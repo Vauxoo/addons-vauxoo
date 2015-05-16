@@ -48,6 +48,9 @@
             border: none;
             width: 50%;
         }
+        .analysis p{
+            line-height: 12px;
+        }
         .analysis h4{
             text-align: center;
         }
@@ -104,20 +107,37 @@
         /**
         Fonts Size
         */
-        h1, h2, h3, h4, h5 { line-height: auto; }
+        h1, h1, h3, h4, h5 { line-height: auto; }
         h1 { font-size: 14px; }
-        h2 { font-size: 13px; }
+        h1 { font-size: 13px; }
         h3 { font-size: 12px; }
         h4, h5 { font-size: 11px; }
         table.endpage
         {
             page-break-after: always;
         }
+        section, .raw, div {
+            width: 100%;
+            border: none;
+            overflow: hidden; /* add this to contain floated children */
+        }
+        div[class^='col-md'] {
+             float:left;
+        }
+        div[class^='col-md'] p,
+        .totals p {
+            font-size: 11px;
+            line-height: 13px;
+        }
+        .col-md-6 {
+            width: 50%;
+        }
+
     </style>
 </head>
 <body style="border:0;">
     %for obj in objects :
-        <h2>Report Name: ${obj.name}</h2>
+        <h1>Report Name: ${obj.name}</h1>
         <h3>
             Resumed Report.
         </h3>
@@ -314,36 +334,40 @@
             </tr>
             % if obj.records.get('resume_product', []):
                 <tr>
-                <td colspan="2">
-                    <table class="analysis">
-                        <tbody>
-                        <tr>
-                        <th colspan="2">
-                            <h4>Numbers Explained</h4>
-                        </th>
-                        </tr>
+                <td colspan="2" class="totals">
+                    <section>
+                        <h1><u>Numbers Explained</u></h1>
                         %for il in obj.records.get('resume_product', []):
-                        <tr>
-                        <td>
-                            <p><b>${il}</b></p>
-                            %for curr in obj.records.get('resume_product', [])[il] :
-                                <p>Product ID: ${curr['product_id'][0]} - ${curr['product_id'][1]}</p>
-                                <p>count: ${curr['product_id_count']} Lines</p>
-                                <p>Total: ${formatLang(curr['price_subtotal'])}<p>
-                            %endfor
-                        </td>
-                        <td>
-                            <p><b>${il}</b></p>
-                            <p>Consultoría Facturada:<p>
-                            <p>Consultoría Sin Facturar:<p>
+                        <div class="col-md-6">
+                            <h2><u>Amounts in Currency ${il}: </u></h2>
+                            <p><b>Training: </b>${formatLang(obj.records.get('resume_product')[il]['training'])}</p>
+                            <p><b>Consultancy: </b>${formatLang(obj.records.get('resume_product')[il]['consultancy'])}</p>
+                            <p><b>Enterprises: </b>${formatLang(obj.records.get('resume_product')[il]['enterprises'])}</p>
+                            <p><b>Others: </b>${formatLang(obj.records.get('resume_product')[il]['others'])}</p>
                             <hr/>
-                            <p>Entrenamiento:</p>
-                            <p>Enterprise:</p>
-                        </td>
-                        </tr>
+                            <p><b>Total: </b>${formatLang(obj.records.get('resume_product')[il]['total'])}</p>
+                            <hr/>
+                            <p><b>Total in <u>${obj.currency_id.name}</u>: </b>${formatLang(obj.records.get('resume_product')[il]['total_in_control'])}</p>
+                            <hr/>
+                            <p><b>Conversion Rate: </b>${formatLang(obj.records.get('resume_product')[il]['conversion_rate'])}</p>
+                        </div>
                         %endfor
-                        </tbody>
-                    </table>
+                    </section>
+                    <hr/>
+                    <section>
+                    <div class="col-md-6">
+                        <h1><u>Resumed amounts in ${obj.currency_id.name}</u></h1>
+                        <p><b>Total Invoiced: </b>${formatLang(obj.records.get('resumed_numbers')['total_invoiced'])}</p>
+                        <p><b>Pending to Invoice: </b>${formatLang(obj.records.get('resume_product')[il]['pending'])}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h1><u>Resumed amounts in %</u></h1>
+                        <p><b>Training: </b> 03.00% </p>
+                        <p><b>Consultancy: </b> 90.00% </p>
+                        <p><b>Enterprises: </b> 07.00%</p>
+                        <p><b>Training: </b> 01.00% </p>
+                    </div>
+                    </section>
                 </td>
                 </tr>
             % endif

@@ -73,12 +73,14 @@
                         <group string="Technical Information">
                             <notebook>
                                 <page string="Basic Information">
-                                    <field class="oe_inline" name="product_id"
-                                        domain="[('type','=', 'service')]"
-                                        groups="base.group_user"/>
-                                    <field class="oe_inline" name="currency_id" groups="base.group_user"/>
-                                    <field name="user_id" groups="base.group_user"/>
-                                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                                    <group>
+                                        <field class="oe_inline" name="product_id"
+                                            domain="[('type','=', 'service')]"
+                                            groups="base.group_user"/>
+                                        <field class="oe_inline" name="currency_id" groups="base.group_user"/>
+                                        <field name="user_id" groups="base.group_user"/>
+                                        <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                                    </group>
                                 </page>
                                 <page string="Product Information">
                                     <group>
