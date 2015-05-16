@@ -91,6 +91,46 @@
                 </xpath>
             </field>
         </record>
+
+
+        <!-- Project Task -->
+
+
+        <record model="ir.ui.view" id="inherit_tasks_issue_form_view">
+        <field name="name">inherit.task.issue</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position="after">
+            <field name="issue_id"/>
+            </xpath>
+        </field>
+        </record>
+
+        <record id="view_task_tree_issue" model="ir.ui.view">
+            <field name="name">project.task.tree.issue</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name=&quot;stage_id&quot;]" position="after">
+                    <field name="issue_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_search_form_issue" model="ir.ui.view">
+            <field name="name">project.task.search.form.issue</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_search_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@string=&quot;Stage&quot;]" position="after">
+                    <filter string="Issue" domain="[]" context="{'group_by':'issue_id'}"/>
+                </xpath>
+                <xpath expr='//filter[@string="Pending"]' position="before">
+                    <field string="Issue" name="issue_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
 
