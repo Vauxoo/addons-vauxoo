@@ -26,6 +26,7 @@ class hr_timesheet_reports_base(osv.Model):
 
     def _prepare_data(self, cr, uid, ids, record, context=None):
         line_id = record.line_id and record.line_id.id or "NO-LINE"
+        invoice_id = record.line_id and record.line_id.invoice_id
         work_ids, issue_ids = [], []
         if isinstance(line_id, int):
             work_obj = self.pool.get('project.task.work')
@@ -49,7 +50,9 @@ class hr_timesheet_reports_base(osv.Model):
                 'analytic': record.account_id.name,
                 'issue': ' '.join([str(i) for i in issue_ids]),
                 'line': line_id,
+                'invoice_id': invoice_id,
                 'task_id': work_brw.task_id,
+                'record': record,
                 'id': record.id}
 
     def _get_print_data(self, cr, uid, ids, name, args, context=None):

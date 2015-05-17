@@ -478,7 +478,7 @@
         %for res in obj.records['data'] :
         <table width="100%" class="endpage" tyle="font-size: 14px;">
             <tr>
-                <th colspan="9">
+                <th colspan="10">
                 <h3><b>Analytic Account:</b> ${res}</h3>
                 </th>
             </tr>
@@ -486,6 +486,7 @@
                 <th width="5%"> ID </th>
                 <th> Issue </th>
                 <th> User Story </th>
+                <th> Invoice </th>
                 <th width="10%"> User </th>
                 <th> Task </th>
                 <th> Description </th>
@@ -511,6 +512,9 @@
                 </td>
                 <td>
                     ${rec['task_id'].userstory_id and rec['task_id'].userstory_id.id  or 'Na'}
+                </td>
+                <td>
+                    ${rec['invoice_id'] and rec['invoice_id'] or 'N-I'}
                 </td>
                 <td width="10%">
                     ${rec['author']}
