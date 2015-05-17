@@ -369,8 +369,12 @@
                             <li><b>Others: </b>${sum([obj.records.get('resume_product')[o]['total_others'] for o in obj.records.get('resume_product')])}</li>
                         </ul>
                         </p>
-                        <p><b>Only Billable: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</p>
-                        <p><b>Pending to Invoice: </b>${formatLang(obj.records.get('resumed_numbers')['pending'] -sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')]))}</p>
+                        <p><b>Totals Timesheet</b>
+                        <ul>
+                            <li><b>Billable: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</li>
+                            <li><b>Pending <br/><sub>Billables - Billed</sub>: </b><br/>${formatLang(obj.records.get('resumed_numbers')['pending'] -sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')]))}</li>
+                        </ul>
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <h1><u>Resumed amounts in %</u></h1>
