@@ -24,7 +24,22 @@ class hr_timesheet_reports_base(osv.Model):
     _name = "hr.timesheet.reports.base"
     _inherit = ['mail.thread']
 
-    def _prepare_data(self, record):
+    def _prepare_data(self, cr, uid, ids, record, context=None):
+        line_id = record.line_id and record.line_id.id or "NO-LINE"
+        work_ids, issue_ids = [], []
+        if isinstance(line_id, int):
+            work_obj = self.pool.get('project.task.work')
+            issue_obj = self.pool.get('project.issue')
+            work_ids = work_obj.search(cr, uid,
+                                       [('hr_analytic_timesheet_id',
+                                         '=', record.id)], context=context)
+            work_brw = work_obj.browse(cr, uid,
+                                       work_ids,
+                                       context=context)[0]
+            issue_ids = issue_obj.search(cr, uid,
+                                         [('task_id',
+                                           '=', work_brw.task_id.id)],
+                                         context=context)
         return {'author': clean_name(record.user_id.name),
                 'description': record.name,
                 'duration': record.unit_amount,
@@ -32,7 +47,9 @@ class hr_timesheet_reports_base(osv.Model):
                 'to_invoice': record.to_invoice,
                 'date': record.date,
                 'analytic': record.account_id.name,
-                'issue': record.task_id.issue_id.id,
+                'issue': ' '.join([str(i) for i in issue_ids]),
+                'line': line_id,
+                'task_id': work_brw.task_id,
                 'id': record.id}
 
     def _get_print_data(self, cr, uid, ids, name, args, context=None):
@@ -194,7 +211,7 @@ class hr_timesheet_reports_base(osv.Model):
         res = []
         timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids,
                                               context=context)
-        res = [self._prepare_data(tb) for tb in timesheet_brws]
+        res = [self._prepare_data(cr, uid, ids, tb, context=context) for tb in timesheet_brws]
         grouped = timesheet_obj.read_group(cr, uid, dom,
                                            ['account_id',
                                             'unit_amount',

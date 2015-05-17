@@ -476,21 +476,22 @@
         % endif
         <h3> Detailed Report. </h3>
         %for res in obj.records['data'] :
-        <table width="100%" style="font-size: 14px;">
+        <table width="100%" class="endpage" tyle="font-size: 14px;">
             <tr>
-                <th colspan="7">
+                <th colspan="9">
                 <h3><b>Analytic Account:</b> ${res}</h3>
                 </th>
             </tr>
             <tr>
                 <th width="5%"> ID </th>
+                <th> Issue </th>
+                <th> User Story </th>
                 <th width="10%"> User </th>
-                <th> issue </th>
+                <th> Task </th>
                 <th> Description </th>
                 <th> Date </th>
                 <th> Duration </th>
                 <th> Bill </th>
-                <th> Invoiceables </th>
             </tr>
             %for rec in obj.records['data'][res] :
                 %if not rec['to_invoice'] :
@@ -505,13 +506,17 @@
                 <td width="5%">
                     ${rec['id']}
                 </td>
+                <td>
+                    ${rec['issue']}
+                </td>
+                <td>
+                    ${rec['task_id'].userstory_id and rec['task_id'].userstory_id.id  or 'Na'}
+                </td>
                 <td width="10%">
                     ${rec['author']}
                 </td>
-                <td>
-                    ${rec['issue']}
                 <td class="description">
-                    ${rec['description']}
+                    ${rec['task_id'] and rec['task_id'].id }: ${rec['description']}
                 </td>
                 <td class="date">
                     ${rec['date']}
