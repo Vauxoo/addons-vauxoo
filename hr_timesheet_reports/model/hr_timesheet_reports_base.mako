@@ -369,7 +369,8 @@
                             <li><b>Others: </b>${sum([obj.records.get('resume_product')[o]['total_others'] for o in obj.records.get('resume_product')])}</li>
                         </ul>
                         </p>
-                        <p><b>Pending to Invoice: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</p>
+                        <p><b>Only Billable: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</p>
+                        <p><b>Pending to Invoice: </b>${formatLang(obj.records.get('resumed_numbers')['pending'] -sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')]))}</p>
                     </div>
                     <div class="col-md-6">
                         <h1><u>Resumed amounts in %</u></h1>
