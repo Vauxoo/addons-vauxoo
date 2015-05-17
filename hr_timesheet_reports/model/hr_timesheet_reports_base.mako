@@ -12,6 +12,10 @@
             font-size: 9px;
             line-height: 11px;
         }
+        li {
+            font-size: 10px;
+            line-height: 12px;
+        }
         .red {
             color: red;
         }
@@ -357,7 +361,14 @@
                     <section>
                     <div class="col-md-6">
                         <h1><u>Resumed amounts in ${obj.currency_id.name}</u></h1>
-                        <p><b>Total Invoiced: </b>${formatLang(obj.records.get('resumed_numbers')['total_invoiced'])}</p>
+                        <p><b>Total Invoiced</b>
+                        <ul>
+                            <li><b>Training: </b>${sum([obj.records.get('resume_product')[o]['total_train'] for o in obj.records.get('resume_product')])}</li>
+                            <li><b>Consultancy: </b>${sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')])}</li>
+                            <li><b>Enterprises: </b>${sum([obj.records.get('resume_product')[o]['total_lic'] for o in obj.records.get('resume_product')])}</li>
+                            <li><b>Others: </b>${sum([obj.records.get('resume_product')[o]['total_others'] for o in obj.records.get('resume_product')])}</li>
+                        </ul>
+                        </p>
                         <p><b>Pending to Invoice: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</p>
                     </div>
                     <div class="col-md-6">

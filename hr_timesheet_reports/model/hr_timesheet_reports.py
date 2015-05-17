@@ -142,7 +142,12 @@ class hr_timesheet_reports_base(osv.Model):
                 'training': total_train,
                 'pending': total_train,
                 'total': total,
+                'rate': rate,
                 'total_in_control': round(total/rate, 2),
+                'total_cons': round(total_cons/rate, 2),
+                'total_train': round(total_train/rate, 2),
+                'total_others': round(total_others/rate, 2),
+                'total_lic': round(total_ent/rate, 2),
                 'conversion_rate': curr_obj._get_conversion_rate(cr, uid,
                                                                  curr_obj.browse(cr, uid, curr_from, context=context),
                                                                  curr_obj.browse(cr, uid, curr_to, context=context)
