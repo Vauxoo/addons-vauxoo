@@ -152,7 +152,7 @@
 <div class="col-md-6">
     <h1>Report Name: ${obj.name}</h1>
     <h3>
-        Resumed Report.
+        Resumed Timesheet Report.
     </h3>
     <h4>Filter Name: ${obj.filter_id.name}</h4>
     <p>
@@ -256,6 +256,8 @@
 % if obj.records.get('invoices', []):
 <div class="endpage">
 <div class="col-md-6">
+    <h2>Economical Status</h2>
+    <h3>Filter name: ${obj.filter_invoice_id.name}</h3>
     <p>
     ${obj.comment_invoices}
     </p>
