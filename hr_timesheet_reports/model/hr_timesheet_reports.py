@@ -71,7 +71,7 @@ class hr_timesheet_reports_base(osv.Model):
         domain_inv = wzr_brw.filter_invoice_id and \
             wzr_brw.filter_invoice_id.domain or []
         if not domain_inv:
-            return ([], [], [])
+            return ([], [], [], [], [])
         dom_inv = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_inv)]
         # Preparing grouped invoices due to it is 2 levels it need a
         # little extra Work.
@@ -246,10 +246,9 @@ class hr_timesheet_reports_base(osv.Model):
     def _get_total_inv_amount(self, cr, uid, ids, grouped, context=None):
         pending = sum([gro['invoiceables_hours'] for gro in grouped])
         pending_inv = round(pending * self.browse(cr, uid, ids,
-                                                  context=context)[0].product_id.list_price, 2)
+                                                    context=context)[0].product_id.list_price, 2)
         return pending_inv
 
-        pending = 0.00
     def _get_result_ids(self, cr, uid, ids, context=None):
         uid = SUPERUSER_ID
         gi, gbc, ibrw, gbp, rn = self._get_report_inv(cr, uid, ids, context=context)  # noqa
