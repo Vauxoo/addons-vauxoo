@@ -141,7 +141,9 @@
             line-height: 13px;
         }
         .col-md-6 {
-            width: 50%;
+            width: 48%;
+            padding-right: 4px;
+            padding-left: 4px;
         }
 
     </style>
