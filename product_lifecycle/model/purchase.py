@@ -25,6 +25,44 @@
 
 from openerp import models, fields, api
 from openerp.tools.translate import _
+from openerp.exceptions import Warning
+
+
+class PurchaseOrder(models.Model):
+
+    _inherit = 'purchase.order'
+
+    @api.multi
+    def write(self, values):
+        """
+        First check that the purchase order lines have not discontinued
+        product.
+        """
+        order_lines = values.get('order_line', False)
+        obsolete = []
+        for line in order_lines:
+            if isinstance(line[2], dict):
+                product_id = line[2].get('product_id', False)
+                if product_id:
+                    product = self.env['product.product'].browse(product_id)
+                    if product.state == 'obsolete':
+                        obsolete.append((line[1], product))
+                    # TODO if neccesary to check is the replacement_product_id
+                    # is empty and the discontinued check is False?
+        if obsolete:
+            obsolete.sort()
+            obsolete_msg = str()
+            for item in obsolete:
+                obsolete_msg += ''.join([
+                    ' - ', _('Updated line') if item[0] else _('New line'),
+                    ' with product ', item[1].name, '\n',
+                ])
+            raise Warning(
+                _('Purchase order line can not have discontinued products.')
+                + '\n' +
+                _('The next lines cannot be added to the purchase order:') +
+                '\n'*2 + obsolete_msg)
+        return super(PurchaseOrder, self).write(values)
 
 
 class PurchaseOrderLine(models.Model):
