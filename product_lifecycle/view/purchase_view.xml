@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="purchase_order_replacement_product_form" model="ir.ui.view">
+            <field name="name">purchase.order.replacement.product.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="after">
+                    <field name="discontinued" invisible="True"/>
+                    <field name="replacement_product_id" attrs="{'required': [('discontinued', '=', True)]}" options="{'no_create': True}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_line_replacement_product_form" model="ir.ui.view">
+            <field name="name">purchase.order.line.replacement.product.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="discontinued" invisible="True"/>
+                    <field name="replacement_product_id" attrs="{'invisible': [('discontinued', '=', False)], 'required': [('discontinued', '=', True)]}" options="{'no_create': True}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
