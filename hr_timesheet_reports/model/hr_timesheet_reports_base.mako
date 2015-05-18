@@ -253,241 +253,221 @@
 </div>
 </div>
 
+% if obj.records.get('invoices', []):
+<div class="endpage">
 <div class="col-md-6">
     <p>
     ${obj.comment_invoices}
     </p>
 </div>
 <div class="col-md-6">
-        <table class="resume endpage">
-            <tbody>
-            % if obj.records.get('invoices', []):
-            <tr>
-            <td colspan="2">
-                <table width="100%">
-                <tr class="title">
-                    <td colspan="2">Status of invoices until today in the project.</td>
-                </tr>
-                <tr class="title">
-                    <td width="10%"> Period </td>
-                    <td class="invoices_content" style="padding: 0px;" colspan="2">
-                        <table width="100%">
-                            <tr>
-                                <td width="10%"> Number </td>
-                                <td width="20%"> Total </td>
-                                <td width="20%"> Tax</td>
-                                <td width="20%"> Total</td>
-                                <td width="20%"> Pending</td>
-                                <td width="10%"> Currency </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                %for period in obj.records['periods'] :
-                <tr>
-                    <td width="10%" style="text-align: left;">
-                    ${period.get('period_id')[1]}
-                    </td>
-                    <td colspan="2" class="invoices_content">
-                        <table width="100%">
-                            %for invoice in obj.records['invoices'] :
-                                % if invoice.period_id.id == period.get('period_id')[0]:
-                                % if invoice.residual > 1.00:
-                                <tr class="unpaid">
-                                % endif
-                                % if invoice.residual < 1.00:
-                                <tr class="paid">
-                                % endif
-                                    <td width="10%"> ${invoice.number} </td>
-                                    <td width="20%"> ${formatLang(invoice.amount_untaxed)}</td>
-                                    <td width="20%"> ${formatLang(invoice.amount_tax)}</td>
-                                    <td width="20%"> ${formatLang(invoice.amount_total)}</td>
-                                    <td width="20%"> ${formatLang(invoice.residual)}</td>
-                                    <td width="10%"> ${invoice.currency_id.name} </td>
-                                </tr>
-                                % endif
-                            %endfor
-                        </table>
-                    </td>
-                </tr>
-                %endfor
-                <tr>
-                    <td class="invoices_content">
-                        <table width="100%">
-                        %for currency in obj.records['total_invoices'] :
-                        <tr>
-                            <td> ${currency.get('currency_id')[1]} </td>
-                        </tr>
-                        %endfor
-                        </table>
-                    </td>
-                    <td class="invoices_content">
-                        <table width="100%">
-                        %for currency in obj.records['total_invoices'] :
-                        <tr>
-                            <td width="10%"> </td>
-                            <td width="20%">${formatLang(currency.get('amount_untaxed'))} </td>
-                            <td width="20%">${formatLang(currency.get('amount_tax'))} </td>
-                            <td width="20%">${formatLang(currency.get('amount_total'))} </td>
-                            <td width="20%">${formatLang(currency.get('residual'))} </td>
-                            <td width="10%"> </td>
-                        </tr>
-                        %endfor
-                        </table>
-                    </td>
-                </tr>
-                </table>
-            </td>
+        <table width="100%">
+            <tr class="title">
+                <td colspan="2">Status of invoices until today in the project.</td>
             </tr>
-            % if obj.records.get('resume_product', []):
-                <tr>
-                <td colspan="2" class="totals">
-                    <section>
-                        <h2><u>Numbers Explained</u></h2>
-                        %for il in obj.records.get('resume_product', []):
-                        <div class="col-md-6">
-                            <h3><u>Amounts in Currency ${il}: </u></h3>
-                            <p><b>Training: </b>${formatLang(obj.records.get('resume_product')[il]['training'])}</p>
-                            <p><b>Consultancy: </b>${formatLang(obj.records.get('resume_product')[il]['consultancy'])}</p>
-                            <p><b>Enterprises: </b>${formatLang(obj.records.get('resume_product')[il]['enterprises'])}</p>
-                            <p><b>Others: </b>${formatLang(obj.records.get('resume_product')[il]['others'])}</p>
-                            <hr/>
-                            <p><b>Total: </b>${formatLang(obj.records.get('resume_product')[il]['total'])}</p>
-                            <hr/>
-                            <p><b>Total in <u>${obj.currency_id.name}</u>: </b>${formatLang(obj.records.get('resume_product')[il]['total_in_control'])}</p>
-                            <hr/>
-                            <p><b>Conversion Rate: </b>${formatLang(obj.records.get('resume_product')[il]['conversion_rate'])}</p>
-                        </div>
-                        %endfor
-                    </section>
-                    <hr/>
-                    <section>
-                        <h2><u>Resumed amounts in ${obj.currency_id.name}</u></h2>
-                        <div class="col-md-6">
-                        <p><b>Total Invoiced</b>
-                        <ul>
-                            <li><b>Training: </b>${sum([obj.records.get('resume_product')[o]['total_train'] for o in obj.records.get('resume_product')])}</li>
-                            <li><b>Consultancy: </b>${sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')])}</li>
-                            <li><b>Enterprises: </b>${sum([obj.records.get('resume_product')[o]['total_lic'] for o in obj.records.get('resume_product')])}</li>
-                            <li><b>Others: </b>${sum([obj.records.get('resume_product')[o]['total_others'] for o in obj.records.get('resume_product')])}</li>
-                        </ul>
-                        </p>
-                        </div>
-                        <div class="col-md-6">
-                        <p><b>Totals Timesheet</b>
-                        <ul>
-                            <li><b>Billable: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</li>
-                            <li><b>Pending <br/><sub>Billables - Billed</sub>: </b><br/>${formatLang(obj.records.get('resumed_numbers')['pending'] -sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')]))}</li>
-                        </ul>
-                        </p>
-                        </div>
-                    </section>
+            <tr class="title">
+                <td width="10%"> Period </td>
+                <td class="invoices_content" style="padding: 0px;" colspan="2">
+                    <table width="100%">
+                        <tr>
+                            <td width="10%"> Number </td>
+                            <td width="20%"> Total </td>
+                            <td width="20%"> Tax</td>
+                            <td width="20%"> Total</td>
+                            <td width="20%"> Pending</td>
+                            <td width="10%"> Currency </td>
+                        </tr>
+                    </table>
                 </td>
-                </tr>
-            % endif
-            % endif
-            </tbody>
-        </table>
-</div>
-        % if obj.records.get('issues', []):
-        <h3> Issues. </h3>
-        <h4>Filter Name: ${obj.filter_issue_id.name}</h4>
-        <table class="resume endpage">
-            <tbody>
+            </tr>
+            %for period in obj.records['periods'] :
             <tr>
-            <td>
-                <p>
-                ${obj.comment_issues}
-                </p>
-            </td>
-            <td>
-                <table width="100%">
-                    <tbody>
-                    <tr class="title">
-                        <td colspan="3">Status of issues until today in the project.</td>
-                    </tr>
-                    <tr class="title">
-                        <td width="60%"> Analytic Account </td>
-                        <td width="10%"> Qty </td>
-                        <td width="30%"> Status </td>
-                    </tr>
-                    %for issue in obj.records['issues'] :
+                <td width="10%" style="text-align: left;">
+                ${period.get('period_id')[1]}
+                </td>
+                <td colspan="2" class="invoices_content">
+                    <table width="100%">
+                        %for invoice in obj.records['invoices'] :
+                            % if invoice.period_id.id == period.get('period_id')[0]:
+                            % if invoice.residual > 1.00:
+                            <tr class="unpaid">
+                            % endif
+                            % if invoice.residual < 1.00:
+                            <tr class="paid">
+                            % endif
+                                <td width="10%"> ${invoice.number} </td>
+                                <td width="20%"> ${formatLang(invoice.amount_untaxed)}</td>
+                                <td width="20%"> ${formatLang(invoice.amount_tax)}</td>
+                                <td width="20%"> ${formatLang(invoice.amount_total)}</td>
+                                <td width="20%"> ${formatLang(invoice.residual)}</td>
+                                <td width="10%"> ${invoice.currency_id.name} </td>
+                            </tr>
+                            % endif
+                        %endfor
+                    </table>
+                </td>
+            </tr>
+            %endfor
+            <tr>
+                <td class="invoices_content">
+                    <table width="100%">
+                    %for currency in obj.records['total_invoices'] :
                     <tr>
-                        <td width="60%" style="text-align: left;">
-                            ${issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.' }
-                        </td>
-                        <td  width="10%" class="invoices_content">
-                            ${issue['analytic_account_id_count']}
-                        </td>
-                        <td  width="30%" style="text-align: right;" class="invoices_content">
-                            %for stage in issue['children_by_stage'] :
-                            <p style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</p>
-                            %endfor
-                        </td>
+                        <td> ${currency.get('currency_id')[1]} </td>
                     </tr>
                     %endfor
-                    </tbody>
-                </table>
-            </td>
+                    </table>
+                </td>
+                <td class="invoices_content">
+                    <table width="100%">
+                    %for currency in obj.records['total_invoices'] :
+                    <tr>
+                        <td width="10%"> </td>
+                        <td width="20%">${formatLang(currency.get('amount_untaxed'))} </td>
+                        <td width="20%">${formatLang(currency.get('amount_tax'))} </td>
+                        <td width="20%">${formatLang(currency.get('amount_total'))} </td>
+                        <td width="20%">${formatLang(currency.get('residual'))} </td>
+                        <td width="10%"> </td>
+                    </tr>
+                    %endfor
+                    </table>
+                </td>
             </tr>
-            </tbody>
         </table>
+        <section>
+            <h2><u>Numbers Explained</u></h2>
+            %for il in obj.records.get('resume_product', []):
+            <div class="col-md-6">
+                <h3><u>Amounts in Currency ${il}: </u></h3>
+                <p><b>Training: </b>${formatLang(obj.records.get('resume_product')[il]['training'])}</p>
+                <p><b>Consultancy: </b>${formatLang(obj.records.get('resume_product')[il]['consultancy'])}</p>
+                <p><b>Enterprises: </b>${formatLang(obj.records.get('resume_product')[il]['enterprises'])}</p>
+                <p><b>Others: </b>${formatLang(obj.records.get('resume_product')[il]['others'])}</p>
+                <hr/>
+                <p><b>Total: </b>${formatLang(obj.records.get('resume_product')[il]['total'])}</p>
+                <hr/>
+                <p><b>Total in <u>${obj.currency_id.name}</u>: </b>${formatLang(obj.records.get('resume_product')[il]['total_in_control'])}</p>
+                <hr/>
+                <p><b>Conversion Rate: </b>${formatLang(obj.records.get('resume_product')[il]['conversion_rate'])}</p>
+            </div>
+            %endfor
+        </section>
+        <hr/>
+        <section>
+            <h2><u>Resumed amounts in ${obj.currency_id.name}</u></h2>
+            <div class="col-md-6">
+            <p><b>Total Invoiced</b>
+            <ul>
+                <li><b>Training: </b>${sum([obj.records.get('resume_product')[o]['total_train'] for o in obj.records.get('resume_product')])}</li>
+                <li><b>Consultancy: </b>${sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')])}</li>
+                <li><b>Enterprises: </b>${sum([obj.records.get('resume_product')[o]['total_lic'] for o in obj.records.get('resume_product')])}</li>
+                <li><b>Others: </b>${sum([obj.records.get('resume_product')[o]['total_others'] for o in obj.records.get('resume_product')])}</li>
+            </ul>
+            </p>
+            </div>
+            <div class="col-md-6">
+            <p><b>Totals Timesheet</b>
+            <ul>
+                <li><b>Billable: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</li>
+                <li><b>Pending <br/><sub>Billables - Billed</sub>: </b><br/>${formatLang(obj.records.get('resumed_numbers')['pending'] -sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')]))}</li>
+            </ul>
+            </p>
+            </div>
+        </section>
+</div>
+</div>
+% endif
+% if obj.records.get('issues', []):
+<div class="endpage">
+<div class="col-md-6">
+    <h3> Issues. </h3>
+    <h4>Filter Name: ${obj.filter_issue_id.name}</h4>
+    <p>
+        ${obj.comment_issues}
+    </p>
+</div>
+<div class="col-md-6">
+    <table width="100%">
+        <tbody>
+        <tr class="title">
+            <td colspan="3">Status of issues until today in the project.</td>
+        </tr>
+        <tr class="title">
+            <td width="60%"> Analytic Account </td>
+            <td width="10%"> Qty </td>
+            <td width="30%"> Status </td>
+        </tr>
+        %for issue in obj.records['issues'] :
+        <tr>
+            <td width="60%" style="text-align: left;">
+                ${issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.' }
+            </td>
+            <td  width="10%" class="invoices_content">
+                ${issue['analytic_account_id_count']}
+            </td>
+            <td  width="30%" style="text-align: right;" class="invoices_content">
+                %for stage in issue['children_by_stage'] :
+                <p style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</p>
+                %endfor
+            </td>
+        </tr>
+        %endfor
+        </tbody>
+    </table>
+</div>
+</div>
         % endif
         % if obj.records.get('user_stories', []):
-        <h3> User Stories. </h3>
-        <h4>Filter Name: ${obj.filter_hu_id.name}</h4>
-        <table class="resume endpage">
-            <tbody>
-            <tr>
-            <td>
-                <p>
-                    ${obj.comment_hu}
-                </p>
+<div class="endpage">
+<div class="col-md-6">
+    <h3> User Stories. </h3>
+    <h4>Filter Name: ${obj.filter_hu_id.name}</h4>
+    <p>
+        ${obj.comment_hu}
+    </p>
+</div>
+<div class="col-md-6">
+    <table width="100%">
+        <tr class="title">
+            <td colspan="7">Status of User Stories until today in the project.</td>
+        </tr>
+        <tr class="title">
+            <td width="10%"> ID </td>
+            <td width="35%"> Title </td>
+            <td width="15%"> Asked By </td>
+            <td width="10%"> Planned </td>
+            <td width="10%"> Effective </td>
+            <td width="10%"> Invoiceable </td>
+            <td width="10%"> Status </td>
+        </tr>
+        %for hu in obj.records['user_stories'] :
+        <tr>
+            <td width="10%" style="text-align: left;">
+                ${hu.id}
             </td>
-            <td>
-            <table width="100%">
-                <tr class="title">
-                    <td colspan="7">Status of User Stories until today in the project.</td>
-                </tr>
-                <tr class="title">
-                    <td width="10%"> ID </td>
-                    <td width="35%"> Title </td>
-                    <td width="15%"> Asked By </td>
-                    <td width="10%"> Planned </td>
-                    <td width="10%"> Effective </td>
-                    <td width="10%"> Invoiceable </td>
-                    <td width="10%"> Status </td>
-                </tr>
-                %for hu in obj.records['user_stories'] :
-                <tr>
-                    <td width="10%" style="text-align: left;">
-                        ${hu.id}
-                    </td>
-                    <td  width="35%" class="description">
-                        ${hu.name}
-                    </td>
-                    <td  width="15%" class="invoices_content" style="text-align: left;">
-                        ${hu.owner_id.name}
-                    </td>
-                    <td  width="10%" class="invoices_content">
-                        ${hu.planned_hours}
-                    </td>
-                    <td  width="10%" class="invoices_content">
-                        ${hu.effective_hours}
-                    </td>
-                    <td  width="10%" class="invoices_content">
-                        ${hu.invoiceable_hours}
-                    </td>
-                    <td  width="10%" style="text-align: right;" class="invoices_content">
-                        ${hu.state}
-                    </td>
-                </tr>
-                %endfor
-            </table>
+            <td  width="35%" class="description">
+                ${hu.name}
             </td>
-            </tr>
-            </tbody>
-        </table>
+            <td  width="15%" class="invoices_content" style="text-align: left;">
+                ${hu.owner_id.name}
+            </td>
+            <td  width="10%" class="invoices_content">
+                ${hu.planned_hours}
+            </td>
+            <td  width="10%" class="invoices_content">
+                ${hu.effective_hours}
+            </td>
+            <td  width="10%" class="invoices_content">
+                ${hu.invoiceable_hours}
+            </td>
+            <td  width="10%" style="text-align: right;" class="invoices_content">
+                ${hu.state}
+            </td>
+        </tr>
+        %endfor
+    </table>
+</div>
+</div>
         % endif
         <h3> Detailed Report. </h3>
         %for res in obj.records['data'] :
