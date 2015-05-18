@@ -4,7 +4,6 @@
 <html>
 <head>
     <style type="text/css">
-        ${css}
         body {
             font-size: 9px;
         }
@@ -13,6 +12,13 @@
             line-height: 11px;
         }
         li {
+            font-size: 10px;
+            line-height: 12px;
+        }
+        table .title {
+            background-color: #A41D35;
+            color: white;
+            font-weight: bold;
             font-size: 10px;
             line-height: 12px;
         }
@@ -155,8 +161,8 @@
 </div>
 <div class="col-md-6">
     <section>
-                <table>
-                    <tr class="by_account">
+                <table width="100%">
+                    <tr class="title">
                         <td colspan="3"> By Date </td>
                     </tr>
                     <tr class="title">
@@ -185,8 +191,8 @@
                 </table>
     </section>
     <section>
-                <table>
-                    <tr class="by_account">
+                <table width="100%">
+                    <tr class="title">
                         <td colspan="3"> By Analytic </td>
                     </tr>
                     <tr class="title">
@@ -215,8 +221,8 @@
                 </table>
     </section>
     <section>
-                    <table>
-                        <tr class="by_account">
+                <table width="100%">
+                        <tr class="title">
                             <td colspan="3"> By User </td>
                         </tr>
                         <tr class="title">
