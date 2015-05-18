@@ -393,19 +393,19 @@
             <td colspan="3">Status of issues until today in the project.</td>
         </tr>
         <tr class="title">
-            <td width="60%"> Analytic Account </td>
+            <td width="50%"> Analytic Account </td>
             <td width="10%"> Qty </td>
-            <td width="30%"> Status </td>
+            <td width="40%"> Status </td>
         </tr>
         %for issue in obj.records['issues'] :
         <tr>
-            <td width="60%" style="text-align: left;">
+            <td width="50%" style="text-align: left;">
                 ${issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.' }
             </td>
             <td  width="10%" class="invoices_content">
                 ${issue['analytic_account_id_count']}
             </td>
-            <td  width="30%" style="text-align: right;" class="invoices_content">
+            <td  width="40%" style="text-align: right;" class="invoices_content">
                 %for stage in issue['children_by_stage'] :
                 <p style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</p>
                 %endfor
