@@ -71,7 +71,7 @@ class hr_timesheet_reports_base(osv.Model):
         domain_inv = wzr_brw.filter_invoice_id and \
             wzr_brw.filter_invoice_id.domain or []
         if not domain_inv:
-            return ([], [], [], [], [])
+            return ([], [], [], [], {})
         dom_inv = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_inv)]
         # Preparing grouped invoices due to it is 2 levels it need a
         # little extra Work.
