@@ -60,18 +60,32 @@
                         <label for="show_details"/>
                         <field name="show_details"/>
                         <field name="comment_timesheet" nolabel="1" widget="html"/>
-                        <separator string="Invoices Section"/>
-                        <label for="filter_invoice_id"/>
-                        <field name="filter_invoice_id"/>
-                        <field name="comment_invoices" nolabel="1" widget="html"/>
-                        <separator  string="Issue Section"/>
-                        <label for="filter_issue_id"/>
-                        <field name="filter_issue_id"/>
-                        <field name="comment_issues" nolabel="1" widget="html"/>
-                        <separator string="User Stories Section"/>
-                        <label for="filter_hu_id"/>
-                        <field name="filter_hu_id"/>
-                        <field name="comment_hu" nolabel="1" widget="html"/>
+                        <notebook>
+                            <page string="Invoice Information">
+                                <label for="filter_invoice_id"/>
+                                <field name="filter_invoice_id"/>
+                                <field name="comment_invoices" nolabel="1" widget="html"/>
+                            </page>
+                            <page string="Invoice Information">
+                                <group>
+                                    <field name="prod_cons_ids" widget="many2many_tags"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="Issues">
+                                <label for="filter_issue_id"/>
+                                <field name="filter_issue_id"/>
+                                <field name="comment_issues" nolabel="1" widget="html"/>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="User Stories">
+                                <label for="filter_hu_id"/>
+                                <field name="filter_hu_id"/>
+                                <field name="comment_hu" nolabel="1" widget="html"/>
+                            </page>
+                        </notebook>
                         <group string="Technical Information">
                             <notebook>
                                 <page string="Basic Information">
@@ -88,7 +102,6 @@
                                     <group>
                                         <field name="prod_ent_ids" widget="many2many_tags"/>
                                         <field name="prod_train_ids" widget="many2many_tags"/>
-                                        <field name="prod_cons_ids" widget="many2many_tags"/>
                                     </group>
                                 </page>
                             </notebook>
