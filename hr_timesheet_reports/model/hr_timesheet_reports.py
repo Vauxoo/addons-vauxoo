@@ -320,6 +320,7 @@ class hr_timesheet_reports_base(osv.Model):
             domain=[('model_id', 'ilike', 'hr.analytic.timesheet')],
             help="Filter should be by date, group_by is ignored, the model "
             "which the filter should belong to is timesheet."),
+        'show_details': fields.boolean('Show Detailed Timesheets'),
         'records': fields.function(_get_print_data,
                                    string='Records', type="text"),
         'state': fields.selection([('draft', 'Draft'),

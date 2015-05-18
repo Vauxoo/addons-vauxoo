@@ -473,9 +473,10 @@
 </div>
 </div>
         % endif
+        % if obj.show_details:
         <h3> Detailed Report. </h3>
         %for res in obj.records['data'] :
-        <table width="100%" class="endpage" tyle="font-size: 14px;">
+        <table width="100%" style="font-size: 12px;">
             <tr>
                 <th colspan="10">
                 <h3><b>Analytic Account:</b> ${res}</h3>
@@ -537,8 +538,7 @@
             %endfor
         </table>
         %endfor
-    <p>
-    </p>
+        %endif
 %endfor
 </body>
 </html>

@@ -56,7 +56,9 @@
                         <h3><field name="partner_id"/></h3>
                         <separator string="Timesheet Section"/>
                         <label for="filter_id"/>
-                        <field name="filter_id" domain="['|', ('user_id', '=', False), ('user_id', 'in', [uid])]" required="1"/>
+                        <field name="filter_id" required="1"/>
+                        <label for="show_details"/>
+                        <field name="show_details"/>
                         <field name="comment_timesheet" nolabel="1" widget="html"/>
                         <separator string="Invoices Section"/>
                         <label for="filter_invoice_id"/>
