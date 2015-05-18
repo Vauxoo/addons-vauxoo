@@ -235,7 +235,7 @@
                         %for resume in obj.records['resume_user'] :
                         <tr class="by_account">
                             <td style="text-align: left;">
-                            ${resume.get('user_id')[1].split('/')[-1]}
+                            ${resume.get('user_id')[1].split('/')[-1]} ( ${resume.get('user_id_count')} )
                             </td>
                             <td>
                             ${formatLang(resume.get('unit_amount', '0.00'))}

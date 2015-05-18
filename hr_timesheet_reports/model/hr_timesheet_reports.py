@@ -382,6 +382,58 @@ class hr_timesheet_reports_base(osv.Model):
                 'nodestroy': True,
                }
 
+    def go_to_timesheet(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        report = self.browse(cr, uid, ids, context=context)[0]
+        return {'type': 'ir.actions.act_window',
+                'res_model': 'hr.analytic.timesheet',
+                'name': 'Timesheet Activities Reported',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'domain': report.filter_id.domain,
+                'context': context,
+               }
+
+    def go_to_invoices(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        report = self.browse(cr, uid, ids, context=context)[0]
+        return {'type': 'ir.actions.act_window',
+                'res_model': 'account.invoice',
+                'name': 'Invoices Reported',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'domain': report.filter_invoice_id.domain,
+                'context': context,
+               }
+
+    def go_to_issues(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        report = self.browse(cr, uid, ids, context=context)[0]
+        return {'type': 'ir.actions.act_window',
+                'res_model': 'project.issue',
+                'name': 'Issues Reported',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'domain': report.filter_issue_id.domain,
+                'context': context,
+               }
+
+    def go_to_hu(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        report = self.browse(cr, uid, ids, context=context)[0]
+        return {'type': 'ir.actions.act_window',
+                'res_model': 'user.story',
+                'name': 'User Stories Reported',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'domain': report.filter_hu_id.domain,
+                'context': context,
+               }
+
     def send_by_email(self, cr, uid, ids, context=None, cdsm=None):
         ir_model_data = self.pool.get('ir.model.data')
         try:

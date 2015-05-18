@@ -57,6 +57,8 @@
                         <separator string="Timesheet Section"/>
                         <label for="filter_id"/>
                         <field name="filter_id" required="1"/>
+                        <button class="oe_link" string="Timesheets with this filter"
+                            type="object" name="go_to_timesheet"/>
                         <label for="show_details"/>
                         <field name="show_details"/>
                         <field name="comment_timesheet" nolabel="1" widget="html"/>
@@ -64,11 +66,15 @@
                             <page string="Invoice Information">
                                 <label for="filter_invoice_id"/>
                                 <field name="filter_invoice_id"/>
+                                <button class="oe_link" string="Invoices on this filter"
+                                    type="object" name="go_to_invoices"/>
                                 <field name="comment_invoices" nolabel="1" widget="html"/>
                             </page>
-                            <page string="Invoice Information">
+                            <page string="technical Information">
                                 <group>
                                     <field name="prod_cons_ids" widget="many2many_tags"/>
+                                    <button class="oe_link" string="Invoice Lines with this products"
+                                        type="object" name="go_to_cons_lines"/>
                                 </group>
                             </page>
                         </notebook>
@@ -76,6 +82,8 @@
                             <page string="Issues">
                                 <label for="filter_issue_id"/>
                                 <field name="filter_issue_id"/>
+                                <button class="oe_link" string="Issues on this filter"
+                                    type="object" name="go_to_issues"/>
                                 <field name="comment_issues" nolabel="1" widget="html"/>
                             </page>
                         </notebook>
@@ -83,6 +91,8 @@
                             <page string="User Stories">
                                 <label for="filter_hu_id"/>
                                 <field name="filter_hu_id"/>
+                                <button class="oe_link" string="User Stories on this filter"
+                                    type="object" name="go_to_hu"/>
                                 <field name="comment_hu" nolabel="1" widget="html"/>
                             </page>
                         </notebook>
