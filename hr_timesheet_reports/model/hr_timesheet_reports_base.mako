@@ -116,7 +116,8 @@
         h1 { font-size: 13px; }
         h3 { font-size: 12px; }
         h4, h5 { font-size: 11px; }
-        table.endpage
+        table.endpage,
+        div.endpage
         {
             page-break-after: always;
         }
@@ -141,20 +142,19 @@
 </head>
 <body style="border:0;">
     %for obj in objects :
-        <h1>Report Name: ${obj.name}</h1>
-        <h3>
-            Resumed Report.
-        </h3>
-        <h4>Filter Name: ${obj.filter_id.name}</h4>
-        <table class="resume endpage">
-            <tbody>
-            <tr>
-            <td>
-                <p>
-                ${obj.comment_timesheet}
-                </p>
-            </td>
-            <td>
+<div class="endpage">
+<div class="col-md-6">
+    <h1>Report Name: ${obj.name}</h1>
+    <h3>
+        Resumed Report.
+    </h3>
+    <h4>Filter Name: ${obj.filter_id.name}</h4>
+    <p>
+    ${obj.comment_timesheet}
+    </p>
+</div>
+<div class="col-md-6">
+    <section>
                 <table>
                     <tr class="by_account">
                         <td colspan="3"> By Date </td>
@@ -183,8 +183,8 @@
                             <td>${formatLang(obj.records.get('total_ts_bill_by_month'))}</td>
                         </tr>
                 </table>
-            </td>
-            <td>
+    </section>
+    <section>
                 <table>
                     <tr class="by_account">
                         <td colspan="3"> By Analytic </td>
@@ -213,12 +213,8 @@
                         <td>${formatLang(obj.records.get('total_ts_bill_by_month'))}</td>
                     </tr>
                 </table>
-            </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td colspan="2">
+    </section>
+    <section>
                     <table>
                         <tr class="by_account">
                             <td colspan="3"> By User </td>
@@ -247,19 +243,20 @@
                             <td>${formatLang(obj.records.get('total_ts_bill_by_month'))}</td>
                         </tr>
                     </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    </section>
+</div>
+</div>
+
+<div class="col-md-6">
+<p>
+${obj.comment_invoices}
+</p>
+</div>
+<div class="col-md-6">
         <table class="resume endpage">
             <tbody>
             % if obj.records.get('invoices', []):
             <tr>
-            <td>
-                <p>
-                ${obj.comment_invoices}
-                </p>
-            </td>
             <td colspan="2">
                 <table width="100%">
                 <tr class="by_account">
@@ -340,10 +337,10 @@
                 <tr>
                 <td colspan="2" class="totals">
                     <section>
-                        <h1><u>Numbers Explained</u></h1>
+                        <h2><u>Numbers Explained</u></h2>
                         %for il in obj.records.get('resume_product', []):
                         <div class="col-md-6">
-                            <h2><u>Amounts in Currency ${il}: </u></h2>
+                            <h3><u>Amounts in Currency ${il}: </u></h3>
                             <p><b>Training: </b>${formatLang(obj.records.get('resume_product')[il]['training'])}</p>
                             <p><b>Consultancy: </b>${formatLang(obj.records.get('resume_product')[il]['consultancy'])}</p>
                             <p><b>Enterprises: </b>${formatLang(obj.records.get('resume_product')[il]['enterprises'])}</p>
@@ -359,8 +356,8 @@
                     </section>
                     <hr/>
                     <section>
-                    <div class="col-md-6">
-                        <h1><u>Resumed amounts in ${obj.currency_id.name}</u></h1>
+                        <h2><u>Resumed amounts in ${obj.currency_id.name}</u></h2>
+                        <div class="col-md-6">
                         <p><b>Total Invoiced</b>
                         <ul>
                             <li><b>Training: </b>${sum([obj.records.get('resume_product')[o]['total_train'] for o in obj.records.get('resume_product')])}</li>
@@ -369,20 +366,15 @@
                             <li><b>Others: </b>${sum([obj.records.get('resume_product')[o]['total_others'] for o in obj.records.get('resume_product')])}</li>
                         </ul>
                         </p>
+                        </div>
+                        <div class="col-md-6">
                         <p><b>Totals Timesheet</b>
                         <ul>
                             <li><b>Billable: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</li>
                             <li><b>Pending <br/><sub>Billables - Billed</sub>: </b><br/>${formatLang(obj.records.get('resumed_numbers')['pending'] -sum([obj.records.get('resume_product')[o]['total_cons'] for o in obj.records.get('resume_product')]))}</li>
                         </ul>
                         </p>
-                    </div>
-                    <div class="col-md-6">
-                        <h1><u>Resumed amounts in %</u></h1>
-                        <p><b>Training: </b> 03.00% </p>
-                        <p><b>Consultancy: </b> 90.00% </p>
-                        <p><b>Enterprises: </b> 07.00%</p>
-                        <p><b>Training: </b> 01.00% </p>
-                    </div>
+                        </div>
                     </section>
                 </td>
                 </tr>
@@ -390,6 +382,7 @@
             % endif
             </tbody>
         </table>
+</div>
         % if obj.records.get('issues', []):
         <h3> Issues. </h3>
         <h4>Filter Name: ${obj.filter_issue_id.name}</h4>
