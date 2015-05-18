@@ -175,7 +175,7 @@
                     %for resume in obj.records['resume_month'] :
                         <tr class="by_account">
                             <td style="text-align: left;">
-                            ${resume.get('date')}
+                            ${resume.get('date')} ( ${resume.get('date_count')} )
                             </td>
                             <td>
                             ${formatLang(resume.get('unit_amount'))}
@@ -205,7 +205,7 @@
                     %for resume in obj.records['resume'] :
                     <tr class="by_account">
                         <td style="text-align: left;">
-                        ${resume.get('account_id')[1].split('/')[-1]}
+                            ${resume.get('account_id')[1].split('/')[-1] } ( ${resume.get('account_id_count')} )
                         </td>
                         <td>
                         ${formatLang(resume.get('unit_amount', '0.00'))}
