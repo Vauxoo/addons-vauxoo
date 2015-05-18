@@ -254,9 +254,9 @@
 </div>
 
 <div class="col-md-6">
-<p>
-${obj.comment_invoices}
-</p>
+    <p>
+    ${obj.comment_invoices}
+    </p>
 </div>
 <div class="col-md-6">
         <table class="resume endpage">
@@ -265,7 +265,7 @@ ${obj.comment_invoices}
             <tr>
             <td colspan="2">
                 <table width="100%">
-                <tr class="by_account">
+                <tr class="title">
                     <td colspan="2">Status of invoices until today in the project.</td>
                 </tr>
                 <tr class="title">
@@ -403,10 +403,10 @@ ${obj.comment_invoices}
             <td>
                 <table width="100%">
                     <tbody>
-                    <tr>
+                    <tr class="title">
                         <td colspan="3">Status of issues until today in the project.</td>
                     </tr>
-                    <tr>
+                    <tr class="title">
                         <td width="60%"> Analytic Account </td>
                         <td width="10%"> Qty </td>
                         <td width="30%"> Status </td>
@@ -446,7 +446,7 @@ ${obj.comment_invoices}
             </td>
             <td>
             <table width="100%">
-                <tr class="by_account">
+                <tr class="title">
                     <td colspan="7">Status of User Stories until today in the project.</td>
                 </tr>
                 <tr class="title">
