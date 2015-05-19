@@ -20,6 +20,12 @@
                                 <t t-if="o.result_selection =='supplier'">
                                     <strong>Supplier Aging Report of Debts</strong>
                                 </t>
+                                <t t-if="o.direction =='past'">
+                                    <strong> (Past Direction)</strong>
+                                </t>
+                                <t t-if="o.direction =='future'">
+                                    <strong> (Future Direction)</strong>
+                                </t>
                             </td>
                        </tr>
                     </table>
