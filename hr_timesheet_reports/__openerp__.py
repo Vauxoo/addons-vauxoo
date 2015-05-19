@@ -34,7 +34,7 @@ report.
         "model/hr_timesheet_reports_formats.xml",
         "model/hr_timesheet_reports_view.xml",
         "model/hr_timesheet_reports_email.xml",
-        "security/ir.model.access.csv",
+        "wizard/set_invoice_view.xml",
     ],
     "installable": True,
     "active": False,

@@ -56,27 +56,66 @@
                         <h3><field name="partner_id"/></h3>
                         <separator string="Timesheet Section"/>
                         <label for="filter_id"/>
-                        <field name="filter_id" domain="['|', ('user_id', '=', False), ('user_id', 'in', [uid])]" required="1"/>
+                        <field name="filter_id" required="1"/>
+                        <button class="oe_link" string="Timesheets with this filter"
+                            type="object" name="go_to_timesheet"/>
+                        <label for="show_details"/>
+                        <field name="show_details"/>
                         <field name="comment_timesheet" nolabel="1" widget="html"/>
-                        <separator string="Invoices Section"/>
-                        <label for="filter_invoice_id"/>
-                        <field name="filter_invoice_id"/>
-                        <field name="comment_invoices" nolabel="1" widget="html"/>
-                        <separator  string="Issue Section"/>
-                        <label for="filter_issue_id"/>
-                        <field name="filter_issue_id"/>
-                        <field name="comment_issues" nolabel="1" widget="html"/>
-                        <separator string="User Stories Section"/>
-                        <label for="filter_hu_id"/>
-                        <field name="filter_hu_id"/>
-                        <field name="comment_hu" nolabel="1" widget="html"/>
+                        <notebook>
+                            <page string="Invoice Information">
+                                <label for="filter_invoice_id"/>
+                                <field name="filter_invoice_id"/>
+                                <button class="oe_link" string="Invoices on this filter"
+                                    type="object" name="go_to_invoices"/>
+                                <field name="comment_invoices" nolabel="1" widget="html"/>
+                            </page>
+                            <page string="technical Information">
+                                <group>
+                                    <field name="prod_cons_ids" widget="many2many_tags"/>
+                                    <button class="oe_link" string="Invoice Lines with this products"
+                                        type="object" name="go_to_cons_lines"
+                                        context="{'ts_report_id': context.get('active_ids')}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="Issues">
+                                <label for="filter_issue_id"/>
+                                <field name="filter_issue_id"/>
+                                <button class="oe_link" string="Issues on this filter"
+                                    type="object" name="go_to_issues"/>
+                                <field name="comment_issues" nolabel="1" widget="html"/>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="User Stories">
+                                <label for="filter_hu_id"/>
+                                <field name="filter_hu_id"/>
+                                <button class="oe_link" string="User Stories on this filter"
+                                    type="object" name="go_to_hu"/>
+                                <field name="comment_hu" nolabel="1" widget="html"/>
+                            </page>
+                        </notebook>
                         <group string="Technical Information">
-                            <field class="oe_inline" name="product_id"
-                                domain="[('type','=', 'service')]"
-                                groups="base.group_user"/>
-                            <field class="oe_inline" name="currency_id" groups="base.group_user"/>
-                            <field name="user_id" groups="base.group_user"/>
-                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                            <notebook>
+                                <page string="Basic Information">
+                                    <group>
+                                        <field class="oe_inline" name="product_id"
+                                            domain="[('type','=', 'service')]"
+                                            groups="base.group_user"/>
+                                        <field class="oe_inline" name="currency_id" groups="base.group_user"/>
+                                        <field name="user_id" groups="base.group_user"/>
+                                        <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                                    </group>
+                                </page>
+                                <page string="Product Information">
+                                    <group>
+                                        <field name="prod_ent_ids" widget="many2many_tags"/>
+                                        <field name="prod_train_ids" widget="many2many_tags"/>
+                                    </group>
+                                </page>
+                            </notebook>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
