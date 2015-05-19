@@ -85,9 +85,7 @@ class account_aging_wizard_partner(osv.osv_memory):
         context = dict(context or {})
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            direction = line.aaw_id.direction == 'past'
-            spans = [line.aaw_id.period_length * x * (direction and 1 or -1)
-                     for x in range(5)]
+            spans = [line.aaw_id.period_length * x for x in range(5)]
             res[line.id] = dict((fn, 0.0) for fn in field_names)
             for doc in line.document_ids:
                 if 'residual' in field_names:
@@ -96,43 +94,22 @@ class account_aging_wizard_partner(osv.osv_memory):
                     res[line.id]['payment'] += doc.payment
                 if 'total' in field_names:
                     res[line.id]['total'] += doc.total
-
-                if 'not_due' in field_names and not direction:
-                    # We will use same field not due to store all due amounts
-                    if doc.due_days > 0:
-                        res[line.id]['not_due'] += doc.residual
-                if 'span01' in field_names and not direction:
-                    if doc.due_days <= 0 and doc.due_days > spans[1]:
-                        res[line.id]['span01'] += doc.residual
-                if 'span02' in field_names and not direction:
-                    if doc.due_days <= spans[1] and doc.due_days > spans[2]:
-                        res[line.id]['span02'] += doc.residual
-                if 'span03' in field_names and not direction:
-                    if doc.due_days <= spans[2] and doc.due_days > spans[3]:
-                        res[line.id]['span03'] += doc.residual
-                if 'span04' in field_names and not direction:
-                    if doc.due_days <= spans[3] and doc.due_days > spans[4]:
-                        res[line.id]['span04'] += doc.residual
-                if 'span05' in field_names and not direction:
-                    if doc.due_days <= spans[4]:
-                        res[line.id]['span05'] += doc.residual
-
-                if 'not_due' in field_names and direction:
+                if 'not_due' in field_names:
                     if doc.due_days <= 0:
                         res[line.id]['not_due'] += doc.residual
-                if 'span01' in field_names and direction:
+                if 'span01' in field_names:
                     if doc.due_days > 0 and doc.due_days <= spans[1]:
                         res[line.id]['span01'] += doc.residual
-                if 'span02' in field_names and direction:
+                if 'span02' in field_names:
                     if doc.due_days > spans[1] and doc.due_days <= spans[2]:
                         res[line.id]['span02'] += doc.residual
-                if 'span03' in field_names and direction:
+                if 'span03' in field_names:
                     if doc.due_days > spans[2] and doc.due_days <= spans[3]:
                         res[line.id]['span03'] += doc.residual
-                if 'span04' in field_names and direction:
+                if 'span04' in field_names:
                     if doc.due_days > spans[3] and doc.due_days <= spans[4]:
                         res[line.id]['span04'] += doc.residual
-                if 'span05' in field_names and direction:
+                if 'span05' in field_names:
                     if doc.due_days > spans[4]:
                         res[line.id]['span05'] += doc.residual
 
@@ -385,12 +362,6 @@ class account_aging_partner_wizard(osv.osv_memory):
         'period_length': fields.integer(
             'Period Length (days)', required=True),
         'user_id': fields.many2one('res.users', 'User'),
-        'direction': fields.selection(
-            [
-                ('future', 'Future'),
-                ('past', 'Past')],
-            "Direction",
-            required=True),
     }
 
     _defaults = {
@@ -401,7 +372,6 @@ class account_aging_partner_wizard(osv.osv_memory):
         'period_length': 30,
         'user_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u, u,
                                                                       cx).id,
-        'direction': lambda *args: 'past',
     }
 
     def _get_lines_by_partner_without_invoice(
