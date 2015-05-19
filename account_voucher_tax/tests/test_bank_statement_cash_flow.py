@@ -319,7 +319,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(move_line.amount_residual, 16)
                 self.assertEquals(move_line.amount_residual, 16.0)
                 self.assertEquals(move_line.amount_currency, 20.69)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    move_line.currency_id.id, self.currency_usd_id)
                 # move_line_tax_rec_id = move_line
                 checked_line += 1
                 continue
@@ -327,7 +328,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(move_line.debit, 0.0)
                 self.assertEquals(move_line.credit, 16)
                 self.assertEquals(move_line.amount_currency, -20.69)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    move_line.currency_id.id, self.currency_usd_id)
                 checked_line += 1
                 continue
             if move_line.account_id.id == self.account_receivable_id:
@@ -359,7 +361,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(move_line.amount_residual, 16)
                 # TO DO: activate this validation
                 # self.assertEquals(move_line.amount_currency, 20.69)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    move_line.currency_id.id, self.currency_usd_id)
                 # move_line_tax_rec_id = move_line
                 checked_line += 1
                 continue
@@ -368,7 +371,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(move_line.credit, 16)
                 # TO DO: activate this validation
                 # self.assertEquals(move_line.amount_currency, -20.69)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    move_line.currency_id.id, self.currency_usd_id)
                 checked_line += 1
                 continue
             if move_line.account_id.id == self.account_receivable_id:
@@ -400,7 +404,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(move_line.credit, 0.0)
                 self.assertEquals(move_line.amount_residual, 10.47)
                 self.assertEquals(move_line.amount_currency, 16)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    move_line.currency_id.id, self.currency_usd_id)
                 move_line_tax_rec_id = move_line
                 checked_line += 1
                 continue
@@ -408,7 +413,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(move_line.debit, 0.0)
                 self.assertEquals(move_line.credit, 10.47)
                 self.assertEquals(move_line.amount_currency, -16)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    move_line.currency_id.id, self.currency_usd_id)
                 checked_line += 1
                 continue
             if move_line.account_id.id == self.account_receivable_id:
@@ -421,7 +427,7 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'journal_id': self.invoice_journal_id,
             'reference_type': 'none',
-            'name': 'invoice to customer',
+            'name': 'invoice currency USD to customer',
             'account_id': self.account_receivable_id,
             'type': 'out_invoice',
             'date_invoice': time.strftime('%Y')+'-06-01',
@@ -488,7 +494,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(voucher_line.debit, 2.0)
                 self.assertEquals(voucher_line.credit, 0.0)
                 self.assertEquals(voucher_line.amount_currency, 0)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    voucher_line.currency_id.id, self.currency_usd_id)
                 self.assertEquals(
                     voucher_line.reconcile_id.name,
                     move_line_inv_tax_rec_id.reconcile_id.name)
@@ -500,7 +507,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(voucher_line.credit, 10.47)
                 self.assertEquals(voucher_line.amount_residual, 0.0)
                 self.assertEquals(voucher_line.amount_currency, -16)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(
+                    voucher_line.currency_id.id, self.currency_usd_id)
                 self.assertEquals(
                     voucher_line.reconcile_id.name,
                     move_line_tax_rec_id.reconcile_id.name)
@@ -511,8 +519,9 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
                 self.assertEquals(voucher_line.debit, 10.47)
                 self.assertEquals(voucher_line.credit, 0.0)
                 self.assertEquals(voucher_line.amount_residual, 0.0)
-                self.assertEquals(move_line.amount_currency, 16)
-                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                self.assertEquals(voucher_line.amount_currency, 16)
+                self.assertEquals(
+                    voucher_line.currency_id.id, self.currency_usd_id)
                 self.assertEquals(
                     voucher_line.reconcile_id.name,
                     move_line_inv_tax_rec_id.reconcile_id.name)
