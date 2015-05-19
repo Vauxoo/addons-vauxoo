@@ -454,7 +454,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
             'account_id': self.account_bnk_id,
             'date': time.strftime('%Y')+'-06-30',
             'type': 'sale',
-            'amount': 0
+            'amount': 0,
+            'payment_rate_currency_id': self.currency_usd_id,
             })
         self.account_voucher_line_model.create(cr, uid, {
             'voucher_id': voucher_id,
@@ -477,7 +478,7 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
 
         self.assertEquals(
             len(self.account_voucher_model.browse(
-                cr, uid, voucher_id).move_id.line_id), 11)
+                cr, uid, voucher_id).move_id.line_id), 9)
         checked_line = 0
         for voucher_line in self.account_voucher_model.browse(
                 cr, uid, voucher_id).move_id.line_id:
