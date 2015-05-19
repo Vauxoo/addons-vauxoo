@@ -74,7 +74,8 @@
                                 <group>
                                     <field name="prod_cons_ids" widget="many2many_tags"/>
                                     <button class="oe_link" string="Invoice Lines with this products"
-                                        type="object" name="go_to_cons_lines"/>
+                                        type="object" name="go_to_cons_lines"
+                                        context="{'ts_report_id': context.get('active_ids')}"/>
                                 </group>
                             </page>
                         </notebook>

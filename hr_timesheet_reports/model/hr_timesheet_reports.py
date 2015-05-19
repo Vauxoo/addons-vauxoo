@@ -386,6 +386,9 @@ class hr_timesheet_reports_base(osv.Model):
         if context is None:
             context = {}
         report = self.browse(cr, uid, ids, context=context)[0]
+        context.update({
+            'ts_report_id': ids[0],
+        })
         return {'type': 'ir.actions.act_window',
                 'res_model': 'hr.analytic.timesheet',
                 'name': 'Timesheet Activities Reported',
@@ -399,6 +402,9 @@ class hr_timesheet_reports_base(osv.Model):
         if context is None:
             context = {}
         report = self.browse(cr, uid, ids, context=context)[0]
+        context.update({
+            'ts_report_id': ids[0],
+        })
         return {'type': 'ir.actions.act_window',
                 'res_model': 'account.invoice',
                 'name': 'Invoices Reported',
@@ -412,6 +418,9 @@ class hr_timesheet_reports_base(osv.Model):
         if context is None:
             context = {}
         report = self.browse(cr, uid, ids, context=context)[0]
+        context.update({
+            'ts_report_id': ids[0],
+        })
         return {'type': 'ir.actions.act_window',
                 'res_model': 'project.issue',
                 'name': 'Issues Reported',
@@ -425,6 +434,9 @@ class hr_timesheet_reports_base(osv.Model):
         if context is None:
             context = {}
         report = self.browse(cr, uid, ids, context=context)[0]
+        context.update({
+            'ts_report_id': ids[0],
+        })
         return {'type': 'ir.actions.act_window',
                 'res_model': 'user.story',
                 'name': 'User Stories Reported',
