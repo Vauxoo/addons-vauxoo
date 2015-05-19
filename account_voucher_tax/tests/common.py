@@ -72,6 +72,8 @@ class TestTaxCommon(common.TransactionCase):
             "account_voucher_tax.account_provision_tax_sale_ova16")
         self.journal_bank_special = self.ref(
             "account_voucher_tax.bank_journal_special")
+        self.journal_bank_special_usd = self.ref(
+            "account_voucher_tax.bank_journal_special_usd")
         # Set in company tax_provision_customer, tax_provision_supplier fields
         self.registry("res.company").write(
             self.cr, self.uid, [self.company_id],
