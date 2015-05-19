@@ -35,12 +35,68 @@
                             <tr>
                                 <th width="12%" class="ITEMSTITLELEFT">TIN</th>
                                 <th width="18%" class="ITEMSTITLELEFT">PARTNER</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">01-30 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">31-60 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">61-90 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">91-120 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">+ 120 DAYS</th>
+                                <t t-if="o.direction =='past'">
+                                    <th width="10%" class="ITEMSTITLERIGHT">DUE</th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 0 + 1'/>
+                                         to
+                                        <span t-esc='o.period_length * 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 1 + 1'/>
+                                         to
+                                        <span t-esc='o.period_length * 2'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 2 + 1'/>
+                                         to
+                                        <span t-esc='o.period_length * 3'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 3 + 1'/>
+                                        to
+                                        <span t-esc='o.period_length * 4'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        +<span t-esc='o.period_length * 4 + 1'/>
+                                        DAYS
+                                    </th>
+                                </t>
+                                <t t-if="o.direction =='future'">
+                                    <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 0'/>
+                                         to
+                                        -<span t-esc='o.period_length * 1 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 1'/>
+                                         to
+                                        -<span t-esc='o.period_length * 2 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 2'/>
+                                         to
+                                        -<span t-esc='o.period_length * 3 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 3'/>
+                                        to
+                                        -<span t-esc='o.period_length * 4 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 4'/>
+                                        DAYS
+                                    </th>
+                                </t>
                                 <th width="10%" class="ITEMSTITLERIGHT">
                                     <t t-if="o.result_selection =='customer'">TOT./AR</t>
                                     <t t-if="o.result_selection =='supplier'">TOT./AP</t>
