@@ -580,7 +580,7 @@ class account_aging_partner_wizard(osv.osv_memory):
             if not residual:
                 continue
 
-            date_due = [amx_brw.date_maturity or amx_brw.date
+            date_due = [amx_brw.date_maturity
                         for amx_brw in inv_brw.move_id.line_id
                         if amx_brw.account_id.type in (
                             'receivable', 'payable')]
