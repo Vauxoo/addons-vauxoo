@@ -580,6 +580,13 @@ class account_aging_partner_wizard(osv.osv_memory):
             if not residual:
                 continue
 
+            date_due = [amx_brw.date_maturity or amx_brw.date
+                        for amx_brw in inv_brw.move_id
+                        if amx_brw.account_id.type in (
+                            'receivable', 'payable')]
+            date_due = date_due and min(date_due)
+            date_due = date_due or inv_brw.date_due or inv_brw.date_invoice
+
             res.append({
                 'invoice_id': inv_brw.id,
                 'currency_id': inv_brw.currency_id.id,
@@ -587,7 +594,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                 'payment': payment,
                 'residual': residual,
                 'total': inv_brw.amount_total,
-                'date_due': inv_brw.date_due or inv_brw.date_invoice,
+                'date_due': date_due,
                 'date_emission': inv_brw.date_invoice,
             })
 
