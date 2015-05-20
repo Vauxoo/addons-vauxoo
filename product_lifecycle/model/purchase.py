@@ -45,7 +45,7 @@ class PurchaseOrder(models.Model):
                 product_id = line[2].get('product_id', False)
                 if product_id:
                     product = self.env['product.product'].browse(product_id)
-                    if product.state == 'obsolete':
+                    if product.state2 == 'obsolete':
                         obsolete.append((line[1], product))
                     # TODO if neccesary to check is the replacement_product_id
                     # is empty and the discontinued check is False?
@@ -97,14 +97,11 @@ class PurchaseOrderLine(models.Model):
 
         if product:
             product_brw = product_obj.browse(cr, uid, product, context=context)
-            if product_brw.state in ['obsolete']:
-                product_tmpls = [
+            if product_brw.state2 in ['obsolete']:
+                replacements = [
                     item.id for item in product_brw.replacement_product_ids]
-                replacements = product_obj.search(
-                    cr, uid, [('product_tmpl_id', 'in', product_tmpls)],
-                    context=context)
-                msg = (product_brw.name + " " + _('is a discontinued product.')
-                       + '\n')
+                msg = (product_brw.display_name + " " +
+                       _('is a discontinued product.') + '\n')
                 if replacements:
                     msg += _('Select one of the replacement products.')
                 else:

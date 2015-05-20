@@ -26,14 +26,17 @@
 from openerp import models, fields
 
 
-class ProductTemplate(models.Model):
+class ProductProduct(models.Model):
 
-    _inherit = 'product.template'
+    _inherit = 'product.product'
     replacement_product_ids = fields.Many2many(
-        'product.template',
+        'product.product',
         'discontinued_product_id', 'replacement_product_id',
         string='Replacement Products',
         help="When a product is discontinued this list will be the possible"
              " alternative products that could replace it")
-
-    state = fields.Selection(default='draft')
+    state2 = fields.Selection([
+            ('draft', 'In Development'),
+            ('sellable','Normal'),
+            ('end','End of Lifecycle'),
+            ('obsolete','Obsolete')], default='draft', string='State')
