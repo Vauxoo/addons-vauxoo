@@ -9,6 +9,7 @@
                 <div class="footer">
                     <div class="text-right" style="border-top: 1px solid lightGrey;">
                         <ul class="list-inline">
+                            <!--
                             <li>
                                 <span style="font-style:italic;">
                                     <t t-if="o.result_selection =='customer'">
@@ -19,6 +20,7 @@
                                     </t>
                                 </span>
                             </li>
+                            -->
                             <li>&amp;bull;</li>
                             <li>Page:</li>
                             <li><span class="page"/></li>
