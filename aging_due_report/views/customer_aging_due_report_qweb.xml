@@ -5,6 +5,47 @@
                 <style type="text/css">
                     <t t-call="aging_due_report.style_aging_due_report"/>
                 </style>
+                <!-- CALLING HEADER and FOOTER -->
+                <div class="footer">
+                    <div class="text-right" style="border-top: 1px solid lightGrey;">
+                        <ul class="list-inline">
+                            <li>
+                                <span style="font-style:italic;">
+                                    <t t-if="o.result_selection =='customer'">
+                                        <strong>Customer Aging Report of Debts</strong>
+                                    </t>
+                                    <t t-if="o.result_selection =='supplier'">
+                                        <strong>Supplier Aging Report of Debts</strong>
+                                    </t>
+                                    <t t-if="o.direction =='past'">
+                                        <strong> (Past Direction)</strong>
+                                    </t>
+                                    <t t-if="o.direction =='future'">
+                                        <strong> (Future Direction)</strong>
+                                    </t>
+                                </span>
+                            </li>
+                            <li>&amp;bull;</li>
+                            <li>Page:</li>
+                            <li><span class="page"/></li>
+                            <li>/</li>
+                            <li><span class="topage"/></li>
+                        </ul>
+                        <ul class="list-inline">
+                            <li>
+                                <span style="font-style:italic;">Printed</span>
+                            </li>
+                            <li>&amp;bull;</li>
+                            <li>
+                                <span style="font-style:italic;" t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/>
+                            </li>
+                            <li>&amp;bull;</li>
+                            <li>
+                                <span style="font-style:italic;" t-esc="time.strftime('%H:%M')"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="page">
                     <table class="basic_table" width="100%" id="table_header">
                         <tr>
@@ -20,6 +61,12 @@
                                 <t t-if="o.result_selection =='supplier'">
                                     <strong>Supplier Aging Report of Debts</strong>
                                 </t>
+                                <t t-if="o.direction =='past'">
+                                    <strong> (Past Direction)</strong>
+                                </t>
+                                <t t-if="o.direction =='future'">
+                                    <strong> (Future Direction)</strong>
+                                </t>
                             </td>
                        </tr>
                     </table>
@@ -29,12 +76,68 @@
                             <tr>
                                 <th width="12%" class="ITEMSTITLELEFT">TIN</th>
                                 <th width="18%" class="ITEMSTITLELEFT">PARTNER</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">01-30 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">31-60 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">61-90 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">91-120 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">+ 120 DAYS</th>
+                                <t t-if="o.direction =='past'">
+                                    <th width="10%" class="ITEMSTITLERIGHT">DUE</th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 0 + 1'/>
+                                         to
+                                        <span t-esc='o.period_length * 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 1 + 1'/>
+                                         to
+                                        <span t-esc='o.period_length * 2'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 2 + 1'/>
+                                         to
+                                        <span t-esc='o.period_length * 3'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 3 + 1'/>
+                                        to
+                                        <span t-esc='o.period_length * 4'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        +<span t-esc='o.period_length * 4 + 1'/>
+                                        DAYS
+                                    </th>
+                                </t>
+                                <t t-if="o.direction =='future'">
+                                    <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        <span t-esc='o.period_length * 0'/>
+                                         to
+                                        -<span t-esc='o.period_length * 1 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 1'/>
+                                         to
+                                        -<span t-esc='o.period_length * 2 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 2'/>
+                                         to
+                                        -<span t-esc='o.period_length * 3 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 3'/>
+                                        to
+                                        -<span t-esc='o.period_length * 4 - 1'/>
+                                        DAYS
+                                    </th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                        -<span t-esc='o.period_length * 4'/>
+                                        DAYS
+                                    </th>
+                                </t>
                                 <th width="10%" class="ITEMSTITLERIGHT">
                                     <t t-if="o.result_selection =='customer'">TOT./AR</t>
                                     <t t-if="o.result_selection =='supplier'">TOT./AP</t>
