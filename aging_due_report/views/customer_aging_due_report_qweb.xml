@@ -1,10 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
     <openerp>
         <data>
+            <template id="aging_due_report.external_layout_footer">
+                <div class="footer">
+                    <div class="text-right" style="border-top: 1px solid lightGrey;">
+                        <ul class="list-inline">
+                            <li>
+                                <span style="font-style:italic;">
+                                    <t t-if="o.result_selection =='customer'">
+                                        <strong>Customer Aging Report of Debts</strong>
+                                    </t>
+                                    <t t-if="o.result_selection =='supplier'">
+                                        <strong>Supplier Aging Report of Debts</strong>
+                                    </t>
+                                    <t t-if="o.direction =='past'">
+                                        <strong> (Past Direction)</strong>
+                                    </t>
+                                    <t t-if="o.direction =='future'">
+                                        <strong> (Future Direction)</strong>
+                                    </t>
+                                </span>
+                            </li>
+                            <li>&amp;bull;</li>
+                            <li>Page:</li>
+                            <li><span class="page"/></li>
+                            <li>/</li>
+                            <li><span class="topage"/></li>
+                        </ul>
+                        <ul class="list-inline">
+                            <li>
+                                <span style="font-style:italic;">Printed</span>
+                            </li>
+                            <li>&amp;bull;</li>
+                            <li>
+                                <span style="font-style:italic;" t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/>
+                            </li>
+                            <li>&amp;bull;</li>
+                            <li>
+                                <span style="font-style:italic;" t-esc="time.strftime('%H:%M')"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </template>
             <template id="report_aging_due_report_qweb_document">
                 <style type="text/css">
                     <t t-call="aging_due_report.style_aging_due_report"/>
                 </style>
+                <!-- CALLING HEADER and FOOTER -->
+                <t t-call="aging_due_report.external_layout_footer"/>
                 <div class="page">
                     <table class="basic_table" width="100%" id="table_header">
                         <tr>
