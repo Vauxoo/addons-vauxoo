@@ -7,20 +7,22 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-20 18:58+0000\n"
-"PO-Revision-Date: 2015-05-20 18:58+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2015-05-20 19:14+0000\n"
+"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
+"Language-Team: Spanish <http://example.com/projects/addons-"
+"vauxoo/aging_due_report/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "&bull;"
-msgstr ""
+msgstr "&bull;"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
@@ -371,7 +373,7 @@ msgstr "PDF"
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "Page:"
-msgstr ""
+msgstr "Pág:"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.document,partner_id:0
@@ -426,7 +428,7 @@ msgstr "Imprimir"
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "Printed"
-msgstr ""
+msgstr "Impreso"
 
 #. module: aging_due_report
 #: selection:account.aging.wizard,result_selection:0
