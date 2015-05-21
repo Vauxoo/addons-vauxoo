@@ -40,7 +40,9 @@
         "security/product_security.xml",
         "wizard/replacement_product_view.xml",
     ],
-    "demo": [],
+    "demo": [
+        "demo/replacement_product_demo.xml",
+    ],
     "test": [],
     "qweb": [],
     "js": [],
