@@ -57,17 +57,6 @@ class PurchaseOrderLine(models.Model):
         help="Gives the sequence of this line when displaying the"
              " purchase order.")
 
-    @api.one
-    @api.constrains('sequence')
-    def _check_sequence(self):
-        """
-        check that the sequence is a positive number greater than 0.
-        """
-        if self.sequence < 1:
-            raise ValidationError(
-                _('The sequence must be a positive number!') + ".\n" +
-                _('Greater or equal than 1'))
-
     @api.model
     def default_get(self, fields_list):
         """

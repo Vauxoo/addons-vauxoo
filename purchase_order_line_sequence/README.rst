@@ -12,7 +12,7 @@ the line to re-enumerate.
 Features
 --------
 
-This sequence is a incremental positive number greater or equal to 1. It
+This sequence is a incremental number. It
 increments one by one. You can also change the generate sequence number by
 hand to set the sequence number you want. After you save the purchase order
 lines will be re-ordered with the sequence value given.
