@@ -33,6 +33,7 @@
     "depends": [
         "product",
         "purchase",
+        "purchase_order_line_sequence",
     ],
     "data": [
         "view/product_view.xml",

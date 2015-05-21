@@ -43,25 +43,23 @@ class PurchaseOrder(models.Model):
         for line in order_lines:
             if isinstance(line[2], dict):
                 product_id = line[2].get('product_id', False)
+                sequence = line[2].get('sequence', False)
                 if product_id:
                     product = self.env['product.product'].browse(product_id)
                     if product.state2 == 'obsolete':
-                        obsolete.append((line[1], product))
+                        obsolete.append((sequence, product))
                     # TODO if neccesary to check is the replacement_product_id
                     # is empty and the discontinued check is False?
         if obsolete:
             obsolete.sort()
             obsolete_msg = str()
             for item in obsolete:
-                obsolete_msg += ''.join([
-                    ' - ', _('Updated line') if item[0] else _('New line'),
-                    ' with product ', item[1].name, '\n',
-                ])
-            raise Warning(
-                _('Purchase order line can not have discontinued products.')
-                + '\n' +
-                _('The next lines cannot be added to the purchase order:') +
-                '\n'*2 + obsolete_msg)
+                obsolete_msg += ' '.join(['\n', '-', _('Line'), str(item[0]),
+                                          _('with product'), item[1].name])
+            raise Warning('\n'.join([
+                _('Purchase order line can not have discontinued products.'),
+                _('The next lines cannot be added to the purchase order:'),
+                obsolete_msg]))
         return super(PurchaseOrder, self).write(values)
 
 
