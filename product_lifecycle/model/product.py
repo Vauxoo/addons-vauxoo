@@ -36,7 +36,7 @@ class ProductProduct(models.Model):
         help="When a product is discontinued this list will be the possible"
              " alternative products that could replace it")
     state2 = fields.Selection([
-            ('draft', 'In Development'),
-            ('sellable','Normal'),
-            ('end','End of Lifecycle'),
-            ('obsolete','Obsolete')], default='draft', string='State')
+        ('draft', 'In Development'),
+        ('sellable', 'Normal'),
+        ('end', 'End of Lifecycle'),
+        ('obsolete', 'Obsolete')], default='draft', string='State')

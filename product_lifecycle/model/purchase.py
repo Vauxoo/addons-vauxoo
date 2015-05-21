@@ -25,7 +25,7 @@
 
 from openerp import models, fields, api
 from openerp.tools.translate import _
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning  # pylint: disable=W0622
 
 
 class PurchaseOrder(models.Model):
