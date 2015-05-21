@@ -77,7 +77,7 @@
                                 <th width="12%" class="ITEMSTITLELEFT">TIN</th>
                                 <th width="18%" class="ITEMSTITLELEFT">PARTNER</th>
                                 <t t-if="o.direction =='past'">
-                                    <th width="10%" class="ITEMSTITLERIGHT">DUE</th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
                                     <th width="10%" class="ITEMSTITLERIGHT">
                                         <span t-esc='o.period_length * 0 + 1'/>
                                          to
@@ -108,7 +108,7 @@
                                     </th>
                                 </t>
                                 <t t-if="o.direction =='future'">
-                                    <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
+                                    <th width="10%" class="ITEMSTITLERIGHT">DUE</th>
                                     <th width="10%" class="ITEMSTITLERIGHT">
                                         <span t-esc='o.period_length * 0'/>
                                          to
