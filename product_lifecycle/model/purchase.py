@@ -99,7 +99,8 @@ class PurchaseOrderLine(models.Model):
             product_brw = product_obj.browse(cr, uid, product, context=context)
             if product_brw.state2 in ['obsolete']:
                 replacements = [
-                    item.id for item in product_brw.replacement_product_ids]
+                    item.id for item in product_brw.replacement_product_ids
+                    if item.state2 not in ['obsolete'] and item.active]
                 msg = (product_brw.display_name + " " +
                        _('is a discontinued product.') + '\n')
                 if replacements:

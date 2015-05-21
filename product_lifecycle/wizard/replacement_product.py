@@ -52,7 +52,8 @@ class ReplacementProduct(models.TransientModel):
         self.replacement_product_id = False
         res = {'domain': {'replacement_product_id': [('id', 'in', [])]}}
         replacement_ids = [
-            product.id for product in self.product_id.replacement_product_ids]
+            product.id for product in self.product_id.replacement_product_ids
+            if product.state2 not in ['obsolete'] and product.active]
         if replacement_ids:
             if len(replacement_ids) == 1:
                 self.replacement_product_id = replacement_ids[0]
