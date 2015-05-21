@@ -23,7 +23,7 @@
         </record>
 
         <record id="action_replacement_product" model="ir.actions.act_window">
-            <field name="name">Replace a Disconitued Product</field>
+            <field name="name">Replace a Disconitued Product to Purchase</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">replacement.product</field>
             <field name="view_type">form</field>

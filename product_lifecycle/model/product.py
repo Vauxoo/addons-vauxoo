@@ -32,7 +32,7 @@ class ProductProduct(models.Model):
     replacement_product_ids = fields.Many2many(
         'product.product',
         'discontinued_product_id', 'replacement_product_id',
-        string='Replacement Products',
+        string='Replacement Products for Purchase',
         help="When a product is discontinued this list will be the possible"
              " alternative products that could replace it")
     state2 = fields.Selection([

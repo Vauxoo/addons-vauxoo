@@ -34,14 +34,14 @@ class ReplacementProduct(models.TransientModel):
     """
 
     _name = 'replacement.product'
-    _description = 'Select a replacement product'
+    _description = 'Select a replacement product for purchase operations'
 
     product_id = fields.Many2one(
         'product.template', 'Discontinued Product',
         default=lambda self: self._context.get('discontinued_product_id',
                                                False))
     replacement_product_id = fields.Many2one(
-        'product.template', string='Replacement Product')
+        'product.template', string='Replacement Product for Purchase')
 
     @api.onchange('product_id')
     def get_replacement_product_ids(self):
