@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 02:24+0000\n"
-"PO-Revision-Date: 2015-04-14 02:24+0000\n"
+"POT-Creation-Date: 2015-05-20 18:58+0000\n"
+"PO-Revision-Date: 2015-05-20 18:58+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,27 +17,18 @@ msgstr ""
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "+ 120 DAYS"
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "&bull;"
 msgstr ""
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "01-30 DAYS"
+msgid "(Future Direction)"
 msgstr ""
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "31-60 DAYS"
-msgstr ""
-
-#. module: aging_due_report
-#: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "61-90 DAYS"
-msgstr ""
-
-#. module: aging_due_report
-#: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "91-120 DAYS"
+msgid "(Past Direction)"
 msgstr ""
 
 #. module: aging_due_report
@@ -204,10 +195,20 @@ msgid "DAY(S)"
 msgstr ""
 
 #. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "DAYS"
+msgstr ""
+
+#. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "DOCUMENT"
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "DUE"
 msgstr ""
 
 #. module: aging_due_report
@@ -232,6 +233,11 @@ msgstr ""
 #. module: aging_due_report
 #: selection:account.aging.wizard,type:0
 msgid "Detailed Report"
+msgstr ""
+
+#. module: aging_due_report
+#: field:account.aging.wizard,direction:0
+msgid "Direction"
 msgstr ""
 
 #. module: aging_due_report
@@ -268,9 +274,14 @@ msgid "Emission Date"
 msgstr ""
 
 #. module: aging_due_report
-#: code:addons/aging_due_report/wizard/wizard.py:324
+#: code:addons/aging_due_report/wizard/wizard.py:347
 #, python-format
 msgid "Error!"
+msgstr ""
+
+#. module: aging_due_report
+#: selection:account.aging.wizard,direction:0
+msgid "Future"
 msgstr ""
 
 #. module: aging_due_report
@@ -356,6 +367,12 @@ msgid "PDF"
 msgstr ""
 
 #. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Page:"
+msgstr ""
+
+#. module: aging_due_report
 #: field:account.aging.wizard.document,partner_id:0
 #: field:account.aging.wizard.partner,partner_id:0
 msgid "Partner"
@@ -371,6 +388,11 @@ msgstr ""
 #: field:account.aging.wizard,partner_ids:0
 #: help:account.aging.wizard,partner_ids:0
 msgid "Partners"
+msgstr ""
+
+#. module: aging_due_report
+#: selection:account.aging.wizard,direction:0
+msgid "Past"
 msgstr ""
 
 #. module: aging_due_report
@@ -397,6 +419,12 @@ msgstr ""
 #. module: aging_due_report
 #: view:account.aging.wizard:aging_due_report.view_account_aging_partner_report
 msgid "Print"
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Printed"
 msgstr ""
 
 #. module: aging_due_report
@@ -493,7 +521,7 @@ msgid "Tax"
 msgstr ""
 
 #. module: aging_due_report
-#: code:addons/aging_due_report/wizard/wizard.py:325
+#: code:addons/aging_due_report/wizard/wizard.py:348
 #, python-format
 msgid "There is no default company for the current user!"
 msgstr ""
@@ -553,6 +581,17 @@ msgstr ""
 #: field:account.aging.wizard.currency,span05:0
 #: field:account.aging.wizard.partner,span05:0
 msgid "span05"
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "to"
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "to\n"
+"                                        -"
 msgstr ""
 
 #. module: aging_due_report

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 02:24+0000\n"
-"PO-Revision-Date: 2015-04-14 02:33+0000\n"
+"POT-Creation-Date: 2015-05-20 18:58+0000\n"
+"PO-Revision-Date: 2015-05-20 19:17+0000\n"
 "Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
 "Language-Team: Spanish <http://example.com/projects/addons-"
 "vauxoo/aging_due_report/es_MX/>\n"
@@ -20,28 +20,19 @@ msgstr ""
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "+ 120 DAYS"
-msgstr "+ 120 DÍAS"
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "&bull;"
+msgstr "&bull;"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "01-30 DAYS"
-msgstr "01-30 DÍAS"
+msgid "(Future Direction)"
+msgstr "(Dirección Futuro)"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "31-60 DAYS"
-msgstr "31-60 DÍAS"
-
-#. module: aging_due_report
-#: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "61-90 DAYS"
-msgstr "61-90 DÍAS"
-
-#. module: aging_due_report
-#: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "91-120 DAYS"
-msgstr "91-120 DÍAS"
+msgid "(Past Direction)"
+msgstr "(Dirección Pasado)"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.currency,aaw_id:0
@@ -207,11 +198,21 @@ msgid "DAY(S)"
 msgstr "Día(s)"
 
 #. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "DAYS"
+msgstr "DÍAS"
+
+#. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "DOCUMENT"
 msgstr "DOCUMENTO"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "DUE"
+msgstr "VENCIDO"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
@@ -236,6 +237,11 @@ msgstr "Reporte Detallado de Deudas"
 #: selection:account.aging.wizard,type:0
 msgid "Detailed Report"
 msgstr "Reporte Detallado"
+
+#. module: aging_due_report
+#: field:account.aging.wizard,direction:0
+msgid "Direction"
+msgstr "Dirección"
 
 #. module: aging_due_report
 #: field:account.aging.wizard,document_ids:0
@@ -271,10 +277,15 @@ msgid "Emission Date"
 msgstr "Fecha Emisión"
 
 #. module: aging_due_report
-#: code:addons/aging_due_report/wizard/wizard.py:324
+#: code:addons/aging_due_report/wizard/wizard.py:347
 #, python-format
 msgid "Error!"
 msgstr "Error!"
+
+#. module: aging_due_report
+#: selection:account.aging.wizard,direction:0
+msgid "Future"
+msgstr "Futuro"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
@@ -359,6 +370,12 @@ msgid "PDF"
 msgstr "PDF"
 
 #. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Page:"
+msgstr "Página:"
+
+#. module: aging_due_report
 #: field:account.aging.wizard.document,partner_id:0
 #: field:account.aging.wizard.partner,partner_id:0
 msgid "Partner"
@@ -375,6 +392,11 @@ msgstr "Partner por Moneda"
 #: help:account.aging.wizard,partner_ids:0
 msgid "Partners"
 msgstr "Empresas"
+
+#. module: aging_due_report
+#: selection:account.aging.wizard,direction:0
+msgid "Past"
+msgstr "Pasado"
 
 #. module: aging_due_report
 #: selection:account.aging.wizard,result_selection:0
@@ -401,6 +423,12 @@ msgstr "Lista de Precios"
 #: view:account.aging.wizard:aging_due_report.view_account_aging_partner_report
 msgid "Print"
 msgstr "Imprimir"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Printed"
+msgstr "Impreso"
 
 #. module: aging_due_report
 #: selection:account.aging.wizard,result_selection:0
@@ -496,7 +524,7 @@ msgid "Tax"
 msgstr "Imp"
 
 #. module: aging_due_report
-#: code:addons/aging_due_report/wizard/wizard.py:325
+#: code:addons/aging_due_report/wizard/wizard.py:348
 #, python-format
 msgid "There is no default company for the current user!"
 msgstr "No compañía predeterminada para el usuario actual!"
@@ -557,6 +585,19 @@ msgstr "lapso04"
 #: field:account.aging.wizard.partner,span05:0
 msgid "span05"
 msgstr "lapso05"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "to"
+msgstr "a"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "to\n"
+"                                        -"
+msgstr ""
+"a\n"
+"                                        -"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.partner,aml_ids:0
