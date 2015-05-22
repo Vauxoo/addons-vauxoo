@@ -2,6 +2,19 @@
 <openerp>
     <data>
 
+        <!-- Product Template Form -->
+
+        <record id="product_template_replacement_product_form_view" model="ir.ui.view">
+            <field name="name">product.template.replacement.product.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
         <!-- Product Product Form -->
 
         <record id="product_replacement_product_form_view" model="ir.ui.view">
