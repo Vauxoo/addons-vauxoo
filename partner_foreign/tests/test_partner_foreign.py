@@ -31,6 +31,7 @@ class TestPartnerLocation(TransactionCase):
 
     def get_records(self):
         """
+        get records to test
         """
         self.partner_rec = self.env.ref('base.main_partner')
         self.vauxoo_rec = self.env.ref('base.res_partner_23')
@@ -42,6 +43,7 @@ class TestPartnerLocation(TransactionCase):
         of main partner
         """
         country_ve = self.env.ref('base.ve')
+        self.partner_rec.write({'country_id': country_ve.id})
         self.assertEquals(self.partner_rec.country_id.id, country_ve.id)
         self.assertEquals(self.vauxoo_rec.international, 'national')
         self.assertEquals(self.vicking_rec.international, 'international')

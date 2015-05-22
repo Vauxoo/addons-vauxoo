@@ -25,6 +25,7 @@ class TestTaxCommon(common.TransactionCase):
         self.bank_journal_id = self.ref("account.bank_journal")
         self.bank_journal_usd_id = self.ref("account.bank_journal_usd")
         self.currency_usd_id = self.ref("base.USD")
+        self.currency_eur_id = self.ref("base.EUR")
         self.acc_loss_tax = self.ref("account.income_fx_expense")
         self.acc_gain_tax = self.ref("account.income_fx_income")
         self.company_id = self.ref("base.main_company")
@@ -71,15 +72,17 @@ class TestTaxCommon(common.TransactionCase):
             "account_voucher_tax.account_provision_tax_sale_ova16")
         self.journal_bank_special = self.ref(
             "account_voucher_tax.bank_journal_special")
+        self.journal_bank_special_usd = self.ref(
+            "account_voucher_tax.bank_journal_special_usd")
         # Set in company tax_provision_customer, tax_provision_supplier fields
         self.registry("res.company").write(
             self.cr, self.uid, [self.company_id],
             {'tax_provision_customer': self.provision_tax16_customer,
              'tax_provision_supplier': self.provision_tax16_supplier})
 
-
     def create_statement(self, cr, uid, line_invoice, partner, amount, journal,
-                         date_bank=None, account_id=None):
+                         date_bank=None, account_id=None, currency=None,
+                         amount_currency=0):
         bank_stmt_id = self.acc_bank_stmt_model.create(cr, uid, {
             'journal_id': journal,
             'date': date_bank or time.strftime('%Y')+'-07-01',
@@ -90,7 +93,10 @@ class TestTaxCommon(common.TransactionCase):
             'statement_id': bank_stmt_id,
             'partner_id': partner,
             'amount': amount,
+            'currency_id': currency,
+            'amount_currency': amount_currency,
             'date': date_bank or time.strftime('%Y')+'-07-01'})
+        amount = amount_currency and amount_currency or amount
 
         val = {
             'credit': amount > 0 and amount or 0,
