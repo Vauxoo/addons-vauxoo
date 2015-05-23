@@ -139,6 +139,7 @@ $('.oe_website_sale').each(function () {
                 });
 
                 var new_class = 'label-default';
+                var text = '';
 
                 switch(variant_ids[k][4]){
                     case 1:
