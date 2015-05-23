@@ -32,7 +32,7 @@ All modules must start with the name of meta functional area which they will wor
 Repositories which we depend from.
 ---
 
-Read the repo_dependencies.txt file for more information.
+Read the repo_dependencies.txt file for more information. TODO:
 
 Python Libraries which we depend from.
 ---
