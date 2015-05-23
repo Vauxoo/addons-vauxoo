@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -151,5 +151,43 @@ class purchase_order_line(osv.osv):
             # store={
             #     'account.invoice': (_get_ids_from_invoice, ['state'], 15),
             # },
+
+    def _get_quantity(self, cr, uid, ids, field_names=None, arg=False,
+                      context=None):
+        """ Finds quantity of product that has been delivered or invoiced.
+        @return: Dictionary of values
+        """
+        field_names = field_names or []
+        context = dict(context or {})
+        res = {}
+        for idx in ids:
+            res[idx] = {}.fromkeys(field_names, 0.0)
+        for fn in field_names:
+            if fn == 'qty_delivered':
+                for idx in ids:
+                    res[idx][fn] = self._get_move_quantity(cr, uid, idx,
+                                                           context=context)
+            if fn == 'qty_invoiced':
+                for idx in ids:
+                    res[idx][fn] = self._get_inv_quantity(cr, uid, idx,
+                                                          context=context)
+
+        return res
+
+    _inherit = 'purchase.order.line'
+    _columns = {
+        'qty_delivered': fields.function(
+            _get_quantity,
+            multi='qty',
+            type='float',
+            digits_compute=dp.get_precision('Product Unit of Measure'),
+            string='Quantity Delivered',
+            help="Quantity Delivered"),
+        'qty_invoiced': fields.function(
+            _get_quantity,
+            multi='qty',
+            type='float',
+            digits_compute=dp.get_precision('Product Unit of Measure'),
+            string='Quantity Invoiced',
             help="Quantity Invoiced"),
     }
