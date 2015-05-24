@@ -86,18 +86,6 @@ class purchase_order_line(osv.osv):
 
         return res
 
-    def _get_qty_delivered(self, cr, uid, ids, field_names=None, arg=False,
-                           context=None):
-        """ Finds quantity of product that has been delivered.
-        @return: Dictionary of values
-        """
-        context = dict(context or {})
-        res = {}.fromkeys(ids, 0.0)
-        for idx in ids:
-            res[idx] = self._get_move_quantity(cr, uid, idx, context=context)
-
-        return res
-
     # def _get_ids_from_stock(self, cr, uid, ids, context=None):
     #     res = set([])
     #     sm_obj = self.pool.get('stock.move')
@@ -106,17 +94,6 @@ class purchase_order_line(osv.osv):
     #             continue
     #         res.add(sm_brw.purchase_line_id.id)
     #     return list(res)
-
-    def _get_qty_invoiced(self, cr, uid, ids, field_names=None, arg=False,
-                          context=None):
-        """ Finds quantity of product that has been invoiced.
-        @return: Dictionary of values
-        """
-        context = dict(context or {})
-        res = {}.fromkeys(ids, 0.0)
-        for idx in ids:
-            res[idx] = self._get_inv_quantity(cr, uid, idx, context=context)
-        return res
 
     # def _get_ids_from_invoice(self, cr, uid, ids, context=None):
     #     res = set([])
@@ -131,26 +108,6 @@ class purchase_order_line(osv.osv):
     #                 continue
     #             res.add(ail_brw.purchase_line_id.id)
     #     return list(res)
-
-    _inherit = 'purchase.order.line'
-    _columns = {
-        'qty_delivered': fields.function(
-            _get_qty_delivered,
-            type='float',
-            digits_compute=dp.get_precision('Product Unit of Measure'),
-            string='Quantity Delivered',
-            # store={
-            #     'stock.move': (_get_ids_from_stock, ['state'], 15),
-            # },
-            help="Quantity Delivered"),
-        'qty_invoiced': fields.function(
-            _get_qty_invoiced,
-            type='float',
-            digits_compute=dp.get_precision('Product Unit of Measure'),
-            string='Quantity Invoiced',
-            # store={
-            #     'account.invoice': (_get_ids_from_invoice, ['state'], 15),
-            # },
 
     def _get_quantity(self, cr, uid, ids, field_names=None, arg=False,
                       context=None):
