@@ -44,12 +44,12 @@ A Supplier's Formal Due Report,
     "data": [
         "data/aging_due_report_paper_format.xml",
         "data/aging_due_report_style.xml",
+        "report/aging_due_report_qweb.xml",
+        "report/detail_due_report_qweb.xml",
+        "report/customer_formal_due_report_qweb.xml",
+        "report/supplier_formal_due_report_qweb.xml",
         "views/wizard.xml",
-        "views/aging_due_report_qweb.xml",
-        "views/detail_due_report_qweb.xml",
-        "views/customer_formal_due_report_qweb.xml",
-        "views/supplier_formal_due_report_qweb.xml",
-        "views/aging_due_report.xml"
+        "views/report.xml"
     ],
     "test": [],
     "js": [],
