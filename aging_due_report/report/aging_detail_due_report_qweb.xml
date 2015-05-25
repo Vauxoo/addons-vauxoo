@@ -66,37 +66,36 @@
 					            <tr style="border-top: 1px solid #000000;">
 					                <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(p_obj.partner_id.vat and p_obj.partner_id.vat[2:] or '').upper()"/></td>
 					                <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="p_obj.partner_id.name or ''"/> (<span t-esc=" p_obj.currency_id.name or '' "/>)</td>
-					                <td colspan="1" class="ITEMSLEFT ITEMBOLD" style="background-color:
-					                lightgrey;"><span t-esc="p_obj.partner_id.ref or ''"/><span t-esc="p_obj.partner_id.user_id.name or '' "/></td>
-                                <td colspan="3" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;">Amounts expressed in (<span t-esc="p_obj.currency_id and p_obj.currency_id.name or 'N/A'"/>)</td>
+					                <td colspan="1" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="p_obj.partner_id.ref or ''"/><span t-esc="p_obj.partner_id.user_id.name or '' "/></td>
+                                    <td colspan="9" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;">Amounts expressed in (<span t-esc="p_obj.currency_id and p_obj.currency_id.name or 'N/A'"/>)</td>
 					            </tr>
 					            <tr>
-					                <th width="14%" class="ITEMSTITLELEFT">DOCUMENT</th>
-					                <th width="8%" class="ITEMSTITLELEFT">EMIS DATE</th>
-					                <th width="8%" class="ITEMSTITLELEFT">DUE DATE</th>
-					                <th width="7%" class="ITEMSTITLELEFT">DUE DAYS</th>
-					                <th width="7%" class="ITEMSTITLERIGHT">BASE</th>
-					                <th width="7%" class="ITEMSTITLERIGHT">TAX</th>
-					                <th width="7%" class="ITEMSTITLERIGHT">TOT/INV.</th>
-                                    <th width="7%" class="ITEMSTITLERIGHT">
+					                <th width="12.5%" class="ITEMSTITLELEFT">DOCUMENT</th>
+					                <th width="6.25%" class="ITEMSTITLELEFT">EMIS DATE</th>
+					                <th width="6.25%" class="ITEMSTITLELEFT">DUE DATE</th>
+					                <th width="6.25%" class="ITEMSTITLELEFT">DUE DAYS</th>
+					                <th width="6.25%" class="ITEMSTITLERIGHT">BASE</th>
+					                <th width="6.25%" class="ITEMSTITLERIGHT">TAX</th>
+					                <th width="6.25%" class="ITEMSTITLERIGHT">TOT/INV.</th>
+                                    <th width="6.25%" class="ITEMSTITLERIGHT">
                                         <t t-if="o.result_selection =='customer'">COLLECTS</t>
                                         <t t-if="o.result_selection =='supplier'">PAYMENTS</t>
                                     </th>
-					                <th width="7%" class="ITEMSTITLERIGHT">BALANCE</th>
-                                    <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
-                                    <th width="10%" class="ITEMSTITLERIGHT">
+					                <th width="6.25%" class="ITEMSTITLERIGHT">BALANCE</th>
+                                    <th width="6.25%" class="ITEMSTITLERIGHT">NOT DUE</th>
+                                    <th width="6.25%" class="ITEMSTITLERIGHT">
                                         <span t-esc='o.period_length * 0 + 1'/> to <span t-esc='o.period_length * 1'/> DAYS
                                     </th>
-                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                    <th width="6.25%" class="ITEMSTITLERIGHT">
                                         <span t-esc='o.period_length * 1 + 1'/> to <span t-esc='o.period_length * 2'/> DAYS
                                     </th>
-                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                    <th width="6.25%" class="ITEMSTITLERIGHT">
                                         <span t-esc='o.period_length * 2 + 1'/> to <span t-esc='o.period_length * 3'/> DAYS
                                     </th>
-                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                    <th width="6.25%" class="ITEMSTITLERIGHT">
                                         <span t-esc='o.period_length * 3 + 1'/> to <span t-esc='o.period_length * 4'/> DAYS
                                     </th>
-                                    <th width="10%" class="ITEMSTITLERIGHT">
+                                    <th width="6.25%" class="ITEMSTITLERIGHT">
                                         +<span t-esc='o.period_length * 4 + 1'/> DAYS
                                     </th>
 					            </tr>
@@ -148,6 +147,7 @@
 				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.total)"/></td>
 				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.payment)"/></td>
 				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.residual)"/></td>
+				                    <td colspan="6" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"></td>
 					            </tr>
 					            <tr>
 					            	<td colspan="9" style="height: 8px;"></td>
@@ -159,6 +159,7 @@
 					            <tr>
 					                <td colspan="7" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;">TOTAL IN <span t-esc="c_obj.currency_id.name"/></td>
 					                <td colspan="2" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"><span t-esc="formatLang(c_obj.residual)"/></td>
+					                <td colspan="6" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"></td>
 					            </tr>
 			            	</t>
                     	</tbody>
