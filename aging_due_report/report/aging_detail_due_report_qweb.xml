@@ -12,10 +12,10 @@
                             <li>
                                 <span style="font-style:italic;">
                                     <t t-if="o.result_selection =='customer'">
-                                        <strong>Customer Detailed Report of Debts</strong>
+                                        <strong>Customer Detailed Aging Report of Debts</strong>
                                     </t>
                                     <t t-if="o.result_selection =='supplier'">
-                                        <strong>Supplier Detailed Report of Debts</strong>
+                                        <strong>Supplier Detailed Aging Report of Debts</strong>
                                     </t>
                                 </span>
                             </li>
@@ -51,10 +51,10 @@
                             </td>
                             <td style="text-align: left;">
                                 <t t-if="o.result_selection =='customer'">
-                                    <strong>Customer Detailed Report of Debts</strong>
+                                    <strong>Customer Detailed Aging Report of Debts</strong>
                                 </t>
                                 <t t-if="o.result_selection =='supplier'">
-                                    <strong>Supplier Detailed Report of Debts</strong>
+                                    <strong>Supplier Detailed Aging Report of Debts</strong>
                                 </t>
                             </td>
                             <td class="CUSTOMERNAME" style="text-align:right;"><span t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/></td>
