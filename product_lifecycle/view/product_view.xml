@@ -15,7 +15,7 @@
                 <xpath expr="//field[@name='product_manager']" position="after">
                     <field name="product_variant_ids" nolabel="1" colspan="2" attrs="{'invisible': [('is_product_variant', '=', True)]}">
                         <tree create="false" edit="false" delete="false">
-                            <field name="default_code" string="Variant"/>
+                            <field name="display_name" string="Product Variant"/>
                             <field name="state2"/>
                         </tree>
                     </field>
