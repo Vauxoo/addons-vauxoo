@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class ProductProduct(models.Model):
@@ -40,3 +40,13 @@ class ProductProduct(models.Model):
         ('sellable', 'Normal'),
         ('end', 'End of Lifecycle'),
         ('obsolete', 'Obsolete')], default='draft', string='State')
+
+    @api.multi
+    def get_good_replacements(self):
+        """
+        return the replacemets that are not obsolete and active.
+        """
+        replacements = [
+            product.id for product in self.replacement_product_ids
+            if product.state2 not in ['obsolete'] and product.active]
+        return replacements

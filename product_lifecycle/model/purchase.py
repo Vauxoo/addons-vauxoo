@@ -48,8 +48,6 @@ class PurchaseOrder(models.Model):
                     product = self.env['product.product'].browse(product_id)
                     if product.state2 == 'obsolete':
                         obsolete.append((sequence, product))
-                    # TODO if neccesary to check is the replacement_product_id
-                    # is empty and the discontinued check is False?
         if obsolete:
             obsolete.sort()
             obsolete_msg = str()
@@ -67,11 +65,13 @@ class PurchaseOrderLine(models.Model):
 
     _inherit = 'purchase.order.line'
 
-    replacement_product_id = fields.Many2one(
-        'product.product', string='Replacement',
-        help='When the Product you select is a discontinued Product will'
-             ' enable this field so you can choose the replacement you want')
-    discontinued = fields.Boolean('Discontinued')
+    discontinued_product_id = fields.Many2one(
+        'product.product', string='Discotinued Product',
+        domain=[('state2', 'in', ['obsolete'])],
+        help='When introduce a discontinued product to the product field in'
+             ' the purchase order line then will raise a warning and will auto'
+             ' fill this field with the discontiued product and clean the'
+             ' product field so you can add the replacement product')
 
     @api.v7
     def onchange_product_id(
@@ -81,6 +81,8 @@ class PurchaseOrderLine(models.Model):
             context=None):
         """
         Raise a exception is you select discontinued product.
+        Auto fill the discontinued_product_id field with the value given in
+        product.
         """
         context = context or {}
         product_obj = self.pool.get('product.product')
@@ -89,16 +91,12 @@ class PurchaseOrderLine(models.Model):
             partner_id, date_order=date_order,
             fiscal_position_id=fiscal_position_id, date_planned=date_planned,
             name=name, price_unit=price_unit, state=state, context=context)
-        res.get('domain', dict()).update({
-            'replacement_product_id': [('id', 'in', [])]})
-        res.get('value').update({'discontinued': False})
+        res.get('domain', dict()).update({'product_id': []})
 
         if product:
             product_brw = product_obj.browse(cr, uid, product, context=context)
             if product_brw.state2 in ['obsolete']:
-                replacements = [
-                    item.id for item in product_brw.replacement_product_ids
-                    if item.state2 not in ['obsolete'] and item.active]
+                replacements = product_brw.get_good_replacements()
                 msg = (product_brw.display_name + " " +
                        _('is a discontinued product.') + '\n')
                 if replacements:
@@ -110,15 +108,21 @@ class PurchaseOrderLine(models.Model):
                         ' or define a replacement product in the product form'
                         ' view.'))
                 res.update({'warning': {'title': 'Error!', 'message': msg}})
-                res.get('domain').update({
-                    'replacement_product_id': [('id', 'in', replacements)]})
-                res.get('value').update({'discontinued': True})
+                res.get('value').update({
+                    'discontinued_product_id': product})
         return res
 
-    @api.onchange('replacement_product_id')
-    def onchange_replacement_product_id(self):
+    @api.onchange('discontinued_product_id')
+    def onchange_discontinued_product_id(self):
         """
-        Write the replacement product over the product field.
+        - clean the product_id field.
+        - add a domain to the product_id field to show only the replacements
+        for the current discontinued product.
         """
-        self.product_id = self.replacement_product_id
-        self.replacement_product_id = False
+        res = {'domain': {'product_id': []}}
+        if self.discontinued_product_id:
+            self.product_id = False
+            replacements = self.discontinued_product_id.get_good_replacements()
+            res.get('domain').update({
+                'product_id': [('id', 'in', replacements)]})
+        return res

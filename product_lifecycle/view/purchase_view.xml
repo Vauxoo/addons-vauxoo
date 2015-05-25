@@ -8,8 +8,10 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="after">
-                    <field name="discontinued" invisible="True"/>
-                    <field name="replacement_product_id" attrs="{'required': [('discontinued', '=', True)]}" options="{'no_create': True}"/>
+                    <field name="discontinued_product_id"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'required': [('discontinued_product_id', '!=', False)]}</attribute>
                 </xpath>
             </field>
         </record>
@@ -20,8 +22,7 @@
             <field name="inherit_id" ref="purchase.purchase_order_line_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='product_id']" position="after">
-                    <field name="discontinued" invisible="True"/>
-                    <field name="replacement_product_id" attrs="{'invisible': [('discontinued', '=', False)], 'required': [('discontinued', '=', True)]}" options="{'no_create': True}"/>
+                    <field name="discontinued_product_id"/>
                 </xpath>
             </field>
         </record>
