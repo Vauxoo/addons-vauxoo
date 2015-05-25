@@ -47,6 +47,13 @@ class aging_parser_qweb_pdf_report(osv.AbstractModel):
     _wrapped_report_class = aging_parser
 
 
+class aging_detail_parser_qweb_pdf_report(osv.AbstractModel):
+    _name = 'report.aging_due_report.aging_detail_due_report_qweb'
+    _inherit = 'report.abstract_report'
+    _template = 'aging_due_report.aging_detail_due_report_qweb'
+    _wrapped_report_class = aging_parser
+
+
 class formal_parser_qweb_pdf_report(osv.AbstractModel):
     _name = 'report.aging_due_report.formal_due_report_qweb'
     _inherit = 'report.abstract_report'

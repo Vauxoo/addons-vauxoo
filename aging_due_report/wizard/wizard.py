@@ -364,7 +364,8 @@ class account_aging_partner_wizard(osv.osv_memory):
             required=True),
         'type': fields.selection(
             [('aging', 'Aging Report'),
-             ('detail', 'Detailed Report'), ],
+             ('detail', 'Detailed Report'),
+             ('aging_detail', 'Aging Detailed Report'), ],
             # ('formal', 'Formal Report')],
             "Type",
             required=True),
@@ -727,6 +728,8 @@ class account_aging_partner_wizard(osv.osv_memory):
         name = 'aging_due_report.aging_due_report_qweb'
         if wzd_brw.type == 'aging':
             name = 'aging_due_report.aging_due_report_qweb'
+        if wzd_brw.type == 'aging_detail':
+            name = 'aging_due_report.aging_detail_due_report_qweb'
         if wzd_brw.type == 'detail':
             name = 'aging_due_report.detail_due_report_qweb'
         if wzd_brw.result_selection == 'customer':
