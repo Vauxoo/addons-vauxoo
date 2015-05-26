@@ -525,9 +525,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                     payment = (sel == 'customer' and aml_brw.credit or
                                sel == 'supplier' and aml_brw.debit or 0.0)
                 if not reconcile_id:
-                    date_due = False
-                    if aml_brw.journal_id.type in ('sale', 'purchase'):
-                        date_due = aml_brw.date_maturity or aml_brw.date
+                    date_due = aml_brw.date_maturity or aml_brw.date
                     res.append({
                         'partner_id': aml_brw.partner_id.id,
                         'aml_id': aml_brw.id,
