@@ -23,9 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp import netsvc
 from openerp.osv import fields, osv
-
+from openerp import workflow
 
 class hr_payslip(osv.osv):
     _inherit = 'hr.payslip'
@@ -49,9 +48,10 @@ class hr_payslip(osv.osv):
             result[payslip.id] = lines
         return result
 
+
     def _reconciled(self, cr, uid, ids, name, args, context=None):
         res = {}
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for pay in self.browse(cr, uid, ids, context=context):
             res[pay.id] = self.test_paid(cr, uid, [pay.id])
             if not res[pay.id] and pay.state == 'paid':
