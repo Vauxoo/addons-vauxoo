@@ -90,7 +90,8 @@ the fiscal experct adviced us it is right on that way.
     "test": [
         "test/account_voucher_taxes.yml",
         "test/account_voucher_tax_write_off.yml",
-        "test/account_voucher_tax_currency_diff.yml"
+        "test/account_voucher_tax_currency_diff.yml",
+        "test/account_voucher_tax_round_off.yml"
     ],
     "js": [],
     "css": [],
