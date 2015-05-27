@@ -220,15 +220,14 @@ class account_bank_statement_line(osv.osv):
                 account_tax_collected =\
                     move_line_tax.get('account_tax_collected')
                 amount_total_tax = move_line_tax.get('amount', 0)
+
+                # When payment is complete take the amount_residual
+                # of aml of tax to avoid mistakes by rounding
                 amount_residual = self._get_move_line_tax_counterpart(
                     cr, uid, id, move_line_tax, move_amount_counterpart[0],
                     move_amount_counterpart[2], context=context) or\
                     amount_total_tax * abs(factor)
-                print amount_residual,"amount_residual"
-                print amount_total_tax,"amount_total_tax"
-                print self._get_move_line_tax_counterpart(
-                    cr, uid, id, move_line_tax, move_amount_counterpart[0],
-                    move_amount_counterpart[2], context=context)
+
                 lines_tax = voucher_obj._preparate_move_line_tax(
                     cr, uid,
                     account_tax_voucher,  # cuenta del impuesto(account.tax)
@@ -254,13 +253,12 @@ class account_bank_statement_line(osv.osv):
                     # move_line_tax_dict para enviar solo las aml que se van a
                     # conciliar por impuesto
                     move_line_rec.append(move_tax)
-                print move_line_rec,"move_line_rec"
+
                 move_rec_exch = self._get_exchange_reconcile(
                     cr, uid, move_line_tax, move_line_rec,
                     move_amount_counterpart[0], move_amount_counterpart[2],
                     parent, company_currency,
                     statement_currency, context=context)
-                print move_rec_exch,"move_rec_exch"
 
                 move_line_ids.extend(move_rec_exch[0])
                 move_reconcile_id.append(move_rec_exch[1])
@@ -286,12 +284,10 @@ class account_bank_statement_line(osv.osv):
         for move in aml_obj.browse(
                 cr, uid, mvs_tax.get('move_line_reconcile', []),
                 context=context):
+            # This condition is to avoid reconciled taxes of retention
             if mvs_tax.get('amount_residual_tax', True):
                 factor_type = context.get('factor_type', [1, -1])
                 factor = move.debit > 0 and factor_type[0] or factor_type[1]
-                print context,"context"
-                print factor,"factorfactorfactorfactorfactorfactorfactorfactorfactorfactorfactorfactorfactor"
-                print move.amount_residual_currency,"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
                 amount_residual += move.amount_residual_currency*factor
         return amount_residual
 

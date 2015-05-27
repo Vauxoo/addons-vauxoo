@@ -166,7 +166,12 @@ class account_voucher(osv.Model):
                     move_line_rec = []
 
                     context['date'] = voucher.date
-                    reference_amount = amount_total_tax * abs(factor)
+
+                    reference_amount =\
+                        bank_statement_line_obj._get_move_line_tax_counterpart(
+                            cr, uid, id, move_line_tax_dict, line.amount,
+                            line.amount_unreconciled, context=context) or\
+                        amount_total_tax * abs(factor)
 
                     statement_currency_line = False
                     if current_currency != line.currency_id.id:
