@@ -188,7 +188,7 @@ class account_voucher(osv.Model):
                         cr, uid, account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
                         voucher.period_id.id, voucher.journal_id.id,
-                        voucher.date, company_currency, reference_amount,
+                        voucher.date, company_currency,
                         reference_amount, current_currency, False,
                         move_line_tax_dict.get('tax_id'),
                         move_line_tax_dict.get('tax_analytic_id'),
@@ -301,7 +301,7 @@ class account_voucher(osv.Model):
     def _preparate_move_line_tax(self, cr, uid, src_account_id,
                                  dest_account_id, move_id, type, partner,
                                  period, journal, date, company_currency,
-                                 reference_amount, amount_tax_unround,
+                                 reference_amount,
                                  reference_currency_id, tax_id,
                                  line_tax, acc_a,
                                  # informacion de lineas de impuestos
@@ -334,10 +334,8 @@ class account_voucher(osv.Model):
             'period_id': period,
             'move_id': move_id and int(move_id) or None,
             'tax_id': tax_id,
-            'is_tax_voucher': True,
             'analytic_account_id': acc_a,
             'date': date,
-            'tax_voucher_id': tax_id,
         }
         credit_line_vals = {
             'name': line_tax.name,
@@ -349,12 +347,9 @@ class account_voucher(osv.Model):
             'journal_id': journal,
             'period_id': period,
             'move_id': move_id and int(move_id) or None,
-            'amount_tax_unround': amount_tax_unround,
             'tax_id': tax_id,
-            'is_tax_voucher': True,
             'analytic_account_id': acc_a,
             'date': date,
-            'tax_voucher_id': tax_id,
         }
 
         if context.get('amount_voucher') and context.get('amount_voucher') < 0:
@@ -379,13 +374,6 @@ class account_voucher(osv.Model):
                 debit_line_vals.pop('analytic_account_id')
             else:
                 credit_line_vals.pop('analytic_account_id')
-
-        if not amount_tax_unround:
-            credit_line_vals.pop('amount_tax_unround')
-            credit_line_vals.pop('tax_id')
-            debit_line_vals.pop('tax_id')
-            credit_line_vals.pop('is_tax_voucher')
-            debit_line_vals.pop('is_tax_voucher')
 
         account_obj = self.pool.get('account.account')
         cur_obj = self.pool.get('res.currency')
@@ -503,7 +491,6 @@ class account_voucher(osv.Model):
                             credit_amount = float('%.*f' % (2, (
                                 base_amount * factor)))
                             credit_amount_original = (base_amount * factor)
-                            amount_unround = float(base_amount * factor)
                             base_amount_curr = base_amount
                             move_line_id = tax.get('move_line_reconcile')
                             list_tax.append([
@@ -511,7 +498,6 @@ class account_voucher(osv.Model):
                                     'tax_id': tax_br.id,
                                     'account_id': account,
                                     'amount_tax': credit_amount_original,
-                                    'amount_tax_unround': amount_unround,
                                     'tax': credit_amount,
                                     'original_tax': base_amount_curr,
                                     'move_line_id': move_line_id[0],
@@ -578,7 +564,6 @@ class account_voucher_line(osv.Model):
                     credit_amount = float('%.*f' % (2, (
                         base_amount * factor)))
                     credit_amount_original = (base_amount * factor)
-                    amount_unround = float(base_amount * factor)
                     base_amount_curr = base_amount
                     move_line_id = tax.get('move_line_reconcile')
                     list_tax.append([
@@ -586,7 +571,6 @@ class account_voucher_line(osv.Model):
                             'tax_id': tax_br.id,
                             'account_id': account,
                             'amount_tax': credit_amount_original,
-                            'amount_tax_unround': amount_unround,
                             'tax': credit_amount,
                             'original_tax': base_amount_curr,
                             'move_line_id': move_line_id[0],
@@ -610,12 +594,7 @@ class account_move_line(osv.Model):
     _inherit = 'account.move.line'
 
     _columns = {
-        'amount_tax_unround': fields.float(
-            'Amount tax undound', digits=(12, 16)),
         'tax_id': fields.many2one('account.voucher.line.tax', 'Tax'),
-        'tax_voucher_id': fields.many2one(
-            'account.voucher.line.tax', 'Tax Voucher'),
-        'is_tax_voucher': fields.boolean('Tax voucher')
     }
 
 
@@ -637,7 +616,7 @@ class account_voucher_line_tax(osv.Model):
 
     def onchange_amount_tax(self, cr, uid, ids, amount, tax):
         res = {}
-        res['value'] = {'amount_tax': amount, 'amount_tax_unround': amount,
+        res['value'] = {'amount_tax': amount,
                         'diff_amount_tax': abs(tax - amount)}
         return res
 
@@ -645,7 +624,6 @@ class account_voucher_line_tax(osv.Model):
         'tax_id': fields.many2one('account.tax', 'Tax'),
         'account_id': fields.many2one('account.account', 'Account'),
         'amount_tax': fields.float('Amount Tax', digits=(12, 16)),
-        'amount_tax_unround': fields.float('Amount tax undound'),
         'original_tax': fields.float('Original Import Tax'),
         'tax': fields.float('Tax'),
         'balance_tax': fields.function(

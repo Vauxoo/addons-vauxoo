@@ -10,7 +10,6 @@
                     <field name="tax_id"/>
                     <field name="account_id"/>
                     <field name="amount_tax" on_change="onchange_amount_tax(amount_tax, tax)"/>
-                    <field name="amount_tax_unround" invisible="1" />
                     <field name="tax" invisible="1" />
                     <field name="original_tax"/>
                     <field name="balance_tax"/>
@@ -28,7 +27,6 @@
                     <field name="tax_id"/>
                     <field name="account_id"/>
                     <field name="amount_tax" on_change="onchange_amount_tax(amount_tax, tax)"/>
-                    <field name="amount_tax_unround" invisible="1" />
                     <field name="tax" invisible="1" />
                     <field name="original_tax"/>
                     <field name="balance_tax"/>

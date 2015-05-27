@@ -235,7 +235,6 @@ class account_bank_statement_line(osv.osv):
                     move_id, type_payment, partner_id, period_id, journal_id,
                     date_st, company_currency,
                     amount_residual,  # Monto del impuesto por el factor(cuanto le corresponde)(aml) o el resto por pagar de impuestos
-                    amount_residual,  # Monto del impuesto por el factor(cuanto le corresponde)(aml) o el resto por pagar de impuestos
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
                     move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
