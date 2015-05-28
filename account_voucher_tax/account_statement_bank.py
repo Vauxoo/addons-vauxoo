@@ -127,16 +127,16 @@ class account_bank_statement_line(osv.osv):
 
         move_line_obj = self.pool.get('account.move.line')
         move_obj = self.pool.get('account.move')
-        voucher_obj = self.pool.get('account.voucher')
-
-        move_line_ids = []
-        move_reconcile_id = []
 
         st_line = self.browse(cr, uid, id, context=context)
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
+        statement_currency_line = st_line.currency_id.id or False
+        st_line_currency_rate = st_line.currency_id and\
+            (st_line.amount_currency / st_line.amount) or False
 
         context['date'] = st_line.date
+        context['st_line_currency_rate'] = st_line_currency_rate
 
         vals_move = {
             'date': time.strftime('%Y-%m-%d'),
@@ -153,8 +153,47 @@ class account_bank_statement_line(osv.osv):
         self._check_moves_to_concile(
             cr, uid, id, mv_line_dicts, context=context)
 
-        prec = self.pool.get('decimal.precision').precision_get(
-            cr, uid, 'Account')
+        move_line_rec_ids = self.create_move_line_tax_payment(
+            cr, uid, mv_line_dicts, st_line.partner_id.id,
+            st_line.statement_id.period_id.id,
+            st_line.statement_id.journal_id.id,
+            st_line.date, type, st_line.statement_id, company_currency,
+            statement_currency, move_id=move_id_old,
+            statement_currency_line=statement_currency_line, context=context)
+
+        res = super(account_bank_statement_line, self).process_reconciliation(
+            cr, uid, id, mv_line_dicts, context=context)
+
+        move_line_obj.write(cr, uid, move_line_rec_ids[0],
+                            {'move_id': st_line.journal_entry_id.id,
+                             'statement_id': st_line.statement_id.id})
+
+        for rec_ids in move_line_rec_ids[1]:
+            if len(rec_ids) >= 2:
+                move_line_obj.reconcile_partial(cr, uid, rec_ids)
+
+        update_ok = st_line.journal_id.update_posted
+        if not update_ok:
+            st_line.journal_id.write({'update_posted': True})
+        move_obj.button_cancel(cr, uid, [move_id_old])
+        st_line.journal_id.write({'update_posted': update_ok})
+        move_obj.unlink(cr, uid, move_id_old)
+        return res
+
+    def create_move_line_tax_payment(
+        self, cr, uid, mv_line_dicts, partner_id, period_id, journal_id,
+            date_st, type_payment, parent, company_currency,
+            statement_currency, move_id=None, statement_currency_line=None,
+            context=None):
+
+        if context is None:
+            context = {}
+
+        move_line_obj = self.pool.get('account.move.line')
+        voucher_obj = self.pool.get('account.voucher')
+
+        move_line_ids = []
+        move_reconcile_id = []
 
         for move_line_dict in mv_line_dicts:
             move_amount_counterpart = self._get_move_line_counterpart(
@@ -182,30 +221,20 @@ class account_bank_statement_line(osv.osv):
                     move_line_tax.get('account_tax_collected')
                 amount_total_tax = move_line_tax.get('amount', 0)
 
-                if float_compare(move_amount_counterpart[0],
-                                 move_amount_counterpart[2],
-                                 precision_digits=prec) == 0:
-                    amount_residual = self._get_move_line_tax_counterpart(
-                        cr, uid, id, move_line_tax.get(
-                            'move_line_reconcile', []), context=context)
-                else:
-                    amount_residual = amount_total_tax * abs(factor)
                 lines_tax = voucher_obj._preparate_move_line_tax(
                     cr, uid,
                     account_tax_voucher,  # cuenta del impuesto(account.tax)
                     account_tax_collected,  # cuenta del impuesto para notas de credito/debito(account.tax)
-                    move_id_old, type,
-                    st_line.partner_id.id,
-                    st_line.statement_id.period_id.id,
-                    st_line.statement_id.journal_id.id,
-                    st_line.date, company_currency,
-                    amount_residual,  # Monto del impuesto por el factor(cuanto le corresponde)(aml) o el resto por pagar de impuestos
-                    amount_residual,  # Monto del impuesto por el factor(cuanto le corresponde)(aml) o el resto por pagar de impuestos
+                    move_id, type_payment, partner_id, period_id, journal_id,
+                    date_st, company_currency,
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
                     move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
                     amount_base_secondary,  # Monto base(aml)
-                    factor, context=context)
+                    factor, statement_currency_line=statement_currency_line,
+                    context=context)
                 for move_line_dict_tax in lines_tax:
                     move_tax = move_line_obj.create(
                         cr, uid, move_line_dict_tax, context=context
@@ -221,38 +250,13 @@ class account_bank_statement_line(osv.osv):
                 move_rec_exch = self._get_exchange_reconcile(
                     cr, uid, move_line_tax, move_line_rec,
                     move_amount_counterpart[0], move_amount_counterpart[2],
-                    st_line.statement_id, company_currency,
+                    parent, company_currency,
                     statement_currency, context=context)
 
                 move_line_ids.extend(move_rec_exch[0])
                 move_reconcile_id.append(move_rec_exch[1])
 
-        res = super(account_bank_statement_line, self).process_reconciliation(
-            cr, uid, id, mv_line_dicts, context=context)
-
-        move_line_obj.write(cr, uid, move_line_ids,
-                            {'move_id': st_line.journal_entry_id.id,
-                             'statement_id': st_line.statement_id.id})
-
-        for rec_ids in move_reconcile_id:
-            if len(rec_ids) >= 2:
-                move_line_obj.reconcile_partial(cr, uid, rec_ids)
-
-        update_ok = st_line.journal_id.update_posted
-        if not update_ok:
-            st_line.journal_id.write({'update_posted': True})
-        move_obj.button_cancel(cr, uid, [move_id_old])
-        st_line.journal_id.write({'update_posted': update_ok})
-        move_obj.unlink(cr, uid, move_id_old)
-        return res
-
-    def _get_move_line_tax_counterpart(
-            self, cr, uid, ids, mvs_tax, context=None):
-        aml_obj = self.pool.get('account.move.line')
-        amount_residual = 0
-        for move in aml_obj.browse(cr, uid, mvs_tax, context=context):
-            amount_residual += move.amount_residual
-        return amount_residual
+        return [move_line_ids, move_reconcile_id]
 
     def _check_moves_to_concile(
             self, cr, uid, id, mv_line_dicts, context=None):
@@ -345,7 +349,7 @@ class account_bank_statement_line(osv.osv):
         move_counterpart = move_line_tax.get('move_line_reconcile', None)
         rec_ids = []
 
-        if not move_counterpart[0]:
+        if not (move_counterpart and move_counterpart[0]):
             return [[], rec_ids]
 
         move_line_counterpart = move_line_obj.browse(
@@ -366,9 +370,10 @@ class account_bank_statement_line(osv.osv):
         amount_tax_payment = abs(
             move_line_payment_tax.debit - move_line_payment_tax.credit)
 
-        amount_residual = amount_tax_counterpart-abs(amount_tax_payment)
+        factor = move_line_payment_tax.debit > 0 and -1 or 1
 
-        factor = context.get('factor_type', [1, 1])
+        amount_residual = amount_tax_counterpart-amount_tax_payment
+
         prec = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
 
@@ -380,7 +385,7 @@ class account_bank_statement_line(osv.osv):
                          precision_digits=prec):
             amount_residual = 0.0
         else:
-            amount_residual = amount_residual*factor[0]
+            amount_residual = amount_residual*factor
 
         # Si el amount_residual no es igual a cero y la aml tiene
         # moneda secundaria se crea las aml de diferencial
@@ -411,16 +416,19 @@ class account_bank_statement_line(osv.osv):
         return True
 
     def _get_move_line_counterpart(
-            self, cr, uid, mv_line_dicts, company_currency, statement_currency,
-            context=None):
+            self, cr, uid, mv_line_dicts, company_currency=None,
+            statement_currency=None, context=None):
 
         move_line_obj = self.pool.get('account.move.line')
-        currency_obj = self.pool.get('res.currency')
 
         counterpart_unreconcile = 0
         counterpart_amount = 0
         statement_amount = 0
         for move_line_dict in mv_line_dicts:
+
+            statement_amount += move_line_dict.get('credit', 0) > 0 and\
+                move_line_dict.get('credit', 0) or\
+                move_line_dict.get('debit', 0)
 
             if move_line_dict.get('counterpart_move_line_id'):
                 move_counterpart_id =\
@@ -432,22 +440,19 @@ class account_bank_statement_line(osv.osv):
                 if move_line_id.journal_id.type not in (
                         'sale_refund', 'purchase_refund'):
 
-                    statement_amount += move_line_dict.get('credit') > 0 and\
-                        move_line_dict.get('credit') or\
-                        move_line_dict.get('debit')
-
                     counterpart_amount += move_line_id.amount_currency or\
                         move_line_id.credit > 0 and\
                         move_line_id.credit or move_line_id.debit
 
-                    counterpart_unreconcile = currency_obj.compute(
-                        cr, uid, company_currency, statement_currency,
-                        abs(move_line_id.amount_residual), context=context)
+                    counterpart_unreconcile =\
+                        move_line_id.amount_residual_currency
 
                     if move_line_id.currency_id and\
                             move_line_id.currency_id.id == statement_currency:
                         counterpart_unreconcile = abs(
                             move_line_id.amount_residual_currency)
+            else:
+                counterpart_amount = statement_amount
 
         return [statement_amount, counterpart_amount, counterpart_unreconcile]
 
@@ -482,7 +487,8 @@ class account_bank_statement_line(osv.osv):
             # por que puede ser una poliza con iva efecttivamente pagado
             if move_line_id.account_id.type not in\
                     ('receivable', 'payable') and\
-                    move_line_id.journal_id.type not in ('cash', 'bank'):
+                    move_line_id.journal_id.type not in ('cash', 'bank') or\
+                    context.get('journal_special', False):
                 account_group.setdefault(move_line_id.account_id.id, [0, 0])
                 # Validacion del debit/credit cuando la poliza contiene
                 # impuesto 0 o EXENTO toma el monto base de la linea de poliza
@@ -528,20 +534,37 @@ class account_bank_statement_line(osv.osv):
                 else:
                     amount_total_tax =\
                         account_group.get(move_account_tax)[0]+amount_ret_tax
-                dat.append({
-                    'account_tax_voucher':
-                        tax_id.account_paid_voucher_id.id,
-                    'account_tax_collected':
-                        tax_id.account_collected_id.id,
-                    'amount': amount_total_tax,
-                    'tax_id': tax_id,
-                    'tax_analytic_id':
-                        tax_id.account_analytic_collected_id and
-                        tax_id.account_analytic_collected_id.id or False,
+                res = self.preparate_dict_tax(
+                    tax_id=tax_id, amount=amount_total_tax)
+                res.update({
                     'amount_base_secondary': amount_base_secondary,
                     'move_line_reconcile': [account_group.get(
                         move_account_tax)[1]]
                     })
+                dat.append(res)
+
+                if amount_ret_tax:
+                    if not tax_id.account_retention_voucher_id:
+                        msg = _("""
+                            You should configure
+                            'VAT pending for apply Account'
+                            in tax [%s]""") % tax_id.name
+                        raise osv.except_osv(_('Error'), msg)
+                    retention_dict = self.preparate_dict_tax(
+                        tax_id=tax_id, amount=abs(amount_ret_tax))
+                    retention_dict.update({
+                        'account_tax_voucher':
+                            tax_id.account_retention_voucher_id.id,
+                        'move_line_reconcile': [account_group.get(
+                            move_account_tax)[1]]
+                        })
+                    dat.append(retention_dict)
+
+        if not counterpart_move_line_ids:
+            tax_advance = self._get_tax_advance(
+                cr, uid, mv_line_dicts, context=context)
+            if tax_advance:
+                dat.append(tax_advance)
         return dat
 
     def _get_retention(self, cr, uid, account_group=None, tax=None):
@@ -567,6 +590,68 @@ class account_bank_statement_line(osv.osv):
                             account_group[move_account_tax][0]
 
         return amount_retention_tax
+
+    def _get_tax_advance(self, cr, uid, mv_line_dicts, context=None):
+        account_obj = self.pool.get('account.account')
+        user_obj = self.pool.get('res.users')
+        dict_tax_advance = None
+        advance_ok = False
+        for mv_line_dict in mv_line_dicts:
+            move_line_acc_id = mv_line_dict.get('account_id', False)
+
+            account_id = account_obj.browse(
+                cr, uid, move_line_acc_id, context=context)
+
+            if account_id.type == 'receivable' and account_id.reconcile:
+                tax_id = user_obj.browse(
+                    cr, uid, uid,
+                    context=context).company_id.tax_provision_customer
+
+                if not tax_id:
+                    msg = _("""
+                            You should configure in company
+                            'Tax Provision by Customer' """)
+                    raise osv.except_osv(_('Error'), msg)
+                advance_ok = True
+
+            elif account_id.type == 'payable' and account_id.reconcile:
+                tax_id = user_obj.browse(
+                    cr, uid, uid,
+                    context=context).company_id.tax_provision_supplier
+
+                if not tax_id:
+                    msg = _("""
+                            You should configure in company
+                            'Tax Provision by Supplier' """)
+                    raise osv.except_osv(_('Error'), msg)
+                advance_ok = True
+
+            if advance_ok:
+                amount_total_tax = self._get_move_line_counterpart(
+                    cr, uid, [mv_line_dict])[0]
+                amount_total_tax =\
+                    (tax_id.amount * 100.0) * amount_total_tax / (100.0 + (
+                        tax_id.amount * 100.0))
+
+                dict_tax_advance =\
+                    self.preparate_dict_tax(
+                        tax_id=tax_id, amount=amount_total_tax)
+
+        return dict_tax_advance
+
+    def preparate_dict_tax(self, tax_id=None, amount=0):
+        res = {
+            'account_tax_voucher':
+                tax_id.account_paid_voucher_id.id,
+            'account_tax_collected':
+                tax_id.account_collected_id.id,
+            'amount': amount,
+            'tax_id': tax_id,
+            'tax_analytic_id':
+                tax_id.account_analytic_collected_id and
+                tax_id.account_analytic_collected_id.id or False,
+            }
+        return res
 
 
 class account_bank_statement(osv.osv):

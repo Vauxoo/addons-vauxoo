@@ -55,15 +55,12 @@
                                    attrs="{'readonly':[('state','!=','draft')]}"
                                    />
                             <field name='date'
-                                   required='1'
-                                   attrs="{'readonly':[('state','!=','draft')]}"
                                    />
                             <field name='journal_id'
                                     required='1'
                                     attrs="{'readonly':[('state','!=','draft')]}"
                                    />
                             <field name='period_id'
-                                    on_change="onchange_period(period_id)"
                                     required='1'
                                     attrs="{'readonly':[('state','!=','draft')]}"
                                    />
@@ -73,6 +70,9 @@
                         </group>
                         <group col='1' colspan='4'>
                             <field name='aml_ids'
+                            attrs="{'readonly':[('state','!=','draft')]}"
+                                   />
+                            <field name='aml_iva_ids'
                             attrs="{'readonly':[('state','!=','draft')]}"
                                    />
                         </group>
@@ -88,7 +88,8 @@
                 <tree string="Account Voucher Tax SAT">
                         <field name="name"/>
                         <field name="date"/>
-                        <field name="aml_ids"/>
+                        <field name="period_id"/>
+                        <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -106,24 +107,6 @@
             action='account_voucher_tax_sat_action'
             sequence='20'
             />
-
-
-        <record id="view_account_voucher_tax_sat" model="ir.ui.view">
-                <field name="name">view.account.voucher.tax.sat</field>
-                <field name="model">account.tax</field>
-                <field name="inherit_id" ref="account.view_tax_form"/>
-                <field name="arch" type="xml">
-                    <xpath expr="//field[@name='active']" position="after">
-                        <field name="tax_sat_ok"/>
-                        <newline/>
-                        <group attrs="{'invisible':[('tax_sat_ok','=',False)]}" colspan="4">
-                            <field name="account_id_creditable" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
-                            <field name="account_id_by_creditable" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
-                            <field name="tax_reference" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
-                        </group>
-                    </xpath>
-                </field>
-        </record>
         
 
     </data>

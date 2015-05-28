@@ -296,7 +296,7 @@ class commission_payment(osv.Model):
         for cp_brw in self.browse(cr, uid, ids, context=context):
             inv_ids += [invoice.id for invoice in cp_brw.invoice_ids]
         # choose the view_mode accordingly
-        if len(inv_ids) > 1:
+        if len(inv_ids) >= 1:
             result['domain'] = "[('id','in',["+','.join(
                 [str(inv_id) for inv_id in inv_ids]
             )+"])]"
@@ -477,7 +477,7 @@ class commission_payment(osv.Model):
             if aml_brw.rec_invoice:
                 date = aml_brw.rec_invoice.date_due
             else:
-                date = aml_brw.rec_aml.date_maturity
+                date = aml_brw.rec_aml.date_maturity or aml_brw.rec_aml.date
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,

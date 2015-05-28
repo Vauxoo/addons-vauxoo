@@ -137,6 +137,10 @@ $('.oe_website_sale').each(function () {
                 $stock_state.removeClass (function (index, css){
                     return(css.match(/(^|\s)label-\S+/g) || []).join(' ');
                 });
+
+                var new_class = 'label-default';
+                var text = '';
+
                 switch(variant_ids[k][4]){
                     case 1:
                         new_class = 'label-success'

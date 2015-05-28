@@ -1,7 +1,14 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-        
+
+        <record id="account_iva_voucher_pending_apply" model="account.account">
+            <field name="code">X1112_voucher_pending</field>
+            <field name="name">Input VAT Pending for Apply Voucher - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
         <record id="account_iva_voucher" model="account.account">
             <field name="code">X1112_voucher</field>
             <field name="name">Input VAT Voucher - (test)</field>
@@ -27,6 +34,7 @@
             <field name="description">IVA 16% with purchase voucher account for Test</field>
             <field name="account_collected_id" ref="account_iva_voucher_16"/>
             <field name="account_paid_id" ref="account_iva_voucher_16"/>
+            <field name="account_retention_voucher_id" ref="account_iva_voucher_pending_apply"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher"/>
             <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
@@ -84,6 +92,7 @@
             <field name="type">percent</field>
             <field name="amount">0.1100</field>
             <field name="description">IVA 11% with purchase voucher account for Test</field>
+            <field name="account_retention_voucher_id" ref="account_iva_voucher_pending_apply"/>
             <field name="account_collected_id" ref="account_iva_voucher_11"/>
             <field name="account_paid_id" ref="account_iva_voucher_11"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher11"/>
@@ -295,6 +304,77 @@
             <field name="account_paid_id" ref="account_ova_voucher0_sales_0"/>
             <field name="account_collected_voucher_id" ref="account_ova_voucher0_sales"/>
             <field name="account_paid_voucher_id" ref="account_ova_voucher0_sales"/>
+        </record>
+
+<!--
+    Account to tax in advance payment
+-->
+
+        <record id="account_provision_iva_sale_16" model="account.account">
+            <field name="code">X11121_provision_customer</field>
+            <field name="name">Provision VAT Customer 16% - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="reconcile">True</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+
+        <record id="account_provision_iva_purchase_16" model="account.account">
+            <field name="code">X11121_provision_supplier</field>
+            <field name="name">Provision VAT Supplier 16% - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="reconcile">True</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+
+        <record id="account_provision_tax_sale_ova16" model="account.tax">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">OVA 16% with sale provision accounts - Test</field>
+            <field name="tax_voucher_ok" eval="True"/>
+            <field name="type_tax_use">sale</field>
+            <field name="type">percent</field>
+            <field name="amount">0.1600</field>
+            <field name="description">IVA 16% with sale provision account for Test</field>
+            <field name="account_collected_id" ref="account_provision_iva_sale_16"/>
+            <field name="account_paid_id" ref="account_provision_iva_sale_16"/>
+            <field name="account_collected_voucher_id" ref="account_ova_voucher"/>
+            <field name="account_paid_voucher_id" ref="account_ova_voucher"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
+        </record>
+
+        <record id="account_provision_tax_purchase_ova16" model="account.tax">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">OVA 16% with purchase provision accounts - Test</field>
+            <field name="tax_voucher_ok" eval="True"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="type">percent</field>
+            <field name="amount">0.1600</field>
+            <field name="description">IVA 16% with purchase provision account for Test</field>
+            <field name="account_collected_id" ref="account_provision_iva_purchase_16"/>
+            <field name="account_paid_id" ref="account_provision_iva_purchase_16"/>
+            <field name="account_collected_voucher_id" ref="account_iva_voucher"/>
+            <field name="account_paid_voucher_id" ref="account_iva_voucher"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
+        </record>
+
+        <record id="bank_journal_special" model="account.journal">
+            <field name="name">Bank Journal Special - (test)</field>
+            <field name="code">TBNK_1</field>
+            <field name="type">bank</field>
+            <field name="special_journal">True</field>
+            <field name="default_debit_account_id" ref="account.bnk"/>
+            <field name="default_credit_account_id" ref="account.bnk"/>
+            <field name="user_id" ref="base.user_root"/>
+        </record>
+        <record id="bank_journal_special_usd" model="account.journal">
+            <field name="name">USD Bank Journal Special - (test)</field>
+            <field name="code">TUBK_2</field>
+            <field name="type">bank</field>
+            <field name="special_journal">True</field>
+            <field name="default_debit_account_id" ref="account.usd_bnk"/>
+            <field name="default_credit_account_id" ref="account.usd_bnk"/>
+            <field name="currency" ref="base.USD"/>
         </record>
     </data>
 </openerp>

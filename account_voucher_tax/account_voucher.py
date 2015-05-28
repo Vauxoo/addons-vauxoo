@@ -110,8 +110,11 @@ class account_voucher(osv.Model):
 
     def voucher_move_line_tax_create(self, cr, uid, voucher_id, move_id,
                                      context=None):
+        if context is None:
+            context = {}
         bank_statement_line_obj = self.pool.get('account.bank.statement.line')
         move_line_obj = self.pool.get('account.move.line')
+        cur_obj = self.pool.get('res.currency')
         company_currency = self._get_company_currency(
             cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(
@@ -119,73 +122,175 @@ class account_voucher(osv.Model):
         move_ids = []
         move_reconcile_id = []
         context = dict(context)
+        amount_tax_currency = 0.0
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             context.update({'amount_voucher': voucher.amount or 0.0})
+
             for line in voucher.line_ids:
-                if line.tax_line_ids:
-                    if line.amount > line.amount_original:
-                        amount_to_paid = line.amount_original
-                    else:
-                        amount_to_paid = line.amount
-                    factor = \
-                        ((amount_to_paid * 100) / line.amount_original) / 100
-                for line_tax in line.tax_line_ids:
+
+                if not line.amount:
+                    continue
+
+                factor = self.get_percent_pay_vs_invoice(
+                    cr, uid, line.amount_original, line.amount,
+                    context=context)
+
+                move = line.move_line_id
+                mv_line_dicts = [{
+                    'counterpart_move_line_id': move.id,
+                    'credit': move.debit,
+                    'debit': move.credit,
+                    'name': move.name}]
+
+                bank_statement_line_obj._get_factor_type(
+                    cr, uid, False, voucher.type, context=context)
+
+                context['journal_special'] = voucher.journal_id.special_journal
+
+                dict_tax = bank_statement_line_obj._get_move_line_tax(
+                    cr, uid, mv_line_dicts, context=context)
+
+                for move_line_tax_dict in dict_tax:
+
+                    line_tax_id = move_line_tax_dict.get('tax_id')
+                    amount_base_secondary =\
+                        line_tax_id.amount and\
+                        line.amount_original / (1+line_tax_id.amount) or\
+                        move_line_tax_dict.get('amount_base_secondary')
+                    account_tax_voucher =\
+                        move_line_tax_dict.get('account_tax_voucher')
+                    account_tax_collected =\
+                        move_line_tax_dict.get('account_tax_collected')
+                    amount_total_tax = move_line_tax_dict.get('amount', 0)
 
                     move_line_rec = []
-                    amount_tax_unround = line_tax.amount_tax_unround
 
-                    if voucher.type in ('sale', 'receipt'):
-                        account_tax_voucher = \
-                            line_tax.tax_id.account_collected_voucher_id.id
-                    else:
-                        account_tax_voucher = \
-                            line_tax.tax_id.account_paid_voucher_id.id
-                    account_tax_collected = \
-                        line_tax.tax_id.account_collected_id.id
                     context['date'] = voucher.date
-                    reference_amount = line_tax.amount_tax
+                    reference_amount = amount_total_tax * abs(factor)
+
+                    statement_currency_line = False
+                    if current_currency != line.currency_id.id:
+                        statement_currency_line = line.currency_id.id
+
+                    if current_currency != company_currency or statement_currency_line:
+                        amount_tax_currency += cur_obj.compute(
+                            cr, uid, statement_currency_line or current_currency, company_currency,
+                            reference_amount, context=context)
+                    else:
+                        amount_tax_currency += reference_amount
+
                     move_lines_tax = self._preparate_move_line_tax(
                         cr, uid, account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
                         voucher.period_id.id, voucher.journal_id.id,
                         voucher.date, company_currency, reference_amount,
-                        amount_tax_unround, current_currency,
-                        line_tax.id, line_tax.tax_id,
-                        line_tax.analytic_account_id and
-                        line_tax.analytic_account_id.id or False,
-                        line_tax.amount_base,
-                        factor, context=context)
+                        reference_amount, current_currency, False,
+                        move_line_tax_dict.get('tax_id'),
+                        move_line_tax_dict.get('tax_analytic_id'),
+                        amount_base_secondary, factor,
+                        statement_currency_line=statement_currency_line,
+                        context=context)
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(
                             cr, uid, move_line_tax, context=context)
                         move_ids.append(move_create)
                         move_line_rec.append(move_create)
 
-                    # ID de la aml del impuesto que se esta pagando
-                    # es necesario tenerlo en este momento para enviarlo
-                    # a la funcion que concilia los impuestos en el pago
-                    move_counterpart_line_tax = {
-                        'move_line_reconcile': [line_tax.move_line_id.id]}
-
-                    # Se actuliza context con el factor que le corresponde
-                    # dependiendo compra/venta para determinar credit/debit
-                    # de las aml creadas para el diferencial cambiario
-                    bank_statement_line_obj._get_factor_type(
-                        cr, uid, False, voucher.type, context=context)
-
                     move_rec_exch = bank_statement_line_obj.\
                         _get_exchange_reconcile(
-                            cr, uid, move_counterpart_line_tax, move_line_rec,
+                            cr, uid, move_line_tax_dict, move_line_rec,
                             line.amount, line.amount_unreconciled,
                             voucher, company_currency,
                             current_currency, context=context)
                     move_reconcile_id.append(move_rec_exch[1])
+
+            if voucher.journal_id.special_journal:
+                move_line_writeoff_tax = self.writeoff_move_line_tax_get(
+                    cr, uid, voucher, amount_tax_currency, move_id,
+                    voucher.number, company_currency, current_currency,
+                    account_tax_collected, context=context)
+                if move_line_writeoff_tax:
+                    move_line_obj.create(
+                        cr, uid, move_line_writeoff_tax, context=context)
 
         for rec_ids in move_reconcile_id:
             if len(rec_ids) >= 2:
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
 
         return move_ids
+
+    def writeoff_move_line_tax_get(
+            self, cr, uid, voucher, line_total, move_id, name,
+            company_currency, current_currency, account_id, context=None):
+        '''
+        Set a dict to be use to create the writeoff move line.
+
+        :param voucher_id: Id of voucher what we are creating account_move.
+        :param line_total: Amount remaining to be allocated on lines.
+        :param move_id: Id of account move where this line will be added.
+        :param name: Description of account move line.
+        :param company_currency: id of currency of the company to which
+            the voucher belong
+        :param current_currency: id of currency of the voucher
+        :param account_id: account_id of provision account
+        :return: mapping between fieldname and value of account move line to
+            create
+        :rtype: dict
+        '''
+        currency_obj = self.pool.get('res.currency')
+        move_line = {}
+
+        current_currency_obj = voucher.currency_id or\
+            voucher.journal_id.company_id.currency_id
+
+        if not currency_obj.is_zero(cr, uid, current_currency_obj, line_total)\
+                or (company_currency == current_currency and line_total):
+            sign = voucher.type in ('sale', 'receipt') and -1 or 1
+
+            diff = line_total * sign
+
+            move_line = {
+                'name': name,
+                'account_id': account_id,
+                'move_id': move_id,
+                'partner_id': voucher.partner_id.id,
+                'date': voucher.date,
+                'debit': diff > 0 and diff or 0.0,
+                'credit': diff < 0 and -diff or 0.0,
+                'currency_id':
+                    company_currency != current_currency and
+                    current_currency or False,
+                'analytic_account_id':
+                    voucher.analytic_id and voucher.analytic_id.id or False,
+            }
+
+        return move_line
+
+    def _get_reconcile_tax_advance(
+            self, cr, uid, voucher, move_id, context=None):
+
+        bank_statement_line_obj = self.pool.get('account.bank.statement.line')
+
+        company_currency = self._get_company_currency(
+            cr, uid, voucher.id, context)
+        statement_currency = self._get_current_currency(
+            cr, uid, voucher.id, context)
+        move_line_taxes = []
+
+        for voucher_line in voucher.line_ids:
+            if voucher_line.move_line_id.journal_id.type in ('cash', 'bank'):
+                mv_line_dicts = [{
+                    'counterpart_move_line_id': voucher_line.move_line_id.id,
+                    'credit': voucher_line.amount,
+                    'debit': 0}]
+                move_line_taxes =\
+                    bank_statement_line_obj.create_move_line_tax_payment(
+                        cr, uid, mv_line_dicts, voucher.partner_id.id,
+                        voucher.period_id.id, voucher.journal_id.id,
+                        voucher.date, voucher.type, voucher, company_currency,
+                        statement_currency, move_id=move_id, context=context)
+
+        return move_line_taxes
 
     # pylint: disable=W0622
     def _preparate_move_line_tax(self, cr, uid, src_account_id,
@@ -196,11 +301,18 @@ class account_voucher(osv.Model):
                                  line_tax, acc_a,
                                  # informacion de lineas de impuestos
                                  amount_base_tax,
-                                 factor=0, context=None):
+                                 factor=0, statement_currency_line=None,
+                                 context=None):
+
+        account_collected_id = dest_account_id
+
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
+
+        reference_currency_id = statement_currency_line or\
+            reference_currency_id
 
         amount_base, tax_secondary = self._get_base_amount_tax_secondary(
             cr, uid, line_tax, amount_base_tax * factor, reference_amount,
@@ -271,6 +383,8 @@ class account_voucher(osv.Model):
             debit_line_vals.pop('is_tax_voucher')
 
         account_obj = self.pool.get('account.account')
+        cur_obj = self.pool.get('res.currency')
+
         reference_amount = abs(reference_amount)
         src_acct, dest_acct = account_obj.browse(
             cr, uid, [src_account_id, dest_account_id], context=context)
@@ -279,33 +393,49 @@ class account_voucher(osv.Model):
             or src_acct.company_id.currency_id.id
         dest_main_currency_id = dest_acct.currency_id\
             and dest_acct.currency_id.id or dest_acct.company_id.currency_id.id
-        cur_obj = self.pool.get('res.currency')
-        if reference_currency_id != src_main_currency_id:
-            # fix credit line:
-            credit_line_vals['credit'] = cur_obj.compute(
-                cr, uid, reference_currency_id, src_main_currency_id,
-                reference_amount, context=context)
-            credit_line_vals['amount_tax_unround'] = cur_obj.compute(
-                cr, uid, reference_currency_id, src_main_currency_id,
-                abs(reference_amount), round=False, context=context)
-            if (not src_acct.currency_id)\
-                    or src_acct.currency_id.id == reference_currency_id:
-                credit_line_vals.update(
-                    currency_id=reference_currency_id,
-                    amount_currency=-reference_amount)
-        if reference_currency_id != dest_main_currency_id:
-            # fix debit line:
-            debit_line_vals['debit'] = cur_obj.compute(
-                cr, uid, reference_currency_id, dest_main_currency_id,
-                reference_amount, context=context)
-            debit_line_vals['amount_base'] = cur_obj.compute(
-                cr, uid, reference_currency_id, dest_main_currency_id,
-                abs(amount_base), context=context)
-            if (not dest_acct.currency_id)\
-                    or dest_acct.currency_id.id == reference_currency_id:
-                debit_line_vals.update(
-                    currency_id=reference_currency_id,
-                    amount_currency=reference_amount)
+
+        # get rate of bank statement if rate is different to currency
+        if context.get('st_line_currency_rate') and\
+                statement_currency_line != company_currency:
+            credit_line_vals['credit'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                reference_amount/context.get('st_line_currency_rate'))
+            debit_line_vals['debit'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                reference_amount/context.get('st_line_currency_rate'))
+            debit_line_vals['amount_base'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                abs(amount_base)/context.get('st_line_currency_rate'))
+        else:
+            if reference_currency_id != src_main_currency_id:
+                # fix credit line:
+                credit_line_vals['credit'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, src_main_currency_id,
+                    reference_amount, context=context)
+
+            if reference_currency_id != dest_main_currency_id:
+                # fix debit line:
+                debit_line_vals['debit'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, dest_main_currency_id,
+                    reference_amount, context=context)
+                debit_line_vals['amount_base'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, dest_main_currency_id,
+                    abs(amount_base), context=context)
+
+        if reference_currency_id != company_currency:
+            debit_line_vals.update(
+                currency_id=reference_currency_id,
+                amount_currency=reference_amount)
+            credit_line_vals.update(
+                currency_id=reference_currency_id,
+                amount_currency=-reference_amount)
+
+        if self.pool.get('account.journal').browse(
+                cr, uid, journal).special_journal:
+            return [
+                account_collected_id == debit_line_vals.get('account_id') and
+                debit_line_vals or credit_line_vals]
+
         return [debit_line_vals, credit_line_vals]
 
     def _get_base_amount_tax_secondary(self, cr, uid, line_tax,

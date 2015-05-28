@@ -25,29 +25,6 @@
                 </form>
             </field>
         </record>
-        <record id="product_historical_cost_tree" model="ir.ui.view">
-            <field name="name">product.historical.cost.tree</field>
-            <field name="model">product.historic.cost</field>
-            <field name="arch" type="xml">
-                <tree string="Historical Cost">
-                    <field name="name"/>
-                    <field name="price"/>
-                    <field name="product_uom"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="product_historical_cost_form" model="ir.ui.view">
-            <field name="name">product.historical.cost.form</field>
-            <field name="model">product.historic.cost</field>
-            <field name="arch" type="xml">
-                <form string="Historical Cost" version="7.0">
-                    <field name="name"/>
-                    <field name="price"/>
-                    <field name="product_uom"/>
-                </form>
-            </field>
-        </record>
 
         <!--
         <record model="ir.ui.view" id="product_historical_price">

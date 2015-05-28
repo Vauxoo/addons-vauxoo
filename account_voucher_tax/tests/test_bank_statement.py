@@ -127,17 +127,24 @@ class TestPaymentTax(TestTaxCommon):
             cr, uid, line_id, self.partner_agrolait_id, -105.33,
             self.bank_journal_id)
 
+        amount_iva16 = 0.0
+        checked_line = 0
         for move_line_complete in move_line_ids_complete:
             if move_line_complete.account_id.id == self.acc_tax16:
+                amount_iva16 += move_line_complete.credit
                 self.assertEquals(move_line_complete.debit, 0.0)
-                self.assertEquals(move_line_complete.credit, 5.33)
-                self.assertEquals(move_line_complete.amount_residual, -10.67)
-                self.assertTrue(move_line_complete.reconcile_partial_id,
-                                "Partial Reconcile should be created.")
+                if move_line_complete.credit == 10.67:
+                    checked_line += 1
+                if move_line_complete.credit == 5.33:
+                    checked_line += 1
+                self.assertEquals(move_line_complete.amount_residual, 0.0)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line_complete.debit, 5.33)
                 self.assertEquals(move_line_complete.credit, 0.0)
+                checked_line += 1
                 continue
 
             # retention tax validation
@@ -147,11 +154,22 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
                 self.assertTrue(move_line_complete.reconcile_id,
                                 "Reconcile should be created.")
+                checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_ret1067_payment:
                 self.assertEquals(move_line_complete.debit, 0.0)
                 self.assertEquals(move_line_complete.credit, 10.67)
+                checked_line += 1
                 continue
+
+            # iva pending for apply by retention
+            if move_line_complete.account_id.id == self.acc_tax_pending_apply:
+                self.assertEquals(move_line_complete.debit, 10.67)
+                self.assertEquals(move_line_complete.credit, 0.0)
+                checked_line += 1
+                continue
+        self.assertEquals(checked_line, 6)
+        self.assertEquals(amount_iva16, 16)
 
     def test_iva_16_currency_supplier(self):
         """
@@ -351,3 +369,149 @@ class TestPaymentTax(TestTaxCommon):
                 checked_line += 1
                 continue
         self.assertEquals(checked_line, 4)
+
+    def test_iva_16_supplier_difference_currency_usd(self):
+        """
+            Tests Supplier with invoice currency USD and tax 16% with
+            payment with currency of company EUR
+            and specific rate in statement line
+        """
+        cr, uid = self.cr, self.uid
+        invoice_id = self.account_invoice_model.create(cr, uid, {
+            'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_supplier_journal_id,
+            'reference_type': 'none',
+            'name': 'invoice to supplier',
+            'account_id': self.account_payable_id,
+            'type': 'in_invoice',
+            'date_invoice': time.strftime('%Y')+'-06-01',
+            'currency_id': self.currency_usd_id,
+            'check_total': 116
+            })
+        self.account_invoice_line_model.create(cr, uid, {
+            'product_id': self.product_id,
+            'quantity': 1,
+            'price_unit': 100,
+            'invoice_line_tax_id': [(6, 0, [self.tax_16])],
+            'invoice_id': invoice_id,
+            'name': 'product that cost 100'})
+
+        # validate invoice
+        self.registry('account.invoice').signal_workflow(
+            cr, uid, [invoice_id], 'invoice_open')
+        invoice_record = self.account_invoice_model.browse(
+            cr, uid, [invoice_id])
+
+        # we search aml with account payable
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
+                break
+
+        # create payment complete
+
+        move_line_ids_complete = self.create_statement(
+            cr, uid, line_id, self.partner_agrolait_id, -100,
+            self.bank_journal_id, time.strftime('%Y')+'-06-30',
+            currency=self.currency_usd_id, amount_currency=-116)
+
+        checked_line = 0
+        for move_line in move_line_ids_complete:
+            if move_line.account_id.id == self.acc_tax16 and\
+                    move_line.amount_currency == 0:
+                self.assertEquals(move_line.debit, 1.32)
+                self.assertEquals(move_line.credit, 0.0)
+                self.assertEquals(move_line.amount_residual, 0.0)
+                self.assertTrue(move_line.reconcile_id,
+                                "Reconcile should be created.")
+                checked_line += 1
+                continue
+            if move_line.account_id.id == self.acc_tax16 and\
+                    move_line.amount_currency:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(round(move_line.credit, 2), 13.79)
+                self.assertEquals(move_line.amount_residual, 0)
+                self.assertEquals(move_line.amount_currency, -16.0)
+                self.assertTrue(move_line.reconcile_id,
+                                "Reconcile should be created.")
+                checked_line += 1
+                continue
+            if move_line.account_id.id == self.acc_tax_16_payment:
+                self.assertEquals(round(move_line.debit, 2), 13.79)
+                self.assertEquals(move_line.credit, 0.0)
+                self.assertEquals(move_line.amount_currency, 16.0)
+                checked_line += 1
+                continue
+            if move_line.account_id.id == self.acc_gain_tax:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(move_line.credit, 1.32)
+                self.assertEquals(move_line.amount_currency, 0)
+                checked_line += 1
+                continue
+        self.assertEquals(checked_line, 4)
+
+    def test_iva_16_supplier_difference_currency_eur(self):
+        """
+            Tests Supplier with invoice currency company EUR and tax 16% with
+            payment with currency USD
+            and specific rate in statement line
+        """
+        cr, uid = self.cr, self.uid
+        invoice_id = self.account_invoice_model.create(cr, uid, {
+            'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_supplier_journal_id,
+            'reference_type': 'none',
+            'name': 'invoice to supplier',
+            'account_id': self.account_payable_id,
+            'type': 'in_invoice',
+            'date_invoice': time.strftime('%Y')+'-06-01',
+            'check_total': 116
+            })
+        self.account_invoice_line_model.create(cr, uid, {
+            'product_id': self.product_id,
+            'quantity': 1,
+            'price_unit': 100,
+            'invoice_line_tax_id': [(6, 0, [self.tax_16])],
+            'invoice_id': invoice_id,
+            'name': 'product that cost 100'})
+
+        # validate invoice
+        self.registry('account.invoice').signal_workflow(
+            cr, uid, [invoice_id], 'invoice_open')
+        invoice_record = self.account_invoice_model.browse(
+            cr, uid, [invoice_id])
+
+        # we search aml with account payable
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
+                break
+
+        # create payment complete
+
+        move_line_ids_complete = self.create_statement(
+            cr, uid, line_id, self.partner_agrolait_id, -150,
+            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30',
+            currency=self.currency_eur_id, amount_currency=-116)
+
+        checked_line = 0
+        for move_line in move_line_ids_complete:
+            if move_line.account_id.id == self.acc_tax16 and\
+                    move_line.amount_currency:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(round(move_line.credit, 2), 16.0)
+                self.assertEquals(move_line.amount_residual, 0)
+                # TO DO: Also we need to validate amount currency
+                # self.assertEquals(move_line.amount_currency, -24.46)
+                self.assertTrue(move_line.reconcile_id,
+                                "Reconcile should be created.")
+                checked_line += 1
+                continue
+            if move_line.account_id.id == self.acc_tax_16_payment:
+                self.assertEquals(round(move_line.debit, 2), 16.0)
+                self.assertEquals(move_line.credit, 0.0)
+                # TO DO: Also we need to validate amount currency
+                # self.assertEquals(move_line.amount_currency, 24.46)
+                checked_line += 1
+                continue
+        self.assertEquals(checked_line, 2)

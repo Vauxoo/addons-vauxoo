@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data noupdate="0">
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="name">Auditor (Read-Only)</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="users" model="res.users" search="[('name', '=', 'auditor')]" />
+        </record>
+
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_finance'))]"/>
+        </record>
+
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_action_account_moves_all'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_tax_report'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_finance_bank_and_cash'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_finance_entries'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_action_move_journal_line_form'))]"/>
+        </record>
+
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_journals_report'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_unrealized_gains_losses'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_general_ledger'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_account_partner_ledger'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_action_tax_code_tree'))]"/>
+        </record>
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access" eval="[(4, ref('account.menu_finance_reports'))]"/>
+        </record>
+
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record model="res.users" id="res_auditor_user">
+            <field name="name">Auditor user</field>
+            <field name="login">auditor</field>
+            <field name="tz">America/Mexico_City</field>
+            <field name="password">auditor</field>
+            <field name="alias_name">auditor</field>
+            <field name="company_id" eval="ref('base.main_company')"/> 
+            <field name="groups_id"  eval="[(6,0,[ref('account_group_auditory.group_account_user_audit')])]"/>
+        </record>
+    </data>
+</openerp>
