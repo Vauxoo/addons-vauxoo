@@ -36,10 +36,10 @@
         "purchase_order_line_sequence",
     ],
     "data": [
+        "wizard/replacement_product_view.xml",
         "view/product_view.xml",
         "view/purchase_view.xml",
         "security/product_security.xml",
-        "wizard/replacement_product_view.xml",
     ],
     "demo": [
         "demo/replacement_product_demo.xml",

@@ -24,6 +24,8 @@
 ###############################################################################
 
 from openerp import models, fields, api
+from openerp.tools.translate import _
+from openerp.exceptions import Warning  # pylint: disable=W0622
 
 
 class ReplacementProduct(models.TransientModel):
@@ -34,36 +36,101 @@ class ReplacementProduct(models.TransientModel):
     """
 
     _name = 'replacement.product'
-    _description = 'Select a replacement product for purchase operations'
+    _description = ('Replacement of discontinued products'
+                    ' for purchase operations')
 
-    product_id = fields.Many2one(
-        'product.template', 'Discontinued Product',
-        default=lambda self: self._context.get('discontinued_product_id',
-                                               False))
+    @api.multi
+    def _get_lines(self):
+        """
+        Get the lines with discontinued products
+
+        @return a list of dictionaries to create the new wizard lines.
+        """
+        res = []
+
+        self.check_active_model()
+        order = self._context.get('active_id', False)
+        if not order:
+            return res
+        order = self.env['purchase.order'].browse(order)
+        res = [
+            (0, 0, {
+                'line_id': line.id,
+                'number': line.sequence,
+                'discontinued_product_id': line.product_id.id,
+                'replacement_product_ids':
+                    line.product_id.replacement_product_ids,
+            })
+            for line in order.order_line
+            if line.product_id.state2 in ['obsolete']]
+        return res
+
+    lines = fields.One2many(
+        'replacement.product.line', 'replacement_id', default=_get_lines)
+
+    @api.multi
+    def check_active_model(self):
+        """
+        check that the active model is purchase order.
+        if not raise a warning.
+        """
+        model = self._context.get('active_model', False)
+        if model == 'purchase.order':
+            pass
+        elif model:
+            raise Warning(' '.join([
+                _('This wizard is not designed to work from the'),
+                str(model)]))
+        else:
+            raise Warning(_('This wizard need to be called from a model'))
+
+    @api.multi
+    def replacement(self):
+        """
+        Update the replacement products.
+        """
+        self.check_active_model()
+        order = self._context.get('active_id', False)
+        order = self.env['purchase.order'].browse(order)
+        for line in self.lines:
+            line.line_id.write({
+                'product_id': line.replacement_product_id.id,
+                'discontinued_product_id': line.discontinued_product_id.id
+            })
+
+
+class ReplacementProductLines(models.TransientModel):
+
+    """
+    Let to select a replacement product for every discontinued product.
+    """
+
+    _name = 'replacement.product.line'
+    _description = 'Select a replacement for every discontinued product'
+
+    replacement_id = fields.Many2one('replacement.product')
+    discontinued_product_id = fields.Many2one(
+        'product.product', 'Discontinued Product',
+        domain=[('state2', '=', 'obsolete')])
+    replacement_product_ids = fields.Many2many(
+        related="discontinued_product_id.replacement_product_ids")
     replacement_product_id = fields.Many2one(
-        'product.template', string='Replacement Product for Purchase')
+        'product.product', 'Replacement Product for Purchase')
+    line_id = fields.Many2one('purchase.order.line', 'Purchase Order Line')
+    number = fields.Integer(related='line_id.sequence')
 
-    @api.onchange('product_id')
+    @api.onchange('discontinued_product_id')
     def get_replacement_product_ids(self):
         """
-        Return the list of replacment products
+        Return the list of replacement products
         @return domain
         """
         self.replacement_product_id = False
         res = {'domain': {'replacement_product_id': [('id', 'in', [])]}}
-        replacement_ids = [
-            product.id for product in self.product_id.replacement_product_ids
-            if product.state2 not in ['obsolete'] and product.active]
+        replacement_ids = self.discontinued_product_id.get_good_replacements()
         if replacement_ids:
             if len(replacement_ids) == 1:
                 self.replacement_product_id = replacement_ids[0]
             res = {'domain': {
                 'replacement_product_id': [('id', 'in', replacement_ids)]}}
         return res
-
-    @api.multi
-    def select_replacement(self):
-        """
-        Return the replacement product.
-        """
-        return self.replacement_product_id
