@@ -1,10 +1,9 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# Credits #####################################################################
 #    Coded by: Katherine Zaoral <kathy@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>,
 #                  Katherine Zaoral <kathy@vauxoo.com>
@@ -36,6 +35,8 @@ class purchase_requisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {
+        'suggested_supplier':
+            fields.text('Suggested Suppliers'),
         'suggested_supplier_ids': fields.many2many(
             'res.partner',
             'purchase_requisition_suggested_suppliers_rel',
@@ -51,6 +52,8 @@ class purchase_requisition(osv.Model):
             help=('The Suppliers that will participate in the tender. This'
                   ' suppliers can only be defined by the purchase analyst in'
                   ' the phase of Prepare Tenderplan.')),
+        'single_source_justification':
+            fields.text('Single Source Justification'),
     }
 
     def create_orders(self, cr, uid, ids, context=None):
@@ -61,9 +64,12 @@ class purchase_requisition(osv.Model):
         """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        func = self.make_purchase_order
         for req_brw in self.browse(cr, uid, ids, context=context):
-            map(
-                lambda partner_brw: self.make_purchase_order(
-                    cr, uid, [req_brw.id], partner_brw.id, context=context),
-                req_brw.supplier_ids)
+            partner_ids = [po_brw.partner_id.id for po_brw in
+                           req_brw.purchase_ids]
+            for partner_brw in req_brw.supplier_ids:
+                if partner_brw.id in partner_ids:
+                    continue
+                func(cr, uid, [req_brw.id], partner_brw.id, context=context)
         return True

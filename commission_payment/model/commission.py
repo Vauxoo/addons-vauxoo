@@ -214,6 +214,7 @@ class commission_payment(osv.Model):
                                                             currency of the\
                                                             company')),
         'comm_fix': fields.boolean('Fix Commissions?'),
+        'unknown_salespeople': fields.boolean('Allow Unknown Salespeople?'),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -243,7 +244,7 @@ class commission_payment(osv.Model):
                        for cl_brw in cs_brw.comm_lines_ids
                        ]
         # choose the view_mode accordingly
-        if len(cl_ids) > 1:
+        if len(cl_ids) > 0:
             result['domain'] = "[('id','in',["+','.join(
                 [str(cl_id) for cl_id in cl_ids]
             )+"])]"
@@ -295,7 +296,7 @@ class commission_payment(osv.Model):
         for cp_brw in self.browse(cr, uid, ids, context=context):
             inv_ids += [invoice.id for invoice in cp_brw.invoice_ids]
         # choose the view_mode accordingly
-        if len(inv_ids) > 1:
+        if len(inv_ids) >= 1:
             result['domain'] = "[('id','in',["+','.join(
                 [str(inv_id) for inv_id in inv_ids]
             )+"])]"
@@ -476,7 +477,7 @@ class commission_payment(osv.Model):
             if aml_brw.rec_invoice:
                 date = aml_brw.rec_invoice.date_due
             else:
-                date = aml_brw.rec_aml.date_maturity
+                date = aml_brw.rec_aml.date_maturity or aml_brw.rec_aml.date
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
@@ -488,13 +489,24 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            if aml_brw.rec_invoice:
-                date = aml_brw.rec_invoice.date_last_payment
-            else:
-                date = aml_brw.rec_aml.date_last_payment
+            date = aml_brw.rec_aml.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
+
+    def _get_commission_saleman(self, cr, uid, ids, salesman_brw,
+                                context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        if not salesman_brw:
+            return None
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        user_ids = [usr_brw.id for usr_brw in comm_brw.user_ids]
+        if not user_ids:
+            return salesman_brw
+        if salesman_brw.id not in user_ids:
+            return None
+        return salesman_brw
 
     def _get_commission_salesman_policy(self, cr, uid, ids, pay_id,
                                         salesman_id=None, context=None):
@@ -581,6 +593,16 @@ class commission_payment(osv.Model):
         if not aml_brw.credit:
             return True
 
+        # Retrieve Partner's Salesman
+        salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
+                                                        context=context)
+        salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
+                                                   context=context)
+
+        if not salesman_ok:
+            if not (comm_brw.unknown_salespeople and not salesman):
+                return True
+
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, pay_id,
                                                    context=context)
@@ -592,10 +614,6 @@ class commission_payment(osv.Model):
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
         inv_brw = aml_brw.rec_invoice
-
-        # Obtener el vendedor del partner
-        salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
-                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, pay_id,
@@ -765,6 +783,16 @@ class commission_payment(osv.Model):
         if not aml_brw.credit:
             return True
 
+        # Retrieve Partner's Salesman
+        salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
+                                                        context=context)
+        salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
+                                                   context=context)
+
+        if not salesman_ok:
+            if not (comm_brw.unknown_salespeople and not salesman):
+                return True
+
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, aml_id,
                                                    context=context)
@@ -781,10 +809,6 @@ class commission_payment(osv.Model):
         # =======================================================
         # =======================================================
         perc_iva = (inv_brw.amount_total / inv_brw.amount_untaxed - 1) * 100
-
-        # Obtener el vendedor del partner
-        salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
-                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, aml_id,
@@ -857,6 +881,9 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
+
+        if not comm_brw.unknown_salespeople:
+            return True
 
         aml_obj = self.pool.get('account.move.line')
         comm_line_ids = self.pool.get('commission.lines')

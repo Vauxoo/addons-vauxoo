@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from openerp.addons.report.controllers import main
-from openerp.addons.web.http import route, request
-from werkzeug import url_decode
+from openerp.addons.web.http import route, request # pylint: disable=F0401
+from werkzeug import url_decode # pylint: disable=E0611
 import simplejson
 from bs4 import BeautifulSoup
 import xlwt
@@ -17,6 +19,7 @@ class ReportController(main.ReportController):
         What is intended here is to properly assign to the extension to XLS
         """
         response = super(ReportController, self).report_download(data, token)
+        context = request.context
         if response is None:
             return response
 
@@ -24,7 +27,9 @@ class ReportController(main.ReportController):
         url = requestcontent[0]
 
         # decoding the args represented in JSON
-        new_data = url_decode(url.split('?')[1]).items()
+        url_split = url.split('?')
+        index = len(url_split) > 1 and 1 or 0
+        new_data = url_decode(url_split[index]).items()
 
         new_data = dict(new_data)
         if new_data.get('context'):
@@ -57,6 +62,8 @@ class ReportController(main.ReportController):
             rows = table.findAll("tr")
             for tr in rows:
                 cols = tr.findAll("td")
+                if not cols:
+                    cols = tr.findAll("th")
                 if not cols:
                     continue
                 col = 0

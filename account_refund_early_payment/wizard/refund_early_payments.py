@@ -22,20 +22,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv
-from openerp.addons.account.wizard import account_invoice_refund as air
+from openerp import fields, api, models
+from openerp.tools import float_compare
 
 
-class account_invoice_refund(osv.osv_memory):
+class account_invoice_refund(models.TransientModel):
     """Refunds invoice"""
 
     _inherit = "account.invoice.refund"
-
-    filter_refund_inh = \
-        air.account_invoice_refund._columns.get('filter_refund').__dict__
-    REFUND_METHOD = filter_refund_inh.get('selection')
-    REFUND_METHOD.append(('early_payment',
-                         'Early payment: Discount early payment'))
 
     def _search_xml_id(self, cur, uid, model, record_xml_id, context=None):
         if context is None:
@@ -84,18 +78,20 @@ class account_invoice_refund(osv.osv_memory):
             }
         }
 
-    _columns = {
-        'filter_refund': fields.selection(
-            REFUND_METHOD,
-            "Refund Method",
-            required=True,
-            help='Refund base on this type. You can not\
-                  Modify and Cancel if the invoice is already reconciled'),
-        'percent': fields.float('Percent'),
-        'product_id': fields.many2one('product.product', string='Product'),
-        'amount_total': fields.float('Amount'),
-        'active_id': fields.integer('Active ID'),
-    }
+    @api.model
+    def _get_percent_default(self):
+        """
+        It is a hook method. In order to put some smart computation.
+        """
+        return 5.0
+
+
+    filter_refund = fields.Selection(selection_add=[('early_payment',
+                                                     'Early payment: Discount early payment')])
+    percent = fields.Float('Percent', default=_get_percent_default)
+    product_id = fields.Many2one('product.product', string='Product')
+    amount_total = fields.Float('Amount')
+    active_id = fields.Integer('Active ID')
 
     def compute_refund(self, cur, uid, ids, mode='refund', context=None):
         if context is None:
@@ -114,6 +110,8 @@ class account_invoice_refund(osv.osv_memory):
         wizard_brw = self.browse(cur, uid, ids, context=context)
         percent = wizard_brw.percent / 100
 
+        prec = self.pool.get('decimal.precision').precision_get(
+            cur, uid, 'Account')
         for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
                                   context=context):
 
@@ -123,8 +121,9 @@ class account_invoice_refund(osv.osv_memory):
                 refund_lines_brw = refund.invoice_line
                 line_data_dict = {}
 
-                if wizard_brw.amount_total == \
-                        round(inv.amount_total * percent, 2):
+                if not float_compare(
+                        wizard_brw.amount_total, (inv.amount_total * percent),
+                        precision_digits=prec):
                     for refund_line in refund_lines_brw:
                         tax_tuple = refund_line.\
                             invoice_line_tax_id.\
@@ -185,33 +184,22 @@ class account_invoice_refund(osv.osv_memory):
                 movelines = inv.move_id.line_id
                 to_reconcile_ids = {}
                 for line in movelines:
-                    if line.account_id.id == inv.account_id.id:
+                    if line.account_id.reconcile and not line.reconcile_id:
                         to_reconcile_ids.setdefault(line.account_id.id,
                                                     []).append(line.id)
-                    if line.reconcile_id:
-                        line.reconcile_id.unlink()
                 refund.signal_workflow('invoice_open')
                 refund = inv_obj.browse(cur, uid, refund_id[0],
                                         context=context)
                 for tmpline in refund.move_id.line_id:
-                    if tmpline.account_id.id == inv.account_id.id:
+                    if tmpline.account_id.reconcile:
                         to_reconcile_ids[tmpline.
                                          account_id.id].append(tmpline.id)
                 for account in to_reconcile_ids:
-                    account_m_line_obj.reconcile_partial(cur,
-                                                         uid,
-                                                         to_reconcile_ids
-                                                         [account],
-                                                         context=context)
+                    if len(to_reconcile_ids[account]) > 1:
+                        account_m_line_obj.reconcile_partial(
+                            cur, uid, to_reconcile_ids[account],
+                            context=context)
         return result
-
-    def _get_percent_default(self, cur, uid, ids, context=None):
-        """
-        It is a hook method. In order to put some smart computation.
-        """
-        if context is None:
-            context = {}
-        return 5.0
 
     _defaults = {
         'product_id': lambda self, cur,
@@ -220,6 +208,5 @@ class account_invoice_refund(osv.osv_memory):
                                     'account_refund_early_payment',
                                     'product_discount_early_payment',
                                     context=c),
-        'percent': _get_percent_default,
 
     }

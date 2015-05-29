@@ -48,7 +48,7 @@
             <field name="model">commission.lines</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <tree create='false' delete='false' editable='top'>
+                <tree create='true' delete='true' editable='top'>
                     <field name="name" readonly='1'/>
                     <field name="pay_date" readonly='1'/>
                     <field name="pay_off" readonly='1'/>
@@ -304,6 +304,9 @@
                         </group>
                         <notebook colspan="6">
                             <page string="Salespeople">
+                                <group col="2" colspan="2">
+                                    <field name="unknown_salespeople"/>
+                                </group>
                                 <group col="2" colspan="2">
                                     <field name="user_ids" nolabel="1">
                                         <tree edit='false' create='false' delete='false' >

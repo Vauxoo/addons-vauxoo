@@ -37,7 +37,9 @@ class wizard_open_move_line(wizard.interface):
         act_obj = pooler.get_pool(cr.dbname).get('ir.actions.act_window')
         aged_partner_balance_vw_obj = pooler.get_pool(
             cr.dbname).get('account.aged.partner.balance.vw')
-        partner_ids = [aged_partner_balance_vw.partner_id and aged_partner_balance_vw.partner_id.id or False for aged_partner_balance_vw in aged_partner_balance_vw_obj.browse(
+        partner_ids = [aged_partner_balance_vw.partner_id and
+        aged_partner_balance_vw.partner_id.id or False for
+        aged_partner_balance_vw in aged_partner_balance_vw_obj.browse(
             cr, uid, data['ids'], context=context)]
         # result = mod_obj._get_id(cr, uid, 'account',
         # 'action_account_moves_all_a')
@@ -63,7 +65,9 @@ class wizard_open_move_line(wizard.interface):
             FROM account_move_line l
             INNER JOIN
                (
-                   SELECT id, EXTRACT(DAY FROM (now() - COALESCE(lt.date_maturity,lt.date))) AS days_due
+                   SELECT id,
+                   EXTRACT(DAY FROM (now() - COALESCE(lt.date_maturity,lt.date)
+                    )) AS days_due
                    FROM account_move_line lt
                ) l2
                ON l2.id = l.id
@@ -89,10 +93,10 @@ class wizard_open_move_line(wizard.interface):
     states = {
         'init': {
             'actions': [],
-            'result': {'type': 'action', 'action': _open_window, 'state': 'end'}
+            'result': {'type': 'action',
+            'action': _open_window, 'state': 'end'}
         }
     }
 wizard_open_move_line('wizard.open.move.line')
 '''
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

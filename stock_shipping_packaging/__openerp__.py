@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -24,8 +23,8 @@
 ###############################################################################
 {
     "name": "Stock Shipping Packaging", 
-    "version": "1.0", 
-    "author": "Vauxoo C.A.", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
     "category": "Warehouse", 
     "description": """
 ========================
@@ -51,7 +50,6 @@ How to use
 
 In an Order Delivery can add línes of stock.moves, to each stock.move you can add a Packs
 (stock.tracking) filtered by the partner of the delivery order.
-
 
 """, 
     "website": "http://vauxoo.com", 

@@ -20,8 +20,9 @@
 #
 ##############################################################################
 
-from openerp.report import report_sxw
 from lxml import html
+
+from openerp.report import report_sxw
 
 
 class story_user_html(report_sxw.rml_parse):
