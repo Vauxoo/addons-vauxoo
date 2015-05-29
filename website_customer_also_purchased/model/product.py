@@ -63,8 +63,8 @@ class product_template(osv.osv):
             GROUP BY product_tmpl_id;\
             ".format(pids))
         res = cr.fetchall()
-        for r in res:
-            result[ids[0]].append(r[0])
+        for ret in res:
+            result[ids[0]].append(ret[0])
         return result
 
     _columns = {
