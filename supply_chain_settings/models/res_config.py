@@ -19,14 +19,14 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields, api, _
+from openerp import models, fields, api
 
 
 class purchase_config_settings(models.TransientModel):
     _inherit = 'purchase.config.settings'
 
     default_purchase_requisition = fields.Boolean(
-        _("Generate Procurement using Call for Bids"),
+        "Generate Procurement using Call for Bids",
         default_model='product.template', default=True,
         help='Allows you to generate requisitions in automatic,' +
         ' when procurement orders are created')
@@ -42,7 +42,7 @@ class stock_config_settings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
     default_purchase_requisition = fields.Boolean(
-        _("Generate Procurement using Call for Bids"),
+        "Generate Procurement using Call for Bids",
         default_model='product.template', default=True,
         help='Allows you to generate requisitions in automatic,' +
         ' when procurement orders are created')

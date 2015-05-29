@@ -20,10 +20,10 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "supplier_invoice_number_unique",
+    "name": "Supply Chain Settings",
     "version": "1.0",
     "author": "Vauxoo",
-    "category": "Accouting",
+    "category": "Settings",
     "description": """
 This module adds a default purchase requisition on the wizards of
 purchase and warehouses, to generate procurements using
@@ -43,6 +43,4 @@ calls for bids.
     "css": [],
     "qweb": [],
     "installable": True,
-    "auto_install": False,
-    "active": False
 }
