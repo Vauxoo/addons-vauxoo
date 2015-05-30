@@ -19,7 +19,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields
 
 
 class purchase_config_settings(models.TransientModel):
@@ -31,12 +31,6 @@ class purchase_config_settings(models.TransientModel):
         help='Allows you to generate requisitions in automatic,' +
         ' when procurement orders are created')
 
-    @api.one
-    def set_default_purchase_requisition(self):
-        products = self.env['product.template'].search([])
-        for product in products:
-            product.write({'purchase_requisition': True})
-
 
 class stock_config_settings(models.TransientModel):
     _inherit = 'stock.config.settings'
@@ -46,12 +40,6 @@ class stock_config_settings(models.TransientModel):
         default_model='product.template', default=True,
         help='Allows you to generate requisitions in automatic,' +
         ' when procurement orders are created')
-
-    @api.one
-    def set_default_purchase_requisition(self):
-        products = self.env['product.template'].search([])
-        for product in products:
-            product.write({'purchase_requisition': True})
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

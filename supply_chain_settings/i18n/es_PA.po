@@ -19,7 +19,7 @@ msgstr ""
 #: help:purchase.config.settings,default_purchase_requisition:0
 #: help:stock.config.settings,default_purchase_requisition:0
 msgid "Allows you to generate requisitions in automatic, when procurement orders are created"
-msgstr "Permite generar las requisiciones en automático, cuando se crean órdenes de compra"
+msgstr "Permite generar las requisiciones en automático, cuando se crean órdenes de adquisición"
 
 #. module: supply_chain_settings
 #: field:purchase.config.settings,default_purchase_requisition:0
