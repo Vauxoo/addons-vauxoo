@@ -66,7 +66,7 @@ class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
     discontinued_product_id = fields.Many2one(
-        'product.product', string='Discotinued Product',
+        'product.product', string='Discontinued Product',
         domain=[('state2', 'in', ['obsolete'])],
         help='When introduce a discontinued product to the product field in'
              ' the purchase order line then will raise a warning and will auto'

@@ -108,7 +108,8 @@ class ReplacementProductLines(models.TransientModel):
     _name = 'replacement.product.line'
     _description = 'Select a replacement for every discontinued product'
 
-    replacement_id = fields.Many2one('replacement.product')
+    replacement_id = fields.Many2one(
+        'replacement.product', 'Replacement Wizard')
     discontinued_product_id = fields.Many2one(
         'product.product', 'Discontinued Product',
         domain=[('state2', '=', 'obsolete')])
