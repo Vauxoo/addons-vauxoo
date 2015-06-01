@@ -135,13 +135,36 @@
     <div class="oe_row">
         <div class="oe_span6">
             <p class='oe_mt32'>
-                A wizard was created to be popup everytime you are going to
-                use a discontinued product so you can view and select a
-                replacement product.
+                Add a new functionality that can be access from the
+                <code class="docutils literal">Check Discontinued Products</code>
+                button in the purchase order form. This will let to check if a
+                purchase order has discontinued product and will let to update
+                the purchase order lines with a replacement of the
+                discontinued products configured at the product form.
             </p>
         </div>
         <div class="oe_span6">
+            <img class="oe_picture oe_screenshot" src="replacement.product.button.png">
+        </div>
+    </div>
+    <div class="oe_row">
+        <div class="oe_span6">
             <img class="oe_picture oe_screenshot" src="replacement.product.wizard.png">
+        </div>
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+                Note: This wizard works in the case that a purchase order was
+                created and then one o more products in the order lines have
+                been discontinued.
+            </p>
+            <p class='oe_mt32'>
+                The Purchase order will be updated with the new replacements
+                selected: The replacement product will be put in the
+                <code class="docutils literal">Product</code> field and the
+                discontinued product will be move to the
+                <code class="docutils literal">Discontinued Product</code>
+                field.
+            </p>
         </div>
     </div>
 </section>
