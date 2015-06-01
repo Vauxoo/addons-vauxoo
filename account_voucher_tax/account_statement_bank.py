@@ -33,7 +33,7 @@ class account_bank_statement_line(osv.osv):
 
     _inherit = 'account.bank.statement.line'
 
-    def _get_exchange_lines(
+    def _get_exchange_lines_tax(
             self, cr, uid, parent,
             move_line_counterpart, move_line_payment_tax, amount_residual,
             company_currency, current_currency, context=None):
@@ -425,7 +425,7 @@ class account_bank_statement_line(osv.osv):
             cr, uid, parent.company_id.currency_id, amount_residual) and\
                 move_line_payment_tax.currency_id:
 
-            exch_lines = self._get_exchange_lines(
+            exch_lines = self._get_exchange_lines_tax(
                 cr, uid, parent, move_line_counterpart, move_line_payment_tax,
                 amount_residual, company_currency, statement_currency,
                 context=context)
