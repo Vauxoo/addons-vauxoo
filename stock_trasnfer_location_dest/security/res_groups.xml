@@ -1,0 +1,10 @@
+<openerp>
+    <data>
+
+        <record id="res_group_change_location" model="res.groups">
+          <field name="name">Change Destination Location</field>
+        </record>
+
+
+    </data>
+</openerp>

@@ -35,6 +35,7 @@ transfer any picking of a easy way
         "stock"
     ],
     "data": [
+        'security/res_groups.xml',
         'wizard/transfer_detail_view.xml',
     ],
     "installable": True,
