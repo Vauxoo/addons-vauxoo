@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
+from openerp import models, fields, api
 
 
 class stock_transfer_details(models.TransientModel):
@@ -31,10 +31,16 @@ class stock_transfer_details(models.TransientModel):
         res = super(stock_transfer_details, self).default_get(cr, uid,
                                                               l_fields,
                                                               context=context)
-        print res
+        loc_id = set()
+        for item in res.get('item_ids'):
+            loc_id.add(item.get('destinationloc_id'))
+        for item in res.get('packop_ids'):
+            loc_id.add(item.get('destinationloc_id'))
+        if loc_id:
+            res.update({'dest_location_id': tuple(loc_id)[0]})
         return res
 
-    dest_location_id = fields.Many2one('stock.lcation',
+    dest_location_id = fields.Many2one('stock.location',
                                        string='Destination Location',
                                        help='Destination Location of the '
                                        'transfer if you change this '
@@ -44,5 +50,12 @@ class stock_transfer_details(models.TransientModel):
     change_location = fields.Boolean('Change Location',
                                      help='Check if you want to change the '
                                      'destination location of this transfer')
+
+    @api.onchange('dest_location_id')
+    def onchange_location_dest(self):
+        for item in self.item_ids:
+            item.destinationloc_id = self.dest_location_id.id
+        for pack in self.packop_ids:
+            pack.destinationloc_id = self.dest_location_id.id
 
     # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
