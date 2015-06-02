@@ -29,7 +29,7 @@
     "version": "1.0",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
-    "category": "",
+    "category": "Inventory Control",
     "depends": [
         "stock",
     ],
