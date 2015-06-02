@@ -41,7 +41,7 @@ class ProductTemplate(models.Model):
     @api.depends('incoming_qty')
     def _compute_purchase_incoming_qty(self):
         """
-        When the Incomming Qty is update then Purchase Incoming Qty is
+        When the Incoming Qty is update then Purchase Incoming Qty is
         calculate. This Qty is calculated taking into account the purchase
         incoming qty of every product variant
         """
