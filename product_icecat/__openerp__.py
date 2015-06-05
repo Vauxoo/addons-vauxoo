@@ -17,42 +17,43 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-############################################################################################
+###############################################################################
 {
-    "name": "Product Information Import from icecat", 
-    "version": "1.0", 
-    "author": "Zikzakmedia SL", 
-    "category": "Added functionality", 
+    "name": "Product Information Import from icecat",
+    "version": "1.1",
+    "author": "Vauxoo, Zikzakmedia SL",
+    "category": "Added functionality",
     "description": """
     Import information XML from icecat to OpenERP products.
-    This wizard download XML in openerp-server (addons/product_icecat/xml) and after process data mapping line to product import.
+    This wizard download XML in openerp-server (addons/product_icecat/xml) and
+    after process data mapping line to product import.
     - Language import: User preference or force into wizard (option)
     - HTML Category option: create list details
     - FTP image
     http://www.icecat.biz/
-    """, 
-    "website": "http://www.zikzakmedia.com", 
-    "license": "", 
+    """,
+    "website": "http://www.zikzakmedia.com",
+    "license": "",
     "depends": [
-        "base", 
-        "product_manufacturer", 
+        "base",
+        "product_manufacturer",
         "product_images_olbs"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/ir.model.access.csv", 
-        "product_icecat.xml", 
-        "product_manufacturer.xml", 
+        "security/ir.model.access.csv",
+        "product_icecat.xml",
+        "product_manufacturer.xml",
         "wizard/wizard_product_icecat.xml"
-    ], 
+    ],
     "test": [
         ""
-    ], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False, # This module need to stay here, but until a customer
+    # ask for migration it will be done
+    "auto_install": False,
     "active": False
 }

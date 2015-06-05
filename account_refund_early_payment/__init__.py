@@ -1,10 +1,9 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+#  ############ Credits #######################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
 #    Audited by: Jose Morales <jose@vauxoo.com>
@@ -25,4 +24,3 @@
 
 from . import model
 from . import wizard
-

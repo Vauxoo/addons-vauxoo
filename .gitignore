@@ -5,6 +5,7 @@ _build/
 # dotfiles
 .*
 !.gitignore
+!.travis.yml
 # compiled python files
 *.py[co]
 # setup.py egg_info

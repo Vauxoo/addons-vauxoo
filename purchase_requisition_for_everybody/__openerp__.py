@@ -20,40 +20,42 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Purchase Requisition for Everybody", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Security", 
+    "name": "Purchase Requisition for Everybody",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Security",
     "description": """
 Records Rule for Purchase_Requisition Module
 ============================================
 
-Created 2 groups which are Requisition / User and Requisition / Manager and new purchase requisition menu to separate from purchase menu
+Created 2 groups which are Requisition / User and Requisition / Manager and new
+purchase requisition menu to separate from purchase menu
 
 With Requisition / User we can see only your own requisition and modify these
 With Requisition / Manage  we can see whole requisition and modify these
 
-You need any of those 2 groups for you can see the new purchase requisition menu
+You need any of those 2 groups for you can see the new purchase requisition
+menu
 
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    """,
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "purchase", 
+        "base",
+        "purchase",
         "purchase_requisition"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/requisition_security.xml", 
-        "view/purchase_requisition_view.xml", 
+        "security/requisition_security.xml",
+        "view/purchase_requisition_view.xml",
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

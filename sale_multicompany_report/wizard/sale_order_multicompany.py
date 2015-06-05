@@ -26,12 +26,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
+import base64
+
+import openerp.netsvc as netsvc
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
-import base64
-import openerp.netsvc as netsvc
-
+from openerp.osv.osv import except_osv
 
 class print_sale_order_report(osv.TransientModel):
 
@@ -42,7 +42,6 @@ class print_sale_order_report(osv.TransientModel):
 
     def __get_company_object(self, cr, uid):
         user = self.pool.get('res.users').browse(cr, uid, uid)
-        print user
         if not user.company_id:
             raise except_osv(_('ERROR !'), _(
                 'There is no company configured for this user'))
@@ -60,7 +59,7 @@ class print_sale_order_report(osv.TransientModel):
                 "ir.actions.report.xml").browse(cr, uid, rep_id)
 
         service = netsvc.LocalService('report.' + report.report_name)
-        (result, format) = service.create(cr, uid, context[
+        (result, dummy) = service.create(cr, uid, context[
                                           'active_ids'], {'model': context['active_model']}, {})
         return base64.encodestring(result)
 
