@@ -183,7 +183,7 @@ class account_invoice(osv.Model):
         if values.get('date_invoice', False) and\
                 not values.get('invoice_datetime', False):
             user_hour = self._get_time_zone(cr, uid, [], context=context)
-            time_invoice = datetime.time(abs(user_hour), 0, 0)
+            time_invoice = datetime.datetime.utcnow().time()
 
             date_invoice = datetime.datetime.strptime(
                 values['date_invoice'], '%Y-%m-%d').date()
