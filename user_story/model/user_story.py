@@ -31,7 +31,7 @@ _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
 class user_story(osv.Model):
     _name = 'user.story'
     _description = 'User Story'
-    _order = 'id desc'
+    _order = 'id desc'                                                                                                                                                                                                                                                                                                                                                                                                                          
     _inherit = ['mail.thread']
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -504,7 +504,6 @@ class acceptability_criteria(osv.Model):
         return link
 
     def approve(self, cr, uid, ids, context=None):
-        import pdb; pdb.set_trace()
         context = context or {}
         criterial_brw2 = self.browse(cr, uid, ids[0])
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
