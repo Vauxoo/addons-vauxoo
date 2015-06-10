@@ -56,8 +56,8 @@ siguientes:
         "demo/demo.xml"
     ],
     "data": [
-        "data/data_us_report.xml",
-        "report/user_story_report_view.xml",
+        #"data/data_us_report.xml",
+        #"report/user_story_report_view.xml",
         "security/userstory_security.xml",
         "security/ir.model.access.csv",
         "view/userstory_view.xml",
@@ -66,7 +66,8 @@ siguientes:
         "view/hr_timesheet_all_view.xml",
         "view/custom_project_task_view.xml",
         "data/data.xml",
-        "data/user_story_template.xml"
+        "data/user_story_template.xml",
+        "report/user_story_report.xml"
     ],
     "test": [],
     "js": [],

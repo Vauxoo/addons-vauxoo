@@ -429,7 +429,8 @@ class user_story(osv.Model):
                                         'email_from': user.email,
                                     }, context=context)
             mail_mail.send(cr, uid, [mail_id],
-                        recipient_ids=followers,
+                        #recipient_ids=followers,
+                        followers,
                         context=context)
         return self.write(cr, uid, ids,
                           {'approval_user_id': uid,
@@ -503,6 +504,7 @@ class acceptability_criteria(osv.Model):
         return link
 
     def approve(self, cr, uid, ids, context=None):
+        import pdb; pdb.set_trace()
         context = context or {}
         criterial_brw2 = self.browse(cr, uid, ids[0])
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
@@ -541,11 +543,13 @@ class acceptability_criteria(osv.Model):
         partner_ids.append(user_story_brw.owner_id.partner_id.id)
         if user_story_brw.user_id:
             partner_ids.append(user_story_brw.user_id.partner_id.id)
-        if user_story_brw.user_execute_idi:
+        if user_story_brw.user_execute_id:
             partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
+        # model_data_id = data_obj._get_id(cr, uid, 'user_story',
+        #                                  'email_compose_message_wizard_inherit_form_without_partner')
         model_data_id = data_obj._get_id(cr, uid, 'user_story',
-                                         'email_compose_message_wizard_inherit_form_without_partner')
+                                         'email_compose_message_wizard_inherit_form')
         res_id = data_obj.browse(cr, uid, model_data_id, context=context).res_id
         ction = {
             'type': 'ir.actions.act_window',
