@@ -85,7 +85,9 @@ class account_aging_wizard_partner(osv.osv_memory):
         context = dict(context or {})
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            spans = [line.aaw_id.period_length * x for x in range(5)]
+            direction = line.aaw_id.direction == 'past'
+            spans = [line.aaw_id.period_length * x * (direction and 1 or -1)
+                     for x in range(5)]
             res[line.id] = dict((fn, 0.0) for fn in field_names)
             for doc in line.document_ids:
                 if 'residual' in field_names:
@@ -94,22 +96,43 @@ class account_aging_wizard_partner(osv.osv_memory):
                     res[line.id]['payment'] += doc.payment
                 if 'total' in field_names:
                     res[line.id]['total'] += doc.total
-                if 'not_due' in field_names:
+
+                if 'not_due' in field_names and not direction:
+                    # We will use same field not due to store all due amounts
+                    if doc.due_days > 0:
+                        res[line.id]['not_due'] += doc.residual
+                if 'span01' in field_names and not direction:
+                    if doc.due_days <= 0 and doc.due_days > spans[1]:
+                        res[line.id]['span01'] += doc.residual
+                if 'span02' in field_names and not direction:
+                    if doc.due_days <= spans[1] and doc.due_days > spans[2]:
+                        res[line.id]['span02'] += doc.residual
+                if 'span03' in field_names and not direction:
+                    if doc.due_days <= spans[2] and doc.due_days > spans[3]:
+                        res[line.id]['span03'] += doc.residual
+                if 'span04' in field_names and not direction:
+                    if doc.due_days <= spans[3] and doc.due_days > spans[4]:
+                        res[line.id]['span04'] += doc.residual
+                if 'span05' in field_names and not direction:
+                    if doc.due_days <= spans[4]:
+                        res[line.id]['span05'] += doc.residual
+
+                if 'not_due' in field_names and direction:
                     if doc.due_days <= 0:
                         res[line.id]['not_due'] += doc.residual
-                if 'span01' in field_names:
+                if 'span01' in field_names and direction:
                     if doc.due_days > 0 and doc.due_days <= spans[1]:
                         res[line.id]['span01'] += doc.residual
-                if 'span02' in field_names:
+                if 'span02' in field_names and direction:
                     if doc.due_days > spans[1] and doc.due_days <= spans[2]:
                         res[line.id]['span02'] += doc.residual
-                if 'span03' in field_names:
+                if 'span03' in field_names and direction:
                     if doc.due_days > spans[2] and doc.due_days <= spans[3]:
                         res[line.id]['span03'] += doc.residual
-                if 'span04' in field_names:
+                if 'span04' in field_names and direction:
                     if doc.due_days > spans[3] and doc.due_days <= spans[4]:
                         res[line.id]['span04'] += doc.residual
-                if 'span05' in field_names:
+                if 'span05' in field_names and direction:
                     if doc.due_days > spans[4]:
                         res[line.id]['span05'] += doc.residual
 
@@ -362,6 +385,12 @@ class account_aging_partner_wizard(osv.osv_memory):
         'period_length': fields.integer(
             'Period Length (days)', required=True),
         'user_id': fields.many2one('res.users', 'User'),
+        'direction': fields.selection(
+            [
+                ('future', 'Future'),
+                ('past', 'Past')],
+            "Direction",
+            required=True),
     }
 
     _defaults = {
@@ -372,6 +401,7 @@ class account_aging_partner_wizard(osv.osv_memory):
         'period_length': 30,
         'user_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u, u,
                                                                       cx).id,
+        'direction': lambda *args: 'past',
     }
 
     def _get_lines_by_partner_without_invoice(
@@ -495,9 +525,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                     payment = (sel == 'customer' and aml_brw.credit or
                                sel == 'supplier' and aml_brw.debit or 0.0)
                 if not reconcile_id:
-                    date_due = False
-                    if aml_brw.journal_id.type in ('sale', 'purchase'):
-                        date_due = aml_brw.date_maturity or aml_brw.date
+                    date_due = aml_brw.date_maturity or aml_brw.date
                     res.append({
                         'partner_id': aml_brw.partner_id.id,
                         'aml_id': aml_brw.id,
@@ -571,14 +599,24 @@ class account_aging_partner_wizard(osv.osv_memory):
             return res
 
         for inv_brw in inv_obj.browse(cr, uid, inv_ids):
+            currency_id = (inv_brw.currency_id.id !=
+                           inv_brw.company_id.currency_id.id and
+                           inv_brw.currency_id.id)
             payment = self._get_aml(
                 cr, uid,
                 [aml.id for aml in inv_brw.payment_ids],
-                inv_type, inv_brw.currency_id.id)
+                inv_type, currency_id)
             residual = inv_brw.amount_total + payment
 
             if not residual:
                 continue
+
+            date_due = [amx_brw.date_maturity
+                        for amx_brw in inv_brw.move_id.line_id
+                        if amx_brw.account_id.type in (
+                            'receivable', 'payable')]
+            date_due = date_due and min(date_due)
+            date_due = date_due or inv_brw.date_due or inv_brw.date_invoice
 
             res.append({
                 'invoice_id': inv_brw.id,
@@ -587,7 +625,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                 'payment': payment,
                 'residual': residual,
                 'total': inv_brw.amount_total,
-                'date_due': inv_brw.date_due or inv_brw.date_invoice,
+                'date_due': date_due,
                 'date_emission': inv_brw.date_invoice,
             })
 

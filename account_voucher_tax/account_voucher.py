@@ -168,9 +168,13 @@ class account_voucher(osv.Model):
                     context['date'] = voucher.date
                     reference_amount = amount_total_tax * abs(factor)
 
-                    if current_currency != company_currency:
+                    statement_currency_line = False
+                    if current_currency != line.currency_id.id:
+                        statement_currency_line = line.currency_id.id
+
+                    if current_currency != company_currency or statement_currency_line:
                         amount_tax_currency += cur_obj.compute(
-                            cr, uid, current_currency, company_currency,
+                            cr, uid, statement_currency_line or current_currency, company_currency,
                             reference_amount, context=context)
                     else:
                         amount_tax_currency += reference_amount
@@ -183,8 +187,9 @@ class account_voucher(osv.Model):
                         reference_amount, current_currency, False,
                         move_line_tax_dict.get('tax_id'),
                         move_line_tax_dict.get('tax_analytic_id'),
-                        amount_base_secondary,
-                        factor, context=context)
+                        amount_base_secondary, factor,
+                        statement_currency_line=statement_currency_line,
+                        context=context)
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(
                             cr, uid, move_line_tax, context=context)
@@ -240,7 +245,9 @@ class account_voucher(osv.Model):
 
         if not currency_obj.is_zero(cr, uid, current_currency_obj, line_total)\
                 or (company_currency == current_currency and line_total):
-            diff = line_total
+            sign = voucher.type in ('sale', 'receipt') and -1 or 1
+
+            diff = line_total * sign
 
             move_line = {
                 'name': name,
@@ -248,8 +255,8 @@ class account_voucher(osv.Model):
                 'move_id': move_id,
                 'partner_id': voucher.partner_id.id,
                 'date': voucher.date,
-                'credit': diff > 0 and diff or 0.0,
-                'debit': diff < 0 and -diff or 0.0,
+                'debit': diff > 0 and diff or 0.0,
+                'credit': diff < 0 and -diff or 0.0,
                 'currency_id':
                     company_currency != current_currency and
                     current_currency or False,
@@ -294,7 +301,8 @@ class account_voucher(osv.Model):
                                  line_tax, acc_a,
                                  # informacion de lineas de impuestos
                                  amount_base_tax,
-                                 factor=0, context=None):
+                                 factor=0, statement_currency_line=None,
+                                 context=None):
 
         account_collected_id = dest_account_id
 
@@ -302,6 +310,9 @@ class account_voucher(osv.Model):
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
+
+        reference_currency_id = statement_currency_line or\
+            reference_currency_id
 
         amount_base, tax_secondary = self._get_base_amount_tax_secondary(
             cr, uid, line_tax, amount_base_tax * factor, reference_amount,
@@ -372,6 +383,8 @@ class account_voucher(osv.Model):
             debit_line_vals.pop('is_tax_voucher')
 
         account_obj = self.pool.get('account.account')
+        cur_obj = self.pool.get('res.currency')
+
         reference_amount = abs(reference_amount)
         src_acct, dest_acct = account_obj.browse(
             cr, uid, [src_account_id, dest_account_id], context=context)
@@ -380,33 +393,42 @@ class account_voucher(osv.Model):
             or src_acct.company_id.currency_id.id
         dest_main_currency_id = dest_acct.currency_id\
             and dest_acct.currency_id.id or dest_acct.company_id.currency_id.id
-        cur_obj = self.pool.get('res.currency')
-        if reference_currency_id != src_main_currency_id:
-            # fix credit line:
-            credit_line_vals['credit'] = cur_obj.compute(
-                cr, uid, reference_currency_id, src_main_currency_id,
-                reference_amount, context=context)
-            credit_line_vals['amount_tax_unround'] = cur_obj.compute(
-                cr, uid, reference_currency_id, src_main_currency_id,
-                abs(reference_amount), round=False, context=context)
-            if (not src_acct.currency_id)\
-                    or src_acct.currency_id.id == reference_currency_id:
-                credit_line_vals.update(
-                    currency_id=reference_currency_id,
-                    amount_currency=-reference_amount)
-        if reference_currency_id != dest_main_currency_id:
-            # fix debit line:
-            debit_line_vals['debit'] = cur_obj.compute(
-                cr, uid, reference_currency_id, dest_main_currency_id,
-                reference_amount, context=context)
-            debit_line_vals['amount_base'] = cur_obj.compute(
-                cr, uid, reference_currency_id, dest_main_currency_id,
-                abs(amount_base), context=context)
-            if (not dest_acct.currency_id)\
-                    or dest_acct.currency_id.id == reference_currency_id:
-                debit_line_vals.update(
-                    currency_id=reference_currency_id,
-                    amount_currency=reference_amount)
+
+        # get rate of bank statement if rate is different to currency
+        if context.get('st_line_currency_rate') and\
+                statement_currency_line != company_currency:
+            credit_line_vals['credit'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                reference_amount/context.get('st_line_currency_rate'))
+            debit_line_vals['debit'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                reference_amount/context.get('st_line_currency_rate'))
+            debit_line_vals['amount_base'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                abs(amount_base)/context.get('st_line_currency_rate'))
+        else:
+            if reference_currency_id != src_main_currency_id:
+                # fix credit line:
+                credit_line_vals['credit'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, src_main_currency_id,
+                    reference_amount, context=context)
+
+            if reference_currency_id != dest_main_currency_id:
+                # fix debit line:
+                debit_line_vals['debit'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, dest_main_currency_id,
+                    reference_amount, context=context)
+                debit_line_vals['amount_base'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, dest_main_currency_id,
+                    abs(amount_base), context=context)
+
+        if reference_currency_id != company_currency:
+            debit_line_vals.update(
+                currency_id=reference_currency_id,
+                amount_currency=reference_amount)
+            credit_line_vals.update(
+                currency_id=reference_currency_id,
+                amount_currency=-reference_amount)
 
         if self.pool.get('account.journal').browse(
                 cr, uid, journal).special_journal:

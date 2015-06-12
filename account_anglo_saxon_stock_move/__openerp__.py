@@ -33,7 +33,7 @@ Account Anglo-Saxon Stock Move
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "account_anglo_saxon",
+        "account_anglo_saxon_missing_key",
         "stock_move_entries",
     ],
     "demo": [],
