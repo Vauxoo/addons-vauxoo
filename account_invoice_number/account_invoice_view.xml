@@ -7,12 +7,14 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet[@string='Invoice']/h1/field[@name='number']" position="attributes">
+                <xpath expr="//field[@name='number']" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </xpath>
-                <xpath expr="/form/sheet[@string='Invoice']/h1/field[@name='number']" position="after">
-                    <field name="internal_number"/>
+                <xpath expr="//field[@name='internal_number']" position="replace">
                 </xpath>
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="internal_number" readonly="1" class="oe_inline"/>
+                 </xpath>
             </field>
         </record>
 
