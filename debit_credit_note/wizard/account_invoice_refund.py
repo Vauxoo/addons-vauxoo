@@ -22,7 +22,8 @@
 
 from openerp.osv import osv
 from openerp.tools.translate import _
-import netsvc
+from openerp import netsvc
+from openerp.tools.safe_eval import safe_eval as eval # pylint: disable=W0622
 
 
 class account_invoice_refund(osv.osv_memory):
@@ -38,11 +39,11 @@ class account_invoice_refund(osv.osv_memory):
         inv_type = context.get('type', 'out_invoice')
         company_id = user_obj.browse(
             cr, uid, uid, context=context).company_id.id
-        type = (inv_type == 'out_invoice') and 'sale_refund' or \
+        ttype = (inv_type == 'out_invoice') and 'sale_refund' or \
                (inv_type == 'out_refund') and 'sale' or \
                (inv_type == 'in_invoice') and 'purchase_refund' or \
                (inv_type == 'in_refund') and 'purchase'
-        journal = obj_journal.search(cr, uid, [('type', '=', type), (
+        journal = obj_journal.search(cr, uid, [('type', '=', ttype), (
             'company_id', '=', company_id)], limit=1, context=context)
         return journal and journal[0] or False
 
@@ -61,13 +62,13 @@ class account_invoice_refund(osv.osv_memory):
                             view_type=view_type,
                             context=context,
                             toolbar=toolbar, submenu=submenu)
-        type = context.get('type', 'out_invoice')
+        ttype = context.get('type', 'out_invoice')
         company_id = user_obj.browse(
             cr, uid, uid, context=context).company_id.id
-        journal_type = (type == 'out_invoice') and 'sale_refund' or \
-                       (type == 'out_refund') and 'sale' or \
-                       (type == 'in_invoice') and 'purchase_refund' or \
-                       (type == 'in_refund') and 'purchase'
+        journal_type = (ttype == 'out_invoice') and 'sale_refund' or \
+                       (ttype == 'out_refund') and 'sale' or \
+                       (ttype == 'in_invoice') and 'purchase_refund' or \
+                       (ttype == 'in_refund') and 'purchase'
         for field in res['fields']:
             if field == 'journal_id':
                 journal_select = journal_obj._name_search(cr, uid, '',
@@ -80,7 +81,7 @@ class account_invoice_refund(osv.osv_memory):
                 res['fields'][field]['selection'] = journal_select
         return res
 
-    def _get_period(self, cr, uid, context={}):
+    def _get_period(self, cr, uid, context=None):
         """
         Return  default account period value
         """
@@ -91,7 +92,7 @@ class account_invoice_refund(osv.osv_memory):
             period_id = ids[0]
         return period_id
 
-    def _get_orig(self, cr, uid, inv, context={}):
+    def _get_orig(self, cr, uid, inv, context=None):
         """
         Return  default origin value
         """
@@ -129,6 +130,7 @@ class account_invoice_refund(osv.osv_memory):
             company = res_users_obj.browse(
                 cr, uid, uid, context=context).company_id
             journal_id = form.journal_id.id
+            inv = None
             for inv in inv_obj.browse(cr, uid, context.get('active_ids'),
                                       context=context):
                 if inv.state in ['draft', 'proforma2', 'cancel']:
@@ -266,8 +268,8 @@ class account_invoice_refund(osv.osv_memory):
                      (inv.type == 'out_invoice') and 'action_invoice_tree3' or \
                      (inv.type == 'in_invoice') and 'action_invoice_tree4'
             result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
-            id = result and result[1] or False
-            result = act_obj.read(cr, uid, id, context=context)
+            ids = result and result[1] or False
+            result = act_obj.read(cr, uid, ids, context=context)
             invoice_domain = eval(result['domain'])
             invoice_domain.append(('id', 'in', created_inv))
             result['domain'] = invoice_domain
