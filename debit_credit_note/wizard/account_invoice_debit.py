@@ -23,6 +23,7 @@ import time
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+from openerp.tools.safe_eval import safe_eval as eval # pylint: disable=W0622
 
 
 class account_invoice_debit(osv.TransientModel):
@@ -57,11 +58,11 @@ class account_invoice_debit(osv.TransientModel):
         inv_type = context.get('type', 'out_invoice')
         company_id = user_obj.browse(
             cr, uid, uid, context=context).company_id.id
-        type = (inv_type == 'out_invoice') and 'sale_refund' or \
+        ttype = (inv_type == 'out_invoice') and 'sale_refund' or \
                (inv_type == 'out_refund') and 'sale' or \
                (inv_type == 'in_invoice') and 'purchase_refund' or \
                (inv_type == 'in_refund') and 'purchase'
-        journal = obj_journal.search(cr, uid, [('type', '=', type), (
+        journal = obj_journal.search(cr, uid, [('type', '=', ttype), (
             'company_id', '=', company_id)], limit=1, context=context)
         return journal and journal[0] or False
 
@@ -80,20 +81,20 @@ class account_invoice_debit(osv.TransientModel):
             toolbar=toolbar, submenu=submenu)
         # Debit note only from customer o purchase invoice
         # type = context.get('journal_type', 'sale_refund')
-        type = context.get('journal_type', 'sale')
-        if type in ('sale', 'sale_refund'):
-            type = 'sale'
+        ttype = context.get('journal_type', 'sale')
+        if ttype in ('sale', 'sale_refund'):
+            ttype = 'sale'
         else:
-            type = 'purchase'
+            ttype = 'purchase'
         for field in res['fields']:
             if field == 'journal_id':
                 journal_select = journal_obj._name_search(cr, uid, '', [(
-                    'type', '=', type)], context=context, limit=None,
+                    'type', '=', ttype)], context=context, limit=None,
                     name_get_uid=1)
                 res['fields'][field]['selection'] = journal_select
         return res
 
-    def _get_period(self, cr, uid, context={}):
+    def _get_period(self, cr, uid, context=None):
         """
         Return  default account period value
         """
@@ -104,7 +105,7 @@ class account_invoice_debit(osv.TransientModel):
             period_id = ids[0]
         return period_id
 
-    def _get_orig(self, cr, uid, inv, ref, context={}):
+    def _get_orig(self, cr, uid, inv, ref, context=None):
         """
         Return  default origin value
         """
@@ -128,6 +129,8 @@ class account_invoice_debit(osv.TransientModel):
         inv_tax_obj = self.pool.get('account.invoice.tax')
         inv_line_obj = self.pool.get('account.invoice.line')
         res_users_obj = self.pool.get('res.users')
+        # TODO: This code needs deep reviewing
+        mode = None
         if context is None:
             context = {}
 
@@ -139,6 +142,7 @@ class account_invoice_debit(osv.TransientModel):
             company = res_users_obj.browse(
                 cr, uid, uid, context=context).company_id
             journal_id = form.journal_id.id
+            inv = None
             for inv in inv_obj.browse(cr, uid, context.get('active_ids'),
                                       context=context):
                 if inv.state in ['draft', 'proforma2', 'cancel']:
@@ -252,9 +256,9 @@ class account_invoice_debit(osv.TransientModel):
                      (inv.type == 'in_invoice') and 'action_invoice_tree4'
             # we get the model
             result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
-            id = result and result[1] or False
+            ids = result and result[1] or False
             # we read the act window
-            result = act_obj.read(cr, uid, id, context=context)
+            result = act_obj.read(cr, uid, ids, context=context)
             # we add the new invoices into domain list
             invoice_domain = eval(result['domain'])
             invoice_domain.append(('id', 'in', created_inv))
