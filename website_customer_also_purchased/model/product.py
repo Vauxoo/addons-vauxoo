@@ -48,7 +48,9 @@ class product_template(osv.osv):
         pid = cr.fetchall()
         for pr in pid:
             pids_t.append(pr[0])
-        pids = '(%s)' % ', '.join(map(repr, tuple(pids_t)))
+        pids = '(%s)' % ', '.join(map  # pylint: disable=W0141,W0110
+                                  (repr,
+                                   tuple(pids_t)))
         cr.execute("\
             SELECT product_tmpl_id\
             FROM product_product\
