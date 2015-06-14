@@ -598,7 +598,8 @@ Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos just
                                                    'body_html': html,
                                                    'auto_delete': True,
                                                }, context=context)
-                    task.user_id and mail_mail.send(cr, uid, [mail_id],
-                                   recipient_ids=[task.user_id.partner_id.id],
-                                   context=context)
+                    if task.user_id:
+                        mail_mail.send(cr, uid, [mail_id],
+                                       recipient_ids=[task.user_id.partner_id.id],
+                                       context=context)
         return True

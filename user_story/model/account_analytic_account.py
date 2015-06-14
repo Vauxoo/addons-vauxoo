@@ -37,21 +37,21 @@ class account_analytic_account(osv.Model):
         return res
 
     def _get_invoiceables_hours(self, cr, uid, ids, args,
-                                fields, context=None):
+                                _fields, context=None):
         if context is None:
             context = {}
         res = {}
         total = 0
-        for id in ids:
+        for _id in ids:
             acl_obj = self.pool.get('account.analytic.line')
-            acl_srch = acl_obj.search(cr, uid, [('account_id', '=', id)])
+            acl_srch = acl_obj.search(cr, uid, [('account_id', '=', _id)])
             acl_brw = acl_obj.browse(cr, uid, acl_srch)
             for acl in acl_brw:
                 if acl.to_invoice:
                     total = total + (acl.unit_amount -
                                      (acl.unit_amount *
                                       (acl.to_invoice.factor/100)))
-            res[id] = total
+            res[_id] = total
         return res
 
     _columns = {
