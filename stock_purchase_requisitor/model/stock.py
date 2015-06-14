@@ -25,7 +25,7 @@
 
 from openerp.osv import osv, fields
 
-purchase_order_type = [
+PURCHASE_ORDER_TYPE = [
     ('materials', 'Materials'),
     ('service', 'Services'),
 ]
