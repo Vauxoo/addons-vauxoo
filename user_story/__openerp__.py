@@ -60,6 +60,7 @@ user stories directly in your system.
         "view/hr_timesheet_view.xml",
         "view/hr_timesheet_all_view.xml",
         "view/custom_project_task_view.xml",
+        "view/account_analytic_account.xml",
         "data/data.xml",
         "data/user_story_template.xml"
     ],

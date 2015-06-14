@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+  <data>
+
+    <record model="ir.ui.view" id="inherit_account_analytic_account_form_form">
+      <field name="name">inherit.account.analytic.account.form.form</field>
+      <field name="model">account.analytic.account</field>
+      <field name="inherit_id" ref="account_analytic_analysis.account_analytic_account_form_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='quantity_max']" position="after">
+          <div attrs="{'invisible': [('quantity_max','=',0)]}" class="oe_grey">
+            <field name="invoiceables_hours" class="oe_inline"/> Units Invoiceable
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</openerp>
