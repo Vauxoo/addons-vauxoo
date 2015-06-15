@@ -25,6 +25,6 @@ install:
 
 script:
   # Run pylint and flake8 test
-  - pylint --rcfile=${HOME}/.pylint.conf ${INCLUDE}
-  - flake8 --config=${HOME}/.flake8__init__.cfg ${INCLUDE}
-  - flake8 --config=${HOME}/.flake8.cfg ${INCLUDE}
+  - if [ "x${INCLUDE}" == "x" ]; then exit 0; else pylint --rcfile=${HOME}/.pylint.conf ${INCLUDE}; fi
+  - if [ "x${INCLUDE}" == "x" ]; then exit 0; else flake8 --config=${HOME}/.flake8__init__.cfg ${INCLUDE}; fi
+  - if [ "x${INCLUDE}" == "x" ]; then exit 0; else flake8 --config=${HOME}/.flake8.cfg ${INCLUDE}; fi
