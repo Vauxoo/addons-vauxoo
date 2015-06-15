@@ -39,7 +39,7 @@ class ProductProduct(models.Model):
         ('draft', 'In Development'),
         ('sellable', 'Normal'),
         ('end', 'End of Lifecycle'),
-        ('obsolete', 'Obsolete')], default='draft', string='State')
+        ('obsolete', 'Obsolete')], default='draft', string='State', copy=False)
 
     @api.multi
     def get_good_replacements(self):
