@@ -298,6 +298,6 @@ msgstr "Ayuda"
 
 #. module: account_voucher_tax
 #: model:account.tax,name:account_voucher_tax.account_voucher_tax_purchase_iva10_rete_isr
-msgid "RETENTION ISR 10% - Test"
+msgid "WITHHOLDING ISR 10% - Test"
 msgstr "RETENCIÓN ISR 10% - Prueba"
 
