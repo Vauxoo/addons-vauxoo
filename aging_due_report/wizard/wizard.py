@@ -525,9 +525,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                     payment = (sel == 'customer' and aml_brw.credit or
                                sel == 'supplier' and aml_brw.debit or 0.0)
                 if not reconcile_id:
-                    date_due = False
-                    if aml_brw.journal_id.type in ('sale', 'purchase'):
-                        date_due = aml_brw.date_maturity or aml_brw.date
+                    date_due = aml_brw.date_maturity or aml_brw.date
                     res.append({
                         'partner_id': aml_brw.partner_id.id,
                         'aml_id': aml_brw.id,
@@ -601,10 +599,13 @@ class account_aging_partner_wizard(osv.osv_memory):
             return res
 
         for inv_brw in inv_obj.browse(cr, uid, inv_ids):
+            currency_id = (inv_brw.currency_id.id !=
+                           inv_brw.company_id.currency_id.id and
+                           inv_brw.currency_id.id)
             payment = self._get_aml(
                 cr, uid,
                 [aml.id for aml in inv_brw.payment_ids],
-                inv_type, inv_brw.currency_id.id)
+                inv_type, currency_id)
             residual = inv_brw.amount_total + payment
 
             if not residual:
