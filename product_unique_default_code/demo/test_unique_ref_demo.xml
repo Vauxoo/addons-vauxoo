@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="product.product_product_5" model="product.product">
+            <field name="default_code">B3424</field>
+        </record>
+        
+    </data>
+</openerp>

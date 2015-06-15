@@ -28,33 +28,43 @@
 #
 ##############################################################################
 {
-    "name": "Cálculo de Pago de Comisiones por producto pagado", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Others", 
+    "name": "Salespeople Commission based on Payments",
+    "version": "0.1",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Others",
     "description": """
-Cálculo de Pago de Comisiones por producto pagado
-""", 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+Salespeople Commission based on Payments
+========================================
+""",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "account", 
-        "account_voucher", 
-        "product_historical_price", 
-        "baremo"
-    ], 
-    "demo": [], 
+        "base",
+        "account",
+        "product_historical_price",
+        "mail",
+        "baremo",
+        "message_post_model",
+        "report",
+    ],
+    "demo": [
+        "demo/account_invoice_demo.xml",
+    ],
     "data": [
-        "security/commission_payment_security.xml", 
-        "security/ir.model.access.csv", 
-        "commission_report.xml", 
-        "commission_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+        "security/commission_payment_security.xml",
+        "security/ir.model.access.csv",
+        "report/layouts.xml",
+        "report/template.xml",
+        "data/report_paperformat.xml",
+        "view/commission_report.xml",
+        "view/commission_view.xml",
+        "view/account_view.xml",
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,26 +1,14 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <!--        <record id="board_account_form_inherit" model="ir.ui.view">
-            <field name="name">board.account.form</field>
-            <field name="model">board.board</field>
-            <field name="inherit_id" ref="account.board_account_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="/form/board/column/action[@string='Draft Customer Invoices']" position="before">
-                    <action name="%(action_expense_report_tree)d" string="Purchase Order Waiting Approval"/>
-                </xpath>
-                
-            </field>
-        </record>-->
-
-        <record id="account_aged_balance_view" model="ir.ui.view">
+        <record id="account_aged_balance_view_inhr" model="ir.ui.view">
             <field name="name">Aged Partner Balance</field>
+            <field name="inherit_id" ref="account.account_aged_balance_view"/>
             <field name="model">account.aged.trial.balance</field>
-            <field name="inherit_id" ref="account.account_aged_balance_view" />
             <field name="arch" type="xml">
-                <xpath expr='//footer' position='replace'>
+                <xpath expr="//footer" position="replace">
                 </xpath>
-                <xpath expr='//separator[@string="Aged Partner Balance"]' position='before'>
+                <xpath expr="//separator[@string='Aged Partner Balance']" position="before">
                     <header>
                         <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
                         <button 
@@ -52,7 +40,6 @@
                 </xpath>
                 <xpath expr='//field[@name="direction_selection"]' position='after'>
                     <field name='type' required='1'/>
-                    <field name='target_move' required='1'/>
                 </xpath>
                 <xpath expr='//field[@name="journal_ids"]' position='after'>
                     <field 

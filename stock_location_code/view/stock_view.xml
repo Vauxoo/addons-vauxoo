@@ -2,29 +2,18 @@
 <openerp>
     <data>
 
-        <record model="ir.ui.view" id="view_stock_location_inherit3">
-            <field name="name">view.stock.location.inherit3</field>
-            <field name="model">stock.location</field>
-            <field name="inherit_id" ref="stock.view_location_form"/>
-            <field name="arch" type="xml">
-                    <xpath expr="//field[@name='name']" position="after">
- 			<field name="code"/>
-                    </xpath>
-	    </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_location_search_inherit3">
+       <record model="ir.ui.view" id="view_location_search_inherit3">
             <field name="name">view.location.search.inherit3</field>
             <field name="model">stock.location</field>
             <field name="inherit_id" ref="stock.view_location_search"/>
             <field name="arch" type="xml">
-                    <xpath expr="//field[@name='name']" position="replace">
-			<field name="name" filter_domain="['|', ('name','ilike',self),('code','ilike',self)]"/>
-                    </xpath>
-                    <xpath expr="//field[@name='name']" position="after">
-                        <field name="code" string="Code"/>
-                    </xpath>
-	    </field>
+                <xpath expr="//field[@name='name']" position="replace">
+        			<field name="name" filter_domain="['|', ('name','ilike',self),('loc_barcode','ilike',self)]"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="loc_barcode" />
+                </xpath>
+            </field>
         </record>
 
         <record model="ir.ui.view" id="view_location_tree_inherit3">
@@ -32,11 +21,10 @@
             <field name="model">stock.location</field>
             <field name="inherit_id" ref="stock.view_location_tree2"/>
             <field name="arch" type="xml">
-                    <xpath expr="//field[@name='complete_name']" position="after">
-			<field name="code"/>
-                    </xpath>
-	    </field>
+                <xpath expr="//field[@name='complete_name']" position="after">
+                    <field name="loc_barcode" string="Barcode"/>
+                </xpath>
+            </field>
         </record>
-
     </data>
 </openerp>

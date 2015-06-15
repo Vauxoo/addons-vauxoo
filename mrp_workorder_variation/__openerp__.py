@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -24,8 +23,8 @@
 ###############################################################################
 {
     "name": "MRP WorkOrder Variation", 
-    "version": "1.0", 
-    "author": "Vauxoo C.A", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
     "category": "MRP", 
     "description": """
 

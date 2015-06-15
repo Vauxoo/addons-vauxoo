@@ -1,0 +1,7 @@
+<openerp>
+    <data>
+        <record id="res_group_sale_order_line" model="res.groups">
+          <field name="name">Cost price in sale order line</field>
+        </record>
+    </data>
+</openerp>

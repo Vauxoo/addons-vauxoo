@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<!-- Variants with description template and 3 columns. -->
+		<template id="product_variants_description_3columns" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with 3 columns description">
+		  <xpath expr="//div[@class='col-sm-5 col-md-5 col-lg-4 col-lg-offset-1']" position="after">
+		  	<div class="col-sm-3 col-md-3 col-lg-3 descriptions_column">
+		  	<t t-if="product.attribute_line_ids">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+			  		<h6>Actual Configuration</h6>
+			  	</div>
+			    <t t-foreach="product.attribute_line_ids" t-as="variant_id">
+		        	<ul class="list-group">
+			        	<t t-foreach="variant_id.value_ids" t-as="value_id">
+							<li t-att-class="'list-group-item hidden oe_variant_description oe_variant_description_' + str(value_id.id)">
+								<strong><t t-raw="value_id.name"></t></strong><br/>
+								<t t-raw="value_id.description"/>
+							</li>
+				    	</t>
+					</ul>
+			    </t>
+			</div>
+			</t>
+		  	</div>
+		  </xpath>
+		  <xpath expr="//section[@id='product_detail']//p[last()]" position="replace">
+		  	<span class="hidden"></span>
+		  </xpath>
+		  <xpath expr="//hr[@t-if='product.description_sale']" position="replace">
+		  	<span class="hidden"></span>
+          </xpath>
+		  <xpath expr="//p[@t-field='product.description_sale']" position="replace">
+		  	<span class="hidden"></span>
+          </xpath>
+		  <xpath expr="//h1[@itemprop='name']" position="replace">
+          	<h4><strong itemprop="name" t-field="product.name"></strong></h4>
+            <hr t-if="product.description_sale"/>
+            <div itemprop="description" t-field="product.description_sale" class='text-muted'></div>
+            <a href="#product_full_description" class="btn btn-link pull-right"><i class="fa fa-arrow-circle-down"></i>Full description</a>
+            <hr t-if="product.description_sale"/>
+          </xpath>
+		  <xpath expr="//div[@class='col-sm-7 col-md-7 col-lg-7']" position="attributes">
+		  	<attribute name="class">col-sm-5 col-md-5 col-lg-5 images_column</attribute>
+		  </xpath>
+		  <xpath expr="//div[@class='col-sm-5 col-md-5 col-lg-4 col-lg-offset-1']" position="attributes">
+		  	<attribute name="class">col-sm-4 col-md-4 col-lg-3 col-lg-offset-1 variants_column</attribute>
+		  </xpath>
+		  <xpath expr="//t[@t-placeholder='select']" position="replace">
+		    <input type="hidden" t-if="len(product.product_variant_ids) == 1" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
+              <t t-call="website_variants_extra.variants">
+              </t>
+		  </xpath>
+		</template>
+
+		<!-- Variants with description template. -->
+		<template id="product_variants_description" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with description">
+		  <xpath expr="//t[@t-placeholder='select']" position="replace">
+		    <input type="hidden" t-if="len(product.product_variant_ids) == 1" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
+		  </xpath>
+		</template>
+		<!-- Variants -->
+		<template id="variants">
+		  <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/>
+		  <div t-if="product.attribute_line_ids" class="panel panel-info panel-configure">
+			<div t-if="product.attribute_line_ids" class="panel-heading">
+		  		<h6>Configure</h6>
+		  	</div>
+		  <ul t-attf-class="list-group js_add_cart_variants" t-att-data-attribute_value_ids="attribute_value_ids">
+		    <t t-foreach="product.attribute_line_ids" t-as="variant_id">
+		      <li class="list-group-item" t-if="len(variant_id.value_ids) > 1">
+
+		        <strong t-field="variant_id.attribute_id.name"/>
+
+		        <t t-if="variant_id.attribute_id.type in ['select', 'hidden']">
+		          <select class="form-control js_variant_change" t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)">
+		            <t t-foreach="variant_id.value_ids" t-as="value_id">
+		              <option t-att-value="value_id.id">
+		                  <span t-field="value_id.name"/>
+		                  <span t-if="value_id.price_extra">
+		                      <t t-esc="value_id.price_extra > 0 and '+' or ''"/><span t-field="value_id.price_extra" style="white-space: nowrap;" t-field-options='{
+		                               "widget": "monetary",
+		                                "from_currency": "product.company_id.currency_id",
+		                               "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+		                           }'/>
+		                  </span>
+		              </option>
+		            </t>
+		          </select>
+		        </t>
+
+		        <t t-if="variant_id.attribute_id.type == 'radio'">
+		          <ul class="list-unstyled">
+		              <t t-set="inc" t-value="0"/>
+		              <t t-foreach="variant_id.value_ids" t-as="value_id">
+		                  <li t-if="value_id.product_ids" class="**form-group js_attribute_value" style="margin: 0;">
+		                      <label class="control-label" style="margin: 0 20px;">
+		                          <input type="radio" class="js_variant_change" t-att-checked="'checked' if not inc else ''" t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)" t-att-value="value_id.id" style="vertical-align: top; margin-right: 10px;"/>
+		                          <span t-field="value_id.name"/>
+		                          <span class="badge" t-if="value_id.price_extra">
+		                              <t t-esc="value_id.price_extra > 0 and '+' or ''"/><span t-field="value_id.price_extra" style="white-space: nowrap;" t-field-options='{
+		                                      "widget": "monetary",
+		                                      "from_currency": "product.company_id.currency_id",
+		                                      "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+		                                   }'/>
+		                          </span>
+		                      </label>
+		                  </li>
+		                  <t t-set="inc" t-value="inc+1"/>
+		              </t>
+		          </ul>
+		        </t>
+
+		        <t t-if="variant_id.attribute_id.type == 'color'">
+		          <ul class="list-inline">
+		              <t t-set="inc" t-value="0"/>
+		              <li t-foreach="variant_id.value_ids" t-as="value_id">
+		                  <label t-attf-style="background-color:#{value_id.color or value_id.name}"
+		                      t-attf-class="css_attribute_color #{'active' if not inc else ''}">
+		                    <input type="radio" class="js_variant_change"
+		                      t-att-checked="'checked' if not inc else ''"
+		                      t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)"
+		                      t-att-value="value_id.id"
+		                      t-att-title="value_id.name"/>
+		                  </label>
+		                  <t t-set="inc" t-value="inc+1"/>
+		              </li>
+		          </ul>
+		        </t>
+
+		      </li>
+		    </t>
+		  </ul>
+		</div>
+		</template>
+    </data>
+</openerp>

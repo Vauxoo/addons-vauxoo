@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<openerp>
-    <data>
-        <report id="report_commission_payment" model="commission.payment" name="commission.payment" rml="commission_payment/report/comm_report.rml" string="Reporte de Comisiones" auto="True" menu="False" header="False"/>
-    </data>
-</openerp>

@@ -58,6 +58,8 @@ class custom_timesheet_all(osv.Model):
                                        'Invoiceable', readonly=True,
                                        help='Definition of invoicing status of\
                                         the line.'),
+        'invoiceables_hours': fields.float('Invoiceable Hours', readonly=True,
+                                           help='Total hours to charge.'),
     }
 
     def init(self, cr):
@@ -77,11 +79,20 @@ class custom_timesheet_all(osv.Model):
                     work.user_id AS user_id,
                     work.name AS name,
                     work.hours AS unit_amount,
-                    acc_anal_line.to_invoice AS invoiceable
+                    acc_anal_line.to_invoice AS invoiceable,
+                    work.hours - (work.hours * (hr_ts_factor.factor / 100))
+                     AS invoiceables_hours
                 FROM project_task_work AS work
-                LEFT JOIN hr_analytic_timesheet AS tsheet ON tsheet.id = work.hr_analytic_timesheet_id
-                LEFT JOIN account_analytic_line AS acc_anal_line ON acc_anal_line.id = tsheet.line_id
-                LEFT JOIN account_analytic_account AS analytic ON analytic.id = acc_anal_line.account_id
-                LEFT JOIN project_task AS task ON task.id = work.task_id
-                LEFT JOIN user_story AS us ON us.id = task.userstory_id
+                LEFT JOIN hr_analytic_timesheet AS tsheet ON
+                 tsheet.id = work.hr_analytic_timesheet_id
+                LEFT JOIN account_analytic_line AS acc_anal_line ON
+                 acc_anal_line.id = tsheet.line_id
+                LEFT JOIN hr_timesheet_invoice_factor AS hr_ts_factor ON
+                 hr_ts_factor.id = acc_anal_line.to_invoice
+                LEFT JOIN account_analytic_account AS analytic ON
+                 analytic.id = acc_anal_line.account_id
+                LEFT JOIN project_task AS task ON
+                 task.id = work.task_id
+                LEFT JOIN user_story AS us ON
+                 us.id = task.userstory_id
         )''')

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+  <data>
+    <record id="purchase_stock_accrual_view" model="ir.ui.view">
+        <field name="name">Purchase Stock Accrual</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_2_stock_picking"/>
+        <field name="arch" type="xml">
+             <xpath expr="//div[contains(@class, 'oe_button_box')]" position="inside">
+                <button
+                    type="object"
+                    string="Stock Accruals"
+                    name="view_accrual"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                    />
+            </xpath>
+        </field>
+    </record>
+  </data>
+</openerp>

@@ -34,11 +34,11 @@ class account_invoice(models.Model):
 
     @api.multi
     def check_tax_lines(self, compute_taxes):
-        account_invoice_tax = self.env['account.invoice.tax']
+        account_invoice_tax_var = self.env['account.invoice.tax']
         company_currency = self.company_id.currency_id
         if not self.tax_line:
             for tax in compute_taxes.values():
-                account_invoice_tax.create(tax)
+                account_invoice_tax_var.create(tax)
         else:
             tax_key = []
             for tax in self.tax_line:
