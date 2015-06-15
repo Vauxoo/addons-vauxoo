@@ -23,9 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields, api
-from openerp.tools.translate import _
-from openerp.exceptions import Warning  # pylint: disable=W0622
+from openerp import models, fields, api, _
+from openerp.exceptions \
+    import Warning, ValidationError  # pylint: disable=W0622
 
 
 class ReplacementProduct(models.TransientModel):
@@ -135,3 +135,22 @@ class ReplacementProductLines(models.TransientModel):
             res = {'domain': {
                 'replacement_product_id': [('id', 'in', replacement_ids)]}}
         return res
+
+    @api.one
+    @api.constrains('replacement_product_id', 'discontinued_product_id')
+    def _check_line(self):
+        """
+        This method will check that when creating the replacement line the
+        replacement_product_id and the discontinued_product_id belongs to the
+        correspond states.
+            - discontinued_product_id must be an obsolete product.
+            - replacement_product_id must not be an obsolete product.
+        """
+        if self.replacement_product_id and \
+                self.replacement_product_id.state2 in ['obsolete']:
+            raise ValidationError(
+                _("The Replacement product can not be a obsolete product"))
+        if self.discontinued_product_id and \
+                self.discontinued_product_id.state2 not in ['obsolete']:
+            raise ValidationError(
+                _("The Discontinued producr must be a obsolete product"))
