@@ -3,22 +3,40 @@ language: python
 python:
   - "2.7"
 
-env:
-  - LINT_CHECK="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="account_invoice_tax" LINT_CHECK="0" UNIT_TEST="0"
-  # Just to validate if the repository can be declared in addons-path.
-  # Install only one base module in order to validate declaration is Ok!.
-
 virtualenv:
   system_site_packages: true
 
 install:
-  - git clone https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
-  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
-  - travis_install_nightly
+  # Get diff (name-only) of current PR from travis environment variables
+  - git --git-dir=${TRAVIS_BUILD_DIR}/.git fetch origin ${TRAVIS_BRANCH} && git --git-dir=${TRAVIS_BUILD_DIR}/.git diff --name-only origin/${TRAVIS_BRANCH}.. >${TRAVIS_BUILD_DIR}/diff-name-only.diff
+  - cat ${TRAVIS_BUILD_DIR}/diff-name-only.diff
+
+  # Get name of root folders and set new environment variable
+  - python -c "print 'export INCLUDE=\"' + ' '.join( list( set( [fname_diff.split('/')[0] for fname_diff in open('${TRAVIS_BUILD_DIR}/diff-name-only.diff', 'r').read().strip('\n').split('\n') if '/' in fname_diff] ) )) + '\"'" >${TRAVIS_BUILD_DIR}/modules.profile
+  - cat ${TRAVIS_BUILD_DIR}/modules.profile
+  - source ${TRAVIS_BUILD_DIR}/modules.profile
+  - echo ${INCLUDE}
+
+  # If don't have modules to test then exit
+  - if [ "x${INCLUDE}" == "x" ]; then exit 0; fi
+
+  # Install pylint and flake8
+  - sudo pip install pylint flake8 pytz
+
+  # Download configuration files of pylint and flake8
+  - curl https://raw.githubusercontent.com/Vauxoo/pylint-conf/master/conf/pylint_vauxoo_light.cfg -o ${HOME}/.pylint.conf
+  - curl https://raw.githubusercontent.com/Vauxoo/maintainer-quality-tools/master/travis/cfg/travis_run_flake8__init__.cfg -o ${HOME}/.flake8__init__.cfg
+  - curl https://raw.githubusercontent.com/Vauxoo/maintainer-quality-tools/master/travis/cfg/travis_run_flake8.cfg -o ${HOME}/.flake8.cfg
+
+  # Download odoo path to test import-libraries
+  - git clone --single-branch --depth=1 https://github.com/odoo/odoo.git -b ${TRAVIS_BRANCH} ${HOME}/.odoo-${TRAVIS_BRANCH}
+
 
 script:
-  - travis_run_tests ${VERSION}
+  # If don't have modules to test then exit
+  - if [ "x${INCLUDE}" == "x" ]; then exit 0; fi
 
-after_success:
-  coveralls
+  # Run pylint and flake8 test
+  - PYTHONPATH=${PYTHONPATH}:${HOME}/.odoo-${TRAVIS_BRANCH} pylint --rcfile=${HOME}/.pylint.conf ${INCLUDE} -d I0011
+  - flake8 --config=${HOME}/.flake8__init__.cfg ${INCLUDE}
+  - flake8 --config=${HOME}/.flake8.cfg ${INCLUDE}
