@@ -49,7 +49,8 @@
 		    <input type="hidden" t-if="len(product.product_variant_ids) == 1" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
               <t t-call="website_variants_extra.variants">
               </t>
-		  </xpath> TODO: THIS CODE IS COMMENTED BECAUSE IT CRASHES PHANTOM CRAWLER, IT HAS A PURPOSE DISCUSS WITH NHOMAR--> 
+		  </xpath> TODO: THIS CODE IS COMMENTED BECAUSE IT CRASHES PHANTOM CRAWLER, 
+		  				 IT HAS A PURPOSE DISCUSS WITH NHOMAR--> 
 		</template>
 
 		<!-- Variants with description template. -->
