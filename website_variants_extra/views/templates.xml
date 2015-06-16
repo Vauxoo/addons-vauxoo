@@ -45,11 +45,12 @@
 		  <xpath expr="//div[@class='col-sm-5 col-md-5 col-lg-4 col-lg-offset-1']" position="attributes">
 		  	<attribute name="class">col-sm-4 col-md-4 col-lg-3 col-lg-offset-1 variants_column</attribute>
 		  </xpath>
-		  <xpath expr="//t[@t-placeholder='select']" position="replace">
+<!-- 		  <xpath expr="//t[@t-placeholder='select']" position="replace">
 		    <input type="hidden" t-if="len(product.product_variant_ids) == 1" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
               <t t-call="website_variants_extra.variants">
               </t>
-		  </xpath>
+		  </xpath> TODO: THIS CODE IS COMMENTED BECAUSE IT CRASHES PHANTOM CRAWLER, 
+		  				 IT HAS A PURPOSE DISCUSS WITH NHOMAR--> 
 		</template>
 
 		<!-- Variants with description template. -->
