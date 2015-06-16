@@ -23,30 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields, api
-
-
-class ProductProduct(models.Model):
-
-    _inherit = 'product.product'
-    replacement_product_ids = fields.Many2many(
-        'product.product',
-        'discontinued_product_id', 'replacement_product_id',
-        string='Replacement Products for Purchase',
-        help="When a product is discontinued this list will be the possible"
-             " alternative products that could replace it")
-    state2 = fields.Selection([
-        ('draft', 'In Development'),
-        ('sellable', 'Normal'),
-        ('end', 'End of Lifecycle'),
-        ('obsolete', 'Obsolete')], default='draft', string='State', copy=False)
-
-    @api.multi
-    def get_good_replacements(self):
-        """
-        return the replacemets that are not obsolete and active.
-        """
-        replacements = [
-            product.id for product in self.replacement_product_ids
-            if product.state2 not in ['obsolete'] and product.active]
-        return replacements
+from . import test_product
