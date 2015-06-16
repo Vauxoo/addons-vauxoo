@@ -23,9 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields, api, _
-from openerp.exceptions \
-    import Warning, ValidationError  # pylint: disable=W0622
+from openerp import models, fields, api, exceptions, _
 
 
 class ReplacementProduct(models.TransientModel):
@@ -78,11 +76,12 @@ class ReplacementProduct(models.TransientModel):
         if model == 'purchase.order':
             pass
         elif model:
-            raise Warning(' '.join([
+            raise exceptions.Warning(' '.join([
                 _('This wizard is not designed to work from the'),
                 str(model)]))
         else:
-            raise Warning(_('This wizard need to be called from a model'))
+            raise exceptions.Warning(
+                _('This wizard need to be called from a model'))
 
     @api.multi
     def replacement(self):
@@ -148,9 +147,9 @@ class ReplacementProductLines(models.TransientModel):
         """
         if self.replacement_product_id and \
                 self.replacement_product_id.state2 in ['obsolete']:
-            raise ValidationError(
+            raise exceptions.ValidationError(
                 _("The Replacement product can not be a obsolete product"))
         if self.discontinued_product_id and \
                 self.discontinued_product_id.state2 not in ['obsolete']:
-            raise ValidationError(
+            raise exceptions.ValidationError(
                 _("The Discontinued producr must be a obsolete product"))

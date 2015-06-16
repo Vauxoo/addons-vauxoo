@@ -23,9 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields, api
-from openerp.tools.translate import _
-from openerp.exceptions import Warning  # pylint: disable=W0622
+from openerp import models, fields, api, exceptions, _
 
 
 class PurchaseOrder(models.Model):
@@ -54,7 +52,7 @@ class PurchaseOrder(models.Model):
             for item in obsolete:
                 obsolete_msg += ' '.join(['\n', '-', _('Line'), str(item[0]),
                                           _('with product'), item[1].name])
-            raise Warning('\n'.join([
+            raise exceptions.Warning('\n'.join([
                 _('Purchase order line can not have discontinued products.'),
                 _('The next lines cannot be added to the purchase order:'),
                 obsolete_msg]))

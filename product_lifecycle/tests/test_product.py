@@ -24,8 +24,7 @@
 ###############################################################################
 
 from openerp.tests import common
-from openerp.exceptions \
-    import Warning, ValidationError  # pylint: disable=W0622
+from openerp import exceptions
 import time
 
 
@@ -253,7 +252,7 @@ class TestProductLifecycle(common.SingleTransactionCase):
                           set(['sellable', 'draft']))
 
         # Add one obsolete line. This will raise an exception.
-        with self.assertRaises(Warning):
+        with self.assertRaises(exceptions.Warning):
             self.create_pol(order, self.obsolete_product)
 
     def test_06_replacement_product_wizard(self):
@@ -312,7 +311,7 @@ class TestProductLifecycle(common.SingleTransactionCase):
         # This will raise an exception becuase only not obsolete products can
         # be used as a valid replacement.
         wiz_line = wiz.lines[0]
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(exceptions.ValidationError):
             wiz_line.replacement_product_id = self.obsolete_replacement
 
         # Add a sellable replacement product in the replacement line.
@@ -328,4 +327,3 @@ class TestProductLifecycle(common.SingleTransactionCase):
                          wiz_line.replacement_product_id)
         self.assertEqual(obsolete_order_line.discontinued_product_id,
                          wiz_line.discontinued_product_id)
-
