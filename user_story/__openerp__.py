@@ -25,19 +25,14 @@
 ##############################################################################
 {
     "name": "User Story",
-    "version": "0.1",
+    "version": "2.0",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "description": """
-Este módulo registra requerimientos funcionales y técnicos de software a
-través de Historias de Usuarios.
+Take the funcional and technical requirements following the strategy of
+user stories directly in your system.
 
-Las historias se redactan siguiendo preceptos de las prácticas ágiles, y mas
-específicamente de una recomendación de Dan North.
-
-En su artículo 'What's in a `Story`_ ?'. Este artículo representa la documentación
-funcionalde este módulo. Las `fuentes`_  en inglés y español el artículo son las
-siguientes:
+'What's in a `Story`_ ?'. english source `fuentes`_
 
 .. Story: http://dannorth.net/whats-in-a-story/
 .. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/""",
@@ -65,6 +60,7 @@ siguientes:
         "view/hr_timesheet_view.xml",
         "view/hr_timesheet_all_view.xml",
         "view/custom_project_task_view.xml",
+        "view/account_analytic_account.xml",
         "data/data.xml",
         "data/user_story_template.xml"
     ],

@@ -3,14 +3,14 @@ from openerp.http import request
 from openerp.addons.website_sale.controllers.main import website_sale
 
 
-class website_sale(website_sale):
+class website_sale_inh(website_sale):
 
     def get_attribute_value_ids(self, product):
         cr, uid, context, pool = request.cr, request.uid, request.context,\
             request.registry
         product_obj = pool['product.product']
         supplier_obj = pool['product.supplierinfo']
-        res = super(website_sale, self).get_attribute_value_ids(product)
+        res = super(website_sale_inh, self).get_attribute_value_ids(product)
         new_res = []
         for ret in res:
             product_cache = product_obj.browse(cr, uid, [ret[0]], context)[0]
