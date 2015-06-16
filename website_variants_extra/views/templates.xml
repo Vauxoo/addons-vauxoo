@@ -15,7 +15,6 @@
 			        	<t t-foreach="variant_id.value_ids" t-as="value_id">
 							<li t-att-class="'list-group-item hidden oe_variant_description oe_variant_description_' + str(value_id.id)">
 								<strong><t t-raw="value_id.name"></t></strong><br/>
-								<t t-raw="value_id.description"/>
 							</li>
 				    	</t>
 					</ul>
