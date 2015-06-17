@@ -1,0 +1,268 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* product_do_merge
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0-20130824-231042\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-16 22:00+0000\n"
+"PO-Revision-Date: 2015-06-16 18:01-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 1.7.5\n"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,group_by_default_code:0
+msgid "Referencia"
+msgstr "Referencia"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid ""
+"The selected products will be merged together. All\n"
+"                                documents linking to one of these products will be\n"
+"                                redirected to the aggregated product. You can remove\n"
+"                                products from this list to avoid merging them."
+msgstr ""
+"Los productos seleccionados serán combinados.\n"
+"Todos los documentos enlazados a uno de estos productos serán redireccionados al producto agregado.\n"
+"Puede eliminar productos de esta lista para evitar que sean combinados."
+
+#. module: product_do_merge
+#: field:base.product.merge.line,wizard_id:0
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Automatic Merge Wizard"
+msgstr "Asistente para Combinar Automáticamente"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,state:0
+msgid "State"
+msgstr "Stado"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,current_product_id:0
+msgid "Current product"
+msgstr "Producto Actual"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,product_ids:0
+msgid "Products to merge"
+msgstr "Productos a Combinar"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,group_by_name_template:0
+msgid "Nombre"
+msgstr "Nombre"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,line_ids:0
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Select the currente product and product to replaced"
+msgstr "Seleccionar el producto actual y el producto a sustituir"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,group_by_categ_id:0
+msgid "Categoria"
+msgstr "Categoría"
+
+#. module: product_do_merge
+#: model:ir.model,name:product_do_merge.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,current_line_id:0
+msgid "Current Line"
+msgstr "Línea Actual"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Merge duplicate products"
+msgstr "Combinar productos duplicados"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid ""
+"Select the list of fields used to search for\n"
+"                                duplicated records. If you select several fields,\n"
+"                                OpenERP will propose you to merge only those having\n"
+"                                all these fields in common. (not one of the fields)."
+msgstr ""
+"Seleccione la lista de campos utilizados para buscar registros duplicados.\n"
+"Si selecciona varios campos, OpenERP le propondrá combinar sólo aquellos\n"
+"que tienen en común todos los campos seleccionados (no uno de los campos)."
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,dst_product_id:0
+msgid "Destination Contact"
+msgstr "Contacto Destino"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Replace product"
+msgstr "Sustituir producto"
+
+#. module: product_do_merge
+#: selection:base.product.merge.automatic.wizard,state:0
+msgid "Finished"
+msgstr "Finalizado"
+
+#. module: product_do_merge
+#: model:ir.model,name:product_do_merge.model_base_product_merge_automatic_wizard
+msgid "base.product.merge.automatic.wizard"
+msgstr "base.product.merge.automatic.wizard"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "There is no more products to merge for this request..."
+msgstr "No hay mas productos a combinar para esta solicitud..."
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,maximum_group:0
+msgid "Maximum of Group of Contacts"
+msgstr "Máximo Grupo de Productos"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Search duplicates based on duplicated data in"
+msgstr "Buscar duplicados basado en datos duplicados en"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Skip these products"
+msgstr "Saltar estos productos"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,number_group:0
+msgid "Group of Products"
+msgstr "Grupo de Productos"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Merge Automatically"
+msgstr "Combinar Automáticamente"
+
+#. module: product_do_merge
+#: field:base.product.merge.line,aggr_ids:0
+msgid "Ids"
+msgstr "Ids"
+
+#. module: product_do_merge
+#: field:base.product.merge.line,min_id:0
+msgid "MinID"
+msgstr "MinID"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,product_from:0
+msgid "Product from"
+msgstr "Del Producto"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Products"
+msgstr "Productos"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Merge the following products"
+msgstr "Combinar los siguientes productos"
+
+#. module: product_do_merge
+#: model:ir.actions.act_window,name:product_do_merge.base_product_merge_automatic_act
+#: model:ir.ui.menu,name:product_do_merge.product_merge_automatic_menu
+msgid "Duplicate products"
+msgstr "Productos Duplicados"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Options"
+msgstr "Opciones"
+
+#. module: product_do_merge
+#: selection:base.product.merge.automatic.wizard,state:0
+msgid "Option"
+msgstr "Opción"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Deduplicate the other Products"
+msgstr "Desduplicar los otros Productos"
+
+#. module: product_do_merge
+#: selection:base.product.merge.automatic.wizard,state:0
+msgid "Selection"
+msgstr "Selección"
+
+#. module: product_do_merge
+#: model:res.groups,name:product_do_merge.res_group_product_do_merge
+msgid "Show wizard Product Do Merge"
+msgstr "Mostrar Asistente para Combinar Productos"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Are you sure to execute the automatic merge of your products?"
+msgstr "¿Está seguro de ejecutar combinación automática en sus productos?"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,product_to:0
+msgid "Product to"
+msgstr "Producto Destino"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "or"
+msgstr "o"
+
+#. module: product_do_merge
+#: field:base.product.merge.automatic.wizard,group_by_uom_id:0
+msgid "Unidad de medida"
+msgstr "Unidad de medida"
+
+#. module: product_do_merge
+#: field:product.product,create_date:0
+msgid "Create Date"
+msgstr "Fecha de Creación"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Merge with Manual Check"
+msgstr "Combinar mediante Chequeo Manual"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: product_do_merge
+#: view:base.product.merge.automatic.wizard:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: product_do_merge
+#: model:ir.ui.menu,name:product_do_merge.root_menu_product
+msgid "Tools"
+msgstr "Herramientas"
+
+#. module: product_do_merge
+#: model:ir.actions.act_window,name:product_do_merge.action_product_merge
+msgid "Automatic Merge"
+msgstr "Combinar Automáticamente"
+
+#. module: product_do_merge
+#: model:ir.model,name:product_do_merge.model_base_product_merge_line
+msgid "base.product.merge.line"
+msgstr "base.product.merge.line"
