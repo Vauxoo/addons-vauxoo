@@ -45,7 +45,7 @@ class ProductTemplate(models.Model):
         and update the state of the field "Call of Bids"
         in the product.template (Boolean field with the same name).
         If the field purchase_requisition product.category has "Not Set" option
-        then review the product category father
+        then review the parent product category
         and so on until you find a category where you have defined
          (other than 'Not Set') value.
         """
