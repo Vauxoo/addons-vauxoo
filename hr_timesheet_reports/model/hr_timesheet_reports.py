@@ -114,22 +114,26 @@ class hr_timesheet_reports_base(osv.Model):
         all_ids = ent_ids + cons_ids + train_ids
         for gbc in grouped_by_currency:
             currency = gbc['currency_id']
-            inv_line_ids = invoice_obj.search(cr, uid,
-                                              dom_inv +  [('currency_id', 'in', [currency[0]])],
-                                              context=context)
-            group_prod = inv_line_obj.read_group(cr, uid,
-                                                 [('invoice_id', 'in', inv_line_ids)],
-                                                 ['product_id', 'price_subtotal', ],
-                                                 ['product_id', 'price_subtotal', ],
-                                                 context=context)
-            total_ent = sum([gr['price_subtotal'] for gr in group_prod if gr['product_id'][0] in ent_ids])
-            total_cons = sum([gr['price_subtotal'] for gr in group_prod if gr['product_id'][0] in cons_ids])
-            total_train = sum([gr['price_subtotal'] for gr in group_prod if gr['product_id'][0] in train_ids])
-            total_others = sum([gr['price_subtotal'] for gr in group_prod if gr['product_id'][0] not in all_ids])
+            inv_line_ids = invoice_obj.search(
+                cr, uid, dom_inv + [('currency_id', 'in', [currency[0]])],
+                context=context)
+            group_prod = inv_line_obj.read_group(
+                cr, uid, [('invoice_id', 'in', inv_line_ids)],
+                         ['product_id', 'price_subtotal', ],
+                         ['product_id', 'price_subtotal', ], context=context)
+            total_ent = sum([gr['price_subtotal'] for gr in group_prod
+                            if gr['product_id'][0] in ent_ids])
+            total_cons = sum([gr['price_subtotal'] for gr in group_prod
+                             if gr['product_id'][0] in cons_ids])
+            total_train = sum([gr['price_subtotal'] for gr in group_prod
+                              if gr['product_id'][0] in train_ids])
+            total_others = sum([gr['price_subtotal'] for gr in group_prod
+                               if gr['product_id'][0] not in all_ids])
             total = total_ent + total_ent + total_train + total_others
             curr_from = wzr_brw.currency_id.id
             curr_to = currency[0]
-            curr_from_brw = curr_obj.browse(cr, uid, curr_from, context=context)
+            curr_from_brw = curr_obj.browse(cr, uid, curr_from,
+                                            context=context)
             curr_to_brw = curr_obj.browse(cr, uid, curr_to, context=context)
             rate = curr_obj._get_conversion_rate(cr, uid,
                                                  curr_from_brw,
@@ -143,15 +147,15 @@ class hr_timesheet_reports_base(osv.Model):
                 'pending': total_train,
                 'total': total,
                 'rate': rate,
-                'total_in_control': round(total/rate, 2),
-                'total_cons': round(total_cons/rate, 2),
-                'total_train': round(total_train/rate, 2),
-                'total_others': round(total_others/rate, 2),
-                'total_lic': round(total_ent/rate, 2),
-                'conversion_rate': curr_obj._get_conversion_rate(cr, uid,
-                                                                 curr_obj.browse(cr, uid, curr_from, context=context),
-                                                                 curr_obj.browse(cr, uid, curr_to, context=context)
-                                                                 ),
+                'total_in_control': round(total / rate, 2),
+                'total_cons': round(total_cons / rate, 2),
+                'total_train': round(total_train / rate, 2),
+                'total_others': round(total_others / rate, 2),
+                'total_lic': round(total_ent / rate, 2),
+                'conversion_rate': curr_obj._get_conversion_rate(
+                    cr, uid, curr_obj.browse(cr, uid, curr_from,
+                                             context=context),
+                    curr_obj.browse(cr, uid, curr_to, context=context)),
             }
         #  TODO: This must be a better way to achieve this list directly from
         #  search group on v8.0 for now the simplest way make a list with
@@ -161,7 +165,8 @@ class hr_timesheet_reports_base(osv.Model):
                                           context=context)
         # Getting resumed numbers
         resumed_numbers = {
-            'total_invoiced': sum([ grouped_by_product[i]['total_in_control'] for i in grouped_by_product])
+            'total_invoiced': sum([grouped_by_product[i]['total_in_control']
+                                   for i in grouped_by_product])
         }
         return (elements, grouped_by_currency,
                 invoices_brw, grouped_by_product,
@@ -219,7 +224,7 @@ class hr_timesheet_reports_base(osv.Model):
         res = []
         timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids,
                                               context=context)
-        res = [self._prepare_data(cr, uid, ids, tb, context=context) for tb in timesheet_brws]
+        res = [self._prepare_data(cr, uid, ids, tb, context=context) for tb in timesheet_brws]  # noqa
         grouped = timesheet_obj.read_group(cr, uid, dom,
                                            ['account_id',
                                             'unit_amount',
@@ -245,8 +250,9 @@ class hr_timesheet_reports_base(osv.Model):
 
     def _get_total_inv_amount(self, cr, uid, ids, grouped, context=None):
         pending = sum([gro['invoiceables_hours'] for gro in grouped])
-        pending_inv = round(pending * self.browse(cr, uid, ids,
-                                                    context=context)[0].product_id.list_price, 2)
+        pending_inv = round(
+            pending * self.browse(
+                cr, uid, ids, context=context)[0].product_id.list_price, 2)
         return pending_inv
 
     def _get_result_ids(self, cr, uid, ids, context=None):
@@ -254,7 +260,7 @@ class hr_timesheet_reports_base(osv.Model):
         gi, gbc, ibrw, gbp, rn = self._get_report_inv(cr, uid, ids, context=context)  # noqa
         grouped, gbm, projects, res, gbu = self._get_report_ts(cr, uid,
                                                                ids, context=context)  # noqa
-        rn['pending'] = self._get_total_inv_amount(cr, uid, ids, grouped, context)
+        rn['pending'] = self._get_total_inv_amount(cr, uid, ids, grouped, context)  # noqa
         info = {
             'data': {},
             'resume': grouped,
@@ -396,7 +402,7 @@ class hr_timesheet_reports_base(osv.Model):
                 'view_mode': 'tree,form',
                 'domain': report.filter_id.domain,
                 'context': context,
-               }
+                }
 
     def go_to_invoices(self, cr, uid, ids, context=None):
         if context is None:
@@ -412,7 +418,7 @@ class hr_timesheet_reports_base(osv.Model):
                 'view_mode': 'tree,form',
                 'domain': report.filter_invoice_id.domain,
                 'context': context,
-               }
+                }
 
     def go_to_issues(self, cr, uid, ids, context=None):
         if context is None:
@@ -428,7 +434,7 @@ class hr_timesheet_reports_base(osv.Model):
                 'view_mode': 'tree,form',
                 'domain': report.filter_issue_id.domain,
                 'context': context,
-               }
+                }
 
     def go_to_hu(self, cr, uid, ids, context=None):
         if context is None:
@@ -444,7 +450,7 @@ class hr_timesheet_reports_base(osv.Model):
                 'view_mode': 'tree,form',
                 'domain': report.filter_hu_id.domain,
                 'context': context,
-               }
+                }
 
     def send_by_email(self, cr, uid, ids, context=None, cdsm=None):
         ir_model_data = self.pool.get('ir.model.data')
