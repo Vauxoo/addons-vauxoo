@@ -18,7 +18,7 @@ msgstr ""
 #. module: product_properties_by_category
 #: selection:product.category,purchase_requisition:0
 msgid "Not Set"
-msgstr "No Configurado"
+msgstr "Sin Default"
 
 #. module: product_properties_by_category
 #: model:ir.model,name:product_properties_by_category.model_product_category

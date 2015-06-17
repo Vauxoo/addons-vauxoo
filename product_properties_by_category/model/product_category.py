@@ -44,7 +44,7 @@ class ProductTemplate(models.Model):
         Reviews the state of the field product property in the product.category
         and update the default value of the corresponding fields in the
         product.template. If the category have not default value defined in the
-        field will search into its parent categority and so on until found a
+        field will search into its parent categorty and so on until found a
         default value defined. If there is not default value defined will
         return False.
 
