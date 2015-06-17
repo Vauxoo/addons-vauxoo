@@ -4,14 +4,14 @@ from openerp.osv import osv, fields
 
 class set_invoice(osv.osv_memory):
 
-    _name='set.invoice'
+    _name = 'set.invoice'
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, field, context=None):
         if context is None:
             context = {}
-        print context
         htr = False
-        res = super(set_invoice, self).default_get(cr, uid, fields, context=context)
+        res = super(set_invoice, self).default_get(
+            cr, uid, field, context=context)
         ids = context.get('active_ids', False)
         model = context.get('active_model', False)
         report_id = context.get('ts_report_id', False)
@@ -20,10 +20,11 @@ class set_invoice(osv.osv_memory):
             htr = htr_obj.browse(cr, uid, report_id, context=context)
         obj = self.pool.get(model)
         brws = obj.browse(cr, uid, ids, context=context)
-        total_h = sum([b.invoiceables_hours for b in brws if b.invoiceables_hours])
+        total_h = sum(
+            [b.invoiceables_hours for b in brws if b.invoiceables_hours])
         res.update({
             'total_timesheet': total_h,
-            'total_money': htr and total_h*htr.product_id.list_price or 0.00,
+            'total_money': htr and total_h * htr.product_id.list_price or 0.00,
             'currency_id': htr and htr.currency_id.id,
         })
 
@@ -35,7 +36,7 @@ class set_invoice(osv.osv_memory):
                                         "be setted to this invoice be sure "
                                         "quantities are consistent"),
         'total_money': fields.float('Total Timesheet in Money',
-                                    help="Total in money with the currency and "
+                                    help="Total in money with the currency and"
                                     "product of the report which you comes "
                                     "from"),
         'currency_id': fields.many2one('product.product', 'Currency',
