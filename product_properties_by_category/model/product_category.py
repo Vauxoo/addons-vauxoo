@@ -50,24 +50,30 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     @api.onchange('categ_id')
-    def _get_prod_cate_call_of_bids(self):
+    def get_product_properties(self):
         """
-        Reviews the state of the field "Call of Bids" in the product.category
-        and update the state of the field "Call of Bids"
-        in the product.template (Boolean field with the same name).
-        If the field purchase_requisition product.category has "Not Set" option
-        then review the parent product category
-        and so on until you find a category where you have defined
-         (other than 'Not Set') value.
+        Reviews the state of the field product property in the product.category
+        and update the default value of the corresponding fields in the
+        product.template. If the category have not default value defined in the
+        field will search into its parent categorty and so on until found a
+        default value defined. If there is not default value defined will
+        return False.
+
+        - Check "Call of Bids" for the product.category and update the
+          "Call for Bids" in the product.template.
         """
-        self.purchase_requisition = self.check_parents_prch_rqs(self.categ_id)
+        self.purchase_requisition = self.get_purchase_requisition_default()
 
     @api.one
-    def check_parents_prch_rqs(self, categ_id):
-        if categ_id:
-            if categ_id.purchase_requisition == '-1':
-                self.check_parents_prch_rqs(categ_id.parent_id)
+    def get_purchase_requisition_default(self):
+        """
+        Add return the default value for the "Call for Bids" boolean field.
+        """
+        cr_categ_id = self.categ_id
+        default_value = -1
+        while default_value != -1 or not cr_categ_id.parent_id:
+            if cr_categ_id.purchase_requisition == '-1':
+                cr_categ_id = cr_categ_id.parent_id
             else:
-                return categ_id.purchase_requisition
-        else:
-            return False
+                default_value = cr_categ_id.purchase_requisition
+        return default_value != -1 and bool(default_value) or False
