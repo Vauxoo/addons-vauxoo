@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#
-#    Copyright (c) Vauxoo - http://www.vauxoo.com/
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
+#    All Rights Reserved
 ###############################################################################
 #    Credits:
 #    Coded by: Hugo Adan <hugo@vauxoo.com>
@@ -23,23 +21,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    "name": "Product Properties by Category",
-    "summary": "Set Product Default Properties from the Product Category",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "website": "http://www.vauxoo.com/",
-    "category": "Product",
-    "depends": [
-        "purchase_requisition",
-    ],
-    "data": [
-        "view/product_category.xml",
-    ],
-    "demo": [],
-    "test": [],
-    "qweb": [],
-    "js": [],
-    "css": [],
-    "installable": True,
-}
+from . import test_product_category

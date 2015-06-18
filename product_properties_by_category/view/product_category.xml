@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//group" position="after">
                         <group name="product_property" string="Product Properties">
-                            <field name="purchase_requisition"/>
+                            <field name="purchase_requisition" string="Call for Bids"/>
                         </group>
                     </xpath>
             </field>

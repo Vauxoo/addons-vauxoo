@@ -27,11 +27,22 @@ class ProductCategory(models.Model):
 
     _inherit = 'product.category'
 
-    purchase_requisition = fields.Selection([
-        ('1', "Set True"),
-        ('0', "Set False"),
-        ('-1', "Not Set"),
-    ], default='-1')
+    @api.model
+    def _get_selection(self):
+        options = [
+            ('1', 'Set True'),
+            ('0', 'Set False'),
+            ('-1', 'Not Set')
+        ]
+        return options
+
+    purchase_requisition = fields.Selection(
+        _get_selection,
+        'Call for Bids',
+        type='char',
+        default='-1',
+        help="Check this box to generate Call for Bids instead \
+    of generating requests for quotation from procurement.")
 
 
 class ProductTemplate(models.Model):
