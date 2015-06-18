@@ -70,7 +70,7 @@ class project_issue(osv.Model):
         return issue_ids
 
     _columns = {
-        'analytic_account_id': fields.many2one('project.project',
+        'analytic_account_id': fields.many2one('account.analytic.account',
                                                'Analytic Account',
                                                track_visibility='onchange',
                                                help='Analytic account to '
