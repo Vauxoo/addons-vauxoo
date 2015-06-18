@@ -36,7 +36,7 @@ class PurchaseOrder(models.Model):
         First check that the purchase order lines have not discontinued
         product.
         """
-        order_lines = values.get('order_line', False)
+        order_lines = values.get('order_line', [])
         obsolete = []
         for line in order_lines:
             if isinstance(line[2], dict):
