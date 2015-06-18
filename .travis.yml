@@ -37,6 +37,6 @@ script:
   - if [ "x${INCLUDE}" == "x" ]; then exit 0; fi
 
   # Run pylint and flake8 test
-  - PYTHONPATH=${PYTHONPATH}:${HOME}/.odoo-${TRAVIS_BRANCH} pylint --rcfile=${HOME}/.pylint.conf ${INCLUDE} -d I0011
+  - PYTHONPATH=${PYTHONPATH}:${HOME}/.odoo-${TRAVIS_BRANCH} pylint --rcfile=${HOME}/.pylint.conf ${INCLUDE} -d I0011,F0401
   - flake8 --config=${HOME}/.flake8__init__.cfg ${INCLUDE}
   - flake8 --config=${HOME}/.flake8.cfg ${INCLUDE}
