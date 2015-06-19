@@ -425,13 +425,13 @@ class user_story(osv.Model):
                                         'subject': (u'{name} Approved the User Story with id {number}'.format(
                                             number=i, name=user.name)),
                                         'body_html': body,
+					'recipient_ids': [(6, 0, followers)],
                                         'auto_delete': True,
                                         'email_from': user.email,
                                     }, context=context)
             mail_mail.send(cr, uid, [mail_id],
-                        #recipient_ids=followers,
-                        followers,
-                        context=context)
+                           followers,
+                           context=context)
         return self.write(cr, uid, ids,
                           {'approval_user_id': uid,
                            'approved': True}, context=context)

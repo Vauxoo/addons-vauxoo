@@ -53,6 +53,7 @@ project_issue module.
     "data": [
         "security/groups.xml",
         "view/project_issue_view.xml",
+        "wizard/update_analytic_view.xml",
     ],
     "test": [],
     "js": [],
