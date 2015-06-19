@@ -63,7 +63,7 @@ class ProductTemplate(models.Model):
         """
         self.purchase_requisition = self.get_purchase_requisition_default()
 
-    @api.one
+    @api.multi
     def get_purchase_requisition_default(self):
         """
         Add return the default value for the "Call for Bids" boolean field.

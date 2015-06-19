@@ -35,7 +35,6 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
 
     def update_product(self, product):
         res = product.get_purchase_requisition_default()
-        res = res[0]
         product.write({
             'categ_id': product.categ_id.id,
             'purchase_requisition': res,
