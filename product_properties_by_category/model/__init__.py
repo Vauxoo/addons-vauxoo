@@ -20,4 +20,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import pruduct_category
+from . import product_category

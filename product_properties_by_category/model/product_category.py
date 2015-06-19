@@ -39,10 +39,9 @@ class ProductCategory(models.Model):
     purchase_requisition = fields.Selection(
         _get_selection,
         'Call for Bids',
-        type='char',
         default='-1',
-        help="Check this box to generate Call for Bids instead \
-    of generating requests for quotation from procurement.")
+        help="Check this box to generate Call for Bids instead "
+             "of generating requests for quotation from procurement.")
 
 
 class ProductTemplate(models.Model):
@@ -70,10 +69,10 @@ class ProductTemplate(models.Model):
         Add return the default value for the "Call for Bids" boolean field.
         """
         cr_categ_id = self.categ_id
-        default_value = -1
-        while default_value != -1 or not cr_categ_id.parent_id:
+        default_value = '-1'
+        while cr_categ_id.parent_id:
             if cr_categ_id.purchase_requisition == '-1':
                 cr_categ_id = cr_categ_id.parent_id
             else:
                 default_value = cr_categ_id.purchase_requisition
-        return default_value != -1 and bool(default_value) or False
+        return default_value != '-1' and bool(int(default_value)) or False

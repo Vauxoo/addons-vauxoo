@@ -33,21 +33,12 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         self.product = self.browse_ref(
             'product.product_product_35_product_template')
 
-    # Simulate the onchange
-    def check_parents_prch_rqs(self, categ_id):
-        if categ_id:
-            if categ_id.purchase_requisition == '-1':
-                return int(self.check_parents_prch_rqs(categ_id.parent_id))
-            else:
-                return int(categ_id.purchase_requisition)
-        else:
-            return False
-
-    def update_product(self, product, category):
-        result = bool(self.check_parents_prch_rqs(category))
+    def update_product(self, product):
+        result = product.get_purchase_requisition_default()
         product.write({
-            'categ_id': category.id,
-            'purchase_requisition': result, })
+            'categ_id': product.categ_id.id,
+            'purchase_requisition': result[0],
+        })
 
     def test_category_prch_rqst(self):
         """
@@ -56,16 +47,12 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         """
         # Set "Call for Bids" False to the product.
         self.product.purchase_requisition = False
-        # Category All / Saleable
-        category_b = self.product_category.parent_id
-        # Category All
-        category_a = category_b.parent_id
         # Add a default value "Set True" for "Call for Bids"
         # of product category first in line (Category A).
-        category_a.purchase_requisition = '1'
+        self.product_category.purchase_requisition = '1'
         # Simulate the onchange and check that the field
         # in the product change for False to True.
-        self.update_product(self.product, category_b)
+        self.update_product(self.product)
         self.assertTrue(self.product.purchase_requisition)
 
     def test_no_restriction(self):
@@ -74,12 +61,8 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         The user can manually change a value inherit form
         the product.category as is needed.
         """
-        category_b = self.product_category.parent_id
-        # Category All
-        category_a = category_b.parent_id
         # Taking the same product in Test 01 change the
-        # "Call for Bids" in product to False and check that
-        # "Call for Bids" in product most be True
+        # "Call for Bids" in product to False
         self.assertTrue(self.product.purchase_requisition)
         # Set "Call for Bids" False to the product.
         self.product.purchase_requisition = False
@@ -88,17 +71,15 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         # product.category A "call for bids" to check that they are different.
         self.assertNotEqual(
             self.product.purchase_requisition,
-            bool(int(category_a.purchase_requisition)))
+            bool(int(self.product_category.purchase_requisition)))
 
     def test_sub_category_default_value(self):
         """
         Test 03: Check pull the default value form
         the parent category one level above.
         """
-        # Category All / Saleable
-        category_b = self.product_category.parent_id
-        # Category All
-        category_a = category_b.parent_id
+        category_a = self.product_category
+        category_b = category_a.parent_id
         # Remove the default value in Category A
         category_a.purchase_requisition = '-1'
         # Add a default value "Set True" in Category B.
@@ -107,7 +88,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         self.product.purchase_requisition = False
         # Simulate the onchane and check that de product "Call for Bids"
         # change to default describe in Category B.
-        self.update_product(self.product, self.product_category)
+        self.update_product(self.product)
         self.assertTrue(self.product.purchase_requisition)
 
     def test_all_category_default_no_set(self):
@@ -123,9 +104,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         while category.parent_id:
             category.purchase_requisition = '-1'
             category = category.parent_id
-        # Category All
-        category_a = self.product_category.parent_id.parent_id
         # Simulate the onchange and check that the Call for Bids
         # change from True to False.
-        self.update_product(self.product, category_a)
+        self.update_product(self.product)
         self.assertFalse(self.product.purchase_requisition)
