@@ -34,13 +34,14 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
             'product.product_product_35_product_template')
 
     def update_product(self, product):
-        result = product.get_purchase_requisition_default()
+        res = product.get_purchase_requisition_default()
+        res = res[0]
         product.write({
             'categ_id': product.categ_id.id,
-            'purchase_requisition': result[0],
+            'purchase_requisition': res,
         })
 
-    def test_category_prch_rqst(self):
+    def test_01_category_prch_rqst(self):
         """
         Test 01: Check that the product receive the default value
         defined in the product.category
@@ -55,7 +56,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         self.update_product(self.product)
         self.assertTrue(self.product.purchase_requisition)
 
-    def test_no_restriction(self):
+    def test_02_no_restriction(self):
         """
         Test 02: No restriction over the inherit values.
         The user can manually change a value inherit form
@@ -63,8 +64,6 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         """
         # Taking the same product in Test 01 change the
         # "Call for Bids" in product to False
-        self.assertTrue(self.product.purchase_requisition)
-        # Set "Call for Bids" False to the product.
         self.product.purchase_requisition = False
         self.assertFalse(self.product.purchase_requisition)
         # Check the new value of product "call for bids" with the
@@ -73,7 +72,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
             self.product.purchase_requisition,
             bool(int(self.product_category.purchase_requisition)))
 
-    def test_sub_category_default_value(self):
+    def test_03_sub_category_default_value(self):
         """
         Test 03: Check pull the default value form
         the parent category one level above.
@@ -91,7 +90,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         self.update_product(self.product)
         self.assertTrue(self.product.purchase_requisition)
 
-    def test_all_category_default_no_set(self):
+    def test_04_all_category_default_no_set(self):
         """
         Test 04: What happen when is not default value
         defined in the product category or in either of its parents.

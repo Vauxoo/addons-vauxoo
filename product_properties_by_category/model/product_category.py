@@ -75,4 +75,5 @@ class ProductTemplate(models.Model):
                 cr_categ_id = cr_categ_id.parent_id
             else:
                 default_value = cr_categ_id.purchase_requisition
+                break
         return default_value != '-1' and bool(int(default_value)) or False
