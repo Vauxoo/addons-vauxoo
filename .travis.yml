@@ -6,7 +6,20 @@ python:
 virtualenv:
   system_site_packages: true
 
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml  # because pip installation is slow
+      - python-simplejson
+      - python-serial
+
 install:
+  # Install packages
+
+  - curl https://raw.githubusercontent.com/OCA/maintainer-quality-tools/master/travis/requirements.txt -o ${HOME}/.requirements.txt
+  - sudo pip install -q -r ${HOME}/.requirements.txt
+
   # Get diff (name-only) of current PR from travis environment variables
   - git --git-dir=${TRAVIS_BUILD_DIR}/.git fetch origin ${TRAVIS_BRANCH} && git --git-dir=${TRAVIS_BUILD_DIR}/.git diff --name-only origin/${TRAVIS_BRANCH}.. >${TRAVIS_BUILD_DIR}/diff-name-only.diff
   - cat ${TRAVIS_BUILD_DIR}/diff-name-only.diff
