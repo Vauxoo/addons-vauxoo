@@ -32,7 +32,7 @@
     "license": "AGPL-3",
     "depends": [
         "fetchmail",
-        "portal_project_issue"
+        "portal_project_issue",
     ],
     "demo": [
     ],
