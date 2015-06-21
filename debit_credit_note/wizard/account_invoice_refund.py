@@ -130,13 +130,13 @@ class account_invoice_refund(osv.osv_memory):
             company = res_users_obj.browse(
                 cr, uid, uid, context=context).company_id
             journal_id = form.journal_id.id
-            inv = None
-            for inv in inv_obj.browse(cr, uid, context.get('active_ids'),
+            invx = None
+            for invx in inv_obj.browse(cr, uid, context.get('active_ids'),
                                       context=context):
-                if inv.state in ['draft', 'proforma2', 'cancel']:
+                if invx.state in ['draft', 'proforma2', 'cancel']:
                     raise osv.except_osv(_('Error!'), _(
                         'Cannot %s draft/proforma/cancel invoice.') % (mode))
-                if inv.reconciled and mode in ('cancel', 'modify'):
+                if invx.reconciled and mode in ('cancel', 'modify'):
                     raise osv.except_osv(_('Error!'), _(
                         'Cannot %s invoice which is already reconciled, '
                         'invoice should be unreconciled first. You can only '
@@ -144,10 +144,10 @@ class account_invoice_refund(osv.osv_memory):
                 if form.period.id:
                     period = form.period.id
                 else:
-                    period = inv.period_id and inv.period_id.id or False
+                    period = invx.period_id and invx.period_id.id or False
 
                 if not journal_id:
-                    journal_id = inv.journal_id.id
+                    journal_id = invx.journal_id.id
 
                 if form.date:
                     date = form.date
@@ -165,41 +165,41 @@ class account_invoice_refund(osv.osv_memory):
                                       (date, company.id,))
                         else:
                             cr.execute("""SELECT id
-                                    from account_period where date(%s)
+                                    from account_period where date({date})
                                     between date_start AND  date_stop  \
-                                    limit 1 """, (date,))
-                        res = cr.fetchone()
-                        if res:
-                            period = res[0]
+                                    limit 1 """.format(date=date))
+                        rex = cr.fetchone()
+                        if rex:
+                            period = rex[0]
                 else:
-                    date = inv.date_invoice
+                    date = invx.date_invoice
                 if form.description:
                     description = form.description
                 else:
-                    description = inv.name
+                    description = invx.name
 
                 if not period:
                     raise osv.except_osv(_('Insufficient Data!'),
                                          _('No period found on the invoice.'))
 
                 refund_id = inv_obj.refund(cr, uid, [
-                                           inv.id], date, period,
+                                           invx.id], date, period,
                                            description, journal_id,
                                            context=context)
                 refund = inv_obj.browse(cr, uid, refund_id[0], context=context)
                 # Add parent invoice
                 inv_obj.write(cr, uid, [refund.id],
                               {'date_due': date,
-                               'check_total': inv.check_total,
-                               'parent_id': inv.id})
+                               'check_total': invx.check_total,
+                               'parent_id': invx.id})
                 inv_obj.button_compute(cr, uid, refund_id)
 
                 created_inv.append(refund_id[0])
                 if mode in ('cancel', 'modify'):
-                    movelines = inv.move_id.line_id
+                    movelines = invx.move_id.line_id
                     to_reconcile_ids = {}
                     for line in movelines:
-                        if line.account_id.id == inv.account_id.id:
+                        if line.account_id.id == invx.account_id.id:
                             to_reconcile_ids[line.account_id.id] = [line.id]
                         if type(line.reconcile_id) != osv.orm.browse_null:
                             reconcile_obj.unlink(cr, uid, line.reconcile_id.id)
@@ -208,18 +208,18 @@ class account_invoice_refund(osv.osv_memory):
                     refund = inv_obj.browse(
                         cr, uid, refund_id[0], context=context)
                     for tmpline in refund.move_id.line_id:
-                        if tmpline.account_id.id == inv.account_id.id:
+                        if tmpline.account_id.id == invx.account_id.id:
                             to_reconcile_ids[
                                 tmpline.account_id.id].append(tmpline.id)
                     for account in to_reconcile_ids:
                         account_m_line_obj.reconcile(
                             cr, uid, to_reconcile_ids[account],
                             writeoff_period_id=period,
-                            writeoff_journal_id=inv.journal_id.id,
-                            writeoff_acc_id=inv.account_id.id
+                            writeoff_journal_id=invx.journal_id.id,
+                            writeoff_acc_id=invx.account_id.id
                         )
                     if mode == 'modify':
-                        invoice = inv_obj.read(cr, uid, [inv.id],
+                        invoice = inv_obj.read(cr, uid, [invx.id],
                                                ['name', 'type', 'number',
                                                 'reference', 'comment',
                                                 'date_due', 'partner_id',
@@ -241,7 +241,7 @@ class account_invoice_refund(osv.osv_memory):
                         tax_lines = inv_obj._refund_cleanup_lines(
                             cr, uid, tax_lines, context=context)
                         invoice.update({
-                            'type': inv.type,
+                            'type': invx.type,
                             'date_invoice': date,
                             'state': 'draft',
                             'number': False,
@@ -249,7 +249,7 @@ class account_invoice_refund(osv.osv_memory):
                             'tax_line': tax_lines,
                             'period_id': period,
                             'name': description,
-                            'origin': self._get_orig(cr, uid, inv, context={}),
+                            'origin': self._get_orig(cr, uid, invx, context={}),
                         })
                         for field in (
                             'partner_id', 'account_id', 'currency_id',
@@ -257,16 +257,16 @@ class account_invoice_refund(osv.osv_memory):
                             invoice[field] = invoice[
                                 field] and invoice[field][0]
                         inv_id = inv_obj.create(cr, uid, invoice, {})
-                        if inv.payment_term.id:
+                        if invx.payment_term.id:
                             data = inv_obj.onchange_payment_term_date_invoice(
-                                cr, uid, [inv_id], inv.payment_term.id, date)
+                                cr, uid, [inv_id], invx.payment_term.id, date)
                             if 'value' in data and data['value']:
                                 inv_obj.write(cr, uid, [inv_id], data['value'])
                         created_inv.append(inv_id)
-            xml_id = (inv.type == 'out_refund') and 'action_invoice_tree1' or \
-                     (inv.type == 'in_refund') and 'action_invoice_tree2' or \
-                     (inv.type == 'out_invoice') and 'action_invoice_tree3' or \
-                     (inv.type == 'in_invoice') and 'action_invoice_tree4'
+            xml_id = (invx.type == 'out_refund') and 'action_invoice_tree1' or \
+                     (invx.type == 'in_refund') and 'action_invoice_tree2' or \
+                     (invx.type == 'out_invoice') and 'action_invoice_tree3' or \
+                     (invx.type == 'in_invoice') and 'action_invoice_tree4'
             result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
             ids = result and result[1] or False
             result = act_obj.read(cr, uid, ids, context=context)
