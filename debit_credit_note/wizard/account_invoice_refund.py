@@ -32,18 +32,17 @@ class account_invoice_refund(osv.osv_memory):
     _inherit = 'account.invoice.refund'
 
     def _get_journal(self, cr, uid, context=None):
-        obj_journal = self.pool.get('account.journal')
+        aj_obj = self.pool.get('account.journal')
         user_obj = self.pool.get('res.users')
-        if context is None:
-            context = {}
-        inv_type = context.get('type', 'out_invoice')
+        context = context or {}
+        itype = context.get('type', 'out_invoice')
         company_id = user_obj.browse(
             cr, uid, uid, context=context).company_id.id
-        ttype = (inv_type == 'out_invoice') and 'sale_refund' or \
-               (inv_type == 'out_refund') and 'sale' or \
-               (inv_type == 'in_invoice') and 'purchase_refund' or \
-               (inv_type == 'in_refund') and 'purchase'
-        journal = obj_journal.search(cr, uid, [('type', '=', ttype), (
+        ttype = (itype == 'out_invoice') and 'sale_refund' or \
+               (itype == 'out_refund') and 'sale' or \
+               (itype == 'in_invoice') and 'purchase_refund' or \
+               (itype == 'in_refund') and 'purchase'
+        journal = aj_obj.search(cr, uid, [('type', '=', ttype), (
             'company_id', '=', company_id)], limit=1, context=context)
         return journal and journal[0] or False
 
