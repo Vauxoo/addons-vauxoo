@@ -49,17 +49,20 @@ class account_invoice(osv.Model):
                                      'to this invoice'),
     }
 
-    def copy(self, cr, uid, id, default={}, context=None):
+    def copy(self, cr, uid, ids, default=None, context=None):
         """ Allows you to duplicate a record,
         child_ids, nro_ctrl and reference fields are
         cleaned, because they must be unique
         """
         if context is None:
             context = {}
+        if default is None:
+            default = {}
         default.update({
             'child_ids': [],
         })
-        return super(account_invoice, self).copy(cr, uid, id, default, context)
+        return super(account_invoice, self).copy(cr, uid, ids, default,
+                                                 context)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

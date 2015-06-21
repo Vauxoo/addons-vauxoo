@@ -24,6 +24,7 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from lxml import etree
+from openerp.tools.safe_eval import safe_eval as eval # pylint: disable=W0622
 
 
 class account_invoice_parent(osv.osv_memory):
@@ -100,10 +101,11 @@ class account_invoice_parent(osv.osv_memory):
             res['arch'] = etree.tostring(doc)
         return res
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, fname, context=None):
         """ Change value for default of the type field
         """
-        res = super(account_invoice_parent, self).default_get(cr, uid, fields, context=context)
+        res = super(account_invoice_parent, self).default_get(cr, uid, fname,
+                                                              context=context)
         if context.get('op_type', False):
             res.update({'type': context.get('op_type', 'modify')})
         return res
@@ -119,20 +121,23 @@ class account_invoice_parent(osv.osv_memory):
         act_obj = self.pool.get('ir.actions.act_window')
         # we get the model
         result = mod_obj.get_object_reference(cr, uid, module, xml_id)
-        id = result and result[1] or False
+        ids = result and result[1] or False
         # we read the act window
-        result = act_obj.read(cr, uid, id, context=context)
+        result = act_obj.read(cr, uid, ids, context=context)
         # we add the new context into context dictionary
         invoice_context = eval(result['context'])
         invoice_context.update({'op_type': op_type, 'partner_id': partner_id, 'parent_id': parent_id})
         result['context'] = invoice_context
         return result
 
-    def check_sure(self, cr, uid, ids, ok, context=None):
+    def check_sure(self, cr, uid, ids, okk, context=None):
         """ Checks if the user is sure
         """
-        if not ok:
-            raise osv.except_osv(_('User Error'), _('Assign parent invoice, Please check the box to confirm that you agree!'))
+        if not okk:
+            raise osv.except_osv(
+                _('User Error'),
+                _('Assign parent invoice, Please check the box to confirm '
+                  'that you agree!'))
         return True
 
     def check_recursion(self, cr, uid, ids, child_id, parent_id, context=None):
@@ -205,15 +210,16 @@ class account_invoice_parent(osv.osv_memory):
         partner_id = form.get('partner_id', False)
         self.check_recursion(cr, uid, ids, active_id, parent_id, context)
         inv_obj = self.pool.get('account.invoice')
-        inv_brw = inv_obj.browse(cr, uid, active_id, context=context)
 
         if parent_id:
             self.check_grandfather(cr, uid, ids, parent_id, context)
-            inv_obj.write(cr, uid, active_id, {'parent_id': parent_id}, context=context)
+            inv_obj.write(cr, uid, active_id, {'parent_id': parent_id},
+                          context=context)
             return {}
 
-        result = self.get_window(cr, uid, ids, 'action_account_invoice_parent', 'l10n_ve_fiscal_requirements', 'modify', partner_id, parent_id)
-        return result
+        return self.get_window(
+            cr, uid, ids, 'action_account_invoice_parent',
+            'l10n_ve_fiscal_requirements', 'modify', partner_id, parent_id)
 
     def invoice_operation(self, cr, uid, ids, context=None):
         """ General method that calls a function depending of the data['type']
