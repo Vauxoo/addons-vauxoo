@@ -246,3 +246,17 @@ class TestUserStory(TransactionCase):
                                             ('body', 'ilike', mes)])
                 self.assertTrue(m_id, "The message was not created")
             i += 1
+
+    @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
+    def test_approve_button(self):
+        cr, uid = self.cr, self.uid
+        self.test_create_method()
+        threading.currentThread().testing = True
+        # Search the user and the user story to change the criterials
+        user_id = self.user.search(cr, uid, [('name', '=', 'User Test')])
+        story_id = self.story.search(cr, uid,
+                                     [('name', '=', 'User Story Test')])
+        user_brw = user_id and self.user.browse(cr, uid, user_id[0])
+        if not user_brw.email:
+            user_brw.write({'email': 'admin@test.com'})
+        self.story.do_approval(cr, user_id[0], story_id)

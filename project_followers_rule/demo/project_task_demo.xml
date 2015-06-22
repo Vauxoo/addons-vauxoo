@@ -8,10 +8,6 @@
             <field name="date_start" eval="time.strftime('%Y-%m-01 10:00:00')"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="privacy_visibility">followers</field>
-            <field name="priority">1</field>
-<!--
-            <field name="currency_id" ref="base.MXN"/>
--->
         </record>
         <record id="project_task_test_vauxoo" model="project.task">
             <field name="name">Task Test Vauxoo</field>
