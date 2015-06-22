@@ -31,9 +31,10 @@
     "website": "http://www.vauxoo.com/",
     "category": "",
     "depends": [
-        "stock",
+        "purchase",
     ],
     "data": [
+        "view/purchase_view.xml",
         "view/stock_picking.xml",
     ],
     "demo": [],

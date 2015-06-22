@@ -23,5 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import stock_picking
-from . import purchase
+from openerp import models, fields
+
+
+class PurchaseOrder(models.Model):
+
+    _inherit = 'purchase.order'
+
+    change_picking = fields.Boolean(
+        string='Change Picking',
+        default=False,
+        help="If True can change the move lines of the generated picking"
+             " (used for Fill Rates). If False can not change the move lines"
+             " this remains equal to the purchase order lines."
+             " The default is False")
