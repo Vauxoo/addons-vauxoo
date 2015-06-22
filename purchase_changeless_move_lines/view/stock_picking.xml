@@ -9,9 +9,10 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@string='General Informations']/group" position="inside">
                     <field name="purchase_id"/>
+                    <field name="change_picking" invisible="True"/>
                 </xpath>
                 <xpath expr="//field[@name='move_lines']" position="attributes">
-                    <attribute name="attrs">{'readonly': [('purchase_id', '!=', False)]}</attribute>
+                    <attribute name="attrs">{'readonly': [('change_picking', '=', False)]}</attribute>
                 </xpath>
             </field>
         </record>

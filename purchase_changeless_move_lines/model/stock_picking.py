@@ -31,23 +31,34 @@ class StockPicking(models.Model):
 
     _inherit = 'stock.picking'
 
+    change_picking = fields.Boolean(
+        compute='_compute_purchase_fields',
+        string='Change Picking',
+        help="This field only apply to stock pickings related to purchase"
+             " orders. If True can change the move lines. If False can not"
+             " change the move lines this remains equal to the purchase order"
+             " lines. This field value is defined in the purchase order"
+             " itself")
+
     purchase_id = fields.Many2one(
         'purchase.order',
-        compute='_compute_purchase_order_id',
+        compute='_compute_purchase_fields',
         string='Purchase Order',
         help="If this stock pickings was generated via a purchase order")
 
-    @api.depends('move_lines')
-    def _compute_purchase_order_id(self):
+    @api.depends('move_lines', 'change_picking')
+    def _compute_purchase_fields(self):
         """
         Calculate if the stock picking have lines generated via purchsae order
         """
         for record in self:
+            change_picking = True
             order = False
             purchase_lines = record.move_lines.mapped('purchase_line_id')
             if purchase_lines:
                 order = purchase_lines.mapped('order_id')
                 if order and len(order) == 1:
+                    change_picking = order.change_picking
                     order = order.id
                 else:
                     raise Warning(_(
@@ -55,3 +66,4 @@ class StockPicking(models.Model):
                         ' purchase orders case is not implemented yet into'
                         ' purchase_chagenless_move_lines module.'))
             self.purchase_id = order
+            self.change_picking = change_picking
