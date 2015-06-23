@@ -17,8 +17,7 @@
     "website": "http://www.vauxoo.com/",
     "category": "sale",
     "depends": [
-        "sale",
-        "user_story",
+        "sale_service",
     ],
     "data": [
         "view/sale_order_view.xml",
