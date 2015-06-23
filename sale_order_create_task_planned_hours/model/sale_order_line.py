@@ -17,5 +17,8 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     estimated_hours = fields.Float(
-        help="Estimated Hours taken for service",
+        help="Estimated Hours taken for service "
+        "If the product type is diferent to Service"
+        "you can not fill the field",
         default=1.0)
+    product_type = fields.Selection(related="product_id.type", store=False)

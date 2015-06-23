@@ -8,7 +8,9 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='price_unit']" position="after">
-                    <field name="estimated_hours" widget="float_time"/>
+                    <field name="estimated_hours" widget="float_time"
+                        attrs="{'invisible':[('product_type','!=','service')]}"/>
+                    <field name="product_type" invisible="1"/>
                 </xpath>
             </field>
         </record>
