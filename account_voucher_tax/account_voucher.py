@@ -561,11 +561,11 @@ class account_move_line(osv.Model):
             context = {}
         cr.execute("""
                 select account_id, sum(amount_tax_unround) as without,
-                    case  when sum(credit) > 0.0
+                    coalesce(case  when sum(credit) > 0.0
                         then sum(credit)
                     when sum(debit) > 0.0
                         then sum(debit)
-                    end as round, id
+                    end, 0.0) as round, id
                 from account_move_line
                 where move_id in (
                 select move_id from account_move_line aml
