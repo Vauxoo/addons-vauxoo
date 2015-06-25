@@ -23,8 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import models, fields, api, _
-from openerp.exceptions import Warning  # pylint: disable=W0622
+from openerp import models, fields, api, exceptions, _
 
 
 class StockPicking(models.Model):
@@ -61,9 +60,49 @@ class StockPicking(models.Model):
                     change_picking = order.change_picking
                     order = order.id
                 else:
-                    raise Warning(_(
+                    raise exceptions.Warning(_(
                         'A stock picking with purchase lines of multiple'
                         ' purchase orders case is not implemented yet into'
                         ' purchase_chagenless_move_lines module.'))
             self.purchase_id = order
             self.change_picking = change_picking
+
+    @api.multi
+    def do_transfer(self):
+        """
+        Verify if the change_picking field and if is True then will check that
+        no move lines have been edited, added or removed.
+        """
+        error_msg = _(
+            'This transfer can not be done.'
+            ' The related purchase order is mark with not change'
+            ' picking and the current picking have ')
+        if not self.change_picking:
+            lines = self.move_lines
+
+            # check if added new lines
+            lines_w_pol = lines.filtered("purchase_line_id")
+            lines_wo_pol = lines - lines_w_pol
+            if lines_wo_pol:
+                raise exceptions.Warning(error_msg + _('NEW move lines'))
+
+            # check if removed lines
+            purchase_lines = self.purchase_id.order_line
+            move_lines_pol = lines.mapped("purchase_line_id")
+            missing_lines = purchase_lines - move_lines_pol
+            if missing_lines:
+                raise exceptions.Warning(error_msg + _('REMOVE move lines'))
+
+            # check if edited the move lines
+            for line in lines:
+                move_line = (line.product_id,
+                             line.product_uom,
+                             line.product_uom_qty)
+                purchase_line = (line.purchase_line_id.product_id,
+                                 line.purchase_line_id.product_uom,
+                                 line.purchase_line_id.product_qty)
+                if move_line != purchase_line:
+                    raise exceptions.Warning(
+                        error_msg + _('DIFFERENT move lines'))
+
+        return super(StockPicking, self).do_transfer()
