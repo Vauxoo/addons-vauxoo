@@ -73,36 +73,47 @@ class StockPicking(models.Model):
         Verify if the change_picking field and if is True then will check that
         no move lines have been edited, added or removed.
         """
+        self.check_move_lines()
+        # pdb.set_trace()
+        # raise exceptions.Warning('wip')
+        res = super(StockPicking, self).do_transfer()
+        return res
+
+    def check_move_lines(self):
+        """
+        This method is used to check when a picking is set as change_picking
+        False the move lines must to match with the purchase order lines.
+        """
+        if self.change_picking:
+            return True
+        lines = self.move_lines
         error_msg = _(
             'This transfer can not be done.'
             ' The related purchase order is mark with not change'
             ' picking and the current picking have ')
-        if not self.change_picking:
-            lines = self.move_lines
 
-            # check if added new lines
-            lines_w_pol = lines.filtered("purchase_line_id")
-            lines_wo_pol = lines - lines_w_pol
-            if lines_wo_pol:
-                raise exceptions.Warning(error_msg + _('NEW move lines'))
+        # check if added new lines
+        lines_w_pol = lines.filtered("purchase_line_id")
+        lines_wo_pol = lines - lines_w_pol
+        if lines_wo_pol:
+            raise exceptions.Warning(error_msg + _('NEW move lines'))
 
-            # check if removed lines
-            purchase_lines = self.purchase_id.order_line
-            move_lines_pol = lines.mapped("purchase_line_id")
-            missing_lines = purchase_lines - move_lines_pol
-            if missing_lines:
-                raise exceptions.Warning(error_msg + _('REMOVE move lines'))
+        # check if removed lines
+        purchase_lines = self.purchase_id.order_line
+        move_lines_pol = lines.mapped("purchase_line_id")
+        missing_lines = purchase_lines - move_lines_pol
+        if missing_lines:
+            raise exceptions.Warning(error_msg + _('REMOVE move lines'))
 
-            # check if edited the move lines
-            for line in lines:
-                move_line = (line.product_id,
-                             line.product_uom,
-                             line.product_uom_qty)
-                purchase_line = (line.purchase_line_id.product_id,
-                                 line.purchase_line_id.product_uom,
-                                 line.purchase_line_id.product_qty)
-                if move_line != purchase_line:
-                    raise exceptions.Warning(
-                        error_msg + _('DIFFERENT move lines'))
-
-        return super(StockPicking, self).do_transfer()
+        # check if edited the move lines
+        for line in lines:
+            move_line = (line.product_id,
+                         line.product_uom,
+                         line.product_uom_qty)
+            purchase_line = (line.purchase_line_id.product_id,
+                             line.purchase_line_id.product_uom,
+                             line.purchase_line_id.product_qty)
+            if move_line != purchase_line:
+                raise exceptions.Warning(
+                    error_msg + _('DIFFERENT move lines'))
+        return True
