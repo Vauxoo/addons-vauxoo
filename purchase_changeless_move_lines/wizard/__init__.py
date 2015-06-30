@@ -23,7 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import test_purchase_order
-from . import test_picking
-from . import test_picking_validate
-from . import test_stock_transfer_details
+from . import stock_transfer_details
