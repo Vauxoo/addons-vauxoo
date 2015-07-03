@@ -176,11 +176,10 @@ class user_story(osv.Model):
                                        'body_html': body,
                                        'auto_delete': False,
                                        'email_from': user_id.email,
+                                       'recipient_ids': followers,
                                    }, context=context)
         mail_mail.send(cr, uid, [mail_id],
-                       recipient_ids=followers,
                        context=context)
-
         return False
 
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
