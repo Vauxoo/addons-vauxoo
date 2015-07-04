@@ -22,7 +22,8 @@ class TestUserStory(TransactionCase):
     def test_create_method(self):
         cr, uid = self.cr, self.uid
         # Search groups that allow manage user story
-        us_manager_group = self.data.get_object(cr, uid, 'user_story', 'group_user_story_manager')
+        us_manager_group = self.data.get_object(
+            cr, uid, 'user_story', 'group_user_story_manager')
         # Creating user to try the create method
         user_test_id = self.user.create(cr, SUPERUSER_ID, {
             'name': 'User Test',
@@ -39,7 +40,8 @@ class TestUserStory(TransactionCase):
                               'name': 'User Story Test',
                               'owner_id': user_test_id,
                               'project_id': project_id,
-                              # Adding user story group to the user created previously
+                              # Adding user story group to the user created
+                              # previously
                               'accep_crit_ids': [(0, 0,
                                                   {'name': 'Criterial Test 1',
                                                    'scenario': 'Test 1'}),
@@ -55,7 +57,8 @@ class TestUserStory(TransactionCase):
         self.user.write(cr, SUPERUSER_ID, [user_test_id], {
             'groups_id': [(4, us_manager_group.id)]
         })
-        # Try that a user with user story group can create a user story,  this group must allow create user story without problems
+        # Try that a user with user story group can create a user story,  this
+        # group must allow create user story without problems
         self.assertTrue(self.story.create(cr, user_test_id, {
             'name': 'User Story Test',
             'owner_id': user_test_id,
@@ -71,7 +74,9 @@ class TestUserStory(TransactionCase):
                                  'scenario': 'Test 3'}),
                                ]
 
-        }, self.context), "An user with user story group manager cannot create an user story")
+        }, self.context),
+            "An user with user story group manager cannot create an"
+            " user story")
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_write_method(self):
@@ -90,22 +95,18 @@ class TestUserStory(TransactionCase):
             'use_tasks': True,
         })
         # Creating an user story for try modify
-        story_id = self.story.create(cr, SUPERUSER_ID,
-                          {
-                              'name': 'User Story Test',
-                              'owner_id': user_test_id,
-                              'project_id': project_id,
-                              'accep_crit_ids': [(0, 0,
-                                                  {'name': 'Criterial Test 1',
-                                                   'scenario': 'Test 1'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 2',
-                                                   'scenario': 'Test 2'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 3',
-                                                   'scenario': 'Test 3'}),
-                                                 ]
-                          })
+        story_id = self.story.create(cr, SUPERUSER_ID, {
+            'name': 'User Story Test',
+            'owner_id': user_test_id,
+            'project_id': project_id,
+            'accep_crit_ids': [
+                (0, 0, {'name': 'Criterial Test 1',
+                        'scenario': 'Test 1'}),
+                (0, 0, {'name': 'Criterial Test 2',
+                        'scenario': 'Test 2'}),
+                (0, 0, {'name': 'Criterial Test 3',
+                        'scenario': 'Test 3'}),
+            ]})
         # Try that a user without user story group cannot write an user story
         self.assertRaises(except_orm, self.story.write, cr,
                           user_test_id, [story_id],
@@ -116,10 +117,12 @@ class TestUserStory(TransactionCase):
         self.user.write(cr, SUPERUSER_ID, [user_test_id], {
             'groups_id': [(4, us_manager_group.id)]
         })
-        # Try that a user with user story group can write a user story,  this group must allow create user story without problems
+        # Try that a user with user story group can write a user story,  this
+        # group must allow create user story without problems
         self.assertTrue(self.story.write(cr, user_test_id, [story_id], {
             'name': 'User Story Test Changed',
-        }, self.context), "An user with user story group manager cannot write an user story")
+        }, self.context),
+            "An user with user story group manager cannot write an user story")
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_unlink_method(self):
@@ -138,22 +141,18 @@ class TestUserStory(TransactionCase):
             'use_tasks': True,
         })
         # Creating an user story for try modify
-        story_id = self.story.create(cr, SUPERUSER_ID,
-                          {
-                              'name': 'User Story Test',
-                              'owner_id': user_test_id,
-                              'project_id': project_id,
-                              'accep_crit_ids': [(0, 0,
-                                                  {'name': 'Criterial Test 1',
-                                                   'scenario': 'Test 1'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 2',
-                                                   'scenario': 'Test 2'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 3',
-                                                   'scenario': 'Test 3'}),
-                                                 ]
-                          })
+        story_id = self.story.create(cr, SUPERUSER_ID, {
+            'name': 'User Story Test',
+            'owner_id': user_test_id,
+            'project_id': project_id,
+            'accep_crit_ids': [
+                (0, 0, {'name': 'Criterial Test 1',
+                        'scenario': 'Test 1'}),
+                (0, 0, {'name': 'Criterial Test 2',
+                        'scenario': 'Test 2'}),
+                (0, 0, {'name': 'Criterial Test 3',
+                        'scenario': 'Test 3'}),
+            ]})
         # Try that a user without user story group cannot remove an user story
         self.assertRaises(except_orm, self.story.unlink,
                           cr, user_test_id, [story_id])
@@ -161,7 +160,8 @@ class TestUserStory(TransactionCase):
         self.user.write(cr, SUPERUSER_ID, [user_test_id], {
             'groups_id': [(4, us_manager_group.id)]
         })
-        # Try that a user with user story group can remove a user story,  this group must allow create user story without problems
+        # Try that a user with user story group can remove a user story,  this
+        # group must allow create user story without problems
         self.assertTrue(self.story.unlink(cr, user_test_id, [story_id]),
                         "An user with user story group manager cannot remove "
                         "an user story")
@@ -183,22 +183,18 @@ class TestUserStory(TransactionCase):
             'use_tasks': True,
         })
         # Creating an user story for try modify
-        story_id = self.story.create(cr, SUPERUSER_ID,
-                          {
-                              'name': 'User Story Test',
-                              'owner_id': user_test_id,
-                              'project_id': project_id,
-                              'accep_crit_ids': [(0, 0,
-                                                  {'name': 'Criterial Test 1',
-                                                   'scenario': 'Test 1'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 2',
-                                                   'scenario': 'Test 2'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 3',
-                                                   'scenario': 'Test 3'}),
-                                                 ]
-                          })
+        story_id = self.story.create(cr, SUPERUSER_ID, {
+            'name': 'User Story Test',
+            'owner_id': user_test_id,
+            'project_id': project_id,
+            'accep_crit_ids': [
+                (0, 0, {'name': 'Criterial Test 1',
+                        'scenario': 'Test 1'}),
+                (0, 0, {'name': 'Criterial Test 2',
+                        'scenario': 'Test 2'}),
+                (0, 0, {'name': 'Criterial Test 3',
+                        'scenario': 'Test 3'}),
+            ]})
         # Try that a user without user story group cannot copy an user story
         self.assertRaises(except_orm, self.story.copy, cr,
                           user_test_id, story_id)
@@ -206,9 +202,12 @@ class TestUserStory(TransactionCase):
         self.user.write(cr, SUPERUSER_ID, [user_test_id], {
             'groups_id': [(4, us_manager_group.id)]
         })
-        # Try that a user with user story group can copy a user story,  this group must allow create user story without problems
-        self.assertTrue(self.story.copy(cr, user_test_id, story_id, context=self.context),
-                        "An user with user story group manager cannot remove an user story")
+        # Try that a user with user story group can copy a user story,  this
+        # group must allow create user story without problems
+        self.assertTrue(
+            self.story.copy(cr, user_test_id, story_id, context=self.context),
+            "An user with user story group manager cannot remove an"
+            " user story")
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_acceptability_criterial_buttons(self):

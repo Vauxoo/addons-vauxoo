@@ -48,8 +48,8 @@ class story_user_html(report_sxw.rml_parse):
         return ''
 
 report_sxw.report_sxw('report.user.story.report',
-            'user.story',
-            'addons/user_story/report/user_story_report.sxw',
-            parser=story_user_html)
+                      'user.story',
+                      'addons/user_story/report/user_story_report.sxw',
+                      parser=story_user_html)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
