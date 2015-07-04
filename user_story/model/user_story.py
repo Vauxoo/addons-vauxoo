@@ -83,8 +83,11 @@ class user_story(osv.Model):
                     hu = self.browse(cr, uid, ids[0], context=context)
                     subject = _(u'Acceptance criteria accepted {criteria} on User Story {hu}'.format(
                         criteria=criteria[1][:30], hu=hu.id))
-                    self.send_mail_hu(
-                        cr, uid, ids, subject, body, hu.id, users=False, context=context)
+                    followers = self.get_followers(
+                        cr, uid, ids, context=context)
+                    self.message_post(
+                        cr, uid, ids, body, subject, type='email',
+                        context=context, partner_ids=followers)
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
 
@@ -139,51 +142,23 @@ class user_story(osv.Model):
         else:
             return False
 
-    def send_mail_hu(self, cr, uid, ids, subject, body, res_id,
-                     users=None, context=None):
-        if context is None:
-            context = {}
-        if context.get('force_send', False):
-            uid = SUPERUSER_ID
+    def get_followers(self, cr, uid, ids, users=None, context=None):
+        context = context or {}
+        followers = []
         if not users:
             followers = self.read(cr, uid, ids[0], [
                 'message_follower_ids'])['message_follower_ids']
         else:
             followers = []
-            hu = self.browse(cr, uid, res_id, context=context)
+            hu = self.browse(cr, uid, ids[0], context=context)
             owner_id = hu.owner_id
             if hu.user_id and hu.user_id.partner_id:
                 followers.append(hu.user_id.partner_id.id)
             if hu.user_execute_id and hu.user_execute_id.partner_id:
                 followers.append(hu.user_execute_id.partner_id.id)
             if owner_id:
-                user_o = [owner_id]
-                followers.append(user_o[0].partner_id.id)
-                followers.append(user_o[0].partner_id.id)
-
-        context.update({
-            'default_body': body,
-        })
-        user_id = self.pool.get('res.users').browse(
-            cr, uid, [uid], context=context)[0]
-
-        mail_mail = self.pool.get('mail.mail')
-        mail_id = mail_mail.create(cr, uid,
-                                   {
-                                       'model': 'user.story',
-                                       'res_id': res_id,
-                                       'subject': subject,
-                                       'body_html': body,
-                                       'auto_delete': False,
-                                       'email_from': user_id.email,
-                                       'recipient_ids': [
-                                           (4, partner)
-                                           for partner in followers],
-                                   }, context=context)
-
-        mail_mail.send(cr, uid, [mail_id],
-                       context=context)
-        return False
+                followers.append(owner_id.partner_id.id)
+        return followers
 
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
         res = {}
@@ -444,8 +419,11 @@ class user_story(osv.Model):
         hu = hu_model.browse(cr, uid, ids[0], context=context)
         subject = 'The User Story with ID %s, "%s...", is now in Pending state' % (
             hu.id, hu.name[:30])
-        self.send_mail_hu(
-            cr, uid, ids, subject, body, hu.id, users=True, context=context)
+        followers = self.get_followers(
+            cr, uid, ids, users=True, context=context)
+        self.message_post(
+            cr, uid, ids, body, subject, type='email', context=context,
+            partner_ids=followers)
         return self.write(cr, uid, ids, {'state': 'pending'}, context=context)
 
     def do_done(self, cr, uid, ids, context=None):
