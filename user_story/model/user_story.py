@@ -83,8 +83,8 @@ class user_story(osv.Model):
                     hu = self.browse(cr, uid, ids[0], context=context)
                     subject = _(u'Acceptance criteria accepted {criteria} on User Story {hu}'.format(
                         criteria=criteria[1][:30], hu=hu.id))
-                    followers = self.get_followers(
-                        cr, uid, ids, context=context)
+                    followers = self.read(cr, uid, ids[0], [
+                        'message_follower_ids'])['message_follower_ids']
                     self.message_post(
                         cr, uid, ids, body, subject, type='email',
                         context=context, partner_ids=followers)
@@ -141,24 +141,6 @@ class user_story(osv.Model):
 
         else:
             return False
-
-    def get_followers(self, cr, uid, ids, users=None, context=None):
-        context = context or {}
-        followers = []
-        if not users:
-            followers = self.read(cr, uid, ids[0], [
-                'message_follower_ids'])['message_follower_ids']
-        else:
-            followers = []
-            hu = self.browse(cr, uid, ids[0], context=context)
-            owner_id = hu.owner_id
-            if hu.user_id and hu.user_id.partner_id:
-                followers.append(hu.user_id.partner_id.id)
-            if hu.user_execute_id and hu.user_execute_id.partner_id:
-                followers.append(hu.user_execute_id.partner_id.id)
-            if owner_id:
-                followers.append(owner_id.partner_id.id)
-        return followers
 
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
         res = {}
@@ -419,8 +401,8 @@ class user_story(osv.Model):
         hu = hu_model.browse(cr, uid, ids[0], context=context)
         subject = 'The User Story with ID %s, "%s...", is now in Pending state' % (
             hu.id, hu.name[:30])
-        followers = self.get_followers(
-            cr, uid, ids, users=True, context=context)
+        followers = self.read(cr, uid, ids[0], [
+            'message_follower_ids'])['message_follower_ids']
         self.message_post(
             cr, uid, ids, body, subject, type='email', context=context,
             partner_ids=followers)
