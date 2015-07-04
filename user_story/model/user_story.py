@@ -176,8 +176,11 @@ class user_story(osv.Model):
                                        'body_html': body,
                                        'auto_delete': False,
                                        'email_from': user_id.email,
-                                       'recipient_ids': followers,
+                                       'recipient_ids': [
+                                           (4, partner)
+                                           for partner in followers],
                                    }, context=context)
+
         mail_mail.send(cr, uid, [mail_id],
                        context=context)
         return False
