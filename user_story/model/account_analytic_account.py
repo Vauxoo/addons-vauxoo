@@ -50,7 +50,7 @@ class account_analytic_account(osv.Model):
                 if acl.to_invoice:
                     total = total + (acl.unit_amount -
                                      (acl.unit_amount *
-                                      (acl.to_invoice.factor/100)))
+                                      (acl.to_invoice.factor / 100)))
             res[_id] = total
         return res
 
