@@ -35,5 +35,4 @@ class mail_notification(osv.Model):
             (message.author_id.receive_my_emails and
                 message.author_id.notify_email != "none"):
             res.append(message.author_id.id)
-        print res,"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
         return res
