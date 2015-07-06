@@ -29,6 +29,10 @@ class mail_notification(osv.Model):
     _inherit = 'mail.notification'
 
     def get_partners_to_email(self, cr, uid, ids, message, context=None):
+        """
+            Overwrite this method to allow receive your own message sent
+            validating the field @receive_my_emails added in model of partner
+        """
         res = super(mail_notification, self).get_partners_to_email(
             cr, uid, ids, message, context=context)
         if message.author_id and\

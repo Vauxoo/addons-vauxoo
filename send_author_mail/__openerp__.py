@@ -25,7 +25,8 @@
     "author": "Vauxoo",
     "category": "Addons Vauxoo",
     "description": """
-Check Field receive_my_emails in partner to receive your own copy of messages sent
+This module added one field in view of partner to allow you receive your own
+message sent to others
     """,
     "website": "http://vauxoo.com",
     "license": "",
