@@ -23,8 +23,28 @@ from openerp.addons.mail.tests.common import TestMail
 
 
 class TestMailMailAuthor(TestMail):
+    """
+        These tests validate the cases when partner is allow to receive
+        your own emails
+
+    """
+
+    # ----------------------------------------------------------
+    # receive_my_emails | notify_email | receive your own email?
+    # ----------------------------------------------------------
+    #   True                 always                 True
+    #   False                always                 False
+    #   True                 none                   False
+    #   False                none                   False
+    # -----------------------------------------------------------
 
     def test_receive_mail_author(self):
+        """
+            This test validate when partner that send email must receive
+            your own email, because has this configuration:
+                @receive_my_emails: True
+                @notify_email: always
+        """
 
         cr, uid = self.cr, self.uid
         context = {}
@@ -50,6 +70,12 @@ class TestMailMailAuthor(TestMail):
             'Partner to notify incorrect, should be two partners to notify')
 
     def test_not_receive_mail_author(self):
+        """
+            This test validate when partner that send email must not receive
+            your own email, because has this configuration:
+                @receive_my_emails: False
+                @notify_email: always
+        """
 
         cr, uid = self.cr, self.uid
         context = {}
@@ -75,6 +101,12 @@ class TestMailMailAuthor(TestMail):
             'Partner to notify incorrect, should be only partner to notify')
 
     def test_not_receive_mail_author_2(self):
+        """
+            This test validate when partner that send email must not receive
+            your own email, because has this configuration:
+                @receive_my_emails: True
+                @notify_email: none
+        """
 
         cr, uid = self.cr, self.uid
         context = {}
@@ -100,6 +132,12 @@ class TestMailMailAuthor(TestMail):
             'Partner to notify incorrect, should be only partner to notify')
 
     def test_not_receive_mail_author3(self):
+        """
+            This test validate when partner that send email must not receive
+            your own email, because has this configuration:
+                @receive_my_emails: False
+                @notify_email: none
+        """
 
         cr, uid = self.cr, self.uid
         context = {}
