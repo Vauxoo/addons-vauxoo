@@ -2,24 +2,27 @@
 <openerp>
 <data>
 <template id="timesheet_vauxoo_report">
+        &lt;!DOCTYPE html&gt;
     <t t-call="hr_timesheet_reports.layout">
-<html>
-    <body style="border:0;">
-    <div class="endpage">
+    <div class="page">
+    <div class="oe_structure"/>
+    <div class="row">
+
     <div class="col-md-6">
         <h1>
             <strong>Report Name:</strong>
-            <p t-field="o.name"/>
+            <p t-esc="o.name"/>
         </h1>
         <h3>
             Resumed Timesheet Report.
         </h3>
         <h4>
             <strong>Filter Name:</strong>
-            <p t-field="o.filter_id.name"/>
+            <p t-esc="o.filter_id.name"/>
         </h4>
-            <p t-field="o.comment_timesheet"/>
+            <p t-esc="o.comment_timesheet"/>
     </div>
+    <t t-set="records" t-value="get_records(o)"/>
     <div class="col-md-6">
         <section>
                     <table width="100%">
@@ -31,23 +34,23 @@
                             <td> Total Hours</td>
                             <td> Billable Hours</td>
                         </tr>
-                        <t t-foreach="o.resume_month" t-as="resume">
+                        <t t-foreach="records.get('resume_month')" t-as="resume">
                             <tr class="by_account">
                                 <td style="text-align: left;">
-                                    <span t-esc="%s (%s) % (resume.date, resume.date_count)"/>
+                                    <span t-esc="'%s (%s)' % (resume.get('date'), resume.get('date_count'))"/>
                                 </td>
                                 <td>
-                                    <span t-field="resume.unit_amount"/>
+                                    <span t-esc="resume.get('unit_amount')"/>
                                 </td>
                                 <td>
-                                    <span t-esc="resume.invoiceables_hours or 0.00"/>
+                                    <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
                                 </td>
                             </tr>
                         </t>
                             <tr class="totals">
                                 <td>Totals</td>
-                                <td><span t-field="o.total_ts_by_month"/></td>
-                                <td><span t-field="o.total_ts_bill_by_month"/></td>
+                                <td><span t-esc="records.get('total_ts_by_month')"/></td>
+                                <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
                             </tr>
                     </table>
         </section>
@@ -61,23 +64,23 @@
                             <td> Total Hours</td>
                             <td> Billable Hours</td>
                         </tr>
-                        <t t-foreach="o.resume" t-as="resume">
+                        <t t-foreach="records.get('resume')" t-as="resume">
                             <tr class="by_account">
                                 <td style="text-align: left;">
-                                    <span t-esc="%s (%s) % (resume.account_id.name.split('/')[-1], resume.account_id_count)"/>
+                                    <span t-esc="'%s (%s)' % (resume.get('account_id')[1].split('/')[-1], resume.get('account_id_count'))"/>
                                 </td>
                                 <td>
-                                    <span t-esc="resume.unit_amount or 0.00"/>
+                                    <span t-esc="resume.get('unit_amount') or 0.00"/>
                                 </td>
                                 <td>
-                                    <span t-esc="resume.invoiceables_hours or 0.00"/>
+                                    <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
                                 </td>
                             </tr>
                         </t>
                         <tr class="totals">
                             <td>Totals</td>
-                            <td><span t-field="o.total_ts_by_month"/></td>
-                            <td><span t-field="o.total_ts_bill_by_month"/></td>
+                            <td><span t-esc="records.get('total_ts_by_month')"/></td>
+                            <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
                         </tr>
                     </table>
         </section>
@@ -91,38 +94,37 @@
                                 <td> Total Hours</td>
                                 <td> Billable Hours</td>
                             </tr>
-                        <t t-foreach="o.resume_user" t-as="resume">
+                        <t t-foreach="records.get('resume_user')" t-as="resume">
                             <tr class="by_account">
                                 <td style="text-align: left;">
-                                    <span t-esc="%s (%s) % (resume.user_id.name.split('/')[-1], resume.user_id_count)"/>
+                                    <span t-esc="'%s (%s)' % (resume.get('user_id')[1].split('/')[-1], resume.get('user_id_count'))"/>
                                 </td>
                                 <td>
-                                    <span t-esc="resume.unit_amount or 0.00"/>
+                                    <span t-esc="resume.get('unit_amount') or 0.00"/>
                                 </td>
                                 <td>
-                                    <span t-esc="resume.invoiceables_hours or 0.00"/>
+                                    <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
                                 </td>
                             </tr>
                         </t>
                             <tr class="totals">
                                 <td>Totals</td>
-                                    <td><span t-field="o.total_ts_by_month"/></td>
-                                    <td><span t-field="o.total_ts_bill_by_month"/></td>
+                                    <td><span t-esc="records.get('total_ts_by_month')"/></td>
+                                    <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
                             </tr>
                         </table>
         </section>
     </div>
-    </div>
 
-    <t t-foreach="o.invoices">
+    <t t-if="records.get('invoices')">
     <div class="endpage">
     <div class="col-md-6">
         <h2>Economical Status</h2>
         <h3>
             <strong>Filter Name:</strong>
-            <p t-field="o.filter_invoice_id.name"/>
+            <p t-esc="o.filter_invoice_id.name"/>
         </h3>
-        <p t-field="o.comment_invoices"/>
+        <p t-esc="o.comment_invoices"/>
     </div>
     <div class="col-md-6">
             <table width="100%">
@@ -144,22 +146,22 @@
                         </table>
                     </td>
                 </tr>
-                <t t-foreach="o.periods" t-as="period">
+                <t t-foreach="records.get('periods')" t-as="period">
                 <tr>
                     <td width="10%" style="text-align: left;">
-                    <span t-field="period.period_id.name"/>
+                    <span t-esc="period.get('period_id')[1]"/>
                     </td>
                     <td colspan="2" class="invoices_content">
                         <table width="100%">
-                            <t t-foreach="o.invoices" t-as="invoice">
-                                <t t-if="invoice.period_id.id == period.period_id.id">
+                            <t t-foreach="records.get('invoices')" t-as="invoice">
+                                <t t-if="invoice.period_id.id == period.get('period_id')[0]">
                                     <tr t-att-class="invoice.residual &gt; 1.00 and 'unpaid' or invoice.residual &lt; 1.00 and 'paid'">
-                                    <td width="20%"><span t-field="invoice.number"/></td>
-                                    <td width="20%"><span t-field="invoice.amount_untaxed"/></td>
-                                    <td width="20%"><span t-field="invoice.amount_tax"/></td>
-                                    <td width="20%"><span t-field="invoice.amount_total"/></td>
-                                    <td width="20%"><span t-field="invoice.residual"/></td>
-                                    <td width="10%"><span t-field="invoice.currency_id.name"/></td>
+                                    <td width="20%"><span t-esc="invoice.number"/></td>
+                                    <td width="20%"><span t-esc="invoice.amount_untaxed"/></td>
+                                    <td width="20%"><span t-esc="invoice.amount_tax"/></td>
+                                    <td width="20%"><span t-esc="invoice.amount_total"/></td>
+                                    <td width="20%"><span t-esc="invoice.residual"/></td>
+                                    <td width="10%"><span t-esc="invoice.currency_id.name"/></td>
                                 </tr>
                                 </t>
                         </t>
@@ -170,22 +172,22 @@
                 <tr>
                     <td class="invoices_content">
                         <table width="100%">
-                        <t t-foreach="o.total_invoices" t-as="currency">
+                        <t t-foreach="records.get('total_invoices')" t-as="currency">
                             <tr>
-                                <td><span t-field="currency.currency_id.name"/></td>
+                                <td><span t-esc="currency.get('currency_id')[1]"/></td>
                             </tr>
                         </t>
                         </table>
                     </td>
                     <td class="invoices_content">
                         <table width="100%">
-                        <t t-foreach="o.total_invoices" t-as="currency">
+                        <t t-foreach="records.get('total_invoices')" t-as="currency">
                         <tr>
                             <td width="10%"> </td>
-                            <td width="20%"><span t-field="invoice.amount_untaxed"/></td>
-                            <td width="20%"><span t-field="invoice.amount_tax"/></td>
-                            <td width="20%"><span t-field="invoice.amount_total"/></td>
-                            <td width="20%"><span t-field="invoice.residual"/></td>
+                            <td width="20%"><span t-esc="currency.get('amount_untaxed')"/></td>
+                            <td width="20%"><span t-esc="currency.get('amount_tax')"/></td>
+                            <td width="20%"><span t-esc="currency.get('amount_total')"/></td>
+                            <td width="20%"><span t-esc="currency.get('residual')"/></td>
                             <td width="10%"> </td>
                         </tr>
                         </t>
@@ -199,26 +201,26 @@
                 <t t-set="total_cons" t-value="0"/>
                 <t t-set="total_lic" t-value="0"/>
                 <t t-set="total_others" t-value="0"/>
-                <t t-foreach="o.resume_product" t-as="il">
-                    <t t-set="total_train" t-value="il.total_train+total_train"/>
-                    <t t-set="total_cons" t-value="il.total_cons+total_cons"/>
-                    <t t-set="total_lic" t-value="il.total_lic+total_lic"/>
-                    <t t-set="total_others" t-value="il.total_others+total_others"/>
+                <t t-foreach="records.get('resume_product')" t-as="il">
+                    <t t-set="total_train" t-value="records.get('resume_product')[il].get('total_train')+total_train"/>
+                    <t t-set="total_cons" t-value="records.get('resume_product')[il].get('total_cons')+total_cons"/>
+                    <t t-set="total_lic" t-value="records.get('resume_product')[il].get('total_lic')+total_lic"/>
+                    <t t-set="total_others" t-value="records.get('resume_product')[il].get('total_others')+total_others"/>
                     <div class="col-md-6">
                         <h3>
                             <strong>Amounts in Currency </strong>
-                            <u t-field="il"/>
+                            <u t-esc="il"/>
                         </h3>
-                        <p><b>Training: </b><span t-field="il.training"/></p>
-                        <p><b>Consultancy: </b><span t-field="il.consultancy"/></p>
-                        <p><b>Enterprises: </b><span t-field="il.enterprises"/></p>
-                        <p><b>Others: </b><span t-field="il.others"/></p>
+                        <p><b>Training: </b><span t-esc="records.get('resume_product')[il].get('training')"/></p>
+                        <p><b>Consultancy: </b><span t-esc="records.get('resume_product')[il].get('consultancy')"/></p>
+                        <p><b>Enterprises: </b><span t-esc="records.get('resume_product')[il].get('enterprises')"/></p>
+                        <p><b>Others: </b><span t-esc="records.get('resume_product')[il].get('others')"/></p>
                         <hr/>
-                        <p><b>Total: </b><span t-field="il.total"/></p>
+                        <p><b>Total: </b><span t-esc="records.get('resume_product')[il].get('total')"/></p>
                         <hr/>
-                        <p><b>Total in <u t-field="o.currency_id.name"></u>: </b><span t-field="il.total_in_control"/></p>
+                        <p><b>Total in <u t-esc="o.currency_id.name"></u>: </b><span t-esc="records.get('resume_product')[il].get('total_in_control')"/></p>
                         <hr/>
-                        <p><b>Conversion Rate: </b><span t-field="il.conversion_rate"/></p>
+                        <p><b>Conversion Rate: </b><span t-esc="records.get('resume_product')[il].get('conversion_rate')"/></p>
                     </div>
                 </t>
             </section>
@@ -226,7 +228,7 @@
             <section>
                 <h2>
                     <strong>Resumed amounts in </strong>
-                    <u t-field="o.currency_id.name"/></h2>
+                    <u t-esc="o.currency_id.name"/></h2>
                 <div class="col-md-6">
                 <p><b>Total Invoiced</b>
                 <ul>
@@ -240,8 +242,8 @@
                 <div class="col-md-6">
                 <p><b>Totals Timesheet</b>
                 <ul>
-                    <li><b>Billable: </b><span t-field="o.resumed_numbers.pending"/></li>
-                    <li><b>Pending <br/><sub>Billables - Billed</sub>: </b><br/><span t-esc="o.resumed_numbers.pending - total_cons"/></li>
+                    <li><b>Billable: </b><span t-esc="records.get('resumed_numbers')['pending']"/></li>
+                    <li><b>Pending <br/><sub>Billables - Billed</sub>: </b><br/><span t-esc="records.get('resumed_numbers')['pending'] - total_cons"/></li>
                 </ul>
                 </p>
                 </div>
@@ -249,15 +251,15 @@
     </div>
     </div>
     </t>
-    <t t-if="o.issues">
+    <t t-if="records.get('issues')">
         <div class="endpage">
         <div class="col-md-6">
             <h3> Issues. </h3>
             <h4>
                 <strong>Filter Name: </strong>
-                <p t-field="o.filter_issue_id.name"/>
+                <p t-esc="o.filter_issue_id.name"/>
             </h4>
-            <p t-field="o.comment_issues"/>
+            <p t-esc="o.comment_issues"/>
         </div>
         <div class="col-md-6">
             <table width="100%">
@@ -270,18 +272,17 @@
                     <td width="10%"> Qty </td>
                     <td width="40%"> Status </td>
                 </tr>
-                <t t-foreach="o.issues" t-as="issue">
+                <t t-foreach="records.get('issues')" t-as="issue">
                     <tr>
                         <td width="50%" style="text-align: left;">
-                            <span t-esc="issue.analytic_account_id.name or 'Not analytic Setted.'"/>
+                            <span t-esc="issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.'"/>
                         </td>
                         <td  width="10%" class="invoices_content">
-                            <span t-field="issue.analytic_account_id_count"/>
+                            <span t-esc="issue.get('analytic_account_id_count')"/>
                         </td>
                         <td  width="40%" style="text-align: right;" class="invoices_content">
-                            %for stage in issue['children_by_stage'] :
-                        <t t-foreach="issue.children_by_stage" t-as="stage">
-                            <p style="padding-top:2px;" t-esc="stage.stage_id.name - stage.stage_id_count"/>
+                        <t t-foreach="issue.get('children_by_stage')" t-as="stage">
+                            <p style="padding-top:2px;" t-esc="'%s - %s ' %(stage.get('stage_id')[1], stage.get('stage_id_count'))"/>
                         </t>
                     </td>
                 </tr>
@@ -292,15 +293,15 @@
         </div>
     </t>
 
-    <t t-if="o.user_stories">
+    <t t-if="records.get('user_stories')">
         <div class="endpage">
         <div class="col-md-6">
             <h3> User Stories. </h3>
             <h4>
                 <strong>Filter Name:</strong>
-                <p t-field="o.filter_hu_id.name"/>
+                <p t-esc="o.filter_hu_id.name"/>
             </h4>
-            <p t-field="o.comment_hu"/>
+            <p t-esc="o.comment_hu"/>
         </div>
         <div class="col-md-6">
             <table width="100%">
@@ -316,28 +317,28 @@
                     <td width="10%"> Invoiceable </td>
                     <td width="10%"> Status </td>
                 </tr>
-                <t t-foreach="o.user_stories" t-as="hu">
+                <t t-foreach="records.get('user_stories')" t-as="hu">
                     <tr>
                         <td width="10%" style="text-align: left;">
-                            <span t-field="hu.id"/>
+                            <span t-esc="hu.id"/>
                         </td>
                         <td  width="35%" class="description">
-                            <span t-field="hu.name"/>
+                            <span t-esc="hu.name"/>
                         </td>
                         <td  width="15%" class="invoices_content" style="text-align: left;">
-                            <span t-field="hu.owner_id.name"/>
+                            <span t-esc="hu.owner_id.name"/>
                         </td>
                         <td  width="10%" class="invoices_content">
-                            <span t-field="hu.planned_hours"/>
+                            <span t-esc="hu.planned_hours"/>
                         </td>
                         <td  width="10%" class="invoices_content">
-                            <span t-field="hu.effective_hours"/>
+                            <span t-esc="hu.effective_hours"/>
                         </td>
                         <td  width="10%" class="invoices_content">
-                            <span t-field="hu.invoiceable_hours"/>
+                            <span t-esc="hu.invoiceable_hours"/>
                         </td>
                         <td  width="10%" style="text-align: right;" class="invoices_content">
-                            <span t-field="hu.state"/>
+                            <span t-esc="hu.state"/>
                         </td>
                     </tr>
                 </t>
@@ -348,11 +349,11 @@
 
         <t t-if="o.show_details">
             <h3> Detailed Report. </h3>
-            <t t-foreach="o.data" t-as="res">
+            <t t-foreach="records.get('data')" t-as="res">
                 <table width="100%" style="font-size: 12px;">
                     <tr>
                         <th colspan="10">
-                            <h3><b>Analytic Account:</b><span t-field="res"/></h3>
+                            <h3><b>Analytic Account:</b><span t-esc="res"/></h3>
                         </th>
                     </tr>
                     <tr>
@@ -367,47 +368,45 @@
                         <th> Duration </th>
                         <th> Bill </th>
                     </tr>
-                    <tr t-att-class="not res.to_invoice and 'red' or res.to_invoice.id == 1 and 'bold' or res.to_invoice.id == 5 and 'green' or 'blue'">
-                        <td width="5%">
-                            <span t-field="res.id"/>
-                        </td>
-                        <td>
-                            <span t-field="res.issue"/>
-                        </td>
-                        <td>
-                            <span t-esc="res.task_id.userstory_id and res.task_id.userstory_id.id or 'Na'"/>
-                        </td>
-                        <td>
-                            <span t-esc="res.invoice_id.name or 'N-I'"/>
-                        </td>
-                        <td width="10%">
-                            <span t-field="res.author"/>
-                        </td>
-                        <td class="description">
-                            <span t-esc="'%s: %s' % (res.task_id and res.task_id.id, res.description)"/>
-                        </td>
-                        <td class="date">
-                            <span t-field="res.date"/>
-                        </td>
-                        <td class="duration">
-                            <span t-field="res.duration"/>
-                        </td>
-                        <td>
-                            <span t-esc="res.to_invoice and res.to_invoice.name or 'No Setted'"/>
-                        </td>
-                        <td class="duration">
-                            <span t-field="res.invoiceables_hours"/>
-                        </td>
-                    </tr>
+                    <t t-foreach="records.get('data')[res]" t-as="rec">
+                        <tr t-att-class="not rec.get('to_invoice') and 'red' or rec.get('to_invoice').id == 1 and 'bold' or rec.get('to_invoice').id == 5 and 'green' or 'blue'">
+                            <td width="5%">
+                                <span t-esc="rec.get('id')"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('issue')"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('task_id').userstory_id and rec.get('task_id').userstory_id.id or 'Na'"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('invoice_id') or 'N-I'"/>
+                            </td>
+                            <td width="10%">
+                                <span t-esc="rec.get('author')"/>
+                            </td>
+                            <td class="description">
+                                <span t-esc="'%s: %s' % (rec.get('task_id') and rec.get('task_id').id, rec.get('description'))"/>
+                            </td>
+                            <td class="date">
+                                <span t-esc="rec.get('date')"/>
+                            </td>
+                            <td class="duration">
+                                <span t-esc="rec.get('duration')"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('to_invoice') and rec.get('to_invoice').name or 'No Setted'"/>
+                            </td>
+                            <td class="duration">
+                                <span t-esc="rec.get('invoiceables_hours')"/>
+                            </td>
+                        </tr>
+                    </t>
                 </table>
             </t>
     </t>
-</body>
-</html>
-
-    Status API Training Shop Blog About Help
-
-
+    </div>
+    </div>
     </t>
 </template>
 
