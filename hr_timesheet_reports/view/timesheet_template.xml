@@ -3,12 +3,14 @@
 <data>
 <template id="timesheet_vauxoo_report">
     <t t-call="hr_timesheet_reports.layout">
+<html>
     <body style="border:0;">
     <div class="endpage">
     <div class="col-md-6">
         <h1>
             <strong>Report Name:</strong>
             <p t-field="o.name"/>
+        </h1>
         <h3>
             Resumed Timesheet Report.
         </h3>
@@ -17,7 +19,6 @@
             <p t-field="o.filter_id.name"/>
         </h4>
             <p t-field="o.comment_timesheet"/>
-        </p>
     </div>
     <div class="col-md-6">
         <section>
@@ -152,7 +153,7 @@
                         <table width="100%">
                             <t t-foreach="o.invoices" t-as="invoice">
                                 <t t-if="invoice.period_id.id == period.period_id.id">
-                                <tr t-att-class="invoice.residual > 1.00 and 'unpaid' or invoice.residual < 1.00 and 'paid'">
+                                    <tr t-att-class="invoice.residual &gt; 1.00 and 'unpaid' or invoice.residual &lt; 1.00 and 'paid'">
                                     <td width="20%"><span t-field="invoice.number"/></td>
                                     <td width="20%"><span t-field="invoice.amount_untaxed"/></td>
                                     <td width="20%"><span t-field="invoice.amount_tax"/></td>
@@ -337,7 +338,6 @@
                         </td>
                         <td  width="10%" style="text-align: right;" class="invoices_content">
                             <span t-field="hu.state"/>
-                        </td>
                         </td>
                     </tr>
                 </t>

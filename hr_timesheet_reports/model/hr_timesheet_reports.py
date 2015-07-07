@@ -379,14 +379,10 @@ class hr_timesheet_reports_base(osv.Model):
     }
 
     def do_report(self, cr, uid, ids, context=None):
-        return {'type': 'ir.actions.report.xml',
-                'name': 'hr.timesheet.reports.explain',
-                'report_name': 'Resumed Project Status',
-                'report_type': "webkit",
-                'string': "Hr timesheet reports base",
-                'file': "hr_timesheet_reports/model/hr_timesheet_reports_base.mako",  # noqa
-                'nodestroy': True,
-               }
+        return self.pool['report'].get_action(cr, uid, ids,
+                                       'hr_timesheet_reports.'
+                                       'timesheet_report_vauxoo',
+                                       context=context)
 
     def go_to_timesheet(self, cr, uid, ids, context=None):
         if context is None:
