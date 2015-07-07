@@ -13,6 +13,7 @@ Team Social Icons on Our team page
     ],
     'data': [
         'views/layout.xml',
+        'views/hr_employee.xml',
         'views/website_hr_icons.xml',
     ],
     'demo': [
