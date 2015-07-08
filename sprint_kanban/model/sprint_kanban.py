@@ -22,6 +22,13 @@ class sprint_kanban(osv.Model):
         self.write(cr, uid, ids, {'state': 'open'}, context=context)
         return True
 
+    def _get_task_count(self, cr, uid, ids, field_name, arg, context=None):
+        Task = self.pool['project.task']
+        return {
+            project_id: Task.search_count(cr,uid, [('project_id', '=', project_id)], context=context)
+            for project_id in ids
+        }
+
     _name = 'sprint.kanban'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
 
@@ -70,6 +77,7 @@ class sprint_kanban(osv.Model):
                                                  task is ready to be pulled
                                                  to the next stage""",
                                          readonly=True, required=False),
+        'task_count': fields.function(_get_task_count, string="Number of tasks for this user story", type='integer')
     }
 
     def set_kanban_state_blocked(self, cr, uid, ids, context=None):

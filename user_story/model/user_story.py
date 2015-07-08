@@ -739,16 +739,27 @@ class project_task(osv.Model):
                                         help="Set here the User Story related with this task"),
         'branch_to_clone': fields.char('Branch to clone', 512,
                                        help='Source branch to be clone and make merge proposal'),
-
     }
 
 
 class inherit_project(osv.Model):
 
-    '''Inheirt project model to a new Descripcion field'''
+    '''Inherit project model to a new Description field'''
 
     _inherit = 'project.project'
+
+
+    def _get_finished_user_stories(self, cr, uid, ids, field_name, arg, context=None):
+        User_story = self.pool['user.story']
+        total = User_story.search_count(cr,uid, [('project_id', '=', ids[0])], context=context)
+        finished = User_story.search_count(cr,uid, [('project_id', '=', ids[0]),('state','in',['done','cancelled'])], context=context)
+        return {project_id: '{} / {} User stories'.format(finished, total) for project_id in ids}
+
+
     _columns = {
-        'descriptions': fields.text('Description',
-                                    help="Reference on what the project is about"),
+        'descriptions': fields.text('Description',  help="Reference on what the project is about"),
+        #'user_story_count': fields.integer('#User stories')
+        'user_stories_finished': fields.function(
+            _get_finished_user_stories, string="Percentage finished user stories", type='char')
     }
+

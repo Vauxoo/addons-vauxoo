@@ -10,7 +10,8 @@
         
       
         <xpath expr="//field[@name='date_deadline']" position="after">
-          <field name="userstory_id" on_change="onchange_user_story_task(userstory_id)" domain="[('project_id','=',project_id)]"/>
+          <field name="userstory_id" on_change="onchange_user_story_task(userstory_id)"
+            domain="[('project_id','=',project_id)]"/>
         </xpath>
         
       </field>
@@ -22,7 +23,6 @@
       <field name="inherit_id" ref="sprint_kanban.inherit_tasks_sprint_kanban_form_view" />
       <field name="arch" type="xml">
         
-      
         <xpath expr="//field[@name='res_id']" position="after">
           <field name="branch_to_clone" />
         </xpath>
@@ -60,8 +60,11 @@
                                 <field name="descriptions" widget="html" attrs="{'readonly':[('state','=','done')]}" placeholder="Add Description..." />
                             </page>
                         </xpath>
-                        <xpath expr="//div[@name='buttons']" > 
-                            <button name="%(act_project_project_users_story_all)d" string="User Stories" type="action" groups="user_story.group_user_story_user"/>
+                        <xpath expr="//div[@name='buttons']" position="inside">
+                            <button class="oe_stat_button" type="action" name="%(act_project_project_users_story_all)d">
+                                  <field name="user_stories_finished"/>
+                              </button>
+
                         </xpath>
                 </field>
         </record>
