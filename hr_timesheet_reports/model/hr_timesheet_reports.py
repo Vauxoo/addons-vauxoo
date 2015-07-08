@@ -379,10 +379,9 @@ class hr_timesheet_reports_base(osv.Model):
     }
 
     def do_report(self, cr, uid, ids, context=None):
-        return self.pool['report'].get_action(cr, uid, ids,
-                                       'hr_timesheet_reports.'
-                                       'timesheet_report_vauxoo',
-                                       context=context)
+        return self.pool['report'].\
+            get_action(cr, uid, ids, 'hr_timesheet_reports.'
+                       'timesheet_report_vauxoo', context=context)
 
     def go_to_timesheet(self, cr, uid, ids, context=None):
         if context is None:
