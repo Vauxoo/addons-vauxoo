@@ -26,11 +26,14 @@ report.
     "depends": [
         "hr_timesheet_sheet",
         "report_webkit",
+        "report",
         "user_story",
         "project_issue",
     ],
     "demo": [],
     "data": [
+        "view/layout.xml",
+        "view/timesheet_template.xml",
         "model/hr_timesheet_reports_formats.xml",
         "model/hr_timesheet_reports_view.xml",
         "model/hr_timesheet_reports_email.xml",

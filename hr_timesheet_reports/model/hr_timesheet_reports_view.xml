@@ -9,6 +9,15 @@
                 string="Hr timesheet reports base"
                 report_type="webkit"
                 menu="True"/>
+        <report
+            id="qweb_hr_timesheet_reports_base"
+            string="Hr timesheet reports base"
+            model="hr.timesheet.reports.base"
+            report_type="qweb-pdf"
+            file="hr_timesheet_reports.timesheet_report_vauxoo"
+            name="hr_timesheet_reports.timesheet_report_vauxoo"
+        />
+
 
         <record id="view_reports_base_tree" model="ir.ui.view">
             <field name="name">Timesheet Report</field>
