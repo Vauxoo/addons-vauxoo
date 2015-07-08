@@ -2,12 +2,9 @@
 <openerp>
 <data>
 <template id="timesheet_vauxoo_report">
-        &lt;!DOCTYPE html&gt;
-    <t t-call="hr_timesheet_reports.layout">
     <div class="page">
-    <div class="oe_structure"/>
-    <div class="row">
-
+    <t t-call="hr_timesheet_reports.layout">
+        &lt;!DOCTYPE html&gt;
     <div class="col-md-6">
         <h1>
             <strong>Report Name:</strong>
@@ -405,9 +402,8 @@
                 </table>
             </t>
     </t>
-    </div>
-    </div>
     </t>
+    </div>
 </template>
 
 <template id="timesheet_report_vauxoo">
