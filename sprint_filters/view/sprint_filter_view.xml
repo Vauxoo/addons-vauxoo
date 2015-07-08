@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+  <data>
+
+     <!-- +++++++++++ view in Form +++++++++++++++++++++++++++ -->
+
+    <record model="ir.ui.view" id="sprint_kanban_form_hu_view">
+      <field name="name">sprint.kanban.form</field>
+      <field name="model">sprint.kanban</field>
+      <field name="inherit_id" ref="sprint_kanban.sprint_kanban_form_view"/>
+      <field name="arch" type="xml">
+          <xpath expr="//group[2]" position="after">
+              <field nolabel="1" name="user_story_ids"/>
+          </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="user_story_form_hu_view">
+      <field name="name">user.story.form</field>
+      <field name="model">user.story</field>
+      <field name="inherit_id" ref="user_story.view_userstory_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='task_ids']" position="after">
+              <separator string="Sprints" colspan='4'/>
+              <field nolabel="1" name="sprint_ids"/>
+          </xpath>
+      </field>
+    </record>
+   </data>
+</openerp>
