@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ############ Credits ########################################################
 #    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -22,29 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Account Anglo-Saxon Stock Move", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
+    "name": "Account Anglo-Saxon Stock Move",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "",
     "description": """
 Account Anglo-Saxon Stock Move
 ------------------------------
-    This module adds an attribute to the Account Invoice Line object
-    and in the case of creating invoice from shipments attach the Stock Move
-    Record on the regarding Invoice Line
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+""",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "account_anglo_saxon"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+        "account_anglo_saxon_missing_key",
+        "stock_move_entries",
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

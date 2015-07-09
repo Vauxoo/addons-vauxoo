@@ -29,7 +29,8 @@ from openerp.osv import osv
 class product_product(osv.Model):
     _inherit = "product.product"
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    def copy(self, cr, uid,
+             id, default=None, context=None):  # pylint: disable=W0622
 
         if not default:
             default = {}

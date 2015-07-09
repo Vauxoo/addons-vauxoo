@@ -4,7 +4,7 @@
   !record {model: res.users, id: res_user_demo_task_rule0}:
     company_id: base.main_company
     name: Demo Task Rule
-    login: dtask
+    login: dtask@example.com
     password: dtask
     groups_id:
       - base.group_user
@@ -17,12 +17,11 @@
     from openerp.osv.orm import except_orm
     from openerp.tools import mute_logger
     from openerp import tools
-    
     test_ok = False
-    
     obj_task = self.browse(cr, uid, ref("project_task_test_vauxoo"))
     obj_user = self.pool.get('res.users')
     user_partner_id = obj_user.browse(cr, uid, ref("res_user_demo_task_rule0")).partner_id.id
+    obj_user.browse(cr, uid, ref("res_user_demo_task_rule0")).partner_id.write({'email': 'dtask@example.com'})
     ###############################################################################################
     #                             Project privacy_visibility: Followers                           #
     #                         follower_project: False, follower_task: False                       #

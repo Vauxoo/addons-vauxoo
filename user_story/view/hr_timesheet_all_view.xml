@@ -16,6 +16,7 @@
                     <field name="period"/>
                     <field name="unit_amount" sum="Total time" widget="float_time"/>
                     <field name="invoiceable"/>
+                    <field name="invoiceables_hours" sum="Total time" widget="float_time"/>
                 </tree>
             </field>
         </record>
@@ -33,6 +34,7 @@
                     <field name="name"/>
                     <field name="period"/>
                     <field name="invoiceable"/>
+                    <field name="invoiceables_hours"/>
                     <group expand="0" string="Filters">
                         <filter name="analytic_id" string="Unassigned Project" domain="[('analytic_id','=',False)]"/>
                         <filter name="userstory" string="Unassigned User Story" domain="[('userstory','=',False)]"/>

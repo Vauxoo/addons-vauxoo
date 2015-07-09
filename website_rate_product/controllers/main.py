@@ -6,7 +6,7 @@ from openerp.addons.web.controllers.main import login_redirect
 from openerp.addons.website_sale.controllers.main import website_sale
 
 
-class website_sale(website_sale):
+class website_sale_inh(website_sale):
 
     @http.route(['/shop/product/comment/<int:product_template_id>'],
                 type='http', auth="public", methods=['POST'], website=True)
@@ -27,5 +27,6 @@ class website_sale(website_sale):
             }
             request.registry['mail.message'].write(cr, uid, [mid], data,
                                                    context)
-        r = werkzeug.utils.redirect(request.httprequest.referrer + "#comments")
-        return r
+        res = werkzeug.utils.redirect(request.httprequest.referrer +
+                                      "#comments")
+        return res
