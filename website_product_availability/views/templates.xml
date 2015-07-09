@@ -2,7 +2,7 @@
 <openerp>
     <data>
  		<template id="product_stock_state" inherit_id="website_sale.product">
- 			<xpath expr="//h1[@itemprop='name']" position="after">
+ 			<xpath expr="//hr[@t-if='product.description_sale']" position="before">
  				<h5><span class="label stock_state"></span></h5>
 
  				<h5><span class="label label-info stock_delay"></span></h5>

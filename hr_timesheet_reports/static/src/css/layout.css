@@ -1,0 +1,142 @@
+body {
+    font-size: 9px;
+}
+p {
+    font-size: 9px;
+    line-height: 11px;
+}
+li {
+    font-size: 10px;
+    line-height: 12px;
+}
+table .title {
+    background-color: #A41D35;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 12px;
+}
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
+.blue {
+    color: blue;
+}
+.bold {
+    color: grey;
+    font-weight: bold;
+}
+table p {
+    font-size: 9px;
+    line-height: 9px;
+    padding: 0px;
+    padding-bottom: 1px;
+    margin: 0px;
+}
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 9px;
+    padding: 3px;
+    vertical-align: top;
+}
+th {
+    border: 1px solid black;
+}
+.analysis > tbody > tr > td {
+    text-align: left;
+    border: none;
+    width: 50%;
+}
+.analysis p{
+    line-height: 12px;
+}
+.analysis h4{
+    text-align: center;
+}
+.analysis {
+    width: 100%;
+}
+.resume {
+    width: 100%;
+    border: none;
+}
+.resume > tbody > tr > td{
+    text-align: left;
+    border: none;
+}
+.totals > td{
+    text-align: right;
+    font-weight: bold;
+}
+.resume > tbody > tr > td:first-child{
+    width: 40%;
+}
+.description {
+    text-align: left;
+}
+.duration {
+    font-weight: bold;
+}
+.date {
+    font-weight: bold;
+    width: 10%;
+}
+.paid {
+    color: green;
+}
+.unpaid {
+    color: red;
+}
+.invoices_content table,
+.invoices_content th,
+.invoices_content td {
+    border: none;
+    text-align: center;
+    font-size: 9px;
+    padding: 3px;
+    vertical-align: top;
+}
+.invoices_content td {
+    width: 20%;
+}
+.invoices_content td.amount {
+    text-align: right;
+    width: 40%;
+}
+/**
+Fonts Size
+*/
+h1, h1, h3, h4, h5 { line-height: auto; }
+h1 { font-size: 14px; }
+h1 { font-size: 13px; }
+h3 { font-size: 12px; }
+h4, h5 { font-size: 11px; }
+table.endpage,
+div.endpage
+{
+    page-break-after: always;
+}
+section, .raw, div {
+    width: 100%;
+    border: none;
+    overflow: hidden; /* add this to contain floated children */
+}
+div[class^='col-md'] {
+     float:left;
+}
+div[class^='col-md'] p,
+.totals p {
+    font-size: 11px;
+    line-height: 13px;
+}
+.col-md-6 {
+    width: 48%;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
