@@ -9,6 +9,7 @@
 #    planned by: Humberto Arocha <hbto@vauxoo.com>
 ############################################################################
 
+from openerp import SUPERUSER_ID
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
 
@@ -49,7 +50,7 @@ class account_invoice_line(orm.Model):
         return account.user_type.asset_policy
 
     def _check_asset_category_required_msg(self, cr, uid, ids, context=None):
-        for account_move_line in self.browse(cr, uid, ids, context):
+        for account_move_line in self.browse(cr, SUPERUSER_ID, ids, context):
 
             policy = self._get_asset_category_policy(
                 cr, uid, account_move_line.account_id, context=context)
