@@ -194,7 +194,6 @@ class account_bank_statement_line(osv.osv):
 
         move_line_ids = []
         move_reconcile_id = []
-
         prec = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
 
