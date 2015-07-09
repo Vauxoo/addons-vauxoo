@@ -7,9 +7,11 @@
 
  				<h5><span class="label label-info stock_delay"></span></h5>
 
- 				<div id="similar_products_vx" class="alert alert-success" style="align: center;">
- 					<a href="#rec_prod" class="alert-link">Similar Products</a>
- 				</div>
+ 				<t t-if="product.alternative_product_ids">
+ 					<div id="similar_products_vx" class="alert alert-success" style="align: center;">
+ 						<a href="#rec_prod" class="alert-link">Similar Products</a>
+ 					</div>
+ 				</t>
  			</xpath>
  		</template>
  		<template id="product_rec_prod_name" inherit_id="website_sale.recommended_products">
