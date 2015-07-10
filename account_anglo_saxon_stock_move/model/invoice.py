@@ -46,7 +46,7 @@ class AccountInvoice(osv.osv):
                                     'credit': brw.credit,
                                     'ids': [brw.id],
                                 }
-                for key, val in res.iteritems():
+                for val in res.values():
                     if val['debit'] == val['credit']:
                         aml_obj.reconcile(cr, uid, val['ids'])
                     elif len(val['ids']) > 1:
