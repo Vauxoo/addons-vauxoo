@@ -500,12 +500,6 @@ class acceptability_criteria(osv.Model):
         data_obj = self.pool.get('ir.model.data')
         user_story_brw = criterial_brw.accep_crit_id
         partner_ids = [i.id for i in user_story_brw.message_follower_ids]
-        partner_ids.append(user_story_brw.owner_id.partner_id.id)
-        if user_story_brw.user_id:
-            partner_ids.append(user_story_brw.user_id.partner_id.id)
-        if user_story_brw.user_execute_id:
-            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
-        partner_ids = list(set(partner_ids))
         template = data_obj.get_object(
             cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
 
@@ -524,6 +518,7 @@ class acceptability_criteria(osv.Model):
         criterial_brw.write({'accepted': True})
         story_obj.message_post(
             cr, uid, [user_story_brw.id], body, subject=None, type='email',
+            subtype='mt_comment',
             context=context, partner_ids=partner_ids)
         return True
 
