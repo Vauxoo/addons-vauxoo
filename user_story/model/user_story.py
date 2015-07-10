@@ -507,16 +507,24 @@ class acceptability_criteria(osv.Model):
         partner_ids = list(set(partner_ids))
         template = data_obj.get_object(
             cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
-        mail = self.pool.get('email.template').generate_email(
-            cr, SUPERUSER_ID, template.id, ids[0])
-        compose_id = compose_obj.create(cr, uid, {
-            'model': 'user.story',
-            'res_id': user_story_brw.id,
-            'partner_ids': [(6, 0, partner_ids)],
-            'body': mail.get('body'),
-        })
+
+        # Extract body form the email.template an used as body argument in
+        # the message_post call.
+        temp_obj = self.pool.get('email.template')
+        user_obj = self.pool.get('res.users')
+        story_obj = self.pool.get('user.story')
+        approver_name = user_obj.browse(cr, uid, uid, context=context).name
+        body = temp_obj.read(cr, SUPERUSER_ID, template.id, ['body_html'],
+                context=context)['body_html']
+        temp_data = temp_obj.render_template_batch(
+            cr, uid, body, 'acceptability.criteria', [criterial_brw2.id],
+            context=context, post_process=True)
+        body = temp_data.values()[0]
+
         criterial_brw2.write({'accepted': True})
-        compose_obj.send_mail(cr, uid, [compose_id])
+        story_obj.message_post(
+            cr, uid, [user_story_brw.id], body, subject=None, type='email',
+            context=context, partner_ids=partner_ids)
         return True
 
     def disapprove(self, cr, uid, ids, context=None):
