@@ -25,7 +25,7 @@ class account_account_type(orm.Model):
 
     _columns = {
         'asset_policy': fields.selection(
-            lambda self, args, kwargs: self._get_policies(args, kwargs),
+            lambda self, cr, ui, cx: self._get_policies(cr, ui),
             'Policy for asset category',
             required=True,
             help="Set the policy for the asset category field : if you select "
