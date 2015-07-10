@@ -22,94 +22,94 @@
     <t t-set="records" t-value="get_records(o)"/>
     <div class="col-md-6">
         <section>
-                    <table width="100%">
-                        <tr class="title">
-                            <td colspan="3"> By Date </td>
-                        </tr>
-                        <tr class="title">
-                            <td> Month </td>
-                            <td> Total Hours</td>
-                            <td> Billable Hours</td>
-                        </tr>
-                        <t t-foreach="records.get('resume_month')" t-as="resume">
-                            <tr class="by_account">
-                                <td style="text-align: left;">
-                                    <span t-esc="'%s (%s)' % (resume.get('date'), resume.get('date_count'))"/>
-                                </td>
-                                <td>
-                                    <span t-esc="resume.get('unit_amount')"/>
-                                </td>
-                                <td>
-                                    <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
-                                </td>
-                            </tr>
-                        </t>
-                            <tr class="totals">
-                                <td>Totals</td>
-                                <td><span t-esc="records.get('total_ts_by_month')"/></td>
-                                <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
-                            </tr>
-                    </table>
+            <table width="100%">
+                <tr class="title">
+                    <td colspan="3"> By Date </td>
+                </tr>
+                <tr class="title">
+                    <td> Month </td>
+                    <td> Total Hours</td>
+                    <td> Billable Hours</td>
+                </tr>
+                <t t-foreach="records.get('resume_month')" t-as="resume">
+                    <tr class="by_account">
+                        <td style="text-align: left;">
+                            <span t-esc="'%s (%s)' % (resume.get('date'), resume.get('date_count'))"/>
+                        </td>
+                        <td>
+                            <span t-esc="resume.get('unit_amount')"/>
+                        </td>
+                        <td>
+                            <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
+                        </td>
+                    </tr>
+                </t>
+                    <tr class="totals">
+                        <td>Totals</td>
+                        <td><span t-esc="records.get('total_ts_by_month')"/></td>
+                        <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
+                    </tr>
+            </table>
         </section>
         <section>
-                    <table width="100%">
-                        <tr class="title">
-                            <td colspan="3"> By Analytic </td>
-                        </tr>
-                        <tr class="title">
-                            <td> Account </td>
-                            <td> Total Hours</td>
-                            <td> Billable Hours</td>
-                        </tr>
-                        <t t-foreach="records.get('resume')" t-as="resume">
-                            <tr class="by_account">
-                                <td style="text-align: left;">
-                                    <span t-esc="'%s (%s)' % (resume.get('account_id')[1].split('/')[-1], resume.get('account_id_count'))"/>
-                                </td>
-                                <td>
-                                    <span t-esc="resume.get('unit_amount') or 0.00"/>
-                                </td>
-                                <td>
-                                    <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
-                                </td>
-                            </tr>
-                        </t>
-                        <tr class="totals">
-                            <td>Totals</td>
-                            <td><span t-esc="records.get('total_ts_by_month')"/></td>
-                            <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
-                        </tr>
-                    </table>
+            <table width="100%">
+                <tr class="title">
+                    <td colspan="3"> By Analytic </td>
+                </tr>
+                <tr class="title">
+                    <td> Account </td>
+                    <td> Total Hours</td>
+                    <td> Billable Hours</td>
+                </tr>
+                <t t-foreach="records.get('resume')" t-as="resume">
+                    <tr class="by_account">
+                        <td style="text-align: left;">
+                            <span t-esc="'%s (%s)' % (resume.get('account_id')[1].split('/')[-1], resume.get('account_id_count'))"/>
+                        </td>
+                        <td>
+                            <span t-esc="resume.get('unit_amount') or 0.00"/>
+                        </td>
+                        <td>
+                            <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
+                        </td>
+                    </tr>
+                </t>
+                <tr class="totals">
+                    <td>Totals</td>
+                    <td><span t-esc="records.get('total_ts_by_month')"/></td>
+                    <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
+                </tr>
+            </table>
         </section>
         <section>
-                    <table width="100%">
-                            <tr class="title">
-                                <td colspan="3"> By User </td>
-                            </tr>
-                            <tr class="title">
-                                <td> User </td>
-                                <td> Total Hours</td>
-                                <td> Billable Hours</td>
-                            </tr>
-                        <t t-foreach="records.get('resume_user')" t-as="resume">
-                            <tr class="by_account">
-                                <td style="text-align: left;">
-                                    <span t-esc="'%s (%s)' % (resume.get('user_id')[1].split('/')[-1], resume.get('user_id_count'))"/>
-                                </td>
-                                <td>
-                                    <span t-esc="resume.get('unit_amount') or 0.00"/>
-                                </td>
-                                <td>
-                                    <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
-                                </td>
-                            </tr>
-                        </t>
-                            <tr class="totals">
-                                <td>Totals</td>
-                                    <td><span t-esc="records.get('total_ts_by_month')"/></td>
-                                    <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
-                            </tr>
-                        </table>
+            <table width="100%">
+                <tr class="title">
+                    <td colspan="3"> By User </td>
+                </tr>
+                <tr class="title">
+                    <td> User </td>
+                    <td> Total Hours</td>
+                    <td> Billable Hours</td>
+                </tr>
+                <t t-foreach="records.get('resume_user')" t-as="resume">
+                    <tr class="by_account">
+                        <td style="text-align: left;">
+                            <span t-esc="'%s (%s)' % (resume.get('user_id')[1].split('/')[-1], resume.get('user_id_count'))"/>
+                        </td>
+                        <td>
+                            <span t-esc="resume.get('unit_amount') or 0.00"/>
+                        </td>
+                        <td>
+                            <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
+                        </td>
+                    </tr>
+                </t>
+                <tr class="totals">
+                    <td>Totals</td>
+                        <td><span t-esc="records.get('total_ts_by_month')"/></td>
+                        <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
+                </tr>
+            </table>
         </section>
     </div>
 

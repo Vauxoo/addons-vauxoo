@@ -96,7 +96,9 @@
                   <field name="difficulty_level"/>
                   <button icon="gtk-info" name="ask_review" string="Ask For Review by Product Owner" type="object" help="Remember, when you ask for review this Acceptance criteria you should say where and How it must be done"/>
                   <button icon="gtk-apply" name="approve" string="Approve" type="object" help="Click here if you are sure it works, it will mark this as 'ready'"/>
+                  <!--
                   <button icon="gtk-cancel" name="disapprove" string="Disaprove" type="object" help="Click here if it doesn't work, remember communicate the reason why it doesn't works"/>
+                  -->
                 </tree>
               </field>
             </page>
