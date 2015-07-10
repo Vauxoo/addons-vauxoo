@@ -27,7 +27,7 @@
     "name": "Project Configuration",
     "version": "0.1",
     "depends": ["base", "project", "email_template"],
-    "author": ["Vauxoo",],
+    "author": "Vauxoo",
     "description" : """
 Project Configuration
 =====================

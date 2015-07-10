@@ -55,16 +55,15 @@ class stock_picking(osv.Model):
                   ' process the stock picking.'))
         return res
 
-    def copy(self, cur, uid, id, default=None, context=None):
+    def copy(self, cur, uid, ids, default=None, context=None):
         """
         Ovwerwrite the copy method to also copy the date_contract_expiry value.
         """
         default = default or {}
         context = context or {}
-        picking_brw = self.browse(cur, uid, id, context=context)
         default['date_contract_expiry'] = False
         res = super(stock_picking, self).copy(
-            cur, uid, id, default=default, context=context)
+            cur, uid, ids, default=default, context=context)
         return res
 
 
@@ -96,16 +95,15 @@ class stock_picking_in(osv.Model):
                   ' process the stock picking in.'))
         return res
 
-    def copy(self, cur, uid, id, default=None, context=None):
+    def copy(self, cur, uid, ids, default=None, context=None):
         """
         Ovwerwrite the copy method to also copy the date_contract_expiry value.
         """
         default = default or {}
         context = context or {}
-        picking_brw = self.browse(cur, uid, id, context=context)
         default['date_contract_expiry'] = False
         res = super(stock_picking_in, self).copy(
-            cur, uid, id, default=default, context=context)
+            cur, uid, ids, default=default, context=context)
         return res
 
 
@@ -137,14 +135,13 @@ class stock_picking_out(osv.Model):
                   ' process the stock picking out.'))
         return res
 
-    def copy(self, cur, uid, id, default=None, context=None):
+    def copy(self, cur, uid, ids, default=None, context=None):
         """
         Ovwerwrite the copy method to also copy the date_contract_expiry value.
         """
         default = default or {}
         context = context or {}
-        picking_brw = self.browse(cur, uid, id, context=context)
         default['date_contract_expiry'] = False
         res = super(stock_picking_out, self).copy(
-            cur, uid, id, default=default, context=context)
+            cur, uid, ids, default=default, context=context)
         return res
