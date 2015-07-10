@@ -24,8 +24,11 @@ class account_account_type(orm.Model):
                 ('never', _('Never'))]
 
     _columns = {
-        'asset_policy': fields.selection(
-            lambda self, cr, ui, cx: self._get_policies(cr, ui),
+        'asset_policy': fields.selection([
+            ('optional', 'Optional'),
+            ('always', 'Always'),
+            ('never', 'Never')
+            ],
             'Policy for asset category',
             required=True,
             help="Set the policy for the asset category field : if you select "
@@ -38,7 +41,7 @@ class account_account_type(orm.Model):
     }
 
     _defaults = {
-        'asset_policy': 'optional',
+        'asset_policy': lambda *a: 'optional',
     }
 
 

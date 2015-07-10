@@ -5,21 +5,10 @@
             <field name="name">account.asset.category.required.account.type.form</field>
             <field name="model">account.account.type</field>
             <field name="inherit_id" ref="account.view_account_type_form" />
-            <field name="arch"  type="xml">
-                <field name="code" position="after">
-                        <field name="asset_policy" />
-                </field>
-            </field>
-        </record>
-
-        <record id="view_account_type_asset_category_tree" model="ir.ui.view">
-            <field name="name">view.account.type.asset.category.tree</field>
-            <field name="model">account.account.type</field>
-            <field name="inherit_id" ref="account.view_account_type_tree" />
-            <field name="arch"  type="xml">
-                <field name="code" position="after">
-                    <field name="asset_policy" />
-                </field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="asset_policy"/>
+                </xpath>
             </field>
         </record>
 
