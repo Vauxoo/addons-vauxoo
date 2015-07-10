@@ -533,7 +533,7 @@ class acceptability_criteria(osv.Model):
         partner_ids.append(user_story_brw.owner_id.partner_id.id)
         if user_story_brw.user_id:
             partner_ids.append(user_story_brw.user_id.partner_id.id)
-        if user_story_brw.user_execute_idi:
+        if user_story_brw.user_execute_id:
             partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
         model_data_id = data_obj._get_id(
