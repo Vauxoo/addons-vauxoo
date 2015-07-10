@@ -21,9 +21,12 @@
 #
 ##############################################################################
 
-from openerp.osv import osv
+from openerp.osv import osv, orm
 from openerp import models, api
-import time
+
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountInvoice(osv.osv):
@@ -65,15 +68,22 @@ class AccountInvoice(osv.osv):
 
                 for brw in aml_brws:
                     if res.get(brw.account_id.id, False):
-                        res[brw.account_id.id]['ids'].append(brw.id)
+                        res[brw.account_id.id].append(brw.id)
                     else:
-                        res[brw.account_id.id] = {
-                            'ids': [brw.id],
-                        }
+                        res[brw.account_id.id] = [brw.id]
+
                 for val in res.values():
-                    if len(val['ids']) > 1:
-                        aml_obj.reconcile_partial(cr, uid, val['ids'],
+                    if not len(val) > 1:
+                        continue
+                    try:
+                        aml_obj.reconcile_partial(cr, uid, val,
                                                   context=context)
+                    except orm.except_orm:
+                        message = (
+                            "Reconciliation was not possible with "
+                            "Journal Items [{values}]".format(
+                                values=", ".join([str(idx) for idx in val])))
+                        _logger.exception(message)
 
         return True
 
