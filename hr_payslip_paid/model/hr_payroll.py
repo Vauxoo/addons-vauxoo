@@ -29,21 +29,28 @@ from openerp import models, fields, api
 class hr_payslip(models.Model):
     _inherit = 'hr.payslip'
 
+
     @api.one
     @api.depends(
         'move_id.line_id.account_id',
         'move_id.line_id.reconcile_id')
-    def _compute_lines(self):
-        result = {}
+    def _compute_payments(self):
         lines = []
         if self.move_id:
+            lines = []
             for p_line_id in self.move_id.line_id:
-                if (p_line_id.reconcile_id or
-                        p_line_id.reconcile_partial_id) and\
-                        p_line_id.id not in lines:
-                    lines.append(p_line_id.id)
+                temp_lines = []
+                if p_line_id.reconcile_id:
+                    temp_lines = [
+                        line.id for line in p_line_id.reconcile_id.line_id
+                        if line != p_line_id]
+                elif p_line_id.reconcile_partial_id:
+                    temp_lines = [
+                        line.id for line in
+                        p_line_id.reconcile_partial_id.line_partial_ids
+                        if line != p_line_id]
+                lines += [x for x in temp_lines if x not in lines]
         self.payment_ids = lines
-        return result
 
     @api.one
     @api.depends(
@@ -65,7 +72,7 @@ class hr_payslip(models.Model):
             \n* When user cancel payslip the status is 'Rejected'.\
             \n* When the payment is done the status id 'Paid'.")
     payment_ids = fields.Many2many(
-        'account.move.line', string='Payments', compute='_compute_lines')
+        'account.move.line', string='Payments', compute='_compute_payments')
     reconciled = fields.Boolean(
         string='Paid/Reconciled', store=True, readonly=True,
         compute='_compute_reconciled', help="It indicates that the payslip has"
