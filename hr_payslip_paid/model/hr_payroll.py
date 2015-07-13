@@ -34,21 +34,13 @@ class hr_payslip(osv.osv):
     def _compute_lines(self, cr, uid, ids, name, args, context=None):
         result = {}
         for payslip in self.browse(cr, uid, ids, context=context):
-            src = []
             lines = []
             if payslip.move_id:
                 for p_line_id in payslip.move_id.line_id:
-                    temp_lines = []
-                    if p_line_id.reconcile_id:
-                        temp_lines = [line.id for line in
-                                      p_line_id.reconcile_id.line_id]
-                    elif p_line_id.reconcile_partial_id:
-                        temp_lines = [
-                            line.id for line in
-                            p_line_id.reconcile_partial_id.line_partial_ids]
-                    lines += [x for x in temp_lines if x not in lines]
-                    src.append(p_line_id.id)
-            line = [line for line in lines if line not in src]
+                    if (p_line_id.reconcile_id or
+                            p_line_id.reconcile_partial_id) and\
+                            p_line_id.id not in lines:
+                        lines.append(p_line_id.id)
             result[payslip.id] = lines
         return result
 
