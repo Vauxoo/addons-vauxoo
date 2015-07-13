@@ -85,9 +85,9 @@ class account_invoice_refund(models.TransientModel):
         """
         return 5.0
 
-
-    filter_refund = fields.Selection(selection_add=[('early_payment',
-                                                     'Early payment: Discount early payment')])
+    filter_refund = fields.\
+        Selection(selection_add=[('early_payment',
+                                  'Early payment: Discount early payment')])
     percent = fields.Float('Percent', default=_get_percent_default)
     product_id = fields.Many2one('product.product', string='Product')
     amount_total = fields.Float('Amount')
@@ -148,6 +148,9 @@ class account_invoice_refund(models.TransientModel):
                                 price_unit_discount
                             line_data_dict[tax_tuple]['quantity'] =\
                                 1
+                            line_data_dict[tax_tuple]['account_id'] =\
+                                wizard_brw.product_id.\
+                                property_account_income.id
 
                         inv_line_obj.unlink(cur, uid, [refund_line.id])
                     for new_refund_line in line_data_dict.values():
