@@ -8,7 +8,7 @@
                 <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
                 <field name="arch" type="xml">
                     <xpath expr="//field[@name='state']" position="attributes">
-                        <attribute name="statusbar_visible">draft,confirm,paid</attribute>
+                        <attribute name="statusbar_visible">draft,done,paid</attribute>
                     </xpath>
                     <xpath expr="//page[@string='Accounting Information']" position="after">
                         <page string="Payments">

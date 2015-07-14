@@ -22,147 +22,96 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#
-from openerp.osv import fields, osv
-from openerp import workflow
 import openerp.netsvc as netsvc
+from openerp import models, fields, api
 
 
-class hr_payslip(osv.osv):
+class hr_payslip(models.Model):
     _inherit = 'hr.payslip'
 
-    def _compute_lines(self, cr, uid, ids, name, args, context=None):
-        result = {}
-        for payslip in self.browse(cr, uid, ids, context=context):
-            src = []
+    @api.one
+    @api.depends(
+        'move_id.line_id.account_id',
+        'move_id.line_id.reconcile_id')
+    def _compute_payments(self):
+        lines = []
+        if self.move_id:
             lines = []
-            if payslip.move_id:
-                for p_line_id in payslip.move_id.line_id:
-                    temp_lines = []
-                    if p_line_id.reconcile_id:
-                        temp_lines = [line.id for line in
-                                      p_line_id.reconcile_id.line_id]
-                    elif p_line_id.reconcile_partial_id:
-                        temp_lines = [
-                            line.id for line in
-                            p_line_id.reconcile_partial_id.line_partial_ids]
-                    lines += [x for x in temp_lines if x not in lines]
-                    src.append(p_line_id.id)
-            line = [line for line in lines if line not in src]
-            result[payslip.id] = lines
-        return result
+            for p_line_id in self.move_id.line_id:
+                temp_lines = []
+                if p_line_id.reconcile_id:
+                    temp_lines = [
+                        line.id for line in p_line_id.reconcile_id.line_id
+                        if line != p_line_id]
+                elif p_line_id.reconcile_partial_id:
+                    temp_lines = [
+                        line.id for line in
+                        p_line_id.reconcile_partial_id.line_partial_ids
+                        if line != p_line_id]
+                lines += [x for x in temp_lines if x not in lines]
+        self.payment_ids = lines
 
-    def _reconciled(self, cr, uid, ids, name, args, context=None):
-        res = {}
-        wf_service = workflow
-        for pay in self.browse(cr, uid, ids, context=context):
-            res[pay.id] = self.test_paid(cr, uid, [pay.id])
-            if not res[pay.id] and pay.state == 'paid':
-                wf_service.trg_validate(
-                    uid, 'hr.payslip', pay.id, 'open_test', cr)
-        return res
+    @api.one
+    @api.depends(
+        'move_id.line_id.account_id',
+        'move_id.line_id.reconcile_id')
+    def _compute_reconciled(self):
+        self.reconciled = self.test_paid()
 
-    def action_done_paid(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
-
-    def _get_payslip_from_line(self, cr, uid, ids, context=None):
-        move = {}
-        for line in self.pool.get('account.move.line').browse(
-                cr, uid, ids, context=context):
-            if line.reconcile_partial_id:
-                for line2 in line.reconcile_partial_id.line_partial_ids:
-                    move[line2.move_id.id] = True
-            if line.reconcile_id:
-                for line2 in line.reconcile_id.line_id:
-                    move[line2.move_id.id] = True
-        payslip_ids = []
-        if move:
-            payslip_ids = self.pool.get('hr.payslip').search(
-                cr, uid, [('move_id', 'in', move.keys())], context=context)
-        return payslip_ids
-
-    def _get_payslip_from_reconcile(self, cr, uid, ids, context=None):
-        move = {}
-        for res in self.pool.get('account.move.reconcile').browse(
-                cr, uid, ids, context=context):
-            for line in res.line_partial_ids:
-                move[line.move_id.id] = True
-            for line in res.line_id:
-                move[line.move_id.id] = True
-
-        payslip_ids = []
-        if move:
-            payslip_ids = self.pool.get('hr.payslip').search(
-                cr, uid, [('move_id', 'in', move.keys())], context=context)
-        return payslip_ids
-
-    _columns = {
-        'state': fields.selection([
-            ('draft', 'Draft'),
-            ('verify', 'Waiting'),
-            ('done', 'Done'),
-            ('cancel', 'Rejected'),
-            ('paid', 'Paid'),
-        ], 'Status', select=True, readonly=True,
-            help="* When the payslip is created the status is 'Draft'.\
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('verify', 'Waiting'),
+        ('done', 'Done'),
+        ('cancel', 'Rejected'),
+        ('paid', 'Paid'),
+    ], 'Status', select=True, readonly=True,
+        help="* When the payslip is created the status is 'Draft'.\
             \n* If the payslip is under verification, the status is 'Waiting'.\
             \n* If the payslip is confirmed then status is set to 'Done'.\
             \n* When user cancel payslip the status is 'Rejected'.\
-            \n* When the payment is done the status id 'Paid'."),
-        'payment_ids': fields.function(
-            _compute_lines, relation='account.move.line',
-            type="many2many", string='Payments'),
-        'reconciled': fields.function(
-            _reconciled, string='Paid/Reconciled', type='boolean',
-            store={
-                'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, [], 50),
-                'account.move.line': (_get_payslip_from_line, None, 50),
-                'account.move.reconcile': (
-                    _get_payslip_from_reconcile, None, 50), },
-            help="It indicates that the payslip has been paid and the journal "
-            "entry of the payslip has been reconciled with one or several "
-            "journal entries of payment."),
-    }
+            \n* When the payment is done the status id 'Paid'.")
+    payment_ids = fields.Many2many(
+        'account.move.line', string='Payments', compute='_compute_payments')
+    reconciled = fields.Boolean(
+        string='Paid/Reconciled', store=True, readonly=True,
+        compute='_compute_reconciled', help="It indicates that the payslip has"
+        " been paid and the journal entry of the payslip has been reconciled "
+        "with one or several journal entries of payment.")
 
-    def move_line_id_payment_get(self, cr, uid, ids, *args):
-        if not ids:
-            return []
-        result = self.move_line_id_payment_gets(cr, uid, ids, *args)
-        return result.get(ids[0], [])
-
-    def move_line_id_payment_gets(self, cr, uid, ids, *args):
+    @api.multi
+    def move_line_id_payment_get(self):
+        # return the move line ids with the same account as the payroll self
         res = {}
-        if not ids:
+        if not self.id:
             return res
-        payslip_bwr = self.browse(cr, uid, ids[0])
         account_ids = []
-        for det in payslip_bwr.details_by_salary_rule_category:
+        for det in self.details_by_salary_rule_category:
             if det.salary_rule_id.account_credit.id:
-                account_ids.append(det.salary_rule_id.account_credit.id)
+                account = det.salary_rule_id.account_credit
+                if account.type == 'payable' and account.reconcile:
+                    account_ids.append(account.id)
         if not account_ids:
             return res
-        cr.execute('SELECT i.id, l.id '
-                   'FROM account_move_line l '
-                   'LEFT JOIN hr_payslip i ON (i.move_id=l.move_id) '
-                   'WHERE i.id IN %s '
-                   'AND l.account_id=%s',
-                   (tuple(ids), account_ids[0]))
-        for result in cr.fetchall():
+        query = '''SELECT i.id, l.id
+                   FROM account_move_line l
+                   LEFT JOIN hr_payslip i ON (i.move_id=l.move_id)
+                   WHERE i.id IN %s
+                   AND l.account_id=%s'''
+        self._cr.execute(query, (tuple(self.ids), account_ids[0]))
+        for result in self._cr.fetchall():
             res.setdefault(result[0], [])
             res[result[0]].append(result[1])
-        return res
+        return res.get(self.id, [])
 
-    def test_paid(self, cr, uid, ids, *args):
-        res = self.move_line_id_payment_get(cr, uid, ids)
-        if not res:
+    @api.multi
+    def test_paid(self):
+        # check whether all corresponding account move lines are reconciled
+        line_ids = self.move_line_id_payment_get()
+        if not line_ids:
             return False
-        ok = True
-        for id_payslip in res:
-            cr.execute(
-                'select reconcile_id from account_move_line where id=%s', (
-                    id_payslip,))
-            ok = ok and bool(cr.fetchone()[0])
-        return ok
+        query = "SELECT reconcile_id FROM account_move_line WHERE id IN %s"
+        self._cr.execute(query, (tuple(line_ids),))
+        return all(row[0] for row in self._cr.fetchall())
 
     def done_paid(self, cr, uid, ids, context=None):
         """
