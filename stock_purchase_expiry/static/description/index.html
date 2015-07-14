@@ -11,7 +11,7 @@
         </h3>
         <div class="oe_span6">
             <p class='oe_mt32'>
-                Add a contract expiry date to the purchase order that will
+                Add a contract due date to the purchase order that will
                 control the related picking and invoice possible operations.
             </p>
         </div>
@@ -26,14 +26,14 @@
 
 <section class="oe_container">
     <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan">Purchase Contract Expiration Date</h2>
+        <h2 class="oe_slogan">Purchase Contract Due Date</h2>
 
         <div class="oe_span6">
             <p class='oe_mt32'>
-                Add a new field named <code>contract expiration date</code>
+                Add a new field named <code>contract due date</code>
                 in the Puchase Order model and show it in the purchase order
-                form. By default this field is empty until the user manuall
-                add a expiration of contract date.
+                form. By default this field is empty until the user manual
+                add a contract due date.
             </p>
         </div>
         <div class="oe_span6">
@@ -46,7 +46,7 @@
             <p class='oe_mt32'>
                 When a picking duplication is peform the copy record
                 will skip the value and clear the picking
-                expiration contract date field.
+                contract due date field.
             </p>
         </div>
         <div class="oe_span6">
@@ -64,18 +64,18 @@
 
 <section class="oe_container oe_dark">
     <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan">Picking Contract Expiration Date</h2>
+        <h2 class="oe_slogan">Picking Contract Due Date</h2>
         <div class="oe_span12">
             <p class='oe_mt32'>
                 When a Purchase Order is confirm will create stock pikings,
-                This pickings will have a expired contract date pull from the
+                This pickings will have a contract due date pull from the
                 Purchase Order.
             </p>
         </div>
         <div class="oe_span6">
             <p class='oe_mt32'>
-                Frist, Create a Purchase Order and then set a Expiration of
-                Contract Date. Then, Confirm the Purchase Order in order to
+                Frist, Create a Purchase Order and then set a
+                Contract Due Date. Then, Confirm the Purchase Order in order to
                 generate the incomming pickings..
             </p>
         </div>
@@ -99,7 +99,7 @@
         <div class="oe_span6">
             <p class='oe_mt32'>
                 Third, the picking generated via Purchase Order confirmation
-                will have set Expiration of Contract Date with the same date
+                will have set Contract Due Date with the same date
                 given in the Purchase Order.
             </p>
         </div>
@@ -119,8 +119,8 @@
         <div class="oe_span6">
             <p class='oe_mt32'>
                 Add a new restriction that will not let to receive products
-                for a picking when the Expiry Contract Date passed. First, Create a
-                Purchase Order and change contract expire date to a past date
+                for a picking when the Contract Due Date passed. First, Create a
+                Purchase Order and change contract due date to a past date
                 and Confirm the order.
             </p>
         </div>
@@ -134,7 +134,7 @@
             <p class='oe_mt32'>
                 Second, Go inside the picking generated and click in the
                 <code>Receive</code> button. An error message will be pop up
-                saying <code>Cannot receive a picking with a expired contract
+                saying <code>Cannot receive a picking with a contract due
                 date of pickings in done state.</code>
                 <!-- TODO this paragraph have not much sence. re order -->
             </p>
@@ -147,7 +147,7 @@
         <div class="oe_span6">
             <p class='oe_mt32'>
                 In special ocations when want to recieve products even in the
-                expiry contract date is passed a <code>Force Receive</code>
+                contract due date is passed a <code>Force Receive</code>
                 button was added to the Stock Picking from view to force
                 the receive products wizard as the normal action.
             </p>
@@ -166,8 +166,8 @@
 
         <div class="oe_span6">
             <p class='oe_mt32'>
-                The invoice creation is also affected with the Expiration
-                Contract Date.
+                The invoice creation is also affected with the
+                Contract Due Date.
                 After the products are received the picking change to
                 <code>Received</code> state and the <code>Create
                 Invoice/Refund</code> button is shown in the picking form
@@ -202,7 +202,7 @@
             <p class='oe_mt32'>
                 When using the <code>Create Draft Invoice</code>
                 you can regular create the invoice of the selected picking if
-                the Expiration of Contract Date is not passed yet. If the
+                the Contract Due Date is not passed yet. If the
                 date is passed instead the invoice creation will fail.
 
                 <!--
@@ -228,9 +228,9 @@
             <p class='oe_mt32'>
                 A <code>Force Create</code> button was added in the in the
                 Create Draft Invoices wizard. When a stock picking have
-                contract expired date then with this button will proceed no
+                contract due date then with this button will proceed no
                 matter what and will create the invoice even if the stock
-                picking have a expired contract date.
+                picking have a contract due date.
             </p>
         </div>
         <div class="oe_span6">
