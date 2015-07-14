@@ -29,7 +29,6 @@ from openerp import models, fields, api
 class hr_payslip(models.Model):
     _inherit = 'hr.payslip'
 
-
     @api.one
     @api.depends(
         'move_id.line_id.account_id',
