@@ -87,7 +87,9 @@ class hr_payslip(models.Model):
         account_ids = []
         for det in self.details_by_salary_rule_category:
             if det.salary_rule_id.account_credit.id:
-                account_ids.append(det.salary_rule_id.account_credit.id)
+                account = det.salary_rule_id.account_credit
+                if account.type == 'payable' and account.reconcile:
+                    account_ids.append(account.id)
         if not account_ids:
             return res
         query = '''SELECT i.id, l.id
