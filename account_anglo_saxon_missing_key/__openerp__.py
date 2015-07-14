@@ -33,7 +33,6 @@ Account Anglo-Saxon Missing Key
     [IMP] Adding keys to hook from when performing post processing on
     Anglo_saxon module records
     https://github.com/odoo/odoo/pull/6109
-
 """,
     "website": "http://www.vauxoo.com/",
     "license": "",
