@@ -2,9 +2,9 @@
 <openerp>
 <data>
 <template id="timesheet_vauxoo_report">
+    <xpath expr="//t[@t-call='report.external_layout']" position="replace">
+    <t t-call="hr_timesheet_reports.external_layout">
     <div class="page">
-    <t t-call="hr_timesheet_reports.layout">
-        &lt;!DOCTYPE html&gt;
     <div class="col-md-6">
         <h1>
             <strong>Report Name:</strong>
@@ -17,7 +17,7 @@
             <strong>Filter Name:</strong>
             <p t-esc="o.filter_id.name"/>
         </h4>
-            <p t-esc="o.comment_timesheet"/>
+            <t t-raw="o.comment_timesheet"/>
     </div>
     <t t-set="records" t-value="get_records(o)"/>
     <div class="col-md-6">
@@ -121,7 +121,7 @@
             <strong>Filter Name:</strong>
             <p t-esc="o.filter_invoice_id.name"/>
         </h3>
-        <p t-esc="o.comment_invoices"/>
+        <p t-raw="o.comment_invoices"/>
     </div>
     <div class="col-md-6">
             <table width="100%">
@@ -256,7 +256,7 @@
                 <strong>Filter Name: </strong>
                 <p t-esc="o.filter_issue_id.name"/>
             </h4>
-            <p t-esc="o.comment_issues"/>
+            <p t-raw="o.comment_issues"/>
         </div>
         <div class="col-md-6">
             <table width="100%">
@@ -298,7 +298,7 @@
                 <strong>Filter Name:</strong>
                 <p t-esc="o.filter_hu_id.name"/>
             </h4>
-            <p t-esc="o.comment_hu"/>
+            <p t-raw="o.comment_hu"/>
         </div>
         <div class="col-md-6">
             <table width="100%">
@@ -402,8 +402,9 @@
                 </table>
             </t>
     </t>
-    </t>
     </div>
+    </t>
+    </xpath>
 </template>
 
 <template id="timesheet_report_vauxoo">
