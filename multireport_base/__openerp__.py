@@ -29,7 +29,7 @@
     "author": "Vauxoo", 
     "category": "Generic Modules/Others", 
     "description": """
-\t               Agrega un tab en la Compañia que va a contener los reportes personalizados.
+        Add new tab to the Company form view that contains the custom reports.
                     """, 
     "website": "http://vauxoo.com/", 
     "license": "", 
