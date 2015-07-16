@@ -76,7 +76,8 @@ class product_product(osv.Model):
             method=True, selection=SELECTION_LIST,
             string="Website Stock State",
             store={'product.product': (lambda self, cr, uid, ids,
-                                       context={}: ids, ['qty_available', 'low_stock'], 15)}),
+                                       context={}: ids, ['qty_available',
+                                                         'low_stock'], 15)}),
     }
     _default = {
         'low_stock': 0,
