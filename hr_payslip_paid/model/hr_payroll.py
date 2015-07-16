@@ -57,13 +57,8 @@ class hr_payslip(models.Model):
     def _compute_reconciled(self):
         self.reconciled = self.test_paid()
 
-    state = fields.Selection([
-        ('draft', _('Draft')),
-        ('verify', _('Waiting')),
-        ('done', _('Done')),
-        ('cancel', _('Rejected')),
-        ('paid', _('Paid')),
-    ], 'Status', select=True, readonly=True,
+    state = fields.Selection(
+        selection_add=[('paid', _('Paid'))],
         help="* When the payslip is created the status is 'Draft'.\
             \n* If the payslip is under verification, the status is 'Waiting'.\
             \n* If the payslip is confirmed then status is set to 'Done'.\
