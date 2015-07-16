@@ -2,27 +2,23 @@
 <openerp>
 <data>
     <template id="timesheets">
-        <div class="col-md-6">
-            <h1> <strong>Report Name:</strong>
-                <p t-esc="o.name"/> </h1>
-            <h3> Resumed Timesheet Report. </h3>
-            <h4>
-                <strong>Filter Name:</strong>
-                <p t-esc="o.filter_id.name"/>
-            </h4>
-            <t t-raw="o.comment_timesheet"/>
+        <div class="col-xs-12">
+            <div class="raw">
+                <h3> Resumed Timesheet Report. </h3>
+                <strong>Filter Name:</strong> <span t-esc="o.filter_id.name"/>
+            </div>
+            <div class="raw">
+                <t t-raw="o.comment_timesheet"/>
+            </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-12">
             <section>
-                <table width="100%">
-                    <tr class="title">
-                        <td colspan="3"> By Date </td>
-                    </tr>
-                    <tr class="title">
-                        <td> Month </td>
-                        <td> Total Hours</td>
-                        <td> Billable Hours</td>
-                    </tr>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr class="title"> <td colspan="3"> By Date </td> </tr>
+                    <tr class="title"> <td> Month </td> <td> Total Hours</td> <td> Billable Hours</td> </tr>
+                    </thead>
+                    <tbody>
                     <t t-foreach="records.get('resume_month')" t-as="resume">
                         <tr class="by_account">
                             <td style="text-align: left;">
@@ -36,15 +32,19 @@
                             </td>
                         </tr>
                     </t>
+                    </tbody>
+                    <tfoot>
                         <tr class="totals">
                             <td>Totals</td>
                             <td><span t-esc="records.get('total_ts_by_month')"/></td>
                             <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
                         </tr>
+                    </tfoot>
                 </table>
             </section>
             <section>
-                <table width="100%">
+                <table class="table table-striped table-bordered">
+                    <thead>
                     <tr class="title">
                         <td colspan="3"> By Analytic </td>
                     </tr>
@@ -53,6 +53,8 @@
                         <td> Total Hours</td>
                         <td> Billable Hours</td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <t t-foreach="records.get('resume')" t-as="resume">
                         <tr class="by_account">
                             <td style="text-align: left;">
@@ -66,15 +68,19 @@
                             </td>
                         </tr>
                     </t>
-                    <tr class="totals">
-                        <td>Totals</td>
-                        <td><span t-esc="records.get('total_ts_by_month')"/></td>
-                        <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
-                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="totals">
+                            <td>Totals</td>
+                            <td><span t-esc="records.get('total_ts_by_month')"/></td>
+                            <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </section>
             <section>
-                <table width="100%">
+                <table class="table table-striped table-bordered">
+                    <thead>
                     <tr class="title">
                         <td colspan="3"> By User </td>
                     </tr>
@@ -83,6 +89,8 @@
                         <td> Total Hours</td>
                         <td> Billable Hours</td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <t t-foreach="records.get('resume_user')" t-as="resume">
                         <tr class="by_account">
                             <td style="text-align: left;">
@@ -96,11 +104,14 @@
                             </td>
                         </tr>
                     </t>
+                    </tbody>
+                    <tfoot>
                     <tr class="totals">
                         <td>Totals</td>
                             <td><span t-esc="records.get('total_ts_by_month')"/></td>
                             <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
                     </tr>
+                    </tfoot>
                 </table>
             </section>
         </div>
@@ -108,7 +119,7 @@
     <template id="invoices">
         <t t-if="records.get('invoices')">
             <div class="endpage">
-            <div class="col-md-6">
+            <div class="col-xs-12">
                 <h2>Economical Status</h2>
                 <h3>
                     <strong>Filter Name:</strong>
@@ -116,8 +127,9 @@
                 </h3>
                 <p t-raw="o.comment_invoices"/>
             </div>
-            <div class="col-md-6">
-                    <table width="100%">
+            <div class="col-xs-12">
+                <table class="table table-striped table-bordered">
+                    <thead>
                         <tr class="title">
                             <td colspan="2">Status of invoices until today in the project.</td>
                         </tr>
@@ -136,6 +148,8 @@
                                 </table>
                             </td>
                         </tr>
+                    </thead>
+                    <tbody>
                         <t t-foreach="records.get('periods')" t-as="period">
                         <tr>
                             <td width="10%" style="text-align: left;">
@@ -158,7 +172,9 @@
                                 </table>
                             </td>
                         </tr>
-                    </t>
+                        </t>
+                    </tbody>
+                    <tfoot>
                         <tr>
                             <td class="invoices_content">
                                 <table width="100%">
@@ -184,9 +200,10 @@
                                 </table>
                             </td>
                         </tr>
+                    </tfoot>
                     </table>
                     <section>
-                        <h2><u>Numbers Explained</u></h2>
+                        <h2><u>Amounts Resumed</u></h2>
                         <t t-set="total_train" t-value="0"/>
                         <t t-set="total_cons" t-value="0"/>
                         <t t-set="total_lic" t-value="0"/>
@@ -196,7 +213,7 @@
                             <t t-set="total_cons" t-value="records.get('resume_product')[il].get('total_cons')+total_cons"/>
                             <t t-set="total_lic" t-value="records.get('resume_product')[il].get('total_lic')+total_lic"/>
                             <t t-set="total_others" t-value="records.get('resume_product')[il].get('total_others')+total_others"/>
-                            <div class="col-md-6">
+                            <div class="col-xs-12">
                                 <h3>
                                     <strong>Amounts in Currency </strong>
                                     <u t-esc="il"/>
@@ -214,12 +231,11 @@
                             </div>
                         </t>
                     </section>
-                    <hr/>
                     <section>
                         <h2>
                             <strong>Resumed amounts in </strong>
                             <u t-esc="o.currency_id.name"/></h2>
-                        <div class="col-md-6">
+                        <div class="col-xs-12">
                         <p><b>Total Invoiced</b>
                         <ul>
                             <li><b>Training: </b><span t-esc="total_train"/></li>
@@ -229,7 +245,7 @@
                         </ul>
                         </p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-12">
                         <p><b>Totals Timesheet</b>
                         <ul>
                             <li><b>Billable: </b><span t-esc="records.get('resumed_numbers')['pending']"/></li>
@@ -245,7 +261,7 @@
     <template id="issues">
         <t t-if="records.get('issues')">
             <div class="endpage">
-            <div class="col-md-6">
+            <div class="col-xs-12">
                 <h3> Issues. </h3>
                 <h4>
                     <strong>Filter Name: </strong>
@@ -253,9 +269,9 @@
                 </h4>
                 <p t-raw="o.comment_issues"/>
             </div>
-            <div class="col-md-6">
-                <table width="100%">
-                    <tbody>
+            <div class="col-xs-12">
+                <table class="table table-striped table-bordered">
+                    <thead>
                     <tr class="title">
                         <td colspan="3">Status of issues until today in the project.</td>
                     </tr>
@@ -264,6 +280,8 @@
                         <td width="10%"> Qty </td>
                         <td width="40%"> Status </td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <t t-foreach="records.get('issues')" t-as="issue">
                         <tr>
                             <td width="50%" style="text-align: left;">
@@ -288,7 +306,7 @@
     <template id="user_stories">
         <t t-if="records.get('user_stories')">
             <div class="endpage">
-            <div class="col-md-6">
+            <div class="col-xs-12">
                 <h3> User Stories. </h3>
                 <h4>
                     <strong>Filter Name:</strong>
@@ -296,8 +314,8 @@
                 </h4>
                 <p t-raw="o.comment_hu"/>
             </div>
-            <div class="col-md-6">
-                <table width="100%">
+            <div class="col-xs-12">
+                <table class="table table-striped table-bordered">
                     <tr class="title">
                         <td colspan="7">Status of User Stories until today in the project.</td>
                     </tr>
