@@ -22,8 +22,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-import openerp.netsvc as netsvc
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 
 
 class hr_payslip(models.Model):
@@ -58,13 +57,8 @@ class hr_payslip(models.Model):
     def _compute_reconciled(self):
         self.reconciled = self.test_paid()
 
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('verify', 'Waiting'),
-        ('done', 'Done'),
-        ('cancel', 'Rejected'),
-        ('paid', 'Paid'),
-    ], 'Status', select=True, readonly=True,
+    state = fields.Selection(
+        selection_add=[('paid', _('Paid'))],
         help="* When the payslip is created the status is 'Draft'.\
             \n* If the payslip is under verification, the status is 'Waiting'.\
             \n* If the payslip is confirmed then status is set to 'Done'.\
@@ -112,13 +106,3 @@ class hr_payslip(models.Model):
         query = "SELECT reconcile_id FROM account_move_line WHERE id IN %s"
         self._cr.execute(query, (tuple(line_ids),))
         return all(row[0] for row in self._cr.fetchall())
-
-    def done_paid(self, cr, uid, ids, context=None):
-        """
-        This function is called by a webservice for update the payslip that
-        were created before to added the state paid.
-        """
-        wf_service = netsvc.LocalService("workflow")
-        for id_ in ids:
-            wf_service.trg_write(uid, 'hr.payslip', id_, cr)
-        return True
