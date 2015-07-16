@@ -10,3 +10,11 @@
 tfoot {
     font-weight: bold;
 }
+
+@media print {
+    .table {
+        page-break-after:always !important;
+        page-break-before:always !important;
+    }
+
+}

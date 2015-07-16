@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
-    <template id="timesheets">
+    <template id="timesheets" name="Timesheet Report for Customers">
         <div class="col-xs-12">
             <div class="raw">
                 <h2>Resumed Timesheet Report</h2>
@@ -126,7 +126,7 @@
             </div>
             <table class="table text-center table-striped table-bordered">
                 <thead>
-                    <tr>
+                    <tr class="text-left">
                         <td colspan="7"><h3>Status of invoices until today in the project</h3></td>
                     </tr>
                     <tr class="title">
