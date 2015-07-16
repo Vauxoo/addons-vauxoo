@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-16 15:50+0000\n"
-"PO-Revision-Date: 2015-07-16 15:50+0000\n"
+"POT-Creation-Date: 2015-07-16 18:17+0000\n"
+"PO-Revision-Date: 2015-07-16 18:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,16 +16,18 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hr_payslip_paid
-#: code:addons/hr_payslip_paid/model/hr_payroll.py:63
+#: code:addons/hr_payslip_paid/model/hr_payroll.py:62
 #, python-format
-msgid "Done"
-msgstr "Hecho"
-
-#. module: hr_payslip_paid
-#: code:addons/hr_payslip_paid/model/hr_payroll.py:61
-#, python-format
-msgid "Draft"
-msgstr "Borrador"
+msgid "* When the payslip is created the status is 'Draft'.            \n"
+"* If the payslip is under verification, the status is 'Waiting'.            \n"
+"* If the payslip is confirmed then status is set to 'Done'.            \n"
+"* When user cancel payslip the status is 'Rejected'.            \n"
+"* When the payment is done the status id 'Paid'."
+msgstr "* Cuando se crea la nómina el estado es 'Borrador'.\n"
+"* Si la nómina se encuentra bajo la verificación, el estado es 'Esperando'.\n"
+"* Si la nómina esta confirmada el estado es 'Hecho'.\n"
+"* Cuando el usuario cancela nómina el estado es 'Rechazada'.\n"
+"* Cuando el pago esta hecho es estado es 'Pagado'."
 
 #. module: hr_payslip_paid
 #: help:hr.payslip,reconciled:0
@@ -33,7 +35,7 @@ msgid "It indicates that the payslip has been paid and the journal entry of the 
 msgstr "Indica que la nómina se ha pagado y la entrada de diario de la nómina se ha reconciliado con uno o varias polizás de pago."
 
 #. module: hr_payslip_paid
-#: code:addons/hr_payslip_paid/model/hr_payroll.py:65
+#: code:addons/hr_payslip_paid/model/hr_payroll.py:61
 #, python-format
 msgid "Paid"
 msgstr "Pagado"
@@ -57,18 +59,6 @@ msgstr "Fecha de pago"
 #: view:hr.payslip:hr_payslip_paid.view_paid_payslip_form
 msgid "Payments"
 msgstr "Pagos"
-
-#. module: hr_payslip_paid
-#: code:addons/hr_payslip_paid/model/hr_payroll.py:64
-#, python-format
-msgid "Rejected"
-msgstr "Rechazado"
-
-#. module: hr_payslip_paid
-#: code:addons/hr_payslip_paid/model/hr_payroll.py:62
-#, python-format
-msgid "Waiting"
-msgstr "Esperando"
 
 #. module: hr_payslip_paid
 #: view:hr.payslip:hr_payslip_paid.view_paid_payslip_form
