@@ -24,8 +24,6 @@
     "version": "1.0", 
     "author": "CLEARCORP S.A.", 
     "category": "Development", 
-    "description": """Adds a wizard to start a Winpdb debugger connection.
-    """, 
     "website": "http://clearcorp.co.cr", 
     "license": "AGPL-3", 
     "depends": [
