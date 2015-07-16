@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 
 
 class hr_payslip(models.Model):
@@ -58,11 +58,11 @@ class hr_payslip(models.Model):
         self.reconciled = self.test_paid()
 
     state = fields.Selection([
-        ('draft', 'Draft'),
-        ('verify', 'Waiting'),
-        ('done', 'Done'),
-        ('cancel', 'Rejected'),
-        ('paid', 'Paid'),
+        ('draft', _('Draft')),
+        ('verify', _('Waiting')),
+        ('done', _('Done')),
+        ('cancel', _('Rejected')),
+        ('paid', _('Paid')),
     ], 'Status', select=True, readonly=True,
         help="* When the payslip is created the status is 'Draft'.\
             \n* If the payslip is under verification, the status is 'Waiting'.\
