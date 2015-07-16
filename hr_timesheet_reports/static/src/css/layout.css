@@ -1,1 +1,8 @@
-
+.vauxoo .img-responsive {
+    margin: auto auto;
+}
+.vauxoo .logo{
+    width: 100%;
+    height: 100%;
+    background: url(https://s3.amazonaws.com/s3.vauxoo.com/odoo_gold_partner_rgb.png) center center no-repeat;
+} 
