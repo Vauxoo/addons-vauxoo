@@ -177,57 +177,96 @@
                 </tfoot>
                 </table>
                 <div class="col-xs-12">
-                <h3>Amounts Resumed</h3>
-                <t t-set="total_train" t-value="0"/>
-                <t t-set="total_cons" t-value="0"/>
-                <t t-set="total_lic" t-value="0"/>
-                <t t-set="total_others" t-value="0"/>
-                <t t-foreach="records.get('resume_product')" t-as="il">
-                    <t t-set="total_train" t-value="records.get('resume_product')[il].get('total_train')+total_train"/>
-                    <t t-set="total_cons" t-value="records.get('resume_product')[il].get('total_cons')+total_cons"/>
-                    <t t-set="total_lic" t-value="records.get('resume_product')[il].get('total_lic')+total_lic"/>
-                    <t t-set="total_others" t-value="records.get('resume_product')[il].get('total_others')+total_others"/>
-                    <div class="col-xs-12">
-                        <h4>
-                            <strong>Amounts in Currency </strong>
-                            <u t-esc="il"/>
-                        </h4>
-                        <p><b>Training: </b><span t-esc="records.get('resume_product')[il].get('training')"/></p>
-                        <p><b>Consultancy: </b><span t-esc="records.get('resume_product')[il].get('consultancy')"/></p>
-                        <p><b>Enterprises: </b><span t-esc="records.get('resume_product')[il].get('enterprises')"/></p>
-                        <p><b>Others: </b><span t-esc="records.get('resume_product')[il].get('others')"/></p>
-                        <hr/>
-                        <p><b>Total: </b><span t-esc="records.get('resume_product')[il].get('total')"/></p>
-                        <hr/>
-                        <p><b>Total in <u t-esc="o.currency_id.name"></u>: </b><span t-esc="records.get('resume_product')[il].get('total_in_control')"/></p>
-                        <hr/>
-                        <p><b>Conversion Rate: </b><span t-esc="records.get('resume_product')[il].get('conversion_rate')"/></p>
-                    </div>
-                </t>
+                    <h3>Amounts Resumed</h3>
+                    <t t-set="total_train" t-value="0"/>
+                    <t t-set="total_cons" t-value="0"/>
+                    <t t-set="total_lic" t-value="0"/>
+                    <t t-set="total_others" t-value="0"/>
+                    <t t-foreach="records.get('resume_product')" t-as="il">
+                        <t t-set="total_train" t-value="records.get('resume_product')[il].get('total_train')+total_train"/>
+                        <t t-set="total_cons" t-value="records.get('resume_product')[il].get('total_cons')+total_cons"/>
+                        <t t-set="total_lic" t-value="records.get('resume_product')[il].get('total_lic')+total_lic"/>
+                        <t t-set="total_others" t-value="records.get('resume_product')[il].get('total_others')+total_others"/>
+                        <div class="col-xs-12">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                <td>
+                                    <h4>
+                                        <strong>Amounts in Currency </strong>
+                                        <u t-esc="il"/>
+                                    </h4>
+                                </td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>
+                                        <ul>
+                                            <li><span><b>Training: </b><span t-esc="records.get('resume_product')[il].get('training')"/></span></li>
+                                            <li><span><b>Consultancy: </b><span t-esc="records.get('resume_product')[il].get('consultancy')"/></span></li>
+                                            <li><span><b>Enterprises: </b><span t-esc="records.get('resume_product')[il].get('enterprises')"/></span></li>
+                                            <li><span><b>Others: </b><span t-esc="records.get('resume_product')[il].get('others')"/></span></li>
+                                            <li><span><b>Total: </b><span t-esc="records.get('resume_product')[il].get('total')"/></span></li>
+                                            <li><span><b>Total in <u t-esc="o.currency_id.name"></u>: </b><span t-esc="records.get('resume_product')[il].get('total_in_control')"/></span></li>
+                                            <li><span><b>Conversion Rate: </b><span t-esc="records.get('resume_product')[il].get('conversion_rate')"/></span></li>
+                                         </ul>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
                 </div>
                 <div class="col-xs-12">
-                    <h4>
-                        <strong>Resumed amounts in </strong>
-                        <u t-esc="o.currency_id.name"/>
-                    </h4>
-                    <div class="col-xs-12">
-                    <p><b>Total Invoiced</b>
-                    <ul>
-                        <li><b>Training: </b><span t-esc="total_train"/></li>
-                        <li><b>Consultancy: </b><span t-esc="total_cons"/></li>
-                        <li><b>Enterprises: </b><span t-esc="total_lic"/></li>
-                        <li><b>Others: </b><span t-esc="total_others"/></li>
-                    </ul>
-                    </p>
-                    </div>
-                    <div class="col-xs-12">
-                    <p><b>Totals Timesheet</b>
-                    <ul>
-                        <li><b>Billable: </b><span t-esc="records.get('resumed_numbers')['pending']"/></li>
-                        <li><b>Pending <br/><sub>Billables - Billed</sub>: </b><br/><span t-esc="records.get('resumed_numbers')['pending'] - total_cons"/></li>
-                    </ul>
-                    </p>
-                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                        <td>
+                            <h4>
+                                <strong>Resumed amounts in </strong>
+                                <u t-esc="o.currency_id.name"/>
+                            </h4>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <h4>Total Invoiced</h4>
+                        </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        <td>
+                        <ul>
+                            <li><b>Training: </b><span t-esc="total_train"/></li>
+                            <li><b>Consultancy: </b><span t-esc="total_cons"/></li>
+                            <li><b>Enterprises: </b><span t-esc="total_lic"/></li>
+                            <li><b>Others: </b><span t-esc="total_others"/></li>
+                        </ul>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <td>
+                                <h3>Totals Timesheet</h3>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                            <ul>
+                                <li><b>Billable: </b><span t-esc="records.get('resumed_numbers')['pending']"/></li>
+                                <li><b>Pending <sub>Billables - Billed</sub>: </b><br/><span t-esc="records.get('resumed_numbers')['pending'] - total_cons"/></li>
+                            </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
         </t>
         </div>
