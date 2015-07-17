@@ -24,12 +24,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Terms and Conditions Log
-========================
-- This module creates a log of all change in the Terms and Conditions fields
- in the Contract
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [
