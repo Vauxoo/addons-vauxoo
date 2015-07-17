@@ -1,17 +1,18 @@
-AutoMerge Records.
----
+AutoMerge Records
+=================
 
+TODO: Add module description
 TODO: Write how it works, with a good example.
 
-Considerations.
----
+Considerations
+--------------
 
-Technical Explanation.
----
+Technical Explanation
+---------------------
 
 TODO: Put here some technical examples.
 
-Functional Usage.
----
+Functional Usage
+----------------
 
 TODO: Put here some functional examples.
