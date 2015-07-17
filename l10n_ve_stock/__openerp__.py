@@ -27,13 +27,6 @@
     "version": "0.3", 
     "author": "Vauxoo", 
     "category": "Localization", 
-    "description": """
-    Notas de entrega
-    Guías de despacho según decreto
-    0591
-    Referencia Legal:
-    http://wiki.openerp.org.ve/index.php?title=0591
-    """, 
     "website": "http://vauxoo.com", 
     "license": "GPL-3", 
     "depends": [
