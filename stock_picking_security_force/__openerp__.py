@@ -4,11 +4,6 @@
     "version": "1.1.1", 
     "author": "Vauxoo", 
     "category": "Stock", 
-    "description": """
-Force availability is a button to dangerous to be available for everybody.
-
-This module adds security to such feature.
-""", 
     "website": "www.vauxoo.com", 
     "license": "", 
     "depends": [
