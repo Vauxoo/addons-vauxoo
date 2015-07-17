@@ -28,9 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Production", 
-    "description": """ Add two function fields to sum all of the credits and
-    debits of the account move lines
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
