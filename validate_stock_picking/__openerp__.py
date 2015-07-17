@@ -24,14 +24,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Stock", 
-    "description": """
-Validate Multiples Stock Picking
-================================
-
-Select stock picking from tree view and dropdown action menu to select wizard
-and validate picking selected
-
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [
