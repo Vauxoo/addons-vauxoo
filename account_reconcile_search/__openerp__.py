@@ -24,11 +24,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Account", 
-    "description": """
-Account Reconcile Search
-========================
-This module allows the feature to group by reconcile ref field
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [
