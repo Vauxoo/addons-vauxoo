@@ -24,14 +24,10 @@
 #
 ##############################################################################
 {
-    "name": "mrp acount link", 
+    "name": "MRP Acount Link", 
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Production", 
-    "description": """This module adds a link
-    between the production order to its account_move_lines generated after
-    the instalation of this module.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
