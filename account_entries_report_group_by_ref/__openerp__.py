@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module inherits the xml account_entries_report_view a button grouping by origin
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
