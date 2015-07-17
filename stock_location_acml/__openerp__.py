@@ -29,12 +29,6 @@
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
-    "description": """
-Stock Location on Account move lines
-====================================
-
-Show the location of account move lines from stock move
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
