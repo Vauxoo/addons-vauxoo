@@ -223,47 +223,41 @@
                         <thead>
                         <tr>
                         <td>
-                            <h4>
+                            <h3>
                                 <strong>Resumed amounts in </strong>
                                 <u t-esc="o.currency_id.name"/>
-                            </h4>
+                            </h3>
                         </td>
                         </tr>
                         <tr>
                         <td>
                             <h4>Total Invoiced</h4>
                         </td>
+                        <td>
+                            <h4>Totals Timesheet</h4>
+                        </td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                         <td>
-                        <ul>
-                            <li><b>Training: </b><span t-esc="total_train"/></li>
-                            <li><b>Consultancy: </b><span t-esc="total_cons"/></li>
-                            <li><b>Enterprises: </b><span t-esc="total_lic"/></li>
-                            <li><b>Others: </b><span t-esc="total_others"/></li>
-                        </ul>
+                            <div class="row">
+                                <ul>
+                                    <li><b>Training: </b><span t-esc="total_train"/></li>
+                                    <li><b>Consultancy: </b><span t-esc="total_cons"/></li>
+                                    <li><b>Enterprises: </b><span t-esc="total_lic"/></li>
+                                    <li><b>Others: </b><span t-esc="total_others"/></li>
+                                </ul>
+                            </div>
                         </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <td>
-                                <h3>Totals Timesheet</h3>
-                            </td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                            <ul>
-                                <li><b>Billable: </b><span t-esc="records.get('resumed_numbers')['pending']"/></li>
-                                <li><b>Pending <sub>Billables - Billed</sub>: </b><br/><span t-esc="records.get('resumed_numbers')['pending'] - total_cons"/></li>
-                            </ul>
-                            </td>
+                        <td>
+                            <div class="row">
+                                <ul>
+                                    <li><b>Billable: </b><span t-esc="records.get('resumed_numbers')['pending']"/></li>
+                                    <li><b>Pending <sub>Billables - Billed</sub>: </b><span t-esc="records.get('resumed_numbers')['pending'] - total_cons"/></li>
+                                </ul>
+                            </div>
+                        </td>
                         </tr>
                         </tbody>
                     </table>
