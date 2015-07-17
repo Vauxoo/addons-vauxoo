@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name" : "Portal Acess for User Story",
+    "name" : "Portal Access for User Story",
     "version" : "0.1",
     "depends" : [
                  "base",
@@ -34,16 +34,6 @@
                  "portal_project",
                  ],
     "author" : "Vauxoo",
-    "description" : """
-This Module only offer Portal Access to customers.
-
-    - List User Stories per Project.
-    - Allow Mark Acceptability Criteria as "Accepted".
-    - See historical communication on User Story.
-
-The only objective is, easily with add Portal Access to Contacts on a Customer
-be able to let them accept user stories.
-                    """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "demo" : [
