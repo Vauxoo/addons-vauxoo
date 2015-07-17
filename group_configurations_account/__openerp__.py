@@ -28,9 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-        Add a group, and adds in wizard for configurate accounting
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
