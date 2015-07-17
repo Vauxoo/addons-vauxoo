@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module add locaton_id,location_dest_id,date_expected,state in stocks moves
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
