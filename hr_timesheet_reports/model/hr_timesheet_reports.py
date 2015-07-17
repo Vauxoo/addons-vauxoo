@@ -286,10 +286,15 @@ class hr_timesheet_reports_base(models.Model):
         return info
 
     @api.one
-    @api.depends('comment_timesheet', 'comment_invoices')
+    @api.depends('comment_timesheet',
+                 'comment_invoices',
+                 'comment_issues',
+                 'comment_hu')
     def _comment2html(self):
         self.cts2html = rst2html.html.rst2html(self.comment_timesheet)
         self.ci2html = rst2html.html.rst2html(self.comment_invoices)
+        self.ciss2html = rst2html.html.rst2html(self.comment_issues)
+        self.chu2html = rst2html.html.rst2html(self.comment_hu)
 
     name = fields.Char('Report Title')
     comment_invoices = fields.Text('Comment about Invoices',
@@ -309,9 +314,17 @@ class hr_timesheet_reports_base(models.Model):
     comment_issues = fields.Text('Comment about Timesheets',
                                  help='It will appear just above '
                                  'the resumed issues.')
+    ciss2html = fields.Text('Comments Issues html',
+                            compute='_comment2html',
+                            help='It will appear just above '
+                            'the resumed timesheets.')
     comment_hu = fields.Text('Comment about Timesheets',
                              help='It will appear just above '
                              'the resumed hu status.')
+    chu2html = fields.Text('Comments User Stories html',
+                           compute='_comment2html',
+                           help='It will appear just above '
+                           'the resumed timesheets.')
     user_id = fields.Many2one(
         'res.users', 'Responsible',
         help='Owner of the report, generally the person that create it.')

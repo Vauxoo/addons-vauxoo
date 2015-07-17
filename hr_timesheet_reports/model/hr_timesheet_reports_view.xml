@@ -99,22 +99,30 @@
                                 </group>
                             </page>
                         </notebook>
+                        <separator string="Issues Section"/>
+                        <label for="filter_issue_id"/>
+                        <field name="filter_issue_id"/>
+                        <button class="oe_link" string="Issues on this filter"
+                            type="object" name="go_to_issues"/>
                         <notebook>
-                            <page string="Issues">
-                                <label for="filter_issue_id"/>
-                                <field name="filter_issue_id"/>
-                                <button class="oe_link" string="Issues on this filter"
-                                    type="object" name="go_to_issues"/>
-                                <field name="comment_issues" nolabel="1" widget="html"/>
+                            <page string="Comment Issues">
+                                <field name="ciss2html" nolabel="1" widget="html"/>
+                            </page>
+                            <page string="Edit Online">
+                                <field name="comment_issues" nolabel="1"/>
                             </page>
                         </notebook>
+                        <separator string="User Stories Section"/>
+                        <label for="filter_hu_id"/>
+                        <field name="filter_hu_id"/>
+                        <button class="oe_link" string="User Stories on this filter"
+                                type="object" name="go_to_hu"/>
                         <notebook>
-                            <page string="User Stories">
-                                <label for="filter_hu_id"/>
-                                <field name="filter_hu_id"/>
-                                <button class="oe_link" string="User Stories on this filter"
-                                    type="object" name="go_to_hu"/>
-                                <field name="comment_hu" nolabel="1" widget="html"/>
+                            <page string="Comments User Stories">
+                                <field name="chu2html" nolabel="1" widget="html"/>
+                            </page>
+                            <page string="Edit Online">
+                                <field name="comment_hu" nolabel="1"/>
                             </page>
                         </notebook>
                         <group string="Technical Information">
