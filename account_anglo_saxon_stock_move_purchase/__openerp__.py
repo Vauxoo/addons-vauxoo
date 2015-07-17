@@ -26,12 +26,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Account Anglo-Saxon Stock Move Purchase
-------------------------------
-This module allows to gather Journal Item in a Purchase Order
-that were created because of accrual accounts for Stock In with Anglo Saxon
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
