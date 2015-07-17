@@ -28,13 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Project Phase Description
-=========================
-
-This module added field description in view Project Phase.
-
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
