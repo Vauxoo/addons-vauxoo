@@ -4,10 +4,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
-    "description": """
-    What do this module:
-    Just the quotation format.
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
