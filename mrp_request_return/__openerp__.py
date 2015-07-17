@@ -29,8 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/MRP", 
-    "description": """ Add wizard to request or return product to the stock
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
