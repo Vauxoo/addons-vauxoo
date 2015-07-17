@@ -31,10 +31,6 @@
     "version": "0.2", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Accounting", 
-    "description": """
-        Este modulo agrega la posibilidad de imprimir directamente el cheque a la impresora
-
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
