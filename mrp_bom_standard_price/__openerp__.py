@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module inherits standard price field in mrp.bom
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
