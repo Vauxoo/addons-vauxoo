@@ -28,8 +28,6 @@
     "version": "2.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """This module creates a sql view for
-    Account Aged Partner Balance today.""",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
