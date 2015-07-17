@@ -25,15 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-Configure And Create Journal:
-=============================
-
-1.- Genera wizard que te permite escoger un cuenta contable y asignar todos sus
-hijos con tipo liquidez y tipo interno No conciliado.
-
-2.- crea un diario por cada cuenta hija detectada en el paso anterior
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
