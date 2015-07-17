@@ -28,13 +28,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Sale Order",
-    "description": """
-Sale Order Line Copy
-====================
-
-This module add the button in the sale order line for copy data.
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
