@@ -27,8 +27,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Accounting", 
-    "description": """
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
