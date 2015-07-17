@@ -24,18 +24,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Accounting & Finance", 
-    "description": """
-Improve management of Bank Statement.
-=====================================
-    1.- Import directly from files given by banks.
-        a.- Costa Rica Banks.
-            Banco Nacional (CRC).
-            Banco Nacional (USD).
-        b.- Mexican Banks.
-        c.- Venezuelan Banks.
-            Banco Exterior #TODO
-    2.-
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
