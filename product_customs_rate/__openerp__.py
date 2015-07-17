@@ -26,12 +26,6 @@
     "version": "1.0", 
     "author": "Cubic ERP & Vauxoo", 
     "category": "Finance", 
-    "description": """
-Management of Customs Rate
-
-Gestión de Customs Rate (Nandina y subpartida nacional)
-
-    """, 
     "website": "http://cubicERP.com & http://vauxoo.com", 
     "license": "", 
     "depends": [
