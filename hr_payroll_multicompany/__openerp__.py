@@ -27,15 +27,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """
-    This module adds records rules to see only records of the user's company.
-    The models are :
-        hr.contract
-        hr.salary.rule
-        hr.payroll.structure
-        hr.payslip.run
-        hr.payslip
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
