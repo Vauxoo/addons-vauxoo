@@ -29,11 +29,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Product Category Multi-Company
-==============================
-Add company_id field in model product.category
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
