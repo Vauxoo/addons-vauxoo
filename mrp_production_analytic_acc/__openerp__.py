@@ -30,9 +30,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "analytic production", 
-    "description": """
-        Added field for account analitic
-    """, 
     "website": "", 
     "license": "", 
     "depends": [
