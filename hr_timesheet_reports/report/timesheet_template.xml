@@ -3,12 +3,12 @@
 <data>
     <template id="timesheets" name="Timesheet Report for Customers">
         <div class="col-xs-12">
-            <div class="raw">
+            <div class="row">
                 <h2>Resumed Timesheet Report</h2>
                 <strong>Filter Name:</strong> <span t-esc="o.filter_id.name"/>
             </div>
-            <div class="raw">
-                <t t-raw="o.comment_timesheet"/>
+            <div class="row">
+                <t t-raw="o.cts2html"/>
             </div>
         </div>
         <div class="col-xs-12">

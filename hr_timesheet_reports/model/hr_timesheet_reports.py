@@ -2,6 +2,7 @@
 from openerp import models, fields, api, _
 from openerp.tools.safe_eval import safe_eval
 from openerp import SUPERUSER_ID
+from . import rst2html
 
 import re
 
@@ -284,6 +285,11 @@ class hr_timesheet_reports_base(models.Model):
             info['data'][proj] = [r for r in res if r['analytic'] == proj]
         return info
 
+    @api.one
+    @api.depends('comment_timesheet')
+    def _comment2html(self):
+        self.cts2html = rst2html.html.rst2html(self.comment_timesheet)
+
     name = fields.Char('Report Title')
     comment_invoices = fields.Text('Comment about Invoices',
                                    help="It will appear just above "
@@ -291,6 +297,10 @@ class hr_timesheet_reports_base(models.Model):
     comment_timesheet = fields.Text('Comment about Timesheets',
                                     help='It will appear just above '
                                     'the resumed timesheets.')
+    cts2html = fields.Text('Comments TS html',
+                           compute='_comment2html',
+                           help='It will appear just above '
+                           'the resumed timesheets.')
     comment_issues = fields.Text('Comment about Timesheets',
                                  help='It will appear just above '
                                  'the resumed issues.')

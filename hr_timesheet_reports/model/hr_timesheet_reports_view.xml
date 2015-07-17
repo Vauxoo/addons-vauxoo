@@ -70,7 +70,14 @@
                             type="object" name="go_to_timesheet"/>
                         <label for="show_details"/>
                         <field name="show_details"/>
-                        <field name="comment_timesheet" nolabel="1" widget="html"/>
+                        <notebook>
+                            <page string="Comments">
+                                <field name="comment_timesheet" nolabel="1"/>
+                            </page>
+                            <page string="Preview">
+                                <field name="cts2html" nolabel="1" widget="html"/>
+                            </page>
+                        </notebook>
                         <notebook>
                             <page string="Invoice Information">
                                 <label for="filter_invoice_id"/>
