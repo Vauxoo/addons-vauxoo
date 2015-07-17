@@ -26,9 +26,6 @@
     'website': 'https://www.vauxoo.com',
     "depends": ['product'],
     "category": "Generic Modules/Inventory Control",
-    "description": """
-
-""",
     "data": [
         'view/product_view.xml',
     ],

@@ -1,3 +1,6 @@
+Product extension to track sales and purchases from variants
+============================================================
+
 Description field on attribute.
 ---
 
