@@ -1,0 +1,4 @@
+Stock Card
+==========
+
+Kardex.
