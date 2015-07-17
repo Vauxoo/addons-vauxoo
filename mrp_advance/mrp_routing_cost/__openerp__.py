@@ -28,12 +28,6 @@
     "version": "0.1", 
     "author": "Openerp Venezuela", 
     "category": "Generic Modules/MRP", 
-    "description": """
-    What do this module:
-    Add cost managment feature to manage of production in mrp.bom Object.
-    -- Sum all elements on routing
-    -- Add cost concept for routing
-                    """, 
     "website": "http://openerp.com.ve", 
     "license": "", 
     "depends": [
