@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module Add the Name and referenced in the view search account.move.line model to perform the filter
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
