@@ -27,9 +27,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    Print Project Issue Report.
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [
