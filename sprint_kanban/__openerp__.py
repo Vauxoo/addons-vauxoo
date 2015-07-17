@@ -4,9 +4,6 @@
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Project",
-    "description": """
-\tThis is a module of the sprint kanban
-\t""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [
