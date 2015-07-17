@@ -30,10 +30,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Customer", 
-    "description": """
-Move vat field to show after partner name, to easier searching
--Inherit Partner view form and set vat field after partner name
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
