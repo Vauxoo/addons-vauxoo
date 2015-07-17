@@ -25,11 +25,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Composition mode in email_template
-==================================
-This module Allow to create mail.composse.message from email_template like composition_model=comment
-""", 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
