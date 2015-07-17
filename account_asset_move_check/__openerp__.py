@@ -24,20 +24,10 @@
 #
 ##############################################################################
 {
-    'name' : 'Account Asset Move Check',
-    'version' : '0.1',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category' : 'Accounting',
-    'description' : """
-Account Asset Move Check
-========================
-
-This module add a field that makes posible check like posted some
-deprecations lines with an special condition using the "check_posted"
-field in the validation of "_get_move_check" function.
-
-    """,
+    "name": "Account Asset Move Check",
+    "version": "0.1",
+    "author": "Vauxoo",
+    "category": "Accounting",
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
