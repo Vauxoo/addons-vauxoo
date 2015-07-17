@@ -26,12 +26,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Purchase Requisition Line UoM Check
-===================================
-    Checks if the same Unit of Measure set in line is with product's category
-    Unit of Measure
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
