@@ -33,10 +33,12 @@ class mail_notification(osv.Model):
             Overwrite this method to allow receive your own message sent
             validating the field @receive_my_emails added in model of partner
         """
-        res = super(mail_notification, self).get_partners_to_email(
-            cr, uid, ids, message, context=context)
-        if message.author_id and\
-            (message.author_id.receive_my_emails and
-                message.author_id.notify_email != "none"):
-            res.append(message.author_id.id)
-        return res
+	res = super(mail_notification, self).get_partners_to_email(
+	    cr, uid, ids, message, context=context)
+
+	for notification in self.browse(cr, uid, ids, context=context):
+	    if message.author_id and\
+		(message.author_id.receive_my_emails and
+		    message.author_id.notify_email != "none"):
+		res.append(message.author_id.id)
+	    return res
