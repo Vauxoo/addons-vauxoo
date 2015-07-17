@@ -28,11 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic", 
-    "description": """
-
-    This module adda field to save the amount residual in an payslip
-
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
