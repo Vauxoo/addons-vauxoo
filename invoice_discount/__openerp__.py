@@ -28,10 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        Fields to get the amount without discount and discount in lines to
-        invoice.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
