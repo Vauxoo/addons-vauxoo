@@ -28,9 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Product", 
-    "description": """
-Add manies Codes of Customer's in product
-     """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
