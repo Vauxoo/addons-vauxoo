@@ -29,9 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-        Added the Locations by default when select the product in order of production
-    """, 
     "website": "", 
     "license": "", 
     "depends": [
