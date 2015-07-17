@@ -25,12 +25,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Added field in email_template to allow get attachment in mail_compose_message of the follow way:
-------------------------------------------------------------------------------------------------
-* By default get attachment of record
-* From other fields with relation to ir.attachment
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
