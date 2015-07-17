@@ -26,13 +26,6 @@
     "depends": ['account_anglo_saxon', 'product', 'stock_account',
                 'product_extended'],
     "category": "Generic Modules/Inventory Control",
-    "description": """
-Product extension. This module adds:
-  * Computes standard price from the BoM of the product with a button on the
-    * product variant based
-    on the materials in the BoM and the work centers.  It can create the
-    necessary accounting entries when necessary.
-""",
     "data": ['view/product_view.xml',
              'data/update_price_data.xml'],
     "active": False,
