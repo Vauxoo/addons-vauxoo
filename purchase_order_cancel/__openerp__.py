@@ -29,8 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
-    "description": """ Add button to cancel purchase in state done
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
