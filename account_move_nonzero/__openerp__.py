@@ -25,9 +25,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Localization", 
-    "description": """
-    Check that the entry balance is greater than zero
- """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
