@@ -23,9 +23,6 @@
     'name': 'Automatic Product Attributes',
     'version': '1.0',
     'category': 'Tools',
-    'description': """
-    Automated Action to Create Product Attributes
-    """,
     'author': 'Vauxoo',
     'depends': [
         'base_action_rule',
