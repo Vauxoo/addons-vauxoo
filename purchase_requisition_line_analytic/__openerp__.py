@@ -26,12 +26,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-A account analytic is added in purchase requisition lines
-
-Add analytic account on purchase requisition line, so the purchase order takes
-the account analytic value from the purchase requisition.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
