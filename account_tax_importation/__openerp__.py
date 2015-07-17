@@ -29,10 +29,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """
-    This module added functionality to supplier invoice to relate this with
-    other invoice to payment to tax importation to broker.
-""",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
