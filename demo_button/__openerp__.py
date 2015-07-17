@@ -3,7 +3,6 @@
     "version": "", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """Just add a link in menu bar to hack layout""", 
     "website": "", 
     "license": "", 
     "depends": [], 
