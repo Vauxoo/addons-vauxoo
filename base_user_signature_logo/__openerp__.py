@@ -28,8 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Vauxoo", 
-    "description": """This module add in user a field to insert signature_logo
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
