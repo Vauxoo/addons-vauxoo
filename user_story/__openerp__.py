@@ -28,14 +28,6 @@
     "version": "2.0",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-Take the funcional and technical requirements following the strategy of
-user stories directly in your system.
-
-'What's in a `Story`_ ?'. english source `fuentes`_
-
-.. Story: http://dannorth.net/whats-in-a-story/
-.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [
