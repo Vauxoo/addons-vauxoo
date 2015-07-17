@@ -29,8 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Product", 
-    "description": """Import a CSV file to lines of Sale Order
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [
