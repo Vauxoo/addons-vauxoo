@@ -29,9 +29,6 @@
     "version": "1.1",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-        Add Constraint for the default_code and change function copy
-    """,
     "website": "",
     "license": "",
     "depends": [
