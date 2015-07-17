@@ -27,14 +27,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Stock Purchase Type
-===================
-
-Add Purchase Order rfq_user_id field to the Stock Picking Object as field
-    responsable_id,
-
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
