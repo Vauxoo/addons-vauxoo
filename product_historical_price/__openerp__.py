@@ -27,10 +27,6 @@
     "version": "0.2",
     "author": "Vauxoo",
     "category": "Generic Modules/Product",
-    "description": """
-    What do this module:
-    This module gets the historical price of a product
-                    """,
     "website": "http://Vauxoo.com",
     "license": "",
     "depends": [
