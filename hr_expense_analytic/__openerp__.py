@@ -24,11 +24,10 @@
 #
 ##############################################################################
 {
-    "name": "hr_expense_analytic", 
+    "name": "HR Expense Analytic",
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "hr", 
-    "description": """This module add analytic account to departament""", 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
