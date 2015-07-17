@@ -29,8 +29,6 @@
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
-    'description': '''
-''',
     'depends': ['account_accountant'],
     'data': [
         'data/data.xml',
