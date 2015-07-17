@@ -29,9 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-        Add Button Cancel in Order Production when Producton is done
-    """, 
     "website": "", 
     "license": "", 
     "depends": [
