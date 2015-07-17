@@ -26,9 +26,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-    Add a user field named Requisitor.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
