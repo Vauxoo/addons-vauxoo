@@ -29,8 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
-    "description": """ Group Entries
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
