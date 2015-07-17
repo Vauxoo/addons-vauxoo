@@ -29,9 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Procurement", 
-    "description": """ This module merges procurements with a wizard, grouping by
-    product, location and procure method.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
