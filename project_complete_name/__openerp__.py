@@ -29,8 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """ search by complete_name in model Project
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
