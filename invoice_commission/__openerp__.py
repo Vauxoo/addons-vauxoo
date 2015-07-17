@@ -4,10 +4,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Accounting", 
-    "description": """
-    What do this module:
-    Update account module to show invoice commission
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
