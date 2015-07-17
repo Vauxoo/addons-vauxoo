@@ -29,8 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/MRP", 
-    "description": """ Add table to veiw variation
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
