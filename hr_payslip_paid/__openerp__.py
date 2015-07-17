@@ -28,9 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Localization/Mexico", 
-    "description": """
-    This module add the state paid in hr payroll
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
