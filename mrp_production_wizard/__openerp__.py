@@ -28,10 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Production", 
-    "description": """ Add wizard to create a new production order of the
-    selected product in draft state, with the qty added of the selected
-    products. from the stock_picking model
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
