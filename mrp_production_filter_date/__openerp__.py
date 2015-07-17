@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module inherit date_planned field in search view of mrp_production
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
