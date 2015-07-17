@@ -26,7 +26,7 @@ def rst2html(rst, opts=None):
     if opts:
         rst_opts.update(opts)
     # TODO: this should be a parameter
-    rst_opts['template'] = modules.get_module_resource('vauxoo_sale_reports',
+    rst_opts['template'] = modules.get_module_resource('hr_timesheet_reports',
                                                        'model/rst2html',
                                                        'template.txt')
     out = publish_string(rst, writer_name='html', settings_overrides=rst_opts)

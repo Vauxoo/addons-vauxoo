@@ -286,14 +286,19 @@ class hr_timesheet_reports_base(models.Model):
         return info
 
     @api.one
-    @api.depends('comment_timesheet')
+    @api.depends('comment_timesheet', 'comment_invoices')
     def _comment2html(self):
         self.cts2html = rst2html.html.rst2html(self.comment_timesheet)
+        self.ci2html = rst2html.html.rst2html(self.comment_invoices)
 
     name = fields.Char('Report Title')
     comment_invoices = fields.Text('Comment about Invoices',
                                    help="It will appear just above "
                                    "list of invoices.")
+    ci2html = fields.Text('Comments Invoices html',
+                          compute='_comment2html',
+                          help='It will appear just above '
+                          'the resumed timesheets.')
     comment_timesheet = fields.Text('Comment about Timesheets',
                                     help='It will appear just above '
                                     'the resumed timesheets.')

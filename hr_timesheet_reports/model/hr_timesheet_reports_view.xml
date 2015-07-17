@@ -71,22 +71,26 @@
                         <label for="show_details"/>
                         <field name="show_details"/>
                         <notebook>
-                            <page string="Comments">
-                                <field name="comment_timesheet" nolabel="1"/>
-                            </page>
-                            <page string="Preview">
+                            <page string="Timesheet Comments">
                                 <field name="cts2html" nolabel="1" widget="html"/>
                             </page>
+                            <page string="Edit Online">
+                                <field name="comment_timesheet" nolabel="1"/>
+                            </page>
                         </notebook>
+                        <separator string="Invoices Section"/>
+                        <label for="filter_invoice_id"/>
+                        <field name="filter_invoice_id"/>
+                        <button class="oe_link" string="Invoices on this filter"
+                            type="object" name="go_to_invoices"/>
                         <notebook>
                             <page string="Invoice Information">
-                                <label for="filter_invoice_id"/>
-                                <field name="filter_invoice_id"/>
-                                <button class="oe_link" string="Invoices on this filter"
-                                    type="object" name="go_to_invoices"/>
-                                <field name="comment_invoices" nolabel="1" widget="html"/>
+                                <field name="ci2html" nolabel="1" widget="html"/>
                             </page>
-                            <page string="technical Information">
+                            <page string="Edit Online">
+                                <field name="comment_invoices" nolabel="1"/>
+                            </page>
+                            <page string="Technical Information">
                                 <group>
                                     <field name="prod_cons_ids" widget="many2many_tags"/>
                                     <button class="oe_link" string="Invoice Lines with this products"
