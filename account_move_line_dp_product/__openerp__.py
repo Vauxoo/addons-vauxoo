@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """Grouped by production and stock move in model account_move_line
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
