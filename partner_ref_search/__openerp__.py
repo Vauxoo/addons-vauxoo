@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module inherit ref field in search view of res_partner
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
