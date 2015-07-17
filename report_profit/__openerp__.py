@@ -27,10 +27,6 @@
     "version": "0.2", 
     "author": "Vauxoo", 
     "category": "Localization", 
-    "description": """
-        Performs the equivalent of a third unit for the analysis of sales.
-
- """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
