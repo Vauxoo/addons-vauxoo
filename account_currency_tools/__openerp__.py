@@ -25,11 +25,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Tools",
-    "description": """
-Account Currency Tools
-======================
-    This module will be a hub for providing tools related to multicurrency
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
