@@ -7,4 +7,3 @@ Features
 --------
 
 #. New field in res.partner to know if a partner is national or international
-
