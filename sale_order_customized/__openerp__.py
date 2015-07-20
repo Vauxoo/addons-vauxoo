@@ -41,6 +41,7 @@ This module customized
         "sale",
         "sale_stock",
         "sale_margin",
+        "sale_layout",
     ],
     "demo": [],
     "data": [
