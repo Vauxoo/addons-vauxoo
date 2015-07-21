@@ -225,7 +225,8 @@ class hr_timesheet_reports_base(models.Model):
         res = []
         timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids,
                                               context=context)
-        res = [self._prepare_data(cr, uid, ids, tb, context=context) for tb in timesheet_brws]  # noqa
+        res_result = [self._prepare_data(cr, uid, ids, tb, context=context) for tb in timesheet_brws]  # noqa
+        res = sorted(res_result, key=lambda k: k['issue'], reverse=True)
         grouped = timesheet_obj.read_group(cr, uid, dom,
                                            ['account_id',
                                             'unit_amount',
