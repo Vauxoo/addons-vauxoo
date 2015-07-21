@@ -70,16 +70,27 @@
                             type="object" name="go_to_timesheet"/>
                         <label for="show_details"/>
                         <field name="show_details"/>
-                        <field name="comment_timesheet" nolabel="1" widget="html"/>
+                        <notebook>
+                            <page string="Timesheet Comments">
+                                <field name="cts2html" nolabel="1" widget="html"/>
+                            </page>
+                            <page string="Edit Online">
+                                <field name="comment_timesheet" nolabel="1"/>
+                            </page>
+                        </notebook>
+                        <separator string="Invoices Section"/>
+                        <label for="filter_invoice_id"/>
+                        <field name="filter_invoice_id"/>
+                        <button class="oe_link" string="Invoices on this filter"
+                            type="object" name="go_to_invoices"/>
                         <notebook>
                             <page string="Invoice Information">
-                                <label for="filter_invoice_id"/>
-                                <field name="filter_invoice_id"/>
-                                <button class="oe_link" string="Invoices on this filter"
-                                    type="object" name="go_to_invoices"/>
-                                <field name="comment_invoices" nolabel="1" widget="html"/>
+                                <field name="ci2html" nolabel="1" widget="html"/>
                             </page>
-                            <page string="technical Information">
+                            <page string="Edit Online">
+                                <field name="comment_invoices" nolabel="1"/>
+                            </page>
+                            <page string="Technical Information">
                                 <group>
                                     <field name="prod_cons_ids" widget="many2many_tags"/>
                                     <button class="oe_link" string="Invoice Lines with this products"
@@ -88,22 +99,30 @@
                                 </group>
                             </page>
                         </notebook>
+                        <separator string="Issues Section"/>
+                        <label for="filter_issue_id"/>
+                        <field name="filter_issue_id"/>
+                        <button class="oe_link" string="Issues on this filter"
+                            type="object" name="go_to_issues"/>
                         <notebook>
-                            <page string="Issues">
-                                <label for="filter_issue_id"/>
-                                <field name="filter_issue_id"/>
-                                <button class="oe_link" string="Issues on this filter"
-                                    type="object" name="go_to_issues"/>
-                                <field name="comment_issues" nolabel="1" widget="html"/>
+                            <page string="Comment Issues">
+                                <field name="ciss2html" nolabel="1" widget="html"/>
+                            </page>
+                            <page string="Edit Online">
+                                <field name="comment_issues" nolabel="1"/>
                             </page>
                         </notebook>
+                        <separator string="User Stories Section"/>
+                        <label for="filter_hu_id"/>
+                        <field name="filter_hu_id"/>
+                        <button class="oe_link" string="User Stories on this filter"
+                                type="object" name="go_to_hu"/>
                         <notebook>
-                            <page string="User Stories">
-                                <label for="filter_hu_id"/>
-                                <field name="filter_hu_id"/>
-                                <button class="oe_link" string="User Stories on this filter"
-                                    type="object" name="go_to_hu"/>
-                                <field name="comment_hu" nolabel="1" widget="html"/>
+                            <page string="Comments User Stories">
+                                <field name="chu2html" nolabel="1" widget="html"/>
+                            </page>
+                            <page string="Edit Online">
+                                <field name="comment_hu" nolabel="1"/>
                             </page>
                         </notebook>
                         <group string="Technical Information">
@@ -145,11 +164,5 @@
                   parent="base.menu_project_report"
                   action="action_hr_report_base_tree"
                   sequence='100'/>
-        <record id="property_hr_report_base" model="ir.property">
-            <field name="name">webkit_header</field>
-            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
-            <field eval="'ir.header_webkit,'+str(ref('hr_timesheet_reports.ir_header_webkit_timesheet'))" model="ir.header_webkit" name="value"/>
-            <field eval="'ir.actions.report.xml,'+str(ref('hr_timesheet_reports.hr_timesheet_reports_base'))" model="ir.actions.report.xml" name="res_id"/>
-        </record>
     </data>
 </openerp>
