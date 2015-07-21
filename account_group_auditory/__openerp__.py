@@ -47,7 +47,9 @@ models.
         "account",
         "account_accountant",
     ],
-    "demo": [],
+    "demo": [
+        "security/auditor_user.xml",
+    ],
     "data": [
         "security/account_user_group.xml",
         'security/ir.model.access.csv',

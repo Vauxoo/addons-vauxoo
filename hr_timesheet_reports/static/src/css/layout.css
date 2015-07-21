@@ -1,0 +1,20 @@
+.vauxoo .img-responsive {
+    margin: 0 auto;
+}
+
+.vauxoo .header {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+tfoot {
+    font-weight: bold;
+}
+
+@media print {
+    .table {
+        page-break-after:always !important;
+        page-break-before:always !important;
+    }
+
+}
