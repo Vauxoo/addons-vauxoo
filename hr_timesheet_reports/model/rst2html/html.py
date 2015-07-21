@@ -16,8 +16,8 @@ default_rst_opts = {
     'file_insertion_enabled': True,
     'raw_enabled': True,
     'stylesheet_path': None,
-    'traceback': True,
-    'halt_level': 2,
+    'traceback': False,
+    'halt_level': 4,
 }
 
 TEMPLATE = '''
@@ -51,6 +51,12 @@ def rst2html(rst, opts=None):
         >>> chain = [0, 1]
         >>> rst2html(chain)
         u''
+
+    You can pass wrong rst elements and they are managed elegantly.
+
+        >>> chain = "Element in  paragraph\\n Wrongly indented\\nIndented without blank line"
+        >>> rst2html(chain)
+        u'<div class="document">\\n<dl class="docutils">\\n<dt>Element in  paragraph</dt>\\n<dd>Wrongly indented</dd>\\n</dl>\\n<div class="system-message">\\n<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;string&gt;</tt>, line 3)</p>\\nDefinition list ends without a blank line; unexpected unindent.</div>\\n<p>Indented without blank line</p>\\n</div>\\n'
 
     No errors shown, ensure change your types to strings or unicode
 
