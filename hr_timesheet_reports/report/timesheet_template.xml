@@ -272,32 +272,37 @@
                 <strong>Filter Name: </strong>
                 <p t-esc="o.filter_issue_id.name"/>
                 <t t-raw="o.comment_issues"/>
-                <table class="table text-center table-striped table-bordered">
+                <table class="table text-left table-striped table-bordered">
                     <thead>
                     <tr class="title">
                         <td colspan="3">Status of issues until today in the project.</td>
                     </tr>
-                    <tr class="title">
+                    <tr>
                         <td> Analytic Account </td>
-                        <td> Qty </td>
+                        <td class="text-center"> Qty </td>
                         <td> Status </td>
                     </tr>
                     </thead>
                     <tbody>
                     <t t-foreach="records.get('issues')" t-as="issue">
                         <tr>
-                            <td style="text-align: left;">
+                            <td>
                                 <span t-esc="issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.'"/>
                             </td>
-                            <td class="invoices_content">
+                            <td class="text-center">
                                 <span t-esc="issue.get('analytic_account_id_count')"/>
                             </td>
-                            <td style="text-align: right;" class="invoices_content">
-                            <t t-foreach="issue.get('children_by_stage')" t-as="stage">
-                                <span t-esc="'%s - %s ' %(stage.get('stage_id')[1], stage.get('stage_id_count'))"/>
-                            </t>
-                        </td>
-                    </tr>
+                            <td>
+                                <ul class="list-group">
+                                <t t-foreach="issue.get('children_by_stage')" t-as="stage">
+                                    <li class="list-group-item">
+                                        <span class="badge" t-esc="stage.get('stage_id_count')"/>
+                                        <t t-esc="stage.get('stage_id')[1]"/>
+                                    </li>
+                                </t>
+                                </ul>
+                            </td>
+                        </tr>
                     </t>
                     </tbody>
                 </table>
