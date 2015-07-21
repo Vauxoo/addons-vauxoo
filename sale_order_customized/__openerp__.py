@@ -41,6 +41,7 @@ This module customized
     "depends": [
         "sale_stock",
         "sale_margin",  # Because if you will pivote around sale_margin
+        "sale_layout",
     ],
     "demo": [],
     "data": [
