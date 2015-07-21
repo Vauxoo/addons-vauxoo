@@ -1,6 +1,6 @@
 # -*- enconding: utf-8 -*-
 {
-    "name": "Sprint Kanban Filters",
+    "name": "Multiples Sprints in U.S.",
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Project",
