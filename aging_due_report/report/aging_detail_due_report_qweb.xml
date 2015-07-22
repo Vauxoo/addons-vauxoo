@@ -105,8 +105,8 @@
 					                    <td class="ITEMSLEFT"><span t-esc="doc.date_emission and datetime.strptime(doc.date_emission.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
 					                    <td class="ITEMSLEFT"><span t-esc="doc.date_due and datetime.strptime(doc.date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
 					                    <td class="ITEMSLEFT"><span t-esc="doc.due_days and '%s' %doc.due_days or '0' "/> DAY(S)</td>
-					                    <td class="ITEMSRIGHT"><span t-esc="'0.00' "/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="'0.00'"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.base)"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.tax)"/></td>
 					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.total) or '0.00'"/></td>
 					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.payment) or '0.00'"/></td>
 					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.residual) or '0.00'"/></td>
