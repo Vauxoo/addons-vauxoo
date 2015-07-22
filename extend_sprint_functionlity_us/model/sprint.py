@@ -23,7 +23,7 @@ class user_story(models.Model):
     @api.depends('sprint_ids')
     def _get_last_sprint(self):
         if self.sprint_ids:
-            self.sk_id = self.srpint_ids.\
+            self.sk_id = self.sprint_ids.\
                 sorted(key=lambda r: r.datestart)[-1].id
 
     sprint_ids = fields.Many2many('sprint.kanban',
@@ -37,6 +37,13 @@ class user_story(models.Model):
                             compute='_get_last_sprint',
                             store=True,
                             help='The last sprint added to this user story')
+
+    @api.one
+    def update_sprint_user_story(self):
+        us_ids = self.search([('sk_id', '!=', False)])
+        for us in us_ids:
+            us.write({'sprint_ids': [(4, us.sk_id.id)]})
+
 
 
 class acceptability_criteria(models.Model):

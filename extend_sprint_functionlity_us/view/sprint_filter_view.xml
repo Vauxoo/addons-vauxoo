@@ -18,7 +18,7 @@
                       <separator string="Sprints" colspan='4'/>
                       <field nolabel="1" name="user_story_ids"/>
                   </page>
-              <notebook>
+              </notebook>
           </xpath>
       </field>
     </record>
@@ -40,7 +40,7 @@
         <field name="model">acceptability.criteria</field>
         <field name="inherit_id" ref="user_story.view_acceptability_criteria_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='difficulty_level']" position="after">
+            <xpath expr="//field[@name='development']" position="after">
                 <field name="sprint_id"/>
             </xpath>
         </field>

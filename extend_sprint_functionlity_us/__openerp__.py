@@ -13,6 +13,7 @@
         "user_story",
     ],
     "data": [
+        'data/sprint_data.xml',
         'view/sprint_filter_view.xml',
     ],
     "installable": True,
