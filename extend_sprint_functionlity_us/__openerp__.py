@@ -1,6 +1,6 @@
 # -*- enconding: utf-8 -*-
 {
-    "name": "Multiples Sprints in U.S.",
+    "name": "Multiples Sprints in User Stories",
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Project",
