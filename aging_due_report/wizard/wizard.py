@@ -502,6 +502,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                     'residual': 0.0,
                     'currency_id': False,
                     'total': 0.0,
+                    'base': 0.0,
                     'date_emission': date_emission,
                     'date_due': date_due}
             for aml_brw in aml_obj.browse(cr, uid, val, context=context):
