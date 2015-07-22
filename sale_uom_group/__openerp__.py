@@ -26,7 +26,7 @@
 {
     "name": "Sale UOM Group",
     "version": "0.1", 
-    "author": "Openerp Venzuela", 
+    "author": "Vauxoo",
     "category": "Generic Modules/MRP", 
     "website": "http://vauxoo.com", 
     "license": "", 
