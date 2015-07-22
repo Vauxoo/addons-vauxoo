@@ -146,11 +146,7 @@ class account_invoice_refund(models.TransientModel):
                                 wizard_brw.product_id.name
                             line_data_dict[tax_tuple]['price_unit'] =\
                                 price_unit_discount
-                            line_data_dict[tax_tuple]['quantity'] =\
-                                1
-                            line_data_dict[tax_tuple]['account_id'] =\
-                                wizard_brw.product_id.\
-                                property_account_income.id
+                            line_data_dict[tax_tuple]['quantity'] = 1
 
                         inv_line_obj.unlink(cur, uid, [refund_line.id])
                     for new_refund_line in line_data_dict.values():
@@ -160,28 +156,39 @@ class account_invoice_refund(models.TransientModel):
                                             context=context)
 
                 else:
-                    if refund_lines_brw:
-                        refund_line = refund_lines_brw[0]
-                        new_refund_line =\
-                            inv_line_obj.copy_data(cur, uid, refund_line.id)
-                        new_refund_line['product_id'] =\
-                            wizard_brw.product_id.id
-                        new_refund_line['name'] =\
-                            wizard_brw.product_id.name
-                        new_refund_line['price_unit'] =\
-                            wizard_brw.amount_total
-                        new_refund_line['quantity'] =\
-                            1
-                        new_refund_line['invoice_line_tax_id'] =\
-                            False
+                    if not refund_lines_brw:
+                        continue
 
-                        for refund_line in refund_lines_brw:
-                            inv_line_obj.unlink(cur, uid, [refund_line.id])
+                    refund_line = refund_lines_brw[0]
 
-                        inv_line_obj.create(cur,
-                                            uid,
-                                            new_refund_line,
-                                            context=context)
+                    new_refund_line = inv_line_obj.copy_data(
+                        cur, uid, refund_line.id)
+
+                    inv_line_obj.unlink(
+                        cur, uid, [rl.id for rl in refund_lines_brw])
+
+                    fp = inv.fiscal_position and inv.fiscal_position.id
+                    data = inv_line_obj.product_id_change(
+                        cur, uid, [],
+                        wizard_brw.product_id.id,
+                        wizard_brw.product_id.uom_id.id,
+                        1.0,
+                        wizard_brw.product_id.name,
+                        inv.type,
+                        inv.partner_id.id,
+                        fp,
+                        wizard_brw.amount_total,
+                        inv.currency_id.id,
+                        inv.company_id.id
+                        )
+
+                    if 'value' in data and data['value']:
+                        new_refund_line.update(data['value'])
+
+                    inv_line_obj.create(cur,
+                                        uid,
+                                        new_refund_line,
+                                        context=context)
 
                 refund.button_reset_taxes()
                 movelines = inv.move_id.line_id
