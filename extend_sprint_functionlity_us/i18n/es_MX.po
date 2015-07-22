@@ -1,0 +1,75 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* extend_sprint_functionlity_us
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-22 20:41+0000\n"
+"PO-Revision-Date: 2015-07-22 15:47-0600\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_VE\n"
+"X-Generator: Poedit 1.7.5\n"
+
+#. module: extend_sprint_functionlity_us
+#: view:sprint.kanban:extend_sprint_functionlity_us.sprint_kanban_form_hu_view
+msgid "Description"
+msgstr "Descripción"
+
+#. module: extend_sprint_functionlity_us
+#: model:ir.model,name:extend_sprint_functionlity_us.model_sprint_kanban
+#: model:ir.model,name:extend_sprint_functionlity_us.model_user_story
+msgid "Email Thread"
+msgstr "Hilo de mensajes"
+
+#. module: extend_sprint_functionlity_us
+#: view:sprint.kanban:extend_sprint_functionlity_us.sprint_kanban_form_hu_view
+msgid "Extra Info"
+msgstr "Extra Info"
+
+#. module: extend_sprint_functionlity_us
+#: view:acceptability.criteria:extend_sprint_functionlity_us.view_acceptability_criteria_search
+msgid "Sprint"
+msgstr "Sprint"
+
+#. module: extend_sprint_functionlity_us
+#: field:acceptability.criteria,sprint_id:0
+msgid "Sprint Kanban"
+msgstr "Sprint Kanban"
+
+#. module: extend_sprint_functionlity_us
+#: field:user.story,sprint_ids:0
+msgid "Sprint ids"
+msgstr "Sprint ids"
+
+#. module: extend_sprint_functionlity_us
+#: help:acceptability.criteria,sprint_id:0
+msgid "Sprint where this criteria was accepted"
+msgstr "Sprint donde este criterio fue aceptado"
+
+#. module: extend_sprint_functionlity_us
+#: view:sprint.kanban:extend_sprint_functionlity_us.sprint_kanban_form_hu_view
+#: view:user.story:extend_sprint_functionlity_us.user_story_form_hu_view
+msgid "Sprints"
+msgstr "Sprints"
+
+#. module: extend_sprint_functionlity_us
+#: help:user.story,sprint_ids:0
+msgid "Sprints where this User Story was involved"
+msgstr "Sprints donde esta historia de usuario estuvo involucrada"
+
+#. module: extend_sprint_functionlity_us
+#: help:sprint.kanban,user_story_ids:0
+msgid "User Stories that belong to this sprint"
+msgstr "Historias de usuarios que pertenecen a este sprint"
+
+#. module: extend_sprint_functionlity_us
+#: field:sprint.kanban,user_story_ids:0
+msgid "User story ids"
+msgstr "Ids de historias de usuario"
