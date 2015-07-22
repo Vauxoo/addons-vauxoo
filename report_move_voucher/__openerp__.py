@@ -26,7 +26,7 @@
 {
     "name": "Report Move Voucher",
     "version": "0.7", 
-    "author": "OpenERP", 
+    "author": "Vauxoo",
     "category": "Generic Modules/Others", 
     "website": "http://wiki.openerp.org.ve/", 
     "license": "", 
