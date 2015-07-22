@@ -20,7 +20,7 @@
 
 import time
 
-from openerp import SUPERUSER_ID
+from openerp import SUPERUSER_ID, api
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
@@ -323,6 +323,25 @@ class user_story(osv.Model):
                 cr, uid, [('name', 'like', 'Secondary')], context=ctx)[0],
         'help': True,
     }
+
+    @api.multi
+    def onchange_project_followers(self, project_id, owner_id, user_id,
+                                   user_execute_id):
+        followers = []
+        res = {}
+        user_obj = self.env['res.users']
+        if project_id:
+            project_brw = self.env['project.project'].browse(project_id)
+            followers += project_brw.message_follower_ids.ids
+        if owner_id:
+            followers.append(user_obj.browse(owner_id).partner_id.id)
+        if user_id:
+            followers.append(user_obj.browse(user_id).partner_id.id)
+        if user_execute_id:
+            followers.append(user_obj.browse(user_execute_id).partner_id.id)
+
+        res['value'] = {'message_follower_ids': followers}
+        return res
 
     def do_draft(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
