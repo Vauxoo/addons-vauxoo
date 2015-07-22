@@ -28,9 +28,11 @@
       <field name="model">user.story</field>
       <field name="inherit_id" ref="user_story.view_userstory_form"/>
       <field name="arch" type="xml">
-          <xpath expr="//field[@name='task_ids']" position="after">
-              <separator string="Sprints" colspan='4'/>
-              <field nolabel="1" name="sprint_ids"/>
+          <xpath expr="//page[@string='Tasks']" position="after">
+              <page string="Sprints">
+                  <separator string="Sprints" colspan='4'/>
+                  <field nolabel="1" name="sprint_ids"/>
+              </page>
           </xpath>
       </field>
     </record>
@@ -45,5 +47,31 @@
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="view_acceptability_criteria_tree">
+        <field name="name">acceptability.criteria.tree</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="inherit_id" ref="user_story.view_acceptability_criteria_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='development']" position="after">
+                <field name="sprint_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_acceptability_criteria_search" model="ir.ui.view">
+        <field name="name">acceptability.criteria.search</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="inherit_id" ref="user_story.view_acceptability_criteria_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='development']" position="after">
+                <field name="sprint_id"/>
+            </xpath>
+            <xpath expr="//filter[@name='accept_criteria_user_story_id']" position="after">
+                <filter name="accept_criteria_sprint_id" string="Sprint" context="{'group_by':'sprint_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
    </data>
 </openerp>
