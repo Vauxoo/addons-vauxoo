@@ -49,11 +49,6 @@ class user_story(osv.Model):
                     for task in tag_id.task_ids:
                         task_obj.write(cr, uid, [task.id], {
                             'categ_ids': vals['categ_ids']})
-            if vals.get('sk_id'):
-                task_ids = task_obj.search(cr, uid, [
-                    ('userstory_id', '=', ids[0])])
-                task_obj.write(cr, uid, task_ids, {
-                    'sprint_id': vals.get('sk_id')}, context=context)
             context.pop('force_send')
 
         if vals.get('categ_ids'):
@@ -62,11 +57,6 @@ class user_story(osv.Model):
                     task_obj.write(
                         cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
 
-        if vals.get('sk_id'):
-            task_ids = task_obj.search(cr, uid, [
-                                       ('userstory_id', '=', ids[0])])
-            task_obj.write(cr, uid, task_ids, {
-                           'sprint_id': vals.get('sk_id')}, context=context)
 
         if 'accep_crit_ids' in vals:
             ac_obj = self.pool.get('acceptability.criteria')
