@@ -34,6 +34,9 @@
                   <field nolabel="1" name="sprint_ids"/>
               </page>
           </xpath>
+          <xpath expr="//field[@name='accepted']" position="after">
+              <field name="sprint_id"/>
+          </xpath>
       </field>
     </record>
 
