@@ -1,6 +1,6 @@
 # -*- enconding: utf-8 -*-
 {
-    "name": "Multiples Sprints in User Stories",
+    "name": "User Story Scrum",
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Project",
