@@ -24,29 +24,35 @@
 #
 #
 {
-    "name": "HR payslip paid", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
+    "name": "HR payslip paid",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
     "description": """
     This module add the state paid in hr payroll
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+
+    Note:
+    If you have registers of payslip before to this module, you can run the
+    next Web Service:
+    github.com/vauxoo-dev/gist-vauxoo/blob/master/update_state_paid_payslip.py
+    to change to paid the payslips that have your payment.
+    """,
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "hr_payroll_account", 
+        "hr_payroll_account",
         "hr_payroll_cancel"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/hr_payslip_workflow.xml", 
+        "view/hr_payslip_workflow.xml",
         "view/hr_payslip_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

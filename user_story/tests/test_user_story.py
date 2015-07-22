@@ -222,16 +222,41 @@ class TestUserStory(TransactionCase):
         if not user_brw.email:
             user_brw.write({'email': 'admin@test.com'})
         story_brw = story_id and self.story.browse(cr, uid, story_id[0])
+
+        # Test approve an acceptability criteria with a specific user and chack
+        # that the generated message is send by the user who approve.
+        approve_user_id = self.user.create(cr, uid, {
+            'name': 'Approver User', 'login': 'user_approver',
+            'email': 'approver@test.com',
+            })
+        self.assertTrue(approve_user_id)
+        user_brw = self.user.browse(cr, uid, approve_user_id)
+        # Adding user story group to the user created previously
+        us_manager_group = self.data.get_object(
+            cr, uid, 'user_story', 'group_user_story_manager')
+        self.user.write(cr, uid, [approve_user_id], {
+            'groups_id': [(4, us_manager_group.id)]})
+
         i = 0
         for criterial in user_brw and story_brw and story_brw.accep_crit_ids:
             if i == 0:
                 mes = 'El criterio%{0}%ha sido aceptado por%'.\
                     format(criterial.name)
+                self.assertFalse(criterial.accepted)
                 self.criterial.approve(cr, user_brw.id, [criterial.id])
                 m_id = self.message.search(cr, uid,
                                            [('res_id', '=', story_brw.id),
                                             ('body', 'ilike', mes)])
                 self.assertTrue(m_id, "The message was not created")
+                msg_data = self.message.read(cr, uid, m_id, [
+                    'model', 'author_id', 'create_uid', 'write_uid',
+                    'email_from', 'notified_partner_ids', 'partner_ids',
+                    ])[0]
+                self.partner = self.registry('res.partner')
+                author_id = msg_data.get('author_id')[0]
+                approver_partner = self.user.browse(
+                    cr, uid, approve_user_id).partner_id.id
+                self.assertEqual(approver_partner, author_id)
                 cri_brw = self.criterial.browse(cr, uid, criterial.id)
                 self.assertTrue(cri_brw.accepted,
                                 "The criterial was not accepted")

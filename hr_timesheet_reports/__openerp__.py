@@ -20,6 +20,8 @@ c. Deliver how much was consumed by user story.
 report.
 
 3.- Save your reports to use them as auditory process.
+
+** This module is not migrated yet to v8 **
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
@@ -32,9 +34,8 @@ report.
     ],
     "demo": [],
     "data": [
-        "view/layout.xml",
-        "view/timesheet_template.xml",
-        "model/hr_timesheet_reports_formats.xml",
+        "report/layout.xml",
+        "report/timesheet_template.xml",
         "model/hr_timesheet_reports_view.xml",
         "model/hr_timesheet_reports_email.xml",
         "wizard/set_invoice_view.xml",

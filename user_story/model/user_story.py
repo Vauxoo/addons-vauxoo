@@ -480,33 +480,36 @@ class acceptability_criteria(osv.Model):
         return link
 
     def approve(self, cr, uid, ids, context=None):
+        """
+        Approve a acceptabilty criteria and send an email.
+        """
         context = context or {}
-        criterial_brw2 = self.browse(cr, uid, ids[0])
-        criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        criterial_brw = self.browse(cr, uid, ids[0])
         if criterial_brw.accepted:
             return True
         data_obj = self.pool.get('ir.model.data')
-        compose_obj = self.pool.get('mail.compose.message')
         user_story_brw = criterial_brw.accep_crit_id
         partner_ids = [i.id for i in user_story_brw.message_follower_ids]
-        partner_ids.append(user_story_brw.owner_id.partner_id.id)
-        if user_story_brw.user_id:
-            partner_ids.append(user_story_brw.user_id.partner_id.id)
-        if user_story_brw.user_execute_id:
-            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
-        partner_ids = list(set(partner_ids))
         template = data_obj.get_object(
             cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
-        mail = self.pool.get('email.template').generate_email(
-            cr, SUPERUSER_ID, template.id, ids[0])
-        compose_id = compose_obj.create(cr, uid, {
-            'model': 'user.story',
-            'res_id': user_story_brw.id,
-            'partner_ids': [(6, 0, partner_ids)],
-            'body': mail.get('body'),
-        })
-        criterial_brw2.write({'accepted': True})
-        compose_obj.send_mail(cr, uid, [compose_id])
+
+        # Extract body form the email.template an used as body argument in
+        # the message_post call.
+        temp_obj = self.pool.get('email.template')
+        story_obj = self.pool.get('user.story')
+        body = temp_obj.read(
+            cr, SUPERUSER_ID, template.id, ['body_html'],
+            context=context)['body_html']
+        temp_data = temp_obj.render_template_batch(
+            cr, uid, body, 'acceptability.criteria', [criterial_brw.id],
+            context=context, post_process=True)
+        body = temp_data.values()[0]
+
+        criterial_brw.write({'accepted': True})
+        story_obj.message_post(
+            cr, uid, [user_story_brw.id], body, subject=None, type='email',
+            subtype='mt_comment',
+            context=context, partner_ids=partner_ids)
         return True
 
     def disapprove(self, cr, uid, ids, context=None):
@@ -520,7 +523,7 @@ class acceptability_criteria(osv.Model):
         partner_ids.append(user_story_brw.owner_id.partner_id.id)
         if user_story_brw.user_id:
             partner_ids.append(user_story_brw.user_id.partner_id.id)
-        if user_story_brw.user_execute_idi:
+        if user_story_brw.user_execute_id:
             partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
         model_data_id = data_obj._get_id(
