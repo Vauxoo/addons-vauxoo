@@ -31,9 +31,9 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "sale",
         "sale_stock",
-        "sale_margin",
+        "sale_margin",  # Because if you will pivote around sale_margin
+        "sale_layout",
     ],
     "demo": [],
     "data": [

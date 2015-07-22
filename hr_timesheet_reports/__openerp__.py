@@ -18,7 +18,6 @@
     "data": [
         "report/layout.xml",
         "report/timesheet_template.xml",
-        "model/hr_timesheet_reports_formats.xml",
         "model/hr_timesheet_reports_view.xml",
         "model/hr_timesheet_reports_email.xml",
         "wizard/set_invoice_view.xml",
