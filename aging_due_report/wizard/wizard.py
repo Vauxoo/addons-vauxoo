@@ -542,6 +542,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                         'residual': (total - payment),
                         'currency_id': currency_id,
                         'total': total,
+                        'base': total,
                         'date_emission': aml_brw.date,
                         'date_due': date_due})
                 else:
@@ -552,6 +553,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                     doc['currency_id'] = currency_id
                     doc['payment'] -= payment
                     doc['total'] += total
+                    doc['base'] += total
                     doc['residual'] += (total - payment)
             if reconcile_id:
                 res.append(doc)
@@ -626,6 +628,8 @@ class account_aging_partner_wizard(osv.osv_memory):
                 'payment': payment,
                 'residual': residual,
                 'total': inv_brw.amount_total,
+                'tax': inv_brw.amount_tax,
+                'base': inv_brw.amount_untaxed,
                 'date_due': date_due,
                 'date_emission': inv_brw.date_invoice,
             })
@@ -660,9 +664,8 @@ class account_aging_partner_wizard(osv.osv_memory):
         aawp_ids = {}
         aawc_ids = {}
 
-        for each in self._get_invoice_by_partner(cr, uid, partner_ids,
-                                                 inv_type=inv_type,
-                                                 context=context):
+        for each in self._get_invoice_by_partner(
+                cr, uid, partner_ids, inv_type=inv_type, context=context):
             partner_id = each['partner_id']
             currency_id = each['currency_id']
             key_pair = (partner_id, currency_id)
