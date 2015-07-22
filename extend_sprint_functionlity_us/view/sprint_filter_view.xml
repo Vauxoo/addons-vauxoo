@@ -9,8 +9,16 @@
       <field name="model">sprint.kanban</field>
       <field name="inherit_id" ref="sprint_kanban.sprint_kanban_form_view"/>
       <field name="arch" type="xml">
-          <xpath expr="//group[2]" position="after">
-              <field nolabel="1" name="user_story_ids"/>
+          <xpath expr="//field[@name='description']" position="replace">
+              <notebook>
+                  <page string="Description">
+                      <field name="description"/>
+                  </page>
+                  <page string="Extra Info">
+                      <separator string="Sprints" colspan='4'/>
+                      <field nolabel="1" name="user_story_ids"/>
+                  </page>
+              <notebook>
           </xpath>
       </field>
     </record>
@@ -25,6 +33,17 @@
               <field nolabel="1" name="sprint_ids"/>
           </xpath>
       </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_acceptability_criteria_form">
+        <field name="name">acceptability.criteria.form</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="inherit_id" ref="user_story.view_acceptability_criteria_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='difficulty_level']" position="after">
+                <field name="sprint_id"/>
+            </xpath>
+        </field>
     </record>
    </data>
 </openerp>
