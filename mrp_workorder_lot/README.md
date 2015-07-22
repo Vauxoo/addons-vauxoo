@@ -1,6 +1,10 @@
 MRP Workorder Lot
 =================
 
+The ``mrp_workorder_lot`` module holds new work order lot concepts to
+split work orders taking into acccount the workcenters product capacity for
+those workcenters related to the manufacturing order routing operations.
+
 This module adds two features to the mrp module.
 
 Work Order Lot
@@ -93,16 +97,134 @@ the processes did not happen all at once.
     **Note**: The MRP Consume Produce module (``mrp_consume_produce``) can be
     found in lp:~vauxoo/addons-vauxoo/7.0
 
+Produce process
+---------------
+
+- *Case 1:* one2one relationship. One work order lot produce one production
+  lot.
+- *Case 2:* many2one relationship. More that one work order lot produce one
+  production lot.
+- *Case 3:* one2many relationship. One work order lot produce more the one
+  production lots.
+
+    .. figure:: images/wol_produce_spl.png
+       :scale: 100 %
+       :align: center
+       :alt: Payroll Modules
+
+       Módulos OpenERP para manejo de nómina
+
+.. note:: This module only implements the case 1 of produce process with work
+   order lots.
+
+.. TODO: indicate the difference between work order lot and production Lot.
+
+Configuration
+=============
+
 If you install this module you need to active some settings:
 
-- Active ``Manage Routings`` and ``Manage Multiple Units of Measure``
-  checkboxs at the ``Settings Menu > Users Sidebar Section > Users Menu >
-  (Select a User) > User Form Access Rights Tab  > Technical Settings
-  Section`` to show Workcenter and Routing menu.
-- Active the ``Track serial number on products`` checkbox in
-  ``Settings Menu > Configuration Sidebar Section > Warehouse Menu >
-  Traceability Section`` to show the product serial numbers.
-- Active the ``MRP / Button Consume-Produce`` checkbox in
-  ``Settings Menu > Users Sidebar Section > Users Menu > (Select a User) >
-  User Form Access Rights Tab > Other Section`` to active the groups permission
-  to invidually consume and produce.
+At ``Settings > Configuration > Warehouse > Traceability`` active next options
+to show the product serial numbers:
+
+- ``Track serial number on products``
+- ``Expiry date on serial numbers``
+- ``Track serial number on logistic units (pallets)``
+
+At ``Settings > Configuration > Warehouse > Location & Warehouse`` active this
+options:
+
+- ``Manage multiple locations and warehouses``
+
+At ``Settings > Configuration > Manufacturing > Planning`` active this
+options:
+
+- ``Allow detailed planning of work order``: This will install the
+``mrp_operations`` model.
+- set ``Production Batch Process Type`` options to Avoid Production Bottleneck
+
+At Users ``Settings Menu > Users Sidebar Section > Users Menu >
+(Select a User) > User Form Access Rights Tab  > Technical Settings
+Section`` active the next options to show Workcenter and Routing menu, to
+active the groups permission to invidually consume and produce:
+
+- Manage Multiple Units of Measure
+- Manage Routings
+
+- Manage Serial Numbers
+- Manage Logistic Serial Numbers
+- Manage Multiple Locations and Warehouses
+- MRP / Button Consume-Produce 
+
+Products Management
+===================
+
+It agregate a 'product lines' model that contain information of the compatible
+products for the workcenters, indicating the max capacity that product that
+can be recive in the workcenter.
+
+- Products Capacity:
+- Products Quantity: at workcenter operation
+
+WorkFlow
+--------
+
+1. Create a Manufacturing Order with its need fields.
+
+   .. note:: the product associated to your Manufacturing Order need to have a
+             routing associated
+
+2. Confirm the recently created Manufacturing Order.
+3. Change Manufacturing Order State to ``Production Started``
+4. Active the Work Order Lots by clicking the ``Consumed`` button and fillin
+   the wizard required fields.
+5. Go to ``Manufacturing > Planning > Work Orders by Active Lot`` and start to
+   consume an active Work Order Lot by clicking its Consume button (at the
+   kaban card of the work order lot).
+6. Now you need to process the the Work Orders in your Work Order Lot. For that
+   you need to get every work order in your lot to a 'Finish' state. This will
+   trigger a change to the Work Order Lot to ``Ready to Finish`` state.
+7. At youre Manufacturing Order you need to click in the ``Products Produced``
+   button and fill in the required fields and finalize clicking the ``Products
+   Produced`` button. This will set the Work Order Lot form ``Ready to Finish``
+   state to ``Done`` state indicating that the Work Order Lot have been
+   Finished and will create the move of the Manufacturing Order final product
+   that remains in the ``Manufacturing Order Form > Finished Products Page >``
+   ``Produced Products section`` There you will see the complete information
+   of the current produce product.
+
+Work Order Lot
+==============
+
+A Work Order Lot (**WOL**) is a new model that manage the work orders by a
+set of this elements calling with the name of Lot.
+
+This Lot is associated to the Manufacturing Order and its creation is
+automatic by taking into account the workcenter products capaicty boottle
+neck in a routing.
+
+- A Work Order Lot is in progress (active) when is in 'open' or 'pending'
+  state.
+- When a Work Order Lot is in 'draft', 'picking', 'ready', 'done' or 'cancel'
+  state can its associated work orders can change of state.
+
+Menu
+----
+
+- The ``Ready to Picking`` menu is visible for the warehouse/stock user.
+- The ``Active Work Order Lots`` menu is visible for the
+production/manufacturing manager.
+- The ``Active Work Orders`` menu is visible for
+
+States
+------
+
+- **New** (``draft``): Te Lot have been created and is waiting to be activated.
+- **Picking** (``picking``): The Lot its active and ready start the consume.
+- **In Progress** (``open``): The Lot is already consumed and the work orders
+  associated need to be started and finished.
+- **Paused** (``pending``): Its set when some work order that belongs to the
+  work order lot is in pending state, so also the work order lot its in
+  Paused state.
+- **Done** (``done``): The work order lot have produce a production lot.
+- **Cancelled** (``cancel``):
