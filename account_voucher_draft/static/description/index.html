@@ -4,6 +4,41 @@
   </style>
 </head>
 <section class="oe_container">
+ <div class="oe_row oe_spaced">
+  <h2 class="oe_slogan">
+   Account Voucher Draft
+  </h2>
+  <p class="oe_mt32">
+   This module modify the button Pay inside the wizard used to pay an HR Expense
+(using an account voucher). This change is made to do not immediately change
+the HR Expene to done state.
+  </p>
+  <div class="section" id="notes">
+   <h1>
+    Notes
+   </h1>
+   <ul class="simple">
+    <li>
+     The
+     <tt class="docutils literal">
+      Pay
+     </tt>
+     window is not really a wizard, is just a pop up window to create
+a account voucher related to the current hr expense document.
+    </li>
+    <li>
+     The
+     <tt class="docutils literal">
+      hr_expense_replenishment
+     </tt>
+     module can be found at addons-vauxoo
+repository.
+    </li>
+   </ul>
+  </div>
+ </div>
+</section>
+<section class="oe_container">
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
              <h2 class="oe_slogan">Support</h2>
@@ -44,5 +79,5 @@
             <a title="Contact us" data-toggle="tooltip" data-placement="left" Target="_blank" href="https://www.vauxoo.com/page/website.contactus"><i class="fa fa-envelope-square fa-xs backgrounds"></i></a>
           </li>
         </ul>
-        </div> 
+        </div>
 </section>
