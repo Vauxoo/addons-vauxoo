@@ -69,6 +69,7 @@ can be measured in two different criteria:
     - Tree work order Lots for operation 3
       (two Lots of 30 kg and one of 10 Kg)
     - A work order lot of 70 Kg for operation 4 (300 Kg > 70 Kg)
+
 .
 
     **Note**: The second criterion
@@ -140,7 +141,7 @@ At ``Settings > Configuration > Manufacturing > Planning`` active this
 options:
 
 - ``Allow detailed planning of work order``: This will install the
-``mrp_operations`` model.
+  ``mrp_operations`` model.
 - set ``Production Batch Process Type`` options to Avoid Production Bottleneck
 
 At Users ``Settings Menu > Users Sidebar Section > Users Menu >
@@ -213,7 +214,7 @@ Menu
 
 - The ``Ready to Picking`` menu is visible for the warehouse/stock user.
 - The ``Active Work Order Lots`` menu is visible for the
-production/manufacturing manager.
+  production/manufacturing manager.
 - The ``Active Work Orders`` menu is visible for
 
 States
