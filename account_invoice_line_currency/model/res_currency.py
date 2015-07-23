@@ -42,6 +42,7 @@ class res_currency(osv.Model):
         will indicate the conversio rate to use.
         """
         context = context or {}
+        context = dict(context)
         if from_currency_id == to_currency_id:
             return from_amount
         context['date'] = exchange_date
