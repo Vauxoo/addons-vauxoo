@@ -9,7 +9,8 @@ and set their followers
 
 Menu Name: Add Followers (act windows)
 
-How to Use:
+How to Use
+----------
 
 First you user need a groups, this groups is Add Followers/Managers
 
