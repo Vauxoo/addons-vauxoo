@@ -10,7 +10,7 @@ convention:
 
 * Must be a report wizard type to return the txt report.
 * The report wizard type must have the same name as his counterpart in pdf
-format concatenating the following string ' txt' in the report name.
+  format concatenating the following string ' txt' in the report name.
 
 In this way the module generates both reports, making available for download
 the report txt.
