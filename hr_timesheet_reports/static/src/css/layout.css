@@ -4,17 +4,14 @@
 
 .vauxoo .header {
     padding-top: 10px;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom:  1px solid #ccc;
 }
 
 tfoot {
     font-weight: bold;
 }
 
-@media print {
-    .table {
-        page-break-after:always !important;
-        page-break-before:always !important;
-    }
-
+.no-brake tfoot {
+    display: table-row-group
 }
