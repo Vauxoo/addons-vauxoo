@@ -13,9 +13,9 @@ The description of two buttons:
 
 * Approve to Pay: Mark boolean To Pay when is activated.
 
-  .. image:: account_payment_approve_invoice/static/src/demo/button_approve.png
+  .. image:: account_payment_approve_invoice/static/description/button_approve.png
 
 
 * Disapproves to Pay: Uncheck boolean To Pay when is activated.
 
-  .. image:: account_payment_approve_invoice/static/src/demo/button_disapproves.png
+  .. image:: account_payment_approve_invoice/static/description/button_disapproves.png
