@@ -13,6 +13,4 @@ b. Mexican Banks.
 
 c. Venezuelan Banks.
 
-  - Banco Exterior #TODO
-
-
+   - Banco Exterior #TODO
