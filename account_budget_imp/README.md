@@ -13,13 +13,13 @@ Account Budget Improvements
 - Added the concept of "Printed Budget" using the original workflow available
   on the budget we must include the concept of:
 
-- Posted Date: When the accountant Manager dictaminate that the amount is
-  ready to be reviewed for the Local CFO.
+    - Posted Date: When the accountant Manager dictaminate that the amount is
+      ready to be reviewed for the Local CFO.
 
-- Approved Date: When the local CFO says that the Budget can be sent to the
-  CEO.
+    - Approved Date: When the local CFO says that the Budget can be sent to the
+      CEO.
 
-- Received Date: When the CEO says that the budget is received.
+    - Received Date: When the CEO says that the budget is received.
 
 The Account Budget view will be used to comply with need to show the executed
 Budget per period.
