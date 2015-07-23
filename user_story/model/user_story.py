@@ -35,7 +35,7 @@ class user_story(osv.Model):
     _inherit = ['mail.thread']
 
     def write(self, cr, uid, ids, vals, context=None):
-        context = context or {}
+        context = dict(context or {})
         task_obj = self.pool.get('project.task')
         context.update({'force_send': True})
         if task_obj.check_access_rights(cr, uid, 'write', False):
