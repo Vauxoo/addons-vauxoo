@@ -4,6 +4,29 @@
   </style>
 </head>
 <section class="oe_container">
+ <div class="oe_row oe_spaced">
+  <h2 class="oe_slogan">
+   Purchase Requisition Currency
+  </h2>
+  <p class="oe_mt32">
+   Adds the currency field in the purchase requisition model. When you use the
+Request a Quotation button the purchase requisition currency new field will be
+take into account to generate the purchase orders with a pricelist that have
+the same currency. If there is not pricelist with the same purchase requisition
+currency then it will raise an exception. You need to active some User
+Technical Settings to take advantage of this functionality:
+  </p>
+  <ul class="simple">
+   <li>
+    Multi Currencies.
+   </li>
+   <li>
+    Purchase Pricelist.
+   </li>
+  </ul>
+ </div>
+</section>
+<section class="oe_container">
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
              <h2 class="oe_slogan">Support</h2>
@@ -44,5 +67,5 @@
             <a title="Contact us" data-toggle="tooltip" data-placement="left" Target="_blank" href="https://www.vauxoo.com/page/website.contactus"><i class="fa fa-envelope-square fa-xs backgrounds"></i></a>
           </li>
         </ul>
-        </div> 
+        </div>
 </section>
