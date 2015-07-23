@@ -1,8 +1,6 @@
 Account Voucher Tax
 ===================
 
------------------------------
-
 The tax actually paid/cashed in the move of payment
 ===================================================
 
