@@ -105,8 +105,10 @@
     </template>
     <template id="timesheets" name="Timesheet Report for Customers">
         <div class="col-xs-12">
-            <h2>Resumed Timesheet Report</h2>
-            <strong>Filter Name:</strong> <span t-esc="o.filter_id.name"/>
+            <div class="col-xs-12">
+                <h2>Resumed Timesheet Report</h2>
+                <strong>Filter Name:</strong> <span t-esc="o.filter_id.name"/>
+            </div>
             <div class="col-xs-12">
                 <div t-raw="o.cts2html"/>
             </div>
@@ -177,8 +179,10 @@
     <template id="invoices">
         <t t-if="records.get('invoices')">
         <div class="col-xs-12">
-            <h2>Resume of economical status</h2>
-            <strong>Filter Name: </strong> <span t-esc="o.filter_invoice_id.name"/>
+            <div class="col-xs-12">
+                <h2>Resume of economical status</h2>
+                <strong>Filter Name: </strong> <span t-esc="o.filter_invoice_id.name"/>
+            </div>
             <div class="col-xs-12">
                 <div t-raw="o.ci2html"/>
             </div>
@@ -275,8 +279,10 @@
     <template id="issues">
         <t t-if="records.get('issues')">
         <div class="col-xs-12">
-                <h3>Issues.</h3>
-                <strong>Filter Name: </strong> <span t-esc="o.filter_issue_id.name"/>
+                <div class="col-xs-12">
+                    <h3>Issues.</h3>
+                    <strong>Filter Name: </strong> <span t-esc="o.filter_issue_id.name"/>
+                </div>
                 <div class="col-xs-12">
                     <div t-raw="o.ciss2html"/>
                 </div>
