@@ -30,7 +30,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 import base64
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
 class print_account_invoice_report(osv.TransientModel):

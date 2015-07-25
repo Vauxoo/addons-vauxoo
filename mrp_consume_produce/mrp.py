@@ -25,7 +25,7 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
 class mrp_production(osv.Model):
@@ -93,7 +93,7 @@ class mrp_production(osv.Model):
             for moves in production.move_created_ids:
                 stock_move.action_cancel(cr, uid, [moves.id], context=context)
             try:
-                wf_service = netsvc.LocalService("workflow")
+                wf_service = workflow
                 wf_service.trg_validate(
                     uid, 'mrp.production', production.id,
                     'button_produce_done', cr)

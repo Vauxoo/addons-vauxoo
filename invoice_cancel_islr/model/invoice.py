@@ -24,7 +24,7 @@
 
 from openerp.osv import osv
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
 class account_invoice(osv.Model):
@@ -33,7 +33,7 @@ class account_invoice(osv.Model):
     #~
     #~ def action_cancel_draft(self, cr, uid, ids, *args):
     #~
-    #~ wf_service = netsvc.LocalService("workflow")
+    #~ wf_service = workflow
     #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
     #~ for i in self.browse(cr,uid,ids,context={}):
     #~ if i.islr_wh_doc_id:
@@ -44,7 +44,7 @@ class account_invoice(osv.Model):
         '''
         Modified to witholding vat validate
         '''
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         res = super(account_invoice, self).action_number(cr, uid, ids)
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         state = [('draft', 'act_draft'), ('progress', 'act_progress'), (
