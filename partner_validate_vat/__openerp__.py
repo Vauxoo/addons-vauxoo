@@ -28,12 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Addons-vauxoo", 
-    "description": """
-Partner Validate VAT:
-=====================
-
-This module validate that Partner's VAT must be a unique value in each company
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

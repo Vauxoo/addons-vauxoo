@@ -4,13 +4,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Website",
-    "description": """
-Website Comment Approval
-========================
-    This App lets the user approve comments on the products published on the
-    website, it sets the value published to `False`.
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

@@ -24,13 +24,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-This module create registration rules for invoice
-=================================================
-
-Only lets you see invoice created by the logged user
-
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

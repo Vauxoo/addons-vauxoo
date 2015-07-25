@@ -26,22 +26,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "HR Module", 
-    "description": """
-Expenses Replenishment
-======================
-This module add the functionality to the HR Expense module to manage deductible
-expenses by using invoices asociated to an expense document. Also make an
-automation of the reconciliation process for the expense and the employee
-payment.
-
-Dependencies information
-------------------------
-
-- You can download the *account_invoice_line_currency* module from::
-
-    bzr branch lp:addons-vauxoo/7.0
-
-""", 
     "website": "http://openerp.com.ve", 
     "license": "", 
     "depends": [

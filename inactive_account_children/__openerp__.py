@@ -24,12 +24,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-
-Inactive account child's
-========================
-Inactive accounts childs of select of parent
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

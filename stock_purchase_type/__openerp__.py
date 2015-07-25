@@ -27,13 +27,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Stock Purchase Type
-===================
-
-Add Purchase Order type field to the Stock Picking Object.
-
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

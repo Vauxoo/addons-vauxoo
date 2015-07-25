@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module Add Add field arch in view search ir.ui.view model
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

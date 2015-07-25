@@ -25,9 +25,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Add wizard to forward mail in exception state
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

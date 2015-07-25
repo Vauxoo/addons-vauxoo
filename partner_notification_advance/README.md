@@ -1,4 +1,5 @@
 ##Partner Notification Advance
+
 ####Incoming Emails and Discussions
 This module adds the option to partner for only send email and discussions.
 When you move of state a document (Sale, Purchase, Invoice, etc..)

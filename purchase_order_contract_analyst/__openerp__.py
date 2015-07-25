@@ -27,13 +27,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "purchase",
-    "description": """
-Purchase Order Contract Analyst
-===============================
-
-Extend the purchase order document to add an contract analyst that will
-be responsible for evaluate the purchase order.
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

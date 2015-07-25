@@ -24,11 +24,10 @@
 #
 ##############################################################################
 {
-    "name": "account_report_general_ledger_no_journal", 
+    "name": "Account Report General Ledger No Journal",
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "account", 
-    "description": """This module """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

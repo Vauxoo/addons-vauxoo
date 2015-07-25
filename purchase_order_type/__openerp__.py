@@ -26,14 +26,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "purchase", 
-    "description": """
-Purchase Order Type
-===================
-
-Add a new field name type that can discriminate a materials and service
-purchase order. Also add to the purchase order search view the
-filters need to visually make the discrimination.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

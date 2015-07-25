@@ -26,13 +26,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "stock",
-    "description": """
-Stock Accrual Report
-====================
-
-    Allow to retrieves a report for Sale or Purchase fetching delivered &
-    invoiced quantities and how much was accrued.
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

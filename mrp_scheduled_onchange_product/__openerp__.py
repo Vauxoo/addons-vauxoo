@@ -28,10 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Production", 
-    "description": """When you add a product, it sets automatically the default uom
-    for the product and the name of the product. Adds too a domain to the field
-    product_uom to only show the uom matching the selected product.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

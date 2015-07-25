@@ -21,12 +21,10 @@
 ################################################################################
 #"license" : "AGPL-3",
 {
-    "name": "Constraint product_uom", 
+    "name": "Product UOM Constraint",
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module add constraint in mrp_bom
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

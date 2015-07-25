@@ -24,24 +24,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Sign YouTube
-============
-
-What do you need
-----------------
-You need have a YouTube account and have your client ID and developer key if you don't have one you
-can get here_
-
-.. _here: http://code.google.com/apis/youtube/dashboard/gwt/index.html
-How to Use
-----------
-In the configuration menu you have a new menu with the name: Sign YouTube Config.
-You need fill the required information to load all videos for you YouTube account and make the
-configuration test
-
-If the configuration is correct you can load the YouTube videos for send it in the company inbox
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

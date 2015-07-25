@@ -4,9 +4,6 @@
     'summary': 'Present your social icons on team page',
     'website': 'www.vauxoo.com',
     'version': '1.0',
-    'description': """
-Team Social Icons on Our team page
-        """,
     'author': 'Vauxoo',
     'depends': [
         'website_hr',

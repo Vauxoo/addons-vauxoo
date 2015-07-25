@@ -24,12 +24,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Accouting", 
-    "description": """
-Field Active In Analytic Accounts
-=================================
-
-Add field active to analytic accounts
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

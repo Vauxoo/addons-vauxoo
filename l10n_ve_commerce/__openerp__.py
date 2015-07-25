@@ -28,10 +28,6 @@
     "version": "1.0", 
     "author": "Tiny & Vauxoo", 
     "category": "Localisation/Account Charts", 
-    "description": """
-This Module load a generic format for manage medium and big business.
-You will need accounting knowledge to understad sone concepts.
-""", 
     "website": "", 
     "license": "", 
     "depends": [

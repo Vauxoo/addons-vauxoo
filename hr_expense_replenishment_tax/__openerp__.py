@@ -26,13 +26,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "HR Module", 
-    "description": """
-Create Entries Tax Effectively Paid :
-=====================================
-
-This module creates the tax effectively paid of the invoices associated
-with the expense
-""", 
     "website": "http://openerp.com.ve", 
     "license": "", 
     "depends": [

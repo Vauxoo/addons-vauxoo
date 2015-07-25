@@ -28,13 +28,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Customization", 
-    "description": """
-Hierarchical View:
-=========================================================
-    It creates Hierarchical view to projects
-
-
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

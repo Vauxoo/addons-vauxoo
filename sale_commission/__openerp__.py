@@ -4,9 +4,6 @@
     "version": "0.2", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Sale", 
-    "description": """
-    What do this module:
-                        """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

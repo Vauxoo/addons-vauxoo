@@ -29,8 +29,8 @@ class purchase_order(osv.Model):
     _inherit = 'purchase.order'
     _columns = {
         'date_contract_expiry': fields.date(
-            'Expiration of Contract Date',
-            help='Expiration of Contract Date'),
+            'Contract Due Date',
+            help='Contract Due Date'),
     }
 
     def _prepare_order_picking(self, cur, uid, order, context=None):

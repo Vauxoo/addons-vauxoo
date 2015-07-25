@@ -29,11 +29,6 @@
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
-    "description": """
-Show Entries Information in Stock Picking
-=========================================
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

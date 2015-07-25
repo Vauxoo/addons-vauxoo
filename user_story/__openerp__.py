@@ -28,14 +28,6 @@
     "version": "2.0",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-Take the funcional and technical requirements following the strategy of
-user stories directly in your system.
-
-'What's in a `Story`_ ?'. english source `fuentes`_
-
-.. Story: http://dannorth.net/whats-in-a-story/
-.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [
@@ -51,8 +43,8 @@ user stories directly in your system.
         "demo/demo.xml"
     ],
     "data": [
-        "data/data_us_report.xml",
-        "report/user_story_report_view.xml",
+        #"data/data_us_report.xml",
+        #"report/user_story_report_view.xml",
         "security/userstory_security.xml",
         "security/ir.model.access.csv",
         "view/userstory_view.xml",
@@ -62,7 +54,8 @@ user stories directly in your system.
         "view/custom_project_task_view.xml",
         "view/account_analytic_account.xml",
         "data/data.xml",
-        "data/user_story_template.xml"
+        "data/user_story_template.xml",
+        "report/user_story_report.xml"
     ],
     "test": [],
     "js": [],

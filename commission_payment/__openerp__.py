@@ -32,10 +32,6 @@
     "version": "0.1",
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
-    "description": """
-Salespeople Commission based on Payments
-========================================
-""",
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [

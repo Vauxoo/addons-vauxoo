@@ -4,12 +4,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "eCommerce",
-    "description": """
-Website Product Manufacturer URL
-================================
-    This app shows you on the product url of the Manufacturer
-    of the product shown on the website.
-    """,
     "website": "http://www.vauxoo.com/",
     "depends": [
         "purchase",

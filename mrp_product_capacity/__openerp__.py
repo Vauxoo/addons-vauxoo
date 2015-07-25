@@ -26,8 +26,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-""", 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

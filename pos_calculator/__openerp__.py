@@ -25,9 +25,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Point Of Sale", 
-    "description": """
-    Add Calculator functionality in Payment Screen of Point Of Sale
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

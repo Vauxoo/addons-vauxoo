@@ -29,9 +29,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
-    "description": """ Adds 4 fields to generate a connection between account
-    and production models
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

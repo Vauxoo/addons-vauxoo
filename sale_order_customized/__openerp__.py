@@ -28,14 +28,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """
-This module customized
-----------------------
-
-* Add the sequence in the sale order lines
-* Grows larger the width of the sheet of sale order
-* Add new groups to hide fields
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

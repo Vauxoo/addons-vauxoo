@@ -22,7 +22,9 @@
 
 from openerp.osv import osv
 from openerp.tools.translate import _
-import netsvc
+# Commented due to migration process, please when this module is migrated to v8
+# to ensure the functionaliity is working bring alive this import.
+# import netsvc
 
 
 class account_invoice_refund(osv.osv_memory):

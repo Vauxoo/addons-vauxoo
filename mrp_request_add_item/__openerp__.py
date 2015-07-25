@@ -26,15 +26,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "MRP", 
-    "description": """
-
-MRP Request Add Item
-====================
-
-Allows you to add new requests of materials through mrp_request_return button not belonging to the
-BOM.
-
-""", 
     "website": "http://vauxoo.com", 
     "license": "AGPL-3", 
     "depends": [

@@ -29,7 +29,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """""", 
     "website": "", 
     "license": "", 
     "depends": [

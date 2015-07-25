@@ -30,8 +30,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Product", 
-    "description": """This module add group to products prices
-    """, 
     "website": "www.vauxoo.com", 
     "license": "AGPL-3", 
     "depends": [

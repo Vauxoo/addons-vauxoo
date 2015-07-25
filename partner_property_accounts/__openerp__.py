@@ -28,8 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Vauxoo", 
-    "description": """This module replace the fields to account in partner to news fields without groups
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

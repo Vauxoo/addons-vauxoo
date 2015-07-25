@@ -29,10 +29,6 @@
         "account_accountant",
         "stock"],
     "author": "Vauxoo",
-    "description": """
-Import Tax and Tariff
-=====================
-    """,
     "website": "http://www.vauxoo.com/",
     "category": "Accounting",
     "data": [

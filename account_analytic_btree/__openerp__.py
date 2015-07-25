@@ -25,11 +25,10 @@
 #
 ##############################################################################
 {
-    "name": "Creacion de parent_left y parent_right en analiticas", 
+    "name": "Parent_left and parent_right creation for analytic accounts",
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Localization/Mexico", 
-    "description": """This module creates parent_left y paret_right en analytic's accounts""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

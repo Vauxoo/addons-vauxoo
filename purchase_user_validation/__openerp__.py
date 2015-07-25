@@ -29,9 +29,6 @@
     "version": "1.1", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-        add fields that validate the user when approved purchase
-    """, 
     "website": "", 
     "license": "", 
     "depends": [

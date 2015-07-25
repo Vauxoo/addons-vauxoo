@@ -30,11 +30,6 @@
     "version": "0.1",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-This module grand permissions over account_assets model
- to Auditor (Read-Only) group
-
-""",
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [

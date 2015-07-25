@@ -24,10 +24,6 @@
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Addons Vauxoo",
-    "description": """
-This module added one field in view of partner to allow you receive your own
-message sent to others
-    """,
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [

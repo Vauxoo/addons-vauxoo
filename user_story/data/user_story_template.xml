@@ -434,7 +434,7 @@
                             <tr>
                             <td align="center" style="margin: 0px; padding: 0px; width: 600px; background-color: #951510">
                                 <div style="font-size:1.3em; font-family:Arial; color:#FFFFFF;"><b>
-                                        Criterio de Aceptación.
+                                        Acceptability criteria.
                                 </b></div>
                             </td>
                             </tr>
@@ -460,15 +460,15 @@
                                                     <tr>
                                                         <td valign="top" style="padding-left:0;">
                                                             <div mc:edit="std_content00">
-                                                                <h2 class="h2">Estimad@ ${object.accep_crit_id.owner_id.name}</h2>
+                                                                <h2 class="h2">Dear @ ${object.accep_crit_id.owner_id.name}</h2>
                                                                 <h3 class="h3">
-                                                El criterio de aceptación ${object.name} ha sido aceptado por ${user.name}.
+                                                The acceptability criterion ${object.name} has been accepted by ${user.name}.
                                                                 </h3>
                                                                 <pre style="font-size:1.1em; font-family:Arial">
 
-Agradeciendo su atención.
+Thanking your attention.
 
-Ante cualquier duda estamos a su disposición.
+For any questions we are at your disposal.
 <a href="${object.get_body_disapproval()}">Acceso directo al Documento</a>
                                                                 </pre>
                                                                 <br />
@@ -921,7 +921,7 @@ Ante cualquier duda estamos a su disposición.
                             <tr>
                             <td align="center" style="margin: 0px; padding: 0px; width: 600px; background-color: #951510">
                                 <div style="font-size:1.3em; font-family:Arial; color:#FFFFFF;"><b>
-                                        Criterio de Aceptación.
+                                        Acceptability citerion.
                                 </b></div>
                             </td>
                             </tr>
@@ -947,16 +947,16 @@ Ante cualquier duda estamos a su disposición.
                                                     <tr>
                                                         <td valign="top" style="padding-left:0;">
                                                             <div mc:edit="std_content00">
-                                                                <h2 class="h2">Estimad@ ${object.accep_crit_id.owner_id.name}</h2>
+                                                                <h2 class="h2">Dear @ ${object.accep_crit_id.owner_id.name}</h2>
                                                                 <h3 class="h3">
-                                                El criterio de aceptación ${object.name} ha sido terminado por ${object.accep_crit_id.user_execute_id and object.accep_crit_id.user_execute_id.name}.
+                                                Please review ${object.name} 
                                                                 </h3>
                                                                 <pre style="font-size:1.1em; font-family:Arial">
 
-Agradeciendo su atención.
+Thanking your attention.
 
-Ante cualquier duda estamos a su disposición.
-<a href="${object.get_body_disapproval()}">Acceso directo al Documento</a>
+For any questions we are at your disposal.
+<a href="${object.get_body_disapproval()}">Access document</a>
                                                                 </pre>
                                                                 <br />
                                                         </div>
@@ -1405,7 +1405,7 @@ Ante cualquier duda estamos a su disposición.
                             <tr>
                             <td align="center" style="margin: 0px; padding: 0px; width: 600px; background-color: #951510">
                                 <div style="font-size:1.3em; font-family:Arial; color:#FFFFFF;"><b>
-                                        Criterio de Aceptación.
+                                        Acceptability criterion.
                                 </b></div>
                             </td>
                             </tr>
@@ -1433,13 +1433,13 @@ Ante cualquier duda estamos a su disposición.
                                                             <div mc:edit="std_content00">
                                                                 <h2 class="h2">Estimad@ NAME_OWNER</h2>
                                                                 <h3 class="h3">
-                                                El criterio de aceptación "NAME_CRI" ha sido aceptado por NAME_USER.
+                                                The acceptability criterion "NAME_CRI" has been approved by NAME_USER.
                                                                 </h3>
                                                                 <pre style="font-size:1.1em; font-family:Arial">
 
-Agradeciendo su atención.
+Thanking your attention.
 
-Ante cualquier duda estamos a su disposición.
+For any questions we are at your disposal.
                                                                 </pre>
                                                                 <br />
                                                         </div>
@@ -1915,25 +1915,25 @@ Ante cualquier duda estamos a su disposición.
                                                     <tr>
                                                         <td valign="top" style="padding-left:0;">
                                                             <div mc:edit="std_content00">
-                                                                <h2 class="h2">Estimad@ NAME_OWNER</h2>
+                                                                <h2 class="h2">Dear @ NAME_OWNER</h2>
                                                                 <h3 class="h3">
-    La Historia de Usuario ha sido culminada, se encuentra actualmente en espera de que usted proceda a realizar la verificación de la misma, con sus Criterios de Aceptación.
+User history has culminated, is currently awaiting you proceed with the verification of the same, with Acceptability Criteria.
                                                                 </h3>
                                                                 <pre style="font-size:1.1em; font-family:Arial">
-El proceso a seguir es:
+The process to follow is:
 
-1) Entrar en la base de datos de Vauxoo a través del link ubicado al final de este email.
-2) Seleccionar el botón "editar" en la Historia de Usuario.
-3) Revisar los Criterios de Aceptación.
-4) Verificar que los Criterios de Aceptación se cumplan.
-5) Una vez verificado cada criterio seleccionar la casilla "aceptar" lo que indica que se está conforme con el resultado revisado.
+1) Enter the database Vauxoo through the link at the bottom of this email.
+2) Select the button "edit" in the user story.
+3) Check Acceptance Criteria.
+4) Check that the acceptance criteria are met.
+5) Once checked each criterion to select "OK" indicating that it complies with the revised result box.
 
-Todos los criterios de aceptación serán re-validados junto a un consultor de Vauxoo al final del Sprint, de tal manera de cerrar formalmente el cumplimiento del requerimiento.
+All acceptance criteria shall be re-validated by a consultant Vauxoo the end of the Sprint, so to formally close the compliance requirement.
 
 
-Agradeciendo su atención.
+Thanking your attention.
 
-Ante cualquier duda estamos a su disposición.
+For any questions we are at your disposal.
                                                                 </pre>
                                                                 <br />
                                                         </div>

@@ -4,9 +4,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Tools", 
-    "description": """
-    This module correct some behaviours on Document and Fetchmail modules combinated.
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

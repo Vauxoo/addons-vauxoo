@@ -27,9 +27,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Tools", 
-    "description": """
-    Allow update period in account move and account move line.
-    """, 
     "website": "http://wiki.openerp.org.ve/", 
     "license": "", 
     "depends": [

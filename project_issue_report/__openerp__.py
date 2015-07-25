@@ -27,11 +27,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Others", 
-    "description": """
-
-    Modulo que realiza la personalizacion del reporte de incidencias
-
-    """, 
     "website": "http://wiki.openerp.org.ve/", 
     "license": "", 
     "depends": [

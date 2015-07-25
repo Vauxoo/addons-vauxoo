@@ -24,14 +24,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Stock Production Group Serial Number
-====================================
-
-This module added in the search view a "group by"
-that your name is "Serial Number"
-
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

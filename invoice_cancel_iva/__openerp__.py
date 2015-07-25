@@ -26,11 +26,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    Cancels invoices with vat withholding, will be passed to draft and calls
-    mediande vailadadas workflow automatically, keeping the same document that
-    generated initially wittholding
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

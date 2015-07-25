@@ -25,8 +25,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module add stock_kardex in menuitem
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

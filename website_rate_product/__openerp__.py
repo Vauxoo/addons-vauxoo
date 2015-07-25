@@ -4,12 +4,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Website",
-    "description": """
-Website Product Rate
-====================
-    This app shows you a widget with five stars to give product ratings on the
-    e-commerce platform.
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

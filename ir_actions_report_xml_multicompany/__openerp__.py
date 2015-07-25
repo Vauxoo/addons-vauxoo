@@ -24,12 +24,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic", 
-    "description": """
-Fields Active, Company And Sequence For Model Ir_actions_report_xml
-===================================================================
-
-Add fields Active, Company And Sequence to Model Ir_actions_report_xml
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

@@ -30,9 +30,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Project", 
-    "description": """
-Modified the data created by project module to send a mail when a task is created
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

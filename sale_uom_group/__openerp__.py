@@ -24,14 +24,10 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "salem_uom_group", 
+    "name": "Sale UOM Group",
     "version": "0.1", 
-    "author": "Openerp Venzuela", 
+    "author": "Vauxoo",
     "category": "Generic Modules/MRP", 
-    "description": """
-    What do this module:
-    Add multi product uom sum of order line.
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

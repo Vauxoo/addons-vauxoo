@@ -28,15 +28,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Generics Modules",
-    "description": """
-        This module complete the Separator Format, Decimal Separator,
-        Thousands Separator in data of lang english.
-
-        To resolve the next Issue:
-
-        https://github.com/odoo/odoo/issues/1186
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

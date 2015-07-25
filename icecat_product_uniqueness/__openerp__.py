@@ -30,7 +30,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Custom", 
-    "description": """Checks the uniqueness of a product loaded using the product_icecat module for every company""", 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

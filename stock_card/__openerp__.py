@@ -27,10 +27,6 @@
     "version": "0.2", 
     "author": "Vauxoo", 
     "category": "Localization", 
-    "description": """
-        Kardex.
-
- """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

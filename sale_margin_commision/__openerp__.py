@@ -4,9 +4,6 @@
     "version": "0.1", 
     "author": "Vauxoo", 
     "category": "Sales & Purchases", 
-    "description": """
-    Show and control commision against margins
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

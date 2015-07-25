@@ -29,13 +29,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
-    "description": """
-Add active for journal and Period
-===================================
-
-Module to added field active in view journal and view period.
-
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

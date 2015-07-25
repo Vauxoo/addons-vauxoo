@@ -28,7 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Stock", 
-    "description": """This module change readonly in field invoice state for a group""", 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

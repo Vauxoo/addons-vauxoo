@@ -29,13 +29,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Purchase", 
-    "description": """
-Group for button send email:
-============================
-
-Group that hides the button "send by email" sales order
-
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

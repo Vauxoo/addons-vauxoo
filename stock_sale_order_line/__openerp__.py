@@ -26,14 +26,6 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "sale",
-    "description": """
-Stock Sale Order Line
-=====================
-
-    Adds two new fields one in Sale Order Line to grab the stock.moves records
-    related to it, and another from stock.move to point to the related Sale
-    Order Line
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

@@ -27,11 +27,6 @@
     "version": "0.2", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        Este modulo agrega el campo m2m sale_ids en el modelo account.invoice
-        de tal manera que es facilmente obtenible la o las ordenes de compra
-        de la cual proviene la factura en cuestion.
-     """, 
     "website": "http://openerp.netquatro.com", 
     "license": "", 
     "depends": [

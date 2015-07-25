@@ -28,13 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Localization", 
-    "description": """
-Invoice number:
-===============
-
-supplier_invoice_number field added in the tree and search view by
-inheritance
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

@@ -28,13 +28,6 @@
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module uses a wizard to merge an run the procurements
-    of the selected manufacturing orders (creating new manufacturing orders) to make a recursive supply
-    of the parent orders.
-    To apply patches needed use the command:
-    patch -b "procurement/procurement.py" "procurement.py.patch"
-    patch -b "mrp/mrp.py" "mrp.py.patch"
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
