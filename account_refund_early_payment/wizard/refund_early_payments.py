@@ -22,9 +22,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import fields, api, models, osv
-from openerp.tools import float_compare
-# from openerp.tools.translate import _
+from openerp import fields, api, models
 
 
 class account_invoice_refund(models.TransientModel):
