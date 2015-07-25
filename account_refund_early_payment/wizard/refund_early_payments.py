@@ -104,37 +104,22 @@ class account_invoice_refund(models.TransientModel):
             return result
 
         inv_obj = self.pool.get('account.invoice')
+        at_obj = self.pool.get('account.tax')
         inv_line_obj = self.pool.get('account.invoice.line')
         account_m_line_obj = self.pool.get('account.move.line')
 
         refund_id = result.get('domain')[1][2]
 
         wizard_brw = self.browse(cur, uid, ids, context=context)
-        # percent = wizard_brw.percent / 100.0
         amount_total = wizard_brw.amount_total
         prod_brw = wizard_brw.product_id
 
-        # prec = self.pool.get('decimal.precision').precision_get(
-        #     cur, uid, 'Account')
         for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
                                   context=context):
             brw = inv_obj.browse(cur, uid, refund_id, context=context)
 
             if not brw.invoice_line:
                 continue
-
-            # if float_compare(amount_total, inv.amount_total * percent,
-            #                  precision_digits=prec) > 0:
-            #     raise osv.except_osv(
-            #         _('Error!'),
-            #         _("Make sure you have properly set Discounts, Discount "
-            #           "is greater than allowed"))
-
-            refund_line = brw.invoice_line[0]
-
-            new_refund_line = inv_line_obj.copy_data(
-                cur, uid, refund_line.id)
-            new_refund_line['quantity'] = 1.0
 
             inv_line_obj.unlink(
                 cur, uid, [rl.id for rl in brw.invoice_line])
@@ -154,13 +139,21 @@ class account_invoice_refund(models.TransientModel):
                 inv.company_id.id
                 )
 
-            if 'value' in data and data['value']:
-                new_refund_line.update(data['value'])
+            if 'value' not in data and data['value']:
+                continue
 
-            new_refund_line['price_unit'] = amount_total
-            new_refund_line['product_id'] = prod_brw.id
-            inv_line_obj.create(cur, uid, new_refund_line,
-                                context=context)
+            if data['value'].get('invoice_line_tax_id'):
+                perc = 0.0
+                tax_ids = data['value']['invoice_line_tax_id']
+                data['value']['invoice_line_tax_id'] = [(6, 0, tax_ids)]
+                for tax_brw in at_obj.browse(
+                        cur, uid, tax_ids, context=context):
+                    perc += tax_brw.amount
+            data['value']['product_id'] = prod_brw.id
+            data['value']['quantity'] = 1.0
+            data['value']['price_unit'] = amount_total / (1.0 + abs(perc))
+            data['value']['invoice_id'] = refund_id[0]
+            inv_line_obj.create(cur, uid, data['value'], context=context)
 
             brw.button_reset_taxes()
             to_reconcile_ids = {}
