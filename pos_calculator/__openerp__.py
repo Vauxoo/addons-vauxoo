@@ -22,7 +22,7 @@
 ###############################################################################
 {
     "name": "Pos Calculator", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Point Of Sale", 
     "website": "http://vauxoo.com", 

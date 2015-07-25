@@ -26,7 +26,7 @@
 
 {
     "name": "Stock hide set zero button",
-    "version": "1.2",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",

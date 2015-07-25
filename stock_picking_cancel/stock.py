@@ -24,7 +24,7 @@
 #
 ##############################################################################
 from openerp.osv import osv
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 from openerp.tools.translate import _
 
 
@@ -36,7 +36,7 @@ class stock_picking(osv.Model):
             return False
         move_obj = self.pool.get('stock.move')
         self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for p_id in ids:
             moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
             move_obj.write(cr, uid, moves, {'state': 'draft'})
@@ -57,7 +57,7 @@ class stock_picking_in(osv.Model):
             return False
         move_obj = self.pool.get('stock.move')
         self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for p_id in ids:
             moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
             move_obj.write(cr, uid, moves, {'state': 'draft'})
@@ -78,7 +78,7 @@ class stock_picking_out(osv.Model):
             return False
         move_obj = self.pool.get('stock.move')
         self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for p_id in ids:
             moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
             move_obj.write(cr, uid, moves, {'state': 'draft'})

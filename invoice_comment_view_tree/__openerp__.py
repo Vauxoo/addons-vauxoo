@@ -25,7 +25,7 @@
 #
 {
     "name": "Invoice Comment in Tree",
-    "version": "1.0",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "Localization",
     "website": "http://www.vauxoo.com/",

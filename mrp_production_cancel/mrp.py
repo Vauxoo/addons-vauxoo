@@ -25,14 +25,14 @@
 ##############################################################################
 from openerp.osv import osv
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
 class mrp_production(osv.Model):
     _inherit = "mrp.production"
 
     def action_cancel(self, cr, uid, ids, context=None):
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
 
         if context is None:
             context = {}

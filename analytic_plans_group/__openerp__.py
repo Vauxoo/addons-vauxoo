@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Analytic Plans Group", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "", 
     "website": "http://www.vauxoo.com/", 

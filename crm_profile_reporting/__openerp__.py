@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Crm Profiling Report", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "", 
     "category": "Generic Modules/Accounting", 
     "website": "http://vauxoo.com", 

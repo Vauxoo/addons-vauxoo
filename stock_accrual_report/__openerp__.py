@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Stock Accrual Report",
-    "version": "1.0",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "stock",
     "website": "http://www.vauxoo.com/",

@@ -20,7 +20,7 @@
 #######################################################################
 {
     "name": "Product extension to track sales and purchases from variants",
-    "version": "1.0",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "Technical",
     'website': 'https://www.vauxoo.com',

@@ -24,7 +24,7 @@
 #                    "security/groups.xml",
 {
     "name": "Product Historical Price",
-    "version": "0.2",
+    "version": "0.5",
     "author": "Vauxoo",
     "category": "Generic Modules/Product",
     "website": "http://Vauxoo.com",

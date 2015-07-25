@@ -25,7 +25,7 @@
 ##############################################################################
 from openerp.osv import osv
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
 class mrp_production(osv.Model):
@@ -36,7 +36,7 @@ class mrp_production(osv.Model):
         if context is None:
             context = {}
 
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
 
         for production in self.browse(cr, uid, ids, context=context):
             for line in production.picking_ids:

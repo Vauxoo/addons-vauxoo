@@ -25,7 +25,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Commercial Chart Account for Venezuela", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Tiny & Vauxoo", 
     "category": "Localisation/Account Charts", 
     "website": "", 

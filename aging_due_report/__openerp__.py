@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Customer's Due Report",
-    "version": "0.2",
+    "version": "0.5",
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
     "website": "http://www.vauxoo.com/",

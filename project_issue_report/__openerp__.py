@@ -24,7 +24,7 @@
 ##############################################################################
 {
     "name": "Project Issue Report", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Others", 
     "website": "http://wiki.openerp.org.ve/", 

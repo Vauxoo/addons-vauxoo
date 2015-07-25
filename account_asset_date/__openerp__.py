@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Account Asset Date",
-    "version": "1.0",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "account asset",
     "website": "http://www.vauxoo.com/",

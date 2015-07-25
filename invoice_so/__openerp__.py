@@ -24,7 +24,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Agrega campo m2m al modelo account.invoice", 
-    "version": "0.2", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://openerp.netquatro.com", 
