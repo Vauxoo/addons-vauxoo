@@ -26,7 +26,7 @@
 ##############################################################################
 {
     "name": "Parent_left and parent_right creation for analytic accounts",
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Localization/Mexico", 
     "website": "http://www.vauxoo.com/", 

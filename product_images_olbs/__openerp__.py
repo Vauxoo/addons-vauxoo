@@ -17,7 +17,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Product Image Gallery", 
-    "version": "0.1 ", 
+    "version": "0.5", 
     "author": "Sharoon Thomas, Open Labs Business Solutions", 
     "category": "Added functionality - Product Extension", 
     "website": "http://openlabs.co.in/", 

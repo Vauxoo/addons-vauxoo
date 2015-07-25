@@ -21,7 +21,7 @@
 #
 {
     "name": "Account Move Validate Wizard", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://www.vauxoo.com", 

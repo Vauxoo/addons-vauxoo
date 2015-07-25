@@ -28,7 +28,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Long Term User Story", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "User Story Management", 
     "website": "http://www.vauxoo.com", 

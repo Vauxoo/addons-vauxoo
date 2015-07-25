@@ -3,7 +3,7 @@
     'category': 'website',
     'summary': 'This module enables RSS on Products',
     'website': 'http://vauxoo.com',
-    'version': '1.0',
+    'version': '1.5',
     'author': 'Vauxoo',
     'depends': [
         'website_sale',

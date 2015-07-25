@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name": "Fixes and Imrpovements to Bank Statement management", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Accounting & Finance", 
     "website": "http://vauxoo.com", 

@@ -27,7 +27,7 @@
 {
     "name": "Employee from User",
     "summary": "Create an Employee from the User Form",
-    "version": "1.0.1",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "Generic Modules/Human Resources",
     "website": "http://www.vauxoo.com/",

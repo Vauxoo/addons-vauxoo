@@ -27,7 +27,7 @@
 ###############################################################################
 {
     "name": "Move vat field", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Customer", 
     "website": "http://vauxoo.com", 

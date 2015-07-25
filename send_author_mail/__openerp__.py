@@ -21,7 +21,7 @@
 ###############################################################################
 {
     "name": "Send Email Author",
-    "version": "1.1",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "Addons Vauxoo",
     "website": "http://vauxoo.com",
