@@ -24,7 +24,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 # Commented due to migration process, please when this module is migrated to v8
 # to ensure the functionaliity is working bring alive this import.
-# import netsvc
+# import workflow
 
 
 class account_invoice_refund(osv.osv_memory):
@@ -116,7 +116,7 @@ class account_invoice_refund(osv.osv_memory):
         account_m_line_obj = self.pool.get('account.move.line')
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
-        wf_service = netsvc.LocalService('workflow')
+        wf_service = workflow
         inv_tax_obj = self.pool.get('account.invoice.tax')
         inv_line_obj = self.pool.get('account.invoice.line')
         res_users_obj = self.pool.get('res.users')

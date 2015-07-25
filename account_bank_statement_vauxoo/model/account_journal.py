@@ -22,7 +22,7 @@
 
 from openerp.osv import fields, osv
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
 class account_journal(osv.Model):
