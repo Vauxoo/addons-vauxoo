@@ -33,7 +33,7 @@
                 <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
             </h3>
             <div>
-                <field name="project_id" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
+                <field name="project_id" on_change="onchange_project_followers(project_id, owner_id, user_id, user_execute_id)" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
                 <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
                     <p class="oe_grey">
                         The link to the project, all projects listed here

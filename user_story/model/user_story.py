@@ -20,7 +20,7 @@
 
 import time
 
-from openerp import SUPERUSER_ID
+from openerp import SUPERUSER_ID, api
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
@@ -35,7 +35,7 @@ class user_story(osv.Model):
     _inherit = ['mail.thread']
 
     def write(self, cr, uid, ids, vals, context=None):
-        context = context or {}
+        context = dict(context or {})
         task_obj = self.pool.get('project.task')
         context.update({'force_send': True})
         if task_obj.check_access_rights(cr, uid, 'write', False):
@@ -49,11 +49,6 @@ class user_story(osv.Model):
                     for task in tag_id.task_ids:
                         task_obj.write(cr, uid, [task.id], {
                             'categ_ids': vals['categ_ids']})
-            if vals.get('sk_id'):
-                task_ids = task_obj.search(cr, uid, [
-                    ('userstory_id', '=', ids[0])])
-                task_obj.write(cr, uid, task_ids, {
-                    'sprint_id': vals.get('sk_id')}, context=context)
             context.pop('force_send')
 
         if vals.get('categ_ids'):
@@ -62,11 +57,6 @@ class user_story(osv.Model):
                     task_obj.write(
                         cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
 
-        if vals.get('sk_id'):
-            task_ids = task_obj.search(cr, uid, [
-                                       ('userstory_id', '=', ids[0])])
-            task_obj.write(cr, uid, task_ids, {
-                           'sprint_id': vals.get('sk_id')}, context=context)
 
         if 'accep_crit_ids' in vals:
             ac_obj = self.pool.get('acceptability.criteria')
@@ -333,6 +323,25 @@ class user_story(osv.Model):
                 cr, uid, [('name', 'like', 'Secondary')], context=ctx)[0],
         'help': True,
     }
+
+    @api.multi
+    def onchange_project_followers(self, project_id, owner_id, user_id,
+                                   user_execute_id):
+        followers = []
+        res = {}
+        user_obj = self.env['res.users']
+        if project_id:
+            project_brw = self.env['project.project'].browse(project_id)
+            followers += project_brw.message_follower_ids.ids
+        if owner_id:
+            followers.append(user_obj.browse(owner_id).partner_id.id)
+        if user_id:
+            followers.append(user_obj.browse(user_id).partner_id.id)
+        if user_execute_id:
+            followers.append(user_obj.browse(user_execute_id).partner_id.id)
+
+        res['value'] = {'message_follower_ids': followers}
+        return res
 
     def do_draft(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'draft'}, context=context)

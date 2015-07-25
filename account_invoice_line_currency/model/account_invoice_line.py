@@ -8,8 +8,8 @@
 #    Planified by: Humberto Arocha / Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
+#    This program is free software: you can redistribute it and/or modify it
+#    under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
@@ -28,5 +28,7 @@ from openerp.osv import osv, fields
 class account_invoice_line(osv.Model):
     _inherit = "account.invoice.line"
     _columns = {
-        'currency_id': fields.related('invoice_id', 'currency_id', relation='res.currency', type='many2one', string='Currency', help='field'),
+        'currency_id': fields.related(
+            'invoice_id', 'currency_id', relation='res.currency',
+            type='many2one', string='Currency', help='field'),
     }
