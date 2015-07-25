@@ -22,7 +22,7 @@
 #"license" : "AGPL-3",
 {
     "name": "Add locaton_id,location_dest_id,date_expected,state in stocks moves", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://vauxoo.com", 

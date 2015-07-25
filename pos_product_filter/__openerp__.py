@@ -24,7 +24,7 @@
 ###############################################################################
 {
     "name": "POS Product Filter", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Point Of Sale", 
     "website": "http://www.vauxoo.com/", 

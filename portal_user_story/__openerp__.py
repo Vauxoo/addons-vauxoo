@@ -26,7 +26,7 @@
 
 {
     "name" : "Portal Access for User Story",
-    "version" : "0.1",
+    "version" : "0.5",
     "depends" : [
                  "base",
                  "user_story",

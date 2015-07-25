@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Report Parser HTML",
-    "version": "0.1",
+    "version": "0.5",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",

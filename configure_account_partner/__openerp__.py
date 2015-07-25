@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Configure Account to partners", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Customization", 
     "website": "http://vauxoo.com", 

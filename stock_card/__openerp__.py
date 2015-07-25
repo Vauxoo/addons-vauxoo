@@ -24,7 +24,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Stock Card", 
-    "version": "0.2", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Localization", 
     "website": "http://vauxoo.com", 

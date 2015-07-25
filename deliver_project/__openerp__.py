@@ -28,7 +28,7 @@
 ###############################################################################
 {
     "name": "Deliver Project Report", 
-    "version": "", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Projects & Services", 
     "website": "http://vauxoo.com", 

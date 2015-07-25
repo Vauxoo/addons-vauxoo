@@ -26,7 +26,7 @@
 {
     "name": "Costing Method Settings",
     "summary": "Set product default cost method",
-    "version": "1.0",
+    "version": "1.5",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "category": "Settings",

@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "MRP variation webkit report", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Reporting", 
     "website": "http://www.vauxoo.com/", 
