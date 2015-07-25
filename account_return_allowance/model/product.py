@@ -40,9 +40,10 @@ class product_category(osv.Model):
             string="Allowance Account",
             method=True,
             view_load=True,
-            help="Discount on the balance of the product This account will be 
-            used to book Allowances when making Customer Refunds. 
-            Allowance: refer to reductions in price to due to minor defect"),
+            help="Discount on the balance of the product This account will be"
+                 "used to book Allowances when making Customer Refunds. "
+                 "Allowance: refer to reductions in price to due to minor"
+                 " defect"),
         'property_account_return': fields.property(
             'account.account',
             type='many2one',
@@ -50,8 +51,8 @@ class product_category(osv.Model):
             string="Sale Return Account",
             method=True,
             view_load=True,
-            help="Comercial credit note, This account will be used to book 
-            Sale Returns when making Customer Refunds."),
+            help="Comercial credit note, This account will be used to book"
+                 "Sale Returns when making Customer Refunds."),
     }
 
 
