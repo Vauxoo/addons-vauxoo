@@ -26,7 +26,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Pricelist", 
-    "version": "1.1", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Localization/Mexico", 
     "website": "", 

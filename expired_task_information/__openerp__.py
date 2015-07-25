@@ -21,7 +21,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Expired Task Information", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Project", 
     "website": "http://www.vauxoo.com", 

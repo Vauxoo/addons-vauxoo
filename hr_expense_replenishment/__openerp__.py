@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Expenses Replenishment", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "HR Module", 
     "website": "http://openerp.com.ve", 

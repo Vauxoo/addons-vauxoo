@@ -27,7 +27,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "CRM Cost Issue", 
-    "version": "0.2", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Accounting", 
     "website": "http://vauxoo.com", 

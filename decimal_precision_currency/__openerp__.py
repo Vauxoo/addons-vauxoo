@@ -23,7 +23,7 @@
 ##############################################################################-
 {
     "name": "Decimal Precision to Rate Currency", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal", 
     "website": "http://vauxoo.com", 

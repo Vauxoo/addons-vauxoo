@@ -1,7 +1,7 @@
 
 {
     "name": "MRP Production Security Force",
-    "version": "1.1", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "MRP", 
     "website": "www.vauxoo.com", 

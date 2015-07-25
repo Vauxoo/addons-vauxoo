@@ -27,7 +27,7 @@
 {
     "name": "Grand read permissions to Auditor (Read-Only) group"
             " over account_assets",
-    "version": "0.1",
+    "version": "0.5",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://www.vauxoo.com",

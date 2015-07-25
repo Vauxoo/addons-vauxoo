@@ -22,7 +22,7 @@
 #"license" : "AGPL-3",
 {
     "name": "Grouped by production and stock move in model account_move_line", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://vauxoo.com", 
