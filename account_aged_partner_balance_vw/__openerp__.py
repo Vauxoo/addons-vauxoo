@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Report Account Aged Partner Balance view",
-    "version": "2.0",
+    "version": "2.5",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
     "website": "http://www.vauxoo.com/",

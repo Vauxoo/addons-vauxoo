@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Stock Shipping Packaging", 
-    "version": "1.1", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Warehouse", 
     "website": "http://vauxoo.com", 

@@ -24,7 +24,7 @@
 ##############################################################################
 {
     "name": "Split Invoice Button", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Localization", 
     "website": "http://vauxoo.com", 

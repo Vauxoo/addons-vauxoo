@@ -23,7 +23,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Merge Duplicate Products", 
-    "version": "0.1", 
+    "version": "0.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://www.vauxoo.com/", 

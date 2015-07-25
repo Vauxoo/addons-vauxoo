@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "mrp scheduled onchange product", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Production", 
     "website": "http://www.vauxoo.com/", 

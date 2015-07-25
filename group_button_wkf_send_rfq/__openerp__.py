@@ -26,7 +26,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Purchase / Group for button send email", 
-    "version": "1.0", 
+    "version": "1.5", 
     "author": "Vauxoo", 
     "category": "Purchase", 
     "website": "http://www.vauxoo.com/", 
