@@ -32,34 +32,37 @@ class invite_wizard(osv.osv_memory):
 
     def default_get(self, cr, uid, fields, context=None):
         '''
-        Overwrite the original model to add model for the context in the at
-        time use and add in the message all documents to follow
+        Creating in an smart way the default message with the titles of
+        elements to share.
         '''
 
         result = super(invite_wizard, self).default_get(
             cr, uid, fields, context=context)
         model_obj = self.pool.get(result.get('res_model', False) or
                                   context.get('active_model'))
-
+        message = '<div></div>'
         if len(context.get('active_ids', [])) >= 1:
             result.update({'res_model': context.get('active_model')})
-            message = _('<div>You have been invited to follow are '
-                        'documents: </div>')
+            contex_signup = dict(context, signup_valid=True)
             for ids in context.get('active_ids', []):
                 document_name = model_obj.name_get(cr, uid, [ids],
                                                    context=context)[0][1]
-                message = message + '\n<div>' + document_name + '</div>'
-
+                url = self.pool['res.partner']._get_signup_url_for_action(cr, uid, [ids], action='mail.action_mail_redirect', model=self._name, res_id=ids, context=contex_signup)[ids]  # noqa
+                message_new = '''<li><a href="{url}">{name}</a></li>
+                '''.format(url=url, name=document_name)
+                message = message + message_new
+            message = _(
+                '<h2>You have been invited to follow:.</h2><ul>%s</ul>' %
+                message)
             result['message'] = message
         elif 'message' in fields and result.get('res_model') and \
                 result.get('res_id'):
             document_name = self.pool.get(result.get('res_model')).name_get(
                 cr, uid, [result.get('res_id')], context=context)[0][1]
             message = _(
-                '<div>You have been invited to follow %s.</div>' %
+                '<h2>You have been invited to follow:.</h2>%s' %
                 document_name)
             result['message'] = message
-
         return result
 
     _columns = {
