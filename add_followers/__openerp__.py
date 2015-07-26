@@ -24,26 +24,27 @@
 #
 ##############################################################################
 {
-    "name": "Add many followers in many task or project", 
-    "version": "1.5", 
-    "author": "Vauxoo", 
-    "category": "Task and Project", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Add many followers in many task or project",
+    "version": "1.5",
+    "author": "Vauxoo",
+    "category": "Task and Project",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "project", 
+        "project",
         "user_story"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/security_groups.xml", 
+        "security/security_groups.xml",
         "wizard/add_followers_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
-    "active": False
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "active": False,
+    'images': ['images/main_screenshot.png'],
 }
