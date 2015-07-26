@@ -5,7 +5,7 @@ The main idea is create a little how-to commit by commit to know how to improve
 this modules in a clean way and help us to help you, then if you are including
 your new concepts try to be explicit and helpful in your commit messages.
 
-How add a new features:
+How add a new feature:
 ---
 
 0. Clone this repository:
