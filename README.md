@@ -32,4 +32,9 @@ Paid support and warranties.
 Are you planning to use this modules in a production environment that can hire
 some work from the team behind this work?
 
+Do you want to contribute?
+---
+
+[Read the way](https://github.com/Vauxoo/addons-vauxoo/blob/8.0/CONTRIBUTING.md).
+
 #Better go with [Vauxoo](http://vauxoo.com)
