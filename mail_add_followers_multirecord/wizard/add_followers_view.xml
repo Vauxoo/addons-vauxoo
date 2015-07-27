@@ -3,7 +3,7 @@
     <data>
 
         <!-- wizard view -->
-        <record model="ir.ui.view" id="add_followers_wizard_invite_form">
+        <record model="ir.ui.view" id="mail_add_followers_multirecord_wizard_invite_form">
             <field name="name">Add Followers</field>
             <field name="model">mail.wizard.invite</field>
             <field name="priority">200</field>
@@ -39,7 +39,7 @@
                                 type="object"
                                 class="oe_highlight"/>
                         <button string="Add Followers"
-                                name="add_followers"
+                                name="mail_add_followers_multirecord"
                                 context="{'second':True}"
                                 attrs="{'invisible':[('remove', '=', True)]}"
                                 type="object"
@@ -63,8 +63,8 @@
             src_model="project.task"                                            
             view_type="form"                                                       
             view_mode="form"                                                       
-            view_id="add_followers_wizard_invite_form"
-            groups="add_followers.group_add_followers"
+            view_id="mail_add_followers_multirecord_wizard_invite_form"
+            groups="mail_add_followers_multirecord.group_mail_add_followers_multirecord"
             target="new"                                                           
             id="add_many_followers_task_id"/> 
 
@@ -74,8 +74,8 @@
             src_model="project.project"                                            
             view_type="form"                                                       
             view_mode="form"                                                       
-            groups="add_followers.group_add_followers"
-            view_id="add_followers_wizard_invite_form"
+            groups="mail_add_followers_multirecord.group_mail_add_followers_multirecord"
+            view_id="mail_add_followers_multirecord_wizard_invite_form"
             target="new"                                                           
             id="add_many_followers_project_id"/> 
 
@@ -85,8 +85,8 @@
             src_model="user.story"                                            
             view_type="form"                                                       
             view_mode="form"                                                       
-            groups="add_followers.group_add_followers"
-            view_id="add_followers_wizard_invite_form"
+            groups="mail_add_followers_multirecord.group_mail_add_followers_multirecord"
+            view_id="mail_add_followers_multirecord_wizard_invite_form"
             target="new"                                                           
             id="add_many_followers_story_id"/> 
 

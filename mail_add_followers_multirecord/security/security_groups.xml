@@ -2,7 +2,7 @@
 <openerp>
 <data noupdate="1">
 
-    <record id="group_add_followers" model="res.groups">
+    <record id="group_mail_add_followers_multirecord" model="res.groups">
         <field name="name">Add Followers/Managers</field>
     </record>
 

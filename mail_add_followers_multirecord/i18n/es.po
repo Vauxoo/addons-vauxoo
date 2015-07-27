@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* add_followers
+#	* mail_add_followers_multirecord
 #
 msgid ""
 msgstr ""
@@ -17,12 +17,12 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
 "X-Generator: Launchpad (build 17252)\n"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: field:mail.wizard.invite,p_a_g:0
 msgid "Group and Partner"
 msgstr "Grupos y Usuarios"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: help:mail.wizard.invite,groups:0
 msgid ""
 "Used to add a followers group from mail group and not for Users directly"
@@ -30,78 +30,78 @@ msgstr ""
 "Usado para agregar grupo de seguidores desde un grupo de correo y no desde "
 "usuarios directamente"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: field:mail.wizard.invite,mail_groups:0
 msgid "Mail Groups"
 msgstr "Grupos de Correo"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: view:mail.wizard.invite:0
 msgid "Add contacts to notify..."
 msgstr "Agregar contactos para notifiar..."
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: field:mail.wizard.invite,partners:0
 msgid "Partners"
 msgstr "Clientes"
 
-#. module: add_followers
-#: code:addons/add_followers/wizard/add_followers.py:46
+#. module: mail_add_followers_multirecord
+#: code:addons/mail_add_followers_multirecord/wizard/mail_add_followers_multirecord.py:46
 #, python-format
 msgid "<div>You have been invited to follow are documents: </div>"
 msgstr "<div>Usted ha sido invitado para seguir estos documentos: </div>"
 
-#. module: add_followers
-#: model:ir.actions.act_window,name:add_followers.add_many_followers_project_id
-#: model:ir.actions.act_window,name:add_followers.add_many_followers_task_id
+#. module: mail_add_followers_multirecord
+#: model:ir.actions.act_window,name:mail_add_followers_multirecord.add_many_followers_project_id
+#: model:ir.actions.act_window,name:mail_add_followers_multirecord.add_many_followers_task_id
 #: view:mail.wizard.invite:0
 msgid "Add Followers"
 msgstr "Añadir seguidores"
 
-#. module: add_followers
-#: model:res.groups,name:add_followers.group_add_followers
+#. module: mail_add_followers_multirecord
+#: model:res.groups,name:mail_add_followers_multirecord.group_mail_add_followers_multirecord
 msgid "Add Followers/Managers"
 msgstr "Agregar Seguidores/Managers"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: help:mail.wizard.invite,p_a_g:0
 msgid "Used to add a followers for partner and group at the same time"
 msgstr ""
 "Utilizados para agregar seguidores por usuarios o grupos de correos al mismo "
 "tiempo"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: field:mail.wizard.invite,groups:0
 msgid "Groups"
 msgstr "Grupos"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: help:mail.wizard.invite,mail_groups:0
 msgid "Select the mail.groups that you want add with followers"
 msgstr "Selecciona el grupo de correo al cual quieres agregar como seguidor"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: view:mail.wizard.invite:0
 msgid "Cancel"
 msgstr "Cancelar"
 
-#. module: add_followers
-#: model:ir.model,name:add_followers.model_mail_wizard_invite
+#. module: mail_add_followers_multirecord
+#: model:ir.model,name:mail_add_followers_multirecord.model_mail_wizard_invite
 msgid "Invite wizard"
 msgstr "Asistente de invitación"
 
-#. module: add_followers
-#: code:addons/add_followers/wizard/add_followers.py:58
+#. module: mail_add_followers_multirecord
+#: code:addons/mail_add_followers_multirecord/wizard/mail_add_followers_multirecord.py:58
 #, python-format
 msgid "<div>You have been invited to follow %s.</div>"
 msgstr "<div>Ha sido invitado a seguir %s.</div>"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: view:mail.wizard.invite:0
 msgid "or"
 msgstr "o"
 
-#. module: add_followers
+#. module: mail_add_followers_multirecord
 #: help:mail.wizard.invite,partners:0
 msgid "Used to add a followers group by users"
 msgstr "Usado para agregar seguidores al grupo por usuario"

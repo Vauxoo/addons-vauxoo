@@ -90,7 +90,7 @@ class invite_wizard(osv.osv_memory):
 
     }
 
-    def add_followers(self, cr, uid, ids, context=None):
+    def mail_add_followers_multirecord(self, cr, uid, ids, context=None):
         '''
         Overwrite the original model work with many documents at the same time
         and add followers in eech.
@@ -150,7 +150,7 @@ class invite_wizard(osv.osv_memory):
                                            recipient_ids=[follower_id],
                                            context=context)
             else:
-                res = super(invite_wizard, self).add_followers(cr, uid, ids,
+                res = super(invite_wizard, self).mail_add_followers_multirecord(cr, uid, ids,
                                                                context=context)
 
         return res
@@ -230,8 +230,8 @@ class invite_wizard(osv.osv_memory):
                                   'bring_partners': True},
                    context=context)
 
-        view_id = data_obj.get_object(cr, uid, 'add_followers',
-                                      'add_followers_wizard_invite_form')
+        view_id = data_obj.get_object(cr, uid, 'mail_add_followers_multirecord',
+                                      'mail_add_followers_multirecord_wizard_invite_form')
         if partner_ids:
             res['value'].update({'partner_ids': partner_ids})
         return {
