@@ -126,10 +126,11 @@ class invite_wizard(osv.osv_memory):
                         signature = user_id and user_id["signature"] or ''
                         if signature:
                             wizard.message = \
-                                tools.append_content_to_html(wizard.message,
-                                                             signature,
-                                                             plaintext=True,
-                                                             container_tag='div')
+                                tools.\
+                                append_content_to_html(wizard.message,
+                                                       signature,
+                                                       plaintext=True,
+                                                       container_tag='div')
                         # FIXME 8.0: use notification_email_send, send a wall
                         # message and let mail handle email notification +
                         # message box
@@ -137,21 +138,22 @@ class invite_wizard(osv.osv_memory):
                             mail_mail = self.pool.get('mail.mail')
                             # the invite wizard should create a private message
                             # not related to any object -> no model, no res_id
-                            mail_id = mail_mail.create(cr, uid, {
-                                'model': wizard.res_model,
-                                'res_id': res_id,
-                                'subject': 'Invitation to follow %s' %
-                                                       document.name_get()[
-                                                           0][1],
-                                'body_html': '%s' % wizard.message,
-                                'auto_delete': True,
-                                                       }, context=context)
+                            mail_id = mail_mail.\
+                                create(cr, uid, {
+                                    'model': wizard.res_model,
+                                    'res_id': res_id,
+                                    'subject': 'Invitation to follow %s' %
+                                    document.name_get()[0][1],
+                                    'body_html': '%s' % wizard.message,
+                                    'auto_delete': True},
+                                    context=context)
                             mail_mail.send(cr, uid, [mail_id],
                                            recipient_ids=[follower_id],
                                            context=context)
             else:
-                res = super(invite_wizard, self).mail_add_followers_multirecord(cr, uid, ids,
-                                                               context=context)
+                res = super(invite_wizard, self).\
+                    mail_add_followers_multirecord(cr, uid, ids,
+                                                   context=context)
 
         return res
 
@@ -169,14 +171,18 @@ class invite_wizard(osv.osv_memory):
                 document = model_obj.browse(cr, uid, res_id, context=context)
                 if not wizard.bring_partners:
                     new_follower_ids = [p.id for p in wizard.partner_ids]
-                    follower_ids = [i.id for i in document.message_follower_ids]
-                    remove_ids = list(set(follower_ids) - set(new_follower_ids))
-                    document.write({'message_follower_ids': [(6, 0, remove_ids)]})
+                    follower_ids = [i.id for i in
+                                    document.message_follower_ids]
+                    remove_ids = list(set(follower_ids) -
+                                      set(new_follower_ids))
+                    document.write({'message_follower_ids': [(6, 0,
+                                                              remove_ids)]})
                 else:
                     new_follower_ids = [p.id for p in wizard.partner_ids]
                     remove_ids = [i.id for i in document.message_follower_ids
                                   if i.id in new_follower_ids]
-                    document.write({'message_follower_ids': [(6, 0, remove_ids)]})
+                    document.write({'message_follower_ids': [(6, 0,
+                                                              remove_ids)]})
 
         return res
 
@@ -230,8 +236,10 @@ class invite_wizard(osv.osv_memory):
                                   'bring_partners': True},
                    context=context)
 
-        view_id = data_obj.get_object(cr, uid, 'mail_add_followers_multirecord',
-                                      'mail_add_followers_multirecord_wizard_invite_form')
+        view_id = data_obj.get_object(cr, uid,
+                                      'mail_add_followers_multirecord',
+                                      'mail_add_followers_multirecord_'
+                                      'wizard_invite_form')
         if partner_ids:
             res['value'].update({'partner_ids': partner_ids})
         return {
