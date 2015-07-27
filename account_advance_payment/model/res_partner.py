@@ -29,10 +29,12 @@ from openerp.osv import osv, fields
 class res_partner(osv.Model):
     _inherit = 'res.partner'
 
-    def _supplier_customer_advance_get(self, cr, uid, ids, field, arg, context=None):
+    def _supplier_customer_advance_get(self, cr, uid, ids, field, arg,
+                                       context=None):
         res = {}
         for record_id in ids:
-            res = {record_id: {'customer_advance': 0.0, 'supplier_advance': 0.0}}
+            res = {record_id: {'customer_advance': 0.0,
+                               'supplier_advance': 0.0}}
         return res
 
     _columns = {
