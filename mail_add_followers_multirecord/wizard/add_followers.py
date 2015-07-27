@@ -30,14 +30,14 @@ class invite_wizard(osv.osv_memory):
     _inherit = 'mail.wizard.invite'
     _description = 'Invite wizard'
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, _fields, context=None):
         '''
         Creating in an smart way the default message with the titles of
         elements to share.
         '''
 
         result = super(invite_wizard, self).default_get(
-            cr, uid, fields, context=context)
+            cr, uid, _fields, context=context)
         model_obj = self.pool.get(result.get('res_model', False) or
                                   context.get('active_model'))
         message = '<div></div>'
@@ -55,7 +55,7 @@ class invite_wizard(osv.osv_memory):
                 '<h2>You have been invited to follow:.</h2><ul>%s</ul>' %
                 message)
             result['message'] = message
-        elif 'message' in fields and result.get('res_model') and \
+        elif 'message' in _fields and result.get('res_model') and \
                 result.get('res_id'):
             document_name = self.pool.get(result.get('res_model')).name_get(
                 cr, uid, [result.get('res_id')], context=context)[0][1]
@@ -73,10 +73,11 @@ class invite_wizard(osv.osv_memory):
                                  'directly'),
         'partners': fields.boolean('Partners', help='Used to add a follower '
                                                     'group by users'),
-        'remove': fields.boolean('Remove Partners', help='Used to remove followers'),
+        'remove': fields.boolean('Remove Partners',
+                                 help='Used to remove followers'),
         'bring_partners': fields.boolean('Bring Partners',
-                                         help='This field brings all partners of the records '
-                                              'selected'),
+                                         help='This field brings all partners '
+                                         'of the records selected'),
         'p_a_g': fields.boolean('Group and Partner', help='Used to add a '
                                 'followers for partner '
                                 'and group at the same '
@@ -199,7 +200,8 @@ class invite_wizard(osv.osv_memory):
                                             context):
                     partner_ids += groups.get('message_follower_ids', [])
 
-        partner_ids and res['value'].update({'partner_ids': partner_ids})
+        if partner_ids:
+            res['value'].update({'partner_ids': partner_ids})
         return res
 
     def bring_partner(self, cr, uid, ids, context=None):
@@ -215,9 +217,11 @@ class invite_wizard(osv.osv_memory):
         data_obj = self.pool.get('ir.model.data')
         partner_ids = []
         for res_id in context.get('active_ids'):
-            partner_ids += [i.id for i in model_obj.browse(cr, uid, res_id,
-                                                         context=context).message_follower_ids
-                          if i.id not in partner_ids]
+            partner_ids += [i.id for i in
+                            model_obj.
+                            browse(cr, uid, res_id,
+                                   context=context).message_follower_ids
+                            if i.id not in partner_ids]
 
         partner_ids = list(set(partner_ids))
 
@@ -228,7 +232,8 @@ class invite_wizard(osv.osv_memory):
 
         view_id = data_obj.get_object(cr, uid, 'add_followers',
                                       'add_followers_wizard_invite_form')
-        partner_ids and res['value'].update({'partner_ids': partner_ids})
+        if partner_ids:
+            res['value'].update({'partner_ids': partner_ids})
         return {
             'type': 'ir.actions.act_window',
             'name': "Remove Partners",
