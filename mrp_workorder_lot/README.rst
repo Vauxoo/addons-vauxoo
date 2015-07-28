@@ -84,6 +84,39 @@ Company from the list) > In Configuration Tab > At Logistics Section`` or go to
 ``Settings Menu > Configuration Sidebar Section > Manufacturing Menu >
 Manufacturing Order Section > Planning Section``.
 
+A Work Order Lot (**WOL**) is a new model that manage the work orders by a
+set of this elements calling with the name of Lot.
+
+This Lot is associated to the Manufacturing Order and its creation is
+automatic by taking into account the workcenter products capaicty boottle
+neck in a routing.
+
+- A Work Order Lot is in progress (active) when is in 'open' or 'pending'
+  state.
+- When a Work Order Lot is in 'draft', 'picking', 'ready', 'done' or 'cancel'
+  state can its associated work orders can change of state.
+
+Menu
+----
+
+- The ``Ready to Picking`` menu is visible for the warehouse/stock user.
+- The ``Active Work Order Lots`` menu is visible for the
+  production/manufacturing manager.
+- The ``Active Work Orders`` menu is visible for
+
+States
+------
+
+- **New** (``draft``): Te Lot have been created and is waiting to be activated.
+- **Picking** (``picking``): The Lot its active and ready start the consume.
+- **In Progress** (``open``): The Lot is already consumed and the work orders
+  associated need to be started and finished.
+- **Paused** (``pending``): Its set when some work order that belongs to the
+  work order lot is in pending state, so also the work order lot its in
+  Paused state.
+- **Done** (``done``): The work order lot have produce a production lot.
+- **Cancelled** (``cancel``):
+
 Consume and Produce Processes
 -----------------------------
 
@@ -193,39 +226,3 @@ WorkFlow
    that remains in the ``Manufacturing Order Form > Finished Products Page >``
    ``Produced Products section`` There you will see the complete information
    of the current produce product.
-
-Work Order Lot
-==============
-
-A Work Order Lot (**WOL**) is a new model that manage the work orders by a
-set of this elements calling with the name of Lot.
-
-This Lot is associated to the Manufacturing Order and its creation is
-automatic by taking into account the workcenter products capaicty boottle
-neck in a routing.
-
-- A Work Order Lot is in progress (active) when is in 'open' or 'pending'
-  state.
-- When a Work Order Lot is in 'draft', 'picking', 'ready', 'done' or 'cancel'
-  state can its associated work orders can change of state.
-
-Menu
-----
-
-- The ``Ready to Picking`` menu is visible for the warehouse/stock user.
-- The ``Active Work Order Lots`` menu is visible for the
-  production/manufacturing manager.
-- The ``Active Work Orders`` menu is visible for
-
-States
-------
-
-- **New** (``draft``): Te Lot have been created and is waiting to be activated.
-- **Picking** (``picking``): The Lot its active and ready start the consume.
-- **In Progress** (``open``): The Lot is already consumed and the work orders
-  associated need to be started and finished.
-- **Paused** (``pending``): Its set when some work order that belongs to the
-  work order lot is in pending state, so also the work order lot its in
-  Paused state.
-- **Done** (``done``): The work order lot have produce a production lot.
-- **Cancelled** (``cancel``):
