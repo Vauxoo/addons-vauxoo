@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ########### Credits #########################################################
 #    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
 #    Planified by: Katherine Zaoral      <kathy@vauxoo.com>
 #    Audited by: Humberto Arocha         <hbto@vauxoo.com>
@@ -22,34 +22,34 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Workorder Lot", 
-    "version": "1.5", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "MRP Workorder Lot",
+    "version": "1.5",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "mrp", 
-        "mrp_operations", 
-        "mrp_consume_produce", 
+        "mrp",
+        "mrp_operations",
+        "mrp_consume_produce",
         "mrp_product_capacity"
-    ], 
+    ],
     "demo": [
         "demo/mrp_workorder_lot_demo.xml"
-    ], 
+    ],
     "data": [
-        "view/mrp_workorder_lot_view.xml", 
-        "view/res_config_view.xml", 
-        "view/res_company_view.xml", 
-        "wizard/mrp_consume_produce.xml", 
-        "data/mrp_workorder_lot_data.xml", 
+        "view/mrp_workorder_lot_view.xml",
+        "view/res_config_view.xml",
+        "view/res_company_view.xml",
+        "wizard/mrp_consume_produce.xml",
+        "data/mrp_workorder_lot_data.xml",
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
