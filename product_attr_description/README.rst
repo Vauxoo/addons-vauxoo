@@ -1,8 +1,8 @@
 Product extension to track sales and purchases from variants
 ============================================================
 
-Description field on attribute.
----
+Description field on attribute
+------------------------------
 
 Add a module description of type text to the attribute Value model, in order to 
 have a place to set generic long reusable description.
