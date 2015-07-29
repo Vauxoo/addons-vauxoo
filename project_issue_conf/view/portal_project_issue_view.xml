@@ -77,6 +77,19 @@
               </p>
             </field>
         </record>
+
+        <record id="project_issue_month_filter_search" model="ir.ui.view">
+            <field name="name">Project Issue Month Filter Search</field>
+            <field name="model">project.issue</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="project_issue.view_project_issue_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr='/search/group[@string="Group By"]' position="inside">
+                    <filter string="Month" icon="terp-go-month" domain="[]" context="{'group_by':'create_date'}" help="Creation Month"/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="project_issue_act_kanban" model="ir.actions.act_window.view">
             <field name="sequence">10</field>
             <field name="view_mode">kanban</field>
