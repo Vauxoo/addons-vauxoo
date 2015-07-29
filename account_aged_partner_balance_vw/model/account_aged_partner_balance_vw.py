@@ -26,8 +26,10 @@
 
 from openerp.osv import fields, osv
 import time
-import mx.DateTime
-
+try:
+    import mx.DateTime
+except ImportError:
+    _logger.info('account_aged_partner_balance_vw: need mx library')
 
 class account_aged_partner_balance_vw(osv.TransientModel):
     _name = 'account.aged.partner.balance.vw'
