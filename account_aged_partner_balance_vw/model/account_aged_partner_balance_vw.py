@@ -26,6 +26,10 @@
 
 from openerp.osv import fields, osv
 import time
+import logging
+
+_logger = logging.getLogger(__name__)
+
 try:
     import mx.DateTime
 except ImportError:
