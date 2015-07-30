@@ -38,11 +38,14 @@
         "view/account_journal_view.xml", 
         "data/data.xml"
     ], 
-    "test": [], 
+    "test": [],
     "js": [], 
     "css": [], 
     "qweb": [], 
     "installable": True, 
     "auto_install": False, 
-    "active": False
+    "active": False,
+    "external_dependencies": {
+        "python": ["xlrd"],
+    },
 }
