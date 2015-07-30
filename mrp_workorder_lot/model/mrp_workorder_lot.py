@@ -27,11 +27,11 @@ from openerp.tools.translate import _
 from openerp import tools
 
 
-def rounding(f, r):
+def rounding(fff, rrr):
     import math
-    if not r:
-        return f
-    return math.ceil(f / r) * r
+    if not rrr:
+        return fff
+    return math.ceil(fff / rrr) * rrr
 
 
 class stock_move(osv.Model):
@@ -156,10 +156,12 @@ class mrp_production(osv.Model):
             # create work orders by wc capacity and work order lots
             wo_dict_list = self.create_wo_dict(
                 cr, uid, [production.id], context=context)
-            wo_dict_list and self.write(
-                cr, uid, [production.id],
-                {'workcenter_lines': map(lambda x: (0, 0, x), wo_dict_list)},
-                context=context)
+            if wo_dict_list:
+                self.write(
+                    cr, uid, [production.id],
+                    {'workcenter_lines':
+                     [(0, 0, item) for item in wo_dict_list]},
+                    context=context)
 
         return res
 
@@ -353,14 +355,14 @@ class mrp_production(osv.Model):
 
                 if batch_mode == 'max_cost':
                     wc_capacity = wc_brw.capacity_per_cycle
-                    d, m = divmod(factor, wc_capacity)
-                    mult = int(d + (m and 1.0 or 0.0))
+                    ddd, mmm = divmod(factor, wc_capacity)
+                    mult = int(ddd + (mmm and 1.0 or 0.0))
                 elif batch_mode == 'bottleneck':
                     mult, wc_capacity, critic_product_id = \
                         self.get_wc_capacity(
                             cr, uid, production.id, routing_brw.id,
                             context=context) or (1, product_qty, False)
-                    d, m = divmod(factor, wc_capacity)
+                    ddd, mmm = divmod(factor, wc_capacity)
 
                 if critic_product_id:
                     critic_product_income_qty = \
@@ -372,10 +374,10 @@ class mrp_production(osv.Model):
                 else:
                     critic_product_income_qty = 100.0
 
-                percentage = {}.fromkeys(m and ['d', 'm'] or ['d'])
+                percentage = {}.fromkeys(mmm and ['d', 'm'] or ['d'])
                 percentage['d'] = \
                     (wc_capacity / critic_product_income_qty) * 100.0
-                percentage['m'] = m and (m / critic_product_income_qty) * 100.0 \
+                percentage['m'] = mmm and (mmm / critic_product_income_qty) * 100.0 \
                     or percentage['d']
 
                 # create wo lots
@@ -537,7 +539,7 @@ class mrp_production(osv.Model):
             'number': '%05i' % (lot_nbr + 1,),
             'production_id': production.id,
             'percentage': fwol_brw.percentage,
-            'wo_ids': map(lambda x: (0, 0, x), wo_values),
+            'wo_ids': [(0, 0, item) for item in wo_values],
         }
         new_wol_id = wol_obj.create(cr, uid, values, context=context)
         return new_wol_id
@@ -624,6 +626,7 @@ class mrp_workorder_stage(osv.Model):
 
     def _get_wo_state(self, cr, uid, context=None):
         """
+        Get work order center line state
         """
         context = context or {}
         wo_obj = self.pool.get('mrp.production.workcenter.line')
@@ -667,6 +670,7 @@ class mrp_production_workcenter_line(osv.Model):
 
     def _get_draft_stage_id(self, cr, uid, context=None):
         """
+        get draft stage.
         """
         context = context or {}
         wos_obj = self.pool.get('mrp.workorder.stage')
@@ -866,6 +870,7 @@ class mrp_workorder_lot(osv.Model):
         res = list(set(res))
         return res
 
+    # pylint: disable=W0622
     def _set_lot_state(self, cr, uid, id, field, value, arg, context=None):
         """
         Write the field state in Work Order Lot.
