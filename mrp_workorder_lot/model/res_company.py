@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ########### Credits #########################################################
 #    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
 #    Planified by: Katherine Zaoral      <kathy@vauxoo.com>
 #    Audited by: Humberto Arocha         <hbto@vauxoo.com>
@@ -30,7 +30,8 @@ class res_company(osv.osv):
     _columns = {
         'batch_type': fields.selection(
             [('bottleneck', 'Avoid Production Bottleneck'),
-             ('max_cost', 'Maxime Workcenter Productivity / Minimizing Production Cost')],
+             ('max_cost',
+              'Maxime Workcenter Productivity / Minimizing Production Cost')],
             'Production Batch Process Type',
             help=('Two options when management the batch work orders:\n\n'
                   ' - Avoid Production Bottleneck: Will create the batch'

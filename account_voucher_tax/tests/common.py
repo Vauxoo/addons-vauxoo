@@ -42,7 +42,8 @@ class TestTaxCommon(common.TransactionCase):
         self.tax_16_customer = self.ref(
             "account_voucher_tax.account_voucher_tax_sale_ova16")
         self.tax_ret = self.ref(
-            "account_voucher_tax.account_voucher_tax_purchase_iva1067_retencion_iva")
+            "account_voucher_tax."
+            "account_voucher_tax_purchase_iva1067_retencion_iva")
 
         # Data account to tax
         self.acc_tax16 = self.ref(

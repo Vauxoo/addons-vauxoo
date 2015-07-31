@@ -29,14 +29,14 @@ Caused VAT is that actually charged to customers.
 Integration of payment taxes with account voucher
 =================================================
 
-Tested cases
-------------
+Tested cases 1
+--------------
 
 * Payment one or more invoices of the same partner
 * Payment in advance of one or more invoices of the same partner
 
-Known failing Cases (to fix)
-----------------------------
+Known failing Cases (to fix) 1
+------------------------------
 
 * Allow payment invoices with other movements like invoices, debit/credit refunds (resolved account_voucher_no_check_default module)
 * When there are multiple payments may be that the amount of taxes paid is not equally payable by decimal rouding
@@ -47,16 +47,16 @@ Known failing Cases (to fix)
 Integration of payment taxes with Bank Statement
 ================================================
 
-Tested cases
-------------
+Tested cases 2
+--------------
 
 * An statement bank with one imported invoice
 * An statement bank with two or more imported invoices of the same partner
 * An statement bank with two or more imported invoices of different partners
 * Payment in advance of an invoice with partner(when the amount of the advance is less than or equal to the amount of the invoice)
 
-Known failing Cases (to fix)
-----------------------------
+Known failing Cases (to fix) 2
+------------------------------
 
 * Payment in advance that will pay more than one invoice
 * When there are multiple payments may be that the amount of taxes paid is not equally payable by decimal rouding
