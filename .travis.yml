@@ -18,7 +18,7 @@ addons:
       - python-serial
 
 install:
-  - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+  - git clone --single-branch --depth=1 https://github.com/vauxoo-dev/maintainer-quality-tools.git -b master-modules-changed ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
 
 script:
