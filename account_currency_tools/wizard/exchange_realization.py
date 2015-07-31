@@ -25,13 +25,19 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp  # pylint: disable=F0401
 import openerp
 from datetime import datetime, timedelta
-from pandas import DataFrame
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import pytz
 import logging
 
 _logger = logging.getLogger(__name__)
 
+# Extra Imports
+try:
+    from pandas import DataFrame
+except ImportError:
+    _logger.info('account_currency_tools is declared '
+                 ' from addons-vauxoo '
+                 ' you will need: sudo pip install pandas')
 
 class foreign_exchange_realization_line(osv.osv_memory):
 
