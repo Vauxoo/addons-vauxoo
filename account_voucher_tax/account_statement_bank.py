@@ -532,8 +532,12 @@ class account_bank_statement_line(osv.osv):
                     amount_base_secondary = account_group.get(
                         move_account_tax)[0]
                 else:
-                    amount_total_tax =\
-                        account_group.get(move_account_tax)[0]+amount_ret_tax
+                    if account_group.get(move_account_tax)[1]:
+                        amount_total_tax =\
+                            account_group.get(move_account_tax)[0] +\
+                            amount_ret_tax
+                    else:
+                        amount_total_tax = 0
                 res = self.preparate_dict_tax(
                     tax_id=tax_id, amount=amount_total_tax)
                 res.update({
