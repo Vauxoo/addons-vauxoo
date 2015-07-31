@@ -22,8 +22,24 @@
 ###############################################################################
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
-from pandas import DataFrame
-import mx.DateTime
+import logging
+
+_logger = logging.getLogger(__name__)
+
+# Extra Imports
+try:
+    from pandas import DataFrame
+except ImportError:
+    _logger.info('aging_due_report is declared '
+                 ' from addons-vauxoo '
+                 ' you will need: sudo pip install pandas')
+
+try:
+    import mx.DateTime
+except ImportError:
+    _logger.info('aging_due_report is declared '
+                 ' from addons-vauxoo '
+                 ' you will need: sudo pip install pandas')
 
 
 class account_aging_wizard_document(osv.TransientModel):

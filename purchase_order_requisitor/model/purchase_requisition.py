@@ -6,8 +6,8 @@
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -38,7 +38,8 @@ class purchase_requisition(osv.Model):
                             context=None):
         if context is None:
             context = {}
-        res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
+        res = super(purchase_requisition, self).make_purchase_order(
+            cr, uid, ids, partner_id, context=context)
 
         if res:
             requisition_user = self.browse(

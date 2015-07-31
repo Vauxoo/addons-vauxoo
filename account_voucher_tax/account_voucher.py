@@ -172,9 +172,12 @@ class account_voucher(osv.Model):
                     if current_currency != line.currency_id.id:
                         statement_currency_line = line.currency_id.id
 
-                    if current_currency != company_currency or statement_currency_line:
+                    if (current_currency != company_currency
+                            or statement_currency_line):
                         amount_tax_currency += cur_obj.compute(
-                            cr, uid, statement_currency_line or current_currency, company_currency,
+                            cr, uid,
+                            statement_currency_line or current_currency,
+                            company_currency,
                             reference_amount, context=context)
                     else:
                         amount_tax_currency += reference_amount

@@ -223,15 +223,23 @@ class account_bank_statement_line(osv.osv):
 
                 lines_tax = voucher_obj._preparate_move_line_tax(
                     cr, uid,
-                    account_tax_voucher,  # cuenta del impuesto(account.tax)
-                    account_tax_collected,  # cuenta del impuesto para notas de credito/debito(account.tax)
+                    # cuenta del impuesto(account.tax)
+                    account_tax_voucher,
+                    # cuenta del impuesto para notas de credito/debito
+                    # (account.tax)
+                    account_tax_collected,
                     move_id, type_payment, partner_id, period_id, journal_id,
                     date_st, company_currency,
-                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
-                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    # Monto del impuesto por el factor(cuanto le
+                    # corresponde)(aml)
+                    amount_total_tax * abs(factor),
+                    # Monto del impuesto por el factor(cuanto le
+                    # corresponde)(aml)
+                    amount_total_tax * abs(factor),
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
-                    move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
+                    # Cuenta analitica del impuesto(aml)
+                    move_line_tax.get('tax_analytic_id'),
                     amount_base_secondary,  # Monto base(aml)
                     factor, statement_currency_line=statement_currency_line,
                     context=context)
@@ -406,7 +414,8 @@ class account_bank_statement_line(osv.osv):
             return [[new_id, move_line_exch_id], rec_ids]
         return [[], rec_ids]
 
-    def _get_factor_type(self, cr, uid, amount=False, ttype=False, context=None):
+    def _get_factor_type(self, cr, uid, amount=False, ttype=False,
+                         context=None):
         if context is None:
             context = {}
         factor_type = [-1, 1]
@@ -510,7 +519,8 @@ class account_bank_statement_line(osv.osv):
                     # En la posicion [1] agregamos el ID de la aml que contiene
                     # el impuesto para ser pagado y conciliado con la aml del
                     # pago en voucher o bank statement
-                    account_group[move_line_id.account_id.id][1] = move_line_id.id
+                    account_group[move_line_id.account_id.id][1] = \
+                        move_line_id.id
 
         for move_account_tax in account_group:
             amount_base_secondary = 0

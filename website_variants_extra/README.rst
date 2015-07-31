@@ -1,5 +1,8 @@
+Website Extra Variants Options
+==============================
+
 Extra options to show Products Variants
----
+---------------------------------------
 
 In this module we tend to add several ways/options to show product Variants on your 
 e-commerce.
