@@ -7,7 +7,7 @@ virtualenv:
   system_site_packages: true
 
 env:
-  - VERSION="8.0" ODOO_REPO="vauxoo/odoo" LINT_CHECK=1 TESTS=0 ODOO_LINT=1 INCLUDE_CHANGED=
+  - VERSION="8.0" ODOO_REPO="vauxoo/odoo" LINT_CHECK=1 TESTS=0 ODOO_LINT=1 INCLUDE_CHANGED=1
 
 addons:
   apt:
