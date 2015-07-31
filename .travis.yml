@@ -20,7 +20,7 @@ addons:
 install:
   # Install packages
 
-  - git clone --single-branch --depth=1 https://github.com/vauxoo-dev/maintainer-quality-tools.git -b 8.0-vx#3913-kty ${HOME}/maintainer-quality-tools
+  - git clone --single-branch --depth=1 https://github.com/vauxoo-dev/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - curl https://raw.githubusercontent.com/OCA/maintainer-quality-tools/master/travis/requirements.txt -o ${HOME}/.requirements.txt
   - sudo pip install -q -r ${HOME}/.requirements.txt
