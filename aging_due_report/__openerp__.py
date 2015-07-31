@@ -52,7 +52,8 @@
     "active": False,
     "external_dependencies": {
         "python": [
-            'pandas'
+            'pandas',
+            'egenix-mx-base'
         ]
     }
 }

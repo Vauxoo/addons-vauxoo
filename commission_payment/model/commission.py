@@ -1,5 +1,4 @@
 from openerp.osv import osv, fields
-import mx.DateTime
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime
 from openerp.tools.translate import _
@@ -15,6 +14,12 @@ except ImportError:
                  ' from addons-vauxoo '
                  ' you will need: sudo pip install pandas')
 
+try:
+    import mx.DateTime
+except ImportError:
+    _logger.info('account_currency_tools is declared '
+                 ' from addons-vauxoo '
+                 ' you will need:  sudo easy_install egenix-mx-base')
 COMMISSION_STATES = [
     ('draft', 'Draft'),
     ('open', 'In Progress'),

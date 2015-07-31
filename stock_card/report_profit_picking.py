@@ -33,7 +33,15 @@ from openerp.tools.sql import drop_view_if_exists
 
 import time
 import datetime
-from mx.DateTime import *
+
+try:
+    # TODO: Delete this module or fix this.
+    from mx.DateTime import *
+except ImportError:
+    _logger.info('stock_card is declared '
+                 ' from addons-vauxoo '
+                 ' you will need:  sudo easy_install egenix-mx-base')
+
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 

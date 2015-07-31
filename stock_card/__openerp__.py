@@ -23,34 +23,40 @@
 ################################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Stock Card", 
-    "version": "0.5", 
-    "author": "Vauxoo", 
-    "category": "Localization", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Stock Card",
+    "version": "0.5",
+    "author": "Vauxoo",
+    "category": "Localization",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "product", 
-        "purchase", 
-        "account", 
-        "stock", 
+        "base",
+        "product",
+        "purchase",
+        "account",
+        "stock",
         "report_profit"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/stock_card_security.xml", 
-        "security/ir.model.access.csv", 
-        "stock_view.xml", 
-        "report_profit_picking_view.xml", 
-        "stock_card_view.xml", 
+        "security/stock_card_security.xml",
+        "security/ir.model.access.csv",
+        "stock_view.xml",
+        "report_profit_picking_view.xml",
+        "stock_card_view.xml",
         "stock_card_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "external_dependencies": {
+        "python": [
+            'pandas',
+            'egenix-mx-base'
+        ]
+    },
     "active": False
 }
