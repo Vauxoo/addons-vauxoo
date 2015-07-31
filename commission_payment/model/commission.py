@@ -3,7 +3,17 @@ import mx.DateTime
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime
 from openerp.tools.translate import _
-from pandas import DataFrame
+import logging
+
+_logger = logging.getLogger(__name__)
+
+# Extra Imports
+try:
+    from pandas import DataFrame
+except ImportError:
+    _logger.info('account_currency_tools is declared '
+                 ' from addons-vauxoo '
+                 ' you will need: sudo pip install pandas')
 
 COMMISSION_STATES = [
     ('draft', 'Draft'),
