@@ -7,7 +7,7 @@ class TestPaymentTax(TestTaxCommon):
     """
         These Tests were made based on this document,
         https://docs.google.com/a/vauxoo.com/spreadsheets/d/1O82bBb-mySbpH7SiY1KQILsIIRMgcO5E0ddNuCGC0N8/edit#gid=0
-        to test the successful creation of taxes efectivamete pagado / cobrado
+        to test the successful creation of taxes Efectivaly paid and received.
         of supplier in payments by bank statement
     """
 
