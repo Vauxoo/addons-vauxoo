@@ -6,6 +6,9 @@ python:
 virtualenv:
   system_site_packages: true
 
+env:
+  - VERSION="8.0" ODOO_REPO="vauxoo/odoo" LINT_CHECK=0 TESTS=0 ODOO_LINT=1
+
 addons:
   apt:
     packages:
@@ -17,6 +20,8 @@ addons:
 install:
   # Install packages
 
+  - git clone --single-branch --depth=1 https://github.com/vauxoo-dev/maintainer-quality-tools.git -b 8.0-vx#3913-kty ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - curl https://raw.githubusercontent.com/OCA/maintainer-quality-tools/master/travis/requirements.txt -o ${HOME}/.requirements.txt
   - sudo pip install -q -r ${HOME}/.requirements.txt
 
@@ -53,3 +58,6 @@ script:
   - PYTHONPATH=${PYTHONPATH}:${HOME}/.odoo-${TRAVIS_BRANCH} pylint --rcfile=${HOME}/.pylint.conf ${INCLUDE} -d I0011,F0401
   - flake8 --config=${HOME}/.flake8__init__.cfg ${INCLUDE}
   - flake8 --config=${HOME}/.flake8.cfg ${INCLUDE}
+
+  # Check module Vauxoo standard.
+  - travis_run_tests
