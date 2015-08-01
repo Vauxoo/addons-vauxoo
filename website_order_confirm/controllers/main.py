@@ -50,7 +50,7 @@ class website_sale_inh(website_sale):
 
         if (not order.amount_total and not tx) or tx.state in [
                 'pending', 'done']:
-            if (not order.amount_total and not tx):
+            if not order.amount_total and not tx:
                 # Orders are confirmed by payment transactions, but there is
                 # none for free orders,
                 # (e.g. free events), so confirm immediately
