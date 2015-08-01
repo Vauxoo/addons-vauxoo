@@ -35,6 +35,9 @@ from openerp.tools.sql import drop_view_if_exists
 import time
 import datetime
 
+import logging
+_logger = logging.getLogger(__name__)
+
 try:
     from mx.DateTime import *
 except ImportError:
