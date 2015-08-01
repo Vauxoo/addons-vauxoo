@@ -33,7 +33,8 @@ from openerp.tools.sql import drop_view_if_exists
 
 import time
 import datetime
-
+import logging
+_logger = logging.getLogger(__name__)
 try:
     # TODO: Delete this module or fix this.
     from mx.DateTime import *
