@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-11-07 01:14+0000\n"
-"PO-Revision-Date: 2015-08-03 13:08+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-03 15:34+0200\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
 "Language-Team: Macedonian <mk@li.org>\n"
+"Language: mk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
 "X-Generator: Poedit 1.8.2\n"
-"Last-Translator: \n"
-"Language: mk\n"
 
 #. module: account_aged_partner_balance_vw
 #: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:66
@@ -110,8 +110,9 @@ msgstr ""
 #: field:account.aged.partner.document,document_id:0
 #: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:193
 #: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:370
+#, fuzzy
 msgid "Document"
-msgstr ""
+msgstr "Историја на страница на документ"
 
 #. module: account_aged_partner_balance_vw
 #: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:17
@@ -331,8 +332,9 @@ msgstr ""
 #. module: account_aged_partner_balance_vw
 #: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:194
 #: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:371
+#, fuzzy
 msgid "Type"
-msgstr ""
+msgstr "Tип"
 
 #. module: account_aged_partner_balance_vw
 #: selection:account.aged.trial.balance,type:0
@@ -414,8 +416,9 @@ msgstr ""
 
 #. module: account_aged_partner_balance_vw
 #: view:wizard.report.aged.partner.balance:0
+#, fuzzy
 msgid "Cancel"
-msgstr ""
+msgstr "Откажи"
 
 #. module: account_aged_partner_balance_vw
 #: field:account.aged.partner.balance.vw,partner_id:0
