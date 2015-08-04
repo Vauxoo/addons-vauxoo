@@ -27,7 +27,7 @@
 ###############################################################################
 {
     "name": "Send mail when create a task", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Project", 
     "website": "http://vauxoo.com", 
