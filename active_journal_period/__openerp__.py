@@ -26,7 +26,7 @@
 ##############################################################################
 {
     "name": "Active in view Journal and Period", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
     "website": "http://www.vauxoo.com/", 
