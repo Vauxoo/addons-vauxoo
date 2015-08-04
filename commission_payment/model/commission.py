@@ -412,9 +412,9 @@ class commission_payment(osv.Model):
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         # Determinar dias entre la emision de la factura del producto y el pago
         # del mismo
-        pay_date = datetime.strptime(pay_date, '%Y-%m-%d')
-        inv_date = datetime.strptime(inv_date, '%Y-%m-%d')
-        emission_days = (pay_date - inv_date).day
+        pay_date = datetime.datetime.strptime(pay_date, '%Y-%m-%d')
+        inv_date = datetime.datetime.strptime(inv_date, '%Y-%m-%d')
+        emission_days = (pay_date - inv_date).days
 
         # Teniendose dias y descuento por producto se procede a buscar en el
         # baremo el correspondiente valor de comision para el producto en
