@@ -147,6 +147,128 @@ Manufacturing Order Section &gt; Planning Section
      </tt>
      .
     </p>
+    <p>
+     A Work Order Lot (
+     <strong>
+      WOL
+     </strong>
+     ) is a new model that manage the work orders by a
+set of this elements calling with the name of Lot.
+    </p>
+    <p>
+     This Lot is associated to the Manufacturing Order and its creation is
+automatic by taking into account the workcenter products capaicty boottle
+neck in a routing.
+    </p>
+    <ul class="simple">
+     <li>
+      A Work Order Lot is in progress (active) when is in 'open' or 'pending'
+state.
+     </li>
+     <li>
+      When a Work Order Lot is in 'draft', 'picking', 'ready', 'done' or 'cancel'
+state can its associated work orders can change of state.
+     </li>
+    </ul>
+   </div>
+   <div class="section" id="menu">
+    <h2>
+     Menu
+    </h2>
+    <ul class="simple">
+     <li>
+      The
+      <tt class="docutils literal">
+       Ready to Picking
+      </tt>
+      menu is visible for the warehouse/stock user.
+     </li>
+     <li>
+      The
+      <tt class="docutils literal">
+       Active Work Order Lots
+      </tt>
+      menu is visible for the
+production/manufacturing manager.
+     </li>
+     <li>
+      The
+      <tt class="docutils literal">
+       Active Work Orders
+      </tt>
+      menu is visible for
+     </li>
+    </ul>
+   </div>
+   <div class="section" id="states">
+    <h2>
+     States
+    </h2>
+    <ul class="simple">
+     <li>
+      <strong>
+       New
+      </strong>
+      (
+      <tt class="docutils literal">
+       draft
+      </tt>
+      ): Te Lot have been created and is waiting to be activated.
+     </li>
+     <li>
+      <strong>
+       Picking
+      </strong>
+      (
+      <tt class="docutils literal">
+       picking
+      </tt>
+      ): The Lot its active and ready start the consume.
+     </li>
+     <li>
+      <strong>
+       In Progress
+      </strong>
+      (
+      <tt class="docutils literal">
+       open
+      </tt>
+      ): The Lot is already consumed and the work orders
+associated need to be started and finished.
+     </li>
+     <li>
+      <strong>
+       Paused
+      </strong>
+      (
+      <tt class="docutils literal">
+       pending
+      </tt>
+      ): Its set when some work order that belongs to the
+work order lot is in pending state, so also the work order lot its in
+Paused state.
+     </li>
+     <li>
+      <strong>
+       Done
+      </strong>
+      (
+      <tt class="docutils literal">
+       done
+      </tt>
+      ): The work order lot have produce a production lot.
+     </li>
+     <li>
+      <strong>
+       Cancelled
+      </strong>
+      (
+      <tt class="docutils literal">
+       cancel
+      </tt>
+      ):
+     </li>
+    </ul>
    </div>
    <div class="section" id="consume-and-produce-processes">
     <h2>
@@ -450,175 +572,42 @@ of the current produce product.
     </ol>
    </div>
   </div>
-  <div class="section" id="id1">
-   <h1>
-    Work Order Lot
-   </h1>
-   <p>
-    A Work Order Lot (
-    <strong>
-     WOL
-    </strong>
-    ) is a new model that manage the work orders by a
-set of this elements calling with the name of Lot.
-   </p>
-   <p>
-    This Lot is associated to the Manufacturing Order and its creation is
-automatic by taking into account the workcenter products capaicty boottle
-neck in a routing.
-   </p>
-   <ul class="simple">
-    <li>
-     A Work Order Lot is in progress (active) when is in 'open' or 'pending'
-state.
-    </li>
-    <li>
-     When a Work Order Lot is in 'draft', 'picking', 'ready', 'done' or 'cancel'
-state can its associated work orders can change of state.
-    </li>
-   </ul>
-   <div class="section" id="menu">
-    <h2>
-     Menu
-    </h2>
-    <ul class="simple">
-     <li>
-      The
-      <tt class="docutils literal">
-       Ready to Picking
-      </tt>
-      menu is visible for the warehouse/stock user.
-     </li>
-     <li>
-      The
-      <tt class="docutils literal">
-       Active Work Order Lots
-      </tt>
-      menu is visible for the
-production/manufacturing manager.
-     </li>
-     <li>
-      The
-      <tt class="docutils literal">
-       Active Work Orders
-      </tt>
-      menu is visible for
-     </li>
-    </ul>
-   </div>
-   <div class="section" id="states">
-    <h2>
-     States
-    </h2>
-    <ul class="simple">
-     <li>
-      <strong>
-       New
-      </strong>
-      (
-      <tt class="docutils literal">
-       draft
-      </tt>
-      ): Te Lot have been created and is waiting to be activated.
-     </li>
-     <li>
-      <strong>
-       Picking
-      </strong>
-      (
-      <tt class="docutils literal">
-       picking
-      </tt>
-      ): The Lot its active and ready start the consume.
-     </li>
-     <li>
-      <strong>
-       In Progress
-      </strong>
-      (
-      <tt class="docutils literal">
-       open
-      </tt>
-      ): The Lot is already consumed and the work orders
-associated need to be started and finished.
-     </li>
-     <li>
-      <strong>
-       Paused
-      </strong>
-      (
-      <tt class="docutils literal">
-       pending
-      </tt>
-      ): Its set when some work order that belongs to the
-work order lot is in pending state, so also the work order lot its in
-Paused state.
-     </li>
-     <li>
-      <strong>
-       Done
-      </strong>
-      (
-      <tt class="docutils literal">
-       done
-      </tt>
-      ): The work order lot have produce a production lot.
-     </li>
-     <li>
-      <strong>
-       Cancelled
-      </strong>
-      (
-      <tt class="docutils literal">
-       cancel
-      </tt>
-      ):
-     </li>
-    </ul>
-   </div>
-  </div>
  </div>
 </section>
 <section class="oe_container">
     <div class="oe_row oe_spaced">
-        <div class="oe_span12">
-             <h2 class="oe_slogan">Support</h2>
-         </div>
-         <div class="oe_span6">
-             <p class="oe_mt32">
- For services and support contact us directly by our social networks or our website. This description contains links and our number phone.
-             </p>
-         </div>
         <div class="oe_span6">
-            <br>
+            <h2 class="oe_slogan">Do you need help?</h2>
+            <h3 class="oe_slogan">
+                Let's offer you the best services!
+            </h3>
+            <p class="oe_mt32 text-center">
+                Contact us by our official channels.
+            </p>
+            <div class="oe_spaced">
+                <ul class="text-center list-inline">
+                    <li>
+                        <a href="https://facebook.com/vauxoo" Target="_blank"><i class="fa fa-facebook-square fa-xs backgrounds"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/vauxoo" Target="_blank" ><i class="fa fa-twitter-square fa-xs backgrounds"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/company/vauxoo" Target="_blank"><i class="fa fa-linkedin-square fa-xs backgrounds"></i></a>
+                    </li>
+                    <li>
+                        <a title="Contact us" data-toggle="tooltip" data-placement="left" Target="_blank" href="https://www.vauxoo.com/page/website.contactus"><i class="fa fa-envelope-square fa-xs backgrounds"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="oe_span6">
             <div class="oe_demo oe_picture oe_screenshot">
                 <a href="https://www.vauxoo.com"  target="_blank"r>
-                    <img src="VAUXOO.png" width="200" height="150">
+                    <img src="https://s3.amazonaws.com/s3.vauxoo.com/description_logo.png" width="200" height="auto">
                 </a>
-            <div class="oe_demo_footer oe_centeralign">Go to web site</div>
+                <div class="oe_demo_footer oe_centeralign">Meet Us</div>
+            </div>
         </div>
-        </div>
-      </div>
-     <div class="col-md-12">
-        <ul id="contact" class="list-inline">
-          <li class="hidden-xs">
-            <i class="fa fa-phone fa-1x backgrounds"></i><span style="color:#a41d35">+52 (477) 773.33.46</span>
-          </li>
-          <li class="hidden-xs">
-            <i class="fa fa-envelope fa-1x backgrounds"></i><a href="mailto:info@vauxoo.com" style="color:#a41d35">info@vauxoo.com</a>
-          </li>
-          <li>
-            <a href="https://facebook.com/vauxoo" Target="_blank"><i class="fa fa-facebook-square fa-xs backgrounds"></i></a>
-          </li>
-          <li>
-            <a href="https://twitter.com/vauxoo" Target="_blank" ><i class="fa fa-twitter-square fa-xs backgrounds"></i></a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/company/vauxoo" Target="_blank"><i class="fa fa-linkedin-square fa-xs backgrounds"></i></a>
-          </li>
-          <li>
-            <a title="Contact us" data-toggle="tooltip" data-placement="left" Target="_blank" href="https://www.vauxoo.com/page/website.contactus"><i class="fa fa-envelope-square fa-xs backgrounds"></i></a>
-          </li>
-        </ul>
-        </div>
+    </div>
 </section>
