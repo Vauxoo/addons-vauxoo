@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Add many followers in many task or project",
-    "version": "1.6",
+    "version": "1.7",
     "author": "Vauxoo",
     "category": "Task and Project",
     "website": "http://www.vauxoo.com/",
