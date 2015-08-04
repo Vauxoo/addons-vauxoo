@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from openerp.addons.report.controllers import main
-from openerp.addons.web.http import route, request # pylint: disable=F0401
-from werkzeug import url_decode # pylint: disable=E0611
+from openerp.addons.web.http import route, request  # pylint: disable=F0401
+from werkzeug import url_decode  # pylint: disable=E0611
 import simplejson
 import lxml.html
 
