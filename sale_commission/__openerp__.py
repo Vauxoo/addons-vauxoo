@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Sale Commission", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Sale", 
     "website": "http://vauxoo.com", 
