@@ -3,7 +3,7 @@
     'category': 'website',
     'summary': 'Direct confirmation of SO',
     'website': 'http://vauxoo.com',
-    'version': '1.0',
+    'version': '1.1',
     'description': """
     This app allows to transfer all purchases from website
     directly to Sale Order instead of making it a Quotation.
