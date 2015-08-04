@@ -24,7 +24,7 @@
 ##############################################################################
 {
     "name": "Update Period", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Tools", 
     "website": "http://wiki.openerp.org.ve/", 
