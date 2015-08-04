@@ -21,7 +21,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Purchase order lines with discounts", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Tiny, Acysos S.L.", 
     "category": "Generic Modules/Sales & Purchases", 
     "website": "", 
