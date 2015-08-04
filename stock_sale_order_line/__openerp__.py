@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Stock Sale Order Line",
-    "version": "1.5",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "sale",
     "website": "http://www.vauxoo.com/",
