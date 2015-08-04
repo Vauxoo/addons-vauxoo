@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Commision against Margin", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Sales & Purchases", 
     "website": "http://vauxoo.com", 
