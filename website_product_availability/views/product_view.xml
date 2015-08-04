@@ -22,5 +22,29 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="product_template_stock_wh_product_form_view" model="ir.ui.view">
+            <field name="name">product.template.stock.wh.product.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='status']" position="after">
+                    <group name="location_quants" string="Location Quants">
+                        <field name="product_stock_quants_ids" 
+                            nolabel="1" colspan="2">
+                            <tree create="false" edit="false" delete="false">
+                                <field name="location_id"/>
+                                <field name="qty"/>
+                                
+                            </tree>
+                            <!--<field name="product_stock_quants" 
+                            context="{'tree_view_ref':'stock.product_open_quants',
+                                      'group_by':'location_id'}" nolabel="1" colspan="2">
+                        </field>-->
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
