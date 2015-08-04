@@ -24,7 +24,7 @@
 ############################################################################
 {
     "name": "Serial Picking Manager", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Product Serialization", 
     "website": "http://www.vauxoo.com", 
