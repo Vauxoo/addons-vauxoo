@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "MRP Request Add Item", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "MRP", 
     "website": "http://vauxoo.com", 
