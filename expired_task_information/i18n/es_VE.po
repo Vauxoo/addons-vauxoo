@@ -1,19 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* expired_task_information
+# 	* expired_task_information
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-12 18:31+0000\n"
-"PO-Revision-Date: 2013-08-12 18:31+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es_VE\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: expired_task_information
 #: help:task.expired.config,before_expiry:0
@@ -39,9 +41,11 @@ msgstr "Configurar Tarea"
 
 #. module: expired_task_information
 #: help:task.expired.config,without_change:0
-msgid "Days number that tasks may have without changes.\n"
+msgid ""
+"Days number that tasks may have without changes.\n"
 "When these days finish an email information is sent"
-msgstr "Numero de dias que las tareas pueden tener sin cambios.\n"
+msgstr ""
+"Numero de dias que las tareas pueden tener sin cambios.\n"
 "Cuando estos dias se cumplan un correo con esta informacion es enviado"
 
 #. module: expired_task_information
@@ -107,4 +111,3 @@ msgstr "Configurar Tareas Vencidas"
 #, python-format
 msgid "<p>The task will expire in %s days</p>"
 msgstr "<p>La tarea expirara en %s dias</p>"
-

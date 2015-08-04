@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* product_historical_price
+# 	* product_historical_price
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2013-11-07 01:08+0000\n"
-"PO-Revision-Date: 2013-11-07 04:33+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: Moisés López - http://www.vauxoo.com "
 "<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es_VE\n"
 
 #. module: product_historical_price
 #: field:product.product,cost_historical:0
@@ -51,8 +52,10 @@ msgstr "Lista de precio Historico"
 #: help:product.historic.price,product_uom:0
 msgid ""
 "Choose here the Unit of Measure\n"
-"                                               in which the prices and\n"
-"                                               quantities are expressed\n"
+"                                               in which the "
+"prices and\n"
+"                                               quantities are "
+"expressed\n"
 "                                               below."
 msgstr ""
 

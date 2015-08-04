@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-06 00:54+0000\n"
-"PO-Revision-Date: 2015-03-06 00:54+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2015-08-03 15:47+0200\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
@@ -74,4 +76,3 @@ msgstr "Apuntes Sin conciliar No CxC/CxP"
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Unreconciled No AP/AR Journal Items"
 msgstr "Apuntes Sin conciliar No CxC/CxP"
-
