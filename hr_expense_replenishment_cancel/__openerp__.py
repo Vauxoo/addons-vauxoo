@@ -22,7 +22,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Expenses Replenishment Cancel", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
     "website": "http://www.vauxoo.com/", 
