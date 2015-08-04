@@ -21,7 +21,7 @@
 
 {
     'name': 'Automatic Product Attributes',
-    'version': '1.5',
+    'version': '1.6',
     'category': 'Tools',
     'author': 'Vauxoo',
     'depends': [
