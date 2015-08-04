@@ -122,7 +122,6 @@ class ProductTemplate(osv.Model):
                     cr, uid, location_quant_ids, context=context)
             ctx = dict(context)
             new_quants = []
-            print stock_locations_ids
             for location in stock_locations_ids:
                 ctx['location'] = location
                 qtys = self._product_available(
@@ -135,7 +134,19 @@ class ProductTemplate(osv.Model):
                 new_quants.append(new_id)
 
             res[product_id] = new_quants
-            print res
+        return res
+
+    def _get_planned_dates(
+            self, cr, uid, ids, field_names, arg=None, context=None):
+        pol_obj = self.pool.get('purchase.order.line')
+        res = {}
+        for product_id in ids:
+            products = self._get_products(cr, uid, ids, context=context)
+            pol_ids = pol_obj.search(
+                cr, uid, [('product_id', 'in', products),
+                          ('state', 'in', ('draft', 'confirmed'))],
+                context=context)
+            res[product_id] = pol_ids
         return res
 
     _columns = {
@@ -143,4 +154,9 @@ class ProductTemplate(osv.Model):
             _get_locations_quants,
             relation='location.quants',
             type='one2many',
-            string='Locations Quants')}
+            string='Locations Quants'),
+        'product_planned_dates_ids': fields.function(
+            _get_planned_dates,
+            relation='purchase.order.line',
+            type='one2many',
+            string='Locations Quants'), }

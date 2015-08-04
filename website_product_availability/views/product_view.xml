@@ -37,10 +37,17 @@
                                 <field name="qty"/>
                                 
                             </tree>
-                            <!--<field name="product_stock_quants" 
-                            context="{'tree_view_ref':'stock.product_open_quants',
-                                      'group_by':'location_id'}" nolabel="1" colspan="2">
-                        </field>-->
+                        </field>
+                    </group>
+                </xpath>
+                 <xpath expr="//group[@name='status']" position="after">
+                    <group name="dates_planned_2_delivery" string="Dates Planned to delivery">
+                        <field name="product_planned_dates_ids"
+                            nolabel="1">
+                            <tree create="false" edit="false" delete="false">
+                                <field name="date_planned"/>
+                                <field name="order_id"/>
+                            </tree>
                         </field>
                     </group>
                 </xpath>
