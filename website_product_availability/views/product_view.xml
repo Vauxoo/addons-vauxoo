@@ -26,9 +26,9 @@
         <record id="product_template_stock_wh_product_form_view" model="ir.ui.view">
             <field name="name">product.template.stock.wh.product.form.view</field>
             <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@name='status']" position="after">
+                <xpath expr="//group[@name='store']" position="after">
                     <group name="location_quants" string="Location Quants">
                         <field name="product_stock_quants_ids" 
                             nolabel="1" colspan="2">
@@ -39,8 +39,6 @@
                             </tree>
                         </field>
                     </group>
-                </xpath>
-                 <xpath expr="//group[@name='status']" position="after">
                     <group name="dates_planned_2_delivery" string="Dates Planned to delivery">
                         <field name="product_planned_dates_ids"
                             nolabel="1">

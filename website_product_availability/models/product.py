@@ -85,9 +85,9 @@ class LocationQuants(osv.Model):
     _name = 'location.quants'
 
     _columns = {
-        'product_id': fields.many2one('product.template'),
-        'location_id': fields.many2one('stock.location'),
-        'qty': fields.float()
+        'product_id': fields.many2one('product.template', 'Product'),
+        'location_id': fields.many2one('stock.location', 'Stock Location'),
+        'qty': fields.float('Quantity')
     }
 
 
