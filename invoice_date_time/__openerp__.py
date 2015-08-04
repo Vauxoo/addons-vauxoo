@@ -26,7 +26,7 @@
 ##############################################################################
 {
     "name": "Invoice Date Time", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Localization", 
     "website": "http://www.vauxoo.com/", 
