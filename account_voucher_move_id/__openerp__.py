@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Show Journal Entry in voucher", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
     "website": "http://www.vauxoo.com", 
