@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Incoterm Decription", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Sales", 
     "website": "http://vauxoo.com", 
