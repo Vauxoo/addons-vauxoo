@@ -22,7 +22,7 @@
 ##############################################################################
 {
     "name": "Parent_left and parent_right Partner Creation",
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
     "website": "http://www.vauxoo.com/", 
