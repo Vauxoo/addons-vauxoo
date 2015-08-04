@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Fetchmail Corrections", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Tools", 
     "website": "http://vauxoo.com", 
