@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Purchase Requisition Line View", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
     "website": "http://www.vauxoo.com/", 
