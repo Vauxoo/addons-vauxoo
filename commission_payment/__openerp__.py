@@ -66,7 +66,8 @@
     "external_dependencies": {
         "python": [
             'pandas',
-            'egenix-mx-base'
+            # This is now longer true, datetime module is standard in python
+            # 'egenix-mx-base',
         ]
     }
 }
