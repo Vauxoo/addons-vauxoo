@@ -21,7 +21,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Validate Stock Picking", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Stock", 
     "website": "http://www.vauxoo.com", 
