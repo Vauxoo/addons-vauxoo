@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
   	<openerp>
 		<data>
-			<template id="checkout_validated">
-				<xpath expr="//div[@class='form-group #{error.get('zip') and 'has-error' or ''} col-lg-6']" position="replace">
-
+			<template id="checkout_validated" inherit_id="website_sale.checkout">
+				<xpath expr="//div[@class='row']/div[10]" position="replace">
 				</xpath>
 			</template>
 		</data>

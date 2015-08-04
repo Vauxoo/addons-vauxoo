@@ -11,10 +11,10 @@
     ],
     "demo": [],
     "data": [
+        'views/templates.xml'
     ],
     "test": [],
     "qweb": [
-        'views/templates.xml'
              ],
     "installable": True,
     "auto_install": False,
