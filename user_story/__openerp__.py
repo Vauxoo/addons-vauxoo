@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "User Story",
-    "version": "2.5",
+    "version": "2.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
