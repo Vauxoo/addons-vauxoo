@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "MRP request return cancel", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "MRP", 
     "website": "", 

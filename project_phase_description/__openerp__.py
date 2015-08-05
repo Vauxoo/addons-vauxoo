@@ -25,7 +25,7 @@
 #
 {
     "name": "Project Phase Description", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
     "website": "http://vauxoo.com", 

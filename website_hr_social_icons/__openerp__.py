@@ -3,7 +3,7 @@
     'category': 'Website',
     'summary': 'Present your social icons on team page',
     'website': 'www.vauxoo.com',
-    'version': '1.5',
+    'version': '1.6',
     'author': 'Vauxoo',
     'depends': [
         'website_hr',

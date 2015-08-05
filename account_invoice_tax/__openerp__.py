@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Account Invoice Tax",
-    "version": "2.0", 
+    "version": "2.1", 
     "author": "Vauxoo", 
     "category": "Localization/Mexico", 
     "website": "http://www.vauxoo.com/", 

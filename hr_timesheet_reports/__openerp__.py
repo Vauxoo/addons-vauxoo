@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Timesheet reports used internally",
-    "version": "1.5",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Tools",
     "summary": "A great way to report timesheet's consumption of time",

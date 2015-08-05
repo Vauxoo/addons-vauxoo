@@ -25,7 +25,7 @@
 #
 {
     "name": "Partner Validate VAT", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Addons-vauxoo", 
     "website": "http://www.vauxoo.com/", 

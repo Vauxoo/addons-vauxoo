@@ -22,7 +22,7 @@
 #"license" : "AGPL-3",
 {
     "name": "Inherit ref field in search view of res_partner", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://vauxoo.com", 

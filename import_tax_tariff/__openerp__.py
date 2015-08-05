@@ -23,7 +23,7 @@
 # ############################################################################
 {
     "name": "Import Tax and Tariff",
-    "version": "1.5",
+    "version": "1.6",
     "summary": "Import Tax and Tariff",
     "depends": [
         "account_accountant",

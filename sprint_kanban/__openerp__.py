@@ -1,7 +1,7 @@
 # -*- enconding: utf-8 -*-
 {
     "name": "Sprint Kanban",
-    "version": "1.5",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Project",
     "website": "http://vauxoo.com",

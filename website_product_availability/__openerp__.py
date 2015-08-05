@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Website Product Availability",
-    "version": "1.5",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Website",
     "website": "http://www.vauxoo.com/",

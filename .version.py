@@ -9,8 +9,8 @@ def write_version(pathdescriptor):
         ddescriptor = filedescriptor.read()
         filedescriptor.close()
     desc = eval(ddescriptor)
-    version = desc.get('version', 'No Version Found') or '0.1'
-    new_version = '%s.%s' % (version.split('.')[0], '5')
+    version = float(desc.get('version', 0.0))
+    new_version = version + 0.1
     pattern = ''.join([
         r"(?P<base>[\"']{key}[\"']\s*:\s*)".format(
             key='version'),

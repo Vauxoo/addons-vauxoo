@@ -25,7 +25,7 @@
 
 {
     "name": "Project Configuration",
-    "version": "0.5",
+    "version": "0.6",
     "depends": ["base", "project", "email_template"],
     "author": "Vauxoo",
     "website" : "http://vauxoo.com",

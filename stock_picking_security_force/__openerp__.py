@@ -1,7 +1,7 @@
 {
     "name": "Force Availabity Secure",
     "summary": "Add security to the button Force Availability", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Stock", 
     "website": "www.vauxoo.com", 
