@@ -23,19 +23,13 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 import logging
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
 # Extra Imports
 try:
     from pandas import DataFrame
-except ImportError:
-    _logger.info('aging_due_report is declared '
-                 ' from addons-vauxoo '
-                 ' you will need: sudo pip install pandas')
-
-try:
-    import mx.DateTime
 except ImportError:
     _logger.info('aging_due_report is declared '
                  ' from addons-vauxoo '
@@ -50,11 +44,11 @@ class account_aging_wizard_document(osv.TransientModel):
     def _get_due_days(self, cr, uid, ids, field_names, arg, context=None):
         context = dict(context or {})
         res = {}.fromkeys(ids, False)
-        today = mx.DateTime.now()
+        today = datetime.now()
         for line in self.browse(cr, uid, ids, context=context):
             if line.date_due:
-                date_due = mx.DateTime.strptime(line.date_due, '%Y-%m-%d')
-                res[line.id] = (today - date_due).day
+                date_due = datetime.strptime(line.date_due, '%Y-%m-%d')
+                res[line.id] = (today - date_due).days
         return res
 
     _columns = {

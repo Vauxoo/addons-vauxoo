@@ -25,7 +25,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Sale UOM Group",
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo",
     "category": "Generic Modules/MRP", 
     "website": "http://vauxoo.com", 

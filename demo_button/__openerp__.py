@@ -1,6 +1,6 @@
 {
     "name": "Demo of Button on Menubar", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "", 
     "website": "", 

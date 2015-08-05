@@ -24,7 +24,7 @@
 ###############################################################################
 {
     "name": "Purchase Order Contract Analyst",
-    "version": "1.5",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "purchase",
     "website": "http://www.vauxoo.com/",

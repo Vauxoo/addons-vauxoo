@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Periodic Inventory Valuation", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
     "website": "http://vauxoo.com", 

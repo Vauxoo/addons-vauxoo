@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Account invoice Update", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Accounting", 
     "website": "http://vauxoo.com", 

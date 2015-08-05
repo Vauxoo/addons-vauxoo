@@ -3,7 +3,7 @@
     'category': 'website',
     'summary': 'This module enables RSS on Blog',
     'website': 'http://vauxoo.com',
-    'version': '1.5',
+    'version': '1.6',
     'author': 'Vauxoo',
     'depends': [
         'website_blog',

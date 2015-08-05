@@ -11,7 +11,7 @@
 
 {
     'name': 'Double validation in account_invoice',
-    'version': '1.5',
+    'version': '1.6',
     'author': 'Vauxoo',
     'category': '',
     'depends': [

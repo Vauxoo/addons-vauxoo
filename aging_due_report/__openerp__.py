@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Customer's Due Report",
-    "version": "0.5",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
     "website": "http://www.vauxoo.com/",
@@ -53,7 +53,6 @@
     "external_dependencies": {
         "python": [
             'pandas',
-            'egenix-mx-base'
         ]
     }
 }

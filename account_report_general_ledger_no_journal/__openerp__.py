@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Account Report General Ledger No Journal",
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "account", 
     "website": "http://www.vauxoo.com/", 

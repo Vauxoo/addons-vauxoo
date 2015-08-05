@@ -1,6 +1,6 @@
 {
     "name": "Sales Commissions Report", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Human Resources", 
     "website": "http://openerp.com.ve", 

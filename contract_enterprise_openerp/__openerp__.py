@@ -23,7 +23,7 @@
 #TODO:
 {
     "name": "Warranties Enterprise", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Contracts", 
     "website": "http://vauxoo.com", 

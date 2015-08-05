@@ -1,22 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* aging_due_report
+# 	* aging_due_report
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-20 18:58+0000\n"
-"PO-Revision-Date: 2015-05-20 19:17+0000\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
 "Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
-"Language-Team: Spanish <http://example.com/projects/addons-"
-"vauxoo/aging_due_report/es_MX/>\n"
+"Language-Team: Spanish <http://example.com/projects/addons-vauxoo/"
+"aging_due_report/es_MX/>\n"
 "Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.2-dev\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
@@ -593,7 +593,8 @@ msgstr "a"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
-msgid "to\n"
+msgid ""
+"to\n"
 "                                        -"
 msgstr ""
 "a\n"

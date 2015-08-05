@@ -321,6 +321,11 @@ class account_voucher(osv.Model):
             cr, uid, line_tax, amount_base_tax * factor, reference_amount,
             context=context)
 
+        amount_tax_sec = 0
+        if tax_secondary:
+            amount_tax_sec = self.pool.get('account.tax').browse(
+                cr, uid, tax_secondary, context=context).amount
+
         debit_line_vals = {
             'name': line_tax.name,
             'quantity': 1,
@@ -406,9 +411,10 @@ class account_voucher(osv.Model):
             debit_line_vals['debit'] = cur_obj.round(
                 cr, uid, src_acct.company_id.currency_id,
                 reference_amount/context.get('st_line_currency_rate'))
-            debit_line_vals['amount_base'] = cur_obj.round(
-                cr, uid, src_acct.company_id.currency_id,
-                abs(amount_base)/context.get('st_line_currency_rate'))
+            if amount_tax_sec:
+                debit_line_vals['amount_base'] = cur_obj.round(
+                    cr, uid, src_acct.company_id.currency_id,
+                    abs(amount_base)/context.get('st_line_currency_rate'))
         else:
             if reference_currency_id != src_main_currency_id:
                 # fix credit line:
@@ -421,9 +427,10 @@ class account_voucher(osv.Model):
                 debit_line_vals['debit'] = cur_obj.compute(
                     cr, uid, reference_currency_id, dest_main_currency_id,
                     reference_amount, context=context)
-                debit_line_vals['amount_base'] = cur_obj.compute(
-                    cr, uid, reference_currency_id, dest_main_currency_id,
-                    abs(amount_base), context=context)
+                if amount_tax_sec:
+                    debit_line_vals['amount_base'] = cur_obj.compute(
+                        cr, uid, reference_currency_id, dest_main_currency_id,
+                        abs(amount_base), context=context)
 
         if reference_currency_id != company_currency:
             debit_line_vals.update(

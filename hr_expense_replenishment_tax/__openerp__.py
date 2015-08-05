@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Expenses Replenishment Tax", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "HR Module", 
     "website": "http://openerp.com.ve", 

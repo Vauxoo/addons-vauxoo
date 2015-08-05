@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* invoice_multicompany_report
+# 	* invoice_multicompany_report
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2013-11-07 01:10+0000\n"
-"PO-Revision-Date: 2013-11-07 04:27+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: Moisés López - http://www.vauxoo.com "
 "<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es_VE\n"
 
 #. module: invoice_print_multicompany
 #: code:addons/invoice_print_multicompany/wizard/account_invoice_multicompany.py:45
@@ -66,7 +67,6 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: invoice_print_multicompany
-#: view:account.invoice:0
-#: view:print.account.invoice.report:0
+#: view:account.invoice:0 view:print.account.invoice.report:0
 msgid "Print Invoice"
 msgstr "Imprimir Factura"

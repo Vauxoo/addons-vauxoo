@@ -21,7 +21,7 @@
 ################################################################################
 {
     "name": "Wizard that disables accounts childs ", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
     "website": "http://vauxoo.com", 

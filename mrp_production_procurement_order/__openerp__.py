@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "MRP production procurement order", 
-    "version": "1.5", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://www.vauxoo.com/", 

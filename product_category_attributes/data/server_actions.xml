@@ -11,10 +11,14 @@
 categ_obj = pool.get('product.category')
 categ_ids = categ_obj.search(cr, uid, [('id','=',object.categ_id.id)])
 datas = []
+line_attrs = []
+for line in object.attribute_line_ids:
+    line_attrs.append(line.attribute_id.id)
 if categ_ids:
     for categ in categ_obj.browse(cr, uid, categ_ids, context):
         for attribute in categ.attribute_ids:
-            datas.append((0, 0, {'attribute_id':attribute.id}))
+            if attribute.id not in line_attrs:
+                datas.append((0, 0, {'attribute_id':attribute.id}))
         object.write({'attribute_line_ids': datas})]]>
             </field>
         </record>

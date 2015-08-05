@@ -27,7 +27,7 @@
 ###############################################################################
 {
     "name": "Icecat Product Uniqueness Checker", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Custom", 
     "website": "http://vauxoo.com", 

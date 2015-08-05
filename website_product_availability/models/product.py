@@ -71,10 +71,13 @@ class product_product(osv.Model):
         'low_stock': fields.integer('Low Stock', help="This field is used to show\
     on the website when a product has low availability, any number of stock\
     equals the value set or lower will show 'low avilability' on product "),
-        'stock_state': fields.function(_get_availability, type='selection',
-                                       method=True, selection=SELECTION_LIST,
-                                       string="Website Stock State",
-                                       store=True),
+        'stock_state': fields.function(
+            _get_availability, type='selection',
+            method=True, selection=SELECTION_LIST,
+            string="Website Stock State",
+            store={'product.product': (lambda self, cr, uid, ids,
+                                       context={}: ids, ['qty_available',
+                                                         'low_stock'], 15)}),
     }
     _default = {
         'low_stock': 0,

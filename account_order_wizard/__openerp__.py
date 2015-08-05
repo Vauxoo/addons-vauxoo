@@ -23,7 +23,7 @@
 ################################################################################
 {
     "name": "Account Order Wizard", 
-    "version": "0.5", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
     "website": "http://www.vauxoo.com", 

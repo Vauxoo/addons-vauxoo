@@ -1,20 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* mail_add_followers_multirecord
+# 	* mail_add_followers_multirecord
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:12+0000\n"
-"PO-Revision-Date: 2013-11-07 05:07+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es_VE\n"
 
 #. module: mail_add_followers_multirecord
 #: field:mail.wizard.invite,p_a_g:0
@@ -23,8 +24,7 @@ msgstr ""
 
 #. module: mail_add_followers_multirecord
 #: help:mail.wizard.invite,groups:0
-msgid ""
-"Used to add a followers group from mail group and not for Users directly"
+msgid "Used to add a followers group from mail group and not for Users directly"
 msgstr ""
 
 #. module: mail_add_followers_multirecord

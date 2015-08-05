@@ -1,20 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* sale_uncommitted_product
+# 	* sale_uncommitted_product
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2013-11-07 01:07+0000\n"
-"PO-Revision-Date: 2013-11-07 05:16+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:47+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es_VE\n"
 
 #. module: sale_uncommitted_product
 #: field:product.product,qty_committed:0
@@ -101,7 +102,8 @@ msgstr ""
 #: help:product.product,qty_uncommitted:0
 msgid ""
 "Current quantities of\n"
-"                                                   committed products in\n"
+"                                                   committed products "
+"in\n"
 "                                                   Committe Sale Orders.i"
 msgstr ""
 

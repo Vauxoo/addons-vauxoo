@@ -14,12 +14,6 @@ except ImportError:
                  ' from addons-vauxoo '
                  ' you will need: sudo pip install pandas')
 
-try:
-    import mx.DateTime
-except ImportError:
-    _logger.info('account_currency_tools is declared '
-                 ' from addons-vauxoo '
-                 ' you will need:  sudo easy_install egenix-mx-base')
 COMMISSION_STATES = [
     ('draft', 'Draft'),
     ('open', 'In Progress'),
@@ -418,9 +412,9 @@ class commission_payment(osv.Model):
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         # Determinar dias entre la emision de la factura del producto y el pago
         # del mismo
-        pay_date = mx.DateTime.strptime(pay_date, '%Y-%m-%d')
-        inv_date = mx.DateTime.strptime(inv_date, '%Y-%m-%d')
-        emission_days = (pay_date - inv_date).day
+        pay_date = datetime.datetime.strptime(pay_date, '%Y-%m-%d')
+        inv_date = datetime.datetime.strptime(inv_date, '%Y-%m-%d')
+        emission_days = (pay_date - inv_date).days
 
         # Teniendose dias y descuento por producto se procede a buscar en el
         # baremo el correspondiente valor de comision para el producto en
