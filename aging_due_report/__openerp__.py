@@ -53,7 +53,6 @@
     "external_dependencies": {
         "python": [
             'pandas',
-            'egenix-mx-base'
         ]
     }
 }
