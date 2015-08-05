@@ -3,6 +3,10 @@
 		<data>
 			<template id="checkout_validated" inherit_id="website_sale.checkout">
 				<xpath expr="//div[@class='row']/div[10]" position="replace">
+				   <div t-attf-class="form-group #{error.get('mobile') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="mobile" style="font-weight: normal">Mobile</label>
+                      <input type="text" name="mobile" class="form-control" t-att-value="checkout.get('mobile')"/>
+                  </div>
 				</xpath>
 			</template>
 		</data>
