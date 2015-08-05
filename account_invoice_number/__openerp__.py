@@ -24,24 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "Account Invoice Number v7", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Account Invoice Number",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_invoice_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

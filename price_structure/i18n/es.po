@@ -1,19 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* cost_structure
+# 	* cost_structure
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-06-07 15:01+0000\n"
-"PO-Revision-Date: 2012-06-07 10:40-0400\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: Jose <jose@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: cost_structure
 #: field:report.cost,price_subtotal:0
@@ -53,8 +55,7 @@ msgid "Select Price"
 msgstr "Selección de precio"
 
 #. module: cost_structure
-#: field:product.product,status_bool:0
-#: field:sale.order,status_bool:0
+#: field:product.product,status_bool:0 field:sale.order,status_bool:0
 #: field:sale.order,status_price:0
 msgid "Status Price"
 msgstr "Estado del Precio"
@@ -76,8 +77,7 @@ msgid "Cost and Price"
 msgstr "Costos y Precios"
 
 #. module: cost_structure
-#: field:cost.structure,company_id:0
-#: field:method.price,company_id:0
+#: field:cost.structure,company_id:0 field:method.price,company_id:0
 msgid "Company"
 msgstr "Compañía"
 
@@ -132,8 +132,7 @@ msgid "Report"
 msgstr "Reporte"
 
 #. module: cost_structure
-#: field:cost.structure,amount:0
-#: help:cost.structure,amount:0
+#: field:cost.structure,amount:0 help:cost.structure,amount:0
 msgid "Amount"
 msgstr "Total"
 
@@ -158,20 +157,17 @@ msgid "Date of registre creation"
 msgstr "Fecha en la cual fue registrada esta estructura de costo"
 
 #. module: cost_structure
-#: field:method.price,price_referen:0
-#: help:method.price,price_referen:0
+#: field:method.price,price_referen:0 help:method.price,price_referen:0
 msgid "Price Reference"
 msgstr "Precio de referencia"
 
 #. module: cost_structure
-#: field:cost.structure,qty_ant:0
-#: field:product.product,qty_ant:0
+#: field:cost.structure,qty_ant:0 field:product.product,qty_ant:0
 msgid "Ant Qty"
 msgstr "Cantidad Anterior "
 
 #. module: cost_structure
-#: field:cost.structure,min_margin:0
-#: field:method.price,min_margin:0
+#: field:cost.structure,min_margin:0 field:method.price,min_margin:0
 msgid "% Margin"
 msgstr "% Margen"
 
@@ -218,14 +214,12 @@ msgid "Supplier Invoice"
 msgstr "Factura de Proveedor"
 
 #. module: cost_structure
-#: field:cost.structure,type:0
-#: field:report.cost,type_inv:0
+#: field:cost.structure,type:0 field:report.cost,type_inv:0
 msgid "Type"
 msgstr "Tipo"
 
 #. module: cost_structure
-#: field:product.product,cost_ult:0
-#: help:product.product,cost_ult:0
+#: field:product.product,cost_ult:0 help:product.product,cost_ult:0
 #: field:report.cost,last_cost:0
 msgid "Last Cost"
 msgstr "Costo Actual"
@@ -320,14 +314,12 @@ msgid "Update Price List"
 msgstr "Actualizar lista de precio"
 
 #. module: cost_structure
-#: field:method.price,margin:0
-#: field:method.price,margin_reference:0
+#: field:method.price,margin:0 field:method.price,margin_reference:0
 msgid "Margin"
 msgstr "Margen"
 
 #. module: cost_structure
-#: field:product.product,cost_prom:0
-#: field:product.product,cost_to_price:0
+#: field:product.product,cost_prom:0 field:product.product,cost_to_price:0
 msgid "Average Cost"
 msgstr "Costo promedio"
 
@@ -421,14 +413,12 @@ msgid "Product type"
 msgstr "Tipo de producto"
 
 #. module: cost_structure
-#: view:method.price:0
-#: view:report.cost:0
+#: view:method.price:0 view:report.cost:0
 msgid "Method"
 msgstr "Método "
 
 #. module: cost_structure
-#: field:cost.structure,cost_ant:0
-#: field:product.product,cost_ant:0
+#: field:cost.structure,cost_ant:0 field:product.product,cost_ant:0
 msgid "Ant Cost"
 msgstr "Ultimo Costo"
 
@@ -438,8 +428,7 @@ msgid "Measuring unit above of this product obtained in the invoice from cost co
 msgstr "Unidad de medida promedia para este producto seleccionada en las facturas al momento de realizar el costo del producto"
 
 #. module: cost_structure
-#: help:cost.structure,min_margin:0
-#: help:method.price,min_margin:0
+#: help:cost.structure,min_margin:0 help:method.price,min_margin:0
 msgid "Porcent Margin Min"
 msgstr "Porcentaje de margen minimo "
 
@@ -482,8 +471,7 @@ msgid "Cost above, I had this product before the new calculation"
 msgstr "Costo anterior, es el costo que tenia este producto antes del nuevo calculo"
 
 #. module: cost_structure
-#: help:method.price,margin:0
-#: help:method.price,margin_reference:0
+#: help:method.price,margin:0 help:method.price,margin_reference:0
 msgid "Price Margin"
 msgstr "Margen de Precio"
 
@@ -493,21 +481,17 @@ msgid "Cost  and Prices"
 msgstr "Costos y Precios"
 
 #. module: cost_structure
-#: field:cost.structure,date_ant_om:0
-#: field:cost.structure,date_cost_ant:0
+#: field:cost.structure,date_ant_om:0 field:cost.structure,date_cost_ant:0
 #: field:cost.structure,date_cost_prom:0
 #: field:cost.structure,date_cost_suppler:0
 #: field:cost.structure,date_cost_to_price:0
-#: field:cost.structure,date_cost_ult:0
-#: field:cost.structure,date_prom_om:0
-#: field:cost.structure,date_ult_om:0
-#: field:product.product,date_ant_om:0
+#: field:cost.structure,date_cost_ult:0 field:cost.structure,date_prom_om:0
+#: field:cost.structure,date_ult_om:0 field:product.product,date_ant_om:0
 #: field:product.product,date_cost_ant:0
 #: field:product.product,date_cost_prom:0
 #: field:product.product,date_cost_suppler:0
 #: field:product.product,date_cost_to_price:0
-#: field:product.product,date_cost_ult:0
-#: field:product.product,date_prom_om:0
+#: field:product.product,date_cost_ult:0 field:product.product,date_prom_om:0
 #: field:product.product,date_ult_om:0
 msgid "Date"
 msgstr "Fecha"
@@ -594,8 +578,7 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: cost_structure
-#: field:account.invoice,cancel_check:0
-#: view:compute.cost:0
+#: field:account.invoice,cancel_check:0 view:compute.cost:0
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -615,8 +598,7 @@ msgid "To compute cost for all products"
 msgstr "Para calcular el costo para todos los productos"
 
 #. module: cost_structure
-#: field:cost.structure,qty_ult:0
-#: field:product.product,qty_ult:0
+#: field:cost.structure,qty_ult:0 field:product.product,qty_ult:0
 msgid "Last Qty"
 msgstr "Ultima cantidad "
 
@@ -626,8 +608,7 @@ msgid "Customer Invoice"
 msgstr "Facturas de Cliente"
 
 #. module: cost_structure
-#: field:cost.structure,cost_suppler:0
-#: help:cost.structure,cost_suppler:0
+#: field:cost.structure,cost_suppler:0 help:cost.structure,cost_suppler:0
 #: field:product.product,cost_suppler:0
 msgid "Supplier Cost"
 msgstr "Costo para proveedor"
@@ -658,8 +639,7 @@ msgid "Advance Options"
 msgstr "Opciones avanzadas"
 
 #. module: cost_structure
-#: field:compute.cost,product:0
-#: field:compute.cost,product_ids:0
+#: field:compute.cost,product:0 field:compute.cost,product_ids:0
 #: model:ir.model,name:cost_structure.model_product_product
 #: field:report.cost,product_id:0
 msgid "Product"
@@ -686,8 +666,7 @@ msgid "Price"
 msgstr "Price"
 
 #. module: cost_structure
-#: view:cost.structure:0
-#: view:product.product:0
+#: view:cost.structure:0 view:product.product:0
 msgid "Costos"
 msgstr "Costos"
 
@@ -852,4 +831,3 @@ msgstr "Calculo de fecha promedio"
 #: field:compute.cost,bolfili:0
 msgid "Boolean FIFO LIFO"
 msgstr "Boolean FIFO LIFO"
-

@@ -6,31 +6,32 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-11-07 01:13+0000\n"
-"PO-Revision-Date: 2014-01-11 14:24+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-04 06:42+0200\n"
+"PO-Revision-Date: 2015-08-04 06:42+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: account_chart_wiz_dates
-#: field:account.chart,end_date:0
-msgid "End date"
+#: model:ir.model,name:account_chart_wiz_dates.model_account_chart
+msgid "Account chart"
 msgstr ""
 
 #. module: account_chart_wiz_dates
-#: view:account.chart:0
+#: view:account.chart:account_chart_wiz_dates.view_account_chart_inherit_dates_form
 #: selection:account.chart,filter:0
 msgid "Dates"
 msgstr ""
 
 #. module: account_chart_wiz_dates
-#: model:ir.model,name:account_chart_wiz_dates.model_account_chart
-msgid "Account chart"
+#: field:account.chart,end_date:0
+msgid "End date"
 msgstr ""
 
 #. module: account_chart_wiz_dates
