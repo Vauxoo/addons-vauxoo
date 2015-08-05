@@ -1,0 +1,7 @@
+<openerp>
+    <data>
+        <record id="group_validator" model="res.groups">
+            <field name="name">Permission to validate invoice</field>
+        </record>
+    </data>
+</openerp>
