@@ -184,7 +184,7 @@ class website_sale_inh(website_sale):
         order_info = {
             'partner_id': partner_id,
             'message_follower_ids': [
-                (4  , partner_id), (3, request.website.partner_id.id)],
+                (4, partner_id), (3, request.website.partner_id.id)],
             'partner_invoice_id': partner_id,
         }
         order_info.update(
