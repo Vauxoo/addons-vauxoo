@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import SUPERUSER_ID
 from openerp.http import request
+from openerp import http
 from openerp.addons.website_sale.controllers.main import website_sale
 
 
@@ -54,6 +55,7 @@ class website_sale_inh(website_sale):
                             self.checkout_parse(
                                 "billing",
                                 order.partner_id))
+            checkout['mobile'] = partner.mobile
         else:
             checkout = self.checkout_parse('billing', data)
             try:
@@ -101,7 +103,6 @@ class website_sale_inh(website_sale):
                         ('code', '=', country_code)], context=context)
                 if country_ids:
                     checkout['country_id'] = country_ids[0]
-        checkout['mobile'] = partner.mobile
         values = {
             'countries': countries,
             'states': states,
@@ -183,7 +184,8 @@ class website_sale_inh(website_sale):
 
         order_info = {
             'partner_id': partner_id,
-            'message_follower_ids': [(4, partner_id), (3, request.website.partner_id.id)],
+            'message_follower_ids': [
+                (4  , partner_id), (3, request.website.partner_id.id)],
             'partner_invoice_id': partner_id,
         }
         order_info.update(
@@ -206,7 +208,8 @@ class website_sale_inh(website_sale):
         if address_change.get('fiscal_position'):
             fiscal_update = order_obj.onchange_fiscal_position(
                 cr, SUPERUSER_ID, [], address_change['fiscal_position'], [
-                    (4, l.id) for l in order.order_line], context=None)['value']
+                    (4, l.id) for l in order.order_line],
+                context=None)['value']
             order_info.update(fiscal_update)
 
         order_info.pop('user_id')
@@ -216,3 +219,48 @@ class website_sale_inh(website_sale):
         order_obj.write(
             cr, SUPERUSER_ID, [
                 order.id], order_info, context=context)
+
+    mandatory_billing_fields = [
+        "name", "phone", "email", "street2", "city", "country_id"]
+    optional_billing_fields = [
+        "street", "state_id", "vat", "vat_subjected", "zip", "mobile"]
+    mandatory_shipping_fields = [
+        "name", "phone", "street", "city", "country_id"]
+    optional_shipping_fields = ["state_id", "zip"]
+
+    def checkout_parse(self, address_type, data, remove_prefix=False):
+        """ data is a dict OR a partner browse record
+        """
+        # set mandatory and optional fields
+        assert address_type in ('billing', 'shipping')
+        if address_type == 'billing':
+            all_fields = self.mandatory_billing_fields + self.optional_billing_fields  # noqa
+            prefix = ''
+        else:
+            all_fields = self.mandatory_shipping_fields + self.optional_shipping_fields  # noqa
+            prefix = 'shipping_'
+
+        # set data
+        if isinstance(data, dict):
+            query = dict((prefix + field_name, data[prefix + field_name])
+                for field_name in all_fields if prefix + field_name in data)  # noqa
+        else:
+            query = dict((prefix + field_name, getattr(data, field_name))
+                for field_name in all_fields if getattr(data, field_name))  # noqa
+            if address_type == 'billing' and data.parent_id:
+                query[prefix + 'street'] = data.parent_id.name
+
+        if query.get(prefix + 'state_id'):
+            query[prefix + 'state_id'] = int(query[prefix + 'state_id'])
+        if query.get(prefix + 'country_id'):
+            query[prefix + 'country_id'] = int(query[prefix + 'country_id'])
+        if query.get(prefix + 'mobile'):
+            query[prefix + 'mobile'] = int(query[prefix + 'mobile'])
+
+        if query.get(prefix + 'vat'):
+            query[prefix + 'vat_subjected'] = True
+
+        if not remove_prefix:
+            return query
+
+        return dict((field_name, data[prefix + field_name]) for field_name in all_fields if prefix + field_name in data)  # noqa
