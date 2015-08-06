@@ -4,13 +4,19 @@ from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
 import simplejson
-import lxml.html
 
 import logging
 _logger = logging.getLogger(__name__)
 
 import xlwt
 import StringIO
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    _logger.info('You have report_xls from addons-vauxoo'
+                 'declared in your system you will need '
+                 ' bs4 library in order to use '
+                 'this module')
 
 
 class ReportController(main.ReportController):
@@ -59,20 +65,22 @@ class ReportController(main.ReportController):
     def get_xls(self, html):
         wb = xlwt.Workbook()
         ws = wb.add_sheet('Sheet 1')
-        soup = lxml.html.fromstring(html)
+        soup = BeautifulSoup(html)
         row = 0
         for tag_id in ['table_header', 'table_body']:
-            table = soup.get_element_by_id(tag_id)
-            rows = table.findall("tr")
+            # Include a dependency extra when we have a library that
+            # Can achieve the deal is incorrect, TODO: fixme
+            table = soup.find("table", id=tag_id)
+            rows = table.findAll("tr")
             for tr in rows:
-                cols = tr.findall("td")
+                cols = tr.findAll("td")
                 if not cols:
-                    cols = tr.findall("th")
+                    cols = tr.findAll("th")
                 if not cols:
                     continue
                 col = 0
                 for td in cols:
-                    text = "%s" % td.text_content().encode('ascii', 'ignore')
+                    text = "%s" % td.text.encode('ascii', 'ignore')
                     text = text.replace("&nbsp;", " ")
                     text = text.strip()
                     try:
