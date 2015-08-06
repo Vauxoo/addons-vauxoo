@@ -104,21 +104,25 @@ class ProductTemplate(models.Model):
             if quant.location_id.id in stock_locations_ids:
                 continue
             stock_locations_ids.append(quant.location_id.id)
-        location_quant_ids = stock_locations_obj.search(
-            [('product_id', 'in', products),
-             ('location_id', 'in', stock_locations_ids)])
-        if location_quant_ids:
-            stock_locations_obj.unlink(location_quant_ids)
-        ctx = dict(self._context)
         new_quants = []
         for location in stock_locations_ids:
-            ctx['location'] = location
-            qtys = self._product_available(None, False, context=ctx)
-            new_id = stock_locations_obj.create(
-                {'product_id': product_id,
-                 'location_id': location,
-                 'qty': qtys.get(product_id).get('qty_available')})
-            new_quants.append(new_id.id)
+            qtys = self.with_context(
+                location=location)._product_available(None, False)
+            location_ok = stock_locations_obj.search(
+                [('product_id', '=', product_id),
+                 ('location_id', '=', location)])
+            if location_ok:
+                new_qty = qtys.get(product_id).get('qty_available')
+                if location_ok.qty != new_qty:
+                    location_ok.write(
+                        {'qty': qtys.get(product_id).get('qty_available')})
+                new_quants.append(location_ok.id)
+            else:
+                new_id = stock_locations_obj.create(
+                    {'product_id': product_id,
+                     'location_id': location,
+                     'qty': qtys.get(product_id).get('qty_available')})
+                new_quants.append(new_id.id)
         self.product_stock_quants_ids = new_quants
 
     @api.multi
