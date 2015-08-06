@@ -30,6 +30,11 @@
     "depends": [
         "report",
     ],
+    "external_dependencies": {
+        "python": [
+            "bs4",
+        ]
+    },
     "demo": [],
     "data": [
     ],
