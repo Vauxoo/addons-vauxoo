@@ -28,7 +28,15 @@
                       <t t-if="error.get('name')"><span class="label label-danger"> Required </span></t>
 				</xpath>
 				<xpath expr="//label[@for='city']" position="after">
-                      <t t-if="error.get('city')"><span class="label label-danger"> Required </span></t>
+                      <t t-if="error.get('zip_id')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//input[@name='city']" position="replace">
+                      <select name="zip_id" class="form-control">
+                          <option value="">City...</option>
+                          <t t-foreach="cities or []" t-as="city">
+                              <option t-att-value="city.id" t-att-selected="city.id == checkout.get('zip_id')"><t t-esc="city.city"/></option>
+                          </t>
+                      </select>
 				</xpath>
 				<xpath expr="//input[@type='email']" position="before">
                       <t t-if="error.get('email') == 'invalid'"><span class="label label-danger"> Invalid Email </span></t>

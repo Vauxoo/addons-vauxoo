@@ -13,11 +13,14 @@ class website_sale_inh(website_sale):
         orm_partner = registry.get('res.partner')
         orm_user = registry.get('res.users')
         orm_country = registry.get('res.country')
+        orm_city = registry.get('res.better.zip')
         state_orm = registry.get('res.country.state')
         sale_order_obj = registry.get('sale.order')
 
         country_ids = orm_country.search(cr, SUPERUSER_ID, [], context=context)
         countries = orm_country.browse(cr, SUPERUSER_ID, country_ids, context)
+        city_ids = orm_city.search(cr, SUPERUSER_ID, [], context=context)
+        cities = orm_city.browse(cr, SUPERUSER_ID, city_ids, context)
         states_ids = state_orm.search(cr, SUPERUSER_ID, [], context=context)
         states = state_orm.browse(cr, SUPERUSER_ID, states_ids, context)
         partner = orm_user.browse(
@@ -63,9 +66,10 @@ class website_sale_inh(website_sale):
                                  {'comments': data.get('comments', None)},
                                  context=context)
             checkout = self.checkout_parse('billing', data)
-
-            shipping_id = self.validate_shipping(data.get("shipping_id", 0)) and int(data.get("shipping_id")) or None  # noqa
-
+            try:
+                shipping_id = int(data["shipping_id"])
+            except ValueError:
+                pass
             if shipping_id == -1:
                 checkout.update(self.checkout_parse('shipping', data))
         if shipping_id is None:
@@ -108,6 +112,7 @@ class website_sale_inh(website_sale):
                     checkout['country_id'] = country_ids[0]
 
         values = {
+            'cities': cities,
             'countries': countries,
             'states': states,
             'checkout': checkout,
@@ -120,12 +125,13 @@ class website_sale_inh(website_sale):
         return values
 
     mandatory_billing_fields = [
-        "name", "phone", "email", "street2", "city", "country_id"]
+        "name", "phone", "email", "street2", "zip_id", "country_id"]
     optional_billing_fields = [
         "street",
-        "state_id", "vat", "vat_subjected", "zip", "mobile", "is_company"]
+        "state_id",
+        "vat", "vat_subjected", "zip", "mobile", "is_company", "zip_id"]
     mandatory_shipping_fields = [
-        "name", "phone", "street", "city", "country_id"]
+        "name", "phone", "street", "country_id"]
     optional_shipping_fields = ["state_id", "zip"]
 
     def checkout_parse(self, address_type, data, remove_prefix=False):
@@ -154,6 +160,8 @@ class website_sale_inh(website_sale):
             query[prefix + 'state_id'] = int(query[prefix + 'state_id'])
         if query.get(prefix + 'country_id'):
             query[prefix + 'country_id'] = int(query[prefix + 'country_id'])
+        if query.get(prefix + 'zip_id'):
+            query[prefix + 'zip_id'] = int(query[prefix + 'zip_id'])
         if query.get(prefix + 'mobile'):
             query[prefix + 'mobile'] = int(query[prefix + 'mobile'])
         if query.get(prefix + 'is_company'):
@@ -199,8 +207,3 @@ class website_sale_inh(website_sale):
             if not re.match(r"[^@]+@[^@]+\.[^@]+", data.get('email')):
                 error["email"] = 'invalid'
         return error
-
-        def validate_shipping(ship):
-            if ship[0] in ('-', '+'):
-                return ship[1:].isdigit()
-            return ship.isdigit()
