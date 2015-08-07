@@ -23,12 +23,9 @@
 ################################################################################
 {
     "name": "Picking from invoice generator", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    Generate multiple picking in and picking out from invoices selected
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

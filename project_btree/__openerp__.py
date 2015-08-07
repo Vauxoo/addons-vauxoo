@@ -25,16 +25,9 @@
 ##############################################################################
 {
     "name": "Product hierarchical view", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Customization", 
-    "description": """
-Hierarchical View:
-=========================================================
-    It creates Hierarchical view to projects
-
-
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

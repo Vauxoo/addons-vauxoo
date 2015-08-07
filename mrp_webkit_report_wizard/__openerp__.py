@@ -25,11 +25,9 @@
 ##############################################################################
 {
     "name": "MRP variation webkit report", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Reporting", 
-    "description": """This module adds a report of the variation on production orders of the selected product
-    in the selected range of time""", 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

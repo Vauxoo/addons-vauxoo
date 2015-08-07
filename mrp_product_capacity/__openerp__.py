@@ -23,11 +23,9 @@
 ###############################################################################
 {
     "name": "MRP Product Capacity", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-""", 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

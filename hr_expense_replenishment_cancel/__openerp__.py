@@ -22,16 +22,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Expenses Replenishment Cancel", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-Expenses Replenishment Cancel:
-===========================
-Allows you to cancel an expense already paid to return to draft state and make
-changes to your entrie or regenerate
-
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Recovery Attachment BD", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        Recovery attachments from BD
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

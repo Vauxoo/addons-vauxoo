@@ -22,14 +22,9 @@
 #"license" : "AGPL-3",
 {
     "name": "Procurements", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """The procurement order will schedule a proposal for automatic procurement
-for the product which needs replenishment. This procurement will start a
-task, either a purchase order form for the supplier, or a production order
-depending on the product's configuration.
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

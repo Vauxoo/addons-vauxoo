@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Entry Line Journal", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Entry Line Journal
---------------------------
-
-This module takes journal_id field from move line for grouping of
-analytic entry lines by journal_id.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

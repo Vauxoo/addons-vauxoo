@@ -179,12 +179,12 @@
         </record>
         <record id="account_voucher_tax_purchase_iva10_rete_isr" model="account.tax">
             <field name="company_id" ref="base.main_company"/>
-            <field name="name">IVA 10% RETENIDO ISR - Test</field>
+            <field name="name">WITHHOLDING ISR 10% - Test</field>
             <field name="tax_voucher_ok" eval="True"/>
             <field name="type_tax_use">purchase</field>
             <field name="type">percent</field>
             <field name="amount">-0.10000</field>
-            <field name="description">IVA 10% RETENIDO ISR Test</field>
+            <field name="description">WITHHOLDING ISR 10% Test</field>
             <field name="account_collected_id" ref="account.iva"/>
             <field name="account_paid_id" ref="account.iva"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher10_rete_isr"/>
@@ -276,6 +276,7 @@
             <field name="account_paid_id" ref="account_iva_voucher0_purchase_0"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher0_purchase"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher0_purchase"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
         </record>
         <record id="account_ova_voucher0_sales" model="account.account">
             <field name="code">X11005_voucher</field>

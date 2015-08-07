@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ############ Credits ########################################################
 #    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -23,13 +23,9 @@
 ###############################################################################
 {
     "name": "Account Anglo-Saxon Stock Move",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

@@ -25,13 +25,9 @@
 ##############################################################################
 {
     "name": "Project Contract Validations", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        This module adds guidelines and validations in the relation
-        between Project and Analytic Account modules.
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

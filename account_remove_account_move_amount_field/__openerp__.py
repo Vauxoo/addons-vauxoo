@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Account remove account move amount field", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
-    "description": """ Removes from the account move form view the amount field
-    Enhaces speed of account move model a bit.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

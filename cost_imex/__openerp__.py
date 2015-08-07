@@ -24,16 +24,9 @@
 ############################################################################
 {
     "name": "Cost Imex", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    This module will add new functionality to the purchasing module, allowing import tax charged on the purchase process product line.
-
-    Be modified in view of purchase where adding a new tab will be calculated automatically import taxes
-
-    Added a new model to all compute of tax base
-                    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

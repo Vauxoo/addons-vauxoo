@@ -25,14 +25,9 @@
 #
 {
     "name": "Project Required", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Project", 
-    "description": """
-    This module set as required the field project_id on
-    model project.task from the view by inheritance.
-    Also warns the hours and add negative future dates.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

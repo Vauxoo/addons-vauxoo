@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "MRP Button Box", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo C.A.", 
     "category": "", 
-    "description": """
-MRP Button Box
-==============
-
-Dummy module to add a button box at the manufacturing order right uper corner.
-This module can be find at lp:addons-vauxoo/7.0/mrp_button_box
-""", 
     "website": "http://www.openerp.com.ve", 
     "license": "", 
     "depends": [

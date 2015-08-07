@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Entry Line Move", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Entry Line Move
-------------------------
-
-This module takes move_id field from move line for grouping of
-analytic entry lines by move_id.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

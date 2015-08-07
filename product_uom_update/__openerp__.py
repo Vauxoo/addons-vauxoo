@@ -25,15 +25,9 @@
 #
 {
     "name": "Product uom update", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-Product uom update
-==================
-
-    This wizard help you to change units in the products
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

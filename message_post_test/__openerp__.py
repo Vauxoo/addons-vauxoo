@@ -24,18 +24,9 @@
 ###############################################################################
 {
     "name": "Message Post Test",
-    "version": "0.1",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-Test for message_post_model module
-==================================
-
-- This module only is used to test the functionality of message_post_model
-  module
-
-
-""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [

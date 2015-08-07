@@ -1,20 +1,14 @@
 # -*- encoding: utf-8 -*-
 {
     "name": "Website Product Availability",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Website",
-    "description": """
-Website Product Availability
-==============================
-    This app shows you on the product template on the
-    website if a product is available, low Availability or
-    if the product is make to order.
-    """,
     "website": "http://www.vauxoo.com/",
     "depends": [
         "stock",
         "purchase",
+        "website_variants_extra",
         "website_sale",
     ],
     "demo": [],

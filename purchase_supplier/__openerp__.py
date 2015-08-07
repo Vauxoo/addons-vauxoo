@@ -28,11 +28,9 @@
 #~ 'purchase_workflow.xml',
 {
     "name": "Purchase - supplier", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Purchases", 
-    "description": """Purchse supplier, whe you validate a purchase, the partner is converted in product supplier
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

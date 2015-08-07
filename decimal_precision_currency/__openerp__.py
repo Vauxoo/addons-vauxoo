@@ -23,12 +23,9 @@
 ##############################################################################-
 {
     "name": "Decimal Precision to Rate Currency", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal", 
-    "description": """
-                    This module, add decimal  precision format to Rate Currency, for the conversion  between currencies is accurate.
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

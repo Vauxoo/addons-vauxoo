@@ -23,15 +23,9 @@
 ###############################################################################
 {
     "name": "Purchase Requisition Line Plan", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-A account analytic plan instance is added in purchase requisition lines
-
-Add analytic account plan instance on purchase requisition line and purchase order line, so the purchase order takes
-the account analytic value from the purchase requisition.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

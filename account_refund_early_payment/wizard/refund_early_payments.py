@@ -23,7 +23,6 @@
 ###############################################################################
 
 from openerp import fields, api, models
-from openerp.tools import float_compare
 
 
 class account_invoice_refund(models.TransientModel):
@@ -85,120 +84,97 @@ class account_invoice_refund(models.TransientModel):
         """
         return 5.0
 
-
-    filter_refund = fields.Selection(selection_add=[('early_payment',
-                                                     'Early payment: Discount early payment')])
+    filter_refund = fields.\
+        Selection(selection_add=[('early_payment',
+                                  'Early payment: Discount early payment')])
     percent = fields.Float('Percent', default=_get_percent_default)
     product_id = fields.Many2one('product.product', string='Product')
     amount_total = fields.Float('Amount')
     active_id = fields.Integer('Active ID')
 
     def compute_refund(self, cur, uid, ids, mode='refund', context=None):
-        if context is None:
-            context = {}
+        context = dict(context or {})
+
+        result = super(account_invoice_refund, self).compute_refund(
+            cur, uid, ids, mode, context=context)
+
+        if mode != 'early_payment':
+            return result
 
         inv_obj = self.pool.get('account.invoice')
+        at_obj = self.pool.get('account.tax')
         inv_line_obj = self.pool.get('account.invoice.line')
         account_m_line_obj = self.pool.get('account.move.line')
 
-        result = super(account_invoice_refund,
-                       self).compute_refund(cur, uid,
-                                            ids, mode,
-                                            context=context)
         refund_id = result.get('domain')[1][2]
 
         wizard_brw = self.browse(cur, uid, ids, context=context)
-        percent = wizard_brw.percent / 100
+        amount_total = wizard_brw.amount_total
+        prod_brw = wizard_brw.product_id
 
-        prec = self.pool.get('decimal.precision').precision_get(
-            cur, uid, 'Account')
         for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
                                   context=context):
+            brw = inv_obj.browse(cur, uid, refund_id, context=context)
 
-            if mode in 'early_payment':
+            if not brw.invoice_line:
+                continue
 
-                refund = inv_obj.browse(cur, uid, refund_id, context=context)
-                refund_lines_brw = refund.invoice_line
-                line_data_dict = {}
+            inv_line_obj.unlink(
+                cur, uid, [rl.id for rl in brw.invoice_line])
 
-                if not float_compare(
-                        wizard_brw.amount_total, (inv.amount_total * percent),
-                        precision_digits=prec):
-                    for refund_line in refund_lines_brw:
-                        tax_tuple = refund_line.\
-                            invoice_line_tax_id.\
-                            __dict__.get('_ids')
+            fp = inv.fiscal_position and inv.fiscal_position.id
+            data = inv_line_obj.product_id_change(
+                cur, uid, [],
+                prod_brw.id,
+                prod_brw.uom_id.id,
+                1.0,
+                prod_brw.name,
+                inv.type,
+                inv.partner_id.id,
+                fp,
+                amount_total,
+                inv.currency_id.id,
+                inv.company_id.id
+                )
 
-                        price_unit_discount = refund_line.price_unit *\
-                            percent * refund_line.quantity
+            if 'value' not in data and data['value']:
+                continue
 
-                        if line_data_dict.get(tax_tuple):
-                            line_data_dict[tax_tuple]['price_unit'] +=\
-                                price_unit_discount
-                        else:
-                            line_data_dict[tax_tuple] =\
-                                inv_line_obj.copy_data(cur,
-                                                       uid,
-                                                       refund_line.id)
-                            line_data_dict[tax_tuple]['product_id'] =\
-                                wizard_brw.product_id.id
-                            line_data_dict[tax_tuple]['name'] =\
-                                wizard_brw.product_id.name
-                            line_data_dict[tax_tuple]['price_unit'] =\
-                                price_unit_discount
-                            line_data_dict[tax_tuple]['quantity'] =\
-                                1
+            if data['value'].get('invoice_line_tax_id'):
+                perc = 0.0
+                tax_ids = data['value']['invoice_line_tax_id']
+                data['value']['invoice_line_tax_id'] = [(6, 0, tax_ids)]
+                for tax_brw in at_obj.browse(
+                        cur, uid, tax_ids, context=context):
+                    perc += tax_brw.amount
+            data['value']['product_id'] = prod_brw.id
+            data['value']['quantity'] = 1.0
+            data['value']['price_unit'] = amount_total / (1.0 + abs(perc))
+            data['value']['invoice_id'] = refund_id[0]
+            inv_line_obj.create(cur, uid, data['value'], context=context)
 
-                        inv_line_obj.unlink(cur, uid, [refund_line.id])
-                    for new_refund_line in line_data_dict.values():
-                        inv_line_obj.create(cur,
-                                            uid,
-                                            new_refund_line,
-                                            context=context)
+            brw.button_reset_taxes()
+            to_reconcile_ids = {}
 
-                else:
-                    if refund_lines_brw:
-                        refund_line = refund_lines_brw[0]
-                        new_refund_line =\
-                            inv_line_obj.copy_data(cur, uid, refund_line.id)
-                        new_refund_line['product_id'] =\
-                            wizard_brw.product_id.id
-                        new_refund_line['name'] =\
-                            wizard_brw.product_id.name
-                        new_refund_line['price_unit'] =\
-                            wizard_brw.amount_total
-                        new_refund_line['quantity'] =\
-                            1
-                        new_refund_line['invoice_line_tax_id'] =\
-                            False
+            for line in inv.move_id.line_id:
+                if line.account_id.reconcile and not line.reconcile_id:
+                    to_reconcile_ids.setdefault(line.account_id.id,
+                                                []).append(line.id)
 
-                        for refund_line in refund_lines_brw:
-                            inv_line_obj.unlink(cur, uid, [refund_line.id])
+            brw.signal_workflow('invoice_open')
+            brw = inv_obj.browse(cur, uid, refund_id[0], context=context)
 
-                        inv_line_obj.create(cur,
-                                            uid,
-                                            new_refund_line,
-                                            context=context)
+            for tmpline in brw.move_id.line_id:
+                if tmpline.account_id.reconcile:
+                    to_reconcile_ids[tmpline.
+                                     account_id.id].append(tmpline.id)
 
-                refund.button_reset_taxes()
-                movelines = inv.move_id.line_id
-                to_reconcile_ids = {}
-                for line in movelines:
-                    if line.account_id.reconcile and not line.reconcile_id:
-                        to_reconcile_ids.setdefault(line.account_id.id,
-                                                    []).append(line.id)
-                refund.signal_workflow('invoice_open')
-                refund = inv_obj.browse(cur, uid, refund_id[0],
-                                        context=context)
-                for tmpline in refund.move_id.line_id:
-                    if tmpline.account_id.reconcile:
-                        to_reconcile_ids[tmpline.
-                                         account_id.id].append(tmpline.id)
-                for account in to_reconcile_ids:
-                    if len(to_reconcile_ids[account]) > 1:
-                        account_m_line_obj.reconcile_partial(
-                            cur, uid, to_reconcile_ids[account],
-                            context=context)
+            for account in to_reconcile_ids:
+                if len(to_reconcile_ids[account]) > 1:
+                    account_m_line_obj.reconcile_partial(
+                        cur, uid, to_reconcile_ids[account],
+                        context=context)
+
         return result
 
     _defaults = {

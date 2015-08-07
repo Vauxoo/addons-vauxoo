@@ -22,11 +22,9 @@
 #"license" : "AGPL-3",
 {
     "name": "Inherit filter_domain product_id field in search view of mrp_production", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module inherit filter_domain product_id field in search view of mrp_production
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

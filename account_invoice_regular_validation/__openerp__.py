@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Invoice Regular Validation", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        This module validate that the lines don't have account type different to regular
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

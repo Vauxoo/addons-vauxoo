@@ -23,17 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Plans Group", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Plans Group
---------------------
-
-This module adds analytic_group_id field in analytic account for grouping of
-analytics entry lines in future.
-
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

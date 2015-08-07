@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Purchase Order Description", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "purchase", 
-    "description": """
-Purchase Order Description
-==========================
-
-Add a new field for description of PO and separator for terms and condition os PO
-
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

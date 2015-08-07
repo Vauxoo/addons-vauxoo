@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Stock Validate Past", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Warehouse Management", 
-    "description": """
-This module add the selection field "type_process_date", if its value = planned_date the field date_create takes the value from date_expected
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

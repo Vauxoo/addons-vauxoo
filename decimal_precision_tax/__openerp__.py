@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Decimal Precision to Rate Tax", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal", 
-    "description": """
-                    This module, add decimal  precision format to Rate Tax.
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

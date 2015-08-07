@@ -23,12 +23,9 @@
 ################################################################################
 {
     "name": "Project Task Work", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-
-""", 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

@@ -1,24 +1,24 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* mrp_consume_produce
+# 	* mrp_consume_produce
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:10+0000\n"
-"PO-Revision-Date: 2013-11-07 05:12+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: juan <openerp1@hotmil.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es_VE\n"
 
 #. module: mrp_consume_produce
-#: field:mrp.consume.line.move,move_id:0
-#: field:mrp.produce.line,move_id:0
+#: field:mrp.consume.line.move,move_id:0 field:mrp.produce.line,move_id:0
 msgid "Move"
 msgstr ""
 
@@ -85,8 +85,7 @@ msgid "Product to be Produce"
 msgstr ""
 
 #. module: mrp_consume_produce
-#: field:mrp.consume.line,product_id:0
-#: field:mrp.produce.line,product_id:0
+#: field:mrp.consume.line,product_id:0 field:mrp.produce.line,product_id:0
 msgid "Product"
 msgstr ""
 
@@ -102,8 +101,7 @@ msgid "You this wizard can be only called by the manufacturing order."
 msgstr ""
 
 #. module: mrp_consume_produce
-#: field:mrp.consume.line,product_uom:0
-#: field:mrp.produce.line,product_uom:0
+#: field:mrp.consume.line,product_uom:0 field:mrp.produce.line,product_uom:0
 #: view:mrp.production:0
 msgid "Unit of Measure"
 msgstr ""
@@ -121,8 +119,7 @@ msgstr ""
 #. module: mrp_consume_produce
 #: model:ir.actions.act_window,name:mrp_consume_produce.create_produce_action
 #: model:ir.actions.act_window,name:mrp_consume_produce.produce_wizard
-#: view:mrp.produce:0
-#: view:mrp.production:0
+#: view:mrp.produce:0 view:mrp.production:0
 msgid "Produce"
 msgstr ""
 
@@ -234,8 +231,7 @@ msgid ""
 msgstr ""
 
 #. module: mrp_consume_produce
-#: field:mrp.consume.line,quantity:0
-#: field:mrp.produce.line,quantity:0
+#: field:mrp.consume.line,quantity:0 field:mrp.produce.line,quantity:0
 msgid "Quantity"
 msgstr ""
 
@@ -263,10 +259,8 @@ msgstr ""
 #. module: mrp_consume_produce
 #: model:ir.actions.act_window,name:mrp_consume_produce.consume_wizard
 #: model:ir.actions.act_window,name:mrp_consume_produce.create_consume_action
-#: view:mrp.consume:0
-#: field:mrp.consume,consume_line_ids:0
-#: field:mrp.produce,produce_line_ids:0
-#: view:mrp.production:0
+#: view:mrp.consume:0 field:mrp.consume,consume_line_ids:0
+#: field:mrp.produce,produce_line_ids:0 view:mrp.production:0
 msgid "Consume"
 msgstr ""
 
@@ -302,8 +296,7 @@ msgid "Produce Wizard"
 msgstr ""
 
 #. module: mrp_consume_produce
-#: view:mrp.consume:0
-#: view:mrp.produce:0
+#: view:mrp.consume:0 view:mrp.produce:0
 msgid "Cancel"
 msgstr ""
 

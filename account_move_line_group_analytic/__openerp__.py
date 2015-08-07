@@ -22,16 +22,9 @@
 #"license" : "AGPL-3",
 {
     "name": "Grouped by product,move_id y analytic in model account_move_line", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-Improvements in account.move.line view:
-=======================================
-
-On search view for journal items (account_move_line) we add group by product,
-move_id and analytic_id.
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

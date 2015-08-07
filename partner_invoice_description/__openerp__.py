@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Partner Invoice Description", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        Add notes invoice to partner
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

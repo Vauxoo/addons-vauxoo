@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "POS Delivery Restaurant", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Point Of Sale", 
-    "description": """
-POS Delivery Restaurant
-=======================
-
-With this module deli_rest field is added in the point of sale, which can be a
-restaurant or delivery.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

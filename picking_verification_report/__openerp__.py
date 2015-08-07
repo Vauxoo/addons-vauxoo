@@ -23,12 +23,9 @@
 ############################################################################
 {
     "name": "Picking Verification Report", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        This module installs the Picking Verification Report.
-                    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

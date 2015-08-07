@@ -25,13 +25,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Commercial Chart Account for Venezuela", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Tiny & Vauxoo", 
     "category": "Localisation/Account Charts", 
-    "description": """
-This Module load a generic format for manage medium and big business.
-You will need accounting knowledge to understad sone concepts.
-""", 
     "website": "", 
     "license": "", 
     "depends": [

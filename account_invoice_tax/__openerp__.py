@@ -24,15 +24,10 @@
 #
 ##############################################################################
 {
-    "name": "account_invoice_tax", 
-    "version": "1.0", 
+    "name": "Account Invoice Tax",
+    "version": "2.1", 
     "author": "Vauxoo", 
     "category": "Localization/Mexico", 
-    "description": """This module add tax relation to original tax, to be able to take off all data from invoices.
-Technical Warning - This module add method override
-     def check_tax_lines from account_invoice
-     def compute from account_invoice_tax
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

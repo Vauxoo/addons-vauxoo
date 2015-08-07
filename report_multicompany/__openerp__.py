@@ -25,17 +25,9 @@
 #
 {
     "name": "Report Multicompany", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Report Multicompany
-===================
-
-This module adds a model report_multicompany which helps to have a report
-relationship with company (similar to a property).
-
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

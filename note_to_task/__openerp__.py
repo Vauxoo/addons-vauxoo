@@ -22,18 +22,9 @@
 ###############################################################################
 {
     "name": "Convert Note to Task", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Tools", 
-    "description": """
-Convert Note to Task
-====================
-    Add a button in Notes showing a wizard to convert the note into a task
-    asking:
-            1. - Estimated time for this task.
-            2.- Associate Project.
-            3.- Date to end.
-            """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

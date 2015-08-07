@@ -21,14 +21,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Account Reconcile Search", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Account", 
-    "description": """
-Account Reconcile Search
-========================
-This module allows the feature to group by reconcile ref field
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

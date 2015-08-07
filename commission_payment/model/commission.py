@@ -1,9 +1,18 @@
 from openerp.osv import osv, fields
-import mx.DateTime
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime
 from openerp.tools.translate import _
-from pandas import DataFrame
+import logging
+
+_logger = logging.getLogger(__name__)
+
+# Extra Imports
+try:
+    from pandas import DataFrame
+except ImportError:
+    _logger.info('account_currency_tools is declared '
+                 ' from addons-vauxoo '
+                 ' you will need: sudo pip install pandas')
 
 COMMISSION_STATES = [
     ('draft', 'Draft'),
@@ -403,9 +412,9 @@ class commission_payment(osv.Model):
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         # Determinar dias entre la emision de la factura del producto y el pago
         # del mismo
-        pay_date = mx.DateTime.strptime(pay_date, '%Y-%m-%d')
-        inv_date = mx.DateTime.strptime(inv_date, '%Y-%m-%d')
-        emission_days = (pay_date - inv_date).day
+        pay_date = datetime.datetime.strptime(pay_date, '%Y-%m-%d')
+        inv_date = datetime.datetime.strptime(inv_date, '%Y-%m-%d')
+        emission_days = (pay_date - inv_date).days
 
         # Teniendose dias y descuento por producto se procede a buscar en el
         # baremo el correspondiente valor de comision para el producto en

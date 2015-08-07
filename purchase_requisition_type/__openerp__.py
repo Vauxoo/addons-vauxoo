@@ -23,17 +23,9 @@
 ###############################################################################
 {
     "name": "Purchase Requisition Type", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "purchase", 
-    "description": """
-Purchase Requisition Type
-=========================
-
-Add a new field name type that can discriminate a matarials and service
-purchase requisition. Also add to the purchase requisition search view the
-filters need to visually make the discrimination.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

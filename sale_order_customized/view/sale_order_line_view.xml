@@ -51,6 +51,21 @@
                 </xpath>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="view_order_form_inherit_qty_change">
+            <field name="name">sale.order.form.inherit_qty_change</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_layout.view_order_form_inherit_1"/>
+            <field name="arch" type="xml">
+                <data>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='sale_layout_cat_id']" position="before">
+                    <field name="product_uom_qty"/>
+                </xpath>
+                </data>
+            </field>
+        </record>
         
     </data>
 </openerp>

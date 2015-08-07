@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Account move sum all credits debits", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Production", 
-    "description": """ Add two function fields to sum all of the credits and
-    debits of the account move lines
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

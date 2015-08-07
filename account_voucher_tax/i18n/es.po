@@ -7,22 +7,26 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-05 20:12+0000\n"
-"PO-Revision-Date: 2015-02-05 20:12+0000\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: account_voucher_tax
 #: code:addons/account_voucher_tax/account_statement_bank.py:75
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "                    You should configure the 'Gain Exchange Rate Account' to\n"
 "                    manage automatically the booking of accounting entries\n"
 "                    related to differences between exchange rates."
-msgstr "\n"
+msgstr ""
+"\n"
 "                    You should configure the 'Gain Exchange Rate Account' to\n"
 "                    manage automatically the booking of accounting entries\n"
 "                    related to differences between exchange rates."
@@ -30,11 +34,13 @@ msgstr "\n"
 #. module: account_voucher_tax
 #: code:addons/account_voucher_tax/account_statement_bank.py:63
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "                    You should configure the 'Loss Exchange Rate Account'\n"
 "                    to manage automatically the booking of accounting entries\n"
 "                    related to differences between exchange rates."
-msgstr "\n"
+msgstr ""
+"\n"
 "                    You should configure the 'Loss Exchange Rate Account'\n"
 "                    to manage automatically the booking of accounting entries\n"
 "                    related to differences between exchange rates."
@@ -215,8 +221,7 @@ msgid "Supplier Invoices and Outstanding transactions"
 msgstr "Facturas de proveedor y transiciones de salida"
 
 #. module: account_voucher_tax
-#: field:account.move.line,tax_id:0
-#: field:account.voucher.line.tax,tax:0
+#: field:account.move.line,tax_id:0 field:account.voucher.line.tax,tax:0
 #: field:account.voucher.line.tax,tax_id:0
 #: model:ir.model,name:account_voucher_tax.model_account_tax
 msgid "Tax"
@@ -277,10 +282,12 @@ msgstr "Líneas de comprobante"
 #. module: account_voucher_tax
 #: code:addons/account_voucher_tax/account_statement_bank.py:292
 #, python-format
-msgid "You are trying reconciling in the payment a refund credit / debit, this can cause conflicts to processes as payment tax and / or commissions, you should first make a conciliation manual process to the refund credit / debit with your invoice and return here to make the payment. \n"
+msgid ""
+"You are trying reconciling in the payment a refund credit / debit, this can cause conflicts to processes as payment tax and / or commissions, you should first make a conciliation manual process to the refund credit / debit with your invoice and return here to make the payment. \n"
 " Refunds credit / debit: \n"
 " %s"
-msgstr "Usted esta intentando conciliar en el pago un nota de crédito/débito, esto podría causar conflictos para procesos como iva efectivamente pagado y/o comisiones, usted deberia primero hacer un proceso de conciliación manual de la nota de crédito/débito con su correspondiente factura y regresar aquí a hacer el pago. \n"
+msgstr ""
+"Usted esta intentando conciliar en el pago un nota de crédito/débito, esto podría causar conflictos para procesos como iva efectivamente pagado y/o comisiones, usted deberia primero hacer un proceso de conciliación manual de la nota de crédito/débito con su correspondiente factura y regresar aquí a hacer el pago. \n"
 " Notas de crédito / débito: \n"
 " %s"
 
@@ -296,3 +303,7 @@ msgstr "change"
 msgid "help"
 msgstr "Ayuda"
 
+#. module: account_voucher_tax
+#: model:account.tax,name:account_voucher_tax.account_voucher_tax_purchase_iva10_rete_isr
+msgid "WITHHOLDING ISR 10% - Test"
+msgstr "RETENCIÓN ISR 10% - Prueba"

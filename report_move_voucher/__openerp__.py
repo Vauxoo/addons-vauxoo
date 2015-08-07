@@ -24,13 +24,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name": "Report Move Voucher ", 
-    "version": "0.7", 
-    "author": "OpenERP", 
+    "name": "Report Move Voucher",
+    "version": "0.6", 
+    "author": "Vauxoo",
     "category": "Generic Modules/Others", 
-    "description": """
- \t\t\tImprime el Comprobante de Asiento
-                    """, 
     "website": "http://wiki.openerp.org.ve/", 
     "license": "", 
     "depends": [

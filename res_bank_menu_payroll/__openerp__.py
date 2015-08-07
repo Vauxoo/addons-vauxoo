@@ -21,13 +21,9 @@
 ################################################################################
 {
     "name": "Menu of Banks in Human Resources", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-This module adds the menu banks in human resources
-===============
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

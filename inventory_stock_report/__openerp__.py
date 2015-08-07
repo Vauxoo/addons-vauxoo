@@ -24,13 +24,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "l10n-co-stock-count", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-                - Reporte de la Hoja de Conteo de Inventario.
-                - Reporte del Total de Invenatrio.
-                    """, 
     "website": "http://wiki.openerp.org.ve/", 
     "license": "", 
     "depends": [

@@ -26,12 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "MRP Production Cancel", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-        Add Button Cancel in Order Production when Producton is done
-    """, 
     "website": "", 
     "license": "", 
     "depends": [

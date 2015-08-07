@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Entry Line Period", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Entry Line Period
---------------------------
-
-This module takes period_id field from move line for grouping of
-analytic entry lines by period_id.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

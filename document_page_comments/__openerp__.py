@@ -25,19 +25,9 @@
 ##############################################################################
 {
     "name": "Document Page Comments", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-
-Documents Page Comments
-=======================
-
-This module add messeage history and followers in document page model
-to we can follow each document and receive a mail when those are modified if
-you are follower
-
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

@@ -27,10 +27,9 @@
 ###############################################################################
 {
     "name": "Icecat Product Uniqueness Checker", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Custom", 
-    "description": """Checks the uniqueness of a product loaded using the product_icecat module for every company""", 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

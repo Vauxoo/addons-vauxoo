@@ -22,11 +22,9 @@
 #"license" : "AGPL-3",
 {
     "name": "This module inherits standard price field in mrp.bom", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module inherits standard price field in mrp.bom
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

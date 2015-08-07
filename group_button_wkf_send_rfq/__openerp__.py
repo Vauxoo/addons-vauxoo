@@ -26,16 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Purchase / Group for button send email", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Purchase", 
-    "description": """
-Group for button send email:
-============================
-
-Group that hides the button "send by email" sales order
-
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Invoice Sale Ref", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        This module add in invoice the reference to sale_order
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

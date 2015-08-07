@@ -23,15 +23,9 @@
 ###############################################################################
 {
     "name": "Supplier Products", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Supplier Products
-=================
-
-The supplier can manage a list of products to offer.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

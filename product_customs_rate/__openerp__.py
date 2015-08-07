@@ -23,15 +23,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Customs Rate Management", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Cubic ERP & Vauxoo", 
     "category": "Finance", 
-    "description": """
-Management of Customs Rate
-
-Gestión de Customs Rate (Nandina y subpartida nacional)
-
-    """, 
     "website": "http://cubicERP.com & http://vauxoo.com", 
     "license": "", 
     "depends": [

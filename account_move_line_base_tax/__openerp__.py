@@ -25,15 +25,9 @@
 ##############################################################################
 {
     "name": "Amount Base Account Move Line", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    This module adds  the fields:
-        - amount_base
-        - tax_id_secondary
-    in account_move_line. These fields are fill when you validate the invoice.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

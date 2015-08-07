@@ -24,11 +24,10 @@
 #
 ##############################################################################
 {
-    "name": "report_process_production", 
-    "version": "1.0", 
+    "name": "Report Process Production",
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "MRP", 
-    "description": """Report Process Production""", 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

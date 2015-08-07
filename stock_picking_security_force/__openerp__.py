@@ -1,14 +1,9 @@
 {
     "name": "Force Availabity Secure",
     "summary": "Add security to the button Force Availability", 
-    "version": "1.1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Stock", 
-    "description": """
-Force availability is a button to dangerous to be available for everybody.
-
-This module adds security to such feature.
-""", 
     "website": "www.vauxoo.com", 
     "license": "", 
     "depends": [

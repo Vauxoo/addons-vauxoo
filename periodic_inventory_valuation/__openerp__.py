@@ -23,15 +23,9 @@
 ###############################################################################
 {
     "name": "Periodic Inventory Valuation", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-Periodic Inventory Valuation.
-=============================
-
-To generate journal items per period inventory valuation
-""", 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

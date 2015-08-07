@@ -23,12 +23,9 @@
 ################################################################################
 {
     "name": "Transaction Type", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    Manages bank transactions regarding credit cards, debit cards, petty cash, and Carton
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

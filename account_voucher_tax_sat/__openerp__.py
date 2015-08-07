@@ -22,17 +22,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Account Voucher Tax SAT",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Accounting",
-    "description": """
-Polizas de SAT:
-===============
-
-1.- Crea los apuntes contables para los impuestos con retenciones
-2.- Crea provicion de pago al SAT
-3.- Crea apuntes contables para las retenciones de IVA
-    """,
     "website": "http://www.vauxoo.com/",
     "depends": [
         "account",

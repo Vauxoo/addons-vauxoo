@@ -23,12 +23,9 @@
 ################################################################################
 {
     "name": "Cost assigned in the account move", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-   This module was created to build upon the seat by movement of a product, it will take as cost thereof, calculated by the module cost_structure
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

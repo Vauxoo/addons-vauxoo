@@ -23,12 +23,9 @@
 ################################################################################
 {
     "name": "Cost assigned in the account move", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    This module allows you to modify the control number of the invoice and the internal number is
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

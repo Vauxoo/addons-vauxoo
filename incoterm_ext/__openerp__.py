@@ -23,12 +23,9 @@
 ###############################################################################
 {
     "name": "Incoterm Decription", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Sales", 
-    "description": """
-    Add Formal Description to Incoterms.
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

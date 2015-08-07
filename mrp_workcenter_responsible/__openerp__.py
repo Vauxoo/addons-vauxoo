@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "MRP Workcenter Responsible", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "MRP", 
-    "description": """
-MRP Workcenter Responsible
-==========================
-
-Add the feature of having a responsible for a work center and it's work
-orders associated.
-""", 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

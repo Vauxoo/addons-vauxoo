@@ -25,10 +25,9 @@
 ##############################################################################
 {
     "name": "Stock Picking Cancel", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Stock", 
-    "description": """This module add a button to cancel after to done""", 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

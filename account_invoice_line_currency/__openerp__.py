@@ -24,11 +24,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Account Invoice Line Currency", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Accounting", 
-    "description": """
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

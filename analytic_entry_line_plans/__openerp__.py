@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Entry Line Plans", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Entry Line Plans
--------------------------
-
-This module takes analytics_id field from move line for grouping of
-analytics entry lines by analytics_id.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

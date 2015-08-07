@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Entry Line Tax Code", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Entry Line Tax Code
-----------------------------
-
-This module takes tax_code_id field from move line for grouping of
-analytics entry lines by tax_code_id.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

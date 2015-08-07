@@ -19,17 +19,9 @@
 ##############################################################################
 {
     "name": "Show Journal Entry in voucher", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-This module show Journal Entry in:
-========================================
-*Sales Receipts
-*Customer Payments
-*Purchase Receipts
-*Supplier Payments
-""", 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

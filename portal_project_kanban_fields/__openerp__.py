@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Portal Project Kanban Fields", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Add three fields to the project.
-
-- Project URL: Link to the project in launchpad.
-- Documentation URL: Link to the project documentation.
-- Image: Logo of the Project
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

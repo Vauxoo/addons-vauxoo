@@ -21,21 +21,9 @@
 ##############################################################################
 {
     "name": "Fixes and Imrpovements to Bank Statement management", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Accounting & Finance", 
-    "description": """
-Improve management of Bank Statement.
-=====================================
-    1.- Import directly from files given by banks.
-        a.- Costa Rica Banks.
-            Banco Nacional (CRC).
-            Banco Nacional (USD).
-        b.- Mexican Banks.
-        c.- Venezuelan Banks.
-            Banco Exterior #TODO
-    2.-
-                    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
@@ -50,11 +38,14 @@ Improve management of Bank Statement.
         "view/account_journal_view.xml", 
         "data/data.xml"
     ], 
-    "test": [], 
+    "test": [],
     "js": [], 
     "css": [], 
     "qweb": [], 
     "installable": True, 
     "auto_install": False, 
-    "active": False
+    "active": False,
+    "external_dependencies": {
+        "python": ["xlrd"],
+    },
 }

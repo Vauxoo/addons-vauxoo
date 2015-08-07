@@ -22,12 +22,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Account Move Nonzero", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Localization", 
-    "description": """
-    Check that the entry balance is greater than zero
- """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

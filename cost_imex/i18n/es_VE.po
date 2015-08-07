@@ -1,20 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* cost_imex
+# 	* cost_imex
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:11+0000\n"
-"PO-Revision-Date: 2013-11-07 05:14+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es_VE\n"
 
 #. module: cost_imex
 #: help:percent.imex.line,percent:0
@@ -27,8 +28,7 @@ msgid "Purchase"
 msgstr ""
 
 #. module: cost_imex
-#: field:national.special.tax,percent:0
-#: field:percent.imex.line,percent:0
+#: field:national.special.tax,percent:0 field:percent.imex.line,percent:0
 #: field:percent.imex.line,percent_id:0
 msgid "Percent"
 msgstr ""
@@ -49,8 +49,7 @@ msgid "Special Info"
 msgstr ""
 
 #. module: cost_imex
-#: field:percent.imex,percent_lines:0
-#: field:purchase.order,percent_apply:0
+#: field:percent.imex,percent_lines:0 field:purchase.order,percent_apply:0
 msgid "Percents to Apply"
 msgstr ""
 
@@ -141,8 +140,7 @@ msgid "Importation Purchase"
 msgstr ""
 
 #. module: cost_imex
-#: field:national.special.tax,date:0
-#: field:percent.imex.line,date:0
+#: field:national.special.tax,date:0 field:percent.imex.line,date:0
 msgid "Date"
 msgstr ""
 
@@ -271,8 +269,7 @@ msgid "Other Percent"
 msgstr ""
 
 #. module: cost_imex
-#: help:percent.imex,percent_lines:0
-#: help:purchase.order,percent_apply:0
+#: help:percent.imex,percent_lines:0 help:purchase.order,percent_apply:0
 msgid "Percent to compute"
 msgstr ""
 

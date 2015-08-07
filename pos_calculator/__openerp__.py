@@ -22,12 +22,9 @@
 ###############################################################################
 {
     "name": "Pos Calculator", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Point Of Sale", 
-    "description": """
-    Add Calculator functionality in Payment Screen of Point Of Sale
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

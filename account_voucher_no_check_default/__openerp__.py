@@ -25,13 +25,9 @@
 ##############################################################################
 {
     "name": "No concile Credits Voucher", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        This module change the onchange in the lines from account voucher,
-        that no check 'reconcile'.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

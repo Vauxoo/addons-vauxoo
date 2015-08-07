@@ -25,13 +25,9 @@
 ##############################################################################
 {
     "name": "Product product multi link", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module links from products to their journal items,
-    production orders, stock moves with productions, and bill of materials where
-    those products are components
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

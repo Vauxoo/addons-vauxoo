@@ -26,12 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "mrp default location", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-        Added the Locations by default when select the product in order of production
-    """, 
     "website": "", 
     "license": "", 
     "depends": [

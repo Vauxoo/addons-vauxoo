@@ -22,16 +22,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Account Reconcile Advance Tax", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-Create Entries Tax Effectively Paid :
-=====================================
-
-This module creates the tax effectively paid of the invoices associated
-with the advance
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

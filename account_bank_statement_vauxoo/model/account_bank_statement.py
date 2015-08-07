@@ -24,8 +24,15 @@ from openerp.osv import fields, osv
 from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp.tools.translate import _
 
+import logging
+
+_logger = logging.getLogger(__name__)
+
 # Excel Stuff
-import xlrd
+try:
+    import xlrd
+except ImportError:
+    _logger.info('account_bank_statement_vauxoo: needs xlrd library')
 import base64
 from datetime import date, datetime, timedelta
 

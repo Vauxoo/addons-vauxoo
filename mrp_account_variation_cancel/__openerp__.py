@@ -26,11 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Account Variation Cancel", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Account", 
-    "description": """ canceled entries of variaon of production
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

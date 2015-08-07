@@ -25,22 +25,15 @@
 #
 {
     "name": "Sale order Customized",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """
-This module customized
-----------------------
-* Add the sequence in the sale order lines
-* Grows larger the width of the sheet of sale order
-* Add new groups to hide fields
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "sale",
         "sale_stock",
-        "sale_margin",
+        "sale_margin",  # Because if you will pivote around sale_margin
+        "sale_layout",
     ],
     "demo": [],
     "data": [

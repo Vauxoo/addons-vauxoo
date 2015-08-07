@@ -22,15 +22,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Email template dinamic attachment", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Added field in email_template to allow get attachment in mail_compose_message of the follow way:
-------------------------------------------------------------------------------------------------
-* By default get attachment of record
-* From other fields with relation to ir.attachment
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Group Configurations Accounting", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Accounting", 
-    "description": """
-        Add a group, and adds in wizard for configurate accounting
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

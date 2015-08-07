@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Entry Line Partner", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Entry Line Partner
----------------------------
-
-This module takes partner_id field from move line for grouping of
-analytics entry lines by partner_id.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

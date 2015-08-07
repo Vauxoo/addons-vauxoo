@@ -31,13 +31,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Voucher Paid support report", 
-    "version": "0.2", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Accounting", 
-    "description": """
-        Este modulo agrega al reporte del soporte de pago detallado las retenciones del Impuesto al valor agregado (IVA)
-
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

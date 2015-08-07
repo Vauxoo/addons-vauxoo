@@ -24,17 +24,9 @@
 ###############################################################################
 {
     "name": "Purchase Requisition Supplier List", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "purchase", 
-    "description": """
-Purchase Requisition Supplier List
-==================================
-
-This module add to the purchase requisition document a functionality to manage
-a list of suggested suppliers.
-
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

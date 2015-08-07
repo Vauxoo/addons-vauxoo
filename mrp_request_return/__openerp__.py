@@ -26,11 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "MRP Acreation", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/MRP", 
-    "description": """ Add wizard to request or return product to the stock
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

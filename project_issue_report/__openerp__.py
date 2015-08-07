@@ -24,14 +24,9 @@
 ##############################################################################
 {
     "name": "Project Issue Report", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Others", 
-    "description": """
-
-    Modulo que realiza la personalizacion del reporte de incidencias
-
-    """, 
     "website": "http://wiki.openerp.org.ve/", 
     "license": "", 
     "depends": [

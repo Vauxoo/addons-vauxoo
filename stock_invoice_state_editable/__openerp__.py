@@ -25,10 +25,9 @@
 ##############################################################################
 {
     "name": "Stock invoice state editable", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Stock", 
-    "description": """This module change readonly in field invoice state for a group""", 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

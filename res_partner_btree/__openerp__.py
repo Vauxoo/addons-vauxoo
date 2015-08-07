@@ -21,11 +21,10 @@
 #
 ##############################################################################
 {
-    "name": "Creacion de parent_left y parent_right en partner", 
-    "version": "1.0", 
+    "name": "Parent_left and parent_right Partner Creation",
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """This module creates parent_left y paret_right en partners""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

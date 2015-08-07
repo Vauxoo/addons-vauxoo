@@ -22,12 +22,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Forward Mail", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Addons Vauxoo", 
-    "description": """
-Add wizard to forward mail in exception state
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

@@ -26,7 +26,7 @@
 ##############################################################################
 import time
 from openerp.report import report_sxw
-from tools import amount_to_text_en
+from openerp.tools import amount_to_text_en
 from numero_a_texto import Numero_a_Texto
 
 

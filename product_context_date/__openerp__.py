@@ -26,11 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Product Context Date", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Product", 
-    "description": """ Add field date in view search by the context
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

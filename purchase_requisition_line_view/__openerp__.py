@@ -23,12 +23,9 @@
 ###############################################################################
 {
     "name": "Purchase Requisition Line View", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-    This module to add a form view and tree view for purchase requisition line model.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

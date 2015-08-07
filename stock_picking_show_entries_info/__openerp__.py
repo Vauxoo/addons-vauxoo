@@ -26,14 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Show Entries Information in Stock Picking",
-    "version": "1.1",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
-    "description": """
-Show Entries Information in Stock Picking
-=========================================
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

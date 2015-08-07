@@ -27,12 +27,9 @@
 ###############################################################################
 {
     "name": "Send mail when create a task", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Project", 
-    "description": """
-Modified the data created by project module to send a mail when a task is created
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

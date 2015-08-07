@@ -167,7 +167,8 @@ class mrp_consume(osv.TransientModel):
         """
         context = context or {}
         wol_obj = self.pool.get('mrp.workorder.lot')
-        res = super(mrp_consume, self).action_consume(
+        # TODO check this method. the super is apply but the res is not return
+        super(mrp_consume, self).action_consume(
             cr, uid, ids, context=context)
         if context.get('active_model', False) == 'mrp.workorder.lot':
             wol_id = context.get('active_id', False)
@@ -180,7 +181,7 @@ class mrp_consume(osv.TransientModel):
                     _('No valid operation. no work order lot active_id.')
                 )
 
-        #~ refresh kaban view
+        # refresh kaban view
         view_id, search_view_id, action_help = \
             self._get_kanban_view_data(cr, uid, context=context)
 
@@ -303,11 +304,11 @@ class mrp_produce(osv.TransientModel):
         context = context or {}
         wol_obj = self.pool.get('mrp.workorder.lot')
         sm_obj = self.pool.get('stock.move')
-        #~ create convencianal moves
+        # create convencianal moves
         for produce in self.browse(cr, uid, ids, context=context):
             res = super(mrp_produce, self).action_produce(
                 cr, uid, ids, context=context)
-        #~ add the serial number to the moves
+        # add the serial number to the moves
         for produce in self.browse(cr, uid, ids, context=context):
             prodlot_id = dict(
                 [(produce_line.product_id.id, produce_line.prodlot_id.id)
@@ -317,7 +318,7 @@ class mrp_produce(osv.TransientModel):
                     cr, uid, move.id,
                     {'prodlot_id': prodlot_id[move.product_id.id]},
                     context=context)
-        #~ set work order lot to done
+        # set work order lot to done
         wol_obj.write(cr, uid, produce.wo_lot_id.id, {'state': 'done'},
                       context=context)
         return res

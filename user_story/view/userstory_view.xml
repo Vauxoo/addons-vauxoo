@@ -33,7 +33,7 @@
                 <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
             </h3>
             <div>
-                <field name="project_id" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
+                <field name="project_id" on_change="onchange_project_followers(project_id, owner_id, user_id, user_execute_id)" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
                 <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
                     <p class="oe_grey">
                         The link to the project, all projects listed here
@@ -48,7 +48,7 @@
                         <field name="owner_id" select="1" required="1" string="Who ask for this feature on customer side?"/>
                         <field name="user_id" string="Who fill this Story?"/>
                         <field name="user_execute_id"
-                            string="Who is in chanrge to make things done?"/>
+                            string="Who is in charge to make things done?"/>
                         <field name="code" invisible="True"/>
                         <field name="planned_hours"
                             string="How many hours do I 'Think' it can take?"/>
@@ -86,7 +86,7 @@
                     <h3>This User Story was approved by: <field name="approval_user_id" readonly="True"/></h3>
                 </div>
               <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('approved','=',True)]}" placeholder="Add a description here ..." widget="html"/>
-              <h1><label for="accep_crit_ids" string="4.- Aceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
+              <h1><label for="accep_crit_ids" string="4.- Acceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1">
                 <tree string="Acceptability Criteria" editable="bottom">
                   <field name="name"/>
@@ -96,7 +96,9 @@
                   <field name="difficulty_level"/>
                   <button icon="gtk-info" name="ask_review" string="Ask For Review by Product Owner" type="object" help="Remember, when you ask for review this Acceptance criteria you should say where and How it must be done"/>
                   <button icon="gtk-apply" name="approve" string="Approve" type="object" help="Click here if you are sure it works, it will mark this as 'ready'"/>
+                  <!--
                   <button icon="gtk-cancel" name="disapprove" string="Disaprove" type="object" help="Click here if it doesn't work, remember communicate the reason why it doesn't works"/>
+                  -->
                 </tree>
               </field>
             </page>

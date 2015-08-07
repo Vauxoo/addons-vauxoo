@@ -26,11 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Project Complete Name", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """ search by complete_name in model Project
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

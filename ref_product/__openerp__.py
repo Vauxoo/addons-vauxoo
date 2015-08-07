@@ -25,27 +25,9 @@
 ##############################################################################
 {
     "name": "Ref Product", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Others", 
-    "description": """
-When you install this module, the form view of the products
-accommodates the fields to give better presentation of the information
-presented to the end user.
-
-    Fields are accommodated are:
-
-        *Can be Purchased
-        *Can be used in contracts.
-
-    This module will be installed until the following bug remains fixed:
-
-        https://bugs.launchpad.net/openobject-addons/+bug/1188863
-
-    Image url:
-
-        https://www.diigo.com/item/image/3z3vg/kj84
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

@@ -27,12 +27,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "mrp account analytics", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "analytic production", 
-    "description": """
-        Added field for account analitic
-    """, 
     "website": "", 
     "license": "", 
     "depends": [

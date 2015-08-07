@@ -22,11 +22,9 @@
 #"license" : "AGPL-3",
 {
     "name": "Add stock_kardex in menuitem", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """This module add stock_kardex in menuitem
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

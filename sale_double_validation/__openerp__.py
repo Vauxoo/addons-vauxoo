@@ -22,17 +22,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "sale_double_validation", 
-    "version": "0.1", 
+    "name": "Sale Double Validation",
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Sales & Purchases", 
-    "description": """
-This module modifies the sale workflow in order to validate sales
-only by authorized group set by configuration wizard,
-
-Acknowledgement to OpenERP SA
-this module is based on purchase_double_validation
-    """, 
     "website": "http://www.vauxoo.com", 
     "license": "", 
     "depends": [

@@ -25,23 +25,18 @@
 ##############################################################################
 {
     "name": "Complete data from lang english",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Generics Modules",
-    "description": """
-        This module complete the Separator Format, Decimal Separator, Thousands Separator in
-        data of lang english
-        """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
         "base"
     ],
     "demo": [
-        "data/lang_data.xml"
+        "demo/lang_data.xml"
     ],
-    "data": [
-    ],
+    "data": [],
     "test": [],
     "js": [],
     "css": [],

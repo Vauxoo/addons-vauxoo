@@ -25,17 +25,9 @@
 #
 {
     "name": "Account move type account filter",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-This module add 5 filters to journal items
-- account type in payable or receivable
-- account type is payable
-- account type is receivable
-- account type not is payable
-- account type is nor receivable
-""",
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [

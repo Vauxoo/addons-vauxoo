@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Account Voucher Requester", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Account Voucher Requester
-=========================
-
-This module add an user field to the account voucher model to be the account
-voucher requester.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

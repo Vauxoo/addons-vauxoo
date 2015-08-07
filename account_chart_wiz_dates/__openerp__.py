@@ -25,12 +25,9 @@
 ##############################################################################
 {
     "name": "Wizard Account Chart Dates", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-        Add fields for date initial & end
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

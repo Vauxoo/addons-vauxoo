@@ -25,13 +25,9 @@
 #
 {
     "name": "Followers of Task to Project", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-The followers_task_ids function field type is added, this field is used in the registration rule Follow Project Task,
-allowing read, write, delete and create tasks without being a follower of the project.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

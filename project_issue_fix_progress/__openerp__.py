@@ -22,11 +22,9 @@
 ################################################################################
 {
     "name": "Manage the amount of progress in parallel", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """Manage the amount of progress in parallel, among other related fields.
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [

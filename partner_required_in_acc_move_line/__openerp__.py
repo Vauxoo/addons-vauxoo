@@ -25,14 +25,9 @@
 ##############################################################################
 {
     "name": "Partner Required in Move Lines", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    This module add a field in account_account to indicate that this account
-    required a partner in yours moves, and when a move_line use this account
-    the partner was required.
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

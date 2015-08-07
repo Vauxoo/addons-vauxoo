@@ -26,15 +26,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Search by Last Modification User, Date Modified, Date Created", 
-    "version": "1.1", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Search by write_date, write_uid, create_date, create_uid in model Project_task
-==============================================================================
-To work properly, you need apply the next patch:
-https://code.launchpad.net/~openerp-dev/openobject-server/7.0-opw-593628-msh/+merge/168947
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

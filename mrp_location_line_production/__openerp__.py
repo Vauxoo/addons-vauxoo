@@ -26,12 +26,9 @@
 #~ "mrp_view.xml",
 {
     "name": "Mrp location line production", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    This module change place where take location in lines of production
-    """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [

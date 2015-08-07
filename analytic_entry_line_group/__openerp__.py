@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Analytic Entry Line Group", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Analytic Entry Line Group
--------------------------
-This module takes analytic_group_id field from analytic account for grouping of
-analytics entry lines.
-
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

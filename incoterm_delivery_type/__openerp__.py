@@ -23,14 +23,9 @@
 ###############################################################################
 {
     "name": "Incoterm Delivery Type", 
-    "version": "1.0", 
+    "version": "1.6", 
     "author": "Vauxoo", 
     "category": "", 
-    "description": """
-Incoterm Delivery Type
-======================
-This module add a delivery type boolan field in the incoterms model.
-""", 
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [

@@ -26,14 +26,9 @@
 ##############################################################################
 {
     "name": "Report Order customisation Vnzla", 
-    "version": "0.2", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules/Others", 
-    "description": """
-                    Purchase Order customisation for Vauxoo
-                    Add new field for Payment Terms in purchase order
-                    Changed in purchase order fields to required
-                    """, 
     "website": "http://wiki.openerp.org.ve/", 
     "license": "", 
     "depends": [

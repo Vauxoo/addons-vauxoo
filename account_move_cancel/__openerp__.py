@@ -23,14 +23,9 @@
 ################################################################################
 {
     "name": "Account Move Cancel", 
-    "version": "0.1", 
+    "version": "0.6", 
     "author": "Vauxoo", 
     "category": "Generic Modules", 
-    "description": """
-    Cancels multiple invoices from a wizard and is called from other modules for direct
-    billing cancellations and cancel your withholding, withholding automatically validating
-    and maintaining the seat number that generated in its initial stage
-    """, 
     "website": "http://vauxoo.com", 
     "license": "", 
     "depends": [
