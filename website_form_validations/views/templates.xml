@@ -8,6 +8,12 @@
                       <input type="text" name="mobile" class="form-control" t-att-value="checkout.get('mobile')"/>
                   </div>
 				</xpath>
+				<xpath expr="//div[@class='row']/div[11]" position="after">
+                  <div t-attf-class="form-group col-lg-12">
+                      <label class="control-label" for="comments">Comments</label>
+                      <textarea type="text" name="comments" class="form-control" t-att-value="checkout.get('comments')"/>
+                  </div>
+				</xpath>
 				<!-- Field validations, renders a small badge on the right side of the label -->
 				<xpath expr="//label[@for='contact_name']" position="after">
                       <t t-if="error.get('name')"><span class="label label-danger"> Required </span></t>

@@ -21,7 +21,8 @@
 
 from openerp import models, fields
 
-class sale_order(models.Model):
-	_inherit = 'sale.order'
 
-	comments = fields.Text('Comments')
+class sale_order(models.Model):
+    _inherit = 'sale.order'
+
+    comments = fields.Text('Comments')

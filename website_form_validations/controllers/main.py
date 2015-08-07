@@ -14,6 +14,8 @@ class website_sale_inh(website_sale):
         orm_user = registry.get('res.users')
         orm_country = registry.get('res.country')
         state_orm = registry.get('res.country.state')
+        sale_order_obj = registry.get('sale.order')
+
 
         country_ids = orm_country.search(cr, SUPERUSER_ID, [], context=context)
         countries = orm_country.browse(cr, SUPERUSER_ID, country_ids, context)
@@ -26,7 +28,6 @@ class website_sale_inh(website_sale):
             context).partner_id
 
         order = None
-
         shipping_id = None
         shipping_ids = []
         checkout = {}
@@ -57,6 +58,10 @@ class website_sale_inh(website_sale):
                                 order.partner_id))
             checkout['mobile'] = partner.mobile
         else:
+            order_to_update = request.website.sale_get_order(context=context)
+            sale_order_obj.write(cr, uid, [order_to_update.id],
+                                 {'comments': data.get('comments', None)},
+                                 context=context)
             checkout = self.checkout_parse('billing', data)
             try:
                 shipping_id = int(data["shipping_id"])
@@ -64,7 +69,6 @@ class website_sale_inh(website_sale):
                 pass
             if shipping_id == -1:
                 checkout.update(self.checkout_parse('shipping', data))
-
         if shipping_id is None:
             if not order:
                 order = request.website.sale_get_order(context=context)
@@ -103,6 +107,7 @@ class website_sale_inh(website_sale):
                         ('code', '=', country_code)], context=context)
                 if country_ids:
                     checkout['country_id'] = country_ids[0]
+
         values = {
             'countries': countries,
             'states': states,
@@ -118,7 +123,8 @@ class website_sale_inh(website_sale):
     mandatory_billing_fields = [
         "name", "phone", "email", "street2", "city", "country_id"]
     optional_billing_fields = [
-        "street", "state_id", "vat", "vat_subjected", "zip", "mobile"]
+        "street",
+        "state_id", "vat", "vat_subjected", "zip", "mobile"]
     mandatory_shipping_fields = [
         "name", "phone", "street", "city", "country_id"]
     optional_shipping_fields = ["state_id", "zip"]
@@ -160,6 +166,7 @@ class website_sale_inh(website_sale):
 
         return dict((field_name, data[prefix + field_name]) for field_name in all_fields if prefix + field_name in data)  # noqa
 
+    # This is a simple function that validates special fields as: email, vat...
     def checkout_form_validate(self, data):
         cr, uid, registry = request.cr, request.uid, request.registry
 
