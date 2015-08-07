@@ -90,7 +90,7 @@ class LocationQuants(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    @api.multi
+    @api.one
     def _get_locations_quants(self):
         stock_locations_obj = self.env['location.quants']
         stock_quants_obj = self.env['stock.quant']
@@ -125,7 +125,7 @@ class ProductTemplate(models.Model):
                 new_quants.append(new_id.id)
         self.product_stock_quants_ids = new_quants
 
-    @api.multi
+    @api.one
     def _get_planned_dates(self):
         pol_obj = self.env['purchase.order.line']
         products = self._get_products()
