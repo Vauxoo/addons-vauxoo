@@ -59,7 +59,7 @@ class website_sale_inh(website_sale):
             checkout['is_company'] = partner.is_company
         else:
             order_to_update = request.website.sale_get_order(context=context)
-            sale_order_obj.write(cr, uid, [order_to_update.id],
+            sale_order_obj.write(cr, SUPERUSER_ID, [order_to_update.id],
                                  {'comments': data.get('comments', None)},
                                  context=context)
             checkout = self.checkout_parse('billing', data)
