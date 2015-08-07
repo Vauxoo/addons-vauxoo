@@ -11,7 +11,8 @@
     ],
     "demo": [],
     "data": [
-        'views/templates.xml'
+        'views/sale_order_view.xml',
+        'views/templates.xml',
     ],
     "test": [],
     "qweb": [

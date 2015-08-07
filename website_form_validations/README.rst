@@ -12,6 +12,7 @@ red the input fields.
 Extras:
 -------
 - Adds the mobile phone field.
+- Adds a field for comments in the order.
 
 Contributors
 ------------
