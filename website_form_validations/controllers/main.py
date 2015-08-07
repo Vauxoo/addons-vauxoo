@@ -16,7 +16,6 @@ class website_sale_inh(website_sale):
         state_orm = registry.get('res.country.state')
         sale_order_obj = registry.get('sale.order')
 
-
         country_ids = orm_country.search(cr, SUPERUSER_ID, [], context=context)
         countries = orm_country.browse(cr, SUPERUSER_ID, country_ids, context)
         states_ids = state_orm.search(cr, SUPERUSER_ID, [], context=context)
@@ -57,6 +56,7 @@ class website_sale_inh(website_sale):
                                 "billing",
                                 order.partner_id))
             checkout['mobile'] = partner.mobile
+            checkout['is_company'] = partner.is_company
         else:
             order_to_update = request.website.sale_get_order(context=context)
             sale_order_obj.write(cr, uid, [order_to_update.id],
@@ -124,7 +124,7 @@ class website_sale_inh(website_sale):
         "name", "phone", "email", "street2", "city", "country_id"]
     optional_billing_fields = [
         "street",
-        "state_id", "vat", "vat_subjected", "zip", "mobile"]
+        "state_id", "vat", "vat_subjected", "zip", "mobile", "is_company"]
     mandatory_shipping_fields = [
         "name", "phone", "street", "city", "country_id"]
     optional_shipping_fields = ["state_id", "zip"]
@@ -157,6 +157,10 @@ class website_sale_inh(website_sale):
             query[prefix + 'country_id'] = int(query[prefix + 'country_id'])
         if query.get(prefix + 'mobile'):
             query[prefix + 'mobile'] = int(query[prefix + 'mobile'])
+        if query.get(prefix + 'is_company'):
+            query[prefix + 'is_company'] = query[prefix + 'is_company']
+        else:
+            query[prefix + 'is_company'] = False
 
         if query.get(prefix + 'vat'):
             query[prefix + 'vat_subjected'] = True

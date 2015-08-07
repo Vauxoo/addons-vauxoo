@@ -2,6 +2,7 @@
   	<openerp>
 		<data>
 			<template id="checkout_validated" inherit_id="website_sale.checkout">
+				<!-- Extra fields -->
 				<xpath expr="//div[@class='row']/div[10]" position="replace">
 				   <div t-attf-class="form-group #{error.get('mobile') and 'has-error' or ''} col-lg-6">
                       <label class="control-label" for="mobile" style="font-weight: normal">Mobile</label>
@@ -14,6 +15,14 @@
                       <textarea type="text" name="comments" class="form-control" t-att-value="checkout.get('comments')"/>
                   </div>
 				</xpath>
+				<xpath expr="//div[@class='row']/div[2]" position="before">
+                  <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label mt32">
+                      <input type="checkbox" name="is_company" class="" t-att-checked="'checked' if checkout.get('is_company') == True else ''"/> Is Company
+                  </label>
+                  </div>
+				</xpath>
+
 				<!-- Field validations, renders a small badge on the right side of the label -->
 				<xpath expr="//label[@for='contact_name']" position="after">
                       <t t-if="error.get('name')"><span class="label label-danger"> Required </span></t>
