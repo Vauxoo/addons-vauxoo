@@ -8,6 +8,7 @@
     "depends": [
         "stock",
         "purchase",
+        "website_variants_extra",
         "website_sale",
     ],
     "demo": [],
