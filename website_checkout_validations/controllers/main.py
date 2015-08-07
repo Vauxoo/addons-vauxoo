@@ -63,10 +63,9 @@ class website_sale_inh(website_sale):
                                  {'comments': data.get('comments', None)},
                                  context=context)
             checkout = self.checkout_parse('billing', data)
-            try:
-                shipping_id = int(data["shipping_id"])
-            except ValueError:
-                pass
+
+            shipping_id = self.validate_shipping(data.get("shipping_id", 0)) and int(data.get("shipping_id")) or None  # noqa
+
             if shipping_id == -1:
                 checkout.update(self.checkout_parse('shipping', data))
         if shipping_id is None:
@@ -200,3 +199,8 @@ class website_sale_inh(website_sale):
             if not re.match(r"[^@]+@[^@]+\.[^@]+", data.get('email')):
                 error["email"] = 'invalid'
         return error
+
+        def validate_shipping(ship):
+            if ship[0] in ('-', '+'):
+                return ship[1:].isdigit()
+            return ship.isdigit()
