@@ -8,6 +8,33 @@
                       <input type="text" name="mobile" class="form-control" t-att-value="checkout.get('mobile')"/>
                   </div>
 				</xpath>
+				<!-- Field validations, renders a small badge on the right side of the label -->
+				<xpath expr="//label[@for='contact_name']" position="after">
+                      <t t-if="error.get('name')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='city']" position="after">
+                      <t t-if="error.get('city')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//input[@type='email']" position="before">
+                      <t t-if="error.get('email') == 'invalid'"><span class="label label-danger"> Invalid Email </span></t>
+                      <t t-if="error.get('email') == 'missing'"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='phone']" position="after">
+                      <t t-if="error.get('phone')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='street']" position="after">
+                      <t t-if="error.get('street')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='street2']" position="after">
+                      <t t-if="error.get('street2')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='country_id']" position="after">
+                      <t t-if="error.get('country_id')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='state_id']" position="after">
+                      <t t-if="error.get('state_id')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+
 			</template>
 		</data>
 	</openerp>

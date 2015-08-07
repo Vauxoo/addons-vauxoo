@@ -2,6 +2,7 @@
 from openerp import SUPERUSER_ID
 from openerp.http import request
 from openerp.addons.website_sale.controllers.main import website_sale
+import re
 
 
 class website_sale_inh(website_sale):
@@ -158,3 +159,33 @@ class website_sale_inh(website_sale):
             return query
 
         return dict((field_name, data[prefix + field_name]) for field_name in all_fields if prefix + field_name in data)  # noqa
+
+    def checkout_form_validate(self, data):
+        cr, uid, registry = request.cr, request.uid, request.registry
+
+        # Validation
+        error = dict()
+        for field_name in self.mandatory_billing_fields:
+            if not data.get(field_name):
+                error[field_name] = 'missing'
+
+        if data.get("vat") and hasattr(registry["res.partner"], "check_vat"):
+            if request.website.company_id.vat_check_vies:
+                # force full VIES online check
+                check_func = registry["res.partner"].vies_vat_check
+            else:
+                # quick and partial off-line checksum validation
+                check_func = registry["res.partner"].simple_vat_check
+            vat_country, vat_number = registry["res.partner"]._split_vat(data.get("vat"))  # noqa
+            if not check_func(cr, uid, vat_country, vat_number, context=None):
+                error["vat"] = 'error'
+
+        if data.get("shipping_id") == -1:
+            for field_name in self.mandatory_shipping_fields:
+                field_name = 'shipping_' + field_name
+                if not data.get(field_name):
+                    error[field_name] = 'missing'
+        if data.get('email'):
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", data.get('email')):
+                error["email"] = 'invalid'
+        return error
