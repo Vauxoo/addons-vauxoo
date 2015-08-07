@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
- 		<template id="product_stock_state" inherit_id="website_sale.product">
- 			<xpath expr="//hr[@t-if='product.description_sale']" position="before">
- 				<h5><span class="label stock_state"></span></h5>
+         <template id="product_stock_available_website" inherit_id="website_variants_extra.product_variants_description_3columns">
+             <xpath expr="//div[@class='col-sm-3 col-md-3 col-lg-3 descriptions_column']" position="after">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <t t-if="product.product_stock_quants_ids">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3>Availability by Store</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="nav nav-pills nav-stacked mt16">
+                                    <t t-foreach="product.product_stock_quants_ids" t-as="quant">
+                                        <li><span><t t-raw="quant.location_id.name"></t></span><span class='badge pull-right'><t t-raw="quant.qty"></t></span></li>
+                                    </t>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="not product.product_stock_quants_ids and product.product_planned_dates_ids">
+                        <div role='alert' class="alert alert-danger">
+                            <p>Available Until:
+                            <strong>
+                                <span class='active'><t t-raw="product.product_planned_dates_ids.sorted(key=lambda r: r.date_planned)[0].date_planned"/></span>
+                            </strong></p>
+                        </div>
+                    </t>
+                </div>
+             </xpath>
+         </template>
+         <template id="product_stock_state" inherit_id="website_sale.product">
+             <xpath expr="//hr[@t-if='product.description_sale']" position="before">
+                 <h5><span class="label stock_state"></span></h5>
 
- 				<h5><span class="label label-info stock_delay"></span></h5>
+                 <h5><span class="label label-info stock_delay"></span></h5>
 
- 				<t t-if="product.alternative_product_ids">
- 					<div id="similar_products_vx" class="alert alert-success" style="align: center;">
- 						<a href="#rec_prod" class="alert-link">Similar Products</a>
- 					</div>
- 				</t>
- 			</xpath>
- 		</template>
- 		<template id="product_rec_prod_name" inherit_id="website_sale.recommended_products">
- 			<xpath expr="//h3" position="before">
-    			<a name="rec_prod"></a>
- 			</xpath>
- 		</template>
+                 <t t-if="product.alternative_product_ids">
+                     <div id="similar_products_vx" class="alert alert-success" style="align: center;">
+                         <a href="#rec_prod" class="alert-link">Similar Products</a>
+                     </div>
+                 </t>
+             </xpath>
+         </template>
+         <template id="product_rec_prod_name" inherit_id="website_sale.recommended_products">
+             <xpath expr="//h3" position="before">
+                <a name="rec_prod"></a>
+             </xpath>
+         </template>
     </data>
 </openerp>
