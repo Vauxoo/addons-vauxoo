@@ -1,25 +1,20 @@
 # -*- encoding: utf-8 -*-
 {
-    "name": "Website Product Availability",
-    "version": "1.6",
+    "name": "Website Form Validations",
+    "version": "1.5",
     "author": "Vauxoo",
     "category": "Website",
     "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "stock",
-        "purchase",
-        "website_variants_extra",
         "website_sale",
     ],
     "demo": [],
     "data": [
-        "views/layout.xml",
-        "views/templates.xml",
-        "views/product_view.xml",
+        'views/sale_order_view.xml',
+        'views/templates.xml',
     ],
     "test": [],
-    "js": [],
-    "css": [],
     "qweb": [
     ],
     "installable": True,
