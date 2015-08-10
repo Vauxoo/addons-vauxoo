@@ -20,26 +20,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Journal Entries report", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Accouting", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Journal Entries report",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accouting",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
+        "account",
         "report_webkit"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "data.xml", 
+        "data.xml",
         "account_move_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
