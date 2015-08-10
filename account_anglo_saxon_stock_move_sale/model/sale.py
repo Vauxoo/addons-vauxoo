@@ -24,7 +24,7 @@ from openerp.tools.translate import _
 from openerp.osv import osv, fields
 
 
-class sale_order(osv.osv):
+class SaleOrder(osv.osv):
 
     _inherit = "sale.order"
     _columns = {
