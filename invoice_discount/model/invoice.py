@@ -30,7 +30,7 @@ discount and the value of the discount
 from openerp.osv import osv, fields
 
 
-class account_invoice_line(osv.osv):
+class AccountInvoiceLine(osv.osv):
 
     '''
     Inherit from account.invoice.line to get by line the amount without
@@ -92,7 +92,7 @@ class account_invoice_line(osv.osv):
     }
 
 
-class account_invoice(osv.osv):
+class AccountInvoice(osv.osv):
 
     '''
     Inherit from account.invoice to get the amount total without discount and
