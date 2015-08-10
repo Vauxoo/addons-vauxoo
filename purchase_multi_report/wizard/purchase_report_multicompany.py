@@ -33,7 +33,7 @@ import base64
 import openerp.workflow as workflow
 
 
-class print_purchase_report(osv.TransientModel):
+class PrintPurchaseReport(osv.TransientModel):
 
     """
     OpenERP Wizard : print.purchase.report

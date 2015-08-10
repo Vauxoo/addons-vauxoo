@@ -24,7 +24,7 @@
 from openerp.osv import fields, osv
 
 
-class account_voucher_tax_assigned(osv.TransientModel):
+class AccountVoucherTaxAssigned(osv.TransientModel):
 
     _name = 'account.voucher.tax.assigned'
 

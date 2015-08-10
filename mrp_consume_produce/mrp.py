@@ -28,7 +28,7 @@ from openerp.osv import osv, fields
 import openerp.workflow as workflow
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def _check_boolean(self, cr, uid, ids, field_name, args, context={}):

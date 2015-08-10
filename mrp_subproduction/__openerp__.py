@@ -24,24 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "MRP Subproduction", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Subproduction",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

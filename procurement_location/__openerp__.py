@@ -25,22 +25,22 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "plocation", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "website": "", 
-    "license": "", 
+    "name": "plocation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "",
+    "license": "",
     "depends": [
         "mrp_default_location"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -27,7 +27,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
     _columns = {
         'advance_account_id': fields.many2one(
@@ -38,7 +38,7 @@ class account_voucher(osv.Model):
     def writeoff_move_line_get(self, cr, uid, voucher_id, line_total, move_id,
                                name, company_currency, current_currency,
                                context=None):
-        move_line = super(account_voucher, self).writeoff_move_line_get(
+        move_line = super(AccountVoucher, self).writeoff_move_line_get(
             cr, uid, voucher_id, line_total, move_id, name, company_currency,
             current_currency, context=context)
         voucher = self.pool.get('account.voucher').browse(
@@ -64,7 +64,7 @@ class account_voucher(osv.Model):
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id, amount,
                             currency_id, ttype, date, context=None):
-        res = super(account_voucher, self).onchange_partner_id(
+        res = super(AccountVoucher, self).onchange_partner_id(
             cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype,
             date, context=context)
         context = context or {}

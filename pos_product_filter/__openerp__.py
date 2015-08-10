@@ -23,31 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "POS Product Filter", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Point Of Sale", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "POS Product Filter",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Point Of Sale",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "base", 
-        "point_of_sale", 
-        "sale", 
+        "base",
+        "point_of_sale",
+        "sale",
         "pos_delivery_restaurant"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/product_view.xml"
-    ], 
-    "test": [], 
+    ],
+    "test": [],
     "js": [
-        "static/src/js/backbone-super-min.js", 
-        "static/src/js/models.js", 
+        "static/src/js/backbone-super-min.js",
+        "static/src/js/models.js",
         "static/src/js/main.js"
-    ], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

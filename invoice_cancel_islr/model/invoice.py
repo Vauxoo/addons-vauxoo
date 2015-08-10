@@ -27,7 +27,7 @@ from openerp.osv import osv
 import openerp.workflow as workflow
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
 
     #~
@@ -45,7 +45,7 @@ class account_invoice(osv.Model):
         Modified to witholding vat validate
         '''
         wf_service = workflow
-        res = super(account_invoice, self).action_number(cr, uid, ids)
+        res = super(AccountInvoice, self).action_number(cr, uid, ids)
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         state = [('draft', 'act_draft'), ('progress', 'act_progress'), (
             'confirmed', 'act_confirmed'), ('done', 'act_done')]
@@ -76,7 +76,7 @@ class account_invoice(osv.Model):
             islr_obj.write(cr, uid, [invo_brw.islr_wh_doc_id.id], {
                            'prev_state': invo_brw.islr_wh_doc_id.state},
                            context=context)
-        res = super(account_invoice, self).invoice_cancel(
+        res = super(AccountInvoice, self).invoice_cancel(
             cr, uid, ids, context=context)
 
         return res

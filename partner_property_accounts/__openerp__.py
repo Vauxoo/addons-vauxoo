@@ -24,24 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "Partner account Sin grupo", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Vauxoo", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Partner account Sin grupo",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Vauxoo",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "partner_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": False, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False,
+    "auto_install": False,
     "active": False
 }

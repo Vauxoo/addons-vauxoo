@@ -24,23 +24,23 @@
 #
 #
 {
-    "name": "Hr Payroll Home Address Validation", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Hr Payroll Home Address Validation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "hr_payroll", 
+        "hr_payroll",
         "hr_payroll_account"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

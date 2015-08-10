@@ -5,7 +5,7 @@ from openerp.addons.website_sale.controllers.main import website_sale
 import re
 
 
-class website_sale_inh(website_sale):
+class WebsiteSaleInh(website_sale):
 
     def checkout_values(self, data=None):
         cr, uid, context, registry =\

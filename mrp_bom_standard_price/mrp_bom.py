@@ -23,7 +23,7 @@
 from openerp.osv import osv, fields
 
 
-class mrp_bom(osv.Model):
+class MrpBom(osv.Model):
     _inherit = 'mrp.bom'
 
     _columns = {

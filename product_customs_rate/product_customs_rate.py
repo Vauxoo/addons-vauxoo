@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class product_customs_rate(osv.Model):
+class ProductCustomsRate(osv.Model):
 
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):

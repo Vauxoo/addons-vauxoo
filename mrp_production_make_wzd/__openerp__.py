@@ -24,25 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Production Make Wzd", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Production Make Wzd",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "mrp_default_location"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/wizard_production_make.xml", 
+        "wizard/wizard_production_make.xml",
         "wizard/mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

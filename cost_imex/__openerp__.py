@@ -23,29 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name": "Cost Imex", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Cost Imex",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "purchase"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "data/data_load.xml", 
-        "security/percent_imex_security.xml", 
-        "security/ir.model.access.csv", 
-        "view/purchase_view.xml", 
+        "data/data_load.xml",
+        "security/percent_imex_security.xml",
+        "security/ir.model.access.csv",
+        "view/purchase_view.xml",
         "view/percen_imex_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

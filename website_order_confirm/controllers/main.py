@@ -5,7 +5,7 @@ from openerp.http import request
 from openerp.addons.website_sale.controllers.main import website_sale
 
 
-class website_sale_inh(website_sale):
+class WebsiteSaleInh(website_sale):
 
     @http.route(
         '/shop/payment/validate',

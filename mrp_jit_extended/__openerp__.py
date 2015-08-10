@@ -24,26 +24,26 @@
 #
 ##############################################################################
 {
-    "name": "MRP JIT extended", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP JIT extended",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "procurement_order_merge", 
-        "mrp_subproduction", 
+        "procurement_order_merge",
+        "mrp_subproduction",
         "procurement_location"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/mrp_jit_extended_wizard_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

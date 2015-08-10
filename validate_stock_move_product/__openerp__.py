@@ -20,24 +20,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 {
-    "name": "Validate Stock Move Product", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Validate Stock Move Product",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/validate_stock_move_product.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

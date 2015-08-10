@@ -25,25 +25,25 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Ledger Report", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Accounting", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Account Ledger Report",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "acc_ledger_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

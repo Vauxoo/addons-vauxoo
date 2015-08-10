@@ -27,7 +27,7 @@ from openerp.tools.translate import _
 import time
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
     _columns = {
         'date_contract_expiry': fields.date(
@@ -47,7 +47,7 @@ class stock_picking(osv.Model):
         if ((not sp_brw.date_contract_expiry) or
                 (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
                 context.get('force_expiry_pickings', False)):
-            res = super(stock_picking, self).action_process(
+            res = super(StockPicking, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
             raise osv.except_osv(_('Invalid Procedure'),
@@ -62,12 +62,12 @@ class stock_picking(osv.Model):
         default = default or {}
         context = context or {}
         default['date_contract_expiry'] = False
-        res = super(stock_picking, self).copy(
+        res = super(StockPicking, self).copy(
             cur, uid, ids, default=default, context=context)
         return res
 
 
-class stock_picking_in(osv.Model):
+class StockPickingIn(osv.Model):
     _inherit = 'stock.picking.in'
     _columns = {
         'date_contract_expiry': fields.date(
@@ -87,7 +87,7 @@ class stock_picking_in(osv.Model):
         if ((not sp_brw.date_contract_expiry) or
                 (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
                 context.get('force_expiry_pickings', False)):
-            res = super(stock_picking_in, self).action_process(
+            res = super(StockPickingIn, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
             raise osv.except_osv(_('Invalid Procedure'),
@@ -102,12 +102,12 @@ class stock_picking_in(osv.Model):
         default = default or {}
         context = context or {}
         default['date_contract_expiry'] = False
-        res = super(stock_picking_in, self).copy(
+        res = super(StockPickingIn, self).copy(
             cur, uid, ids, default=default, context=context)
         return res
 
 
-class stock_picking_out(osv.Model):
+class StockPickingOut(osv.Model):
     _inherit = 'stock.picking.out'
     _columns = {
         'date_contract_expiry': fields.date(
@@ -127,7 +127,7 @@ class stock_picking_out(osv.Model):
         if ((not sp_brw.date_contract_expiry) or
                 (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
                 context.get('force_expiry_pickings', False)):
-            res = super(stock_picking_out, self).action_process(
+            res = super(StockPickingOut, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
             raise osv.except_osv(_('Invalid Procedure'),
@@ -142,6 +142,6 @@ class stock_picking_out(osv.Model):
         default = default or {}
         context = context or {}
         default['date_contract_expiry'] = False
-        res = super(stock_picking_out, self).copy(
+        res = super(StockPickingOut, self).copy(
             cur, uid, ids, default=default, context=context)
         return res

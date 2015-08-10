@@ -25,7 +25,7 @@
 from openerp.osv import osv
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
 
     _inherit = 'account.voucher'
 

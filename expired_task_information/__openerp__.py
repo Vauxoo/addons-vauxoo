@@ -20,28 +20,28 @@
 #
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Expired Task Information", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Project", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Expired Task Information",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Project",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/config_task_security.xml", 
-        "security/ir.model.access.csv", 
-        "view/task_expiry_config_view.xml", 
+        "security/config_task_security.xml",
+        "security/ir.model.access.csv",
+        "view/task_expiry_config_view.xml",
         "data/config_task_expired_data.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

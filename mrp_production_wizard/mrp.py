@@ -30,7 +30,7 @@ from openerp.osv import osv
 import time
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = "mrp.production"
 
     """

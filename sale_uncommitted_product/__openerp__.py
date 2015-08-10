@@ -22,31 +22,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Sale of Uncommitted Products", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Sale of Uncommitted Products",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "sale", 
-        "product", 
+        "base",
+        "sale",
+        "product",
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/product_view.xml", 
-        "view/sale_view.xml", 
-        "view/sale_double_validation_installer.xml", 
-        "workflow/sale_workflow.xml", 
+        "view/product_view.xml",
+        "view/sale_view.xml",
+        "view/sale_double_validation_installer.xml",
+        "workflow/sale_workflow.xml",
         "security/groups.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

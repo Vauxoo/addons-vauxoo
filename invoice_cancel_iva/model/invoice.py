@@ -28,7 +28,7 @@ from openerp.tools.translate import _
 import openerp.workflow as workflow
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
 
     _inherit = 'account.invoice'
 
@@ -45,7 +45,7 @@ class account_invoice(osv.Model):
         Modified to witholding vat validate
         '''
         wf_service = workflow
-        res = super(account_invoice, self).action_number(cr, uid, ids)
+        res = super(AccountInvoice, self).action_number(cr, uid, ids)
         iva_line_obj = self.pool.get('account.wh.iva.line')
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         state = [('draft', 'set_to_draft'), (
@@ -85,7 +85,7 @@ class account_invoice(osv.Model):
                 'prev_state': invo_brw.wh_iva_id.state},
                 context=context)
 
-        res = super(account_invoice, self).invoice_cancel(
+        res = super(AccountInvoice, self).invoice_cancel(
             cr, uid, ids, context=context)
 
         return res

@@ -21,24 +21,24 @@
 ################################################################################
 #"license" : "AGPL-3",
 {
-    "name": "Add the Name and referenced in the view search account.move.line model", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Add the Name and referenced in the view search account.move.line model",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_move_line.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

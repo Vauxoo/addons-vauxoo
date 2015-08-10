@@ -28,7 +28,7 @@ from openerp.tools.translate import _
 import time
 
 
-class sale_order(osv.Model):
+class SaleOrder(osv.Model):
     _inherit = "sale.order"
 
     _columns = {

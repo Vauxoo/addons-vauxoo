@@ -24,23 +24,23 @@
 #
 ##############################################################################
 {
-    "name": "MRP request return cancel", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "website": "", 
-    "license": "", 
+    "name": "MRP request return cancel",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "",
+    "license": "",
     "depends": [
-        "mrp_request_return", 
+        "mrp_request_return",
         "mrp_production_cancel"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

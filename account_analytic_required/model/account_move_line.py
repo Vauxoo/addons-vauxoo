@@ -25,7 +25,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class account_move_line(osv.osv):
+class AccountMoveLine(osv.osv):
     _inherit = "account.move.line"
 
     def _check_analytic_required(self, cr, uid, ids, context=None):

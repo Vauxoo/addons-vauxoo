@@ -24,25 +24,25 @@
 #
 #
 {
-    "name": "Account Reconcile Grouping", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Reconcile Grouping",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
+        "account",
         "account_move_line_grouping"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_move_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -25,6 +25,6 @@
 from openerp.osv import osv
 
 
-class account_bank_statement_line(osv.osv):
+class AccountBankStatementLine(osv.osv):
 
     _inherit = 'account.bank.statement.line'

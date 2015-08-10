@@ -24,32 +24,32 @@
 #
 #
 {
-    "name": "Followers of Task to Project", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Followers of Task to Project",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "base", 
-        "portal_project", 
+        "base",
+        "portal_project",
         "hr"
-    ], 
+    ],
     "demo": [
         "demo/project_task_demo.xml"
-    ], 
+    ],
     "data": [
-        "data/group_follower.xml", 
-        "data/ir_rule_project_data.xml", 
+        "data/group_follower.xml",
+        "data/ir_rule_project_data.xml",
         "view/project_project_view.xml"
-    ], 
+    ],
     "test": [
         "test/ir_rule_task_project.yml"
-    ], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

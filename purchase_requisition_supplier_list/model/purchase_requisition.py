@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
 
     """
     This is an extension of the purchase requisition model to add the

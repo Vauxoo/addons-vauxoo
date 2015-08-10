@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class account_period(osv.Model):
+class AccountPeriod(osv.Model):
     _inherit = 'account.period'
 
     _columns = {

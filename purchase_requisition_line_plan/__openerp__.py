@@ -22,27 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Requisition Line Plan", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Requisition Line Plan",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "purchase_requisition", 
-        "purchase_requisition_line_view", 
-        "purchase_analytic_plans", 
+        "purchase_requisition",
+        "purchase_requisition_line_view",
+        "purchase_analytic_plans",
         "pr_line_related_po_line"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_requisition_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

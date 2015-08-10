@@ -22,27 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Order Department", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "purchase", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Order Department",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "purchase",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "purchase", 
-        "hr", 
-        "purchase_order_requisitor", 
+        "purchase",
+        "hr",
+        "purchase_order_requisitor",
         "purchase_requisition_department"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_order_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

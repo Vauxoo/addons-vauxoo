@@ -22,31 +22,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Expenses Replenishment", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "HR Module", 
-    "website": "http://openerp.com.ve", 
-    "license": "", 
+    "name": "Expenses Replenishment",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "HR Module",
+    "website": "http://openerp.com.ve",
+    "license": "",
     "depends": [
-        "hr_expense", 
-        "account_invoice_line_currency", 
-        "hr_expense_analytic", 
+        "hr_expense",
+        "account_invoice_line_currency",
+        "hr_expense_analytic",
         "account_move_report"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/hr_security.xml", 
-        "wizard/hr_expense_wizard_view.xml", 
-        "view/account_invoice_view.xml", 
-        "view/hr_expense_view.xml", 
+        "security/hr_security.xml",
+        "wizard/hr_expense_wizard_view.xml",
+        "view/account_invoice_view.xml",
+        "view/hr_expense_view.xml",
         "workflow/workflow.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

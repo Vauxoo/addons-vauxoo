@@ -25,7 +25,7 @@
 from openerp import models, fields, api
 
 
-class stock_location_route(models.Model):
+class StockLocationRoute(models.Model):
     _inherit = 'stock.location.route'
 
     consider_on_request = fields.Boolean(
@@ -41,7 +41,7 @@ class stock_location_route(models.Model):
              'route.')
 
 
-class product_product(models.Model):
+class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     def get_states(self):

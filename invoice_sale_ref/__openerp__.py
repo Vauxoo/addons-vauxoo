@@ -24,23 +24,23 @@
 #
 ##############################################################################
 {
-    "name": "Invoice Sale Ref", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Invoice Sale Ref",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "sale", 
+        "sale",
         "stock"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

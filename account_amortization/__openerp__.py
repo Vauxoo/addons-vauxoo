@@ -24,26 +24,26 @@
 #
 ##############################################################################
 {
-    "name": "Vauxoo Account Amortization", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Accounting & Finance", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Vauxoo Account Amortization",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Accounting & Finance",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "decimal_precision", 
-        "account_asset", 
+        "decimal_precision",
+        "account_asset",
         "account_asset_date"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_amortization_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

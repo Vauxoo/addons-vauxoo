@@ -24,7 +24,7 @@ from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
 
     _columns = {

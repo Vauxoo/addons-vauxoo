@@ -25,26 +25,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name": "Report Order customisation Vnzla", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Others", 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+    "name": "Report Order customisation Vnzla",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Others",
+    "website": "http://wiki.openerp.org.ve/",
+    "license": "",
     "depends": [
-        "purchase", 
+        "purchase",
         "multireport_base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/purchase_report_multicompany.xml", 
+        "wizard/purchase_report_multicompany.xml",
         "purchase_report_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": False, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False,
+    "auto_install": False,
     "active": False
 }

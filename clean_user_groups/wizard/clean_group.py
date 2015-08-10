@@ -27,7 +27,7 @@ from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 
 
-class clean_groups(osv.TransientModel):
+class CleanGroups(osv.TransientModel):
 
     _name = 'clean.groups'
 

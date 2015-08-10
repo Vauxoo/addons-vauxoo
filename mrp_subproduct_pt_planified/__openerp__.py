@@ -25,23 +25,23 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "MRP Subproducts Planified", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/MRP", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Subproducts Planified",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/MRP",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp_byproduct", 
+        "mrp_byproduct",
         "mrp_pt_planified"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": True
 }

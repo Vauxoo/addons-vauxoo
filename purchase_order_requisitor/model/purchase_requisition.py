@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class purchase_order(osv.Model):
+class PurchaseOrder(osv.Model):
     _inherit = "purchase.order"
 
     _columns = {
@@ -31,14 +31,14 @@ class purchase_order(osv.Model):
     }
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
     _inherit = "purchase.requisition"
 
     def make_purchase_order(self, cr, uid, ids, partner_id,
                             context=None):
         if context is None:
             context = {}
-        res = super(purchase_requisition, self).make_purchase_order(
+        res = super(PurchaseRequisition, self).make_purchase_order(
             cr, uid, ids, partner_id, context=context)
 
         if res:

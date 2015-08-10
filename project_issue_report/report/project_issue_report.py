@@ -27,10 +27,10 @@
 from openerp.report import report_sxw
 
 
-class Late_payments(report_sxw.rml_parse):
+class LatePayments(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(Late_payments, self).__init__(cr, uid, name, context=context)
+        super(LatePayments, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'message': self._message,
         })
@@ -43,7 +43,7 @@ class Late_payments(report_sxw.rml_parse):
         return message
 
 report_sxw.report_sxw('report.account.late.payments.l10n.ve', 'res.partner',
-                      'addons/late_payments_report/report/late_payments.rml', parser=Late_payments)
+                      'addons/late_payments_report/report/late_payments.rml', parser=LatePayments)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

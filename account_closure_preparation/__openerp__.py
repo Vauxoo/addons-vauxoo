@@ -22,25 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Accounting Closure Preparation", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Accounting Closure Preparation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/views.xml", 
+        "view/views.xml",
         "view/menues_and_actions.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

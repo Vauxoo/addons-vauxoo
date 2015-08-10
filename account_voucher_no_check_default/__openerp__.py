@@ -24,24 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "No concile Credits Voucher", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "No concile Credits Voucher",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account_voucher"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/voucher_payment_receipt_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

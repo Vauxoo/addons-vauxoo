@@ -28,7 +28,7 @@ from openerp.osv import osv, fields
 import openerp.workflow as workflow
 
 
-class procurement_order_merge_jit_extended(osv.TransientModel):
+class ProcurementOrderMergeJitExtended(osv.TransientModel):
     _name = 'procurement.order.merge.jit.extended'
     _columns = {
         'date_planned': fields.datetime('Scheduled date', select=1),

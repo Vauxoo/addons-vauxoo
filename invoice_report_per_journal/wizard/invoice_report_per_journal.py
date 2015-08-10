@@ -35,7 +35,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class invoice_report_per_journal(osv.TransientModel):
+class InvoiceReportPerJournal(osv.TransientModel):
 
     """
     OpenERP Wizard: invoice.report.per.journal

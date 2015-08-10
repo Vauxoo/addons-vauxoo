@@ -24,31 +24,31 @@
 #
 #
 {
-    "name": "Purchase Test Data IMP", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Purchase Test Data IMP",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "purchase", 
-        "account", 
-        "product", 
+        "base",
+        "purchase",
+        "account",
+        "product",
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/wizard.xml"
-    ], 
+    ],
     "test": [
-        "test/purchase_order_test_data.xml", 
+        "test/purchase_order_test_data.xml",
         "test/purchase_order_product_can_be_purchased.yml"
-    ], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

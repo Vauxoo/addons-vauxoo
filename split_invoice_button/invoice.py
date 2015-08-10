@@ -26,7 +26,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
 
     def search_asociated_invoice(self, cr, uid, ids, context=None):

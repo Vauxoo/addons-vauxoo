@@ -25,7 +25,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-class merge_object(osv.Model):
+class MergeObject(osv.Model):
     _name = "merge.object"
 
     _columns = {

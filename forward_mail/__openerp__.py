@@ -21,24 +21,24 @@
 ################################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Forward Mail", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Forward Mail",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "mail"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/forward_mail_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

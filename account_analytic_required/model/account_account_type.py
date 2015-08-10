@@ -24,7 +24,7 @@
 from openerp.osv import fields, osv
 
 
-class account_account_type(osv.osv):
+class AccountAccountType(osv.osv):
     _inherit = "account.account.type"
 
     _columns = {

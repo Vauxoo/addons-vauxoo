@@ -21,25 +21,25 @@
 ################################################################################
 #"license" : "AGPL-3",
 {
-    "name": "Grouped by product,move_id y analytic in model account_move_line", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Grouped by product,move_id y analytic in model account_move_line",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "analytic"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_move_line.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

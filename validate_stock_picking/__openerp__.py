@@ -20,24 +20,24 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Validate Stock Picking", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Stock", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Validate Stock Picking",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Stock",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/validate_picking_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

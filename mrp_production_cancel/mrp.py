@@ -28,7 +28,7 @@ from openerp.osv import osv
 import openerp.workflow as workflow
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = "mrp.production"
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -48,5 +48,5 @@ class mrp_production(osv.Model):
             if production.move_created_ids2:
                 move_obj.action_cancel(cr, uid, [
                     x.id for x in production.move_created_ids2])
-        return super(mrp_production, self).action_cancel(cr, uid, ids,
+        return super(MrpProduction, self).action_cancel(cr, uid, ids,
                                                          context=context)

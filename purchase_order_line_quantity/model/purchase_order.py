@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 import openerp.addons.decimal_precision as dp
 
 
-class purchase_order_line(osv.osv):
+class PurchaseOrderLine(osv.osv):
 
     def _get_inv_quantity(self, cr, uid, ids, context=None):
         context = dict(context or {})

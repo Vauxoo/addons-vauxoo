@@ -20,24 +20,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Menu of Banks in Human Resources", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Menu of Banks in Human Resources",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "hr_payroll"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/res_bank_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

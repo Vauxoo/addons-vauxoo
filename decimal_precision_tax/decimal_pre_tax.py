@@ -28,7 +28,7 @@ from openerp.osv import fields, osv
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class account_tax(osv.Model):
+class AccountTax(osv.Model):
 
     _inherit = "account.tax"
     _columns = {

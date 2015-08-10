@@ -25,7 +25,7 @@ from openerp.osv import fields, osv
 import openerp.workflow as workflow
 
 
-class account_journal(osv.Model):
+class AccountJournal(osv.Model):
     _inherit = 'account.journal'
     _columns = {
         'default_interim_account_id': fields.many2one('account.account',
@@ -56,7 +56,7 @@ class account_journal(osv.Model):
     }
 
 
-class account_journal_bs_config(osv.Model):
+class AccountJournalBsConfig(osv.Model):
     _name = 'account.journal.bs.config'
     _order = 'sequence asc'
     # logger = netsvc.Logger()

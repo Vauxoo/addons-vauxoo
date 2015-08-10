@@ -26,29 +26,29 @@
 # use this command
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "MRP Consume Produce", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Production", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Consume Produce",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Production",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp", 
+        "mrp",
         "mrp_button_box"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/wizard_view.xml", 
-        "mrp_consume_produce_view.xml", 
-        "security/mrp_security.xml", 
-        "security/ir.model.access.csv", 
+        "wizard/wizard_view.xml",
+        "mrp_consume_produce_view.xml",
+        "security/mrp_security.xml",
+        "security/ir.model.access.csv",
         "res_config_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

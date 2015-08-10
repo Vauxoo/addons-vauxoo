@@ -22,30 +22,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Price Structure", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Price Structure",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "product", 
-        "sale", 
+        "product",
+        "sale",
         "cost_structure"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/product_view.xml", 
-        "view/sale_view.xml", 
-        "view/product_pricelist_view.xml", 
-        "workflow/sale_workflow.xml", 
+        "view/product_view.xml",
+        "view/sale_view.xml",
+        "view/product_pricelist_view.xml",
+        "workflow/sale_workflow.xml",
         "wizard/create_list_price_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

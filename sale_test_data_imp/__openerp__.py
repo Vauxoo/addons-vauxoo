@@ -24,31 +24,31 @@
 #
 #
 {
-    "name": "Sale Test Data IMP", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Sale Test Data IMP",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "sale", 
-        "account", 
-        "product", 
+        "base",
+        "sale",
+        "account",
+        "product",
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/wizard.xml"
-    ], 
+    ],
     "test": [
-        "test/sale_order_test_data.xml", 
+        "test/sale_order_test_data.xml",
         "test/sale_order_product_can_be_sold.yml"
-    ], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

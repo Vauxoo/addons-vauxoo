@@ -24,33 +24,33 @@
 #
 ##############################################################################
 {
-    "name": "Account Budget Improvements", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Accounting & Finance", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Budget Improvements",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting & Finance",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account_budget", 
-        "account_accountant", 
-        "ifrs_report", 
+        "account_budget",
+        "account_accountant",
+        "ifrs_report",
         "web_kanban"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/account_budget_view.xml", 
-        "security/res_groups.xml", 
+        "view/account_budget_view.xml",
+        "security/res_groups.xml",
         "data/account_budget_data.xml"
-    ], 
-    "test": [], 
+    ],
+    "test": [],
     "js": [
         "static/src/js/account_budget_imp.js"
-    ], 
+    ],
     "css": [
         "static/src/css/account_budget.css"
-    ], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
