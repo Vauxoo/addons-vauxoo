@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class account_period(osv.osv):
+class AccountPeriod(osv.osv):
     _inherit = "account.period"
     _columns = {
         'move_id': fields.many2one(

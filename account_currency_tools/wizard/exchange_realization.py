@@ -39,7 +39,7 @@ except ImportError:
                  ' from addons-vauxoo '
                  ' you will need: sudo pip install pandas')
 
-class foreign_exchange_realization_line(osv.osv_memory):
+class ForeignExchangeRealizationLine(osv.osv_memory):
 
     _name = 'foreign.exchange.realization.line'
     _columns = {
@@ -89,7 +89,7 @@ class foreign_exchange_realization_line(osv.osv_memory):
     }
 
 
-class foreign_exchange_realization(osv.osv_memory):
+class ForeignExchangeRealization(osv.osv_memory):
 
     _name = 'foreign.exchange.realization'
     _rec_name = 'root_id'
