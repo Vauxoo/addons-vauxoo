@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,7 +25,7 @@
 from openerp import fields, api, models
 
 
-class account_invoice_refund(models.TransientModel):
+class AccountInvoiceRefund(models.TransientModel):
     """Refunds invoice"""
 
     _inherit = "account.invoice.refund"
@@ -57,7 +57,7 @@ class account_invoice_refund(models.TransientModel):
     def default_get(self, cur, uid, fields_data, context=None):
         if context is None:
             context = {}
-        ret = super(account_invoice_refund, self).default_get(cur, uid,
+        ret = super(AccountInvoiceRefund, self).default_get(cur, uid,
                                                               fields_data,
                                                               context=context)
         active_id = context.get('active_id', False)
@@ -95,7 +95,7 @@ class account_invoice_refund(models.TransientModel):
     def compute_refund(self, cur, uid, ids, mode='refund', context=None):
         context = dict(context or {})
 
-        result = super(account_invoice_refund, self).compute_refund(
+        result = super(AccountInvoiceRefund, self).compute_refund(
             cur, uid, ids, mode, context=context)
 
         if mode != 'early_payment':
