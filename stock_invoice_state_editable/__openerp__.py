@@ -24,25 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Stock invoice state editable", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Stock", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Stock invoice state editable",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Stock",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/stock_security.xml", 
+        "security/stock_security.xml",
         "stock_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

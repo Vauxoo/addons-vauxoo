@@ -22,28 +22,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Account Move Cancel", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Account Move Cancel",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "account_cancel"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/invoice_cancel_security.xml", 
-        "security/ir.model.access.csv", 
-        "wizard/account_move_cancel_view.xml", 
+        "security/invoice_cancel_security.xml",
+        "security/ir.model.access.csv",
+        "wizard/account_move_cancel_view.xml",
         "view/invoice_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

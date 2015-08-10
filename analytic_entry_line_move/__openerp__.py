@@ -22,25 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Analytic Entry Line Move", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Analytic Entry Line Move",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "analytic"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_analytic_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

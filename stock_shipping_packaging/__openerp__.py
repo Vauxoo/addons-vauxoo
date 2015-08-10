@@ -22,26 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Stock Shipping Packaging", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Warehouse", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Stock Shipping Packaging",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Warehouse",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
+        "base",
+        "mail",
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/stock_shipping_packaging_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

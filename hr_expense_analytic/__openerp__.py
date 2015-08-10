@@ -25,25 +25,25 @@
 ##############################################################################
 {
     "name": "HR Expense Analytic",
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "hr", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "hr",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "hr", 
-        "hr_expense", 
+        "hr",
+        "hr_expense",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "hr_expense_analytic_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

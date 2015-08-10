@@ -20,25 +20,25 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Sign Youtube", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Sign Youtube",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/ir.model.access.csv", 
+        "security/ir.model.access.csv",
         "view/sign_youtube_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -25,21 +25,21 @@
 ##############################################################################
 {
     "name": "Account Invoice Tax",
-    "version": "2.1", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "version": "2.1",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

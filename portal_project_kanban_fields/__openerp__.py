@@ -22,28 +22,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Portal Project Kanban Fields", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Portal Project Kanban Fields",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "project", 
+        "base",
+        "project",
         "portal_project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
+    ],
+    "test": [],
+    "js": [],
     "css": [
         "static/src/css/project.css"
-    ], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

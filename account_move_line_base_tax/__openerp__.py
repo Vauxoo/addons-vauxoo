@@ -24,26 +24,26 @@
 #
 ##############################################################################
 {
-    "name": "Amount Base Account Move Line", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Amount Base Account Move Line",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
-        "l10n_mx_account_tax_category", 
+        "account",
+        "l10n_mx_account_tax_category",
         "account_invoice_tax"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

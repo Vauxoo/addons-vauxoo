@@ -24,24 +24,24 @@
 #
 #
 {
-    "name": "Invoice number", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Localization", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Invoice number",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Localization",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/invoice_number.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

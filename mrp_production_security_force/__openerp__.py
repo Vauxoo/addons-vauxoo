@@ -1,24 +1,24 @@
 
 {
     "name": "MRP Production Security Force",
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "website": "www.vauxoo.com", 
-    "license": "", 
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "www.vauxoo.com",
+    "license": "",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "mrp_production_security_force_view.xml", 
+        "mrp_production_security_force_view.xml",
         "security/groups.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

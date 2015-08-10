@@ -22,26 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Button Box", 
-    "version": "1.6", 
-    "author": "Vauxoo C.A.", 
-    "category": "", 
-    "website": "http://www.openerp.com.ve", 
-    "license": "", 
+    "name": "MRP Button Box",
+    "version": "1.6",
+    "author": "Vauxoo C.A.",
+    "category": "",
+    "website": "http://www.openerp.com.ve",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
+        "base",
+        "mail",
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/mrp_button_box_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

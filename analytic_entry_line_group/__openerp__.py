@@ -22,27 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Analytic Entry Line Group", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Analytic Entry Line Group",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "analytic", 
-        "account_analytic_plans", 
-        "purchase_analytic_plans", 
+        "analytic",
+        "account_analytic_plans",
+        "purchase_analytic_plans",
         "analytic_plans_group"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_analytic_plans_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

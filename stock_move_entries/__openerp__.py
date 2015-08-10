@@ -25,25 +25,25 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Stock Move Entries", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Account", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Stock Move Entries",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "stock", 
+        "stock",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/stock_move_entries_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

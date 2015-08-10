@@ -22,25 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Workcenter Responsible", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "MRP Workcenter Responsible",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "mrp_operations", 
+        "mrp_operations",
         "hr"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/mrp_workcenter_responsible_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

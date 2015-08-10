@@ -24,25 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Configure Account to partners", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Customization", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Configure Account to partners",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Customization",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "group_configurations_account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/conf_wizard.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

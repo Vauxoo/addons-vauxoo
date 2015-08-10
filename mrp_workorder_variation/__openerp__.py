@@ -22,25 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP WorkOrder Variation", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "website": "http://vauxoo.com", 
-    "license": "AGPL-3", 
+    "name": "MRP WorkOrder Variation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://vauxoo.com",
+    "license": "AGPL-3",
     "depends": [
-        "mrp", 
+        "mrp",
         "mrp_operations"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/mrp_production_workcenter_line_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

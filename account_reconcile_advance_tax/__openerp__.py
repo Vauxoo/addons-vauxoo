@@ -21,23 +21,23 @@
 ################################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Reconcile Advance Tax", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Account Reconcile Advance Tax",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "account_reconcile_advance", 
+        "account_reconcile_advance",
         "account_voucher_tax"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

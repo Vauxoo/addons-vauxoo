@@ -22,28 +22,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Project Task Work", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Project Task Work",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "project", 
+        "project",
         "project_issue"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/project_task_work.xml", 
-        "security/ir.model.access.csv", 
-        "view/project_view.xml", 
+        "security/project_task_work.xml",
+        "security/ir.model.access.csv",
+        "view/project_view.xml",
         "view/report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

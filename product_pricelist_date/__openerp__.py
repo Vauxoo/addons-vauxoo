@@ -25,25 +25,25 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Pricelist", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "website": "", 
-    "license": "", 
+    "name": "Pricelist",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "website": "",
+    "license": "",
     "depends": [
-        "product", 
+        "product",
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "product_pricelist_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

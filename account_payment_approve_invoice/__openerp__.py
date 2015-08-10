@@ -24,27 +24,27 @@
 #
 ##############################################################################
 {
-    "name": "Payment Approve", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Payment Approve",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/account_invoice_view.xml", 
-        "security/account_security.xml", 
+        "view/account_invoice_view.xml",
+        "security/account_security.xml",
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

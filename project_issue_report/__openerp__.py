@@ -23,25 +23,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name": "Project Issue Report", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Others", 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+    "name": "Project Issue Report",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Others",
+    "website": "http://wiki.openerp.org.ve/",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "project_issue_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
