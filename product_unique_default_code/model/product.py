@@ -26,7 +26,7 @@
 from openerp.osv import osv
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
 
     def copy(self, cr, uid,
@@ -41,7 +41,7 @@ class product_product(osv.Model):
             'default_code'] = product_default_code.default_code and\
             product_default_code.default_code + ' (copy)' or False
 
-        return super(product_product, self).copy(cr, uid, id, default=default,
+        return super(ProductProduct, self).copy(cr, uid, id, default=default,
                                                  context=context)
 
     _sql_constraints = [

@@ -27,7 +27,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
 
     def _product_available_done(self, cr, uid, ids, field_names=None,

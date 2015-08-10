@@ -34,7 +34,7 @@ def rounding(fff, rrr):
     return math.ceil(fff / rrr) * rrr
 
 
-class stock_move(osv.Model):
+class StockMove(osv.Model):
     _inherit = 'stock.move'
 
     def write(self, cr, uid, ids, values, context=None):
@@ -58,11 +58,11 @@ class stock_move(osv.Model):
                 cr, uid, values['production_id'],
                 context=context).prodlot_id.id
             values.update({'prodlot_id': prodlot_id})
-        return super(stock_move, self).write(
+        return super(StockMove, self).write(
             cr, uid, ids, values, context=context)
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
 
     _inherit = 'mrp.production'
     _columns = {
@@ -125,7 +125,7 @@ class mrp_production(osv.Model):
         if error_msg:
             raise osv.except_osv(_('Invalid Procedure'), error_msg)
 
-        res = super(mrp_production, self).write(
+        res = super(MrpProduction, self).write(
             cr, uid, ids, values, context=context)
         return res
 
@@ -142,7 +142,7 @@ class mrp_production(osv.Model):
         wo_obj = self.pool.get('mrp.production.workcenter.line')
 
         # normal process of confirm
-        res = super(mrp_production, self).action_compute(
+        res = super(MrpProduction, self).action_compute(
             cr, uid, ids, properties=properties, context=context)
 
         for production in self.browse(cr, uid, ids, context=context):
@@ -613,7 +613,7 @@ class mrp_production(osv.Model):
         return True
 
 
-class mrp_workorder_stage(osv.Model):
+class MrpWorkorderStage(osv.Model):
 
     _name = 'mrp.workorder.stage'
     _description = 'Work Order Stage'
@@ -664,7 +664,7 @@ class mrp_workorder_stage(osv.Model):
     }
 
 
-class mrp_production_workcenter_line(osv.Model):
+class MrpProductionWorkcenterLine(osv.Model):
 
     _inherit = 'mrp.production.workcenter.line'
 
@@ -812,13 +812,13 @@ class mrp_production_workcenter_line(osv.Model):
                 cr, uid, [('state', '=', values.get('state'))],
                 context=context)[0]})
 
-        res = super(mrp_production_workcenter_line, self).write(
+        res = super(MrpProductionWorkcenterLine, self).write(
             cr, uid, wo_ids, values, context=context, update=update)
 
         return res
 
 
-class mrp_workorder_lot(osv.Model):
+class MrpWorkorderLot(osv.Model):
 
     _name = 'mrp.workorder.lot'
     _description = "Work Order Lot"

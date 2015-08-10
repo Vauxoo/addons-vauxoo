@@ -31,7 +31,7 @@ priority_options = [
 ]
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
     _inherit = 'purchase.requisition'
     _order = 'priority asc'
     _columns = {

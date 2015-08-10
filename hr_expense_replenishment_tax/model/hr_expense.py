@@ -25,7 +25,7 @@ from openerp.osv import fields, osv
 from openerp.addons import decimal_precision as dp
 
 
-class hr_expense_expense(osv.Model):
+class HrExpenseExpense(osv.Model):
     _inherit = "hr.expense.expense"
     _columns = {
         'fully_applied_vat': fields.boolean(
@@ -42,7 +42,7 @@ class hr_expense_expense(osv.Model):
         default = default.copy()
         default.update({'fully_applied_vat': False,
                         })
-        return super(hr_expense_expense, self).copy(
+        return super(HrExpenseExpense, self).copy(
             cr, uid, ids, default, context=context)
 
     def payment_reconcile(self, cr, uid, ids, context=None):
@@ -50,7 +50,7 @@ class hr_expense_expense(osv.Model):
         lines.
         """
         context = context or {}
-        res = super(hr_expense_expense, self).payment_reconcile(
+        res = super(HrExpenseExpense, self).payment_reconcile(
             cr, uid, ids, context=context)
         self.create_her_tax_pay_adv(cr, uid, ids, context=context)
         return res
@@ -216,7 +216,7 @@ class hr_expense_expense(osv.Model):
         return True
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     def proforma_voucher(self, cr, uid, ids, context=None):
@@ -233,11 +233,11 @@ class account_voucher(osv.Model):
                             'date_voucher': voucher_brw.date})
             hr_expense_obj.create_her_tax(
                 cr, uid, dat[0]['expense_id'], aml={}, context=context)
-        return super(account_voucher,
+        return super(AccountVoucher,
                      self).proforma_voucher(cr, uid, ids, context=context)
 
 
-class account_move_line(osv.osv):
+class AccountMoveLine(osv.osv):
     _inherit = "account.move.line"
 
     # pylint: disable = W0622
@@ -254,7 +254,7 @@ class account_move_line(osv.osv):
             for expense in expense_obj.browse(cr, uid, expense_ids,
                                               context=context):
                 context['apply_round'] = True
-                res = super(account_move_line, self).reconcile(
+                res = super(AccountMoveLine, self).reconcile(
                     cr, uid, ids, type=type,
                     writeoff_acc_id=writeoff_acc_id,
                     writeoff_period_id=writeoff_period_id,
@@ -266,7 +266,7 @@ class account_move_line(osv.osv):
                     expense_obj.write(cr, uid, expense.id,
                                       {'fully_applied_vat': True})
                 return res
-        return super(account_move_line, self).reconcile(
+        return super(AccountMoveLine, self).reconcile(
             cr, uid, ids, type=type, writeoff_acc_id=writeoff_acc_id,
             writeoff_period_id=writeoff_period_id,
             writeoff_journal_id=writeoff_journal_id,

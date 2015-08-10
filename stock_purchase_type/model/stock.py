@@ -31,7 +31,7 @@ purchase_order_type = [
 ]
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
     _columns = {
         'transaction_type': fields.selection(
@@ -42,7 +42,7 @@ class stock_picking(osv.Model):
     }
 
 
-class stock_picking_in(osv.Model):
+class StockPickingIn(osv.Model):
     _inherit = 'stock.picking.in'
     _columns = {
         'transaction_type': fields.selection(
@@ -53,7 +53,7 @@ class stock_picking_in(osv.Model):
     }
 
 
-class stock_picking_out(osv.Model):
+class StockPickingOut(osv.Model):
     _inherit = 'stock.picking.out'
     _columns = {
         'transaction_type': fields.selection(

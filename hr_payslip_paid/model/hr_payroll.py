@@ -25,7 +25,7 @@
 from openerp import models, fields, api, _
 
 
-class hr_payslip(models.Model):
+class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
     @api.one

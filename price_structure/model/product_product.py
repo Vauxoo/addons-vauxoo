@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
 
     _inherit = 'product.product'
 
@@ -96,7 +96,7 @@ class product_product(osv.Model):
     }
 
 
-class inherit_product_category(osv.Model):
+class InheritProductCategory(osv.Model):
 
     """ """
 

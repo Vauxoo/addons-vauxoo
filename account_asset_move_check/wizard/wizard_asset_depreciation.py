@@ -27,7 +27,7 @@
 from openerp.osv import fields, osv
 
 
-class wizard_asset_depreciation(osv.osv_memory):
+class WizardAssetDepreciation(osv.osv_memory):
     _name = 'wizard.asset.depreciation'
 
     _columns = {

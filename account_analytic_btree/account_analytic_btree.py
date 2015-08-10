@@ -27,7 +27,7 @@
 from openerp.osv import osv, fields
 
 
-class account_analytic_account(osv.Model):
+class AccountAnalyticAccount(osv.Model):
     _inherit = 'account.analytic.account'
 
     _order = "parent_left"

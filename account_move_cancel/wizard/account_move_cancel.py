@@ -29,7 +29,7 @@ import openerp.workflow as workflow
 #~ from DateTime import DateTime
 
 
-class account_move_cancel(osv.TransientModel):
+class AccountMoveCancel(osv.TransientModel):
 
     _name = 'account.move.cancel'
     _columns = {

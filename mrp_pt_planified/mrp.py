@@ -29,7 +29,7 @@ from openerp.tools.translate import _
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -38,7 +38,7 @@ class mrp_production(osv.Model):
         default.update({
             'pt_planified_ids': [],
         })
-        return super(mrp_production, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(cr, uid, id, default, context)
 
     _columns = {
         'pt_planified_ids': fields.one2many('mrp.pt.planified',
@@ -73,12 +73,12 @@ class mrp_production(osv.Model):
                     'production_id': production.id
                 }
                 mrp_pt.create(cr, uid, val)
-        res = super(mrp_production, self).action_compute(
+        res = super(MrpProduction, self).action_compute(
             cr, uid, ids, properties=properties, context=context)
         return res
 
 
-class mrp_pt_planified(osv.Model):
+class MrpPtPlanified(osv.Model):
     _name = 'mrp.pt.planified'
     _rec_name = 'product_id'
 

@@ -27,7 +27,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.inventory'
 
     def unlink(self, cr, uid, ids, context=None):

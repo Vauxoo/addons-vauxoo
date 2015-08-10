@@ -29,7 +29,7 @@ import openerp
 import time
 
 
-class account_bank_statement_line(osv.osv):
+class AccountBankStatementLine(osv.osv):
 
     _inherit = 'account.bank.statement.line'
 
@@ -161,7 +161,7 @@ class account_bank_statement_line(osv.osv):
             statement_currency, move_id=move_id_old,
             statement_currency_line=statement_currency_line, context=context)
 
-        res = super(account_bank_statement_line, self).process_reconciliation(
+        res = super(AccountBankStatementLine, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=context)
 
         move_line_obj.write(cr, uid, move_line_rec_ids[0],
@@ -668,7 +668,7 @@ class account_bank_statement_line(osv.osv):
         return res
 
 
-class account_bank_statement(osv.osv):
+class AccountBankStatement(osv.osv):
 
     _inherit = 'account.bank.statement'
 
@@ -677,7 +677,7 @@ class account_bank_statement(osv.osv):
         aml_obj = self.pool.get('account.move.line')
         move_line_ids = []
 
-        res = super(account_bank_statement, self).button_journal_entries(
+        res = super(AccountBankStatement, self).button_journal_entries(
             cr, uid, ids, context=context)
 
         aml_id_statement = aml_obj.search(cr, uid, res.get('domain', []))

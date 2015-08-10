@@ -22,7 +22,7 @@
 from openerp import models, fields
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     comments = fields.Text('Comments')

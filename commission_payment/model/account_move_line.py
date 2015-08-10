@@ -76,7 +76,7 @@ WHERE
 '''
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
 
     def _get_reconciling_aml(self, cr, uid, ids, fieldname, arg, context=None):
         res = {}.fromkeys(ids, None)

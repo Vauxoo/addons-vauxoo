@@ -40,7 +40,7 @@ SUMINISTRO = [('comprar', 'Comprar'),
               ]
 
 
-class stock_count(osv.TransientModel):
+class StockCount(osv.TransientModel):
 
     """
     Conteo del Stock

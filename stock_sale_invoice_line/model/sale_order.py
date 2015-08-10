@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class account_invoice_line(osv.osv):
+class AccountInvoiceLine(osv.osv):
     _inherit = "account.invoice.line"
 
     _columns = {

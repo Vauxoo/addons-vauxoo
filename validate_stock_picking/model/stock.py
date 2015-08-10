@@ -29,7 +29,7 @@ from openerp import workflow
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
-class inherit_stock_move(osv.Model):
+class InheritStockMove(osv.Model):
 
     _inherit = 'stock.move'
 

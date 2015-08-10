@@ -24,7 +24,7 @@
 from openerp import models,  _
 
 
-class wizard_price(models.Model):
+class WizardPrice(models.Model):
     _inherit = "wizard.price"
 
     def execute_cron(self, cr, uid, ids=None, context=None):
@@ -43,7 +43,7 @@ class wizard_price(models.Model):
         return True
 
     def default_get(self, cr, uid, field, context=None):
-        res = super(wizard_price, self).default_get(cr,
+        res = super(WizardPrice, self).default_get(cr,
                                                     uid,
                                                     field, context=context)
         product_pool = self.pool.get(context.get('active_model',

@@ -23,7 +23,7 @@ from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
 
-class hr_timesheet(osv.Model):
+class HrTimesheet(osv.Model):
     _inherit = "hr.analytic.timesheet"
 
     def _get_invoiceables_hours(
@@ -106,7 +106,7 @@ class hr_timesheet(osv.Model):
     }
 
 
-class custom_timesheet(osv.Model):
+class CustomTimesheet(osv.Model):
     _name = "custom.timesheet"
     _order = "date desc"
     _auto = False

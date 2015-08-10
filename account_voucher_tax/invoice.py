@@ -27,7 +27,7 @@
 from openerp.osv import osv
 
 
-class invoice(osv.osv):
+class Invoice(osv.osv):
     _inherit = 'account.invoice'
 
     def invoice_pay_customer(self, cr, uid, ids, context=None):

@@ -27,7 +27,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     _columns = {
@@ -39,7 +39,7 @@ class mrp_production(osv.Model):
         if context is None:
             context = {}
 
-        stock_picking = self.pool.get('stock.picking')
+        StockPicking = self.pool.get('stock.picking')
         mrp_production2 = self.pool.get('mrp.production')
         stock_move = self.pool.get('stock.move')
         production = self.pool.get('mrp.production').browse(
@@ -49,7 +49,7 @@ class mrp_production(osv.Model):
             context['type'] = 'return'
             pick_id_return = mrp_production2._make_production_internal_shipment2(
                 cr, uid, production, context=context)
-            stock_picking.write(cr, uid, pick_id_return, {
+            StockPicking.write(cr, uid, pick_id_return, {
                                 'state': 'draft',
                                 'auto_picking': False,
                                 'production_id': production.id})
@@ -60,7 +60,7 @@ class mrp_production(osv.Model):
                         parent_move_id=False, destination_location_id=False)
                     stock_move.write(cr, uid, shipment_move_id, {
                                      'state': 'draft'})
-        res = super(mrp_production, self).action_finished_consume(
+        res = super(MrpProduction, self).action_finished_consume(
             cr, uid, ids, context=context)
         return res
 
@@ -99,7 +99,7 @@ class mrp_production(osv.Model):
     def _make_production_internal_shipment2(self, cr, uid, production,
                                             context=None):
         ir_sequence = self.pool.get('ir.sequence')
-        stock_picking = self.pool.get('stock.picking')
+        StockPicking = self.pool.get('stock.picking')
         routing_loc = None
         pick_type = 'internal'
         address_id = False
@@ -117,7 +117,7 @@ class mrp_production(osv.Model):
 
         # Take next Sequence number of shipment base on type
         pick_name = ir_sequence.get(cr, uid, 'stock.picking')
-        picking_id = stock_picking.create(cr, uid, {
+        picking_id = StockPicking.create(cr, uid, {
             'name': pick_name + '-' + context.get('type', ''),
             'origin': (production.origin or '').split(':')[0]
             + ':' + production.name,
@@ -134,13 +134,12 @@ class mrp_production(osv.Model):
         default.update({
             'picking_ids': []
         })
-        return super(mrp_production, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(cr, uid, id, default, context)
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
 
     _columns = {
         'production_id': fields.many2one('mrp.production', 'Production')
     }
-mrp_production()

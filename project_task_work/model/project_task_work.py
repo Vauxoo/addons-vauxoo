@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class project_task(osv.Model):
+class ProjectTask(osv.Model):
     _inherit = 'project.task'
 
     def _get_issue(self, cr, uid, ids, fieldname, arg, context=None):
@@ -61,7 +61,7 @@ class project_task(osv.Model):
     }
 
 
-class project_task_work(osv.Model):
+class ProjectTaskWork(osv.Model):
     _inherit = 'project.task.work'
 
     def _get_project(self, cr, uid, ids, fieldname, arg, context=None):

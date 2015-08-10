@@ -36,7 +36,7 @@ except ImportError:
                  ' you will need: sudo pip install pandas')
 
 
-class account_aging_wizard_document(osv.TransientModel):
+class AccountAgingWizardDocument(osv.TransientModel):
     _name = 'account.aging.wizard.document'
     _rec_name = 'partner_id'
     _order = 'due_days'
@@ -85,7 +85,7 @@ class account_aging_wizard_document(osv.TransientModel):
     }
 
 
-class account_aging_wizard_partner(osv.osv_memory):
+class AccountAgingWizardPartner(osv.osv_memory):
     _name = 'account.aging.wizard.partner'
     _description = 'Account Aging Wizard Partner'
     _rec_name = 'partner_id'
@@ -267,7 +267,7 @@ class account_aging_wizard_partner(osv.osv_memory):
     }
 
 
-class account_aging_wizard_currency(osv.osv_memory):
+class AccountAgingWizardCurrency(osv.osv_memory):
     _name = 'account.aging.wizard.currency'
     _description = 'Account Aging Wizard Currency'
     _rec_name = 'currency_id'
@@ -344,7 +344,7 @@ class account_aging_wizard_currency(osv.osv_memory):
     }
 
 
-class account_aging_partner_wizard(osv.osv_memory):
+class AccountAgingPartnerWizard(osv.osv_memory):
     _name = 'account.aging.wizard'
     _description = 'Price List'
     _rec_name = 'result_selection'

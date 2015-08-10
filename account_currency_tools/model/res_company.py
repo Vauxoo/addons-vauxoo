@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class res_company(osv.Model):
+class ResCompany(osv.Model):
     _inherit = "res.company"
     _description = 'Companies'
 

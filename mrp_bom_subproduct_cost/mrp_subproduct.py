@@ -29,7 +29,7 @@ from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class mrp_subproduct(osv.Model):
+class MrpSubproduct(osv.Model):
     _inherit = 'mrp.subproduct'
 
     def _calc_cost(self, cr, uid, ids, field_name, arg, context):

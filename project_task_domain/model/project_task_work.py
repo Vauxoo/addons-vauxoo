@@ -28,7 +28,7 @@ from openerp.tools.translate import _
 import time
 
 
-class project_task_work(osv.Model):
+class ProjectTaskWork(osv.Model):
     _inherit = 'project.task.work'
 
     def onchange_hours(self, cr, uid, ids, hours=None, context=None):

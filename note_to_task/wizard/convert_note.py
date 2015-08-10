@@ -24,7 +24,7 @@
 from openerp.osv import fields, osv
 
 
-class convert_note_task(osv.TransientModel):
+class ConvertNoteTask(osv.TransientModel):
 
     '''Convert Note to Task Wizard'''
 

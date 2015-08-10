@@ -26,7 +26,7 @@
 from openerp.osv import fields, osv
 
 
-class account_vouchers_invoice_wizard(osv.osv_memory):
+class AccountVouchersInvoiceWizard(osv.osv_memory):
     _name = 'account.vouchers.invoice.wizard'
 
     def default_get(self, cr, uid, fields_list=None, context=None):

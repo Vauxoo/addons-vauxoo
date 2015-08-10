@@ -24,7 +24,7 @@ from openerp.osv import osv
 from openerp import SUPERUSER_ID
 
 
-class forward_mail(osv.osv_memory):
+class ForwardMail(osv.osv_memory):
 
     _name = 'forward.mail'
 

@@ -26,7 +26,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-class account_invoice(osv.osv):
+class AccountInvoice(osv.osv):
 
     _inherit = 'account.invoice'
 
@@ -42,7 +42,7 @@ class account_invoice(osv.osv):
         default.update({
             'to_pay': False,
         })
-        return super(account_invoice, self).copy(cr, uid, id, default, context)
+        return super(AccountInvoice, self).copy(cr, uid, id, default, context)
 
     def payment_approve(self, cr, uid, ids, context=None):
         '''

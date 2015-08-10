@@ -24,7 +24,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class invite_wizard(osv.osv_memory):
+class InviteWizard(osv.osv_memory):
 
     """ Wizard to invite partners and make them followers. """
     _inherit = 'mail.wizard.invite'
@@ -36,7 +36,7 @@ class invite_wizard(osv.osv_memory):
         elements to share.
         '''
 
-        result = super(invite_wizard, self).default_get(
+        result = super(InviteWizard, self).default_get(
             cr, uid, _fields, context=context)
         model_obj = self.pool.get(result.get('res_model', False) or
                                   context.get('active_model'))
@@ -151,7 +151,7 @@ class invite_wizard(osv.osv_memory):
                                            recipient_ids=[follower_id],
                                            context=context)
             else:
-                res = super(invite_wizard, self).\
+                res = super(InviteWizard, self).\
                     mail_add_followers_multirecord(cr, uid, ids,
                                                    context=context)
 

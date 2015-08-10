@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class company(osv.osv):
+class Company(osv.osv):
     _inherit = 'res.company'
     _columns = {
         'check_purchase_fulfillment': fields.boolean(
@@ -35,7 +35,7 @@ class company(osv.osv):
     }
 
 
-class res_partner(osv.Model):
+class ResPartner(osv.Model):
 
     _inherit = 'res.partner'
     _columns = {

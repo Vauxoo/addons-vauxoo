@@ -29,7 +29,7 @@ File to inherit hr.employee and added fields to complete name
 from openerp.osv import osv, fields
 
 
-class hr_employee(osv.Model):
+class HrEmployee(osv.Model):
     '''
     Inherit hr.employee to added fields to complete name
     '''

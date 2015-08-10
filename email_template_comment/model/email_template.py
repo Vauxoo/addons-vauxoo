@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class email_template(osv.Model):
+class EmailTemplate(osv.Model):
 
     _inherit = 'email.template'
 

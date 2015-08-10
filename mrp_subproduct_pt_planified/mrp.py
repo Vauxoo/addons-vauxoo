@@ -26,13 +26,13 @@
 from openerp.osv import osv
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def action_compute(self, cr, uid, ids, properties=[], context=None):
         mrp_pt = self.pool.get('mrp.pt.planified')
         bom_obj = self.pool.get('mrp.bom')
-        res = super(mrp_production, self).action_compute(
+        res = super(MrpProduction, self).action_compute(
             cr, uid, ids, properties=properties, context=context)
         bom_obj = self.pool.get('mrp.bom')
         uom_obj = self.pool.get('product.uom')

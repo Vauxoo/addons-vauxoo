@@ -23,7 +23,7 @@
 from openerp.osv import osv, fields
 
 
-class product_category(osv.osv):
+class ProductCategory(osv.osv):
     _inherit = "product.category"
 
     _columns = {

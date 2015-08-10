@@ -65,7 +65,7 @@ def t_time(date):
     return date.strftime("%Y-%m-%d")
 
 
-class commission_payment(osv.Model):
+class CommissionPayment(osv.Model):
 
     """
     OpenERP Model : commission_payment
@@ -1205,7 +1205,7 @@ class commission_payment(osv.Model):
         return True
 
 
-class commission_sale_noid(osv.Model):
+class CommissionSaleNoid(osv.Model):
 
     """
     Commission Payment : commission_sale_noid
@@ -1224,7 +1224,7 @@ class commission_sale_noid(osv.Model):
     }
 
 
-class commission_noprice(osv.Model):
+class CommissionNoprice(osv.Model):
 
     """
     Commission Payment : commission_sale_noid
@@ -1245,7 +1245,7 @@ class commission_noprice(osv.Model):
     }
 
 
-class commission_lines(osv.Model):
+class CommissionLines(osv.Model):
 
     """
     Commission Payment : commission_lines
@@ -1420,7 +1420,7 @@ class commission_lines(osv.Model):
         return True
 
 
-class commission_salesman(osv.Model):
+class CommissionSalesman(osv.Model):
 
     """
     Commission Payment : commission_salesman
@@ -1463,7 +1463,7 @@ class commission_salesman(osv.Model):
     }
 
 
-class commission_voucher(osv.Model):
+class CommissionVoucher(osv.Model):
 
     """
     Commission Payment : commission_voucher
@@ -1486,7 +1486,7 @@ class commission_voucher(osv.Model):
     }
 
 
-class commission_invoice(osv.Model):
+class CommissionInvoice(osv.Model):
 
     """
     Commission Payment : commission_invoice
@@ -1512,7 +1512,7 @@ class commission_invoice(osv.Model):
     }
 
 
-class commission_lines_2(osv.Model):
+class CommissionLines2(osv.Model):
 
     """
     Commission Payment : commission_lines_2
@@ -1526,7 +1526,7 @@ class commission_lines_2(osv.Model):
     }
 
 
-class res_company(osv.Model):
+class ResCompany(osv.Model):
     _inherit = "res.company"
     _description = 'Companies'
 

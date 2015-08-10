@@ -23,7 +23,7 @@
 from openerp.osv import osv
 
 
-class purchase_requisition_line(osv.Model):
+class PurchaseRequisitionLine(osv.Model):
     _inherit = "purchase.requisition.line"
 
     def _check_same_uom_category(self, cr, uid, ids, context=None):

@@ -22,7 +22,7 @@
 from openerp.osv import fields, osv
 
 
-class account_analytic_account(osv.Model):
+class AccountAnalyticAccount(osv.Model):
     _inherit = "account.analytic.account"
 
     def _remaining_hours_calc(self, cr, uid, ids, name, arg, context=None):

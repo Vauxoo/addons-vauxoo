@@ -19,7 +19,7 @@ import base64
 import urllib
 
 
-class product_images(osv.Model):
+class ProductImages(osv.Model):
 
     "Products Image gallery"
     _name = "product.images"

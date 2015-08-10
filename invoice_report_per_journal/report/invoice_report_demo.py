@@ -30,7 +30,7 @@ from openerp.report import report_sxw
 from openerp.addons.report_webkit import webkit_report
 
 
-class invoice_report_demo_html(report_sxw.rml_parse):
+class InvoiceReportDemoHtml(report_sxw.rml_parse):
 
     '''
     Define methods that need the report
@@ -47,7 +47,7 @@ class invoice_report_demo_html(report_sxw.rml_parse):
         '''
         if context is None:
             context = {}
-        super(invoice_report_demo_html, self).__init__(
+        super(InvoiceReportDemoHtml, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
         })
@@ -55,6 +55,6 @@ class invoice_report_demo_html(report_sxw.rml_parse):
 webkit_report.WebKitParser('report.invoice.report.demo.webkit',
            'account.invoice',
            'addons/invoice_report_per_journal/report/invoice_report_demo.mako',
-           parser=invoice_report_demo_html)
+           parser=InvoiceReportDemoHtml)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

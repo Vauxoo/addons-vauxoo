@@ -31,7 +31,7 @@
 from openerp.osv import fields, osv
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
     _columns = {
         'parent_id': fields.many2one('account.invoice',
@@ -59,7 +59,7 @@ class account_invoice(osv.Model):
         default.update({
             'child_ids': [],
         })
-        return super(account_invoice, self).copy(cr, uid, id, default, context)
+        return super(AccountInvoice, self).copy(cr, uid, id, default, context)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
