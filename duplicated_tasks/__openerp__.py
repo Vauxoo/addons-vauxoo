@@ -20,25 +20,25 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Duplicated Tasks", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Projects", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Duplicated Tasks",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Projects",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/search_duplicated_task_view.xml", 
+        "wizard/search_duplicated_task_view.xml",
         "view/task_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

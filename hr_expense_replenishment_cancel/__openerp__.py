@@ -21,25 +21,25 @@
 ################################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Expenses Replenishment Cancel", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Expenses Replenishment Cancel",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "hr_expense_replenishment"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "workflow/hr_expense_workflow.xml", 
+        "workflow/hr_expense_workflow.xml",
         "view/hr_expense_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

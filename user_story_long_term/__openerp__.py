@@ -27,32 +27,32 @@
 #'wizard/user_story_compute_tasks_view.xml',
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Long Term User Story", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "User Story Management", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Long Term User Story",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "User Story Management",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
-        "user_story", 
-        "project_conf", 
+        "base",
+        "mail",
+        "user_story",
+        "project_conf",
         "project_long_term"
-    ], 
+    ],
     "demo": [
         "demo/user_story_conf.xml"
-    ], 
+    ],
     "data": [
-        "security/ir.model.access.csv", 
-        "user_story_long_term_view.xml", 
+        "security/ir.model.access.csv",
+        "user_story_long_term_view.xml",
         "workflow/user_story_long_term_workflow.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

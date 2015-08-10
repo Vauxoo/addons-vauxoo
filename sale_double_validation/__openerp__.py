@@ -23,24 +23,24 @@
 ################################################################################
 {
     "name": "Sale Double Validation",
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Sales & Purchases", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Sales & Purchases",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/sale_double_validation_installer.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -23,26 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name": "Split Invoice Button", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Localization", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Split Invoice Button",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Localization",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/invoice_view.xml", 
-        "security/split_invoice_security.xml", 
+        "view/invoice_view.xml",
+        "security/split_invoice_security.xml",
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

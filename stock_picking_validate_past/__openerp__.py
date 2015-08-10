@@ -24,24 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "Stock Validate Past", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Warehouse Management", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Stock Validate Past",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Warehouse Management",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "stock_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

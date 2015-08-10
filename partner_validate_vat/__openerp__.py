@@ -24,22 +24,22 @@
 #
 #
 {
-    "name": "Partner Validate VAT", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Addons-vauxoo", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Partner Validate VAT",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons-vauxoo",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

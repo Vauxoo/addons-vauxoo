@@ -26,24 +26,24 @@
 #~ "account_voucher_view.xml",
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Wizard Vouchers Partner Invoice", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "", 
-    "license": "", 
+    "name": "Wizard Vouchers Partner Invoice",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "",
+    "license": "",
     "depends": [
         "account_voucher"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/vouchers_partner_invoice.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

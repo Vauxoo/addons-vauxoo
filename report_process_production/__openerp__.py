@@ -25,24 +25,24 @@
 ##############################################################################
 {
     "name": "Report Process Production",
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/wizard_report_process.xml", 
+        "wizard/wizard_report_process.xml",
         "process_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

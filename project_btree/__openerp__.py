@@ -24,25 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Product hierarchical view", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Customization", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Product hierarchical view",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Customization",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "project_hierarchical_view.xml", 
+        "project_hierarchical_view.xml",
         "project_data.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

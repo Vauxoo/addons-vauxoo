@@ -20,28 +20,28 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Unit Measure Check", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Sale, Purchase and Warehousee", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Unit Measure Check",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Sale, Purchase and Warehousee",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "sale", 
-        "purchase", 
-        "product", 
-        "stock", 
+        "sale",
+        "purchase",
+        "product",
+        "stock",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/stock_return_picking_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

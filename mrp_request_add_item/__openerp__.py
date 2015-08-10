@@ -22,26 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Request Add Item", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "website": "http://vauxoo.com", 
-    "license": "AGPL-3", 
+    "name": "MRP Request Add Item",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://vauxoo.com",
+    "license": "AGPL-3",
     "depends": [
-        "mrp", 
-        "mrp_consume_produce", 
+        "mrp",
+        "mrp_consume_produce",
         "mrp_request_return"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/mrp_request_return_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

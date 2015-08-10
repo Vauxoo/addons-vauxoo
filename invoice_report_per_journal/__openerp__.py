@@ -23,31 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name": "Account Invoice Per Journal Report", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Invoice Per Journal Report",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
+        "account",
         "report_webkit"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "data/data.xml", 
-        "view/account_journal_view.xml", 
-        "wizard/invoice_report_per_journal.xml", 
-        "view/account_invoice_view.xml", 
+        "data/data.xml",
+        "view/account_journal_view.xml",
+        "wizard/invoice_report_per_journal.xml",
+        "view/account_invoice_view.xml",
         "report/invoice_report_demo.xml"
-    ], 
+    ],
     "test": [
         "test/invoice_report_per_journal.yml"
-    ], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -25,24 +25,24 @@
 ##############################################################################
 {
     "name": "Report Move Voucher",
-    "version": "0.6", 
+    "version": "0.6",
     "author": "Vauxoo",
-    "category": "Generic Modules/Others", 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+    "category": "Generic Modules/Others",
+    "website": "http://wiki.openerp.org.ve/",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "move_voucher_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

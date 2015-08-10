@@ -26,25 +26,25 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name": "Move vat field", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Customer", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Move vat field",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Customer",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "base_vat"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/partner_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

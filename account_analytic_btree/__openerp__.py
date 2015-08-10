@@ -26,22 +26,22 @@
 ##############################################################################
 {
     "name": "Parent_left and parent_right creation for analytic accounts",
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "project"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

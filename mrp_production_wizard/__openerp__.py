@@ -24,25 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "MPR Production Wizard", 
-    "version": "1.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Production", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MPR Production Wizard",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Production",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp_default_location", 
+        "mrp_default_location",
         "mrp_pt_planified"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

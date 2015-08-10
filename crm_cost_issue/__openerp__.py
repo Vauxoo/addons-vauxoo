@@ -26,28 +26,28 @@
 ###
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "CRM Cost Issue", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Accounting", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "CRM Cost Issue",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "crm", 
-        "project", 
-        "project_issue", 
+        "base",
+        "crm",
+        "project",
+        "project_issue",
         "product"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_task_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

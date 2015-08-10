@@ -27,26 +27,26 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name": "Deliver Project Report", 
-    "version": "0.6", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Projects & Services", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Deliver Project Report",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Projects & Services",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/module_view.xml", 
-        "report/ir_report.xml", 
+        "view/module_view.xml",
+        "report/ir_report.xml",
         "report/module_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
