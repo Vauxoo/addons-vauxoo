@@ -43,12 +43,15 @@ class stock_location_route(models.Model):
 
 class product_product(models.Model):
     _inherit = 'product.product'
-    SELECTION_LIST = [
-        ('1', 'Available'),
-        ('2', 'Not Available'),
-        ('3', 'Low Availability'),
-        ('4', 'On Request'),
-    ]
+
+    def get_states(self):
+        SELECTION_LIST = [
+            ('1', 'Available'),
+            ('2', 'Not Available'),
+            ('3', 'Low Availability'),
+            ('4', 'On Request'),
+        ]
+        return SELECTION_LIST
 
     @api.one
     @api.depends('qty_available', 'low_stock')
@@ -74,30 +77,17 @@ class product_product(models.Model):
         '\'low avilability\' on product')
     stock_state = fields.Selection(
         compute=_get_availability,
-        selection=SELECTION_LIST,
+        selection=get_states,
         string="Website Stock State",
         default=0)
-
-
-class LocationQuants(models.Model):
-    _name = 'location.quants'
-
-    product_id = fields.Many2one('product.template', 'Product')
-    location_id = fields.Many2one('stock.location', 'Stock Location')
-    qty = fields.Float('Quantity')
-
-
-class ProductTemplate(models.Model):
-    _inherit = 'product.template'
 
     @api.one
     def _get_locations_quants(self):
         stock_locations_obj = self.env['location.quants']
         stock_quants_obj = self.env['stock.quant']
         product_id = self.id
-        products = self._get_products()
         quants = stock_quants_obj.search(
-            [('product_id', 'in', products),
+            [('product_id', '=', product_id),
              ('location_id.usage', '=', 'internal')])
         stock_locations_ids = []
         for quant in quants:
@@ -105,31 +95,46 @@ class ProductTemplate(models.Model):
                 continue
             stock_locations_ids.append(quant.location_id.id)
         new_quants = []
+        product = self
         for location in stock_locations_ids:
             qtys = self.with_context(
                 location=location)._product_available(None, False)
+            new_qty = qtys.get(product_id).get('qty_available')
+            stock_state = '2'
+            for route in product.route_ids:
+                if route.consider_on_request:
+                    stock_state = '4'
+                    break
+            if stock_state != '4':
+                if new_qty > product.low_stock:
+                    stock_state = '1'
+                elif 0 < product.qty_available <= product.low_stock:
+                    stock_state = '3'
+                elif product.qty_available <= 0:
+                    stock_state = '2'
             location_ok = stock_locations_obj.search(
                 [('product_id', '=', product_id),
                  ('location_id', '=', location)])
             if location_ok:
-                new_qty = qtys.get(product_id).get('qty_available')
                 if location_ok.qty != new_qty:
                     location_ok.write(
-                        {'qty': qtys.get(product_id).get('qty_available')})
+                        {'qty': new_qty,
+                         'stock_state': stock_state})
                 new_quants.append(location_ok.id)
             else:
                 new_id = stock_locations_obj.create(
                     {'product_id': product_id,
                      'location_id': location,
-                     'qty': qtys.get(product_id).get('qty_available')})
+                     'qty': new_qty,
+                     'stock_state': stock_state})
                 new_quants.append(new_id.id)
         self.product_stock_quants_ids = new_quants
 
     @api.one
     def _get_planned_dates(self):
         pol_obj = self.env['purchase.order.line']
-        products = self._get_products()
-        pol_ids = pol_obj.search([('product_id', 'in', products),
+        product_id = self.id
+        pol_ids = pol_obj.search([('product_id', '=', product_id),
                                   ('state', 'in', ('draft', 'confirmed'))])
         self.product_planned_dates_ids = pol_ids
 
@@ -141,3 +146,24 @@ class ProductTemplate(models.Model):
         compute=_get_planned_dates,
         comodel_name='purchase.order.line',
         string='Locations Quants')
+
+
+class LocationQuants(models.Model):
+    _name = 'location.quants'
+
+    def get_states(self):
+        SELECTION_LIST = [
+            ('1', 'Available'),
+            ('2', 'Not Available'),
+            ('3', 'Low Availability'),
+            ('4', 'On Request'),
+        ]
+        return SELECTION_LIST
+
+    product_id = fields.Many2one('product.product', 'Product')
+    location_id = fields.Many2one('stock.location', 'Stock Location')
+    qty = fields.Float('Quantity')
+    stock_state = fields.Selection(
+        selection=get_states,
+        string="Website Stock State",
+        default=0)
