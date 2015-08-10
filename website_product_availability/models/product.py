@@ -45,13 +45,12 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     def get_states(self):
-        SELECTION_LIST = [
+        return [
             ('1', 'Available'),
             ('2', 'Not Available'),
             ('3', 'Low Availability'),
             ('4', 'On Request'),
         ]
-        return SELECTION_LIST
 
     @api.one
     @api.depends('qty_available', 'low_stock')
@@ -152,13 +151,12 @@ class LocationQuants(models.Model):
     _name = 'location.quants'
 
     def get_states(self):
-        SELECTION_LIST = [
+        return [
             ('1', 'Available'),
             ('2', 'Not Available'),
             ('3', 'Low Availability'),
             ('4', 'On Request'),
         ]
-        return SELECTION_LIST
 
     product_id = fields.Many2one('product.product', 'Product')
     location_id = fields.Many2one('stock.location', 'Stock Location')
