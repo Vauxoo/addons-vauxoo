@@ -28,11 +28,11 @@ from openerp.osv import osv, fields
 import openerp.addons.decimal_precision as dp
 
 
-class account_asset_depreciation_line(osv.Model):
+class AccountAssetDepreciationLine(osv.Model):
     _inherit = 'account.asset.depreciation.line'
 
     def _get_move_check(self, cr, uid, ids, name, args, context=None):
-        res = super(account_asset_depreciation_line, self)._get_move_check(
+        res = super(AccountAssetDepreciationLine, self)._get_move_check(
             cr, uid, ids, name, args, context=context)
         for line in self.browse(cr, uid, ids, context=context):
             res[line.id] = bool(line.move_id or line.historical)
@@ -50,11 +50,11 @@ class account_asset_depreciation_line(osv.Model):
     }
 
 
-class account_asset_asset(osv.osv):
+class AccountAssetAsset(osv.osv):
     _inherit = 'account.asset.asset'
 
     def _amount_residual(self, cr, uid, ids, name, args, context=None):
-        res = super(account_asset_asset, self)._amount_residual(
+        res = super(AccountAssetAsset, self)._amount_residual(
             cr, uid, ids, name, args, context=context)
         dep_line_obj = self.pool.get('account.asset.depreciation.line')
         for asset in res:
