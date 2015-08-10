@@ -33,7 +33,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class purchase_requisition_analyst_delegation(osv.TransientModel):
+class PurchaseRequisitionAnalystDelegation(osv.TransientModel):
 
     """
     This wizard permit to delegate a authority given the user the change to

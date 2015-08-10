@@ -26,7 +26,7 @@
 from openerp.osv import osv
 
 
-class user_story(osv.osv):
+class UserStory(osv.osv):
     _description = "User Story Messages"
     _inherit = 'user.story'
 
@@ -47,4 +47,4 @@ class user_story(osv.osv):
         for proc in self.browse(cr, uid, ids, context=context):
             if tracked_fields.get("description", False) and proc.state == 'draft':
                 return True
-        return super(user_story, self).message_track(cr, uid, [proc.id], tracked_fields, initial_values, context=context)
+        return super(UserStory, self).message_track(cr, uid, [proc.id], tracked_fields, initial_values, context=context)

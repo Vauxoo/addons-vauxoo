@@ -27,7 +27,7 @@
 from openerp.osv import fields, osv
 
 
-class configure_create_journal(osv.osv_memory):
+class ConfigureCreateJournal(osv.osv_memory):
     _name = 'configure.create.journal'
 
     _columns = {

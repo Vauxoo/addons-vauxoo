@@ -2,7 +2,7 @@
 from openerp.osv import osv
 
 
-class document(osv.Model):
+class Document(osv.Model):
 
     """
     fetchmail

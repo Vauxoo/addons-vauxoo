@@ -27,7 +27,7 @@ from openerp.tools.translate import _
 import time
 
 
-class stock_invoice_onshipping(osv.TransientModel):
+class StockInvoiceOnshipping(osv.TransientModel):
 
     _inherit = 'stock.invoice.onshipping'
 
@@ -60,6 +60,6 @@ class stock_invoice_onshipping(osv.TransientModel):
             raise osv.except_osv(_('Invalid Procedure'),
                 _('This action can only be peform over not contract due'
                  ' date pickings which also are not in done state.'))
-        res = super(stock_invoice_onshipping, self).open_invoice(
+        res = super(StockInvoiceOnshipping, self).open_invoice(
             cur, uid, ids, context=context)
         return res

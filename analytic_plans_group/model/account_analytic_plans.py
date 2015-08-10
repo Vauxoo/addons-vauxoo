@@ -26,7 +26,7 @@
 from openerp.osv import fields, osv
 
 
-class account_analytic_group(osv.Model):
+class AccountAnalyticGroup(osv.Model):
     _name = 'account.analytic.group'
 
     _columns = {
@@ -34,7 +34,7 @@ class account_analytic_group(osv.Model):
     }
 
 
-class account_analytic_account(osv.Model):
+class AccountAnalyticAccount(osv.Model):
     _inherit = 'account.analytic.account'
 
     _columns = {

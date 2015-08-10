@@ -30,7 +30,7 @@ from openerp import workflow
 wf_service = workflow
 
 
-class validate_picking(osv.TransientModel):
+class ValidatePicking(osv.TransientModel):
 
     _name = 'validate.picking.wz'
 

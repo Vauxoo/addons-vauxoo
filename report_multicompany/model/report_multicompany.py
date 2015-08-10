@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class report_multicompany(osv.Model):
+class ReportMulticompany(osv.Model):
 
     _name = 'report.multicompany'
     _order = 'sequence, id desc'

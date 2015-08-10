@@ -25,7 +25,7 @@
 from openerp.osv import osv
 
 
-class res_currency(osv.Model):
+class ResCurrency(osv.Model):
 
     _inherit = "res.currency"
 

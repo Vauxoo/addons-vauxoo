@@ -34,7 +34,7 @@ from openerp.osv import osv
 import re
 
 
-class stock_location(osv.Model):
+class StockLocation(osv.Model):
 
     """
     Inherit the stock location model to add a code attribute and make the code

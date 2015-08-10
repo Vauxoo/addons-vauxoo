@@ -26,7 +26,7 @@
 from openerp.osv import osv
 
 
-class mail_notification(osv.Model):
+class MailNotification(osv.Model):
 
     _inherit = 'mail.notification'
 

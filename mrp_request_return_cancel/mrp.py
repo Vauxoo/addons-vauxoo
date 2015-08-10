@@ -28,7 +28,7 @@ from openerp.osv import osv
 import openerp.workflow as workflow
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = "mrp.production"
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -42,5 +42,5 @@ class mrp_production(osv.Model):
             for line in production.picking_ids:
                 wf_service.trg_validate(
                     uid, 'stock.picking', line.id, 'button_cancel', cr)
-        return super(mrp_production, self).action_cancel(cr, uid, ids,
+        return super(MrpProduction, self).action_cancel(cr, uid, ids,
                                                          context=context)

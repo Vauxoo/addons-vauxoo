@@ -31,7 +31,7 @@ Definition of the module testing cases (unittest)
 from openerp.tests.common import TransactionCase
 
 
-class test_commission(TransactionCase):
+class TestCommission(TransactionCase):
 
     """
     Tests for Commissions (commission.payment)
@@ -41,7 +41,7 @@ class test_commission(TransactionCase):
         """
         basic method to define some basic data to be re use in all test cases.
         """
-        super(test_commission, self).setUp()
+        super(TestCommission, self).setUp()
         self.cp_model = self.registry('commission.payment')
 
     def test_basic_commission(self):

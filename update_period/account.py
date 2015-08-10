@@ -26,7 +26,7 @@
 from openerp.osv import osv
 
 
-class account_move(osv.Model):
+class AccountMove(osv.Model):
     _inherit = 'account.move'
 
     def action_update_period(self, cr, uid, ids, context={}):

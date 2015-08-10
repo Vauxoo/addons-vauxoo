@@ -27,7 +27,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class mrp_consume(osv.TransientModel):
+class MrpConsume(osv.TransientModel):
     _inherit = 'mrp.consume'
 
     def _get_default_wo_lot(self, cr, uid, context=None):
@@ -168,7 +168,7 @@ class mrp_consume(osv.TransientModel):
         context = context or {}
         wol_obj = self.pool.get('mrp.workorder.lot')
         # TODO check this method. the super is apply but the res is not return
-        super(mrp_consume, self).action_consume(
+        super(MrpConsume, self).action_consume(
             cr, uid, ids, context=context)
         if context.get('active_model', False) == 'mrp.workorder.lot':
             wol_id = context.get('active_id', False)
@@ -220,7 +220,7 @@ class mrp_consume(osv.TransientModel):
         return (view_id, search_view_id, action_help)
 
 
-class mrp_produce(osv.TransientModel):
+class MrpProduce(osv.TransientModel):
     _inherit = 'mrp.produce'
 
     def _get_default_mo_id(self, cr, uid, context=None):
@@ -306,7 +306,7 @@ class mrp_produce(osv.TransientModel):
         sm_obj = self.pool.get('stock.move')
         # create convencianal moves
         for produce in self.browse(cr, uid, ids, context=context):
-            res = super(mrp_produce, self).action_produce(
+            res = super(MrpProduce, self).action_produce(
                 cr, uid, ids, context=context)
         # add the serial number to the moves
         for produce in self.browse(cr, uid, ids, context=context):
@@ -345,14 +345,14 @@ class mrp_produce(osv.TransientModel):
         @param move_id: move id.
         """
         context = context or {}
-        res = super(mrp_produce, self)._get_produce_line_values(
+        res = super(MrpProduce, self)._get_produce_line_values(
             cr, uid, move_id, context=context)
         res.update({'prodlot_id': self._get_produce_line_prodlot_id(
             cr, uid, res['product_id'], context=context)})
         return res
 
 
-class mrp_produce_line(osv.TransientModel):
+class MrpProduceLine(osv.TransientModel):
     _inherit = 'mrp.produce.line'
 
     _columns = {

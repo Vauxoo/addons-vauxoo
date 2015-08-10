@@ -28,7 +28,7 @@
 from openerp.osv import osv, fields
 
 
-class configure_account_partner(osv.TransientModel):
+class ConfigureAccountPartner(osv.TransientModel):
     _name = 'configure.account.partner'
     _columns = {
         'name': fields.many2one('account.account', 'Accounts Payable',

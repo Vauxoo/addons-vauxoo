@@ -27,7 +27,7 @@
 from openerp import models, fields
 
 
-class res_partner(models.Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     is_broker_ok = fields.Boolean(

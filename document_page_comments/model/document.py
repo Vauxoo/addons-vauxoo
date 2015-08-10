@@ -27,7 +27,7 @@
 from openerp.osv import osv
 
 
-class document_page(osv.Model):
+class DocumentPage(osv.Model):
 
     _name = 'document.page'
 

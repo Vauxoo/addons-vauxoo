@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class mrp_config_settings(osv.osv_memory):
+class MrpConfigSettings(osv.osv_memory):
     _inherit = 'mrp.config.settings'
 
     def _get_batch_modes(self, cr, uid, context=None):

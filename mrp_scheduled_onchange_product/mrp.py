@@ -28,7 +28,7 @@
 from openerp.osv import osv
 
 
-class mrp_production_product_line(osv.Model):
+class MrpProductionProductLine(osv.Model):
     _inherit = "mrp.production.product.line"
 
     _columns = {

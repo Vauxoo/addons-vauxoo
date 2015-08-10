@@ -32,7 +32,7 @@ import cStringIO
 import openerp.tools as tools
 
 
-class sale_order(osv.Model):
+class SaleOrder(osv.Model):
     _inherit = 'sale.order'
 
     def import_data_line(self, cr, uid, ids, fdata, favalidate, context={}):

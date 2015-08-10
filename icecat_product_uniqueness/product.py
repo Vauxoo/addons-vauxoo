@@ -28,7 +28,7 @@
 from openerp.osv import osv
 
 
-class product_inherited(osv.Model):
+class ProductInherited(osv.Model):
 
     """
     Checks if a loaded product already exists on the database

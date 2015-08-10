@@ -28,7 +28,7 @@ _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
     'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
 
 
-class user_story(osv.Model):
+class UserStory(osv.Model):
     _name = 'user.story'
     _description = 'User Story'
     _order = 'id desc'
@@ -85,7 +85,7 @@ class user_story(osv.Model):
                     self.message_post(
                         cr, uid, ids, body, subject, type='email',
                         context=context, partner_ids=followers)
-        return super(user_story, self).write(cr, uid, ids,
+        return super(UserStory, self).write(cr, uid, ids,
                                              vals, context=context)
 
     def body_progress(self, cr, uid, ids, template, context=None):
@@ -220,7 +220,7 @@ class user_story(osv.Model):
 
         auto_follow_fields.append('user_execute_id')
         auto_follow_fields.append('approval_user_id')
-        res = super(user_story, self)._message_get_auto_subscribe_fields(
+        res = super(UserStory, self)._message_get_auto_subscribe_fields(
             cr, uid, updated_fields, auto_follow_fields=auto_follow_fields,
             context=context)
         return res
@@ -440,7 +440,7 @@ class user_story(osv.Model):
                           context=context)
 
 
-class user_story_priority(osv.Model):
+class UserStoryPriority(osv.Model):
     _name = 'user.story.priority'
     _description = "User Story Priority Level"
     _columns = {
@@ -448,7 +448,7 @@ class user_story_priority(osv.Model):
     }
 
 
-class user_story_difficulty(osv.Model):
+class UserStoryDifficulty(osv.Model):
     _name = 'user.story.difficulty'
     _description = "User Story Difficulty Level"
     _order = "points asc"
@@ -470,7 +470,7 @@ class user_story_difficulty(osv.Model):
     }
 
 
-class acceptability_criteria(osv.Model):
+class AcceptabilityCriteria(osv.Model):
     _name = 'acceptability.criteria'
     _description = 'Acceptability Criteria'
 
@@ -703,14 +703,14 @@ class acceptability_criteria(osv.Model):
     }
 
 
-class project_task(osv.Model):
+class ProjectTask(osv.Model):
     _inherit = 'project.task'
 
     def default_get(self, cr, uid, field, context=None):
         '''Owerwrite default get to add project in new task automatically'''
         if context is None:
             context = {}
-        res = super(project_task, self).default_get(
+        res = super(ProjectTask, self).default_get(
             cr, uid, field, context=context)
         if context.get('project_task', False):
             res.update({'project_id': context.get('project_task'),
@@ -733,7 +733,7 @@ class project_task(osv.Model):
 
     def case_close(self, cr, uid, ids, context=None):
         """ Closes Task inherit for write date now"""
-        res = super(project_task, self).case_close(
+        res = super(ProjectTask, self).case_close(
             cr, uid, ids, context=context)
         if not isinstance(ids, list):
             ids = [ids]
@@ -755,7 +755,7 @@ class project_task(osv.Model):
     }
 
 
-class inherit_project(osv.Model):
+class InheritProject(osv.Model):
 
     '''Inheirt project model to a new Descripcion field'''
 

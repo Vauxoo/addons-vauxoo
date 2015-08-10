@@ -22,12 +22,12 @@
 from openerp import models,  _
 
 
-class product_template(models.Model):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     def get_product_accounts(self, cr, uid, product_id, context=None):
         context = context or {}
-        res = super(product_template, self)\
+        res = super(ProductTemplate, self)\
             .get_product_accounts(cr, uid, product_id,
                                   context=context)
         product_brw = self.browse(cr, uid, product_id)

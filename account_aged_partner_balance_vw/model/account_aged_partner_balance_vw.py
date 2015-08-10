@@ -35,7 +35,7 @@ try:
 except ImportError:
     _logger.info('account_aged_partner_balance_vw: need mx library')
 
-class account_aged_partner_balance_vw(osv.TransientModel):
+class AccountAgedPartnerBalanceVw(osv.TransientModel):
     _name = 'account.aged.partner.balance.vw'
     _rec_name = 'partner_id'
     _order = 'partner_id'
@@ -58,7 +58,7 @@ class account_aged_partner_balance_vw(osv.TransientModel):
     }
 
 
-class account_aged_partner_document(osv.TransientModel):
+class AccountAgedPartnerDocument(osv.TransientModel):
     _name = 'account.aged.partner.document'
     _inherit = 'account.aged.partner.balance.vw'
     _rec_name = 'partner_id'
@@ -83,7 +83,7 @@ class account_aged_partner_document(osv.TransientModel):
     }
 
 
-class account_aged_trial_balance(osv.TransientModel):
+class AccountAgedTrialBalance(osv.TransientModel):
     _inherit = 'account.aged.trial.balance'
 
     account_type_gbl = None

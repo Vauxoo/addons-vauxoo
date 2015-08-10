@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {
@@ -40,11 +40,11 @@ class purchase_requisition(osv.Model):
     def copy(self, cr, uid, id, default=None, context=None):
         default = default or {}
         default.update({'purchaser_id': False})
-        return super(purchase_requisition, self).copy(cr, uid, id, default,
+        return super(PurchaseRequisition, self).copy(cr, uid, id, default,
                                                       context=context)
 
 
-class res_partner(osv.Model):
+class ResPartner(osv.Model):
 
     _inherit = 'res.partner'
     _columns = {
@@ -56,5 +56,5 @@ class res_partner(osv.Model):
     def copy(self, cr, uid, id, default=None, context=None):
         default = default or {}
         default.update({'is_purchaser': False})
-        return super(res_partner, self).copy(cr, uid, id, default,
+        return super(ResPartner, self).copy(cr, uid, id, default,
                                              context=context)

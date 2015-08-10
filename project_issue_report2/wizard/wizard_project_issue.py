@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class wizard_price_list_sequence_report(osv.TransientModel):
+class WizardPriceListSequenceReport(osv.TransientModel):
     _name = "wizard.project.issue.report"
 
     _columns = {

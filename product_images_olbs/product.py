@@ -17,7 +17,7 @@
 from openerp.osv import osv, fields
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
     _columns = {
         'image_ids': fields.one2many(

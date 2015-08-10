@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _description = 'Product'
     _inherit = "product.product"
 

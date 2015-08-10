@@ -22,7 +22,7 @@
 from openerp.osv import osv, fields
 
 
-class project_issue(osv.Model):
+class ProjectIssue(osv.Model):
 
     _inherit = 'project.issue'
 
@@ -149,7 +149,7 @@ class project_issue(osv.Model):
         return True
 
 
-class project_task(osv.Model):
+class ProjectTask(osv.Model):
 
     _inherit = 'project.task'
 

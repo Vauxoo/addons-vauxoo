@@ -24,11 +24,11 @@
 from openerp.osv import osv
 
 
-class account_invoice_line(osv.Model):
+class AccountInvoiceLine(osv.Model):
     _inherit = "account.invoice.line"
 
     def move_line_get(self, cr, uid, invoice_id, context=None):
-        res = super(account_invoice_line, self).move_line_get(
+        res = super(AccountInvoiceLine, self).move_line_get(
             cr, uid, invoice_id, context=context)
         invo_obj = self.pool.get('account.invoice')
         invo_brw = invo_obj.browse(cr, uid, invoice_id, context=context)

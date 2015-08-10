@@ -26,7 +26,7 @@
 from openerp import models, fields
 
 
-class res_partner_mail(models.Model):
+class ResPartnerMail(models.Model):
     """ Update partner to add a field about notification preferences """
     _inherit = 'res.partner'
 

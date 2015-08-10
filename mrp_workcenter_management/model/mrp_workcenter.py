@@ -38,7 +38,7 @@ from openerp.osv import osv, fields
 #    ]
 
 
-class mrp_production_workcenter_line(osv.Model):
+class MrpProductionWorkcenterLine(osv.Model):
 
     _inherit = "mrp.production.workcenter.line"
     _columns = {

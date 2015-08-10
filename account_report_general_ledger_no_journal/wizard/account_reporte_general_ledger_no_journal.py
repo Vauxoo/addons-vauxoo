@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class account_ledger_report(osv.TransientModel):
+class AccountLedgerReport(osv.TransientModel):
     _inherit = "account.report.general.ledger"
 
     def _get_all_journal(self, cr, uid, context=None):

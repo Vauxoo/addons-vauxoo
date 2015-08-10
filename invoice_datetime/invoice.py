@@ -36,7 +36,7 @@ import pytz
 import time
 
 
-class account_payment_term(osv.Model):
+class AccountPaymentTerm(osv.Model):
     _inherit = "account.payment.term"
 
     # pylint: disable=W0622
@@ -50,11 +50,11 @@ class account_payment_term(osv.Model):
                     date_ref, '%Y-%m-%d %H:%M:%S'))
             except BaseException:
                 pass
-        return super(account_payment_term, self).compute(
+        return super(AccountPaymentTerm, self).compute(
             cr, uid, id, value, date_ref, context=context)
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
     # _order = 'invoice_datetime asc'
 
@@ -113,7 +113,7 @@ class account_invoice(osv.Model):
                 vals.update(
                     {'date_invoice_tz': self._get_datetime_with_user_tz(
                         cr, uid, datetime_inv)})
-        return super(account_invoice, self).create(
+        return super(AccountInvoice, self).create(
             cr, uid, vals, context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -125,7 +125,7 @@ class account_invoice(osv.Model):
                 vals.update(
                     {'date_invoice_tz': self._get_datetime_with_user_tz(
                         cr, uid, datetime_inv)})
-        return super(account_invoice, self).write(
+        return super(AccountInvoice, self).write(
             cr, uid, ids, vals, context=context)
 
     def _get_default_type(self, cr, uid, ids):
@@ -150,7 +150,7 @@ class account_invoice(osv.Model):
             'invoice_datetime': False,
             'date_invoice': False,
             'date_invoice_tz': False})
-        return super(account_invoice, self).copy(
+        return super(AccountInvoice, self).copy(
             cr, uid, ids, default, context)
 
     def _get_time_zone(self, cr, uid, invoice_id, context=None):
@@ -255,5 +255,5 @@ class account_invoice(osv.Model):
                                    'date_invoice': inv.date_invoice},
                     context=context)
                 self.write(cr, uid, ids, vals_date, context=context)
-        return super(account_invoice,
+        return super(AccountInvoice,
                      self).action_move_create(cr, uid, ids, context=context)

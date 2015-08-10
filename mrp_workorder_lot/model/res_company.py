@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class res_company(osv.osv):
+class ResCompany(osv.osv):
     _inherit = 'res.company'
     _columns = {
         'batch_type': fields.selection(

@@ -1,7 +1,7 @@
 from openerp.osv import osv, fields
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
 
     def _date_last_payment(self, cr, uid, ids, fieldname, arg, context=None):
         res = {}.fromkeys(ids, None)

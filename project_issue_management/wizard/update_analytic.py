@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class update_analytic(osv.TransientModel):
+class UpdateAnalytic(osv.TransientModel):
 
     _name = 'update.analytic'
 
@@ -34,7 +34,7 @@ class update_analytic(osv.TransientModel):
         context = context or {}
         issue_obj = self.pool.get('project.issue')
         analytic_ids = set()
-        res = super(update_analytic, self).default_get(cr, uid, l_fields,
+        res = super(UpdateAnalytic, self).default_get(cr, uid, l_fields,
                                                        context=context)
         if context.get('active_ids'):
             for issue in issue_obj.browse(cr, uid, context.get('active_ids')):

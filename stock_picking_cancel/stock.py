@@ -28,7 +28,7 @@ import openerp.workflow as workflow
 from openerp.tools.translate import _
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
 
     def action_cancel_draft(self, cr, uid, ids, *args):
@@ -49,7 +49,7 @@ class stock_picking(osv.Model):
         return True
 
 
-class stock_picking_in(osv.Model):
+class StockPickingIn(osv.Model):
     _inherit = 'stock.picking.in'
 
     def action_cancel_draft(self, cr, uid, ids, *args):
@@ -70,7 +70,7 @@ class stock_picking_in(osv.Model):
         return True
 
 
-class stock_picking_out(osv.Model):
+class StockPickingOut(osv.Model):
     _inherit = 'stock.picking.out'
 
     def action_cancel_draft(self, cr, uid, ids, *args):
@@ -91,7 +91,7 @@ class stock_picking_out(osv.Model):
         return True
 
 
-class stock_move(osv.Model):
+class StockMove(osv.Model):
     _inherit = 'stock.move'
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -114,4 +114,4 @@ class stock_move(osv.Model):
                 except BaseException:
                     pass
                 account_move.unlink(cr, uid, [lin[0]])
-        return super(stock_move, self).action_cancel(cr, uid, ids, context=context)
+        return super(StockMove, self).action_cancel(cr, uid, ids, context=context)

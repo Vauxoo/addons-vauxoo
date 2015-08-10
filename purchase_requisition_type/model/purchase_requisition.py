@@ -30,7 +30,7 @@ purchase_requisition_type = [
 ]
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {

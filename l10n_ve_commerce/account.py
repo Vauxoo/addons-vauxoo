@@ -22,7 +22,7 @@
 from openerp.osv import osv
 
 
-class wizard_multi_charts_accounts(osv.TransientModel):
+class WizardMultiChartsAccounts(osv.TransientModel):
 
     """
     wizard_multi_charts_accounts(osv.osv_memory):

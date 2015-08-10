@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class product_price_list(osv.osv_memory):
+class ProductPriceList(osv.osv_memory):
     _inherit = 'product.price_list'
     _description = 'Price List'
     _rec_name = 'price_list'
