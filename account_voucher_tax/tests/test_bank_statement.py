@@ -18,23 +18,8 @@ class TestPaymentTax(TestTaxCommon):
             Tests Supplier with tax 16% and two payments
         """
         cr, uid = self.cr, self.uid
-        invoice_id = self.account_invoice_model.create(cr, uid, {
-            'partner_id': self.partner_agrolait_id,
-            'journal_id': self.invoice_supplier_journal_id,
-            'reference_type': 'none',
-            'name': 'invoice to supplier',
-            'account_id': self.account_payable_id,
-            'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-07-01',
-            'check_total': 116
-            })
-        self.account_invoice_line_model.create(cr, uid, {
-            'product_id': self.product_id,
-            'quantity': 1,
-            'price_unit': 100,
-            'invoice_line_tax_id': [(6, 0, [self.tax_16])],
-            'invoice_id': invoice_id,
-            'name': 'product that cost 100'})
+        invoice_id = self.create_invoice_supplier(
+            cr, uid, 116, [self.tax_16], time.strftime('%Y') + '-07-01')
 
         # validate invoice
         self.registry('account.invoice').signal_workflow(
@@ -92,23 +77,9 @@ class TestPaymentTax(TestTaxCommon):
             and Retention 10.67% with one payment
         """
         cr, uid = self.cr, self.uid
-        invoice_id = self.account_invoice_model.create(cr, uid, {
-            'partner_id': self.partner_agrolait_id,
-            'journal_id': self.invoice_supplier_journal_id,
-            'reference_type': 'none',
-            'name': 'invoice to supplier',
-            'account_id': self.account_payable_id,
-            'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-07-01',
-            'check_total': 105.33
-            })
-        self.account_invoice_line_model.create(cr, uid, {
-            'product_id': self.product_id,
-            'quantity': 1,
-            'price_unit': 100,
-            'invoice_line_tax_id': [(6, 0, [self.tax_16, self.tax_ret])],
-            'invoice_id': invoice_id,
-            'name': 'product that cost 100'})
+        invoice_id = self.create_invoice_supplier(
+            cr, uid, 105.33, [self.tax_16, self.tax_ret],
+            time.strftime('%Y') + '-07-01')
 
         # validate invoice
         self.registry('account.invoice').signal_workflow(
@@ -176,24 +147,9 @@ class TestPaymentTax(TestTaxCommon):
             Tests Supplier with currency USD and tax 16% with two payments
         """
         cr, uid = self.cr, self.uid
-        invoice_id = self.account_invoice_model.create(cr, uid, {
-            'partner_id': self.partner_agrolait_id,
-            'journal_id': self.invoice_supplier_journal_id,
-            'reference_type': 'none',
-            'name': 'invoice to supplier',
-            'account_id': self.account_payable_id,
-            'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
-            'currency_id': self.currency_usd_id,
-            'check_total': 116
-            })
-        self.account_invoice_line_model.create(cr, uid, {
-            'product_id': self.product_id,
-            'quantity': 1,
-            'price_unit': 100,
-            'invoice_line_tax_id': [(6, 0, [self.tax_16])],
-            'invoice_id': invoice_id,
-            'name': 'product that cost 100'})
+        invoice_id = self.create_invoice_supplier(
+            cr, uid, 116, [self.tax_16],
+            time.strftime('%Y') + '-06-01', self.currency_usd_id)
 
         # validate invoice
         self.registry('account.invoice').signal_workflow(
@@ -211,7 +167,8 @@ class TestPaymentTax(TestTaxCommon):
 
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, -60,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-01')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-01')
+
         for move_line in move_line_ids_complete:
             if move_line.account_id.id == self.acc_tax16 and\
                     move_line.amount_currency:
@@ -232,7 +189,7 @@ class TestPaymentTax(TestTaxCommon):
 
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, -56,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-30')
 
         checked_line = 0
         for move_line_complete in move_line_ids_complete:
@@ -277,24 +234,9 @@ class TestPaymentTax(TestTaxCommon):
             Second payment with exchange rate same that invoice
         """
         cr, uid = self.cr, self.uid
-        invoice_id = self.account_invoice_model.create(cr, uid, {
-            'partner_id': self.partner_agrolait_id,
-            'journal_id': self.invoice_supplier_journal_id,
-            'reference_type': 'none',
-            'name': 'invoice to supplier',
-            'account_id': self.account_payable_id,
-            'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-30',
-            'currency_id': self.currency_usd_id,
-            'check_total': 116
-            })
-        self.account_invoice_line_model.create(cr, uid, {
-            'product_id': self.product_id,
-            'quantity': 1,
-            'price_unit': 100,
-            'invoice_line_tax_id': [(6, 0, [self.tax_16])],
-            'invoice_id': invoice_id,
-            'name': 'product that cost 100'})
+        invoice_id = self.create_invoice_supplier(
+            cr, uid, 116, [self.tax_16],
+            time.strftime('%Y') + '-06-30', self.currency_usd_id)
 
         # validate invoice
         self.registry('account.invoice').signal_workflow(
@@ -312,7 +254,7 @@ class TestPaymentTax(TestTaxCommon):
 
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, -115,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-01')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-01')
         for move_line in move_line_ids_complete:
             if move_line.account_id.id == self.acc_tax16 and\
                     move_line.amount_currency:
@@ -333,7 +275,7 @@ class TestPaymentTax(TestTaxCommon):
 
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, -1,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-30')
 
         checked_line = 0
         for move_line_complete in move_line_ids_complete:
@@ -384,10 +326,10 @@ class TestPaymentTax(TestTaxCommon):
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
+            'date_invoice': time.strftime('%Y') + '-06-01',
             'currency_id': self.currency_usd_id,
             'check_total': 116
-            })
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -412,7 +354,7 @@ class TestPaymentTax(TestTaxCommon):
 
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, -100,
-            self.bank_journal_id, time.strftime('%Y')+'-06-30',
+            self.bank_journal_id, time.strftime('%Y') + '-06-30',
             currency=self.currency_usd_id, amount_currency=-116)
 
         checked_line = 0
@@ -464,9 +406,9 @@ class TestPaymentTax(TestTaxCommon):
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
+            'date_invoice': time.strftime('%Y') + '-06-01',
             'check_total': 116
-            })
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -491,7 +433,7 @@ class TestPaymentTax(TestTaxCommon):
 
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, -150,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30',
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-30',
             currency=self.currency_eur_id, amount_currency=-116)
 
         checked_line = 0
@@ -515,3 +457,52 @@ class TestPaymentTax(TestTaxCommon):
                 checked_line += 1
                 continue
         self.assertEquals(checked_line, 2)
+
+    def test_iva_16_isr_ret_supplier(self):
+        """
+            Tests Supplier with tax 16%, ISR 10% and retention 10.67%
+        """
+        cr, uid = self.cr, self.uid
+        self.acc_tax_model.write(cr, uid, self.tax_isr, {
+            'account_collected_id': self.acc_ret10_isr_payment,
+            'account_paid_id': self.acc_ret10_isr_payment,
+            'tax_voucher_ok': False})
+        invoice_id = self.create_invoice_supplier(
+            cr, uid, 95.33, [
+                self.tax_16, self.tax_ret, self.tax_isr],
+            time.strftime('%Y') + '-07-01')
+
+        # validate invoice
+        self.registry('account.invoice').signal_workflow(
+            cr, uid, [invoice_id], 'invoice_open')
+        invoice_record = self.account_invoice_model.browse(
+            cr, uid, [invoice_id])
+
+        # we search aml with account payable
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
+                break
+
+        # create payment by total amount
+        move_line_ids = self.create_statement(
+            cr, uid, line_id, self.partner_agrolait_id, -95.33,
+            self.bank_journal_id)
+
+        self.assertEquals(len(move_line_ids), 8)
+        for move_line in move_line_ids:
+            if move_line.account_id.id == self.acc_tax16:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertIn(move_line.credit, (5.33, 10.67),)
+                self.assertEquals(move_line.amount_residual, 0)
+                continue
+            if move_line.account_id.id == self.acc_ret1067_payment:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(move_line.credit, 10.67)
+                self.assertEquals(move_line.amount_residual, 0)
+                continue
+            if move_line.account_id.id == self.account_bnk_id:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(move_line.credit, 95.33)
+                self.assertEquals(move_line.amount_residual, 0)
+                continue

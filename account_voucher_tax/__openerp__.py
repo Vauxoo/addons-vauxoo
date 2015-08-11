@@ -36,7 +36,6 @@
         "account_voucher",
         "account_invoice_tax",
         "analytic",
-        "account_move_line_base_tax",
         "account_cancel",
     ],
     "demo": [

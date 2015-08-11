@@ -40,22 +40,8 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
         self.assertEquals(checked_line, 3)
 
         # create invoice
-        invoice_id = self.account_invoice_model.create(cr, uid, {
-            'partner_id': self.partner_agrolait_id,
-            'journal_id': self.invoice_supplier_journal_id,
-            'reference_type': 'none',
-            'name': 'invoice to supplier',
-            'account_id': self.account_payable_id,
-            'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
-            })
-        self.account_invoice_line_model.create(cr, uid, {
-            'product_id': self.product_id,
-            'quantity': 1,
-            'price_unit': 100,
-            'invoice_line_tax_id': [(6, 0, [self.tax_16])],
-            'invoice_id': invoice_id,
-            'name': 'product that cost 100'})
+        invoice_id = self.create_invoice_supplier(
+            cr, uid, 116, [self.tax_16], time.strftime('%Y') + '-06-01')
 
         # validate invoice
         self.registry('account.invoice').signal_workflow(

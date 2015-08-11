@@ -207,14 +207,10 @@ class AccountBankStatementLine(osv.osv):
                 move_amount_counterpart[0], context=context)
 
             for move_line_tax in move_line_tax_dict:
+                context.update({
+                    'counterpart_move_line_tax_id': move_line_tax.get(
+                        'counterpart_move_line_tax_id', [])})
                 move_line_rec = []
-                line_tax_id = move_line_tax.get('tax_id')
-                # Cuando el impuesto (@tax_id) tiene @amount = 0 es un impuesto
-                # de compra 0% o EXENTO y necesitamos enviar el monto base
-                amount_base_secondary =\
-                    line_tax_id.amount and\
-                    move_amount_counterpart[1] / (1+line_tax_id.amount) or\
-                    move_line_tax.get('amount_base_secondary')
                 account_tax_voucher =\
                     move_line_tax.get('account_tax_voucher')
                 account_tax_collected =\
@@ -240,7 +236,6 @@ class AccountBankStatementLine(osv.osv):
                     move_line_tax.get('tax_id'),  # Impuesto
                     # Cuenta analitica del impuesto(aml)
                     move_line_tax.get('tax_analytic_id'),
-                    amount_base_secondary,  # Monto base(aml)
                     factor, statement_currency_line=statement_currency_line,
                     context=context)
                 for move_line_dict_tax in lines_tax:
@@ -498,13 +493,15 @@ class AccountBankStatementLine(osv.osv):
                     ('receivable', 'payable') and\
                     move_line_id.journal_id.type not in ('cash', 'bank') or\
                     context.get('journal_special', False):
-                account_group.setdefault(move_line_id.account_id.id, [0, 0])
+                account_group.setdefault(move_line_id.account_id.id, [0, 0, 0])
                 # Validacion del debit/credit cuando la poliza contiene
                 # impuesto 0 o EXENTO toma el monto base de la linea de poliza
                 if not move_line_id.debit and not move_line_id.credit:
                     account_group[move_line_id.account_id.id][0] +=\
                         move_line_id.amount_base or 0.0
                     account_group[move_line_id.account_id.id][1] = False
+                    account_group[move_line_id.account_id.id][2] =\
+                        move_line_id.id
                 else:
                     # @factor puede ser 1 o -1 depende de tipo de transaccion
                     # si es venta, compra, nota de credito/debito, retenciones
@@ -521,9 +518,7 @@ class AccountBankStatementLine(osv.osv):
                     # pago en voucher o bank statement
                     account_group[move_line_id.account_id.id][1] = \
                         move_line_id.id
-
         for move_account_tax in account_group:
-            amount_base_secondary = 0
             tax_ids = tax_obj.search(
                 cr, uid,
                 [('account_collected_id', '=', move_account_tax),
@@ -539,8 +534,6 @@ class AccountBankStatementLine(osv.osv):
                 # para reporta a la DIOT validando el @amount del impuesto
                 if tax_id.amount == 0:
                     amount_total_tax = 0
-                    amount_base_secondary = account_group.get(
-                        move_account_tax)[0]
                 else:
                     if account_group.get(move_account_tax)[1]:
                         amount_total_tax =\
@@ -551,9 +544,10 @@ class AccountBankStatementLine(osv.osv):
                 res = self.preparate_dict_tax(
                     tax_id=tax_id, amount=amount_total_tax)
                 res.update({
-                    'amount_base_secondary': amount_base_secondary,
                     'move_line_reconcile': [account_group.get(
-                        move_account_tax)[1]]
+                        move_account_tax)[1]],
+                    'counterpart_move_line_tax_id': [account_group.get(
+                        move_account_tax)[2]],
                     })
                 dat.append(res)
 
@@ -585,24 +579,32 @@ class AccountBankStatementLine(osv.osv):
         ''' Get retention of same type of category tax
             @param account_group: Dictionary with grouped by key of account_id
                 and value amount fox example {1: 1.0}
-            @param tax: Object Browse of tax '''
-
+            @param tax: Object Browse of tax
+            In this method we search by name of tax to identify if is
+            tax or retention, because we remove fields code tax from this
+            method because this fields is used to other purpose'''
         tax_obj = self.pool.get('account.tax')
         amount_retention_tax = 0
         if account_group and tax:
             for move_account_tax in account_group:
                 if tax.amount > 0:
+                    tax_code = ''
+                    if 'ISR' in tax.name.upper():
+                        tax_code = 'ISR'
+                    elif 'IVA' in tax.name.upper():
+                        tax_code = 'IVA'
                     tax_ids = tax_obj.search(
                         cr, uid,
                         [('account_collected_id', '=', move_account_tax),
-                         ('tax_category_id.code', '=',
-                            tax.tax_category_id.code),
                          ('amount', '<', 0), ('id', '<>', tax.id),
                          ], limit=1)
-                    if tax_ids:
+                    n_tax_ids = []
+                    for tax_br in tax_obj.browse(cr, uid, tax_ids):
+                        if tax_br.name.upper().find(tax_code) != -1:
+                            n_tax_ids.append(tax_br.id)
+                    if n_tax_ids:
                         amount_retention_tax +=\
                             account_group[move_account_tax][0]
-
         return amount_retention_tax
 
     def _get_tax_advance(self, cr, uid, mv_line_dicts, context=None):

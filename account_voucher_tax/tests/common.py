@@ -13,6 +13,7 @@ class TestTaxCommon(common.TransactionCase):
         self.account_invoice_model = self.registry('account.invoice')
         self.account_invoice_line_model = self.registry('account.invoice.line')
         self.acc_bank_stmt_model = self.registry('account.bank.statement')
+        self.acc_tax_model = self.registry('account.tax')
         self.acc_bank_stmt_line_model = self.registry(
             'account.bank.statement.line')
         self.account_bnk_id = self.ref("account.bnk")
@@ -43,6 +44,8 @@ class TestTaxCommon(common.TransactionCase):
             "account_voucher_tax.account_voucher_tax_purchase_0iva")
         self.tax_16_customer = self.ref(
             "account_voucher_tax.account_voucher_tax_sale_ova16")
+        self.tax_isr = self.ref(
+            "account_voucher_tax.account_voucher_tax_purchase_iva10_rete_isr")
         self.tax_ret = self.ref(
             "account_voucher_tax."
             "account_voucher_tax_purchase_iva1067_retencion_iva")
@@ -67,6 +70,8 @@ class TestTaxCommon(common.TransactionCase):
             "account_voucher_tax.account_ova_voucher")
         self.acc_ret1067_payment = self.ref(
             "account_voucher_tax.account_iva_voucher1067_retencion_iva")
+        self.acc_ret10_isr_payment = self.ref(
+            "account_voucher_tax.account_iva_voucher10_rete_isr")
 
         # Data to Provision tax
         self.acc_provision_tax_16_customer = self.ref(

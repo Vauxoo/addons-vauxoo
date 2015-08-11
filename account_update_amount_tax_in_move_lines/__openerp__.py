@@ -32,7 +32,7 @@
     "website": "",
     "license": "",
     "depends": [
-        "account_move_line_base_tax"
+        "l10n_mx_diot_report",
     ],
     "demo": [],
     "data": [

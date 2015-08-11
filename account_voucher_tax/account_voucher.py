@@ -146,17 +146,13 @@ class AccountVoucher(osv.Model):
                     cr, uid, False, voucher.type, context=context)
 
                 context['journal_special'] = voucher.journal_id.special_journal
-
                 dict_tax = bank_statement_line_obj._get_move_line_tax(
                     cr, uid, mv_line_dicts, context=context)
 
                 for move_line_tax_dict in dict_tax:
-
-                    line_tax_id = move_line_tax_dict.get('tax_id')
-                    amount_base_secondary =\
-                        line_tax_id.amount and\
-                        line.amount_original / (1+line_tax_id.amount) or\
-                        move_line_tax_dict.get('amount_base_secondary')
+                    context.update({
+                        'counterpart_move_line_tax_id': move_line_tax_dict.get(
+                            'counterpart_move_line_tax_id', [])})
                     account_tax_voucher =\
                         move_line_tax_dict.get('account_tax_voucher')
                     account_tax_collected =\
@@ -190,7 +186,7 @@ class AccountVoucher(osv.Model):
                         reference_amount, current_currency, False,
                         move_line_tax_dict.get('tax_id'),
                         move_line_tax_dict.get('tax_analytic_id'),
-                        amount_base_secondary, factor,
+                        factor,
                         statement_currency_line=statement_currency_line,
                         context=context)
                     for move_line_tax in move_lines_tax:
@@ -219,7 +215,6 @@ class AccountVoucher(osv.Model):
         for rec_ids in move_reconcile_id:
             if len(rec_ids) >= 2:
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
-
         return move_ids
 
     def writeoff_move_line_tax_get(
@@ -303,7 +298,6 @@ class AccountVoucher(osv.Model):
                                  reference_currency_id, tax_id,
                                  line_tax, acc_a,
                                  # informacion de lineas de impuestos
-                                 amount_base_tax,
                                  factor=0, statement_currency_line=None,
                                  context=None):
 
@@ -316,15 +310,6 @@ class AccountVoucher(osv.Model):
 
         reference_currency_id = statement_currency_line or\
             reference_currency_id
-
-        amount_base, tax_secondary = self._get_base_amount_tax_secondary(
-            cr, uid, line_tax, amount_base_tax * factor, reference_amount,
-            context=context)
-
-        amount_tax_sec = 0
-        if tax_secondary:
-            amount_tax_sec = self.pool.get('account.tax').browse(
-                cr, uid, tax_secondary, context=context).amount
 
         debit_line_vals = {
             'name': line_tax.name,
@@ -369,14 +354,8 @@ class AccountVoucher(osv.Model):
         if type in ('payment', 'purchase'):
             if reference_amount < 0:
                 credit_line_vals.pop('analytic_account_id')
-                credit_line_vals.update({
-                    'amount_base': abs(amount_base),
-                    'tax_id_secondary': tax_secondary})
             else:
                 debit_line_vals.pop('analytic_account_id')
-                debit_line_vals.update({
-                    'tax_id_secondary': tax_secondary,
-                    'amount_base': abs(amount_base)})
         else:
             if reference_amount < 0:
                 debit_line_vals.pop('analytic_account_id')
@@ -411,10 +390,6 @@ class AccountVoucher(osv.Model):
             debit_line_vals['debit'] = cur_obj.round(
                 cr, uid, src_acct.company_id.currency_id,
                 reference_amount/context.get('st_line_currency_rate'))
-            if amount_tax_sec:
-                debit_line_vals['amount_base'] = cur_obj.round(
-                    cr, uid, src_acct.company_id.currency_id,
-                    abs(amount_base)/context.get('st_line_currency_rate'))
         else:
             if reference_currency_id != src_main_currency_id:
                 # fix credit line:
@@ -427,10 +402,6 @@ class AccountVoucher(osv.Model):
                 debit_line_vals['debit'] = cur_obj.compute(
                     cr, uid, reference_currency_id, dest_main_currency_id,
                     reference_amount, context=context)
-                if amount_tax_sec:
-                    debit_line_vals['amount_base'] = cur_obj.compute(
-                        cr, uid, reference_currency_id, dest_main_currency_id,
-                        abs(amount_base), context=context)
 
         if reference_currency_id != company_currency:
             debit_line_vals.update(
@@ -447,19 +418,6 @@ class AccountVoucher(osv.Model):
                 debit_line_vals or credit_line_vals]
 
         return [debit_line_vals, credit_line_vals]
-
-    def _get_base_amount_tax_secondary(self, cr, uid, line_tax,
-                                       amount_base_tax, reference_amount,
-                                       context=None):
-        amount_base = 0
-        tax_secondary = False
-        if line_tax and line_tax.tax_category_id\
-                and line_tax.tax_category_id.name in \
-                ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'):
-            amount_base = line_tax.amount and\
-                reference_amount / line_tax.amount or amount_base_tax
-            tax_secondary = line_tax.id
-        return [amount_base, tax_secondary]
 
     def action_move_line_create(self, cr, uid, ids, context=None):
         res = super(AccountVoucher, self).action_move_line_create(

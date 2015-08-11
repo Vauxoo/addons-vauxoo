@@ -34,6 +34,7 @@
     "depends": [
         "account_invoice_tax",
         "account_voucher_tax",
+        "l10n_mx_diot_report",
     ],
     "demo": [
         "demo/account_tax_demo.xml",
