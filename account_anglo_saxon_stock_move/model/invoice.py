@@ -29,8 +29,32 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class AccountInvoice(osv.osv):
+class AccountInvoice(models.Model):
     _inherit = "account.invoice"
+
+    @api.model
+    def line_get_convert(self, line, part, date):
+        res = super(AccountInvoice, self).line_get_convert(line, part, date)
+        if line.get('sm_id', False):
+            res['sm_id'] = line['sm_id']
+        return res
+
+    @api.multi
+    def action_cancel(self):
+        aml_obj = self.env['account.move.line']
+        aml_ids = []
+        for inv in self:
+            if not inv.move_id:
+                continue
+            for aml_brw in inv.move_id.line_id:
+                # Unreconcile all non-receivable and non-payable lines
+                if aml_brw.account_id.reconcile and aml_brw.account_id.type \
+                        not in ('receivable', 'payable'):
+                    aml_ids.append(aml_brw.id)
+        if aml_ids:
+            aml_obj._remove_move_reconcile(aml_ids)
+
+        return super(AccountInvoice, self).action_cancel()
 
     def reconcile_stock_accrual(self, cr, uid, ids, context=None):
         context = dict(context or {})
@@ -92,34 +116,6 @@ class AccountInvoice(osv.osv):
             cr, uid, ids, context=context)
         self.reconcile_stock_accrual(cr, uid, ids, context=context)
         return res
-
-
-class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
-
-    @api.model
-    def line_get_convert(self, line, part, date):
-        res = super(AccountInvoice, self).line_get_convert(line, part, date)
-        if line.get('sm_id', False):
-            res['sm_id'] = line['sm_id']
-        return res
-
-    @api.multi
-    def action_cancel(self):
-        aml_obj = self.env['account.move.line']
-        aml_ids = []
-        for inv in self:
-            if not inv.move_id:
-                continue
-            for aml_brw in inv.move_id.line_id:
-                # Unreconcile all non-receivable and non-payable lines
-                if aml_brw.account_id.reconcile and aml_brw.account_id.type \
-                        not in ('receivable', 'payable'):
-                    aml_ids.append(aml_brw.id)
-        if aml_ids:
-            aml_obj._remove_move_reconcile(aml_ids)
-
-        return super(AccountInvoice, self).action_cancel()
 
 
 class AccountInvoiceLine(osv.osv):
