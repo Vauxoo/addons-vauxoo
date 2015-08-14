@@ -24,7 +24,7 @@
 #
 ##############################################################################
 
-
+from openerp import api
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
@@ -179,11 +179,12 @@ class MrpProduction(osv.Model):
             method=True, string='Remaining'),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'subproduction_ids': [],
             'superproduction_ids': [],
         })
-        return super(MrpProduction, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(default)

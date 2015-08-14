@@ -23,6 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import api
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
@@ -32,13 +33,14 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'pt_planified_ids': [],
         })
-        return super(MrpProduction, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(default)
 
     _columns = {
         'pt_planified_ids': fields.one2many('mrp.pt.planified',

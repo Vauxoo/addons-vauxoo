@@ -28,6 +28,7 @@
 #
 ##############################################################################
 
+from openerp import api
 from openerp.osv import fields, osv
 
 
@@ -49,17 +50,16 @@ class AccountInvoice(osv.Model):
                                      'to this invoice'),
     }
 
-    def copy(self, cr, uid, id, default={}, context=None):
+    @api.one
+    def copy(self, default={}):
         """ Allows you to duplicate a record,
         child_ids, nro_ctrl and reference fields are
         cleaned, because they must be unique
         """
-        if context is None:
-            context = {}
         default.update({
             'child_ids': [],
         })
-        return super(AccountInvoice, self).copy(cr, uid, id, default, context)
+        return super(AccountInvoice, self).copy(default)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

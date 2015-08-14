@@ -24,3 +24,4 @@
 #
 
 from . import test_invoice_datetime
+from . import test_copy_method

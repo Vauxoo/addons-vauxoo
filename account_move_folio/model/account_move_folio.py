@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from openerp import api
 from openerp.osv import fields, osv
 
 
@@ -50,12 +51,13 @@ class AccountMove(osv.Model):
             ['folio_id']),
     ]
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         default = {} if default is None else default.copy()
         default.update({
             'folio_id': False
         })
-        return super(AccountMove, self).copy(cr, uid, id, default=default, context=context)
+        return super(AccountMove, self).copy(default=default)
 
     def foliate(self, cr, uid, ids, context=None):
         context = context or {}

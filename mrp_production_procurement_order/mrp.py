@@ -24,7 +24,7 @@
 #
 ##############################################################################
 
-
+from openerp import api
 from openerp.osv import osv, fields
 
 
@@ -47,10 +47,11 @@ class MrpProduction(osv.Model):
             'procurement_id', 'Production orders'),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'procurement_ids': [],
         })
-        return super(MrpProduction, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(default)
