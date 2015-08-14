@@ -28,7 +28,7 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from openerp import tools
+from openerp import tools, api
 import datetime
 from datetime import timedelta
 from pytz import timezone
@@ -141,17 +141,15 @@ class AccountInvoice(osv.Model):
         "date_type": _get_default_type
     }
 
-    def copy(self, cr, uid, ids, default=None, context=None):
-        if context is None:
-            context = {}
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'invoice_datetime': False,
             'date_invoice': False,
             'date_invoice_tz': False})
-        return super(AccountInvoice, self).copy(
-            cr, uid, ids, default, context)
+        return super(AccountInvoice, self).copy(default)
 
     def _get_time_zone(self, cr, uid, invoice_id, context=None):
         if context is None:
