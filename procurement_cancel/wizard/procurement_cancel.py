@@ -26,7 +26,7 @@ from openerp.osv import osv
 _logger = logging.getLogger(__name__)
 
 
-class cancel_procurement_order(osv.osv_memory):
+class CancelProcurementOrder(osv.osv_memory):
     _name = 'cancel.procurement.order'
     _description = 'Cancel procurement'
 

@@ -27,7 +27,7 @@
 from openerp.osv import osv, fields
 
 
-class product_category(osv.Model):
+class ProductCategory(osv.Model):
     _inherit = 'product.category'
     _columns = {
         'location_src_id': fields.many2one('stock.location',

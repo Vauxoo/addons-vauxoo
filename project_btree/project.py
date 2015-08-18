@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class project_project(osv.Model):
+class ProjectProject(osv.Model):
 
     _inherit = 'project.project'
 

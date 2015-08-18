@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Stock Purchase Check Fulfillment",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "purchase",
-    "description": """
-Stock Purchase Check Fulfillment
-================================
-
-    Check if Products being received are in excess from the Quantities
-    established in the Purchase Order.
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

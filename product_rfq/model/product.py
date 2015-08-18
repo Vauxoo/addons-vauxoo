@@ -28,7 +28,7 @@
 from openerp.osv import fields, osv
 
 
-class inherited_product(osv.Model):
+class InheritedProduct(osv.Model):
 
     """
     Inherit to add rfq field for indicate which product has requisition

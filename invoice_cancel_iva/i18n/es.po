@@ -1,19 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* invoice_cancel_iva
+# 	* invoice_cancel_iva
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-05-25 19:38+0000\n"
-"PO-Revision-Date: 2012-05-25 15:09-0400\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: invoice_cancel_iva
 #: constraint:account.wh.iva:0
@@ -49,4 +51,3 @@ msgstr "Factura"
 #: field:account.wh.iva,prev_state:0
 msgid "Previos State"
 msgstr "Estado anterior"
-

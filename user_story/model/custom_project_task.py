@@ -25,7 +25,7 @@ from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
 
-class custom_project_task(osv.Model):
+class CustomProjectTask(osv.Model):
 
     '''
     Class that contains the methods needed to return the data to the view.

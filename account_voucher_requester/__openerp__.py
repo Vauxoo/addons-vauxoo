@@ -22,31 +22,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Account Voucher Requester", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-Account Voucher Requester
-=========================
-
-This module add an user field to the account voucher model to be the account
-voucher requester.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Account Voucher Requester",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "account_voucher"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_voucher_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

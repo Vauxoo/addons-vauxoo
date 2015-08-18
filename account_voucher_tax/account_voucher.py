@@ -29,7 +29,7 @@ from openerp.osv import osv, fields
 from openerp.addons import decimal_precision as dp
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     # _columns={
@@ -55,14 +55,14 @@ class account_voucher(osv.Model):
                         line.move_line_id.move_id)
             bank_st_obj._validate_not_refund(
                 cr, uid, voucher.type, type_lines_mov, context=context)
-        return super(account_voucher, self).proforma_voucher(
+        return super(AccountVoucher, self).proforma_voucher(
             cr, uid, ids, context=context)
 
     def onchange_amount(self, cr, uid, ids, amount, rate, partner_id,
                         journal_id, currency_id, ttype, date,
                         payment_rate_currency_id,
                         company_id, context=None):
-        res = super(account_voucher, self).onchange_amount(
+        res = super(AccountVoucher, self).onchange_amount(
             cr, uid, ids, amount, rate, partner_id, journal_id, currency_id,
             ttype, date, payment_rate_currency_id, company_id, context=context)
         res_compute = self.onchange_compute_tax(
@@ -71,7 +71,7 @@ class account_voucher(osv.Model):
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id,
                             amount, currency_id, ttype, date, context=None):
-        res = super(account_voucher, self).onchange_partner_id(
+        res = super(AccountVoucher, self).onchange_partner_id(
             cr, uid, ids, partner_id, journal_id, amount, currency_id,
             ttype, date, context=context)
         res_compute = self.onchange_compute_tax(
@@ -81,7 +81,7 @@ class account_voucher(osv.Model):
     def onchange_journal(self, cr, uid, ids, journal_id, line_ids, tax_id,
                          partner_id, date, amount, ttype, company_id,
                          context=None):
-        res = super(account_voucher, self).onchange_journal(
+        res = super(AccountVoucher, self).onchange_journal(
             cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date,
             amount, ttype, company_id, context=context)
         res_compute = self.onchange_compute_tax(
@@ -172,9 +172,12 @@ class account_voucher(osv.Model):
                     if current_currency != line.currency_id.id:
                         statement_currency_line = line.currency_id.id
 
-                    if current_currency != company_currency or statement_currency_line:
+                    if (current_currency != company_currency
+                            or statement_currency_line):
                         amount_tax_currency += cur_obj.compute(
-                            cr, uid, statement_currency_line or current_currency, company_currency,
+                            cr, uid,
+                            statement_currency_line or current_currency,
+                            company_currency,
                             reference_amount, context=context)
                     else:
                         amount_tax_currency += reference_amount
@@ -318,6 +321,11 @@ class account_voucher(osv.Model):
             cr, uid, line_tax, amount_base_tax * factor, reference_amount,
             context=context)
 
+        amount_tax_sec = 0
+        if tax_secondary:
+            amount_tax_sec = self.pool.get('account.tax').browse(
+                cr, uid, tax_secondary, context=context).amount
+
         debit_line_vals = {
             'name': line_tax.name,
             'quantity': 1,
@@ -403,9 +411,10 @@ class account_voucher(osv.Model):
             debit_line_vals['debit'] = cur_obj.round(
                 cr, uid, src_acct.company_id.currency_id,
                 reference_amount/context.get('st_line_currency_rate'))
-            debit_line_vals['amount_base'] = cur_obj.round(
-                cr, uid, src_acct.company_id.currency_id,
-                abs(amount_base)/context.get('st_line_currency_rate'))
+            if amount_tax_sec:
+                debit_line_vals['amount_base'] = cur_obj.round(
+                    cr, uid, src_acct.company_id.currency_id,
+                    abs(amount_base)/context.get('st_line_currency_rate'))
         else:
             if reference_currency_id != src_main_currency_id:
                 # fix credit line:
@@ -418,9 +427,10 @@ class account_voucher(osv.Model):
                 debit_line_vals['debit'] = cur_obj.compute(
                     cr, uid, reference_currency_id, dest_main_currency_id,
                     reference_amount, context=context)
-                debit_line_vals['amount_base'] = cur_obj.compute(
-                    cr, uid, reference_currency_id, dest_main_currency_id,
-                    abs(amount_base), context=context)
+                if amount_tax_sec:
+                    debit_line_vals['amount_base'] = cur_obj.compute(
+                        cr, uid, reference_currency_id, dest_main_currency_id,
+                        abs(amount_base), context=context)
 
         if reference_currency_id != company_currency:
             debit_line_vals.update(
@@ -452,7 +462,7 @@ class account_voucher(osv.Model):
         return [amount_base, tax_secondary]
 
     def action_move_line_create(self, cr, uid, ids, context=None):
-        res = super(account_voucher, self).action_move_line_create(
+        res = super(AccountVoucher, self).action_move_line_create(
             cr, uid, ids, context=context)
         for acc_voucher in self.browse(cr, uid, ids, context=context):
             self.voucher_move_line_tax_create(
@@ -534,7 +544,7 @@ class account_voucher(osv.Model):
         return amount_retention_tax
 
 
-class account_voucher_line(osv.Model):
+class AccountVoucherLine(osv.Model):
     _inherit = 'account.voucher.line'
 
     def onchange_amount(self, cr, uid, ids, amount=False,
@@ -549,7 +559,7 @@ class account_voucher_line(osv.Model):
         absl_obj = self.pool.get('account.bank.statement.line')
         factor = voucher_obj.get_percent_pay_vs_invoice(
             cr, uid, amount_original, amount, context=context)
-        res = super(account_voucher_line, self).onchange_amount(
+        res = super(AccountVoucherLine, self).onchange_amount(
             cr, uid, ids, amount, amount_unreconciled)
         if not voucher_id and not move_line_id and not amount_original:
             return res
@@ -601,7 +611,7 @@ class account_voucher_line(osv.Model):
     }
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
 
     def _get_round(self, cr, uid, ids, context=None):
@@ -678,7 +688,7 @@ class account_move_line(osv.Model):
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False,
                   writeoff_period_id=False, writeoff_journal_id=False,
                   context=None):
-        res = super(account_move_line, self).reconcile(
+        res = super(AccountMoveLine, self).reconcile(
             cr, uid, ids=ids, type='auto', writeoff_acc_id=writeoff_acc_id,
             writeoff_period_id=writeoff_period_id,
             writeoff_journal_id=writeoff_journal_id, context=context)
@@ -694,7 +704,7 @@ class account_move_line(osv.Model):
     }
 
 
-class account_voucher_line_tax(osv.Model):
+class AccountVoucherLineTax(osv.Model):
     _name = 'account.voucher.line.tax'
 
     def _compute_balance(self, cr, uid, ids, name, args, context=None):

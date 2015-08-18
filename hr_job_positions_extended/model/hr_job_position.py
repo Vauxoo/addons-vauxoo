@@ -38,7 +38,7 @@ LEVEL_JOB = [
 ]
 
 
-class hr_job(osv.Model):
+class HrJob(osv.Model):
 
     _inherit = "hr.job"
 

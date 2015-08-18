@@ -21,13 +21,9 @@
 ###############################################################################
 {
     "name": "Send Email Author",
-    "version": "1.1",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Addons Vauxoo",
-    "description": """
-This module added one field in view of partner to allow you receive your own
-message sent to others
-    """,
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [

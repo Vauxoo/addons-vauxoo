@@ -110,7 +110,7 @@ WHERE
 '''
 
 
-class stock_accrual_wizard_line(osv.osv_memory):
+class StockAccrualWizardLine(osv.osv_memory):
     _name = 'stock.accrual.wizard.line'
     _columns = {
         'wzd_id': fields.many2one(
@@ -151,7 +151,7 @@ class stock_accrual_wizard_line(osv.osv_memory):
     }
 
 
-class stock_accrual_wizard(osv.osv_memory):
+class StockAccrualWizard(osv.osv_memory):
     _name = 'stock.accrual.wizard'
     _rec_name = 'type'
 

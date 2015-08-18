@@ -28,7 +28,7 @@
 from openerp.osv import osv
 
 
-class purchase_order(osv.Model):
+class PurchaseOrder(osv.Model):
     _inherit = "purchase.order"
 
     def wkf_confirm_order(self, cr, uid, ids, context=None):
@@ -36,7 +36,7 @@ class purchase_order(osv.Model):
         company_id = self.pool.get(
             'res.users').browse(cr, uid, uid).company_id.id
         product_obj = self.pool.get('product.template')
-        if super(purchase_order, self).wkf_confirm_order(cr, uid, ids,
+        if super(PurchaseOrder, self).wkf_confirm_order(cr, uid, ids,
                                                          context=context):
             for po in self.browse(cr, uid, ids, context=context):
                 partner_id = po.partner_id.id

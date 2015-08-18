@@ -21,6 +21,7 @@
 
 from openerp import models, fields
 
+
 class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 

@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class mail_message(osv.Model):
+class MailMessage(osv.Model):
     _inherit = 'mail.message'
 
     def _comment_bought(self, cr, uid, ids, name, arg, context=None):

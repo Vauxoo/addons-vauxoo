@@ -27,19 +27,9 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Stock Location Code",
-    "version": "1.1",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
-    "description": """
-Stock Location Code
-===================
-
-Add the code field to the location model. The location code is unique per
-company and will fo with the location name always. This way when searching a
-a location you can search it by name or code. The location record will be
-show "[code] name" location in the many2one fields (This emule the product
-model of product module).
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

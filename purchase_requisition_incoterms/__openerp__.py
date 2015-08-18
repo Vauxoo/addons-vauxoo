@@ -26,17 +26,10 @@
 
 {
     'name': 'Purchase Requisition Incoterms',
-    'version': '1.0',
+    'version': '1.6',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
-    'description': '''
-Purchase Requisition Incoterms
-==============================
-
-Add the delivery field to the purchase.requisition model, this to make a
-relationship with the stock.incotermns model.
-''',
     'depends': [
         'purchase_requisition',
         'stock',

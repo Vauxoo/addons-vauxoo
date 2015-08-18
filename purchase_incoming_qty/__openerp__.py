@@ -26,7 +26,7 @@
 {
     "name": "Purchase Incoming Quantity",
     "summary": "Differentiate the Purchase Virtual Incoming Inventory",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "category": "Inventory Control",

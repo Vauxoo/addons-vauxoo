@@ -26,7 +26,7 @@
 {
     "name": "Unit of Measure Security",
     'summary': "Split Unit of measure usability for Sales/Purchases/Warehouse",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "category": "Security",

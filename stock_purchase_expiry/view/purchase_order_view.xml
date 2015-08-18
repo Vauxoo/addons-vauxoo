@@ -22,7 +22,7 @@
                     <field name="date_contract_expiry"/>
                 </xpath>
                 <xpath expr="//group" position="inside">
-                    <filter string="Contract Expiry Date" icon="terp-go-month" context="{'group_by':'date_contract_expiry'}"/>
+                    <filter string="Contract Due Date" icon="terp-go-month" context="{'group_by':'date_contract_expiry'}"/>
                 </xpath>
             </field>
         </record>

@@ -31,21 +31,21 @@ PURCHASE_ORDER_TYPE = [
 ]
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
     _columns = {
         'responsible_id': fields.many2one('res.users', 'Responsible'),
     }
 
 
-class stock_picking_in(osv.Model):
+class StockPickingIn(osv.Model):
     _inherit = 'stock.picking.in'
     _columns = {
         'responsible_id': fields.many2one('res.users', 'Responsible'),
     }
 
 
-class stock_picking_out(osv.Model):
+class StockPickingOut(osv.Model):
     _inherit = 'stock.picking.out'
     _columns = {
         'responsible_id': fields.many2one('res.users', 'Responsible'),

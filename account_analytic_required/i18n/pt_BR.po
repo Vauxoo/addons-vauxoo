@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:14+0000\n"
-"PO-Revision-Date: 2014-01-11 14:22+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Last-Translator: \n"
+"Language: pt_BR\n"
 
 #. module: account_analytic_required
 #: model:ir.model,name:account_analytic_required.model_account_account
@@ -25,8 +26,8 @@ msgstr ""
 #. module: account_analytic_required
 #: view:account.invoice:0
 msgid ""
-"onchange_account_id(product_id, parent.partner_id, parent.type, "
-"parent.fiscal_position, account_id)"
+"onchange_account_id(product_id, parent.partner_id, parent.type, parent."
+"fiscal_position, account_id)"
 msgstr ""
 
 #. module: account_analytic_required

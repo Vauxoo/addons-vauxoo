@@ -3,7 +3,7 @@
 from openerp import fields, models, api
 
 
-class sprint_kanban(models.Model):
+class SprintKanban(models.Model):
 
     _inherit = 'sprint.kanban'
 
@@ -15,7 +15,7 @@ class sprint_kanban(models.Model):
                                       'to this sprint')
 
 
-class user_story(models.Model):
+class UserStory(models.Model):
 
     _inherit = 'user.story'
 
@@ -46,7 +46,7 @@ class user_story(models.Model):
 
 
 
-class acceptability_criteria(models.Model):
+class AcceptabilityCriteria(models.Model):
 
     _inherit = 'acceptability.criteria'
 
@@ -55,7 +55,7 @@ class acceptability_criteria(models.Model):
 
     @api.one
     def approve(self):
-        res = super(acceptability_criteria, self).approve()
+        res = super(AcceptabilityCriteria, self).approve()
         if self.accep_crit_id.sk_id:
             self.sprint_id = self.accep_crit_id.sk_id.id
         return res

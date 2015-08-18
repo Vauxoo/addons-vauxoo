@@ -1,12 +1,9 @@
 # -*- enconding: utf-8 -*-
 {
     "name": "Sprint Kanban",
-    "version": "1.1",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Project",
-    "description": """
-\tThis is a module of the sprint kanban
-\t""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [

@@ -19,13 +19,10 @@
 #
 ##############################################################################
 {
-    "name": "Baremo Para calculo de Comisiones",
-    "version": "0.1",
+    "name": "Baremo for calculating commissions",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-    Crea un modelo para el calculo de comisiones.
-                    """,
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [

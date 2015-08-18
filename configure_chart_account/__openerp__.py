@@ -21,42 +21,25 @@
 ################################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Wizard of Configure Chart Accounting", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
-    "description": """
-Configure Chart Accounting:
-===========================
-
-Background:
------------
-
-El plan contable importado desde otras fuentes esta asignando cuentas de tipo
-regular cuando estas cuentas tienen hijas y deberian ser de tipo vista
-
-1.- Genera wizard que convierte cuentas de tipo regular a tipo vista, cuando las
-cuentas no tienen asignadas cuenta padre y estas tienen hijas
-
-2.- Puedes seleccionar varias cuentas de tipo vista y asignarles una cuenta
-padre que se selecciona en el mismo wizard
-
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Wizard to Configure Chart of Accounts (COA)",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "group_configurations_account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/set_accounting_wizard_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

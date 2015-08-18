@@ -25,25 +25,23 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Variation Cancel", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Account", 
-    "description": """ canceled entries of variaon of production
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Account Variation Cancel",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp_account_variation", 
+        "mrp_account_variation",
         "account_relation_move"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

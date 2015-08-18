@@ -28,7 +28,7 @@ Method to added field report_id in the journal
 from openerp.osv import fields, osv
 
 
-class invoice_report_per_journal(osv.Model):
+class InvoiceReportPerJournal(osv.Model):
 
     """
     invoice_report_per_journal

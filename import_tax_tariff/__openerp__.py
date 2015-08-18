@@ -23,16 +23,12 @@
 # ############################################################################
 {
     "name": "Import Tax and Tariff",
-    "version": "1.0",
+    "version": "1.6",
     "summary": "Import Tax and Tariff",
     "depends": [
         "account_accountant",
         "stock"],
     "author": "Vauxoo",
-    "description": """
-Import Tax and Tariff
-=====================
-    """,
     "website": "http://www.vauxoo.com/",
     "category": "Accounting",
     "data": [

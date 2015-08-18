@@ -23,13 +23,9 @@
 ###############################################################################
 {
     "name": "Account Anglo-Saxon Stock Move",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

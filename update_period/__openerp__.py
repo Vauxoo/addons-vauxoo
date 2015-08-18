@@ -23,27 +23,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name": "Update Period", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Tools", 
-    "description": """
-    Allow update period in account move and account move line.
-    """, 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+    "name": "Update Period",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Tools",
+    "website": "http://wiki.openerp.org.ve/",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

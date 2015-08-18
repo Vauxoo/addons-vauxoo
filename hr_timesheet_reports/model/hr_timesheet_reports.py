@@ -20,7 +20,7 @@ def clean_name(name):
     return text
 
 
-class hr_timesheet_reports_base(models.Model):
+class HrTimesheetReportsBase(models.Model):
 
     _name = "hr.timesheet.reports.base"
     _inherit = ['mail.thread']

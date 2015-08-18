@@ -23,30 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name": "Account Invoice Multicompany Report", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-        Adds a "Report" field on the Company model and a "Print Invoice" button on the customer invoices view which calls
-        a wizard to print an invoice on a MultiCompany enviroment
-                    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Account Invoice Multicompany Report",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/invoice_multicompany_report_view.xml", 
-        "wizard/account_invoice_multicompany.xml", 
+        "view/invoice_multicompany_report_view.xml",
+        "wizard/account_invoice_multicompany.xml",
         "view/invoice_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

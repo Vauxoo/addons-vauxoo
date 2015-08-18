@@ -26,27 +26,26 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name": "Icecat Product Uniqueness Checker", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Custom", 
-    "description": """Checks the uniqueness of a product loaded using the product_icecat module for every company""", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Icecat Product Uniqueness Checker",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Custom",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "product_icecat", 
+        "base",
+        "product_icecat",
         "product"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "product_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

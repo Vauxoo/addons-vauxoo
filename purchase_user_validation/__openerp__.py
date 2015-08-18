@@ -25,27 +25,24 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Purchase User Validator", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-        add fields that validate the user when approved purchase
-    """, 
-    "website": "", 
-    "license": "", 
+    "name": "Purchase User Validator",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "",
+    "license": "",
     "depends": [
         "purchase"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "purchase_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

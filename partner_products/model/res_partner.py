@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class res_partner(osv.Model):
+class ResPartner(osv.Model):
 
     _inherit = 'res.partner'
     _columns = {
@@ -44,5 +44,5 @@ class res_partner(osv.Model):
         context = context or {}
         default = default or {}
         default.update({'product_ids': []})
-        return super(res_partner, self).copy(
+        return super(ResPartner, self).copy(
             cur, uid, ids, default=default, context=context)

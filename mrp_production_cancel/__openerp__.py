@@ -25,30 +25,27 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "MRP Production Cancel", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-        Add Button Cancel in Order Production when Producton is done
-    """, 
-    "website": "", 
-    "license": "", 
+    "name": "MRP Production Cancel",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "",
+    "license": "",
     "depends": [
-        "mrp", 
+        "mrp",
         "stock_picking_cancel"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/production_cancel_security.xml", 
-        "mrp_view.xml", 
+        "security/production_cancel_security.xml",
+        "mrp_view.xml",
         "mrp_workflow.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

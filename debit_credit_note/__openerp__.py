@@ -29,35 +29,27 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Debit and Credit Notes on Invoice", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Accounting", 
-    "description": """
-This module add credit a debit notes on each invoices
-=====================================================
-This module add:
-- A new button on invoice to generate debit note
-- Parent_id field to set principal invoice from which the credit note
-
-""", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Debit and Credit Notes on Invoice",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/account_invoice_debit_view.xml", 
-        "wizard/account_invoice_parent_view.xml", 
+        "wizard/account_invoice_debit_view.xml",
+        "wizard/account_invoice_parent_view.xml",
         "account_invoice_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

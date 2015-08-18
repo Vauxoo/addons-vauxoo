@@ -27,7 +27,7 @@
 from openerp.osv import fields, osv
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
     """
     Extend the purchase.requisition  model to add a new field m2o to
     stock.incoterm model named 'delivery'.

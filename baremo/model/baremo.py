@@ -24,7 +24,7 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp import SUPERUSER_ID
 
 
-class baremo_book(osv.Model):
+class BaremoBook(osv.Model):
     _name = 'baremo.book'
 
     _columns = {
@@ -40,7 +40,7 @@ class baremo_book(osv.Model):
     }
 
 
-class baremo(osv.Model):
+class Baremo(osv.Model):
 
     """
     OpenERP Model : baremo
@@ -67,7 +67,7 @@ class baremo(osv.Model):
     }
 
 
-class baremo_discount(osv.Model):
+class BaremoDiscount(osv.Model):
 
     """
     OpenERP Model : baremo_discount
@@ -87,14 +87,14 @@ class baremo_discount(osv.Model):
     }
 
 
-class res_parter(osv.Model):
+class ResParter(osv.Model):
     _inherit = "res.partner"
     _columns = {
         'baremo_id': fields.many2one('baremo.book', 'Baremo', required=False),
     }
 
 
-class res_company(osv.Model):
+class ResCompany(osv.Model):
     _inherit = "res.company"
     _description = 'Companies'
 

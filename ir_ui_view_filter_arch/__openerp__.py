@@ -21,26 +21,24 @@
 ################################################################################
 #"license" : "AGPL-3",
 {
-    "name": "Add field arch in view search ir.ui.view model", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """This module Add Add field arch in view search ir.ui.view model
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Add field arch in view search ir.ui.view model",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "ir_ui_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

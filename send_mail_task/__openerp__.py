@@ -26,27 +26,24 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name": "Send mail when create a task", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Project", 
-    "description": """
-Modified the data created by project module to send a mail when a task is created
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Send mail when create a task",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Project",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "data/project_data.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

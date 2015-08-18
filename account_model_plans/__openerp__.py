@@ -25,18 +25,10 @@
 
 {
     'name': 'Account Model Plans',
-    'version': '1.0',
+    'version': '1.6',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
-    'description': '''
-Account Model Plans
-===================
-
-- adds analytics_id field (``account.analytic.plan.instance``) to the
-  ``account.model.line`` model.
-- show the new analytics_id field in the ``account.model`` form view.
-''',
     'depends': [
         'account',
         'account_analytic_plans',

@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class islr_wh_doc(osv.Model):
+class IslrWhDoc(osv.Model):
     _inherit = 'islr.wh.doc'
 
     _columns = {

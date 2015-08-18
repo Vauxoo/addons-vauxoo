@@ -23,29 +23,24 @@
 ################################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Agrega campo m2m al modelo account.invoice", 
-    "version": "0.2", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-        Este modulo agrega el campo m2m sale_ids en el modelo account.invoice
-        de tal manera que es facilmente obtenible la o las ordenes de compra
-        de la cual proviene la factura en cuestion.
-     """, 
-    "website": "http://openerp.netquatro.com", 
-    "license": "", 
+    "name": "Agrega campo m2m al modelo account.invoice",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://openerp.netquatro.com",
+    "license": "",
     "depends": [
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "invoice.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

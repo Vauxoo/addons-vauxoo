@@ -29,13 +29,9 @@
 ##############################################################################
 {
     "name": "Salespeople Commission based on Payments",
-    "version": "0.1",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
-    "description": """
-Salespeople Commission based on Payments
-========================================
-""",
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
@@ -66,5 +62,10 @@ Salespeople Commission based on Payments
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
+    "active": False,
+    "external_dependencies": {
+        "python": [
+            'pandas',
+        ]
+    }
 }

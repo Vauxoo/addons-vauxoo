@@ -28,7 +28,7 @@ from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
 
     def _get_product_committed_amount(self, cr, uid, ids, context=None):

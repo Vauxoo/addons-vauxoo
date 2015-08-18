@@ -22,32 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Workcenter Responsible", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "description": """
-MRP Workcenter Responsible
-==========================
-
-Add the feature of having a responsible for a work center and it's work
-orders associated.
-""", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "MRP Workcenter Responsible",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "mrp_operations", 
+        "mrp_operations",
         "hr"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/mrp_workcenter_responsible_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

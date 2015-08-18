@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
 
     _columns = {
@@ -39,13 +39,13 @@ class product_product(osv.Model):
         if not default:
             default = {}
         default['product_customer_code_ids'] = False
-        res = super(product_product, self).copy(
+        res = super(ProductProduct, self).copy(
             cr, uid, id, default=default, context=context)
         return res
 
     def name_search(self, cr, user, name='', args=None, operator='ilike',
                     context=None, limit=80):
-        res = super(product_product, self).name_search(
+        res = super(ProductProduct, self).name_search(
             cr, user, name, args, operator, context, limit)
         if not context:
             context = {}

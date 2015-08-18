@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class res_groups(osv.Model):
+class ResGroups(osv.Model):
     _inherit = 'res.groups'
 
     _columns = {

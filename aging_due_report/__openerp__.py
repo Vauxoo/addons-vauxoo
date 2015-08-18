@@ -23,17 +23,9 @@
 ###############################################################################
 {
     "name": "Customer's Due Report",
-    "version": "0.2",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
-    "description": """
-This module will allow you to get in Multicurrency:
-A Customer & Supplier Detail Due Report,
-A Customer & Supplier Aging Due Report,
-    Comming Soon:
-A Customer's Formal Due Report,
-A Supplier's Formal Due Report,
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
@@ -57,5 +49,10 @@ A Supplier's Formal Due Report,
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
+    "active": False,
+    "external_dependencies": {
+        "python": [
+            'pandas',
+        ]
+    }
 }

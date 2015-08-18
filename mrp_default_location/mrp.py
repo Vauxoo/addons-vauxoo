@@ -27,11 +27,11 @@
 from openerp.osv import osv
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def product_id_change(self, cr, uid, ids, product_id, context=None):
-        res = super(mrp_production, self).product_id_change(
+        res = super(MrpProduction, self).product_id_change(
             cr, uid, ids, product_id, context=context)
         if product_id:
             product = self.pool.get('product.product').browse(

@@ -27,7 +27,7 @@ from openerp import fields, models, api
 from openerp.tools.translate import _
 
 
-class res_partner(models.Model):
+class ResPartner(models.Model):
 
     _inherit = 'res.partner'
 

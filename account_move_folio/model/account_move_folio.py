@@ -2,7 +2,7 @@
 from openerp.osv import fields, osv
 
 
-class account_move_folio(osv.Model):
+class AccountMoveFolio(osv.Model):
     _name = 'account.move.folio'
     _order = 'company_id, journal_id, name'
     _description = "Records of Folios in Journal Entries"
@@ -26,7 +26,7 @@ class account_move_folio(osv.Model):
     }
 
 
-class account_move(osv.Model):
+class AccountMove(osv.Model):
     _inherit = 'account.move'
 
     _columns = {
@@ -55,7 +55,7 @@ class account_move(osv.Model):
         default.update({
             'folio_id': False
         })
-        return super(account_move, self).copy(cr, uid, id, default=default, context=context)
+        return super(AccountMove, self).copy(cr, uid, id, default=default, context=context)
 
     def foliate(self, cr, uid, ids, context=None):
         context = context or {}
@@ -88,6 +88,6 @@ class account_move(osv.Model):
 
     def post(self, cr, uid, ids, context=None):
         context = context or {}
-        super(account_move, self).post(cr, uid, ids, context=context)
+        super(AccountMove, self).post(cr, uid, ids, context=context)
         self.foliate(cr, uid, ids, context=context)
         return True

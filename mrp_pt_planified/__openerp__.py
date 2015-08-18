@@ -25,28 +25,26 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "MRP Products Planified", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/MRP", 
-    "description": """ Add o2m to products produced
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Products Planified",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/MRP",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "mrp_view.xml", 
-        "security/mrp_security.xml", 
+        "mrp_view.xml",
+        "security/mrp_security.xml",
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -21,25 +21,22 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Move Nonzero", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Localization", 
-    "description": """
-    Check that the entry balance is greater than zero
- """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Account Move Nonzero",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Localization",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

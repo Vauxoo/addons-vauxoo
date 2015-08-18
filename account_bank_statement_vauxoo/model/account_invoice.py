@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
 
     """
     account_invoice

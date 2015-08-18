@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class project_task(osv.Model):
+class ProjectTask(osv.Model):
     _inherit = 'project.task'
 
     _columns = {

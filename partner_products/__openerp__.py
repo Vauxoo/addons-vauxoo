@@ -22,31 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Supplier Products", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-Supplier Products
-=================
-
-The supplier can manage a list of products to offer.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Supplier Products",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "product"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/res_partner_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

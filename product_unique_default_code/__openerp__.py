@@ -26,20 +26,15 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Product Default Code Unique",
-    "version": "1.1",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-        Add Constraint for the default_code and change function copy
-    """,
     "website": "",
     "license": "",
     "depends": [
         "product"
     ],
-    "demo": [
-        'demo/test_unique_ref_demo.xml',
-    ],
+    "demo": [],
     "data": [],
     "test": [],
     "js": [],

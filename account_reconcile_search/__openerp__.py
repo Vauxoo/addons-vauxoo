@@ -20,29 +20,24 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Reconcile Search", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Account", 
-    "description": """
-Account Reconcile Search
-========================
-This module allows the feature to group by reconcile ref field
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Account Reconcile Search",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Account",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_reconcile_search.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

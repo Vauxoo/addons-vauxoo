@@ -26,7 +26,7 @@
 {
     "name": "Product Properties by Category",
     "summary": "Set Product Default Properties from the Product Category",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "category": "Product",

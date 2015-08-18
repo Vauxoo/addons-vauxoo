@@ -35,7 +35,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class invoice_report_per_journal(osv.TransientModel):
+class InvoiceReportPerJournal(osv.TransientModel):
 
     """
     OpenERP Wizard: invoice.report.per.journal
@@ -112,7 +112,7 @@ class invoice_report_per_journal(osv.TransientModel):
             try:
                 (result, _) = self._prepare_service(cr, uid, report,
                                                     context=context)
-            except BaseException, e:
+            except BaseException:
                 if report:
                     _logger.warning("Error occurred in the report, the "
                                     "report set to the journal will be "

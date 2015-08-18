@@ -20,15 +20,12 @@
 #######################################################################
 {
     "name": "Product extension to track sales and purchases from variants",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Technical",
     'website': 'https://www.vauxoo.com',
     "depends": ['product'],
     "category": "Generic Modules/Inventory Control",
-    "description": """
-
-""",
     "data": [
         'view/product_view.xml',
     ],

@@ -26,30 +26,27 @@
 ##############################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "mrp account analytics", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "analytic production", 
-    "description": """
-        Added field for account analitic
-    """, 
-    "website": "", 
-    "license": "", 
+    "name": "mrp account analytics",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "analytic production",
+    "website": "",
+    "license": "",
     "depends": [
-        "stock", 
-        "account", 
+        "stock",
+        "account",
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "stock_view.xml", 
+        "stock_view.xml",
         "mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

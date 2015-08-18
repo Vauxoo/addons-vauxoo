@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class purchase_order(osv.Model):
+class PurchaseOrder(osv.Model):
 
     _inherit = 'purchase.order'
     _columns = {
@@ -41,7 +41,7 @@ class purchase_order(osv.Model):
         'purchaser_id': lambda s, c, u, ctx: u,
             }
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
 
     _inherit = 'purchase.requisition'
 
@@ -49,7 +49,7 @@ class purchase_requisition(osv.Model):
                             context=None):
         if context is None:
             context = {}
-        res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
+        res = super(PurchaseRequisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
 
         po_obj = self.pool.get('purchase.order')
         for requisition in self.browse(cr, uid, ids, context=context):

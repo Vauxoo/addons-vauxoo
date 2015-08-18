@@ -1,20 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_vauxoo
+# 	* account_bank_statement_vauxoo
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 01:13+0000\n"
-"PO-Revision-Date: 2013-11-07 03:28+0000\n"
-"Last-Translator: Jose Antonio <jose@vauxoo.com>\n"
+"POT-Creation-Date: 2015-08-03 15:38+0200\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:153
@@ -25,20 +26,25 @@ msgid ""
 msgstr ""
 
 #. module: account_bank_statement_vauxoo
-#: view:account.invoice:0
-#: view:bank.statement.imported.lines:0
+#: view:account.invoice:0 view:bank.statement.imported.lines:0
 #: model:ir.ui.menu,name:account_bank_statement_vauxoo.menu_bank_imported_statement_line
+#, fuzzy
 msgid "Bank Statements Lines"
-msgstr ""
+msgstr "Lineas de Extracto Bancario"
 
 #. module: account_bank_statement_vauxoo
 #: constraint:account.journal.bs.config:0
+#, fuzzy
 msgid ""
 "Error: La expresion no es lista\n"
 "        debe quedar algo así:\n"
 "        [\"cadenaA\",\"cadenaB\",\"CadenaC\"]\n"
 "        o es inválida"
 msgstr ""
+"Error: La expresion no es lista\n"
+"        debe quedar algo así:\n"
+"        [\"cadenaA\",\"cadenaB\",\"CadenaC\"]\n"
+"        o es inválida"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:242
@@ -69,65 +75,79 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: field:account.move.line,stff_id:0
+#, fuzzy
 msgid "Statement from File line"
-msgstr ""
+msgstr "Extracto desde una linea del archivo"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.bank.statement,bs_line_ids:0
+#, fuzzy
 msgid "Statement"
-msgstr ""
+msgstr "Extracto"
 
 #. module: account_bank_statement_vauxoo
 #: help:account.invoice,bank_statement_line_ids:0
 #: help:bank.statement.imported.lines,invoice_ids:0
+#, fuzzy
 msgid "Invoices to be reconciled with this line"
-msgstr ""
+msgstr "Facturas a ser conciliadas con esta linea"
 
 #. module: account_bank_statement_vauxoo
 #: help:bank.statement.imported.lines,invo_move_line:0
+#, fuzzy
 msgid "Chek if invoice and account move line exist"
-msgstr ""
+msgstr "Verifique si la factura y el apunte contable existe"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,company_id:0
+#, fuzzy
 msgid "Company"
-msgstr ""
+msgstr "Compañia"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:332
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Account Move Temporary For this Statement                                    "
-" Id Was Created is created %s "
+"Account Move Temporary For this "
+"Statement                                     Id Was Created is created %s "
 msgstr ""
+"Asiento contable temportal para este "
+"extracto                                    El id generado es %s "
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal,moveper_line:0
+#, fuzzy
 msgid "One Move per Line"
-msgstr ""
+msgstr "Un movimiento por linea"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Validate"
-msgstr ""
+msgstr "Validar"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid ""
 "Create Temporary Account Move with lines exactly as bank Statement FIrst "
 "Iteration."
 msgstr ""
+"Creado temporalmente un asiento contable con las lineas exactas de la "
+"primera iteración del extrato bancario."
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Total Credit"
-msgstr ""
+msgstr "Crédito Total"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal.bs.config,account_id:0
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Account"
-msgstr ""
+msgstr "Cuenta"
 
 #. module: account_bank_statement_vauxoo
 #: help:account.bank.statement,move:0
@@ -138,23 +158,27 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Total Debit"
-msgstr ""
+msgstr "Debito Total"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Change account"
-msgstr ""
+msgstr "Cambio de cuenta"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,credit:0
+#, fuzzy
 msgid "Credit"
-msgstr ""
+msgstr "Credit"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid "Create Account Move From File"
-msgstr ""
+msgstr "Crear asientos contables desde un archivo"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:153
@@ -164,20 +188,22 @@ msgstr ""
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:344
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:365
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:471
-#, python-format
+#, fuzzy, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Cuidado"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal.bs.config,partner_id:0
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid "Delete all lines Imported"
-msgstr ""
+msgstr "Eliminar todas las lineas importadas"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:366
@@ -189,58 +215,72 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal.bs.config,sequence:0
+#, fuzzy
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,state:0
+#, fuzzy
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,debit:0
+#, fuzzy
 msgid "Debit"
-msgstr ""
+msgstr "Debito"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid ""
 "Set date from file, with this button we will read the file and set date and "
 "period to be right with the file information"
 msgstr ""
+"Establezca la fecha de archivo, con este botón vamos a leer el archivo y "
+"elija la fecha y el período para estar bien con la información del archivo"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid ""
 "Import from First attached document with xls name, and structure documented."
 msgstr ""
+"Importar desde un archivo XLS adjunto con formato xls y estructura "
+"documentada."
 
 #. module: account_bank_statement_vauxoo
 #: field:account.bank.statement,fname:0
+#, fuzzy
 msgid "File Name Imported"
-msgstr ""
+msgstr "Nombre del archivo importado"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.invoice,bank_statement_line_ids:0
 #: view:bank.statement.imported.lines:0
 #: field:bank.statement.imported.lines,invoice_ids:0
+#, fuzzy
 msgid "Invoices"
-msgstr ""
+msgstr "Facturas"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.invoice:0
+#, fuzzy
 msgid "Reconcile Bank Statements Line"
-msgstr ""
+msgstr "Reconciliar linea del extracto bancario"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.bank.statement,from_to_file:0
+#, fuzzy
 msgid "Date Range on file"
-msgstr ""
+msgstr "Rango de fecha en el archivo"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.bank.statement,lines_toreview:0
+#, fuzzy
 msgid "Lines to Review"
-msgstr ""
+msgstr "Lineas a revisar"
 
 #. module: account_bank_statement_vauxoo
 #: help:account.bank.statement,fname:0
@@ -252,28 +292,33 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal,default_income_account_id:0
+#, fuzzy
 msgid "Extra Income Account"
-msgstr ""
+msgstr "Cuentas de ingresos extras"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.journal:0
+#, fuzzy
 msgid "Concept"
-msgstr ""
+msgstr "Conecpto"
 
 #. module: account_bank_statement_vauxoo
 #: model:res.groups,name:account_bank_statement_vauxoo.group_bank_statement_import_user
+#, fuzzy
 msgid "Import Bank Statement / User"
-msgstr ""
+msgstr "Importar Extracto Bancario / User"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Temporal Move Line"
-msgstr ""
+msgstr "Linea de movimiento temporal"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid "To Review"
-msgstr ""
+msgstr "Para revisar"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:250
@@ -286,37 +331,43 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,acc_move_line_ids:0
+#, fuzzy
 msgid "unknown"
-msgstr ""
+msgstr "unknown"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:345
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "I found quatity of attachments <> 1 !             Please Attach JUST One XLS "
 "file to this bank statement."
 msgstr ""
+"Se ha encontrado mas de un archivo adjunto!             Por favor adjunto "
+"solo un archivo XLS para este extracto bancario."
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:334
-#, python-format
+#, fuzzy, python-format
 msgid "Account Move Temporary is created %s "
-msgstr ""
+msgstr "Temporal asiento contable creado %s "
 
 #. module: account_bank_statement_vauxoo
 #: selection:bank.statement.imported.lines,state:0
+#, fuzzy
 msgid "Draft"
-msgstr ""
+msgstr "Borrador"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Move line from Bank."
-msgstr ""
+msgstr "Linea del movimiento desde el banco"
 
 #. module: account_bank_statement_vauxoo
 #: help:account.bank.statement,lines_toreview:0
+#, fuzzy
 msgid "Quantity of lines to verify from file."
-msgstr ""
+msgstr "Cantidad de lineas a ser verificadas desde el archivo"
 
 #. module: account_bank_statement_vauxoo
 #: help:bank.statement.imported.lines,counterpart_id:0
@@ -327,64 +378,78 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid "Bank Imported Lines"
-msgstr ""
+msgstr "Lineas del banco importadas"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal.bs.config,expresion:0
+#, fuzzy
 msgid "Text To be Compared"
-msgstr ""
+msgstr "Texto a ser comparado"
 
 #. module: account_bank_statement_vauxoo
 #: model:ir.model,name:account_bank_statement_vauxoo.model_account_move_line
+#, fuzzy
 msgid "Journal Items"
-msgstr ""
+msgstr "Apuntes contables"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.journal:0
+#, fuzzy
 msgid "Concepts to automate Import Banks Statements in this journal"
 msgstr ""
+"Conceptos para automatizar bancos de importación declaraciones en esta "
+"revista"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid "Delete Imported From Attachment"
-msgstr ""
+msgstr "Eliminar datos Importados desde el archivo Adjunto"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal,default_expense_account_id:0
+#, fuzzy
 msgid "Expense Account"
-msgstr ""
+msgstr "Cuenta de gasto"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,numdocument:0
+#, fuzzy
 msgid "Num Document"
-msgstr ""
+msgstr "Num Documento"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
 #: field:bank.statement.imported.lines,date:0
+#, fuzzy
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,move_id:0
+#, fuzzy
 msgid "Account Move"
-msgstr ""
+msgstr "Asiento Contable"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "N Document"
-msgstr ""
+msgstr "N Documento"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid "Set date From File"
-msgstr ""
+msgstr "Establecer fecha desde archivo"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,counterpart_id:0
+#, fuzzy
 msgid "Account Counterpart"
-msgstr ""
+msgstr "Cuenta contrapartida"
 
 #. module: account_bank_statement_vauxoo
 #: help:account.bank.statement,from_to_file:0
@@ -395,18 +460,21 @@ msgstr ""
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
 #: field:bank.statement.imported.lines,office:0
+#, fuzzy
 msgid "Office"
-msgstr ""
+msgstr "Office"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,aml_ids:0
+#, fuzzy
 msgid "Account Move Lines"
-msgstr ""
+msgstr "Apunte contable"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.invoice:0
+#, fuzzy
 msgid "Unreconcile Bank Statements Line"
-msgstr ""
+msgstr "Unreconcile Bank Statements Line"
 
 #. module: account_bank_statement_vauxoo
 #: help:bank.statement.imported.lines,state:0
@@ -417,39 +485,46 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: model:ir.model,name:account_bank_statement_vauxoo.model_bank_statement_imported_lines
+#, fuzzy
 msgid "Imported lines for banks files"
-msgstr ""
+msgstr "Importadas lineas por lineas de bancos"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,bank_statement_id:0
 #: model:ir.model,name:account_bank_statement_vauxoo.model_account_bank_statement
+#, fuzzy
 msgid "Bank Statement"
-msgstr ""
+msgstr "Extracto Bancario"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal,concept_ids:0
+#, fuzzy
 msgid "Concept Lines"
-msgstr ""
+msgstr "Lineas conceptuales"
 
 #. module: account_bank_statement_vauxoo
 #: selection:bank.statement.imported.lines,state:0
+#, fuzzy
 msgid "Done"
-msgstr ""
+msgstr "Listo"
 
 #. module: account_bank_statement_vauxoo
 #: model:ir.model,name:account_bank_statement_vauxoo.model_account_invoice
+#, fuzzy
 msgid "Invoice"
-msgstr ""
+msgstr "Factura"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel"
 
 #. module: account_bank_statement_vauxoo
 #: model:ir.model,name:account_bank_statement_vauxoo.model_account_journal_bs_config
+#, fuzzy
 msgid "account.journal.bs.config"
-msgstr ""
+msgstr "account.journal.bs.config"
 
 #. module: account_bank_statement_vauxoo
 #: help:bank.statement.imported.lines,partnercounterpart_id:0
@@ -464,8 +539,9 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Account Move Line"
-msgstr ""
+msgstr "Apunte contable"
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:471
@@ -477,13 +553,15 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal,default_interim_account_id:0
+#, fuzzy
 msgid "Interim Account"
-msgstr ""
+msgstr "Cuenta Provisional"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Invoices to be reconciled"
-msgstr ""
+msgstr "Facturas a ser reconciliadas"
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
@@ -492,8 +570,9 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: view:account.bank.statement:0
+#, fuzzy
 msgid "Import From Attachment"
-msgstr ""
+msgstr "Importar desde archivo adjunto"
 
 #. module: account_bank_statement_vauxoo
 #: help:account.journal,default_interim_account_id:0
@@ -508,14 +587,16 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,name:0
+#, fuzzy
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal.bs.config,bsl_id:0
 #: model:ir.model,name:account_bank_statement_vauxoo.model_account_journal
+#, fuzzy
 msgid "Journal"
-msgstr ""
+msgstr "Diario"
 
 #. module: account_bank_statement_vauxoo
 #: help:account.journal,default_income_account_id:0
@@ -527,8 +608,9 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: field:account.bank.statement,move:0
+#, fuzzy
 msgid "Move Temp to conciliate"
-msgstr ""
+msgstr "Movimiento temporal para conciliar."
 
 #. module: account_bank_statement_vauxoo
 #: code:addons/account_bank_statement_vauxoo/model/account_bank_statement.py:220
@@ -541,35 +623,42 @@ msgstr ""
 
 #. module: account_bank_statement_vauxoo
 #: view:bank.statement.imported.lines:0
+#, fuzzy
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.journal:0
+#, fuzzy
 msgid "Concepts"
-msgstr ""
+msgstr "Conceptos"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,partnercounterpart_id:0
+#, fuzzy
 msgid "Partner Counterpart"
-msgstr ""
+msgstr "Partner contrapartida"
 
 #. module: account_bank_statement_vauxoo
 #: field:account.journal.bs.config,name:0
+#, fuzzy
 msgid "Cancept Label"
-msgstr ""
+msgstr "Cancept Label"
 
 #. module: account_bank_statement_vauxoo
 #: model:res.groups,name:account_bank_statement_vauxoo.group_bank_statement_import_manager
+#, fuzzy
 msgid "Import Bank Statement / Manager"
-msgstr ""
+msgstr "Import Bank Statement / Manager"
 
 #. module: account_bank_statement_vauxoo
 #: view:account.journal:0
+#, fuzzy
 msgid "Concepts for Banks Statements"
-msgstr ""
+msgstr "Concepts for Banks Statements"
 
 #. module: account_bank_statement_vauxoo
 #: field:bank.statement.imported.lines,invo_move_line:0
+#, fuzzy
 msgid "Chek"
-msgstr ""
+msgstr "Chek"
