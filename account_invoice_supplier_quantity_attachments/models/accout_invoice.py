@@ -38,8 +38,8 @@ class AccountInvoice(models.Model):
             SELECT distinct (res_id)
             FROM ir_attachment
             WHERE res_id IN (
-                SELECT res_id FROM
-                ir_attachment
+                SELECT res_id FROM ir_attachment
+                WHERE res_model = 'account.invoice'
                 GROUP BY res_id HAVING Count(*)%s %s)''' % (operator, value)
             self.env.cr.execute(query)
             for inv in self.env.cr.fetchall():
