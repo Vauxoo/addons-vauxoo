@@ -16,12 +16,22 @@
                   </div>
 				</xpath>
 				<xpath expr="//div[@class='row']/div[2]" position="before">
-                  <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
+                  <div t-attf-class="form-group #{error.get('is_company') and 'has-error' or ''} col-lg-3">
                       <label class="control-label mt32">
-                      <input type="checkbox" name="is_company" class="" t-att-checked="'checked' if checkout.get('is_company') == True else ''"/> Is Company
+                      <input class="partner_type" value="company" type="radio" name="is_company" id="partner_type_c" t-att-checked="'checked' if checkout.get('is_company') == True else ''"/> Company
+                  </label>
+                  </div>
+                  <div t-attf-class="form-group #{error.get('is_particular') and 'has-error' or ''} col-lg-3">
+                      <label class="control-label mt32">
+                      <input class="partner_type" value="particular" type="radio" name="is_company" id="partner_type_p" t-att-checked="'checked' if checkout.get('is_particular') == True else ''"/> Particular
                   </label>
                   </div>
 				</xpath>
+
+                <!-- Extra options for inherited fields -->
+                <xpath expr="//option[@t-att-value='country.id']" position="attributes">
+                    <attribute name="data-code"><t t-esc="country.code"/></attribute>
+                </xpath>
 
 				<!-- Field validations, renders a small badge on the right side of the label -->
 				<xpath expr="//label[@for='contact_name']" position="after">

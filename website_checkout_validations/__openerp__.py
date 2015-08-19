@@ -11,6 +11,7 @@
     ],
     "demo": [],
     "data": [
+        'views/assets.xml',
         'views/sale_order_view.xml',
         'views/templates.xml',
     ],
