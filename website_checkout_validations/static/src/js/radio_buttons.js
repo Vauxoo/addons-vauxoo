@@ -21,12 +21,21 @@
     },
 
     build: function(debug){
-       console.log("enters");
+       if ($("#partner_type_p").is(':checked'))
+        {
+          $("div[id=company]").hide();
+        }
        $(".partner_type").click(function(){
-
          var selectedBox = this.id;
-         console.log(this.id);
-         console.log(selectedBox);
+         if (this.value == 'particular')
+         {
+          $("div[id=company]").hide();
+         }
+         else
+         {
+          $("div[id=company]").show();
+         }
+
        });
 
     },
