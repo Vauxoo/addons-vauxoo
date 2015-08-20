@@ -32,10 +32,22 @@ class ConvertNoteTask(osv.TransientModel):
     _name = 'convert.note.task'
 
     _columns = {
-        'estimated_time': fields.float('Estimated Time', help="""Estimated Time to Complete the
-                Task""", required=True),
-        'project_id': fields.many2one('project.project', 'Project', help='Project Linked', required=True),
-        'date_deadline': fields.date('Deadline', help='Date to complete the Task', required=True),
+        'estimated_time': fields.float(
+            'Estimated Time',
+            help="""Estimated Time to Complete the Task""",
+            required=True
+        ),
+        'project_id': fields.many2one(
+            'project.project',
+            'Project',
+            help='Project Linked',
+            required=True
+        ),
+        'date_deadline': fields.date(
+            'Deadline',
+            help='Date to complete the Task',
+            required=True
+        ),
     }
 
     def create_task(self, cr, uid, ids, context=None):
@@ -44,7 +56,12 @@ class ConvertNoteTask(osv.TransientModel):
         cvt_brw = self.browse(cr, uid, ids, context=context)
         task_obj = self.pool.get('project.task')
         note_obj = self.pool.get('note.note')
-        note_brw = note_obj.browse(cr, uid, [context.get('active_id')], context=context)
+        note_brw = note_obj.browse(
+            cr,
+            uid,
+            [context.get('active_id')],
+            context=context
+        )
         task_id = task_obj.create(cr, uid, {
             'name': note_brw[0].name,
             'description': note_brw[0].memo,
