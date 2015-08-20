@@ -3,10 +3,11 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-################# Credits######################################################
-#    Coded by: Luis Escobar <luis@vauxoo.com>
-#    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
-###############################################################################
+#
+#    CREDITS:
+#       Coded by: Luis Escobar <luis@vauxoo.com>
+#       Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
 #    by the Free Software Foundation, either version 3 of the License, or
@@ -56,10 +57,12 @@ class ConvertNoteTask(osv.TransientModel):
         })
         obj_model = self.pool.get('ir.model.data')
         model_data_ids = obj_model.search(
-            cr, uid, [('model', '=', 'ir.ui.view'),
-                     ('name', '=', 'view_task_form2')])
-        resource_id = obj_model.read(cr, uid, model_data_ids,
-                                    fields=['res_id'])[0]['res_id']
+            cr,
+            uid,
+            [('model', '=', 'ir.ui.view'), ('name', '=', 'view_task_form2')]
+        )
+        resource_id = obj_model.read(
+            cr, uid, model_data_ids, fields=['res_id'])[0]['res_id']
         return {
             'view_type': 'form',
             'view_mode': 'form',
