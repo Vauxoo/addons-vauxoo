@@ -46,10 +46,13 @@ class AccountInvoice(models.Model):
                 res.append(inv[0])
             return [('id', 'in', res)]
         if not value:
-            attachment_obj = self.env['ir.attachment']
-            for att in attachment_obj.search([
-                    ('res_model', '=', 'account.invoice')]):
-                res.append(att.res_id)
+            query = """
+                SELECT distinct(res_id)
+                FROM ir_attachment
+                WHERE res_id IS NOT NULL and res_model = 'account.invoice'"""
+            self.env.cr.execute(query)
+            for inv in self.env.cr.fetchall():
+                res.append(inv[0])
             if operator == '!=':
                 return [('id', 'in', res)]
             elif operator == '=':
