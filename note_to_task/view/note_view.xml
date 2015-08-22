@@ -11,5 +11,16 @@
                 </xpath>
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="view_task_form2">
+            <field name="name">project.task.search.form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <field name="description" position="replace">
+                    <field name="description" nolabel="1" widget="text_html" placeholder="Add a Description..."/>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
