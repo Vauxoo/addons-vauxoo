@@ -3,10 +3,11 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-################# Credits######################################################
+#
+#    CREDITS:
 #    Coded by: Luis Escobar <Luis@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
-###############################################################################
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
 #    by the Free Software Foundation, either version 3 of the License, or
@@ -22,7 +23,7 @@
 ###############################################################################
 {
     "name": "Convert Note to Task",
-    "version": "1.6",
+    "version": "1.6.1",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://vauxoo.com",
