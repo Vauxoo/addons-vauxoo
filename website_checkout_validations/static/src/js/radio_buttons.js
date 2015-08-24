@@ -21,6 +21,21 @@
     },
 
     build: function(debug){
+      // THIS CODE HIDES OR SHOWS THE ZIP IF PANAMA SELECTED OR NOT
+       $("select[name=country_id]").click(function(){
+         console.log($("select[name=country_id]").find(":selected").attr("id"));
+         if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
+         {
+          console.log("True");
+          $("div[id=zip]").hide();
+         }
+         else
+         {
+          console.log("False");
+          $("div[id=zip]").show();
+         }
+       });
+       // THIS CODE HIDES THE COMPANY INPUT IF PARTNER IS PARTICULAR
        if ($("#partner_type_p").is(':checked'))
         {
           $("div[id=company]").hide();

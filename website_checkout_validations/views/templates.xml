@@ -9,18 +9,17 @@
                       <input type="text" name="mobile" class="form-control" t-att-value="checkout.get('mobile')"/>
                   </div>
 				</xpath>
-				<xpath expr="//div[@class='row']/div[11]" position="after">
+
+				<xpath expr="//div[@class='row']/div[12]" position="after">
+                  <div id="zip" t-attf-class="form-group #{error.get('zip') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label label-optional" for="zip">Zip / Postal Code</label>
+                      <input type="text" name="zip" class="form-control" t-att-value="checkout.get('zip')"/>
+                  </div>
                   <div t-attf-class="form-group col-lg-12">
                       <label class="control-label" for="comments">Comments</label>
                       <textarea type="text" name="comments" class="form-control" t-att-value="checkout.get('comments')"/>
                   </div>
 				</xpath>
-                <xpath expr="//div[@class='row']/div[3]" position="replace">
-                  <div id="company" t-attf-class="form-group #{error.get('street') and 'has-error' or ''} col-lg-6">
-                      <label class="control-label label-optional" for="street">Company Name</label>
-                      <input type="text" name="street" class="form-control" t-att-value="checkout.get('street')"/>
-                  </div>
-                </xpath>
 				<xpath expr="//div[@class='row']/div[2]" position="before">
                   <div t-attf-class="form-group #{error.get('is_company') and 'has-error' or ''} col-lg-3">
                       <label class="control-label mt32">
@@ -35,17 +34,21 @@
 				</xpath>
 
                 <!-- Extra options for inherited fields -->
-                <xpath expr="//option[@t-att-value='country.id']" position="attributes">
-                    <attribute name="data-code"><t t-esc="country.code"/></attribute>
-                </xpath>
+                <xpath expr="//select[@name='country_id']" position="replace">
+                      <select name="country_id" class="form-control">
+                          <option value="">Country...</option>
+                          <t t-foreach="countries or []" t-as="country">
+                              <option t-att-id="country.code" t-att-value="country.id" t-att-selected="country.id == checkout.get('country_id')"><t t-esc="country.name"/></option>
+                          </t>
+                      </select>                </xpath>
 
 				<!-- Field validations, renders a small badge on the right side of the label -->
 				<xpath expr="//label[@for='contact_name']" position="after">
                       <t t-if="error.get('name')"><span class="label label-danger"> Required </span></t>
 				</xpath>
-                <xpath expr="//label[@for='contact_name']" position="replace">
+<!--                 <xpath expr="//label[@for='contact_name']" position="replace">
                       <label class="control-label" for="contact_name">Contact Name</label>
-                </xpath>
+                </xpath> -->
 				<xpath expr="//label[@for='city']" position="after">
                       <t t-if="error.get('zip_id')"><span class="label label-danger"> Required </span></t>
 				</xpath>
@@ -76,7 +79,18 @@
 				<xpath expr="//label[@for='state_id']" position="after">
                       <t t-if="error.get('state_id')"><span class="label label-danger"> Required </span></t>
 				</xpath>
-
+                <xpath expr="//div[@class='row']/div[@class='col-md-8 oe_cart']/div[@class='row']/div[1]" position="replace">
+                  <div id="company" t-attf-class="form-group #{error.get('street') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label label-optional" for="street">Company Name</label>
+                      <input type="text" name="street" class="form-control" t-att-value="checkout.get('street')"/>
+                  </div>
+                </xpath>
+                <xpath expr="//div[@class='row']/div[@class='col-md-8 oe_cart']/div[@class='row']/div[5]" position="replace">
+                  <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="contact_name">Contact Name</label>
+                      <input type="text" name="name" class="form-control" t-att-value="checkout.get('name')"/>
+                  </div>
+                </xpath>
 			</template>
 		</data>
 	</openerp>
