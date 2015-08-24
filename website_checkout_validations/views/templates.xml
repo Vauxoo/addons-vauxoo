@@ -9,6 +9,12 @@
                       <input type="text" name="mobile" class="form-control" t-att-value="checkout.get('mobile')"/>
                   </div>
 				</xpath>
+                <xpath expr="//div[@class='row']/div[7]" position="replace">
+                  <div t-attf-class="form-group #{error.get('street2') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="street2">Address</label>
+                      <input type="text" placeholder="Street, House, building, apartment" name="street2" class="form-control" t-att-value="checkout.get('street2')"/>
+                  </div>
+                </xpath>
 
 				<xpath expr="//div[@class='row']/div[12]" position="after">
                   <div id="zip" t-attf-class="form-group #{error.get('zip') and 'has-error' or ''} col-lg-6">
