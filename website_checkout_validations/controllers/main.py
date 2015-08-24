@@ -163,7 +163,7 @@ class WebsiteSaleInh(website_sale):
         if query.get(prefix + 'mobile'):
             query[prefix + 'mobile'] = int(query[prefix + 'mobile'])
         if query.get(prefix + 'is_company') == 'company' or query.get(prefix + 'is_company') == True:  # noqa
-            query[prefix + 'is_company'] == True
+            query[prefix + 'is_company'] = True
         else:
             query[prefix + 'is_company'] = False
             query[prefix + 'is_particular'] = True
