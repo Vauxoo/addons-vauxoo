@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-###########################################################################
+# ##########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
 #    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
-############################################################################
+# ###########################################################################
 #    Coded by: Luis Torres (luis_t@vauxoo.com)
-############################################################################
+# ###########################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -52,9 +52,9 @@ class InvoiceReportDemoHtml(report_sxw.rml_parse):
         self.localcontext.update({
         })
 
-webkit_report.WebKitParser('report.invoice.report.demo.webkit',
-           'account.invoice',
-           'addons/invoice_report_per_journal/report/invoice_report_demo.mako',
-           parser=InvoiceReportDemoHtml)
+webkit_report.WebKitParser(
+    'report.invoice.report.demo.webkit', 'account.invoice',
+    'addons/invoice_report_per_journal/report/invoice_report_demo.mako',
+    parser=InvoiceReportDemoHtml)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
