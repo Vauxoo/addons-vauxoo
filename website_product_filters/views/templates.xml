@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <template id="website_sale.products_attributes" inherit_id="website_sale.products" active="False" customize_show="True" name="Product Attribute's Filters">
-          <xpath expr="//div[@id='products_grid_before']" position="last">
+        <template id="website_sale.products_attributes" inherit_id="website_sale.products_categories" active="False" customize_show="True" name="Product Attribute's Filters">
+          <xpath expr="//ul" position="after">
             <t t-if="attributes">
               <form class="js_attributes" method="get">
                   <input type="hidden" name="search" t-att-value="search"/>
@@ -10,7 +10,9 @@
                       <t t-foreach="attributes" t-as="a">
                         <t t-if="a.type != 'hidden'">
                           <li t-if="a.value_ids and len(a.value_ids) > 1">
-                              <div><strong t-field="a.name"/></div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading"><strong t-field="a.name"/></div>
+                              <div class="panel-body">
                               <t t-if="a.type == 'select'">
                                 <select class="form-control" name="attrib">
                                   <option value=""/>
@@ -43,6 +45,9 @@
                                   </label>
                                 </t>
                               </t>
+
+                            </div>
+                           </div>
                           </li>
                         </t>
                       </t>
