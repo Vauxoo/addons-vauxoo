@@ -115,6 +115,8 @@ class AccountVoucher(osv.Model):
         bank_statement_line_obj = self.pool.get('account.bank.statement.line')
         move_line_obj = self.pool.get('account.move.line')
         cur_obj = self.pool.get('res.currency')
+        object_dp = self.pool.get('decimal.precision')
+        round_val = object_dp.precision_get(cr, uid, 'Account')
         company_currency = self._get_company_currency(
             cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(
@@ -180,7 +182,8 @@ class AccountVoucher(osv.Model):
                             company_currency,
                             reference_amount, context=context)
                     else:
-                        amount_tax_currency += reference_amount
+                        amount_tax_currency += round(
+                            reference_amount, round_val)
 
                     move_lines_tax = self._preparate_move_line_tax(
                         cr, uid, account_tax_voucher, account_tax_collected,
