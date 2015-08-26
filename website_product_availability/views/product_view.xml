@@ -30,12 +30,12 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='store']" position="after">
                     <group name="location_quants" string="Location Quants">
-                        <field name="product_stock_quants_ids" 
+                        <field name="product_stock_quants_ids"
                             nolabel="1" colspan="2">
                             <tree create="false" edit="false" delete="false">
                                 <field name="location_id"/>
                                 <field name="qty"/>
-                                
+
                             </tree>
                         </field>
                     </group>
