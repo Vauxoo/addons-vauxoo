@@ -107,9 +107,9 @@ class ProductProduct(models.Model):
             if stock_state != '4':
                 if new_qty > product.low_stock:
                     stock_state = '1'
-                elif 0 < product.qty_available <= product.low_stock:
+                elif 0 < new_qty <= product.low_stock:
                     stock_state = '3'
-                elif product.qty_available <= 0:
+                elif new_qty <= 0:
                     stock_state = '2'
             location_ok = stock_locations_obj.search(
                 [('product_id', '=', product_id),
