@@ -16,8 +16,8 @@ class WebsiteSale(website_sale):
         '/shop',
         '/shop/page/<int:page>',
         '/shop/category/<model("product.public.category"):category>',
-        '/shop/category/<model("product.public.category"):category>/page/<int:page>'  # noqa
-    ], type='http', auth="public", website=True)
+        '/shop/category/<model("product.public.category"):category>/page/<int:page>',  # noqa
+        '/shop/brands'], type='http', auth="public", website=True)
     def shop(self, page=0, category=None, search='', ppg=False, **post):
         """
         This method was inherited wit the purpose of filtering attributes
@@ -33,7 +33,9 @@ class WebsiteSale(website_sale):
                                             search=search, ppg=ppg,
                                             **post)
         attributes_obj = pool['product.attribute']
+        brand_obj = pool['product.brand']
         attribute_ids = self._get_used_attrs(category)
+        brand_ids = self._get_category_brands(category)
         attributes = attributes_obj.browse(cr, uid, attribute_ids,
                                            context=context)
         res.qcontext['attributes'] = attributes
@@ -45,7 +47,40 @@ class WebsiteSale(website_sale):
                     '/shop',
                     category=category and int(category),
                     search=search)
+        brands = brand_obj.browse(cr, uid, brand_ids, context=context)
+        res.qcontext['brands'] = brands
         return res
+
+    def _normalize_category(self, category):
+        """
+        This method returns a condition value usable on tuples, because
+        sometimes category can come from different places, sometimes it
+        can be an Odoo object and some others an int or a unicode.
+        """
+        if isinstance(category, int) or isinstance(category, unicode):
+            cond = int(category)
+        else:
+            cond = category.id
+        return cond
+
+    def _get_category_brands(self, category):
+        cr, uid, context, pool = (request.cr,
+                                  request.uid,
+                                  request.context,
+                                  request.registry)
+        prod_ids = []
+        brand_ids = []
+        product_obj = pool['product.template']
+        if category:
+            cond = self._normalize_category(category)
+            prod_ids = product_obj.search(cr, uid,
+                                          [('public_categ_ids', '=', cond)],
+                                          context=context)
+            print "BRAND PROD_IDS", prod_ids
+            for prod in product_obj.browse(cr, uid, prod_ids, context=context):
+                if prod.product_brand_id.id not in brand_ids:
+                    brand_ids.append(prod.product_brand_id.id)
+        return brand_ids
 
     def _get_used_attrs(self, category):
         """
@@ -57,15 +92,19 @@ class WebsiteSale(website_sale):
                                   request.context,
                                   request.registry)
         attribute_ids = []
-        attributes = []
         prod_ids = []
         product_obj = pool['product.template']
+        print category
+        print type(category)
         if category:
+            cond = self._normalize_category(category)
             prod_ids = product_obj.search(
                 cr,
                 uid,
-                [('public_categ_ids', '=', category.id)], context=context)
-            for product in product_obj.browse(cr, uid, prod_ids, context=context):
+                [('public_categ_ids', '=', cond)], context=context)
+            print prod_ids
+            for product in product_obj.browse(cr, uid, prod_ids,
+                                              context=context):
                 for attribute in product.attribute_line_ids:
                     if attribute.attribute_id.id not in attribute_ids:
                         attribute_ids.append(attribute.attribute_id.id)

@@ -21,6 +21,11 @@ Extras:
 - Collapse long lists of filters
 - Filters by more than one element of the same type.
 
+Requirements:
+-------------
+- Go to https://github.com/OCA/e-commerce and download repo
+in order to install website_product_brand module.
+
 Contributors
 ------------
 

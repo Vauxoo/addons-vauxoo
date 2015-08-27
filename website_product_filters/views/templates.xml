@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <!-- TEMPLATE TO SHOW BRANDS AND ATTRIBUTES BASED ON CATEGORY -->
         <template id="website_sale.products_attributes" inherit_id="website_sale.products_categories" active="False" customize_show="True" name="Product Attribute's Filters">
           <xpath expr="//ul" position="after">
             <t t-if="attributes">
@@ -54,6 +55,46 @@
                   </ul>
               </form>
             </t>
+            <t t-if="brands">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Brands</div>
+                    <div class="panel-body">
+                      <ul class="nav nav-pills nav-stacked mt16">
+                          <t t-foreach="brands" t-as="b">
+                          <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
+                            <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
+                          </li>
+                          </t>
+                      </ul>
+                    </div>
+                </div>
+            </t>
+          </xpath>
+          <xpath expr="//div[@id='products_grid_before']" position="attributes">
+              <attribute name="class">col-md-3 hidden-xs</attribute>
+          </xpath>
+          <xpath expr="//div[@id='products_grid']" position="attributes">
+              <attribute name="class">col-md-9</attribute>
+          </xpath>
+        </template>
+
+        <!-- TEMPLATE TO SHOW BRAND LIST -->
+        <template id="product_brands_column" inherit_id="website_sale.products" active="False" customize_show="True" name="Product Brands">
+          <xpath expr="//div[@id='products_grid_before']" position="inside">
+              <div class="dropdown">
+                  <p class="active">Select a Brand</p>
+                  <button class="btn btn-default dropdown-toggle" type="button" id="brandDropDown" data-toggle="dropdown" aria-haspopup="true">Select a Brand
+                  <span class="caret"></span>
+                  </button>
+                      <ul class="dropdown-menu" aria-labelledby="brandDropDown">
+                      <li t-att-class=" '' if brand else 'brand active' "><a t-att-href="keep('/shop',brand=0)"><b>All Brands</b></a></li>
+                      <t t-foreach="brands" t-as="b">
+                          <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
+                              <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
+                          </li>
+                      </t>
+                      </ul>
+              </div>
           </xpath>
           <xpath expr="//div[@id='products_grid_before']" position="attributes">
               <attribute name="class">col-md-3 hidden-xs</attribute>
