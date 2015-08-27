@@ -52,5 +52,17 @@
                 </xpath>
             </field>
         </record>
+        <record id="stock_location_alias_form_view" model="ir.ui.view">
+            <field name="name">stock.location.alias.form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h2/field[@name='location_id']" position="after">
+                     <label for="stock_alias" class="oe_edit_only"/>
+                    <h2><field name="stock_alias"/></h2>
+                    <field name="website_published" widget="website_button"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

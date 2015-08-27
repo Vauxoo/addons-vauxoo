@@ -127,7 +127,6 @@ $('.oe_website_sale').each(function () {
         var product_id = false;
         for (var k in variant_ids) {
             if (_.isEmpty(_.difference(variant_ids[k][1], values))) {
-                console.log('isEmpty')
                 $price.html(price_to_str(variant_ids[k][2]));
                 $default_price.html(price_to_str(variant_ids[k][3]));
                 if (variant_ids[k][3]-variant_ids[k][2]>0.2) {
@@ -174,7 +173,9 @@ $('.oe_website_sale').each(function () {
                         break;
                 }
                 if (variant_ids[k][5]) {
-                    $stock_delay.text("Product Available within "+variant_ids[k][5]+" Days")
+                    days = variant_ids[k][5];
+                    $stock_delay.text(
+                        "Product Available in "+days[0]+'/'+days[1]+'/'+days[2]+"");
                 }
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);
