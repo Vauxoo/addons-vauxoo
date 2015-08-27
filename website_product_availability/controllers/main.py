@@ -28,7 +28,7 @@ class WebsiteSaleInh(website_sale):
                 delay_days = supplier_obj.browse(cr, uid, supplier_ids,
                                                  context)[0].delay
                 day = datetime.datetime.now() + datetime.timedelta(
-                   days=delay_days)
+                    days=delay_days)
                 days = day.strftime("%Y/%m/%d")
                 days = days.split('/')
                 days = [int(i) for i in days]
@@ -44,7 +44,8 @@ class WebsiteSaleInh(website_sale):
     def product(self, product, category='', search='', **kwargs):
         result = super(WebsiteSaleInh, self).product(
             product, category, search, **kwargs)
-        cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+        cr, uid, context, pool = request.cr, request.uid, request.context,\
+            request.registry
         variat_obj = pool['product.product']
 
         product_variants_ids = variat_obj.search(
