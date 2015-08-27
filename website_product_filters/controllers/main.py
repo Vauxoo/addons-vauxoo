@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
-import werkzeug
 import openerp
-from openerp import SUPERUSER_ID
 from openerp import http
-from openerp import tools
 from openerp.http import request
-from openerp.tools.translate import _
-from openerp.addons.website.models.website import slug
 from openerp.addons.website_sale.controllers.main import website_sale
 from openerp.addons.website_sale.controllers.main import QueryURL
 
@@ -76,7 +71,6 @@ class WebsiteSale(website_sale):
             prod_ids = product_obj.search(cr, uid,
                                           [('public_categ_ids', '=', cond)],
                                           context=context)
-            print "BRAND PROD_IDS", prod_ids
             for prod in product_obj.browse(cr, uid, prod_ids, context=context):
                 if prod.product_brand_id.id not in brand_ids:
                     brand_ids.append(prod.product_brand_id.id)
@@ -94,15 +88,12 @@ class WebsiteSale(website_sale):
         attribute_ids = []
         prod_ids = []
         product_obj = pool['product.template']
-        print category
-        print type(category)
         if category:
             cond = self._normalize_category(category)
             prod_ids = product_obj.search(
                 cr,
                 uid,
                 [('public_categ_ids', '=', cond)], context=context)
-            print prod_ids
             for product in product_obj.browse(cr, uid, prod_ids,
                                               context=context):
                 for attribute in product.attribute_line_ids:
