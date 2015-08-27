@@ -22,6 +22,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from openerp import api
 from openerp.osv import osv, fields
 
 
@@ -37,11 +38,11 @@ class PurchaseRequisition(osv.Model):
                   ' purchase requisition.')),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         default = default or {}
         default.update({'purchaser_id': False})
-        return super(PurchaseRequisition, self).copy(cr, uid, id, default,
-                                                      context=context)
+        return super(PurchaseRequisition, self).copy(default)
 
 
 class ResPartner(osv.Model):
@@ -53,8 +54,8 @@ class ResPartner(osv.Model):
             help='Is this a Purchaser?'),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         default = default or {}
         default.update({'is_purchaser': False})
-        return super(ResPartner, self).copy(cr, uid, id, default,
-                                             context=context)
+        return super(ResPartner, self).copy(default)

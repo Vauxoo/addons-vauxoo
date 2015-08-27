@@ -21,6 +21,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp import api
 from openerp.osv import fields, osv
 
 
@@ -57,12 +58,13 @@ class AccountInvoice(osv.Model):
             exp_obj.write(cr, uid, exp_id, {'line_ids': data}, context=context)
         return True
 
-    def copy(self, cr, uid, ids, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default = default.copy()
         default.update({'expense_id': False})
-        return super(AccountInvoice, self).copy(cr, uid, ids, default, context=context)
+        return super(AccountInvoice, self).copy(default)
 
 
 class AccountInvoiceLine(osv.Model):

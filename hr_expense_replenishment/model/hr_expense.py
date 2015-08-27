@@ -23,7 +23,7 @@
 ###############################################################################
 import time
 from openerp.osv import fields, osv
-from openerp import workflow
+from openerp import api, workflow
 from openerp.addons import decimal_precision as dp
 from openerp.tools.translate import _
 
@@ -1051,7 +1051,8 @@ class HrExpenseExpense(osv.Model):
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
-    def copy(self, cr, uid, ids, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default = default.copy()
@@ -1062,8 +1063,7 @@ class HrExpenseExpense(osv.Model):
                         'ait_ids': [],
                         'date_post': False,
                         })
-        return super(HrExpenseExpense, self).copy(cr, uid, ids, default,
-                                                    context=context)
+        return super(HrExpenseExpense, self).copy(default)
 
     def show_entries(self, cr, uid, ids, context=None):
         context = context or {}
