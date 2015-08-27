@@ -4,27 +4,61 @@
          <template id="product_stock_available_website" inherit_id="website_variants_extra.product_variants_description_3columns">
              <xpath expr="//div[@class='col-sm-3 col-md-3 col-lg-3 descriptions_column']" position="after">
                 <div class="col-sm-3 col-md-3 col-lg-3">
-                    <t t-if="product.product_stock_quants_ids">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3>Availability by Store</h3>
-                            </div>
-                            <div class="panel-body">
-                                <ul class="nav nav-pills nav-stacked mt16">
-                                    <t t-foreach="product.product_stock_quants_ids" t-as="quant">
-                                        <li><span><t t-raw="quant.location_id.name"></t></span><span class='badge pull-right'><t t-raw="quant.qty"></t></span></li>
-                                    </t>
-                                </ul>
-                            </div>
-                        </div>
+                    <t t-if="product_variants">
+                        <t t-foreach="product_variants" t-as="variant">
+                            <t t-if="variant.product_stock_quants_ids">
+                                <div class="panel panel-info product_variant_states"
+                                    t-att-id="'product-variant-%s' % (variant.id)">
+                                    <div class="panel-heading">
+                                        <h3>Availability by Store</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="nav nav-pills nav-stacked mt16">
+                                            <t t-foreach="variant.product_stock_quants_ids" t-as="quant">
+                                                <li>
+                                                    <span>
+                                                        <t t-raw="quant.location_id.name"></t>
+                                                    </span>
+                                                    <t t-if="quant.stock_state == '1'">
+                                                        <span class="pull-right label label-success">
+                                                            Available
+                                                        </span>
+                                                    </t>
+                                                    <t t-if="quant.stock_state == '2'">
+                                                        <span class="pull-right label label-danger">
+                                                            Not Available
+                                                        </span>
+                                                    </t>
+                                                    <t t-if="quant.stock_state == '3'">
+                                                        <span class=" pull-right label label-warning">
+                                                            Low Availability
+                                                        </span>
+                                                    </t>
+                                                    <t t-if="quant.stock_state == '4'">
+                                                        <span class="pull-right label label-primary">
+                                                            On Request
+                                                        </span>
+                                                    </t>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-if="not variant.product_stock_quants_ids and variant.product_planned_dates_ids">
+                                <div role='alert' class="alert alert-danger">
+                                    <p>Available Until:
+                                        <strong>
+                                            <span class='active'><t t-raw="variant.product_planned_dates_ids.sorted(key=lambda r: r.date_planned)[0].date_planned"/>
+                                            </span>
+                                        </strong>
+                                    </p>
+                                </div>
+                            </t>                            
+                        </t>
                     </t>
-                    <t t-if="not product.product_stock_quants_ids and product.product_planned_dates_ids">
-                        <div role='alert' class="alert alert-danger">
-                            <p>Available Until:
-                            <strong>
-                                <span class='active'><t t-raw="product.product_planned_dates_ids.sorted(key=lambda r: r.date_planned)[0].date_planned"/></span>
-                            </strong></p>
-                        </div>
+                    <t t-if="not product_variants">
+                        <h2> No Variants</h2>
                     </t>
                 </div>
              </xpath>

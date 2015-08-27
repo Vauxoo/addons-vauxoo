@@ -115,17 +115,19 @@ $('.oe_website_sale').each(function () {
         var $default_price = $parent.find(".oe_default_price:first .oe_currency_value");
         var variant_ids = $ul.data("attribute_value_ids");
         var $stock_state = $(".stock_state");
+        var $stock_location_state = $(".stock_location_state");
+        var $div_location_state = $(".product_variant_states");
         var $stock_delay = $(".stock_delay");
+        
         var values = [];
         $parent.find('input.js_variant_change:checked, select.js_variant_change').each(function () {
             values.push(+$(this).val());
         });
-
         $parent.find("label").removeClass("text-muted css_not_available");
-
         var product_id = false;
         for (var k in variant_ids) {
             if (_.isEmpty(_.difference(variant_ids[k][1], values))) {
+                console.log('isEmpty')
                 $price.html(price_to_str(variant_ids[k][2]));
                 $default_price.html(price_to_str(variant_ids[k][3]));
                 if (variant_ids[k][3]-variant_ids[k][2]>0.2) {
@@ -176,6 +178,9 @@ $('.oe_website_sale').each(function () {
                 }
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);
+                $div_location_state.addClass('hidden');
+                select = ".product_variant_states#product-variant-" + variant_ids[k][0];
+                $(select).removeClass('hidden');
                 /*</oscar>*/
                 product_id = variant_ids[k][0];
                 break;
