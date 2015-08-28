@@ -28,7 +28,6 @@ class WebsiteSaleInh(website_sale):
             SUPERUSER_ID,
             request.uid,
             context).partner_id
-
         order = None
         shipping_id = None
         shipping_ids = []
@@ -156,7 +155,6 @@ class WebsiteSaleInh(website_sale):
                 for field_name in all_fields if getattr(data, field_name))  # noqa
             if address_type == 'billing' and data.parent_id:
                 query[prefix + 'street'] = data.parent_id.name
-
         if query.get(prefix + 'state_id'):
             query[prefix + 'state_id'] = int(query[prefix + 'state_id'])
         if query.get(prefix + 'country_id'):
@@ -165,7 +163,12 @@ class WebsiteSaleInh(website_sale):
             query[prefix + 'zip_id'] = int(query[prefix + 'zip_id'])
         if query.get(prefix + 'mobile'):
             query[prefix + 'mobile'] = int(query[prefix + 'mobile'])
-        if query.get(prefix + 'is_company'):
+        if query.get(prefix + 'is_company') == 'company' or query.get(prefix + 'is_company') == True:  # noqa
+            query[prefix + 'is_company'] = True
+        else:
+            query[prefix + 'is_company'] = False
+            query[prefix + 'is_particular'] = True
+        if query.get(prefix + 'is_company', False):
             query[prefix + 'is_company'] = query[prefix + 'is_company']
         else:
             query[prefix + 'is_company'] = False
