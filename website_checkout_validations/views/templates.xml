@@ -22,6 +22,21 @@
                   </label>
                   </div>
 				</xpath>
+				<xpath expr="//label[@for='vat']/.." position="replace">
+					<div class="form-group col-lg-3">
+                      <label class="control-label" for="vat_alone">
+                      	TIN
+                      	<input type="text" placeholder="TIN" name="vat_alone" class="form-control" t-att-value="checkout.get('vat_alone')"/>
+                      	</label>
+                  </div>
+                  <div class="form-group col-lg-3">
+                      <label class="control-label" for="vat_dv" style="font-weight: normal">
+                      	DV
+                      	<input type="text"  placeholder="Check Digit" name="vat_dv" class="form-control" t-att-value="checkout.get('vat_dv')"/>
+                      	</label>
+                  </div>
+                  
+				</xpath>
 
 				<!-- Field validations, renders a small badge on the right side of the label -->
 				<xpath expr="//label[@for='contact_name']" position="after">
@@ -37,6 +52,12 @@
                               <option t-att-value="city.id" t-att-selected="city.id == checkout.get('zip_id')"><t t-esc="city.city"/></option>
                           </t>
                       </select>
+				</xpath>
+				<xpath expr="//label[@for='vat_dv']" position="after">
+                      <t t-if="error.get('vat_dv')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='vat_alone']" position="after">
+                      <t t-if="error.get('vat_alone')"><span class="label label-danger"> Required </span></t>
 				</xpath>
 				<xpath expr="//input[@type='email']" position="before">
                       <t t-if="error.get('email') == 'invalid'"><span class="label label-danger"> Invalid Email </span></t>
