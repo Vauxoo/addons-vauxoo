@@ -177,7 +177,7 @@ class WebsiteSaleInh(website_sale):
                 query.get(prefix + 'vat_alone') and \
                 query.get(prefix + 'country_id'):
             query[prefix + 'vat_alone'] += 'DV'+query.get(prefix + 'vat_dv')
-            query[prefix + 'vat'] = query.get(prefix + 'country_id') +\
+            query[prefix + 'vat'] = str(query.get(prefix + 'country_id')) +\
                 query.get(prefix + 'vat_alone')
 
             query[prefix + 'vat_subjected'] = True
