@@ -23,8 +23,7 @@ Extras:
 
 Requirements:
 -------------
-- Go to https://github.com/OCA/e-commerce and download repo
-in order to install website_product_brand module.
+- Go to https://github.com/OCA/e-commerce and download repo in order to install website_product_brand module.
 
 Contributors
 ------------
