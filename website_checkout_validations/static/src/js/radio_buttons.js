@@ -22,6 +22,10 @@
 
     build: function(debug){
       // THIS CODE HIDES OR SHOWS THE ZIP IF PANAMA SELECTED OR NOT
+         if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
+         {
+          $("div[id=zip]").hide();
+         }
        $("select[name=country_id]").click(function(){
          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
