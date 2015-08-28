@@ -51,6 +51,16 @@
           }
         })
         .trigger( "change" );
+        var selected_category = $(".nav.nav-pills.nav-stacked.nav-hierarchy li.active a");
+        var breadcrumb = $("#bread_category");
+        var brand_selected = $("li.brand.active");
+        var ul = $("ul.breadcrumb");
+        breadcrumb.html(selected_category.html());
+        brand_selected.each(function(){
+          console.log(this);
+          ul.append("<li class='attr'>"+this.innerHTML+"</li>");
+
+        });
     },
 
   })

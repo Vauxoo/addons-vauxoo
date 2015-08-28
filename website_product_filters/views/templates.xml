@@ -116,9 +116,9 @@
         <template id="product_sort_bar" inherit_id="website_sale.products_list_view" active="True">
           <xpath expr="//div[@id='products_grid']" position="before">
             <div class="panel panel-default">
-              <div class="col-md-9 panel-heading">
-                <label for="Order_top">Sort by : </label>
-                <select id="product_sorter">
+              <div class="col-md-3 mt8">
+                <label for="prduct_sorter" class="form-group">Sort by : </label>
+                <select id="product_sorter" name="product_sorter">
                   <option value="0" selected="selected">Select...</option>
                   <option value="name">Product Name</option>
                   <option value="pasc">Price Lowest</option>
@@ -128,6 +128,14 @@
                   <option value="popularity">Popularity</option>
                 </select>
               </div>
+              <div class="col-md-6">
+                <ul class="breadcrumb">
+                    <li><a id="bread_home" href="/">Home</a></li>
+                    <li><a id="bread_products" href="/shop">Products</a></li>
+                    <li class="active"><a id="bread_category">All Products</a></li>
+                </ul>
+              </div>
+
             </div>
           </xpath>
         </template>
@@ -135,6 +143,11 @@
         <template id="product_list_rating" inherit_id="website_sale.products_item" active="True">
           <xpath expr="//div[@class='product_price']" position="inside">
                 <div id="stars_global" class="starrr pull-right" t-att-data-rating="product.rating"></div>
+          </xpath>
+        </template>
+        <template id="categ_class_nav_pills" inherit_id="website_sale.categories_recursive" active="True">
+          <xpath expr="//li" position="attributes">
+            <attribute name="data-id">category-pills</attribute>
           </xpath>
         </template>
     </data>
