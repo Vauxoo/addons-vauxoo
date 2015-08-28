@@ -128,7 +128,8 @@ class WebsiteSaleInh(website_sale):
     optional_billing_fields = [
         "street",
         "state_id",
-        "vat", "vat_subjected", "zip", "mobile", "is_company", "zip_id"]
+        "vat", "vat_dv", "vat_alone", "vat_subjected",
+        "zip", "mobile", "is_company", "zip_id"]
     mandatory_shipping_fields = [
         "name", "phone", "street", "country_id"]
     optional_shipping_fields = ["state_id", "zip"]
@@ -171,7 +172,14 @@ class WebsiteSaleInh(website_sale):
             query[prefix + 'is_company'] = query[prefix + 'is_company']
         else:
             query[prefix + 'is_company'] = False
-        if query.get(prefix + 'vat'):
+
+        if query.get(prefix + 'vat_dv') and \
+                query.get(prefix + 'vat_alone') and \
+                query.get(prefix + 'country_id'):
+            query[prefix + 'vat_alone'] += 'DV'+query.get(prefix + 'vat_dv')
+            query[prefix + 'vat'] = query.get(prefix + 'country_id') +\
+                query.get(prefix + 'vat_alone')
+
             query[prefix + 'vat_subjected'] = True
 
         if not remove_prefix:
@@ -188,7 +196,10 @@ class WebsiteSaleInh(website_sale):
         for field_name in self.mandatory_billing_fields:
             if not data.get(field_name):
                 error[field_name] = 'missing'
-
+        if data.get("vat_alone") and not data.get("vat_dv"):
+            error["vat_dv"] = 'error'
+        elif data.get("vat_dv") and not data.get("vat_alone"):
+            error["vat_alone"] = 'error'
         if data.get("vat") and hasattr(registry["res.partner"], "check_vat"):
             if request.website.company_id.vat_check_vies:
                 # force full VIES online check
@@ -198,7 +209,8 @@ class WebsiteSaleInh(website_sale):
                 check_func = registry["res.partner"].simple_vat_check
             vat_country, vat_number = registry["res.partner"]._split_vat(data.get("vat"))  # noqa
             if not check_func(cr, uid, vat_country, vat_number, context=None):
-                error["vat"] = 'error'
+                error["vat_alone"] = 'error'
+                error["vat_dv"] = 'error'
 
         if data.get("shipping_id") == -1:
             for field_name in self.mandatory_shipping_fields:

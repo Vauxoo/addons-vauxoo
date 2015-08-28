@@ -16,6 +16,7 @@
         "views/layout.xml",
         "views/templates.xml",
         "views/product_view.xml",
+        "security/ir.model.access.csv",
     ],
     "test": [],
     "js": [],

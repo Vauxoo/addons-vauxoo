@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from openerp.http import request
+from openerp.addons.web import http
 from openerp.addons.website_sale.controllers.main import website_sale
+import datetime
 
 
 class WebsiteSaleInh(website_sale):
@@ -16,7 +18,6 @@ class WebsiteSaleInh(website_sale):
             product_cache = product_obj.browse(cr, uid, [ret[0]], context)[0]
             stock_state = product_cache.stock_state
             ret.append(int(stock_state))
-            new_res.append(ret)
             p_tmpl_id = product_cache.product_tmpl_id.id
             supplier_ids = supplier_obj.search(cr, uid,
                                                [('product_tmpl_id', '=',
@@ -24,10 +25,32 @@ class WebsiteSaleInh(website_sale):
                                                limit=1,
                                                order='sequence asc')
             if supplier_ids:
-                days = supplier_obj.browse(cr, uid, supplier_ids,
-                                           context)[0].delay
+                delay_days = supplier_obj.browse(cr, uid, supplier_ids,
+                                                 context)[0].delay
+                day = datetime.datetime.now() + datetime.timedelta(
+                    days=delay_days)
+                days = day.strftime("%Y/%m/%d")
+                days = days.split('/')
+                days = [int(i) for i in days]
             else:
                 days = 0
-            ret.append(int(days))
+            ret.append(days)
             new_res.append(ret)
         return new_res
+
+    @http.route(
+        ['/shop/product/<model("product.template"):product>'],
+        type='http', auth="public", website=True)
+    def product(self, product, category='', search='', **kwargs):
+        result = super(WebsiteSaleInh, self).product(
+            product, category, search, **kwargs)
+        cr, uid, context, pool = request.cr, request.uid, request.context,\
+            request.registry
+        variat_obj = pool['product.product']
+
+        product_variants_ids = variat_obj.search(
+            cr, uid, [('product_tmpl_id', '=', product.id)], context=context)
+        product_variants = variat_obj.browse(
+            cr, uid, product_variants_ids, context=context)
+        result.qcontext['product_variants'] = product_variants
+        return result
