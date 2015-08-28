@@ -33,6 +33,12 @@
               return +b.dataset.rating - +a.dataset.rating;
             }).appendTo( $wrapper );
           }
+          if (val == 'name')
+          {
+            $wrapper.find('.oe_product.oe_list.oe_product_cart').sort(function (a, b) {
+              return b.dataset.name < a.dataset.name;
+            }).appendTo( $wrapper );
+          }
         })
         .trigger( "change" );
     },
