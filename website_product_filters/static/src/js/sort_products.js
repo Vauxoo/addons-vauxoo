@@ -39,6 +39,16 @@
               return b.dataset.name < a.dataset.name;
             }).appendTo( $wrapper );
           }
+          if (val == 'pasc'){
+            $wrapper.find('.oe_product.oe_list.oe_product_cart').sort(function (a, b) {
+              return +a.dataset.price - +b.dataset.price;
+            }).appendTo( $wrapper );
+          }
+          if (val == 'pdesc'){
+            $wrapper.find('.oe_product.oe_list.oe_product_cart').sort(function (a, b) {
+              return +b.dataset.price - +a.dataset.price;
+            }).appendTo( $wrapper );
+          }
         })
         .trigger( "change" );
     },

@@ -109,6 +109,7 @@
           <xpath expr="//div[@class='oe_product oe_list oe_product_cart']" position="attributes">
             <attribute name="t-att-data-rating">product.rating and product.rating or '0'</attribute>
             <attribute name="t-att-data-name">product.name and product.name or ' '</attribute>
+            <attribute name="t-att-data-price">product.lst_price and product.lst_price or '0'</attribute>
           </xpath>
         </template>
 
@@ -119,9 +120,11 @@
                 <label for="Order_top">Sort by : </label>
                 <select id="product_sorter">
                   <option value="0" selected="selected">Select...</option>
-                  <option value="rating">Customer Rating</option>
                   <option value="name">Product Name</option>
+                  <option value="pasc">Price Lowest</option>
+                  <option value="pdesc">Price Highest</option>
                   <option value="hottest">Hottest</option>
+                  <option value="rating">Customer Rating</option>
                   <option value="popularity">Popularity</option>
                 </select>
               </div>
