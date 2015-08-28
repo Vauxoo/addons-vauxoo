@@ -103,5 +103,33 @@
               <attribute name="class">col-md-9</attribute>
           </xpath>
         </template>
+
+        <!-- TEMPLATE TO ADD DATA RATING TO EACH DIV -->
+        <template id="product_div_rating" inherit_id="website_sale.products_list_view" active="True">
+          <xpath expr="//div[@class='oe_product oe_list oe_product_cart']" position="attributes">
+                <attribute name="data-rating"><t t-esc="product.rating and product.rating or '0'"/></attribute>
+          </xpath>
+        </template>
+
+        <template id="product_sort_bar" inherit_id="website_sale.products_list_view" active="True">
+          <xpath expr="//div[@id='products_grid']" position="before">
+            <div class="col-md-9">
+              <label for="Order_top">Sort by : </label>
+              <select id="product_sorter">
+                <option value="0" selected="selected">Select...</option>
+                <option value="rating">Customer Rating</option>
+                <option value="name">Product Name</option>
+                <option value="hottest">Hottest</option>
+                <option value="popularity">Popularity</option>
+              </select>
+            </div>
+          </xpath>
+        </template>
+        <!-- TEMPLATE TO SHOW RATING ON PRODUCT LIST -->
+        <template id="product_list_rating" inherit_id="website_sale.products_item" active="True">
+          <xpath expr="//div[@class='product_price']" position="inside">
+                <div id="stars_global" class="starrr pull-right" t-att-data-rating="product.rating"></div>
+          </xpath>
+        </template>
     </data>
 </openerp>

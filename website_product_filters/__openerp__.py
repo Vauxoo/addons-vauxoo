@@ -9,10 +9,11 @@
     "depends": [
         "website_sale",
         "website_product_brand",
+        "website_rate_product",
     ],
     "demo": [],
     "data": [
-        # 'views/sale_order_view.xml',
+        'views/assets.xml',
         'views/templates.xml',
     ],
     "test": [],
