@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "depends": [
         "website_sale",
+        "base_location",
     ],
     "demo": [],
     "data": [
