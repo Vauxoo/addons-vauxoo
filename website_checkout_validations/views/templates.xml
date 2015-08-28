@@ -82,10 +82,12 @@
                       </select>
 				</xpath>
 				<xpath expr="//label[@for='vat_dv']" position="after">
-                      <t t-if="error.get('vat_dv')"><span class="label label-danger"> Required </span></t>
+                      <t t-if="error.get('vat_dv') == 'invalid'"><span class="label label-danger"> Invalid </span></t>
+                      <t t-if="error.get('vat_dv' == 'missing')"><span class="label label-danger"> Required </span></t>
 				</xpath>
 				<xpath expr="//label[@for='vat_alone']" position="after">
-                      <t t-if="error.get('vat_alone')"><span class="label label-danger"> Required </span></t>
+                      <t t-if="error.get('vat_alone') == 'invalid'"><span class="label label-danger"> Invalid </span></t>
+                      <t t-if="error.get('vat_alone' == 'missing')"><span class="label label-danger"> Required </span></t>
 				</xpath>
 				<xpath expr="//input[@type='email']" position="before">
                       <t t-if="error.get('email') == 'invalid'"><span class="label label-danger"> Invalid Email </span></t>

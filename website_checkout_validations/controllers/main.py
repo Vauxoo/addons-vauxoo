@@ -176,9 +176,9 @@ class WebsiteSaleInh(website_sale):
         if query.get(prefix + 'vat_dv') and \
                 query.get(prefix + 'vat_alone') and \
                 query.get(prefix + 'country_id'):
-            query[prefix + 'vat_alone'] += 'DV'+query.get(prefix + 'vat_dv')
             query[prefix + 'vat'] = str(query.get(prefix + 'country_id')) +\
-                query.get(prefix + 'vat_alone')
+                query.get(prefix + 'vat_alone')+'DV' + \
+                query.get(prefix + 'vat_dv')
 
             query[prefix + 'vat_subjected'] = True
 
@@ -197,9 +197,9 @@ class WebsiteSaleInh(website_sale):
             if not data.get(field_name):
                 error[field_name] = 'missing'
         if data.get("vat_alone") and not data.get("vat_dv"):
-            error["vat_dv"] = 'error'
+            error["vat_dv"] = 'missing'
         elif data.get("vat_dv") and not data.get("vat_alone"):
-            error["vat_alone"] = 'error'
+            error["vat_alone"] = 'missing'
         if data.get("vat") and hasattr(registry["res.partner"], "check_vat"):
             if request.website.company_id.vat_check_vies:
                 # force full VIES online check
@@ -209,8 +209,8 @@ class WebsiteSaleInh(website_sale):
                 check_func = registry["res.partner"].simple_vat_check
             vat_country, vat_number = registry["res.partner"]._split_vat(data.get("vat"))  # noqa
             if not check_func(cr, uid, vat_country, vat_number, context=None):
-                error["vat_alone"] = 'error'
-                error["vat_dv"] = 'error'
+                error["vat_alone"] = 'invalid'
+                error["vat_dv"] = 'invalid'
 
         if data.get("shipping_id") == -1:
             for field_name in self.mandatory_shipping_fields:
