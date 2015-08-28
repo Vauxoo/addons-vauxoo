@@ -137,6 +137,8 @@ class WebsiteSaleInh(website_sale):
     def checkout_parse(self, address_type, data, remove_prefix=False):
         """ data is a dict OR a partner browse record
         """
+        cr, uid, context, registry =\
+            request.cr, request.uid, request.context, request.registry
         # set mandatory and optional fields
         assert address_type in ('billing', 'shipping')
         if address_type == 'billing':
@@ -176,11 +178,13 @@ class WebsiteSaleInh(website_sale):
         if query.get(prefix + 'vat_dv') and \
                 query.get(prefix + 'vat_alone') and \
                 query.get(prefix + 'country_id'):
-            query[prefix + 'vat'] = str(query.get(prefix + 'country_id')) +\
-                query.get(prefix + 'vat_alone')+'DV' + \
-                query.get(prefix + 'vat_dv')
-
-            query[prefix + 'vat_subjected'] = True
+            contry = registry['res.country'].browse(
+                cr, uid, query.get(prefix + 'country_id'), context=context)
+            if contry:
+                query[prefix + 'vat'] = contry.code +\
+                    query.get(prefix + 'vat_alone')+'DV' + \
+                    query.get(prefix + 'vat_dv')
+                query[prefix + 'vat_subjected'] = True
 
         if not remove_prefix:
             return query
