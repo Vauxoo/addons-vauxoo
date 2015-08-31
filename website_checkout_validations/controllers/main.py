@@ -109,7 +109,10 @@ class WebsiteSaleInh(website_sale):
                         ('code', '=', country_code)], context=context)
                 if country_ids:
                     checkout['country_id'] = country_ids[0]
-
+            else:
+                checkout['country_id'] = orm_country.search(
+                    cr, SUPERUSER_ID,
+                    [('code', '=', 'PA')], context=context)[0]
         values = {
             'cities': cities,
             'countries': countries,
