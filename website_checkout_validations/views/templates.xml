@@ -61,7 +61,7 @@
                       <select name="country_id" class="form-control">
                           <option value="">Country...</option>
                           <t t-foreach="countries or []" t-as="country">
-                              <option t-att-id="country.code" t-att-value="country.id" t-att-selected="country.id if country_id == checkout.get('country_id') else country_id"><t t-esc="country.name"/></option>
+                              <option t-att-id="country.code" t-att-value="country.id" t-att-selected="country.id == checkout.get('country_id')"><t t-esc="country.name"/></option>
                           </t>
                       </select>                </xpath>
 
