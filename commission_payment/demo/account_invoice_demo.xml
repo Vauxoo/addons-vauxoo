@@ -38,7 +38,7 @@
             <!-- writeoff_acc_id = -->        <value eval="ref('account.cash')"/>
             <!-- writeoff_period_id = -->    <value eval="ref('account.period_' + str(int(time.strftime('%m'))))"/>
             <!-- writeoff_journal_id = -->    <value eval="ref('account.bank_journal')"/>
-            <!-- context = -->              <value eval="{}"/>
+            <!-- context = -->              <value eval="{'date_p': time.strftime('%Y-%m-%d')}"/>
             <!-- name = -->                 <value eval="str('Payment from Vauxoo')"/>
         </function>
 
