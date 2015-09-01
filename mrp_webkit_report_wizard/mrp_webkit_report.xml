@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<openerp>
-    <data> 
-        <report auto="False" id="mrp_webkit_report_wizard_html" model="mrp.production" name="webkitmrp.production_variation" file="mrp_webkit_report_wizard/report/report_webkit_html.mako" string="Variation report" report_type="webkit" webkit_header="ir_header_webkit_mrp_variation0" multi="True" menu="False"/>
-                
-        <report auto="False" id="mrp_webkit_report_variation_group" model="mrp.production" name="webkitmrp.production_variation_group" file="mrp_webkit_report_wizard/report/report_webkit_variation_group.mako" string="Variation group" report_type="webkit" webkit_header="ir_header_webkit_mrp_variation0" multi="True" menu="False"/>
-    </data>
-</openerp>
