@@ -200,11 +200,11 @@ class WebsiteSaleInh(website_sale):
         # Validation
         error = dict()
         country = registry.get('res.country').browse(
-                cr, SUPERUSER_ID, [data.get('country_id')])
+            cr, SUPERUSER_ID, [data.get('country_id')])
         for field_name in self.mandatory_billing_fields:
             if not data.get(field_name):
                 error[field_name] = 'missing'
-        if data.get('is_company') == True and country.code == 'PA':
+        if data.get('is_company') is True and country.code == 'PA':
             if not data.get("vat_alone") and not data.get("vat_dv"):
                 error["vat_dv"] = 'missing'
                 error["vat_alone"] = 'missing'
@@ -226,7 +226,7 @@ class WebsiteSaleInh(website_sale):
                     error["vat_alone"] = 'invalid'
                     error["vat_dv"] = 'invalid'
 
-        if data.get('is_company') == True and country.code != 'PA':
+        if data.get('is_company') is True and country.code != 'PA':
             if data.get("vat_alone") and not data.get("vat_dv"):
                 error["vat_dv"] = 'missing'
             elif data.get("vat_dv") and not data.get("vat_alone"):
