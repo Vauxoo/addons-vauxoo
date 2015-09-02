@@ -28,7 +28,9 @@
     'depends': [
         'account',
     ],
-    'demo': [],
+    "demo": [
+        'demo/payment_term_demo.xml',
+    ],
     'website': 'https://www.vauxoo.com',
     'data': [
         'views/account_payment_type_view.xml',
