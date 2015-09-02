@@ -148,39 +148,41 @@ $('.oe_website_sale').each(function () {
                         text = 'Available' 
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
-                        $stock_delay.addClass('hidden')
+                        // $stock_delay.addClass('hidden')
                         break;
                     case 2:
                         new_class = 'label-danger'
                         text = 'Not Available' 
                         $("#add_to_cart").addClass('disabled')
                         $("#similar_products_vx").removeClass('hidden')
-                        $stock_delay.removeClass('hidden')
+                        // $stock_delay.removeClass('hidden')
                         break;
                     case 3:
                         new_class = 'label-warning'
                         text = 'Low Availability' 
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
-                        $stock_delay.addClass('hidden')
+                        // $stock_delay.addClass('hidden')
                         break;
                     case 4:
                         new_class = 'label-primary'
                         text = 'On Request' 
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
-                        $stock_delay.removeClass('hidden')
+                        // $stock_delay.removeClass('hidden')
                         break;
                 }
                 if (variant_ids[k][5]) {
                     days = variant_ids[k][5];
-                    $stock_delay.text(
-                        "Product Available in "+days[0]+'/'+days[1]+'/'+days[2]+"");
+                   // $stock_delay.text("Product Available in "+days[0]+'/'+days[1]+'/'+days[2]+"");
                 }
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);
                 $div_location_state.addClass('hidden');
-                select = ".product_variant_states#product-variant-" + variant_ids[k][0];
+                debugger;
+                select =".product_variant_states#product-variant-" + variant_ids[k][0];
+                console.log(variant_ids[k]);
+                console.log(select);
                 $(select).removeClass('hidden');
                 /*</oscar>*/
                 product_id = variant_ids[k][0];
