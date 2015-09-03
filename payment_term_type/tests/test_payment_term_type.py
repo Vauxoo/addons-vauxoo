@@ -29,38 +29,23 @@ class TestPaymentTermType(TransactionCase):
     """
     def setUp(self):
         super(TestPaymentTermType, self).setUp()
-        self.payment_term = self.env['account.payment.term']
-        self.payment_term_line = self.env['account.payment.term.line']
+        self.payment_term_cash = self.env.ref(
+            'payment_term_type.payment_term_cash')
+        self.payment_term_credit = self.env.ref(
+            'payment_term_type.payment_term_credit')
 
     def test_payment_term_type_cash(self):
         """
             This test validate payment type in cash
         """
-
-        payment_term_id = self.payment_term.create({
-            'name': 'Payment Term Cash',
-            })
-        self.payment_term_line.create({
-            'value': 'balance',
-            'payment_id': payment_term_id.id})
         self.assertEqual(
-            payment_term_id.payment_type, 'cash',
+            self.payment_term_cash.payment_type, 'cash',
             'Payment term should be in cash')
 
     def test_payment_term_type_credit(self):
         """
             This test validate payment type in credit
         """
-
-        payment_term_id = self.payment_term.create({
-            'name': 'Payment Term credit',
-            })
-        self.payment_term_line.create({
-            'value': 'procent',
-            'payment_id': payment_term_id.id})
-        self.payment_term_line.create({
-            'value': 'balance',
-            'payment_id': payment_term_id.id})
         self.assertEqual(
-            payment_term_id.payment_type, 'credit',
+            self.payment_term_credit.payment_type, 'credit',
             'Payment term should be in credit')
