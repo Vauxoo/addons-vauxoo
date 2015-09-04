@@ -16,11 +16,14 @@
  "license": "AGPL-3",
  "depends": [
      "account",
+     "sale",
+     "payment_term_type",
  ],
  "demo": [],
  "data": [
     "view/invoice_workflow.xml",
     "view/partner_view.xml",
+    "view/sale_order_view.xml",
  ],
  "installable": True,
  "active": False,
