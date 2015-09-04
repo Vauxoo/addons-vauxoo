@@ -8,4 +8,4 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from . import accout_invoice, partner
+from . import accout_invoice, partner, sale
