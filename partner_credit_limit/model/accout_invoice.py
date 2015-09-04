@@ -18,16 +18,18 @@ class AccontInvoice(models.Model):
     _inherit = 'account.invoice'
 
     @api.one
-    def check_limit_credit(self, cr, uid, ids, context={}):
+    def check_limit_credit(self):
         invoice = self
         partner = invoice.partner_id
         moveline_obj = self.env['account.move.line']
+
+        if invoice.payment_term.payment_type != 'credit':
+            return True
         movelines = moveline_obj.search(
-            cr, uid,
             [('partner_id', '=', partner.id),
              ('account_id.type', 'in', ['receivable', 'payable']),
              ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
-        movelines = moveline_obj.browse(cr, uid, movelines)
+        movelines = moveline_obj.browse(movelines)
         debit, credit = 0.0, 0.0
         debit_maturity, credit_maturity = 0.0, 0.0
 
@@ -58,8 +60,7 @@ class AccontInvoice(models.Model):
                     raise exceptions.Warning(('Credit Over Limits !'), (msg))
                     return False
             else:
-                self.pool.get('res.partner').write(
-                    cr, uid, [partner.id],
+                partner.write(
                     {'credit_limit': credit - debit + invoice.amount_total})
 
             if not partner.maturity_over_credit:
@@ -84,8 +85,7 @@ class AccontInvoice(models.Model):
                 else:
                     return True
             else:
-                self.pool.get('res.partner').write(
-                    cr, uid, [partner.id],
+                partner.write(
                     {'credit_maturity_limit': credit_maturity -
                      debit_maturity + invoice.amount_total})
                 return True
