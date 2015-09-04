@@ -18,4 +18,6 @@ class res_partner(models.Model):
     maturity_over_credit = fields.Boolean(
         'Allow Maturity Over Credit?', required=False)
     credit_maturity_limit = fields.Float(string='Credit Maturity Limit')
-    # date_grace_payment = fields.Integer('Date grace payment')
+    grace_payment_days = fields.Float(
+        'Days grace payment',
+        help='Days grace payment')
