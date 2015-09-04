@@ -8,8 +8,9 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from openerp import models, api
+from openerp import models, api, fields
 import time
+from datetime import timedelta
 from openerp import exceptions
 
 
@@ -23,7 +24,8 @@ class AccontInvoice(models.Model):
         partner = invoice.partner_id
         moveline_obj = self.env['account.move.line']
 
-        if invoice.payment_term.payment_type != 'credit':
+        if invoice.payment_term.payment_type != 'credit' or\
+                invoice.journal_id.type != 'sale':
             return True
         movelines = moveline_obj.search(
             [('partner_id', '=', partner.id),
@@ -34,21 +36,31 @@ class AccontInvoice(models.Model):
         debit_maturity, credit_maturity = 0.0, 0.0
 
         for line in movelines:
-            if line.date_maturity < time.strftime('%Y-%m-%d') and\
-             line.date_maturity is not False:
+            if (line.date_maturity and line.partner_id.grace_payment_days):
+                date_maturity = fields.Datetime.from_string(
+                    line.date_maturity)
+                grace_payment_days = timedelta(
+                    days=line.partner_id.grace_payment_days, seconds=-1)
+                limit_day = date_maturity + grace_payment_days
+
+                if limit_day < fields.Date.today:
+                    credit_maturity += line.debit
+                    debit_maturity += line.credit
+            elif line.date_maturity < fields.Date.today and \
+                    line.date_maturity is not False:
                 credit_maturity += line.debit
                 debit_maturity += line.credit
             credit += line.debit
             debit += line.credit
 
-        saldo = credit - debit
-        saldo_maturity = credit_maturity - debit_maturity
+        balance = credit - debit
+        balance_maturity = credit_maturity - debit_maturity
 
-        if (saldo_maturity + invoice.amount_total) > \
+        if (balance_maturity + invoice.amount_total) > \
             partner.credit_maturity_limit or \
-           (saldo + invoice.amount_total) > partner.credit_limit:
+           (balance + invoice.amount_total) > partner.credit_limit:
             if not partner.over_credit:
-                if (saldo + invoice.amount_total) > \
+                if (balance + invoice.amount_total) > \
                  partner.credit_limit and partner.credit_limit > 0.00:
                     msg = ('Can not validate the Invoice because it has '
                            'exceeded the credit limit'
@@ -64,7 +76,7 @@ class AccontInvoice(models.Model):
                     {'credit_limit': credit - debit + invoice.amount_total})
 
             if not partner.maturity_over_credit:
-                if (saldo_maturity + invoice.amount_total) >\
+                if (balance_maturity + invoice.amount_total) >\
                  partner.credit_maturity_limit and \
                  partner.credit_maturity_limit > 0.00:
                     # ~ msg = 'Can not validate Invoice, Total mature due
@@ -77,7 +89,7 @@ class AccontInvoice(models.Model):
                            '%s \nCheck the credit limits '
                            'on Partner') % (
                            time.strftime('%Y-%m-%d'),
-                           saldo_maturity, partner.credit_maturity_limit)
+                           balance_maturity, partner.credit_maturity_limit)
 
                     raise exceptions.Warning(
                         ('Maturity Credit Over Limits !'), (msg))

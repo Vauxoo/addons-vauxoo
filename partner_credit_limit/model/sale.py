@@ -42,14 +42,14 @@ class SaleOrder(models.Model):
             credit += line.debit
             debit += line.credit
 
-        saldo = credit - debit
-        saldo_maturity = credit_maturity - debit_maturity
+        balance = credit - debit
+        balance_maturity = credit_maturity - debit_maturity
 
-        if (saldo_maturity + so.amount_total) > \
-           partner.credit_maturity_limit or (saldo + so.amount_total) > \
+        if (balance_maturity + so.amount_total) > \
+           partner.credit_maturity_limit or (balance + so.amount_total) > \
            partner.credit_limit:
             if not partner.over_credit:
-                if (saldo + so.amount_total) > partner.credit_limit and \
+                if (balance + so.amount_total) > partner.credit_limit and \
                    partner.credit_limit > 0.00:
                     msg = ('Can not validate the Sale Order because it has '
                            'exceeded the credit limit \nCredit Limit: %s \n'
@@ -65,7 +65,7 @@ class SaleOrder(models.Model):
                     {'credit_limit': credit - debit + so.amount_total})
 
             if not partner.maturity_over_credit:
-                if (saldo_maturity + so.amount_total) > \
+                if (balance_maturity + so.amount_total) > \
                    partner.credit_maturity_limit and \
                    partner.credit_maturity_limit > 0.00:
                     # ~ msg = 'Can not validate Invoice, Total mature due
@@ -76,7 +76,7 @@ class SaleOrder(models.Model):
                            'Maturity Amount: %s \nMaturity Credit Limit: %s \n'
                            'Check the credit limits on Partner') %\
                            (time.strftime('%Y-%m-%d'),
-                            saldo_maturity, partner.credit_maturity_limit)
+                            balance_maturity, partner.credit_maturity_limit)
 
                     raise exceptions.Warning(
                         ('Maturity Credit Over Limits !'), (msg))
