@@ -11,6 +11,7 @@
                     <field name="maturity_over_credit"/>
                     <field name="credit_maturity_limit"/>
                     <field name="over_credit"/>
+                    <field name="grace_payment_days"/>
                 </field>
             </field>
         </record>
