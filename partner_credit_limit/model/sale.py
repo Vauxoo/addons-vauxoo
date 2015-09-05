@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
 
         for line in movelines:
             if line.date_maturity < time.strftime('%Y-%m-%d') and \
-             line.date_maturity is not False:
+                    line.date_maturity is not False:
                 credit_maturity += line.debit
                 debit_maturity += line.credit
             credit += line.debit
@@ -55,7 +55,7 @@ class SaleOrder(models.Model):
                         'Can not validate the Sale Order because it has '
                         'exceeded the credit limit \nCredit Limit: %s \n'
                         'Check the credit limits on Partner') %\
-                            (partner.credit_limit)
+                        (partner.credit_limit)
                     # 'Can not validate Invoice because Total Invoice is
                     # greater than credit_limit: %s\nCheck Partner Accounts or
                     # Credit Limits !'%(partner.credit_limit)
@@ -75,7 +75,7 @@ class SaleOrder(models.Model):
                            'exceeded the credit limit up to date: %s \n'
                            'Maturity Amount: %s \nMaturity Credit Limit: %s \n'
                            'Check the credit limits on Partner') %\
-                           (time.strftime('%Y-%m-%d'),
+                        (time.strftime('%Y-%m-%d'),
                             balance_maturity, partner.credit_maturity_limit)
 
                     raise exceptions.Warning(
