@@ -51,15 +51,15 @@ class SaleOrder(models.Model):
             if not partner.over_credit:
                 if (balance + so.amount_total) > partner.credit_limit and \
                    partner.credit_limit > 0.00:
-                    msg = ('Can not validate the Sale Order because it has '
-                           'exceeded the credit limit \nCredit Limit: %s \n'
-                           'Check the credit limits on Partner') %\
+                    msg = (
+                        'Can not validate the Sale Order because it has '
+                        'exceeded the credit limit \nCredit Limit: %s \n'
+                        'Check the credit limits on Partner') %\
                             (partner.credit_limit)
                     # 'Can not validate Invoice because Total Invoice is
                     # greater than credit_limit: %s\nCheck Partner Accounts or
                     # Credit Limits !'%(partner.credit_limit)
                     raise exceptions.Warning(('Credit Over Limits !'), (msg))
-                    return False
             else:
                 partner.write(
                     {'credit_limit': credit - debit + so.amount_total})
@@ -80,7 +80,6 @@ class SaleOrder(models.Model):
 
                     raise exceptions.Warning(
                         ('Maturity Credit Over Limits !'), (msg))
-                    return False
                 else:
                     return True
             else:

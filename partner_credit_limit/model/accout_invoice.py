@@ -52,7 +52,6 @@ class AccontInvoice(models.Model):
                                '\nPlease cover the late payment in '
                                'the invoice : %s') % (line.invoice.number)
                         raise exceptions.Warning(('Delayed payments!'), msg)
-                        return False
 
                     credit_maturity += line.debit
                     debit_maturity += line.credit
@@ -76,7 +75,6 @@ class AccontInvoice(models.Model):
                     # greater than credit_limit: %s\nCheck Partner Accounts
                     # or Credit Limits !'%(partner.credit_limit)
                     raise exceptions.Warning(('Credit Over Limits !'), msg)
-                    return False
             else:
                 partner.write(
                     {'credit_limit': credit - debit + invoice.amount_total})
@@ -89,17 +87,16 @@ class AccontInvoice(models.Model):
                     # Amount %s as on %s !\nCheck Partner Accounts or
                     # Credit Limits !' % (credit - debit,
                     # time.strftime('%Y-%m-%d'))
-                    msg = ('Can not validate the Invoice because it has '
-                           'exceeded the credit limit up to date: '
-                           '%s \nMaturity Amount :%s \nMaturity Credit Limit: '
-                           '%s \nCheck the credit limits '
-                           'on Partner') % (
-                           time.strftime('%Y-%m-%d'),
-                           balance_maturity, partner.credit_maturity_limit)
+                    msg = (
+                        'Can not validate the Invoice because it has '
+                        'exceeded the credit limit up to date: '
+                        '%s \nMaturity Amount :%s \nMaturity Credit Limit: '
+                        '%s \nCheck the credit limits on Partner') %\
+                        (time.strftime('%Y-%m-%d'),
+                            balance_maturity, partner.credit_maturity_limit)
 
                     raise exceptions.Warning(
                         ('Maturity Credit Over Limits !'), (msg))
-                    return False
                 else:
                     return True
             else:
