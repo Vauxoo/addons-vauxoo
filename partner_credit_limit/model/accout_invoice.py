@@ -35,7 +35,7 @@ class AccontInvoice(models.Model):
         debit_maturity, credit_maturity = 0.0, 0.0
 
         for line in movelines:
-            if (line.date_maturity and line.partner_id.grace_payment_days):
+            if line.date_maturity and line.partner_id.grace_payment_days:
                 maturity = fields.Datetime.from_string(
                     line.date_maturity)
                 grace_payment_days = timedelta(
@@ -66,7 +66,7 @@ class AccontInvoice(models.Model):
            (balance + invoice.amount_total) > partner.credit_limit:
             if not partner.over_credit:
                 if (balance + invoice.amount_total) > \
-                 partner.credit_limit and partner.credit_limit > 0.00:
+                        partner.credit_limit and partner.credit_limit > 0.00:
                     msg = ('Can not validate the Invoice because it has '
                            'exceeded the credit limit'
                            ' \nCredit Limit: %s \nCheck the credit limits'
@@ -81,8 +81,8 @@ class AccontInvoice(models.Model):
 
             if not partner.maturity_over_credit:
                 if (balance_maturity + invoice.amount_total) >\
-                 partner.credit_maturity_limit and \
-                 partner.credit_maturity_limit > 0.00:
+                        partner.credit_maturity_limit and \
+                        partner.credit_maturity_limit > 0.00:
                     # ~ msg = 'Can not validate Invoice, Total mature due
                     # Amount %s as on %s !\nCheck Partner Accounts or
                     # Credit Limits !' % (credit - debit,
