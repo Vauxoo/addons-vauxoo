@@ -61,7 +61,7 @@ class WebsiteSaleInh(website_sale):
         cr, uid, context, pool = request.cr, request.uid, request.context,\
             request.registry
         qty = product.with_context(
-                location=location.id)._product_available(None, False)
+            location=location.id)._product_available(None, False)
         new_qty = qty.get(product.id).get('qty_available')
         stock_state = '2'
         for route in product.route_ids:
