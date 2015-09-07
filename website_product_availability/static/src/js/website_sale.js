@@ -105,8 +105,8 @@ $('.oe_website_sale').each(function () {
     $(oe_website_sale).on('change', 'input.js_variant_change, select.js_variant_change', function (ev) {
    /*     This method is the reason why everithing was copied from original, the final functionality is
         to retrieve an extra value on the product variant and show wheter is available or not
-        this code was made by Oscar Alcala @oscarolar, please forgive the stupid thing I had to do, 
-        but since the assholes on Odoo did not created any inheritance mechanism, I had to fuck 
+        this code was made by Oscar Alcala @oscarolar, please forgive the stupid thing I had to do,
+        but since the assholes on Odoo did not created any inheritance mechanism, I had to fuck
         things up.*/
         var $ul = $(this).parents('ul.js_add_cart_variants:first');
         var $parent = $ul.closest('.js_product');
@@ -118,7 +118,7 @@ $('.oe_website_sale').each(function () {
         var $stock_location_state = $(".stock_location_state");
         var $div_location_state = $(".product_variant_states");
         var $stock_delay = $(".stock_delay");
-        
+
         var values = [];
         $parent.find('input.js_variant_change:checked, select.js_variant_change').each(function () {
             values.push(+$(this).val());
@@ -145,28 +145,28 @@ $('.oe_website_sale').each(function () {
                 switch(variant_ids[k][4]){
                     case 1:
                         new_class = 'label-success'
-                        text = 'Available' 
+                        text = 'Available'
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
                         // $stock_delay.addClass('hidden')
                         break;
                     case 2:
                         new_class = 'label-danger'
-                        text = 'Not Available' 
+                        text = 'Not Available'
                         $("#add_to_cart").addClass('disabled')
                         $("#similar_products_vx").removeClass('hidden')
                         // $stock_delay.removeClass('hidden')
                         break;
                     case 3:
                         new_class = 'label-warning'
-                        text = 'Low Availability' 
+                        text = 'Low Availability'
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
                         // $stock_delay.addClass('hidden')
                         break;
                     case 4:
                         new_class = 'label-primary'
-                        text = 'On Request' 
+                        text = 'On Request'
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
                         // $stock_delay.removeClass('hidden')
@@ -179,10 +179,7 @@ $('.oe_website_sale').each(function () {
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);
                 $div_location_state.addClass('hidden');
-                debugger;
                 select =".product_variant_states#product-variant-" + variant_ids[k][0];
-                console.log(variant_ids[k]);
-                console.log(select);
                 $(select).removeClass('hidden');
                 /*</oscar>*/
                 product_id = variant_ids[k][0];
