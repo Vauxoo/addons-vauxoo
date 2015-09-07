@@ -69,7 +69,7 @@
                                         </strong>
                                     </p>
                                 </div>
-                            </t> -->                            
+                            </t> -->
                         </t>
                     </t>
                     <t t-if="not product_variants">
