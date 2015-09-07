@@ -34,23 +34,25 @@
                   </div>
                   <div t-attf-class="form-group #{error.get('is_particular') and 'has-error' or ''} col-lg-3">
                       <label class="control-label mt32">
-                      <input class="partner_type" value="particular" type="radio" name="is_company" id="partner_type_p" t-att-checked="'checked' if checkout.get('is_particular') == True else ''"/> Particular
+                      <input class="partner_type" value="particular" type="radio" name="is_company" id="partner_type_p" t-att-checked="'checked' if checkout.get('is_particular') == True else ''"/> Personal
                   </label>
                   </div>
 				</xpath>
 				<xpath expr="//label[@for='vat']/.." position="replace">
-					<div class="form-group col-lg-3">
+            <div id="ruc_values">
+              <div class="form-group col-lg-3">
                       <label class="control-label" for="vat_alone">
-                      	TIN
-                      	<input type="text" placeholder="TIN" name="vat_alone" class="form-control" t-att-value="checkout.get('vat_alone')"/>
-                      	</label>
+                        TIN
+                        <input type="text" placeholder="TIN" name="vat_alone" class="form-control" t-att-value="checkout.get('vat_alone')"/>
+                        </label>
                   </div>
-                  <div class="form-group col-lg-3">
+                  <div class="form-group col-lg-2">
                       <label class="control-label" for="vat_dv" style="font-weight: normal">
-                      	DV
-                      	<input type="text"  placeholder="Check Digit" name="vat_dv" class="form-control" t-att-value="checkout.get('vat_dv')"/>
-                      	</label>
+                        DV
+                        <input type="text" maxlength="2" placeholder="Check Digit" name="vat_dv" class="form-control" t-att-value="checkout.get('vat_dv')"/>
+                        </label>
                   </div>
+            </div>
                   
 				</xpath>
 
@@ -83,11 +85,11 @@
 				</xpath>
 				<xpath expr="//label[@for='vat_dv']" position="after">
                       <t t-if="error.get('vat_dv') == 'invalid'"><span class="label label-danger"> Invalid </span></t>
-                      <t t-if="error.get('vat_dv' == 'missing')"><span class="label label-danger"> Required </span></t>
+                      <t t-if="error.get('vat_dv') == 'missing'"><span class="label label-danger"> Required </span></t>
 				</xpath>
 				<xpath expr="//label[@for='vat_alone']" position="after">
                       <t t-if="error.get('vat_alone') == 'invalid'"><span class="label label-danger"> Invalid </span></t>
-                      <t t-if="error.get('vat_alone' == 'missing')"><span class="label label-danger"> Required </span></t>
+                      <t t-if="error.get('vat_alone') == 'missing'"><span class="label label-danger"> Required </span></t>
 				</xpath>
 				<xpath expr="//input[@type='email']" position="before">
                       <t t-if="error.get('email') == 'invalid'"><span class="label label-danger"> Invalid Email </span></t>

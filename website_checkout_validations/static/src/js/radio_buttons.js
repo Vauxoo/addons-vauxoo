@@ -39,17 +39,20 @@
        // THIS CODE HIDES THE COMPANY INPUT IF PARTNER IS PARTICULAR
        if ($("#partner_type_p").is(':checked'))
         {
+          $("div[id=ruc_values]").hide();
           $("div[id=company]").hide();
         }
        $(".partner_type").click(function(){
          var selectedBox = this.id;
          if (this.value == 'particular')
          {
+          $("div[id=ruc_values]").hide();
           $("div[id=company]").hide();
          }
          else
          {
           $("div[id=company]").show();
+          $("div[id=ruc_values]").show();
          }
 
        });

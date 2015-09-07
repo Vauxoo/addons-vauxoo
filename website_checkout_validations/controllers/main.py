@@ -99,7 +99,6 @@ class WebsiteSaleInh(website_sale):
             checkout.update(self.checkout_parse("shipping", shipping))
 
         checkout['shipping_id'] = shipping_id
-
         # Default search by user country
         if not checkout.get('country_id'):
             country_code = request.session['geoip'].get('country_code')
@@ -109,7 +108,10 @@ class WebsiteSaleInh(website_sale):
                         ('code', '=', country_code)], context=context)
                 if country_ids:
                     checkout['country_id'] = country_ids[0]
-
+            else:
+                checkout['country_id'] = orm_country.search(
+                    cr, SUPERUSER_ID,
+                    [('code', '=', 'PA')], context=context)[0]
         values = {
             'cities': cities,
             'countries': countries,
@@ -197,24 +199,51 @@ class WebsiteSaleInh(website_sale):
 
         # Validation
         error = dict()
+        country = registry.get('res.country').browse(
+            cr, SUPERUSER_ID, [data.get('country_id')])
         for field_name in self.mandatory_billing_fields:
             if not data.get(field_name):
                 error[field_name] = 'missing'
-        if data.get("vat_alone") and not data.get("vat_dv"):
-            error["vat_dv"] = 'missing'
-        elif data.get("vat_dv") and not data.get("vat_alone"):
-            error["vat_alone"] = 'missing'
-        if data.get("vat") and hasattr(registry["res.partner"], "check_vat"):
-            if request.website.company_id.vat_check_vies:
-                # force full VIES online check
-                check_func = registry["res.partner"].vies_vat_check
-            else:
-                # quick and partial off-line checksum validation
-                check_func = registry["res.partner"].simple_vat_check
-            vat_country, vat_number = registry["res.partner"]._split_vat(data.get("vat"))  # noqa
-            if not check_func(cr, uid, vat_country, vat_number, context=None):
-                error["vat_alone"] = 'invalid'
-                error["vat_dv"] = 'invalid'
+        if data.get('is_company') is True and country.code == 'PA':
+            if not data.get("vat_alone") and not data.get("vat_dv"):
+                error["vat_dv"] = 'missing'
+                error["vat_alone"] = 'missing'
+            elif data.get("vat_alone") and not data.get("vat_dv"):
+                error["vat_dv"] = 'missing'
+            elif data.get("vat_dv") and not data.get("vat_alone"):
+                error["vat_alone"] = 'missing'
+            if data.get("vat") and hasattr(
+                    registry["res.partner"], "check_vat"):
+                if request.website.company_id.vat_check_vies:
+                    # force full VIES online check
+                    check_func = registry["res.partner"].vies_vat_check
+                else:
+                    # quick and partial off-line checksum validation
+                    check_func = registry["res.partner"].simple_vat_check
+                vat_country, vat_number = registry["res.partner"]._split_vat(data.get("vat"))  # noqa
+                if not check_func(
+                        cr, uid, vat_country, vat_number, context=None):
+                    error["vat_alone"] = 'invalid'
+                    error["vat_dv"] = 'invalid'
+
+        if data.get('is_company') is True and country.code != 'PA':
+            if data.get("vat_alone") and not data.get("vat_dv"):
+                error["vat_dv"] = 'missing'
+            elif data.get("vat_dv") and not data.get("vat_alone"):
+                error["vat_alone"] = 'missing'
+            if data.get("vat") and hasattr(
+                    registry["res.partner"], "check_vat"):
+                if request.website.company_id.vat_check_vies:
+                    # force full VIES online check
+                    check_func = registry["res.partner"].vies_vat_check
+                else:
+                    # quick and partial off-line checksum validation
+                    check_func = registry["res.partner"].simple_vat_check
+                vat_country, vat_number = registry["res.partner"]._split_vat(data.get("vat"))  # noqa
+                if not check_func(
+                        cr, uid, vat_country, vat_number, context=None):
+                    error["vat_alone"] = 'invalid'
+                    error["vat_dv"] = 'invalid'
 
         if data.get("shipping_id") == -1:
             for field_name in self.mandatory_shipping_fields:
