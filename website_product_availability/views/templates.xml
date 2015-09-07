@@ -26,12 +26,12 @@
                                                         </span>
                                                     </t>
                                                     <t t-if="location[1] == '2'">
-                                                        <t t-if="location[2] == 'uknow'">
+                                                        <t t-if="location[2] == 'unknown'">
                                                             <span class="pull-right label label-danger">
                                                             Not Available
                                                             </span>
                                                         </t>
-                                                        <t t-if="location[2] != 'uknow'">
+                                                        <t t-if="location[2] != 'unknown'">
                                                             <span class="pull-right label label-info stock_delay">
                                                                <t t-raw="location[2]"/>
                                                             </span>
@@ -43,12 +43,12 @@
                                                         </span>
                                                     </t>
                                                     <t t-if="location[1] == '4'">
-                                                        <t t-if="location[2] == 'uknow'">
+                                                        <t t-if="location[2] == 'unknown'">
                                                             <span class="pull-right label label-danger">
                                                             On Request
                                                             </span>
                                                         </t>
-                                                        <t t-if="location[2] != 'uknow'">
+                                                        <t t-if="location[2] != 'unknown'">
                                                             <span class="pull-right label label-info stock_delay">
                                                                 <t t-raw="location[2]"/>
                                                             </span>

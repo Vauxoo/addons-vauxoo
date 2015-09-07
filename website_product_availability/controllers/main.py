@@ -90,7 +90,7 @@ class WebsiteSaleInh(website_sale):
         if dates_planed:
             date = min(dates_planed)
         else:
-            date = 'uknow'
+            date = 'unknown'
         return [location.stock_alias, stock_state, str(date)]
 
     @http.route(
