@@ -51,9 +51,10 @@ class AccontInvoice(models.Model):
                     if line.amount_residual > 0.0:
                         has_late_payment = True
                         invoice_list.append(line.invoice.number)
-                # credit and debit maturity sums all aml with limit date to pay
-                credit_maturity += line.debit
-                debit_maturity += line.credit
+                    # credit and debit maturity sums all aml
+                    # with late payments
+                    credit_maturity += line.debit
+                    debit_maturity += line.credit
             credit += line.debit
             debit += line.credit
 
