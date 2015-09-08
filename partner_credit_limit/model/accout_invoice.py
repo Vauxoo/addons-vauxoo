@@ -8,7 +8,7 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from openerp import models, api, fields
+from openerp import models, api, fields, _
 import time
 from datetime import timedelta
 from openerp import exceptions
@@ -33,6 +33,8 @@ class AccontInvoice(models.Model):
              ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
         debit, credit = 0.0, 0.0
         debit_maturity, credit_maturity = 0.0, 0.0
+        invoice_list = []
+        has_late_payment = False
 
         for line in movelines:
             if line.date_maturity and line.partner_id.grace_payment_days:
@@ -47,18 +49,23 @@ class AccontInvoice(models.Model):
                 limit_day = line.date_maturity
                 if limit_day < fields.Date.today():
                     if line.amount_residual > 0.0:
-                        msg = ('Can not validate the Invoice because Partner '
-                               'has late payments.'
-                               '\nPlease cover the late payment in '
-                               'the invoice : %s') % (line.invoice.number)
-                        raise exceptions.Warning(('Delayed payments!'), msg)
-
-                    credit_maturity += line.debit
-                    debit_maturity += line.credit
+                        has_late_payment = True
+                        invoice_list.append(line.invoice.number)
+                # credit and debit maturity sums all aml with limit date to pay
+                credit_maturity += line.debit
+                debit_maturity += line.credit
             credit += line.debit
             debit += line.credit
 
+        if has_late_payment:
+            msg = _('Can not validate the Invoice because Partner '
+                    'has late payments.\nPlease cover the late payment in '
+                    'invoices : %s') % (str(invoice_list))
+            raise exceptions.Warning((_('Delayed payments!')), msg)
+
         balance = credit - debit
+        # balance_maturity is the balance that must've be paid beafore
+        # date_maturity
         balance_maturity = credit_maturity - debit_maturity
 
         if (balance_maturity + invoice.amount_total) > \
@@ -67,14 +74,14 @@ class AccontInvoice(models.Model):
             if not partner.over_credit:
                 if (balance + invoice.amount_total) > \
                         partner.credit_limit and partner.credit_limit > 0.00:
-                    msg = ('Can not validate the Invoice because it has '
-                           'exceeded the credit limit'
-                           ' \nCredit Limit: %s \nCheck the credit limits'
-                           ' on partner') % (partner.credit_limit)
+                    msg = _('Can not validate the Invoice because it has '
+                            'exceeded the credit limit'
+                            ' \nCredit Limit: %s \nCheck the credit limits'
+                            ' on partner') % (partner.credit_limit)
                     # 'Can not validate Invoice because Total Invoice is
                     # greater than credit_limit: %s\nCheck Partner Accounts
                     # or Credit Limits !'%(partner.credit_limit)
-                    raise exceptions.Warning(('Credit Over Limits !'), msg)
+                    raise exceptions.Warning(_('Credit Over Limits !'), msg)
             else:
                 partner.write(
                     {'credit_limit': credit - debit + invoice.amount_total})
@@ -87,7 +94,7 @@ class AccontInvoice(models.Model):
                     # Amount %s as on %s !\nCheck Partner Accounts or
                     # Credit Limits !' % (credit - debit,
                     # time.strftime('%Y-%m-%d'))
-                    msg = (
+                    msg = _(
                         'Can not validate the Invoice because it has '
                         'exceeded the credit limit up to date: '
                         '%s \nMaturity Amount :%s \nMaturity Credit Limit: '
@@ -96,7 +103,7 @@ class AccontInvoice(models.Model):
                             balance_maturity, partner.credit_maturity_limit)
 
                     raise exceptions.Warning(
-                        ('Maturity Credit Over Limits !'), (msg))
+                        (_('Maturity Credit Over Limits !')), (msg))
                 else:
                     return True
             else:

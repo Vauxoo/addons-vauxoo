@@ -37,12 +37,15 @@ class SaleOrder(models.Model):
         for line in movelines:
             if line.date_maturity < time.strftime('%Y-%m-%d') and \
                     line.date_maturity is not False:
+                # credit and debit maturity sums all aml with limit date to pay
                 credit_maturity += line.debit
                 debit_maturity += line.credit
             credit += line.debit
             debit += line.credit
 
         balance = credit - debit
+        # balance_maturity is the balance that must've be paid beafore
+        # dates maturity
         balance_maturity = credit_maturity - debit_maturity
 
         if (balance_maturity + so.amount_total) > \
