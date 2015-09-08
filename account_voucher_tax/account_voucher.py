@@ -28,6 +28,8 @@ from openerp.osv import osv, fields
 
 from openerp.addons import decimal_precision as dp
 
+import itertools
+
 
 class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
@@ -214,7 +216,7 @@ class AccountVoucher(osv.Model):
                 move_line_writeoff_tax = self.writeoff_move_line_tax_get(
                     cr, uid, voucher, amount_tax_currency, move_id,
                     voucher.number, company_currency, current_currency,
-                    account_tax_collected, context=context)
+                    move_reconcile_id, context=context)
                 if move_line_writeoff_tax:
                     move_line_obj.create(
                         cr, uid, move_line_writeoff_tax, context=context)
@@ -227,7 +229,7 @@ class AccountVoucher(osv.Model):
 
     def writeoff_move_line_tax_get(
             self, cr, uid, voucher, line_total, move_id, name,
-            company_currency, current_currency, account_id, context=None):
+            company_currency, current_currency, move_reconcile_id, context=None):
         '''
         Set a dict to be use to create the writeoff move line.
 
@@ -244,6 +246,7 @@ class AccountVoucher(osv.Model):
         :rtype: dict
         '''
         currency_obj = self.pool.get('res.currency')
+        move_line_obj = self.pool.get('account.move.line')
         move_line = {}
 
         current_currency_obj = voucher.currency_id or\
@@ -254,6 +257,13 @@ class AccountVoucher(osv.Model):
             sign = voucher.type in ('sale', 'receipt') and -1 or 1
 
             diff = line_total * sign
+
+            aml_ids = list(itertools.chain.from_iterable(move_reconcile_id))
+            for move_line_id in move_line_obj.browse(
+                    cr, uid, aml_ids, context=context):
+                if move_line_id.journal_id.type not in ('bank', 'cash'):
+                    account_id = move_line_id.account_id.id
+                    break
 
             move_line = {
                 'name': name,
