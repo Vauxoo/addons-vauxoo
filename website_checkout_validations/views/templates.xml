@@ -27,12 +27,12 @@
                   </div>
 				</xpath>
 				<xpath expr="//div[@class='row']/div[2]" position="before">
-                  <div t-attf-class="form-group #{error.get('is_company') and 'has-error' or ''} col-lg-3">
+                  <div t-attf-class="form-group #{error.get('is_company') and 'has-error' or ''} col-lg-3 pull-right">
                       <label class="control-label mt32">
                       <input class="partner_type" value="company" type="radio" name="is_company" id="partner_type_c" t-att-checked="'checked' if checkout.get('is_company') == True else ''"/> Company
                   </label>
                   </div>
-                  <div t-attf-class="form-group #{error.get('is_particular') and 'has-error' or ''} col-lg-3">
+                  <div t-attf-class="form-group #{error.get('is_particular') and 'has-error' or ''} col-lg-3 pull-right">
                       <label class="control-label mt32">
                       <input class="partner_type" value="particular" type="radio" name="is_company" id="partner_type_p" t-att-checked="'checked' if checkout.get('is_particular') == True else ''"/> Personal
                   </label>
@@ -53,7 +53,7 @@
                         </label>
                   </div>
             </div>
-                  
+
 				</xpath>
 
                 <!-- Extra options for inherited fields -->
