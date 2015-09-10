@@ -8,16 +8,89 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from openerp import models, fields
+from openerp import models, fields, api
+from datetime import timedelta
 
 
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
-    over_credit = fields.Boolean('Allow Over Credit?', required=False)
-    maturity_over_credit = fields.Boolean(
-        'Allow Maturity Over Credit?', required=False)
-    credit_maturity_limit = fields.Float(string='Credit Maturity Limit')
     grace_payment_days = fields.Float(
         'Days grace payment',
         help='Days grace payment')
+
+    credit_overloaded = fields.Boolean(
+        compute='_get_credit_overloaded', string="Credit Overloaded",
+        type='Boolean')
+    overdue_credit = fields.Boolean(
+        compute='_get_overdue_credit', string="Late Payments", type='Boolean')
+    allowed_sale = fields.Boolean(
+        compute='get_allowed_sale', string="Allowed Sales", type='Boolean')
+
+    @api.one
+    def _get_credit_overloaded(self):
+        partner = self
+        context = self._context or {}
+        currency_obj = self.env['res.currency']
+        res_company = self.env['res.company']
+        imd_obj = self.env['ir.model.data']
+        company_id = imd_obj.get_object_reference(
+            'base', 'main_company')[1]
+        company = res_company.browse(company_id)
+        new_amount = context.get('new_amount', 0.0)
+        new_currency = context.get('new_currency', False)
+        if new_currency:
+            from_currency = currency_obj.browse(new_currency)
+        else:
+            from_currency = company.currency_id
+        new_amount_currency = from_currency.compute(
+            new_amount, company.currency_id)
+
+        new_credit = partner.credit + new_amount_currency
+
+        if new_credit > partner.credit_limit:
+            partner.credit_overloaded = True
+            return True
+        else:
+            partner.credit_overloaded = False
+            return False
+
+    @api.one
+    def _get_overdue_credit(self):
+        partner = self
+        moveline_obj = self.env['account.move.line']
+        movelines = moveline_obj.search(
+            [('partner_id', '=', partner.id),
+             ('account_id.type', '=', 'receivable'),
+             ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
+        # credit = 0.0
+        debit_maturity, credit_maturity = 0.0, 0.0
+
+        for line in movelines:
+            if line.date_maturity and line.partner_id.grace_payment_days:
+                maturity = fields.Datetime.from_string(
+                    line.date_maturity)
+                grace_payment_days = timedelta(
+                    days=line.partner_id.grace_payment_days, seconds=-1)
+                limit_day = maturity + grace_payment_days
+                limit_day = limit_day.strftime("%Y-%m-%d")
+
+            elif line.date_maturity:
+                limit_day = line.date_maturity
+                if limit_day < fields.Date.today():
+                    # credit and debit maturity sums all aml
+                    # with late payments
+                    debit_maturity += line.debit
+                    credit_maturity += line.credit
+            # credit += line.credit
+        balance_maturity = debit_maturity - credit_maturity
+
+        if balance_maturity > 0.0:
+            partner.overdue_credit = True
+        else:
+            partner.overdue_credit = False
+
+    @api.one
+    def get_allowed_sale(self):
+        if self.credit_overloaded and self.overdue_credit:
+            self.allowed_sale = True

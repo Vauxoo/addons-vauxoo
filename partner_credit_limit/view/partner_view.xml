@@ -8,9 +8,9 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <field name="credit_limit" position="before">
-                    <field name="maturity_over_credit"/>
-                    <field name="credit_maturity_limit"/>
-                    <field name="over_credit"/>
+                    <field name="credit_overloaded" invisible='1'/>
+                    <field name="overdue_credit" invisible='1'/>
+                    <field name="allowed_sale"/>
                     <field name="grace_payment_days"/>
                 </field>
             </field>
