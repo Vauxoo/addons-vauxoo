@@ -22,6 +22,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from openerp import api
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 
@@ -143,12 +144,13 @@ class UserStoryPhase(osv.Model):
     def onchange_UserStory(self, cr, uid, ids, user_story, context=None):
         return {}
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         if not default.get('name', False):
-            default.update(name=_('%s (copy)') % (self.browse(cr, uid, id, context=context).name))
-        return super(UserStoryPhase, self).copy(cr, uid, id, default, context)
+            default.update(name=_('%s (copy)') % (self.name))
+        return super(UserStoryPhase, self).copy(default)
 
     def set_draft(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state': 'draft'})

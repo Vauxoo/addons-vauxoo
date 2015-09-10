@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date_invoice']" position="after">
                     <field name="type" invisible='1'/>
-                    <field name="qty_attachments" string="Attachments"
+                    <field name="qty_attachments"
                          invisible="context.get('type') in ('out_invoice', 'out_refund')"/>
                 </xpath>
             </field>

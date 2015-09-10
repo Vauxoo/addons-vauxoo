@@ -19,3 +19,4 @@
 ##############################################################################
 
 from . import test_for_unique_ref
+from . import test_copy_method

@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account.invoice_tree" /> 
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date_invoice']" position="before">
-                    <field string="Supplier Invoice Number" name="supplier_invoice_number"/>
+                    <field string="Supplier Invoice Number" name="supplier_invoice_number" invisible="context.get('type', False) in ('out_invoice','out_refund') or False"/>
                 </xpath>       
             </field>
         </record>

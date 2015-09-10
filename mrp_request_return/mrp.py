@@ -23,6 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import api
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
@@ -128,13 +129,14 @@ class MrpProduction(osv.Model):
         })
         return picking_id
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'picking_ids': []
         })
-        return super(MrpProduction, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(default)
 
 
 class StockPicking(osv.Model):

@@ -23,6 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import api
 from openerp.osv import osv, fields
 
 
@@ -35,12 +36,12 @@ class ProductProduct(osv.Model):
                                                      'Customer Codes'),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if not default:
             default = {}
         default['product_customer_code_ids'] = False
-        res = super(ProductProduct, self).copy(
-            cr, uid, id, default=default, context=context)
+        res = super(ProductProduct, self).copy(default=default)
         return res
 
     def name_search(self, cr, user, name='', args=None, operator='ilike',

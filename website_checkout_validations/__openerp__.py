@@ -8,9 +8,11 @@
     "license": "AGPL-3",
     "depends": [
         "website_sale",
+        "base_location",
     ],
     "demo": [],
     "data": [
+        'views/assets.xml',
         'views/sale_order_view.xml',
         'views/templates.xml',
     ],

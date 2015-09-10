@@ -21,6 +21,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp import api
 from openerp.osv import fields, osv
 from openerp.addons import decimal_precision as dp
 
@@ -36,14 +37,14 @@ class HrExpenseExpense(osv.Model):
             digits_compute=dp.get_precision('Account'))
     }
 
-    def copy(self, cr, uid, ids, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default = default.copy()
         default.update({'fully_applied_vat': False,
                         })
-        return super(HrExpenseExpense, self).copy(
-            cr, uid, ids, default, context=context)
+        return super(HrExpenseExpense, self).copy(default)
 
     def payment_reconcile(self, cr, uid, ids, context=None):
         """ It reconcile the expense advance and expense invoice account move
