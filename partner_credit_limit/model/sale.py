@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
     def check_limit(self):
         allowed_sale = self.env['res.partner'].with_context(
             {'new_amount': self.amount_total,
-             'new_currency': self.company_id.currency_id.id}
-             ).browse(self.partner_id.id).allowed_sale
+             'new_currency': self.company_id.currency_id.id}).browse(
+                 self.partner_id.id).allowed_sale
         if allowed_sale:
             return True
