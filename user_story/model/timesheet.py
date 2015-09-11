@@ -23,8 +23,8 @@ from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
 
-class HrTimesheet(osv.Model):
-    _inherit = "hr.analytic.timesheet"
+class AnalyticLine(osv.Model):
+    _inherit = "account.analytic.line"
 
     def _get_invoiceables_hours(
             self, cr, uid,
