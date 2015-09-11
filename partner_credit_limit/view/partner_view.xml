@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <record id="action_account_moves_late_payments" model="ir.actions.act_window">
+            <field name="name">Late Payments</field>
+            <field name="res_model">account.move.line</field>
+            <field name="context">{'search_default_partner_id': [active_id], 'default_partner_id': active_id}</field>
+            <field name="domain">[
+                ('account_id.type', '=', 'receivable'),
+                ('state', '!=', 'draft'), ('reconcile_id', '=', False),
+                ('date_maturity','&lt;',time.strftime('%Y-%m-%d %H:%M:%S'))
+            ]</field>
+        </record>
         <record id="view_category_property_form" model="ir.ui.view">
             <field name="name">partner.over.credit.limit.form.inherit</field>
             <field name="model">res.partner</field>
@@ -13,6 +23,14 @@
                     <field name="allowed_sale"/>
                     <field name="grace_payment_days"/>
                 </field>
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button
+                        type="action" class="oe_stat_button"
+                        name="%(partner_credit_limit.action_account_moves_late_payments)d"
+                        icon="fa-list"
+                        string="Late Payments">
+                    </button>
+                </xpath>
             </field>
         </record>
     </data>
