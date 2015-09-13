@@ -29,5 +29,5 @@ script:
   # get modules changed and set environment variable INCLUDE_LINT
   - PYTHONPATH=${PATH} python -c "import getaddons;print 'export INCLUDE_LINT=\"' + ' '.join(getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}')) + '\"'" >${TRAVIS_BUILD_DIR}/modules_changed.profile
   - source ${TRAVIS_BUILD_DIR}/modules_changed.profile
-
+  - if [ "x${INCLUDE_LINT}" == "x" ]; then exit 0; fi
   - travis_run_tests
