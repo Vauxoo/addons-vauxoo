@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 {
     "name": "Website Product Availability",
     "version": "1.6",
