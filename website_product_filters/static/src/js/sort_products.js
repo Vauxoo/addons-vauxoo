@@ -49,6 +49,11 @@
               return +b.dataset.price - +a.dataset.price;
             }).appendTo( $wrapper );
           }
+          if (val == 'popularity'){
+            $wrapper.find('.oe_product.oe_list.oe_product_cart').sort(function (a, b) {
+              return +b.dataset.views - +a.dataset.views;
+            }).appendTo( $wrapper );
+          }
         })
         .trigger( "change" );
         var selected_category = $(".nav.nav-pills.nav-stacked.nav-hierarchy li.active a");

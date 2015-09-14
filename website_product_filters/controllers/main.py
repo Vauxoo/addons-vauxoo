@@ -102,4 +102,18 @@ class WebsiteSale(website_sale):
 
         return attribute_ids
 
+    @http.route(['/shop/product/<model("product.template"):product>'],
+                type='http', auth="public", website=True)
+    def product(self, product, category='', search='', **kwargs):
+        cr, uid, context, pool =\
+            request.cr, request.uid, request.context, request.registry
+        template_obj = pool['product.template']
+        viewed = product.views + 1
+        template_obj.write(cr, uid, [product.id],
+                           {'views': viewed}, context=context)
+        res = super(WebsiteSale, self).product(product=product,
+                                               category=category,
+                                               search=search, **kwargs)
+        return res
+
 openerp.addons.website_sale.controllers.main.website_sale = WebsiteSale

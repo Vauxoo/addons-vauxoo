@@ -109,6 +109,7 @@
           <xpath expr="//div[@class='oe_product oe_list oe_product_cart']" position="attributes">
             <attribute name="t-att-data-rating">product.rating and product.rating or '0'</attribute>
             <attribute name="t-att-data-name">product.name and product.name or ' '</attribute>
+            <attribute name="t-att-data-views">product.views and product.views or '0'</attribute>
             <attribute name="t-att-data-price">product.lst_price and product.lst_price or '0'</attribute>
           </xpath>
         </template>
