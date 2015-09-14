@@ -29,4 +29,3 @@ class SaleOrder(models.Model):
                     '\nPlease cover the late payment or check credit limit'
                     '\nCreadit Limit : %s') % (self.partner_id.credit_limit)
             raise exceptions.Warning(('Warning!'), msg)
-            return False
