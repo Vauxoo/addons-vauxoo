@@ -29,27 +29,33 @@ class AccontInvoice(models.Model):
             return True
         movelines = moveline_obj.search(
             [('partner_id', '=', partner.id),
-             ('account_id.type', 'in', ['receivable', 'payable']),
+             ('account_id.type', '=', 'receivable'),
              ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
-        movelines = moveline_obj.browse(movelines)
         debit, credit = 0.0, 0.0
         debit_maturity, credit_maturity = 0.0, 0.0
 
         for line in movelines:
             if (line.date_maturity and line.partner_id.grace_payment_days):
-                date_maturity = fields.Datetime.from_string(
+                maturity = fields.Datetime.from_string(
                     line.date_maturity)
                 grace_payment_days = timedelta(
                     days=line.partner_id.grace_payment_days, seconds=-1)
-                limit_day = date_maturity + grace_payment_days
+                limit_day = maturity + grace_payment_days
+                limit_day = limit_day.strftime("%Y-%m-%d")
 
-                if limit_day < fields.Date.today:
+            elif line.date_maturity:
+                limit_day = line.date_maturity
+                if limit_day < fields.Date.today():
+                    if line.amount_residual > 0.0:
+                        msg = ('Can not validate the Invoice because Partner '
+                               'has late payments.'
+                               '\nPlease cover the late payment in '
+                               'the invoice : %s') % (line.invoice.number)
+                        raise exceptions.Warning(('Delayed payments!'), msg)
+                        return False
+
                     credit_maturity += line.debit
                     debit_maturity += line.credit
-            elif line.date_maturity < fields.Date.today and \
-                    line.date_maturity is not False:
-                credit_maturity += line.debit
-                debit_maturity += line.credit
             credit += line.debit
             debit += line.credit
 
@@ -69,7 +75,7 @@ class AccontInvoice(models.Model):
                     # 'Can not validate Invoice because Total Invoice is
                     # greater than credit_limit: %s\nCheck Partner Accounts
                     # or Credit Limits !'%(partner.credit_limit)
-                    raise exceptions.Warning(('Credit Over Limits !'), (msg))
+                    raise exceptions.Warning(('Credit Over Limits !'), msg)
                     return False
             else:
                 partner.write(
