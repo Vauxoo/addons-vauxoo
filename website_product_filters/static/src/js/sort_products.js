@@ -21,7 +21,6 @@
     // },
 
     build: function(debug){
-      console.log("loaded shit");
       $("#product_sorter").change(function() {
           var val = "";
           $("#product_sorter option:selected").each(function() {
@@ -52,6 +51,11 @@
           if (val == 'popularity'){
             $wrapper.find('.oe_product.oe_list.oe_product_cart').sort(function (a, b) {
               return +b.dataset.views - +a.dataset.views;
+            }).appendTo( $wrapper );
+          }
+          if (val == 'hottest'){
+            $wrapper.find('.oe_product.oe_list.oe_product_cart').sort(function (a, b) {
+              return +b.dataset.hottest - +a.dataset.hottest;
             }).appendTo( $wrapper );
           }
         })

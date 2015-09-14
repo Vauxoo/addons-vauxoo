@@ -22,7 +22,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields
+from openerp import models, fields, api
+from datetime import datetime
+import time
 
 
 class ProductTemplate(models.Model):
@@ -32,3 +34,15 @@ class ProductTemplate(models.Model):
         'Views',
         help='This field shows the number of times a product has been'
              'viewed on the website in order to get popularity of it.')
+    decimal_time = fields.Integer(
+        'Decimal Time',
+        help='This field shows the decimal time when a product is published'
+        'on the website.')
+
+    @api.one
+    def write(self, values):
+        if values.get('website_published', False) == True:
+            now = datetime.now()
+            decimal_time = time.mktime(now.timetuple())
+            values['decimal_time'] = decimal_time
+        return super(ProductTemplate, self).write(values)
