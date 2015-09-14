@@ -25,5 +25,4 @@
         "view/partner_view.xml",
     ],
     "installable": True,
-    "active": False,
 }

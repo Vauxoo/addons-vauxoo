@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
 #
@@ -8,4 +8,4 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from . import accout_invoice, partner  # sale
+from . import accout_invoice, partner, sale
