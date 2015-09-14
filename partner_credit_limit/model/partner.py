@@ -12,7 +12,7 @@ from openerp import models, fields, api
 from datetime import timedelta
 
 
-class res_partner(models.Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     grace_payment_days = fields.Float(
