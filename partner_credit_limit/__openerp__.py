@@ -22,6 +22,7 @@
     "demo": [],
     "data": [
         "view/invoice_workflow.xml",
+        "view/sale_order_view.xml",
         "view/partner_view.xml",
     ],
     "installable": True,
