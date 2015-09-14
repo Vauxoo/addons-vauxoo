@@ -50,10 +50,8 @@ class ResPartner(models.Model):
 
         if new_credit > partner.credit_limit:
             partner.credit_overloaded = True
-            return True
         else:
             partner.credit_overloaded = False
-            return False
 
     @api.one
     def _get_overdue_credit(self):
@@ -77,11 +75,11 @@ class ResPartner(models.Model):
 
             elif line.date_maturity:
                 limit_day = line.date_maturity
-                if limit_day < fields.Date.today():
-                    # credit and debit maturity sums all aml
-                    # with late payments
-                    debit_maturity += line.debit
-                    credit_maturity += line.credit
+            if limit_day < fields.Date.today():
+                # credit and debit maturity sums all aml
+                # with late payments
+                debit_maturity += line.debit
+                credit_maturity += line.credit
             # credit += line.credit
         balance_maturity = debit_maturity - credit_maturity
 
@@ -92,5 +90,7 @@ class ResPartner(models.Model):
 
     @api.one
     def get_allowed_sale(self):
-        if self.credit_overloaded and self.overdue_credit:
+        if not self.credit_overloaded and not self.overdue_credit:
             self.allowed_sale = True
+        else:
+            self.allowed_sale = False
