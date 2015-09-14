@@ -8,7 +8,8 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from openerp import models, api
+from openerp import models, api, _
+from openerp import exceptions
 
 
 class SaleOrder(models.Model):
@@ -22,3 +23,10 @@ class SaleOrder(models.Model):
                  self.partner_id.id).allowed_sale
         if allowed_sale:
             return True
+        else:
+            msg = _('Can not validate the Invoice because Partner '
+                    'has late payments or has exceeded the credit limit.'
+                    '\nPlease cover the late payment or check credit limit'
+                    '\nCreadit Limit : %s') % (self.partner_id.credit_limit)
+            raise exceptions.Warning(('Warning!'), msg)
+            return False
