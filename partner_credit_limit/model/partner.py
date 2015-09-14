@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
 #
@@ -30,7 +30,7 @@ class ResPartner(models.Model):
     @api.one
     def _get_credit_overloaded(self):
         partner = self
-        context = self._context or {}
+        context = self.env.context or {}
         currency_obj = self.env['res.currency']
         res_company = self.env['res.company']
         imd_obj = self.env['ir.model.data']

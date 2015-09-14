@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
 #
@@ -23,5 +23,3 @@ class AccontInvoice(models.Model):
                  self.partner_id.id).allowed_sale
         if allowed_sale:
             return True
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
