@@ -27,9 +27,8 @@ from datetime import datetime
 import time
 
 
-class ProductTemplate(models.Model):
-    _inherit = "product.template"
-
+class WebsiteSeoMetadata(models.Model):
+    _inherit = ["website.seo.metadata"]
     views = fields.Integer(
         'Views',
         help='This field shows the number of times a product has been'
@@ -45,4 +44,9 @@ class ProductTemplate(models.Model):
             now = datetime.now()
             decimal_time = time.mktime(now.timetuple())
             values['decimal_time'] = decimal_time
-        return super(ProductTemplate, self).write(values)
+        return super(WebsiteSeoMetadata, self).write(values)
+
+
+class WebsiteProductMetadata(models.Model):
+    _inherit = ["product.template", "website.seo.metadata"]
+    _name = "product.template"
