@@ -18,6 +18,8 @@ class AccontInvoice(models.Model):
 
     @api.one
     def check_limit_credit(self):
+        if self.payment_term.payment_type != 'credit':
+            return True
         allowed_sale = self.env['res.partner'].with_context(
             {'new_amount': self.amount_total,
              'new_currency': self.currency_id.id}).browse(
