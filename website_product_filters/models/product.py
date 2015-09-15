@@ -40,7 +40,7 @@ class WebsiteSeoMetadata(models.Model):
 
     @api.one
     def write(self, values):
-        if values.get('website_published', False) == True:
+        if values.get('website_published', False):
             now = datetime.now()
             decimal_time = time.mktime(now.timetuple())
             values['decimal_time'] = decimal_time
