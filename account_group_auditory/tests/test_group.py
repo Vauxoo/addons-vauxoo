@@ -1,3 +1,4 @@
+# coding: utf-8
 from openerp import SUPERUSER_ID
 from openerp.osv.orm import except_orm
 from openerp.tests.common import TransactionCase

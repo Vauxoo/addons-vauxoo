@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -280,6 +280,3 @@ class AccountInvoiceRefund(osv.osv_memory):
                                 'filter_refund'],
                                 context=context)[0]['filter_refund']
         return self.compute_refund(cr, uid, ids, data_refund, context=context)
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

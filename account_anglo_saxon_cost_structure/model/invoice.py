@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -70,5 +71,3 @@ class AccountInvoiceLine(osv.Model):
 
         print "res", res
         return res
-
-  # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

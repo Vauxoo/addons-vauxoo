@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -312,6 +312,3 @@ class MergeEditingWizard(osv.TransientModel):
 
     def action_apply(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

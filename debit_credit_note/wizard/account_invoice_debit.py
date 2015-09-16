@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -263,6 +263,3 @@ class AccountInvoiceDebit(osv.TransientModel):
 
     def invoice_debit(self, cr, uid, ids, context=None):
         return self.compute_debit(cr, uid, ids, context=context)
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -46,4 +46,3 @@ report_sxw.report_sxw('report.m321_reports.packing_list_report',
                       'stock.picking',
                       'addons/m321_reports/report/picking.rml',
                       parser=PackingListReport)
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

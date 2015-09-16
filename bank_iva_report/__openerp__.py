@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -28,7 +28,6 @@
 ###
 ### res_company --> account_management ver si se puede eliminar esta dependencia ####
 ### retencion_iva, base_vat_ve  ver si se puede eliminar esta dependencia
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Voucher Paid support report",
     "version": "0.6",

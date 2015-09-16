@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -75,6 +75,3 @@ class ProjectComputePhases(osv.osv_memory):
         project_id = data.get('project_id') and data.get('project_id')[0] or False
         result['context'] = {"search_default_project_id": project_id, "default_project_id": project_id, "search_default_current": 1}
         return result
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

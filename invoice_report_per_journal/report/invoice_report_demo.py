@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # ##########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -56,5 +56,3 @@ webkit_report.WebKitParser(
     'report.invoice.report.demo.webkit', 'account.invoice',
     'addons/invoice_report_per_journal/report/invoice_report_demo.mako',
     parser=InvoiceReportDemoHtml)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

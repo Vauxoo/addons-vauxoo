@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
     "name": "Account Voucher Category",
     "version": "1.6",

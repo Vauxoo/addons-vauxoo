@@ -1,3 +1,4 @@
+# coding: utf-8
 {
     "name": "Sales Commissions Report",
     "version": "1.6",

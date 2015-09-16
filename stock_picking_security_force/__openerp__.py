@@ -1,3 +1,4 @@
+# coding: utf-8
 {
     "name": "Force Availabity Secure",
     "summary": "Add security to the button Force Availability",

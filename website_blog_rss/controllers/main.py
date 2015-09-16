@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 import openerp
 import datetime
 from openerp.addons.web import http

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -151,5 +151,3 @@ class StockPicking(orm.Model):
                                                              uid,
                                                              move_line,
                                                              invoice_line_id)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

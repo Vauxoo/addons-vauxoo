@@ -1,3 +1,4 @@
+# coding: utf-8
 #########################################################################
 # Copyright (C) 2009  Sharoon Thomas, Open Labs Business solutions      #
 #                                                                       #
@@ -14,7 +15,6 @@
 #You should have received a copy of the GNU General Public License      #
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Product Image Gallery",
     "version": "0.6",

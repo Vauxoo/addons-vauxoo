@@ -1,3 +1,4 @@
+# coding: utf-8
 import time
 import os
 import platform
@@ -23,5 +24,3 @@ report_sxw.report_sxw('report.webkitmrp.production_variation_group',
                       'mrp.production',
                       'addons/mrp_report_webkit_wizard/report/report_webkit_variation_group.mako',
                       parser=ReportWebkitVariationGroup)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

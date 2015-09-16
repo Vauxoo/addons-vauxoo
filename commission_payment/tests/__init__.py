@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 
 """
 Init file for the test in the bdp_purchase_requistion Odoo module.

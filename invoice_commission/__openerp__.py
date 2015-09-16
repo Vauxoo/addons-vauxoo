@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
     "name": "Account invoice Update",
     "version": "0.6",

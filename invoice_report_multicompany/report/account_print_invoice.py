@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -50,4 +50,3 @@ report_sxw.report_sxw(
     'addons/invoice_report_multicompany/report/account_print_invoices.rml',
     parser=AccountInvoice2
 )
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -28,5 +29,3 @@ class ProductAttributeValue(models.Model):
     description = fields.Html(string='Attribute Description', index=True,
                               help="Description on Module from the descriptor "
                               "file and/or README.md")
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

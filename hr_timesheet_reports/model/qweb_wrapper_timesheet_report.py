@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -60,5 +60,3 @@ class TimesheetReportQwebPdfReport(osv.AbstractModel):
         context.update({'translatable': True})
         return super(TimesheetReportQwebPdfReport, self).\
             render_html(cr, uid, ids, data=data, context=context)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
