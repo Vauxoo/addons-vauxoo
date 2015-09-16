@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -55,4 +56,3 @@ class PurchaseOrder(osv.osv):
             'view_id': False,
             'type': 'ir.actions.act_window'
         }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
