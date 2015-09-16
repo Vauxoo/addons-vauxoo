@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -171,4 +172,3 @@ class AccountInvoiceLine(osv.osv):
             res = self._anglo_saxon_stock_move_lines(
                 cr, uid, res, ttype='supplier', context=context)
         return res
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
