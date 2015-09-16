@@ -8,4 +8,4 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from . import test_invoice_credit_limit
+from . import test_invoice_credit_limit, test_sale_credit_limit

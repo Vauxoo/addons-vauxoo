@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
 #
@@ -10,101 +10,99 @@
 ############################################################################
 
 from openerp.tests.common import TransactionCase
+from openerp import exceptions
+from datetime import datetime, timedelta
 
 
-class TestPaymentTermType(TransactionCase):
+class TestSalesCreditLimits(TransactionCase):
     """
-        This Tests validate the payment type dependig
-        payment terms line to compute
+        This test Validate credit limit, late pyaments and credit
+        overloaded.
     """
     def setUp(self):
-        super(TestPaymentTermType, self).setUp()
+        super(TestSalesCreditLimits, self).setUp()
         self.account_invoice = self.env['account.invoice']
+        self.sale_order = self.env['sale.order']
+        self.sale_order_line = self.env['sale.order.line']
         self.account_invoice_line = self.env['account.invoice.line']
-        self.payment_term_cash = self.env.ref(
-            'payment_term_type.payment_term_cash')
         self.payment_term_credit = self.env.ref(
-            'payment_term_type.payment_term_credit')
+            'account.account_payment_term_advance')
 
-        self.partner_agrolait = self.env.ref("base.res_partner_2")
+        self.partner_china = self.env.ref("base.res_partner_3")
         self.journal_id = self.env.ref("account.bank_journal")
         self.account_id = self.env.ref("account.a_recv")
         self.product_id = self.env.ref("product.product_product_6")
 
-    def test_payment_term_type_cash(self):
+    def test_credit_limit_overloaded(self):
         """
-            This test validate payment type in cash
+            This test validate the partner has credit overloaded
+            and can not confirm the sale order
+
         """
-        # invoice state 'Draft'
-        invoice_id = self.account_invoice.create(
-            {'partner_id': self.partner_agrolait.id,
-             'account_id': self.account_id.id,
-             'payment_term': self.payment_term_cash.id,
-             'journal_id': self.journal_id.id, })
-        self.account_invoice_line.create(
+        # CASE WHERE PARTNER HAVE CREDIT OVERLOADED
+        # set credit limit in 500
+        self.partner_china.credit_limit = 200.00
+
+        # sale order with amount total of 600.00
+        sale_id = self.sale_order.create(
+            {'partner_id': self.partner_china.id,
+             'payment_term': self.payment_term_credit.id})
+        self.sale_order_line.create(
             {'product_id': self.product_id.id,
-             'quantity': 1,
-             'price_unit': 100,
-             'invoice_id': invoice_id.id,
+             'product_uos_qty': 1,
+             'price_unit': 600,
+             'order_id': sale_id.id,
              'name': 'product that cost 100', })
-        # payment term Cash and invoice state Draft  ==> False
-        self.assertFalse(
-            invoice_id.allow_print_ok)
+        # should not confirm sale order
+        # credit limit exceded
+        # credit_limit = 500
+        # amount_total = 600
+        with self.assertRaises(exceptions.Warning):
+            sale_id.action_button_confirm()
 
-        # payment term Cash and invoice state Cancel ==> False
-        invoice_id.signal_workflow('invoice_cancel')
-        self.assertFalse(
-            invoice_id.allow_print_ok)
-        # Reset invoice to Draft
-        invoice_id.action_cancel_draft()
-        self.assertEquals(
-            invoice_id.state, 'draft')
-
-        # payment term Cash and invoice state Open ==> False
-        invoice_id.signal_workflow('invoice_open')
-        self.assertFalse(
-            invoice_id.allow_print_ok)
-
-        # payment term Cash and invoice state Paid ==> True
-        invoice_id.confirm_paid()
-        self.assertTrue(invoice_id.allow_print_ok)
-
-    def test_payment_term_type_credit(self):
+    def test_partner_with_late_payments(self):
         """
-            This test validate payment type in cash
+            This test validate that the partner has not late payments
+
         """
-        # invoice state 'Draft'
+        # CASE WHERE PARTNER DOES NOT HAVE LATE PAYMENTS AND CREDIT OVERLOADED
+        # set credit limit in 500
+        self.partner_china.credit_limit = 700.00
+
+        # invoice with amount total of 400.00 and date decreased one day
+        # to get a late payment
         invoice_id = self.account_invoice.create(
-            {'partner_id': self.partner_agrolait.id,
+            {'partner_id': self.partner_china.id,
              'account_id': self.account_id.id,
+             'date_invoice': (datetime.now() - timedelta(days=2)).strftime(
+                "%Y-%m-%d"),
              'payment_term': self.payment_term_credit.id,
              'journal_id': self.journal_id.id, })
         self.account_invoice_line.create(
             {'product_id': self.product_id.id,
-             'quantity': 1,
+             'quantity': 4,
              'price_unit': 100,
              'invoice_id': invoice_id.id,
              'name': 'product that cost 100', })
-        # payment term Cash and invoice state Draft  ==> False
-        self.assertFalse(
-            invoice_id.allow_print_ok)
-
-        # payment term Cash and invoice state Cancel ==> False
-        invoice_id.signal_workflow('invoice_cancel')
-        self.assertFalse(
-            invoice_id.allow_print_ok)
-        # Reset invoice to Draft
-        invoice_id.action_cancel_draft()
-        self.assertEquals(
-            invoice_id.state, 'draft')
-
-        # payment term Cash and invoice state Open ==> True
+        # Validate the invoice.
         invoice_id.signal_workflow('invoice_open')
-        self.assertTrue(
-            invoice_id.allow_print_ok)
 
-        # payment term Cash and invoice state Paid ==> True
-        self.assertTrue(invoice_id.allow_print_ok)
+        # At this moment there are late paymets since the invoice
+        # was validate one day before
 
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        # CASE WHERE PARTNER HAVE LATE PAYMENTS
+        # sale order with amount total of 600.00
+        sale_id = self.sale_order.create(
+            {'partner_id': self.partner_china.id,
+             'payment_term': self.payment_term_credit.id})
+        self.sale_order_line.create(
+            {'product_id': self.product_id.id,
+             'product_uos_qty': 1,
+             'price_unit': 200,
+             'order_id': sale_id.id,
+             'name': 'product that cost 100', })
+        # should not confirm sale order should fail,
+        # couse there are late payments
+        # since the invoice 1 was validate with curent day minus 2 days
+        with self.assertRaises(exceptions.Warning):
+            sale_id.action_button_confirm()
