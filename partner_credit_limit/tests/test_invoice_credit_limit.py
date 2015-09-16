@@ -76,8 +76,8 @@ class TestCreditLimits(TransactionCase):
         invoice_id = self.account_invoice.create(
             {'partner_id': self.partner_china.id,
              'account_id': self.account_id.id,
-             'date_invoice': (datetime.now() - timedelta(days=2)).strftime(
-                "%Y-%m-%d"),
+             'date_invoice': (
+                 datetime.now() - timedelta(days=2)).strftime("%Y-%m-%d"),
              'payment_term': self.payment_term_credit.id,
              'journal_id': self.journal_id.id, })
         self.account_invoice_line.create(
