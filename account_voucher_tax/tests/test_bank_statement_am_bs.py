@@ -1,3 +1,4 @@
+# coding: utf-8
 from openerp.addons.account_voucher_tax.tests.common import TestTaxCommon
 from openerp.tools import float_compare
 import time

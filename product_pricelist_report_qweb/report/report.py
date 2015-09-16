@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -103,5 +103,3 @@ class ProductPricelistReportQweb(osv.AbstractModel):
     # old wrapper class from original report will be used
     # so we can comment this attribute
     _wrapped_report_class = Parser
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

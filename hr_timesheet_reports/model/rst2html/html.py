@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 '''
 Very simple tool to convert rst fields to html
 

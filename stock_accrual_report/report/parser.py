@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -51,5 +51,3 @@ class IfrsPortraitPdfReport(osv.AbstractModel):
     _inherit = 'report.abstract_report'
     _template = 'stock_accrual_report.stock_accrual_report_template'
     _wrapped_report_class = StockAccrualParser
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

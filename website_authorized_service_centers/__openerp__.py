@@ -1,3 +1,4 @@
+# coding: utf-8
 {
     'name': 'Autorized Service Centers',
     'category': 'Website',

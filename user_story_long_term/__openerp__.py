@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,7 +25,6 @@
 #'data/user_story_template.xml',
 #'wizard/user_story_compute_phases_view.xml',
 #'wizard/user_story_compute_tasks_view.xml',
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Long Term User Story",
     "version": "1.6",

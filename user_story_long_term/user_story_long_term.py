@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -293,5 +293,3 @@ class UserStory(osv.Model):
 #                    'date_end': p.end.strftime('%Y-%m-%d %H:%M:%S')
 #                }, context=context)
 #        return True
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

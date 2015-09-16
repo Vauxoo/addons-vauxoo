@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 
 """
 Inherit the account.model.line model in the account_model_plans Odoo module.

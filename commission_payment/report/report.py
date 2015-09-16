@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 
 import time
 
@@ -35,5 +35,3 @@ class IfrsPortraitPdfReport(osv.AbstractModel):
     _inherit = 'report.abstract_report'
     _template = 'commission_payment.comm_salespeople_template'
     _wrapped_report_class = CommParser
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

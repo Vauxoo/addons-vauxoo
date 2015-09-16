@@ -1,3 +1,4 @@
+# coding: utf-8
 from openerp.addons.account_tax_importation.tests.common import TestTaxCommon
 
 

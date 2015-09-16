@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -69,5 +69,3 @@ class AccountInvoice(models.Model):
         self.qty_attachments = obj_attachment.search_count(
             [('res_model', '=', 'account.invoice'),
              ('res_id', '=', self.id,)])
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

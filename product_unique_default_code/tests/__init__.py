@@ -1,3 +1,4 @@
+# coding: utf-8
 #    info@vauxoo.com
 ############################################################################
 #    Coded by: julio (julio@vauxoo.com)

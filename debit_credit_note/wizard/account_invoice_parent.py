@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
@@ -226,6 +226,3 @@ class AccountInvoiceParent(osv.osv_memory):
         operation_method = getattr(self, "action_%s" % data['type'])
 
         return operation_method(cr, uid, ids, data, context=context)
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

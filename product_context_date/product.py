@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -29,6 +29,3 @@ class ProductProduct(osv.osv):
         'date_from': fields.dummy(string='Date From', type='date'),
         'date_to': fields.dummy(string='Date To', type='date'),
     }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
