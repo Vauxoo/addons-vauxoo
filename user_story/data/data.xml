@@ -3,7 +3,7 @@
     <data>
 
         <!-- User Story Difficulty -->
-        <record id="usp_hard" model="user.story.difficulty">
+        <record id="usp_not_apply" model="user.story.difficulty">
             <field name="name">Not Apply</field>
             <field name="estimated">0</field>
             <field name="points">0</field>
