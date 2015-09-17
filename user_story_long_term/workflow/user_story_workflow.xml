@@ -8,7 +8,7 @@
             <field name="on_create">True</field>
         </record>
 
-        <record id="act_draft" model="workflow.activity">
+        <record id="act_draft_us" model="workflow.activity">
             <field name="wkf_id" ref="wkf_us"/>
             <field name="flow_start">True</field>
             <field name="name">do_draft</field>
@@ -24,8 +24,8 @@
             <field name="action">do_progress()</field>
         </record>
 
-        <record id="t0" model="workflow.transition">
-            <field name="act_from" ref="act_draft"/>
+        <record id="t0_us" model="workflow.transition">
+            <field name="act_from" ref="act_draft_us"/>
             <field name="act_to" ref="act_progress"/>
             <field name="signal">do_open</field>
         </record>
