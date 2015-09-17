@@ -20,12 +20,16 @@ class ResPartner(models.Model):
         help='Days grace payment')
 
     credit_overloaded = fields.Boolean(
-        compute='_get_credit_overloaded', string="Credit Overloaded",
-        type='Boolean')
+        compute='_get_credit_overloaded',
+        string="Credit Overloaded", type='Boolean',
+        help="Indicates when the customer has credit overloaded")
     overdue_credit = fields.Boolean(
-        compute='_get_overdue_credit', string="Late Payments", type='Boolean')
+        compute='_get_overdue_credit', string="Late Payments", type='Boolean',
+        help="Indicates when the customer has late payments")
     allowed_sale = fields.Boolean(
-        compute='get_allowed_sale', string="Allowed Sales", type='Boolean')
+        compute='get_allowed_sale', string="Allowed Sales", type='Boolean',
+        help="If the Partner has credit overloaded or late payments,"
+        " he can't validate invoices and sale orders.")
 
     @api.one
     def _get_credit_overloaded(self):
@@ -75,11 +79,13 @@ class ResPartner(models.Model):
 
             elif line.date_maturity:
                 limit_day = line.date_maturity
-            if limit_day < fields.Date.today():
+            else:
+                limit_day = fields.Date.today()
+            if limit_day <= fields.Date.today():
                 # credit and debit maturity sums all aml
                 # with late payments
                 debit_maturity += line.debit
-                credit_maturity += line.credit
+            credit_maturity += line.credit
             # credit += line.credit
         balance_maturity = debit_maturity - credit_maturity
 
