@@ -4,7 +4,13 @@
     <template id="assets_frontend_product_filters" name="Product Filters Assets" inherit_id="website.assets_frontend">
       <xpath expr="//script[last()]" position="after">
         <script src="/website_product_filters/static/src/js/sort_products.js" rel="stylesheet" type="text/less"/>
+        <script src="/website_product_filters/static/src/js/collapse_filters.js" rel="stylesheet" type="text/less"/>
       </xpath>
+    </template>
+    <template id="assets_frontend_filters_less" name="Product filters frontend assets" inherit_id="website.theme">
+        <xpath expr='//link[@href="/website/static/src/css/website.css"]' position="after">
+            <link href="/website_product_filters/static/src/less/filters.less" rel="stylesheet" type="text/less"/>
+        </xpath>
     </template>
     </data>
 </openerp>

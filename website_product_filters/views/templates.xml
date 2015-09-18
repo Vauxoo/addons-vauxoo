@@ -24,14 +24,28 @@
                               </t>
                               <t t-if="a.type == 'radio'">
                                 <ul class="nav nav-pills nav-stacked">
+                                  <t t-set="counter" t-value="1"/>
                                     <t t-foreach="a.value_ids" t-as="v">
+                                      <t t-if="counter &lt; 5">
+
                                         <li t-att-class="'active' if v.id in attrib_set else ''">
                                             <label style="margin: 0 20px;">
                                                 <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
                                                 <span style="font-weight: normal" t-field="v.name"/>
                                             </label>
                                         </li>
+                                      </t>
+                                      <t t-if="counter >= 5">
+                                        <li t-att-class="'hidden active' if v.id in attrib_set else 'hidden'">
+                                            <label style="margin: 0 20px;">
+                                                <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
+                                                <span style="font-weight: normal" t-field="v.name"/>
+                                            </label>
+                                        </li>
+                                      </t>
+                                      <t t-set="counter" t-value="counter+1"/>
                                     </t>
+                                    <a class="show-more"><span class="fa fa-plus-square"></span> Show More</a>
                                 </ul>
                               </t>
                               <t t-if="a.type == 'color'">
@@ -62,7 +76,11 @@
                       <ul class="nav nav-pills nav-stacked mt16">
                           <t t-foreach="brands" t-as="b">
                           <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
-                            <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
+<!--                             <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
+ -->                        <label style="margin: 0 20px;">
+                                  <input type="checkbox" name="brand" t-att-value="'%s' % b.id" t-att-checked="'checked' if b.id == int(brand or 0) else ''"/>
+                            <span style="font-weight: normal" t-field="b.name"/>
+                            </label>
                           </li>
                           </t>
                       </ul>
@@ -90,7 +108,11 @@
                       <li t-att-class=" '' if brand else 'brand active' "><a t-att-href="keep('/shop',brand=0)"><b>All Brands</b></a></li>
                       <t t-foreach="brands" t-as="b">
                           <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
-                              <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
+<!--                               <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
+ -->                              <label style="margin: 0 20px;">
+                                  <input type="checkbox" name="attrib" t-att-value="'%s' % (b.id)" t-att-checked="'checked' if b.id == int(brand or 0) else ''"/>
+                                  <span style="font-weight: normal" t-field="b.name"/>
+                              </label>
                           </li>
                       </t>
                       </ul>
