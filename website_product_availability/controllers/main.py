@@ -2,13 +2,15 @@
 from openerp.http import request
 from openerp.addons.web import http
 from openerp.addons.website_sale.controllers.main import website_sale
+from openerp import SUPERUSER_ID
+
 import datetime
 
 
 class WebsiteSaleInh(website_sale):
 
     def get_attribute_value_ids(self, product):
-        cr, uid, context, pool = request.cr, request.uid, request.context,\
+        cr, uid, context, pool = request.cr, SUPERUSER_ID, request.context,\
             request.registry
         product_obj = pool['product.product']
         supplier_obj = pool['product.supplierinfo']
@@ -39,7 +41,7 @@ class WebsiteSaleInh(website_sale):
         return new_res
 
     def get_locations_variant_ids(self, product):
-        cr, uid, context, pool = request.cr, request.uid, request.context,\
+        cr, uid, context, pool = request.cr, SUPERUSER_ID, request.context,\
             request.registry
         product_obj = pool['product.product']
         lct_ids = pool['stock.location'].search(
@@ -58,7 +60,7 @@ class WebsiteSaleInh(website_sale):
         return new_res
 
     def get_stock_quants(self, product, location):
-        cr, uid, context, pool = request.cr, request.uid, request.context,\
+        cr, uid, context, pool = request.cr, SUPERUSER_ID, request.context,\
             request.registry
         qty = product.with_context(
             location=location.id)._product_available(None, False)
@@ -99,7 +101,7 @@ class WebsiteSaleInh(website_sale):
     def product(self, product, category='', search='', **kwargs):
         result = super(WebsiteSaleInh, self).product(
             product, category, search, **kwargs)
-        cr, uid, context, pool = request.cr, request.uid, request.context,\
+        cr, uid, context, pool = request.cr, SUPERUSER_ID, request.context,\
             request.registry
         variat_obj = pool['product.product']
         product_variants_ids = variat_obj.search(
