@@ -67,13 +67,12 @@ class ResPartner(models.Model):
              ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
         # credit = 0.0
         debit_maturity, credit_maturity = 0.0, 0.0
-
         for line in movelines:
             if line.date_maturity and line.partner_id.grace_payment_days:
                 maturity = fields.Datetime.from_string(
                     line.date_maturity)
                 grace_payment_days = timedelta(
-                    days=line.partner_id.grace_payment_days, seconds=-1)
+                    days=line.partner_id.grace_payment_days)
                 limit_day = maturity + grace_payment_days
                 limit_day = limit_day.strftime("%Y-%m-%d")
 
