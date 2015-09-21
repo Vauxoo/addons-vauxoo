@@ -80,10 +80,6 @@
          </template>
          <template id="product_stock_state" inherit_id="website_sale.product">
              <xpath expr="//hr[@t-if='product.description_sale']" position="before">
-                 <h5><span class="label stock_state"></span></h5>
-
-                 <h5><span class="label label-info stock_delay"></span></h5>
-
                  <t t-if="product.alternative_product_ids">
                      <div id="similar_products_vx" class="alert alert-success" style="align: center;">
                          <a href="#rec_prod" class="alert-link">Similar Products</a>
