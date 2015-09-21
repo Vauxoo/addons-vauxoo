@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -39,6 +39,3 @@ class ProcurementComputeAll(osv.TransientModel):
         res = super(ProcurementComputeAll, self).procure_calculation(
             cr, uid, ids, context=context)
         return res
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

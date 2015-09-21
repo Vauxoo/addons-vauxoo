@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp import models, fields, api, _
 from openerp.tools.safe_eval import safe_eval
 from openerp import SUPERUSER_ID

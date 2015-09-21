@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 
 """
 Inherit the stock location model to add a code attribute and make the code

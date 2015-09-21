@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -61,6 +61,3 @@ class ProjectComputeTasks(osv.osv_memory):
         result = act_obj.read(cr, uid, [id], context=context)[0]
         result['target'] = 'current'
         return result
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

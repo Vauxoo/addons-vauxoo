@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -30,4 +31,3 @@ class ProductTemplate(osv.osv):
         'name': fields.char('Name', size=128, required=True, translate=False,
                             select=True),
     }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

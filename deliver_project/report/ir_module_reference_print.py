@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -86,6 +86,3 @@ class IrModuleReferencePrint(report_sxw.rml_parse):
 report_sxw.report_sxw('report.ir.module.vauxoo', 'ir.module.module',
                       'addons/deliver_project/report/ir_module_reference.rml',
                       parser=IrModuleReferencePrint, header=False)
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

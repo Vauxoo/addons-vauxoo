@@ -1,3 +1,4 @@
+# coding: utf-8
 # -*- enconding: utf-8 -*-
 {
     "name": "User Story Scrum",

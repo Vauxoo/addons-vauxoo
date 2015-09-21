@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
     "name": "Invoice report for AMD Consorcium",
     "version": "0.6",

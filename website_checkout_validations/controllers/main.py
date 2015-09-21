@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 from openerp import SUPERUSER_ID
 from openerp.http import request
 from openerp.addons.website_sale.controllers.main import website_sale

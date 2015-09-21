@@ -1,3 +1,4 @@
+# coding: utf-8
 {
     'name': 'Website Confirm Order',
     'category': 'website',

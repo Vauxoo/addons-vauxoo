@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 import openerp
 from openerp import http
 from openerp.http import request

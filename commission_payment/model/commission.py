@@ -1,3 +1,4 @@
+# coding: utf-8
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime

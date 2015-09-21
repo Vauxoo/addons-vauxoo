@@ -1,4 +1,4 @@
- #-*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 # Copyright (c) 2010 Camptocamp SA (http://www.camptocamp.com)

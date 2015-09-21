@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -171,5 +172,3 @@ class ProductTemplate(models.Model):
                             }, context=context)
             self.write(cr, uid, rec_id, {'standard_price': new_price})
         return True
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

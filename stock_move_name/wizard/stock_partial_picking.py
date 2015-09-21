@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -43,5 +43,3 @@ class StockPartialPicking(osv.osv_memory):
                              self)._partial_move_for(cr, uid, move)
         partial_move['name'] = move.name
         return partial_move
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

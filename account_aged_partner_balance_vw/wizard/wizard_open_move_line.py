@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -98,4 +98,3 @@ class wizard_open_move_line(wizard.interface):
     }
 wizard_open_move_line('wizard.open.move.line')
 '''
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
