@@ -5,13 +5,16 @@
     "author": "Vauxoo",
     "category": "Website",
     "website": "http://www.vauxoo.com/",
+    "license": "LGPL",
     "depends": [
         "stock",
         "purchase",
         "website_variants_extra",
         "website_sale",
     ],
-    "demo": [],
+    "demo": [
+        "demo/stock_alias.xml",
+    ],
     "data": [
         "views/layout.xml",
         "views/templates.xml",
@@ -25,5 +28,4 @@
     ],
     "installable": True,
     "auto_install": False,
-    "active": False
 }
