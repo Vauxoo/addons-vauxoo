@@ -11,7 +11,9 @@
         "website_variants_extra",
         "website_sale",
     ],
-    "demo": [],
+    "demo": [
+        "demo/stock_alias.xml",
+    ],
     "data": [
         "views/layout.xml",
         "views/templates.xml",

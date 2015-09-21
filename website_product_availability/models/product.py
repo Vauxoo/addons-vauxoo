@@ -170,10 +170,6 @@ class LocationQuants(models.Model):
 class StockLocation(models.Model):
     _inherit = 'stock.location'
 
-    @api.one
-    def _get_default_alias(self):
-        self.stock_alias = self.name
-
-    stock_alias = fields.Char('Alias Stock', default=_get_default_alias)
+    stock_alias = fields.Char('Alias Stock', default="Set Alias name")
     website_published = fields.Boolean(
         'Available in the website', copy=False)
