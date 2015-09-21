@@ -76,8 +76,7 @@
                       <ul class="nav nav-pills nav-stacked mt16">
                           <t t-foreach="brands" t-as="b">
                           <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
-<!--                             <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
- -->                        <label style="margin: 0 20px;">
+                          <label style="margin: 0 20px;">
                                   <input type="checkbox" name="brand" t-att-value="'%s' % b.id" t-att-checked="'checked' if b.id == int(brand or 0) else ''"/>
                             <span style="font-weight: normal" t-field="b.name"/>
                             </label>
@@ -108,8 +107,7 @@
                       <li t-att-class=" '' if brand else 'brand active' "><a t-att-href="keep('/shop',brand=0)"><b>All Brands</b></a></li>
                       <t t-foreach="brands" t-as="b">
                           <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
-<!--                               <a t-att-href="keep('/shop/brands',brand = b.id)"><t t-esc="b.name"/></a>
- -->                              <label style="margin: 0 20px;">
+                                  <label style="margin: 0 20px;">
                                   <input type="checkbox" name="attrib" t-att-value="'%s' % (b.id)" t-att-checked="'checked' if b.id == int(brand or 0) else ''"/>
                                   <span style="font-weight: normal" t-field="b.name"/>
                               </label>
