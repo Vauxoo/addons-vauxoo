@@ -5,7 +5,7 @@
     "author": "Vauxoo",
     "category": "Website",
     "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    "license": "LGPL",
     "depends": [
         "stock",
         "purchase",
