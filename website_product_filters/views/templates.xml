@@ -67,8 +67,29 @@
                         </t>
                       </t>
                   </ul>
+            <t t-if="price_ranges">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Price Range</div>
+                    <div class="panel-body">
+                      <ul class="nav nav-pills nav-stacked mt16">
+                          <t t-foreach="price_ranges" t-as="r">
+                            <li t-att-class="'active' if r.id in ranges_set else ''">
+                                <label style="margin: 0 20px;">
+                                    <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
+                                    <span style="font-weight: normal" t-raw="'{0} - {1}'.format(r.lower, r.upper)" t-field-options='{
+                                        "widget": "monetary",
+                                        "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                    }'/>
+                                </label>
+                            </li>
+                          </t>
+                      </ul>
+                    </div>
+                </div>
+            </t>
               </form>
             </t>
+
             <t t-if="brands">
                 <div class="panel panel-default">
                     <div class="panel-heading">Brands</div>
@@ -135,9 +156,17 @@
           </xpath>
         </template>
 
-        <template id="product_sort_bar" inherit_id="website_sale.products_list_view" active="True">
-          <xpath expr="//div[@id='products_grid']" position="before">
+        <template id="product_sort_bar" inherit_id="website_sale.products" active="True">
+          <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="replace">
+
             <div class="panel panel-default">
+            <div class="col-md-6">
+                <ul class="breadcrumb">
+                    <li><a id="bread_home" href="/">Home</a></li>
+                    <li><a id="bread_products" href="/shop">Products</a></li>
+                    <li class="active"><a id="bread_category">All Products</a></li>
+                </ul>
+            </div>
               <div class="col-md-3 mt8">
                 <label for="prduct_sorter" class="form-group">Sort by : </label>
                 <select id="product_sorter" name="product_sorter">
@@ -150,15 +179,11 @@
                   <option value="popularity">Popularity</option>
                 </select>
               </div>
-              <div class="col-md-6">
-                <ul class="breadcrumb">
-                    <li><a id="bread_home" href="/">Home</a></li>
-                    <li><a id="bread_products" href="/shop">Products</a></li>
-                    <li class="active"><a id="bread_category">All Products</a></li>
-                </ul>
-              </div>
+              <t t-call="website_sale.search"><t t-set="search_class">col-md-3</t></t>
 
             </div>
+          </xpath>
+          <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website.pager']" position="replace">
           </xpath>
         </template>
         <!-- TEMPLATE TO SHOW RATING ON PRODUCT LIST -->
