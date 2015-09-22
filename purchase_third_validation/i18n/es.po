@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * purchase_third_validation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-22 19:00+0000\n"
+"PO-Revision-Date: 2015-09-22 19:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_third_validation
+#: help:purchase.config.settings,limit_amount_t:0
+msgid "Amount after which a third validation of purchase is required."
+msgstr "Monto después del que se necesitara una tercera validación."
+
+#. module: purchase_third_validation
+#: field:purchase.config.settings,limit_amount_t:0
+msgid "Limit to require the approbation of a third user"
+msgstr "Limite requerido para la aprobación de un tercer usuario"
+
+#. module: purchase_third_validation
+#: model:ir.model,name:purchase_third_validation.model_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de Compra"
+
+#. module: purchase_third_validation
+#: model:res.groups,name:purchase_third_validation.general_purchase_manager
+msgid "Purchase third validation"
+msgstr "Tercera validación en compras"
+
+#. module: purchase_third_validation
+#: code:addons/purchase_third_validation/models/purchase.py:36
+#, python-format
+msgid "The PO was not approved, you need privileges by the amount of this purchase"
+msgstr "La OC no ha sido aprobada, se necesitan privilegios por el monto de esta compra"
+
+#. module: purchase_third_validation
+#: view:purchase.order:purchase_third_validation.view_purchase_third_level_inherit
+msgid "green:third_level_ok==True;grey:state=='cancel';blue:state in ('wait','confirmed');red:state in ('except_invoice','except_picking');green:third_level_ok==True;"
+msgstr "green:third_level_ok==True;grey:state=='cancel';blue:state in ('wait','confirmed');red:state in ('except_invoice','except_picking');green:third_level_ok==True;"
+
