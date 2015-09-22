@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="act_is_approved" model="workflow.activity">
+            <field name="wkf_id" ref="purchase.purchase_order"/>
+            <field name="name">Approved</field>
+            <field name="kind">dummy</field>
+        </record>
+
+        <record id="purchase_double_validation.act_double_wait" model="workflow.activity">
+            <field name="join_mode">XOR</field>
+        </record>
+
+        <record id="trans_less_third" model="workflow.transition">
+            <field name="act_from" ref="purchase_double_validation.act_double_wait"/>
+            <field name="act_to" ref="act_is_approved"/>
+            <field name="sequence">1</field>
+            <field name="condition">amount_total &lt; 100000</field>
+        </record>
+
+        <record id="trans_third_level" model="workflow.transition">
+            <field name="act_from" ref="purchase_double_validation.act_double_wait"/>
+            <field name="act_to" ref="act_is_approved"/>
+            <field name="sequence">5</field>
+            <field name="group_id" ref="purchase_third_validation.general_purchase_manager"/>
+        </record>
+
+        <record id="trans_message" model="workflow.transition">
+            <field name="act_from" ref="purchase_double_validation.act_double_wait"/>
+            <field name="act_to" ref="act_is_approved"/>
+            <field name="sequence">15</field>
+            <field name="condition">send_dummy_mesage()</field>
+        </record>
+
+        <record id="purchase_double_validation.trans_double_app_conf" model="workflow.transition">
+            <field name="act_from" ref="act_is_approved"/>
+        </record>
+
+    </data>
+</openerp>
