@@ -13,6 +13,7 @@
     ],
     "demo": [],
     "data": [
+        'views/product_price_ranges_view.xml',
         'views/assets.xml',
         'views/templates.xml',
     ],

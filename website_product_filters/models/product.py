@@ -50,3 +50,10 @@ class WebsiteSeoMetadata(models.Model):
 class WebsiteProductMetadata(models.Model):
     _inherit = ["product.template", "website.seo.metadata"]
     _name = "product.template"
+
+
+class ProductPriceRanges(models.Model):
+    _name = "product.price.ranges"
+
+    lower = fields.Float("Lower")
+    upper = fields.Float("Upper")

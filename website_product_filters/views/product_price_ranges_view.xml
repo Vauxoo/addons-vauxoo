@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="product_price_ranges_form_view" model="ir.ui.view">
+            <field name="name">product.price.ranges.form</field>
+            <field name="model">product.price.ranges</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="lower"/>
+                    <field name="upper"/>
+                </tree>
+            </field>
+        </record>
+    <record id="product_price_ranges_action" model="ir.actions.act_window">
+        <field name="name">Product Price Ranges</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.price.ranges</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to define a new price range.
+          </p><p>
+            Ranges are used to filter products on the website.
+          </p>
+        </field>
+    </record>
+    <menuitem action="product_price_ranges_action" id="menu_product_price_ranges" parent="product.prod_config_main" sequence="10" />
+    </data>
+</openerp>

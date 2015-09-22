@@ -28,7 +28,29 @@ class WebsiteSale(website_sale):
                                             search=search, ppg=ppg,
                                             **post)
         attributes_obj = pool['product.attribute']
+        ranges_obj = pool['product.price.ranges']
         brand_obj = pool['product.brand']
+        template_obj = pool['product.template']
+        ranges_list = request.httprequest.args.getlist('range')
+        ranges_selected_ids = [int(v) for v in ranges_list if v]
+        ranges_selected = ranges_obj.browse(cr, uid, ranges_selected_ids,
+                                            context=context)
+        filtered_products = res.qcontext['products']
+        range_product_ids = []
+        for rang in ranges_selected:
+            for fproduct in filtered_products:
+                if rang.lower <= fproduct.lst_price <= rang.upper:
+                    range_product_ids.append(fproduct.id)
+        if range_product_ids:
+            new_products = template_obj.browse(
+                cr,
+                uid,
+                range_product_ids,
+                context=context)
+        else:
+            new_products = filtered_products
+        ranges_ids = ranges_obj.search(cr, uid, [], context=context)
+        ranges = ranges_obj.browse(cr, uid, ranges_ids, context=context)
         attribute_ids = self._get_used_attrs(category)
         brand_ids = self._get_category_brands(category)
         attributes = attributes_obj.browse(cr, uid, attribute_ids,
@@ -44,6 +66,9 @@ class WebsiteSale(website_sale):
                     search=search)
         brands = brand_obj.browse(cr, uid, brand_ids, context=context)
         res.qcontext['brands'] = brands
+        res.qcontext['products'] = new_products
+        res.qcontext['price_ranges'] = ranges
+        res.qcontext['ranges_set'] = ranges_selected_ids
         return res
 
     def _normalize_category(self, category):
