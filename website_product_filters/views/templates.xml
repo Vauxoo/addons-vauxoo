@@ -59,6 +59,7 @@
                                           t-att-title="v.name"/>
                                   </label>
                                 </t>
+
                               </t>
 
                             </div>
@@ -72,8 +73,10 @@
                     <div class="panel-heading">Price Range</div>
                     <div class="panel-body">
                       <ul class="nav nav-pills nav-stacked mt16">
+                        <t t-set="counter" t-value="1"/>
                           <t t-foreach="price_ranges" t-as="r">
-                            <li t-att-class="'active' if r.id in ranges_set else ''">
+                            <t t-if="counter &lt; 5">
+                            <li t-att-class="'active' if r.id in ranges_set else 'hidden'">
                                 <label style="margin: 0 20px;">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
                                     <span style="font-weight: normal" t-raw="'{0} - {1}'.format(r.lower, r.upper)" t-field-options='{
@@ -82,7 +85,21 @@
                                     }'/>
                                 </label>
                             </li>
+                           </t>
+                           <t t-if="counter >= 5">
+                            <li t-att-class="'hidden active' if r.id in ranges_set else ''">
+                                <label style="margin: 0 20px;">
+                                    <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
+                                    <span style="font-weight: normal" t-raw="'{0} - {1}'.format(r.lower, r.upper)" t-field-options='{
+                                        "widget": "monetary",
+                                        "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                    }'/>
+                                </label>
+                            </li>
+                                </t>
+                            <t t-set="counter" t-value="counter+1"/>
                           </t>
+                          <a class="show-more"><span class="fa fa-plus-square"></span> Show More</a>
                       </ul>
                     </div>
                 </div>
