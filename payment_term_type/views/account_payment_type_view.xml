@@ -14,5 +14,19 @@
             </field>
         </record>
 
+        <record id="view_account_config_settings_payment_type" model="ir.ui.view">
+            <field name="name">account.config.setting.payment.type</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div/field[@name='module_product_email_template']/.." position="after">
+                    <div name='payment_type'>
+                        <label for="payment_type"/>
+                        <field name="payment_type" class="oe_inline"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>
