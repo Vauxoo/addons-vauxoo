@@ -31,7 +31,7 @@ class AccountPaymentTerm(models.Model):
 
     _inherit = 'account.payment.term'
 
-    @api.one
+    @api.multi
     @api.depends('line_ids')
     def _compute_payment_type(self):
         """
@@ -41,12 +41,21 @@ class AccountPaymentTerm(models.Model):
             It is credit when payment term has
             at least two line to compute
         """
-
-        self.payment_type = 'cash'
-        if len(self.line_ids) > 1:
-            self.payment_type = 'credit'
+        key_payment = "account.payment_term_type"
+        payment_type = self.env["ir.config_parameter"].get_param(
+            key_payment, default='bqp')
+        for record in self:
+            if payment_type == 'bqp':
+                record.payment_type = 'cash'
+                if len(self.line_ids) > 1:
+                    record.payment_type = 'credit'
+            elif payment_type == 'bdp':
+                for line in record.line_ids:
+                    record.payment_type = 'cash'
+                    if line.days > 0:
+                        record.payment_type = 'credit'
 
     payment_type = fields.Selection(
         [('credit', _('Credit')),
          ('cash', _('Cash'))],
-        string="Payment Type", compute='_compute_payment_type', store=True)
+        string="Payment Type", compute='_compute_payment_type')
