@@ -16,5 +16,15 @@
                 </xpath>
             </field>
         </record>
+
+        <act_window name="Create refund invoice"
+                res_model="account.invoice.refund"
+                src_model="account.invoice"
+                view_mode="form"
+                target="new"
+                key2="client_action_multi"
+                id="act_wizard_refund_invoice"
+                context="{'ctx_active_ids': active_ids, 'ctx_active_model':active_model}"
+                />
     </data>
 </openerp>

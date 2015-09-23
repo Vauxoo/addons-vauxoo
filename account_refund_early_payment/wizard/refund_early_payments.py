@@ -30,50 +30,37 @@ class AccountInvoiceRefund(models.TransientModel):
 
     _inherit = "account.invoice.refund"
 
-    def _search_xml_id(self, cur, uid, model, record_xml_id, context=None):
-        if context is None:
-            context = {}
-        imd_obj = self.pool.get('ir.model.data')
+    @api.model
+    def _search_xml_id(self):
         res_id = False
-        imd_id = imd_obj.search(cur, uid,
-                                [('module', '=', model),
-                                 ('name', '=', record_xml_id)])
+        imd_id = self.env.ref(
+            'account_refund_early_payment.product_discount_early_payment')
         if imd_id:
-            res_id = imd_obj.browse(cur, uid, imd_id)[0].res_id
+            res_id = imd_id.id
         return res_id
 
-    def _compute_amount(self, cur, uid, ids, field_names,
-                        arg=None,
-                        context=None,
-                        query='', query_params=()):
+    @api.multi
+    def _compute_amount(
+            self, field_names, arg=None, context=None,
+            query='', query_params=()):
         if context is None:
             context = {}
         res = {}
-        for wzd in self.browse(cur, uid, ids, context=context):
+        for wzd in self.browse():
             res[wzd.id] = wzd.percent * 10
 
         return res
 
-    def default_get(self, cur, uid, fields_data, context=None):
-        if context is None:
-            context = {}
-        ret = super(AccountInvoiceRefund, self).default_get(cur, uid,
-                                                              fields_data,
-                                                              context=context)
-        active_id = context.get('active_id', False)
-        if active_id:
-            ret['active_id'] = active_id
-        return ret
-
-    def onchange_amount_total(self, cur, uid, ids, percent=0.0,
-                              active_id=None, context=None):
-        if context is None:
-            context = {}
-        inv_obj = self.pool.get('account.invoice')
-        inv = inv_obj.browse(cur, uid, active_id, context=context)
+    @api.multi
+    def onchange_amount_total(self, percent=0.0, active_id=None, context=None):
+        context = dict(self._context)
+        inv_obj = self.env['account.invoice']
+        amount_total = 0
+        for inv in inv_obj.browse(context.get('active_ids', active_id)):
+            amount_total += inv.amount_total * (percent / 100)
         return {
             'value': {
-                'amount_total': inv.amount_total * (percent / 100),
+                'amount_total': amount_total
             }
         }
 
@@ -88,43 +75,44 @@ class AccountInvoiceRefund(models.TransientModel):
         Selection(selection_add=[('early_payment',
                                   'Early payment: Discount early payment')])
     percent = fields.Float('Percent', default=_get_percent_default)
-    product_id = fields.Many2one('product.product', string='Product')
+    product_id = fields.Many2one(
+        'product.product', string='Product', default=_search_xml_id)
     amount_total = fields.Float('Amount')
     active_id = fields.Integer('Active ID')
 
-    def compute_refund(self, cur, uid, ids, mode='refund', context=None):
-        context = dict(context or {})
+    @api.multi
+    def compute_refund(self, mode):
+        context = dict(self._context)
 
-        result = super(AccountInvoiceRefund, self).compute_refund(
-            cur, uid, ids, mode, context=context)
+        if mode == 'early_payment':
+            ctx = context.copy()
+            context.update(
+                {'active_ids': context.get('active_ids')[0]})
+        result = super(
+            AccountInvoiceRefund, self.with_context(context)).compute_refund()
 
         if mode != 'early_payment':
             return result
 
-        inv_obj = self.pool.get('account.invoice')
-        at_obj = self.pool.get('account.tax')
-        inv_line_obj = self.pool.get('account.invoice.line')
-        account_m_line_obj = self.pool.get('account.move.line')
+        inv_obj = self.env['account.invoice']
+        at_obj = self.env['account.tax']
+        inv_line_obj = self.env['account.invoice.line']
 
         refund_id = result.get('domain')[1][2]
 
-        wizard_brw = self.browse(cur, uid, ids, context=context)
-        amount_total = wizard_brw.amount_total
-        prod_brw = wizard_brw.product_id
-
-        for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
-                                  context=context):
-            brw = inv_obj.browse(cur, uid, refund_id, context=context)
+        amount_total = self.amount_total
+        prod_brw = self.product_id
+        for inv in inv_obj.browse(ctx.get('active_ids')):
+            brw = inv_obj.browse(refund_id)
 
             if not brw.invoice_line:
                 continue
 
-            inv_line_obj.unlink(
-                cur, uid, [rl.id for rl in brw.invoice_line])
+            for rl in brw.invoice_line:
+                rl.unlink()
 
             fp = inv.fiscal_position and inv.fiscal_position.id
             data = inv_line_obj.product_id_change(
-                cur, uid, [],
                 prod_brw.id,
                 prod_brw.uom_id.id,
                 1.0,
@@ -139,50 +127,79 @@ class AccountInvoiceRefund(models.TransientModel):
 
             if 'value' not in data and data['value']:
                 continue
-
+            perc = 0.0
             if data['value'].get('invoice_line_tax_id'):
-                perc = 0.0
+
                 tax_ids = data['value']['invoice_line_tax_id']
                 data['value']['invoice_line_tax_id'] = [(6, 0, tax_ids)]
-                for tax_brw in at_obj.browse(
-                        cur, uid, tax_ids, context=context):
+                for tax_brw in at_obj.browse(tax_ids):
                     perc += tax_brw.amount
             data['value']['product_id'] = prod_brw.id
             data['value']['quantity'] = 1.0
             data['value']['price_unit'] = amount_total / (1.0 + abs(perc))
             data['value']['invoice_id'] = refund_id[0]
-            inv_line_obj.create(cur, uid, data['value'], context=context)
+            inv_line_obj.create(data['value'])
 
             brw.button_reset_taxes()
-            to_reconcile_ids = {}
-
-            for line in inv.move_id.line_id:
-                if line.account_id.reconcile and not line.reconcile_id:
-                    to_reconcile_ids.setdefault(line.account_id.id,
-                                                []).append(line.id)
-
             brw.signal_workflow('invoice_open')
-            brw = inv_obj.browse(cur, uid, refund_id[0], context=context)
 
-            for tmpline in brw.move_id.line_id:
-                if tmpline.account_id.reconcile:
-                    to_reconcile_ids[tmpline.
-                                     account_id.id].append(tmpline.id)
-
-            for account in to_reconcile_ids:
-                if len(to_reconcile_ids[account]) > 1:
-                    account_m_line_obj.reconcile_partial(
-                        cur, uid, to_reconcile_ids[account],
-                        context=context)
+        self.action_split_reconcile(brw)
 
         return result
 
-    _defaults = {
-        'product_id': lambda self, cur,
-        uid, c: self._search_xml_id(cur,
-                                    uid,
-                                    'account_refund_early_payment',
-                                    'product_discount_early_payment',
-                                    context=c),
+    @api.model
+    def action_split_reconcile(self, brw):
 
-    }
+        context = dict(self._context)
+
+        inv_obj = self.env['account.invoice']
+        account_m_line_obj = self.env['account.move.line']
+
+        brw.move_id.button_cancel()
+
+        # we get the aml of refund to be split and reconciled
+        to_reconcile_ids = {}
+        for tmpline in brw.move_id.line_id:
+            if tmpline.account_id.reconcile and\
+                    tmpline.account_id.type in ('receivable'):
+                move_line_id_refund = tmpline
+            elif tmpline.account_id.reconcile:
+                to_reconcile_ids.setdefault(
+                    tmpline.account_id.id, []).append(tmpline.id)
+
+        amount_total_inv = 0
+        invoice_source = []
+        # Get the amount_total of all invoices to can make
+        # proration with refund
+        for inv in inv_obj.browse(context.get('active_ids')):
+            amount_total_inv += inv.amount_total
+            invoice_source.append(inv.number)
+
+        for inv in inv_obj.browse(context.get('active_ids')):
+            for line in inv.move_id.line_id:
+                if line.account_id.reconcile and not\
+                        line.reconcile_id and\
+                        line.account_id == move_line_id_refund.account_id:
+                    amount_inv_refund = (
+                        inv.amount_total / amount_total_inv) *\
+                        move_line_id_refund.credit
+                    move_line_id_inv_refund = move_line_id_refund.copy(
+                        default={'credit': amount_inv_refund})
+
+                    line_to_reconcile = account_m_line_obj.browse(
+                        [line.id, move_line_id_inv_refund.id])
+                    line_to_reconcile.reconcile_partial()
+
+                elif line.account_id.reconcile and not line.reconcile_id:
+                    to_reconcile_ids[line.account_id.id].append(line.id)
+
+        for account in to_reconcile_ids:
+            if len(to_reconcile_ids[account]) > 1:
+                line_to_reconcile_2 = account_m_line_obj.browse(
+                    to_reconcile_ids[account])
+                line_to_reconcile_2.reconcile_partial()
+
+        move_line_id_refund.unlink()
+        brw.move_id.button_validate()
+        brw.write(
+            {'origin': ','.join(inv_source for inv_source in invoice_source)})
