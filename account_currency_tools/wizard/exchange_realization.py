@@ -38,6 +38,7 @@ except ImportError:
                  ' from addons-vauxoo '
                  ' you will need: sudo pip install pandas')
 
+
 class ForeignExchangeRealizationLine(osv.osv_memory):
 
     _name = 'foreign.exchange.realization.line'
