@@ -28,7 +28,7 @@ class AccountAccountType(orm.Model):
             ('optional', 'Optional'),
             ('always', 'Always'),
             ('never', 'Never')
-            ],
+        ],
             'Policy for asset category',
             required=True,
             help="Set the policy for the asset category field : if you select "
