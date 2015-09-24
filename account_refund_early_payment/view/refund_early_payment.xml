@@ -24,7 +24,7 @@
                 target="new"
                 key2="client_action_multi"
                 id="act_wizard_refund_invoice"
-                context="{'ctx_active_ids': active_ids, 'ctx_active_model':active_model}"
+                context="{'ctx_active_ids': active_ids, 'ctx_active_model': active_model}"
                 />
     </data>
 </openerp>
