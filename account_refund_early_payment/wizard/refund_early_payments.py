@@ -83,13 +83,14 @@ class AccountInvoiceRefund(models.TransientModel):
     @api.multi
     def compute_refund(self, mode):
         context = dict(self._context)
-
         if mode == 'early_payment':
             ctx = context.copy()
             context.update(
                 {'active_ids': context.get('active_ids')[0]})
+
         result = super(
-            AccountInvoiceRefund, self.with_context(context)).compute_refund()
+            AccountInvoiceRefund, self.with_context(context)).compute_refund(
+                mode)
 
         if mode != 'early_payment':
             return result
@@ -151,7 +152,7 @@ class AccountInvoiceRefund(models.TransientModel):
     def action_split_reconcile(self, brw):
 
         context = dict(self._context)
-
+        prec = self.env['decimal.precision'].precision_get('Account')
         inv_obj = self.env['account.invoice']
         account_m_line_obj = self.env['account.move.line']
 
@@ -163,6 +164,7 @@ class AccountInvoiceRefund(models.TransientModel):
             if tmpline.account_id.reconcile and\
                     tmpline.account_id.type in ('receivable'):
                 move_line_id_refund = tmpline
+                move_refund_credit = tmpline.credit
             elif tmpline.account_id.reconcile:
                 to_reconcile_ids.setdefault(
                     tmpline.account_id.id, []).append(tmpline.id)
@@ -171,8 +173,9 @@ class AccountInvoiceRefund(models.TransientModel):
         invoice_source = []
         # Get the amount_total of all invoices to can make
         # proration with refund
+
         for inv in inv_obj.browse(context.get('active_ids')):
-            amount_total_inv += inv.amount_total
+            amount_total_inv += inv.currency_id.round(inv.amount_total)
             invoice_source.append(inv.number)
 
         for inv in inv_obj.browse(context.get('active_ids')):
@@ -181,17 +184,26 @@ class AccountInvoiceRefund(models.TransientModel):
                         line.reconcile_id and\
                         line.account_id == move_line_id_refund.account_id:
                     amount_inv_refund = (
-                        inv.amount_total / amount_total_inv) *\
-                        move_line_id_refund.credit
+                        amount_total_inv and inv.amount_total / amount_total_inv) *\
+                        move_line_id_refund.credit or 0.0
+
+                    if 1 > (abs(move_refund_credit - amount_inv_refund)) >\
+                            10 ** (-max(5, prec)):
+                        amount_inv_refund = move_refund_credit
+
                     move_line_id_inv_refund = move_line_id_refund.copy(
-                        default={'credit': amount_inv_refund})
+                        default={
+                            'credit': inv.currency_id.round(
+                                amount_inv_refund)})
+                    move_refund_credit -= move_line_id_inv_refund.credit
 
                     line_to_reconcile = account_m_line_obj.browse(
                         [line.id, move_line_id_inv_refund.id])
                     line_to_reconcile.reconcile_partial()
 
                 elif line.account_id.reconcile and not line.reconcile_id:
-                    to_reconcile_ids[line.account_id.id].append(line.id)
+                    to_reconcile_ids.setdefault(
+                        line.account_id.id, []).append(line.id)
 
         for account in to_reconcile_ids:
             if len(to_reconcile_ids[account]) > 1:
