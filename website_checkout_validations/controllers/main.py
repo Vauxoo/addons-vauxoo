@@ -184,7 +184,7 @@ class WebsiteSaleInh(website_sale):
                 cr, uid, query.get(prefix + 'country_id'), context=context)
             if contry:
                 query[prefix + 'vat'] = contry.code +\
-                    query.get(prefix + 'vat_alone')+'DV' + \
+                    query.get(prefix + 'vat_alone') + 'DV' + \
                     query.get(prefix + 'vat_dv')
                 query[prefix + 'vat_subjected'] = True
 

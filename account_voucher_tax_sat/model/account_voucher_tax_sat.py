@@ -60,7 +60,7 @@ class AccountVoucherTaxSat(models.Model):
         'res.company', 'Company', help='Company',
         default=lambda self: self.env['res.company']._company_default_get(
             'account.voucher.tax.sat')
-        )
+    )
     period_id = fields.Many2one(
         'account.period', 'Period', required=True,
         help='Period of Entries to find')
@@ -91,7 +91,7 @@ class AccountVoucherTaxSat(models.Model):
 
         move_line_tax = list(
             set([move_tax['move_line_id']
-                for move_tax in dat]))
+                 for move_tax in dat]))
 
         if dat:
             raise except_orm(

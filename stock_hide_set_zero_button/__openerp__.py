@@ -34,12 +34,11 @@
     "depends": [
         "base",
         "stock",
-        ],
+    ],
     "demo": [],
     "data": [
         "views/stock_view.xml",
         "security/stock_hide_set_zero_button.xml",
     ],
     "installable": True,
-    "active": False,
 }

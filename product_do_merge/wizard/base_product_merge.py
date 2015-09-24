@@ -483,9 +483,9 @@ class MergeProductAutomatic(osv.TransientModel):
                 self._model_is_installed(cr, uid, 'account.move.line',
                                          context=context) and \
                 self.pool.get('account.move.line').\
-            search(cr, openerp.SUPERUSER_ID,
+        search(cr, openerp.SUPERUSER_ID,
                     [('product_id', 'in', [product.id for product in
-                                      src_products])],
+                                           src_products])],
                     context=context):
             raise osv.except_osv(_('Error!'), _(
                 """Only the destination product may be linked to existing

@@ -5,6 +5,7 @@
     "author": "Vauxoo",
     "category": "eCommerce",
     "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "website_sale",
         "product_category_attributes",  # In order to get a description field

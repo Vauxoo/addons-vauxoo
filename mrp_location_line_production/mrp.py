@@ -42,10 +42,10 @@ class MrpProduction(osv.Model):
         return res
 
     def _make_production_consume_line(self, cr, uid, production_line,
-                    parent_move_id, source_location_id=False, context=None):
+                                      parent_move_id, source_location_id=False, context=None):
         res = super(MrpProduction, self)._make_production_consume_line(cr,
-                    uid, production_line, parent_move_id,
-                    source_location_id=source_location_id, context=context)
+                                                                       uid, production_line, parent_move_id,
+                                                                       source_location_id=source_location_id, context=context)
         stock_obj = self.pool.get('stock.move')
         product_obj = self.pool.get('product.product')
         product = stock_obj.browse(cr, uid, res).product_id.id

@@ -42,5 +42,5 @@ class IrActionReportXml(osv.Model):
         'active': 1,
         'company_id': lambda self, cr, uid, c:
         self.pool.get('res.company')._company_default_get(cr, uid,
-                                            'ir.actions.report.xml', context=c),
+                                                          'ir.actions.report.xml', context=c),
     }

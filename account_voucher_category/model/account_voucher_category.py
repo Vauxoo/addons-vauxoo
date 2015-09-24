@@ -31,7 +31,8 @@ class AccountVoucherCategory(osv.Model):
         if level <= 0:
             return '...'
         if elmt.parent_id:
-            parent_path = self._get_one_full_name(elmt.parent_id, level - 1) + " / "
+            parent_path = self._get_one_full_name(
+                elmt.parent_id, level - 1) + " / "
         else:
             parent_path = ''
         return parent_path + elmt.name
@@ -42,8 +43,8 @@ class AccountVoucherCategory(osv.Model):
         'type': fields.selection([('view', 'View'), ('other', 'Regular')], string='Category Type', help='Category Type'),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'parent_id': fields.many2one('account.voucher.category', 'Parent Category',
-            ondelete='restrict',
-            help='Allows to create a Hierachycal Tree of Categories'),
+                                     ondelete='restrict',
+                                     help='Allows to create a Hierachycal Tree of Categories'),
         'parent_left': fields.integer('Parent Left', select=1),
         'parent_right': fields.integer('Parent Right', select=1),
         'complete_name': fields.function(_get_full_name, type='char', string='Full Name'),
@@ -61,13 +62,16 @@ class AccountVoucherCategory(osv.Model):
             context = {}
         ids2 = []
         if name:
-            ids = self.search(cr, uid, [('code', '=', name)] + args, limit=limit, context=context)
-            ids2 = self.search(cr, uid, [('user_type', 'ilike', name)] + args, limit=limit, context=context)
+            ids = self.search(
+                cr, uid, [('code', '=', name)] + args, limit=limit, context=context)
+            ids2 = self.search(
+                cr, uid, [('user_type', 'ilike', name)] + args, limit=limit, context=context)
             if not ids:
                 dom = []
                 for name2 in name.split('/'):
                     name = name2.strip()
-                    ids = self.search(cr, uid, dom + [('name', 'ilike', name)] + args, limit=limit, context=context)
+                    ids = self.search(
+                        cr, uid, dom + [('name', 'ilike', name)] + args, limit=limit, context=context)
                     if not ids:
                         break
                     dom = [('parent_id', 'in', ids)]
@@ -110,9 +114,10 @@ class AccountVoucher(osv.Model):
         '''
         context = context or {}
         move_line = super(AccountVoucher, self).first_move_line_get(cr, uid,
-                voucher_id, move_id, company_currency, current_currency,
-                context=context)
-        voucher = self.pool.get('account.voucher').browse(cr, uid, voucher_id, context)
+                                                                    voucher_id, move_id, company_currency, current_currency,
+                                                                    context=context)
+        voucher = self.pool.get('account.voucher').browse(
+            cr, uid, voucher_id, context)
         move_line['av_cat_id'] = voucher.av_cat_id and voucher.av_cat_id.id or False
         return move_line
 

@@ -50,25 +50,29 @@ class AccountInvoice(models.Model):
                 # end custom change
                 tax_key.append(key)
                 if key not in compute_taxes:
-                    raise except_orm(_('Warning!'), _('Global taxes defined, but they are not in invoice lines !'))
+                    raise except_orm(_('Warning!'), _(
+                        'Global taxes defined, but they are not in invoice lines !'))
                 base = compute_taxes[key]['base']
                 if abs(base - tax.base) > company_currency.rounding:
-                    raise except_orm(_('Warning!'), _('Tax base different!\nClick on compute to update the tax base.'))
+                    raise except_orm(_('Warning!'), _(
+                        'Tax base different!\nClick on compute to update the tax base.'))
             for key in compute_taxes:
                 if key not in tax_key:
-                    raise except_orm(_('Warning!'), _('Taxes are missing!\nClick on compute button.'))
+                    raise except_orm(_('Warning!'), _(
+                        'Taxes are missing!\nClick on compute button.'))
 
 
 class AccountInvoiceTax(models.Model):
     _inherit = 'account.invoice.tax'
 
     tax_id = fields.Many2one('account.tax', string='Tax', required=False, ondelete='set null', index=True,
-        help="Tax relation to original tax, to be able to take off all data from invoices.")
+                             help="Tax relation to original tax, to be able to take off all data from invoices.")
 
     @api.v8
     def compute(self, invoice):
         tax_grouped = {}
-        currency = invoice.currency_id.with_context(date=invoice.date_invoice or fields.Date.context_today(invoice))
+        currency = invoice.currency_id.with_context(
+            date=invoice.date_invoice or fields.Date.context_today(invoice))
         company_currency = invoice.company_id.currency_id
         for line in invoice.invoice_line:
             taxes = line.invoice_line_tax_id.compute_all(
@@ -87,17 +91,25 @@ class AccountInvoiceTax(models.Model):
                 if invoice.type in ('out_invoice', 'in_invoice'):
                     val['base_code_id'] = tax['base_code_id']
                     val['tax_code_id'] = tax['tax_code_id']
-                    val['base_amount'] = currency.compute(val['base'] * tax['base_sign'], company_currency, round=False)
-                    val['tax_amount'] = currency.compute(val['amount'] * tax['tax_sign'], company_currency, round=False)
-                    val['account_id'] = tax['account_collected_id'] or line.account_id.id
-                    val['account_analytic_id'] = tax['account_analytic_collected_id']
+                    val['base_amount'] = currency.compute(
+                        val['base'] * tax['base_sign'], company_currency, round=False)
+                    val['tax_amount'] = currency.compute(
+                        val['amount'] * tax['tax_sign'], company_currency, round=False)
+                    val['account_id'] = tax[
+                        'account_collected_id'] or line.account_id.id
+                    val['account_analytic_id'] = tax[
+                        'account_analytic_collected_id']
                 else:
                     val['base_code_id'] = tax['ref_base_code_id']
                     val['tax_code_id'] = tax['ref_tax_code_id']
-                    val['base_amount'] = currency.compute(val['base'] * tax['ref_base_sign'], company_currency, round=False)
-                    val['tax_amount'] = currency.compute(val['amount'] * tax['ref_tax_sign'], company_currency, round=False)
-                    val['account_id'] = tax['account_paid_id'] or line.account_id.id
-                    val['account_analytic_id'] = tax['account_analytic_paid_id']
+                    val['base_amount'] = currency.compute(
+                        val['base'] * tax['ref_base_sign'], company_currency, round=False)
+                    val['tax_amount'] = currency.compute(
+                        val['amount'] * tax['ref_tax_sign'], company_currency, round=False)
+                    val['account_id'] = tax[
+                        'account_paid_id'] or line.account_id.id
+                    val['account_analytic_id'] = tax[
+                        'account_analytic_paid_id']
                 # start custom change
                 #key = (val['tax_code_id'], val['base_code_id'], val['account_id'], val['account_analytic_id'])
                 key = (val['tax_id'])

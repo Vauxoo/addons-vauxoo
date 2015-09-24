@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # import the os module, for the os.walk function
 import os
 import re

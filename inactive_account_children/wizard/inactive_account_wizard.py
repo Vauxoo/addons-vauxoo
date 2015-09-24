@@ -44,7 +44,7 @@ class InactiveAccountWizard(osv.osv_memory):
                                       'write', account_children.name,
                                       context=context)
                     self.pool.get('account.account').write(cr, uid,
-                                account_children.id, {'active': False})
+                                                           account_children.id, {'active': False})
         return True
 
     def _check_moves(self, cr, uid, ids, method, account=None,
@@ -68,7 +68,7 @@ class InactiveAccountWizard(osv.osv_memory):
 
         value = 'account.account,' + str(ids)
         partner_prop_acc = self.pool.get('ir.property').search(cr,
-            uid, [('value_reference', '=', value)], context=context)
+                                                               uid, [('value_reference', '=', value)], context=context)
         conc_acc = ''
         if account:
             conc_acc = '\nAccount: ' + account
@@ -77,8 +77,8 @@ class InactiveAccountWizard(osv.osv_memory):
             for proper in partner_prop_acc:
                 conc_acc = conc_acc + '\n- ' + str(proper)
             raise osv.except_osv(_('Warning!'), _('You cannot '
-                'remove/deactivate an account which is set on a '
-                'customer or supplier.') + conc_acc)
+                                                  'remove/deactivate an account which is set on a '
+                                                  'customer or supplier.') + conc_acc)
         return True
 
     _columns = {

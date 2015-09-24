@@ -18,10 +18,10 @@
 {
     "name": "Product Image Gallery",
     "version": "0.6",
-    "author": "Sharoon Thomas, Open Labs Business Solutions",
+    "author": "Sharoon Thomas, Open Labs Business Solutions",  # pylint: disable=C8101
     "category": "Added functionality - Product Extension",
     "website": "http://openlabs.co.in/",
-    "license": "",
+    "license": "GPL-3",  # pylint: disable=C8102
     "depends": [
         "base",
         "product"
@@ -37,5 +37,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

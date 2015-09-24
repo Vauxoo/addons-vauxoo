@@ -44,6 +44,6 @@ class StockMove(osv.Model):
 
     _columns = {
         'analytic_acc': fields.many2one('account.analytic.account',
-            'Analytic Account', readonly=True,
-            states={'draft': [('readonly', False)]})
+                                        'Analytic Account', readonly=True,
+                                        states={'draft': [('readonly', False)]})
     }

@@ -59,7 +59,7 @@ class StockLocation(osv.Model):
                     # results, that's fine
                     ids.update(self.search(
                         cr, user, args + [('name', operator, name)],
-                        limit=(limit and (limit-len(ids)) or False),
+                        limit=(limit and (limit - len(ids)) or False),
                         context=context))
                 ids = list(ids)
 

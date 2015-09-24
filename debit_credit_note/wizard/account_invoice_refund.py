@@ -162,7 +162,7 @@ class AccountInvoiceRefund(osv.osv_memory):
                                             where y.id=p.fiscalyear_id \
                                 and date(%s) between p.date_start AND
                                 p.date_stop and y.company_id = %s limit 1""",
-                                      (date, company.id,))
+                                       (date, company.id,))
                         else:
                             cr.execute("""SELECT id
                                     from account_period where date(%s)

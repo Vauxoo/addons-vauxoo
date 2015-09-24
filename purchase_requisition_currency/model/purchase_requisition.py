@@ -36,7 +36,8 @@ class PurchaseRequisition(osv.Model):
 
     _defaults = {
         'currency_id': lambda s, c, u, ctx:
-            s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.currency_id.id,
+            s.pool.get('res.users').browse(
+                c, u, u, context=ctx).company_id.currency_id.id,
     }
 
     def make_purchase_order(self, cr, uid, ids, partner_id, context=None):
@@ -74,7 +75,7 @@ class PurchaseRequisition(osv.Model):
                     pl_ids = pl_obj.search(cr, uid, domain, context=context)
                     if pl_ids:
                         po_obj.write(cr, uid, po_brw.id, {'pricelist_id':
-                            pl_ids[0]})
+                                                          pl_ids[0]})
                     else:
                         currency.update(
                             pl=currency['pl'].name, pr=currency['pr'].name)

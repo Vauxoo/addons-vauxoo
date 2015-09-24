@@ -18,7 +18,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 #"license" : "AGPL-3",
 {
     "name": "Inherit ref field in search view of res_partner",
@@ -40,5 +40,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

@@ -23,5 +23,4 @@
         "wizard/set_invoice_view.xml",
     ],
     "installable": True,
-    "active": False,
 }

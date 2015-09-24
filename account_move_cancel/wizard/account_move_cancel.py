@@ -34,8 +34,8 @@ class AccountMoveCancel(osv.TransientModel):
     _name = 'account.move.cancel'
     _columns = {
         'invoice_ids': fields.many2many('account.invoice', 'invoice_rel',
-                            'invoice1', 'invoice2', 'Invoices',
-                            help="Select the invoices to account move cancel"),
+                                        'invoice1', 'invoice2', 'Invoices',
+                                        help="Select the invoices to account move cancel"),
 
     }
 
@@ -105,7 +105,7 @@ class AccountMoveCancel(osv.TransientModel):
                     i) for i in iva_ids]
 
                 len(iva_ids) == 1 and wf_service.trg_validate(uid,
-                            'account.wh.iva', iva_ids[0], 'cancel', cr) or \
+                                                              'account.wh.iva', iva_ids[0], 'cancel', cr) or \
                     [wf_service.trg_validate(
                      uid, 'account.wh.iva', i, 'cancel', cr) for i in iva_ids]
 
@@ -116,7 +116,7 @@ class AccountMoveCancel(osv.TransientModel):
                     i) for i in islr_ids]
 
                 len(islr_ids) == 1 and wf_service.trg_validate(uid,
-                            'islr.wh.doc', islr_ids[0], 'act_cancel', cr) or \
+                                                               'islr.wh.doc', islr_ids[0], 'act_cancel', cr) or \
                     [wf_service.trg_validate(
                         uid, 'islr.wh.doc', i, 'act_cancel', cr)
                         for i in islr_ids]
@@ -127,7 +127,8 @@ class AccountMoveCancel(osv.TransientModel):
                 raise osv.except_osv(_('Invalid action !'), _(
                     "Impossible invoice(s) cancel %s  because is/are paid!"
                     % (' '.join(names))))
-            invo_obj.action_cancel(cr, uid, invo_ids, context=context)  # correccion estaba llegando tupla () al unlink
+            # correccion estaba llegando tupla () al unlink
+            invo_obj.action_cancel(cr, uid, invo_ids, context=context)
             invo_obj.write(cr, uid, invo_ids, {
                            'cancel_true': True}, context=context)
             hasattr(journal_obj.browse(cr, uid, journal_ids[0],

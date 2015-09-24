@@ -19,7 +19,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from openerp.osv import fields, osv
 
@@ -67,11 +67,13 @@ class Partner(osv.osv):
         inv_obj = self.pool.get('account.invoice')
         for id in ids:
             s_id = so_obj.search(cr, uid,
-                    [('partner_id', '=', id)], order='date_order asc', limit=1) or []
+                                 [('partner_id', '=', id)], order='date_order asc', limit=1) or []
             i_id = inv_obj.search(cr, uid,
-                    # TODO: in the future set args for state in ['open','paid']
-                    [('partner_id', '=', id), ('type', '=', 'out_invoice')],
-                    order='date_invoice asc', limit=1) or []
+                                  # TODO: in the future set args for state in
+                                  # ['open','paid']
+                                  [('partner_id', '=', id),
+                                   ('type', '=', 'out_invoice')],
+                                  order='date_invoice asc', limit=1) or []
             res[id] = {
                 'sale_order_date': s_id and
                 so_obj.browse(cr, uid, s_id[0], context=context).date_order

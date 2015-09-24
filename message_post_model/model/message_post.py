@@ -229,5 +229,5 @@ class MessagePostShowAll(osv.Model):
             if body and message:
                 self.message_post(cr, uid, [idx], body, _('Changes in Fields'))
         res = super(MessagePostShowAll, self).write(cr, uid, ids, vals,
-                                                       context=context)
+                                                    context=context)
         return res

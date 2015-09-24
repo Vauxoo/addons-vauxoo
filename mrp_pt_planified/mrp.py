@@ -44,7 +44,7 @@ class MrpProduction(osv.Model):
 
     _columns = {
         'pt_planified_ids': fields.one2many('mrp.pt.planified',
-            'production_id', 'Products Finished Good Planified'),
+                                            'production_id', 'Products Finished Good Planified'),
     }
 
     def action_compute(self, cr, uid, ids, properties=[], context=None):
@@ -86,9 +86,9 @@ class MrpPtPlanified(osv.Model):
 
     _columns = {
         'product_id': fields.many2one('product.product', 'Product',
-            required=True),
+                                      required=True),
         'quantity': fields.float('quantity',
-            digits_compute=dp.get_precision('Product UoM'), required=True),
+                                 digits_compute=dp.get_precision('Product UoM'), required=True),
         'production_id': fields.many2one('mrp.production', 'production'),
         'product_uom': fields.many2one('product.uom', 'UoM', required=True)
     }

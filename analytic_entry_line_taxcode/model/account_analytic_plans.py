@@ -32,7 +32,7 @@ class AccountAnalyticLine(osv.Model):
 
     _columns = {
         'tax_code_id': fields.many2one('account.tax.code', 'Tax Account',
-            help="The Account can either be a base tax code or a tax code account."),
+                                       help="The Account can either be a base tax code or a tax code account."),
     }
 
 
@@ -45,7 +45,8 @@ class AccountMoveLine(osv.Model):
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        res = super(AccountMoveLine, self).create_analytic_lines(cr, uid, ids, context=context)
+        res = super(AccountMoveLine, self).create_analytic_lines(
+            cr, uid, ids, context=context)
 
         analytic_line_obj = self.pool.get('account.analytic.line')
         for move_line in self.browse(cr, uid, ids, context=context):

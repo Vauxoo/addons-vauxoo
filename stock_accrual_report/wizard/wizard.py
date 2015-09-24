@@ -165,7 +165,7 @@ class StockAccrualWizard(osv.osv_memory):
         return company_id
 
     def _get_debit_credit(self, cr, uid, ids, field_names=None, arg=False,
-                           context=None):
+                          context=None):
         """ Finds Grand total on debits and credits on wizard.
         @return: Dictionary of values
         """

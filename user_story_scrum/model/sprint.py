@@ -45,7 +45,6 @@ class UserStory(models.Model):
             us.write({'sprint_ids': [(4, us.sk_id.id)]})
 
 
-
 class AcceptabilityCriteria(models.Model):
 
     _inherit = 'acceptability.criteria'

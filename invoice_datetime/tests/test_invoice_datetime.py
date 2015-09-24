@@ -32,6 +32,7 @@ _logger = logging.getLogger(__name__)
 
 
 class TestInvoiceDatetime(TransactionCase):
+
     def setUp(self):
         super(TestInvoiceDatetime, self).setUp()
         self.user = self.registry('res.users')

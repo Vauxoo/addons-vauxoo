@@ -74,8 +74,8 @@ class PrintAccountInvoiceReport(osv.TransientModel):
 
     def print_invoice(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.report.xml',
-            'report_name': self._get_report_name(cr, uid, context),
-            'datas': {'ids': context['active_ids']}}
+                'report_name': self._get_report_name(cr, uid, context),
+                'datas': {'ids': context['active_ids']}}
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),

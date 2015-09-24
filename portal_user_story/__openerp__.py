@@ -25,26 +25,26 @@
 ##############################################################################
 
 {
-    "name" : "Portal Access for User Story",
-    "version" : "0.6",
-    "depends" : [
-                 "base",
-                 "user_story",
-                 "portal",
-                 "portal_project",
-                 ],
-    "author" : "Vauxoo",
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "demo" : [
+    "name": "Portal Access for User Story",
+    "version": "0.6",
+    "depends": [
+        "base",
+        "user_story",
+        "portal",
+        "portal_project",
+    ],
+    "author": "Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "AGPL-3",
+    "category": "Generic Modules",
+    "demo": [
         'demo/demo.xml',
     ],
-    "data" : [
+    "data": [
         "security/ir_rules.xml",
         "security/ir.model.access.csv",
         'view/portal_view.xml',
     ],
-    "active": False,
     "images": [],
     "installable": True,
 }

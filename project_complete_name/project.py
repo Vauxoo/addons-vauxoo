@@ -64,11 +64,11 @@ class ProjectProject(osv.Model):
 
     def _complete_name(self, cr, uid, ids, name, args, context=None):
         return super(ProjectProject, self)._complete_name(cr, uid, ids, name,
-                                                        args, context=context)
+                                                          args, context=context)
     _columns = {
         'complete_name2': fields.function(_complete_name,
-              fnct_search=_project_search, string="Project Name",
-              type='char', size=250),
+                                          fnct_search=_project_search, string="Project Name",
+                                          type='char', size=250),
     }
 
     def name_search(self, cr, user, name='', args=None, operator='ilike',
@@ -85,11 +85,11 @@ class ProjectProject(osv.Model):
                     'complete_name2', operator, name)],
                     limit=limit, context=context))
                 ids.update(map(lambda a: a[0], super(ProjectProject,
-                                                    self).name_search(cr, user,
-                                                        name=name, args=args,
-                                                        operator=operator,
-                                                        context=context,
-                                                        limit=limit)))
+                                                     self).name_search(cr, user,
+                                                                       name=name, args=args,
+                                                                       operator=operator,
+                                                                       context=context,
+                                                                       limit=limit)))
                 ids = list(ids)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
@@ -102,7 +102,7 @@ class ProjectTask(osv.Model):
 
     _columns = {
         'project_related_id': fields.related('project_id',
-            'analytic_account_id', type='many2one',
-            relation='account.analytic.account',
-            string='Complete Name Project')
+                                             'analytic_account_id', type='many2one',
+                                             relation='account.analytic.account',
+                                             string='Complete Name Project')
     }

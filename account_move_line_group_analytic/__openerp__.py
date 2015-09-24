@@ -18,7 +18,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 #"license" : "AGPL-3",
 {
     "name": "Grouped by product,move_id y analytic in model account_move_line",
@@ -41,5 +41,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

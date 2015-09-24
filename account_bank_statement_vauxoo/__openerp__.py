@@ -44,7 +44,6 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False,
     "external_dependencies": {
         "python": ["xlrd"],
     },

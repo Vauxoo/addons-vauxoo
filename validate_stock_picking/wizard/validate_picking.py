@@ -66,10 +66,10 @@ class ValidatePicking(osv.TransientModel):
                                                             'date'], copy_ctx)
                             dicts.get('move_ids') and \
                                 dicts.update({'move_ids': [(0, 0, i)
-                                              for i in dicts.get('move_ids')]})
+                                                           for i in dicts.get('move_ids')]})
                             partial_id = do_partial.create(cr, uid, dicts)
                             do_partial.do_partial(cr, uid,
-                                                 [partial_id], copy_ctx)
+                                                  [partial_id], copy_ctx)
                     elif 'stock.move' in context.get('active_model'):
                         context.update({'no_change_date': True})
                         stock_obj.action_done(cr, uid,

@@ -39,7 +39,7 @@ class MrpProduction(osv.Model):
             res['value'].update({
                 'location_src_id': product.categ_id and
                                 product.categ_id.location_src_id.id or False,
-                'location_dest_id': product.categ_id and
+                                'location_dest_id': product.categ_id and
                                 product.categ_id.location_dest_id.id or False})
         else:
             res['value'].update({'location_src_id': False,

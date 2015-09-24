@@ -7,7 +7,7 @@ class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
 
     def _search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False,
-            access_rights_uid=None):
+                access_rights_uid=None):
 
         move_obj = self.pool.get('account.move.line')
         voucher_obj = self.pool.get('account.voucher')
@@ -42,7 +42,7 @@ class AccountMoveLine(osv.Model):
         args.append(no_incluir)
 
         return super(AccountMoveLine, self)._search(cr, uid, args, offset=offset, limit=limit,
-                order=order, context=context, count=count, access_rights_uid=access_rights_uid)
+                                                    order=order, context=context, count=count, access_rights_uid=access_rights_uid)
 
 
 class AccountReconcileAdvance(osv.Model):
@@ -55,7 +55,8 @@ class AccountReconcileAdvance(osv.Model):
         ''''''
         context = context or {}
 
-        res = super(AccountReconcileAdvance, self).default_get(cr, uid, fields, context=context)
+        res = super(AccountReconcileAdvance, self).default_get(
+            cr, uid, fields, context=context)
         if not context.get('default_type', False):
             res.update({'type': 'pay'})
 
@@ -66,9 +67,9 @@ class AccountReconcileAdvance(osv.Model):
         'date': fields.date('Date', help='Document Date'),
         'date_post': fields.date('Accounting Date', help='Date to be used in Journal Entries when posted'),
         'type': fields.selection([('pay', 'Payment'), ('rec', 'Receipt')],
-            help='State'),
+                                 help='State'),
         'state': fields.selection([('draft', 'Draft'), ('cancel', 'Cancel'),
-            ('done', 'Done')], help='State'),
+                                   ('done', 'Done')], help='State'),
         'company_id': fields.many2one('res.company', 'Company', help='Company'),
         'partner_id': fields.many2one('res.partner', 'Partner', help='Advance Partner'),
         'period_id': fields.many2one('account.period', 'Accounting Period', help='Period where Journal Entries will be posted'),
@@ -82,12 +83,12 @@ class AccountReconcileAdvance(osv.Model):
     _defaults = {
         'state': 'draft',
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
-            u, cx).company_id.id,
+                                                                         u, cx).company_id.id,
         'date': fields.date.today
     }
 
     def invoice_credit_lines(self, cr, uid, ids, amount, am_id=None,
-            account_id=False, partner_id=False, date=None, context=None):
+                             account_id=False, partner_id=False, date=None, context=None):
         """
         """
         context = context or {}
@@ -113,7 +114,7 @@ class AccountReconcileAdvance(osv.Model):
         return aml_obj.create(cr, uid, vals, context=context)
 
     def invoice_debit_lines(self, cr, uid, ids, amount, am_id=None,
-            account_id=False, partner_id=False, date=None, context=None):
+                            account_id=False, partner_id=False, date=None, context=None):
         """
         """
         context = context or {}
@@ -143,15 +144,16 @@ class AccountReconcileAdvance(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         ara_brw = self.browse(cr, uid, ids[0], context=context)
         res = []
-        res.append((ara_brw.invoice_ids or ara_brw.ai_aml_ids) and True or False)
+        res.append((ara_brw.invoice_ids or ara_brw.ai_aml_ids)
+                   and True or False)
         res.append((ara_brw.voucher_ids or ara_brw.av_aml_ids) and True or ara_brw.av_aml_ids and True
-                or False)
+                   or False)
 
         if all(res):
             return True
         else:
             raise osv.except_osv(_('Error!'), _("Please Field the Invoices & "
-                "Advances Fields"))
+                                                "Advances Fields"))
 
     def payment_reconcile(self, cr, uid, ids, context=None):
         context = context or {}
@@ -167,34 +169,39 @@ class AccountReconcileAdvance(osv.Model):
 
         # Se preparan los valores para el account.move que se va a crear
         am_vals = am_obj.account_move_prepare(cr, uid, ara_brw.journal_id.id,
-                date=ara_brw.date_post, ref=ara_brw.name,
-                company_id=ara_brw.company_id.id, context=context)
+                                              date=ara_brw.date_post, ref=ara_brw.name,
+                                              company_id=ara_brw.company_id.id, context=context)
 
         # Se crea el acocunt.move
         am_id = am_obj.create(cr, uid, am_vals, context=context)
 
-        # Se obtienen las facturas incluidas en la conciliacion, las facturas (deudas)
+        # Se obtienen las facturas incluidas en la conciliacion, las facturas
+        # (deudas)
         invoice_ids = [inv.id for inv in ara_brw.invoice_ids]
         invoice_ids = inv_obj.search(cr, uid, [('id', 'in', invoice_ids)],
-                order='date_due asc', context=context)
+                                     order='date_due asc', context=context)
 
         # Se obtienen los asientos contables (deudores)
-        ai_aml_ids = ara_brw.ai_aml_ids and [k.id for k in ara_brw.ai_aml_ids] or []
+        ai_aml_ids = ara_brw.ai_aml_ids and [
+            k.id for k in ara_brw.ai_aml_ids] or []
 
         av_aml_ids = []
-        # Se obtienen los asientos contables de los anticipos (vouchers, credito)
+        # Se obtienen los asientos contables de los anticipos (vouchers,
+        # credito)
         for av_brw in ara_brw.voucher_ids:
             av_aml_ids += [l.id for l in av_brw.move_ids if l.account_id.type
-                    == (ara_brw.type == 'pay' and 'payable' or 'receivable')
-                and not l.reconcile_id and not l.reconcile_partial_id]
+                           == (ara_brw.type == 'pay' and 'payable' or 'receivable')
+                           and not l.reconcile_id and not l.reconcile_partial_id]
 
-        # Se unen los asientos contables de los anticipos con los asientos contables escogidos man.
-        av_aml_ids += ara_brw.av_aml_ids and [l.id for l in ara_brw.av_aml_ids] or []
+        # Se unen los asientos contables de los anticipos con los asientos
+        # contables escogidos man.
+        av_aml_ids += ara_brw.av_aml_ids and [
+            l.id for l in ara_brw.av_aml_ids] or []
         av_aml_ids = list(set(av_aml_ids))
 
         # Se ordenan en forma ascendente
         av_aml_ids = aml_obj.search(cr, uid, [('id', 'in', av_aml_ids)],
-                order='date asc', context=context)
+                                    order='date asc', context=context)
 
         # In the future this should be like this
         # while (invoice_ids or ai_aml_ids) and av_aml_ids:
@@ -219,19 +226,25 @@ class AccountReconcileAdvance(osv.Model):
             if invoice_ids:
                 if not inv_sum:
                     #               BE AWARE MULTICURRENCY MISSING HERE
-                    inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
+                    inv_brw = inv_obj.browse(
+                        cr, uid, invoice_ids.pop(0), context=context)
                     inv_sum = inv_brw.residual
 
             elif ai_aml_ids:
                 if not inv_sum:
-                    aml2_brw = aml_obj.browse(cr, uid, ai_aml_ids.pop(0), context=context)
-                    inv_sum = aml2_brw[ara_brw.type == 'pay' and 'credit' or 'debit']
+                    aml2_brw = aml_obj.browse(
+                        cr, uid, ai_aml_ids.pop(0), context=context)
+                    inv_sum = aml2_brw[ara_brw.type ==
+                                       'pay' and 'credit' or 'debit']
 
             # Agarrar dinero mas viejo
             while(aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
-                aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
-                aml_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
-                aml_grn_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']  # unused
+                aml_brw = aml_obj.browse(
+                    cr, uid, av_aml_ids.pop(0), context=context)
+                aml_sum += aml_brw[ara_brw.type ==
+                                   'pay' and 'debit' or 'credit']
+                aml_grn_sum += aml_brw[ara_brw.type ==
+                                       'pay' and 'debit' or 'credit']  # unused
 #               gruping by account_id should be done here
 
 #           While we have plenty of money to pay our debts and there are debts
@@ -245,11 +258,11 @@ class AccountReconcileAdvance(osv.Model):
                     get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
                         self.invoice_credit_lines
                     payid = get_aml(cr, uid, ids, inv_sum, account_id=inv_brw.account_id.id,
-                            am_id=am_id, context=context)
+                                    am_id=am_id, context=context)
                     inv_sum = 0.0
                     iamls = [line.id for line in inv_brw.move_id.line_id if
-                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
-                                'receivable')]
+                             line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
+                                                      'receivable')]
                     pamls = [line.id for line in inv_brw.payment_ids]
                     lines_2_rec.append(iamls + pamls + [payid])
                     inv_brw = None
@@ -263,7 +276,7 @@ class AccountReconcileAdvance(osv.Model):
                         self.invoice_credit_lines
 #               Creates its own mirror and fully reconciliates them
                     payid = get_aml(cr, uid, ids, inv_sum, account_id=aml2_brw.account_id.id,
-                            am_id=am_id, context=context)
+                                    am_id=am_id, context=context)
                     inv_sum = 0.0
                     lines_2_rec.append([payid, aml2_brw.id])
                     aml2_brw = None
@@ -278,16 +291,16 @@ class AccountReconcileAdvance(osv.Model):
 
                 if inv_brw:
                     payid = get_aml(cr, uid, ids, aml_sum, account_id=inv_brw.account_id.id,
-                            am_id=am_id, context=context)
+                                    am_id=am_id, context=context)
                     iamls = [line.id for line in inv_brw.move_id.line_id if
-                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
-                                'receivable')]
+                             line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
+                                                      'receivable')]
                     pamls = [line.id for line in inv_brw.payment_ids]
                     lines_2_par.append(iamls + pamls + [payid])
 #               BE AWARE MULTICURRENCY MISSING HERE
                 else:
                     payid = get_aml(cr, uid, ids, aml_sum, account_id=aml2_brw.account_id.id,
-                            am_id=am_id, context=context)
+                                    am_id=am_id, context=context)
                     lines_2_par.append([payid, aml2_brw.id])
 #               BE AWARE MULTICURRENCY MISSING HERE
 
@@ -310,22 +323,24 @@ class AccountReconcileAdvance(osv.Model):
             #            aml_sum => debit
             if aml_sum:
                 #               if some remaining money get around it will not be reconciled
-                #               This should be sent to a method in order to be captured
+                # This should be sent to a method in order to be captured
                 if ara_brw.type == 'pay':
                     acc_id = ara_brw.partner_id.property_account_payable.id
                 else:
                     acc_id = ara_brw.partner_id.property_account_receivable.id
                 get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
                     self.invoice_credit_lines
-                get_aml(cr, uid, ids, aml_sum, account_id=acc_id, am_id=am_id, context=context)
+                get_aml(cr, uid, ids, aml_sum, account_id=acc_id,
+                        am_id=am_id, context=context)
 
             get_aml = ara_brw.type == 'pay' and self.invoice_credit_lines or \
                 self.invoice_debit_lines
             for aml_brw in aml_obj.browse(cr, uid, used_aml_ids, context=context):
                 adv_2_rec.append([get_aml(cr, uid, ids,
-                    aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit'],
-                    account_id=aml_brw.account_id.id,
-                    am_id=am_id, context=context), aml_brw.id])
+                                          aml_brw[ara_brw.type ==
+                                                  'pay' and 'debit' or 'credit'],
+                                          account_id=aml_brw.account_id.id,
+                                          am_id=am_id, context=context), aml_brw.id])
 
         for line_pair in adv_2_rec + lines_2_rec:
             if not line_pair:
@@ -381,10 +396,10 @@ class AccountVoucher(osv.Model):
 
     _columns = {
         'advance': fields.function(_get_advance, method=True, string='Is an Advance?',
-        store={
-            'account.voucher': (lambda s, c, u, ids, cx: ids, ['move_ids', 'move_id', 'state'], 15),
-            'account.move.line': (_get_voucher_advance, ['reconcile_id', 'reconcile_partial_id'], 30)
-        },
-            help='If the payable or receivable are not fully reconcile then it is advance',
-            type='boolean')
+                                   store={
+                                       'account.voucher': (lambda s, c, u, ids, cx: ids, ['move_ids', 'move_id', 'state'], 15),
+                                       'account.move.line': (_get_voucher_advance, ['reconcile_id', 'reconcile_partial_id'], 30)
+                                   },
+                                   help='If the payable or receivable are not fully reconcile then it is advance',
+                                   type='boolean')
     }

@@ -61,11 +61,11 @@ class InheritsSale(osv.Model):
         product_obj = self.pool.get('product.product')
         res = super(
             InheritsSale, self).product_id_change(cr, uid, ids, pricelist,
-                   product, qty=qty,
-                   uom=uom, qty_uos=qty_uos, uos=uos, name=name,
-                   partner_id=partner_id, lang=lang, update_tax=update_tax,
-                   date_order=date_order, packaging=packaging,
-                   fiscal_position=fiscal_position, flag=flag, context=context)
+                                                  product, qty=qty,
+                                                  uom=uom, qty_uos=qty_uos, uos=uos, name=name,
+                                                  partner_id=partner_id, lang=lang, update_tax=update_tax,
+                                                  date_order=date_order, packaging=packaging,
+                                                  fiscal_position=fiscal_position, flag=flag, context=context)
         uom_id = product and product_obj.browse(cr, uid, product, context)
         uom_id = uom_id and uom_id.uom_id and uom_id.uom_id.id
         res.get('value', False) and res.get(

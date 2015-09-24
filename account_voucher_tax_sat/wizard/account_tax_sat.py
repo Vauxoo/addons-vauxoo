@@ -86,5 +86,5 @@ class AccountVoucherTaxAssigned(osv.TransientModel):
                     'aml_iva_ids': [
                         (4, move_iva_id)
                         for move_iva_id in move_line_iva_to_close]
-                    })
+                })
         return True

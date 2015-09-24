@@ -45,7 +45,8 @@ class CleanGroups(osv.TransientModel):
                 if context.get('active_ids') and SUPERUSER_ID not in context.get('active_ids', []):
                     self.pool.get('res.users').write(cr, uid,
                                                      context.get('active_ids'),
-                                                     {'groups_id': [(6, 0, [])]},
+                                                     {'groups_id': [
+                                                         (6, 0, [])]},
                                                      context=context)
 
                 else:

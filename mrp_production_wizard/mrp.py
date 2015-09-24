@@ -49,8 +49,8 @@ class MrpProduction(osv.Model):
                 cr, uid, line['product_id'], context=None)
             if product_obj_data.weight:
                 total_weight += (line['product_qty'] *
-                    product_obj_data.weight * (product.uom_id.factor /
-                    product_obj_data.uom_id.factor))
+                                 product_obj_data.weight * (product.uom_id.factor /
+                                                            product_obj_data.uom_id.factor))
             else:
                 total_weight += line['product_qty'] * (
                     product.uom_id.factor / product_obj_data.uom_id.factor)
@@ -60,10 +60,10 @@ class MrpProduction(osv.Model):
         default_location_dict = self.product_id_change(
             cr, uid, [], product.id, context)
         if (default_location_dict['value']['location_src_id'] &
-        default_location_dict['value']['location_dest_id']):
+                default_location_dict['value']['location_dest_id']):
             production_order_dict = {
                 'name': self.pool.get('ir.sequence').get(cr, uid,
-                        'mrp.production'),
+                                                         'mrp.production'),
                 'date_planned': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'product_id': product.id,
                 'product_qty': total_weight,

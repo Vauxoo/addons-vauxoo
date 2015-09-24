@@ -56,7 +56,8 @@ class HrPayslip(osv.osv):
                     move[line2.move_id.id] = True
         payslip_ids = []
         if move:
-            payslip_ids = self.pool.get('hr.payslip').search(cr, uid, [('move_id', 'in', move.keys())], context=context)
+            payslip_ids = self.pool.get('hr.payslip').search(
+                cr, uid, [('move_id', 'in', move.keys())], context=context)
         return payslip_ids
 
     def _get_payslip_from_reconcile(self, cr, uid, ids, context=None):
@@ -69,14 +70,15 @@ class HrPayslip(osv.osv):
 
         payslip_ids = []
         if move:
-            payslip_ids = self.pool.get('hr.payslip').search(cr, uid, [('move_id', 'in', move.keys())], context=context)
+            payslip_ids = self.pool.get('hr.payslip').search(
+                cr, uid, [('move_id', 'in', move.keys())], context=context)
         return payslip_ids
 
     _columns = {
         'residual': fields.function(_amount_residual, digits_compute=dp.get_precision('Account'), string='Balance',
-            store={
-                'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, [], 50),
-                'account.move.line': (_get_payslip_from_line, None, 50),
-                'account.move.reconcile': (_get_payslip_from_reconcile, None, 50),
+                                    store={
+            'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, [], 50),
+            'account.move.line': (_get_payslip_from_line, None, 50),
+            'account.move.reconcile': (_get_payslip_from_reconcile, None, 50),
         },),
     }

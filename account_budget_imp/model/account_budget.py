@@ -41,7 +41,7 @@ class CrossoveredBudget(osv.osv):
                                readonly=True,
                                help="Date when the cicle finish."),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year',
-                                     help="Period for this budget"),
+                                         help="Period for this budget"),
         'period_id': fields.many2one('account.period', 'Period',
                                      help="Period for this budget"),
         'date_from': fields.date('Start Date', states={'done': [('readonly', True)]}),
@@ -61,7 +61,8 @@ class CrossoveredBudgetLines(osv.osv):
     def _prac_acc(self, cr, uid, ids, name, args, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = self._prac_amt_acc(cr, uid, [line.id], context=context)[line.id]
+            res[line.id] = self._prac_amt_acc(
+                cr, uid, [line.id], context=context)[line.id]
         return res
 
     def _get_ifrs_total(self, cr, uid, ids, name, args, context=None):
@@ -70,31 +71,33 @@ class CrossoveredBudgetLines(osv.osv):
         ifrs_line_obj = self.pool.get('ifrs.lines')
         for line in cbl_brws:
             ifrs_result = ifrs_line_obj._get_amount_value(cr, uid,
-                    [line.ifrs_lines_id.id],
-                ifrs_line=line.ifrs_lines_id,
-                period_info=line.period_id,
-                context=context)
+                                                          [line.ifrs_lines_id.id],
+                                                          ifrs_line=line.ifrs_lines_id,
+                                                          period_info=line.period_id,
+                                                          context=context)
             res[line.id] = ifrs_result
         return res
 
     _columns = {
         'practical_amount_aa': fields.function(_get_ifrs_total,
-                              string='Caused Amount', type='float',
-                              digits_compute=dp.get_precision('Account'),
-                              help="This amount comes from the computation related to the IFRS line report related"),
+                                               string='Caused Amount', type='float',
+                                               digits_compute=dp.get_precision(
+                                                   'Account'),
+                                               help="This amount comes from the computation related to the IFRS line report related"),
         'practical_amount': fields.function(_prac_acc,
-                              string='Amount', type='float',
-                              digits_compute=dp.get_precision('Account')),
+                                            string='Amount', type='float',
+                                            digits_compute=dp.get_precision('Account')),
         'theoritical_amount': fields.function(_prac_acc,
-                              string='Amount', type='float',
-                              digits_compute=dp.get_precision('Account')),
+                                              string='Amount', type='float',
+                                              digits_compute=dp.get_precision('Account')),
         'forecasted_amount': fields.float('Forecasted Amount',
-                           digits_compute=dp.get_precision('Account'),
-                           help="""Due to your analisys what is the amopunt that
+                                          digits_compute=dp.get_precision(
+                                              'Account'),
+                                          help="""Due to your analisys what is the amopunt that
                            the manager stimate will comply to be compared with
                            the Planned Ammount"""),
         'ifrs_lines_id': fields.many2one("ifrs.lines", "Report Line",
-        help="Line on the IFRS report to analyse your budget."),
+                                         help="Line on the IFRS report to analyse your budget."),
         'period_id': fields.many2one('account.period', 'Period',
                                      domain=[('special', '<>', True)],
                                      help="Period for this budget"),
@@ -107,13 +110,15 @@ class CrossoveredBudgetLines(osv.osv):
     }
 
     def write(self, cr, uid, ids, values, context=None):
-        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context=context)
+        period_brw = self.pool.get('account.period').browse(
+            cr, uid, values.get('period_id'), context=context)
         values.update({'date_from': period_brw.date_start,
                        'date_to': period_brw.date_stop})
         return super(CrossoveredBudgetLines, self).write(cr, uid, ids, values, context=context)
 
     def create(self, cr, uid, values, context=None):
-        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context=context)
+        period_brw = self.pool.get('account.period').browse(
+            cr, uid, values.get('period_id'), context=context)
         values.update({'date_from': period_brw.date_start,
                        'date_to': period_brw.date_stop})
         return super(CrossoveredBudgetLines, self).create(cr, uid, values, context=context)
@@ -142,11 +147,12 @@ class CrossoveredBudgetLines(osv.osv):
                     result = 0.00
                 if line.analytic_account_id.id:
                     cr.execute("SELECT SUM(amount) FROM account_analytic_line WHERE account_id=%s AND (date "
-                           "between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd')) AND "
-                           "general_account_id=ANY(%s)", (line.analytic_account_id.id, date_from, date_to, acc_ids,))
+                               "between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd')) AND "
+                               "general_account_id=ANY(%s)", (line.analytic_account_id.id, date_from, date_to, acc_ids,))
                     result = cr.fetchone()[0]
                 else:
-                    result = sum([a.balance for a in line.general_budget_id.account_ids])
+                    result = sum(
+                        [a.balance for a in line.general_budget_id.account_ids])
             else:
                 result = 0.00
             if result is None:

@@ -34,7 +34,7 @@ class MrpProduction(osv.Model):
     def _make_production_line_procurement(self, cr, uid, production_line,
                                           shipment_move_id, context=None):
         procurement_id = super(MrpProduction,
-            self)._make_production_line_procurement(
+                               self)._make_production_line_procurement(
             cr, uid, production_line, shipment_move_id, context=context)
         procurement_order_pool = self.pool.get('procurement.order')
         procurement_order_pool.write(cr, uid, procurement_id, {
@@ -43,8 +43,8 @@ class MrpProduction(osv.Model):
 
     _columns = {
         'procurement_ids': fields.many2many('procurement.order',
-            'mrp_production_procurement_order_rel', 'production_id',
-            'procurement_id', 'Production orders'),
+                                            'mrp_production_procurement_order_rel', 'production_id',
+                                            'procurement_id', 'Production orders'),
     }
 
     @api.one

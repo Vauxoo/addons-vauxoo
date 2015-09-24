@@ -29,10 +29,10 @@ from openerp.tools.translate import _
 class SaleOrderLine(osv.Model):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-                    uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-                    lang=False, update_tax=True, date_order=False,
-                    packaging=False, fiscal_position=False, flag=False,
-                    context=None):
+                          uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+                          lang=False, update_tax=True, date_order=False,
+                          packaging=False, fiscal_position=False, flag=False,
+                          context=None):
         '''
         Overridden the method of product line sales, to replace the unit price calculation and selection of the cost structure
         that handles the product, and later to filter the prices for the product selected
@@ -46,17 +46,18 @@ class SaleOrderLine(osv.Model):
             cr, uid, product, context=context)
         res = super(
             SaleOrderLine, self).product_id_change(cr, uid, ids, pricelist,
-                        product, qty=qty,
-                        uom=uom, qty_uos=qty_uos,
-                        uos=uos, name=name,
-                        partner_id=partner_id,
-                        lang=lang, update_tax=update_tax,
-                        date_order=date_order,
-                        packaging=packaging, fiscal_position=fiscal_position,
-                        flag=flag, context=context)
+                                                   product, qty=qty,
+                                                   uom=uom, qty_uos=qty_uos,
+                                                   uos=uos, name=name,
+                                                   partner_id=partner_id,
+                                                   lang=lang, update_tax=update_tax,
+                                                   date_order=date_order,
+                                                   packaging=packaging, fiscal_position=fiscal_position,
+                                                   flag=flag, context=context)
         res.get('value', False) and product_brw and\
             product_brw.uom_id and\
-            res.get('value', False).update({'product_uom': product_brw.uom_id.id})
+            res.get('value', False).update(
+                {'product_uom': product_brw.uom_id.id})
         if context.get('price_change', False):
             price = price_obj.price_get(cr, uid, [context.get(
                 'price_change', False)], product, qty, context=context)
@@ -64,7 +65,8 @@ class SaleOrderLine(osv.Model):
                 price.get(context.get('price_change', False)), 2)})
         res.get('value', False) and\
             product_brw and product_brw.categ_id and\
-            res.get('value', False).update({'categ_id': product_brw.categ_id.id})
+            res.get('value', False).update(
+                {'categ_id': product_brw.categ_id.id})
         res.get('value', False) and 'price_unit' in res.get(
             'value', False) and res['value'].pop('price_unit')
         return res
@@ -88,12 +90,12 @@ class SaleOrderLine(osv.Model):
     _inherit = 'sale.order.line'
     _columns = {
         'product_id': fields.many2one('product.product', 'Product',
-            domain=[('sale_ok', '=', True)], change_default=True),
+                                      domain=[('sale_ok', '=', True)], change_default=True),
         'price_list_ids': fields.many2one('product.pricelist', 'Select Price'),
         'cost_structure_id': fields.many2one('cost.structure',
-            'Cost Structure'),
+                                             'Cost Structure'),
         'categ_id': fields.many2one('product.category', 'Category',
-            help='Category by product selected'),
+                                    help='Category by product selected'),
 
     }
 
@@ -130,8 +132,8 @@ class SaleOrder(osv.Model):
                     line.product_id.property_cost_structure.id or False
                 if property_cost_structure and\
                     len(price_compute) == len([i for i in price_compute
-                                        if round(line.price_unit, 2) <
-                                        round(i, 2)]):
+                                               if round(line.price_unit, 2) <
+                                               round(i, 2)]):
                     product.append(
                         u'Intenta vender el producto %s a un precio menor al\
                         estimado para su venta' % line.product_id.name)
@@ -139,7 +141,7 @@ class SaleOrder(osv.Model):
 
                 elif property_cost_structure and\
                     len(price_compute) == len([i for i in price_compute
-                if round(line.price_unit, 2) > round(i, 2)]):
+                                               if round(line.price_unit, 2) > round(i, 2)]):
                     product.append(
                         u'Intenta vender el producto %s a un precio mayor al\
                         estimado para su venta' % line.product_id.name)
@@ -163,9 +165,9 @@ class SaleOrder(osv.Model):
     _columns = {
 
         'status_price': fields.function(_price_status, method=True,
-            type="text", store=True, string='Status Price'),
+                                        type="text", store=True, string='Status Price'),
         'status_bool': fields.function(_price_status, method=True,
-            type="boolean", string='Status Price'),
+                                       type="boolean", string='Status Price'),
 
     }
 
@@ -198,14 +200,14 @@ class SaleOrder(osv.Model):
 
             if property_cost_structure and\
                 len(price_compute) == len([i for i in price_compute
-                                if round(line.price_unit, 2) < round(i, 2)]):
+                                           if round(line.price_unit, 2) < round(i, 2)]):
                 product.append(
                     u'Intenta vender el producto %s a un precio menor\
                     al estimado para su venta' % line.product_id.name)
 
             elif property_cost_structure and\
                 len(price_compute) == len([i for i in price_compute
-            if round(line.price_unit, 2) > round(i, 2)]):
+                                           if round(line.price_unit, 2) > round(i, 2)]):
                 product.append(
                     u'Intenta vender el producto %s a un precio mayor\
                     al estimado para su venta' % line.product_id.name)

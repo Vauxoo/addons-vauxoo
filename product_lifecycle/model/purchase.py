@@ -100,7 +100,7 @@ class PurchaseOrderLine(models.Model):
                 if replacements:
                     msg += _('Select one of the replacement products.')
                 else:
-                    msg += ('\n'*2 + _(
+                    msg += ('\n' * 2 + _(
                         'The are not replacement products defined for the'
                         ' product you selected. Please select another product'
                         ' or define a replacement product in the product form'

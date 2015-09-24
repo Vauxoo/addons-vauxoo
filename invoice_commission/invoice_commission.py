@@ -19,21 +19,21 @@ class InvoiceCommission(osv.Model):
     def _get_invoice_line(self, cr, uid, ids, context=None):
         res = {}
         for line in self.pool.get('account.invoice.line').browse(cr, uid, ids,
-                                                            context=context):
+                                                                 context=context):
             res[line.invoice_id.id] = True
         return res.keys()
 
     _inherit = 'account.invoice'
     _columns = {
         'commission': fields.function(_get_commission, method=True,
-              type='float', string='Commission',
-              digits_compute=dp.get_precision(
-                  'Commission'),
-            store={
-                  'account.invoice': (lambda self, cr, uid, ids, c={}: ids,
-                                  ['invoice_line', 'state'], 25),
-                  'account.invoice.line': (_get_invoice_line,
-                                       ['gain', 'commission'], 15), })
+                                      type='float', string='Commission',
+                                      digits_compute=dp.get_precision(
+                                          'Commission'),
+                                      store={
+                                          'account.invoice': (lambda self, cr, uid, ids, c={}: ids,
+                                                              ['invoice_line', 'state'], 25),
+                                          'account.invoice.line': (_get_invoice_line,
+                                                                   ['gain', 'commission'], 15), })
     }
 
 
@@ -82,17 +82,17 @@ class InvoiceCommissionLine(osv.Model):
     _inherit = 'account.invoice.line'
     _columns = {
         'gain': fields.function(get_gain, method=True, type='float',
-            string='Gain', digits_compute=dp.get_precision('Commission'),
-            store={
-                'account.invoice.line': (lambda self, cr, uid, ids, c={}: ids,
-                ['price_unit', 'price_subtotal', 'product_uom_qty'], 15),
-            }),
+                                string='Gain', digits_compute=dp.get_precision('Commission'),
+                                store={
+                                    'account.invoice.line': (lambda self, cr, uid, ids, c={}: ids,
+                                                             ['price_unit', 'price_subtotal', 'product_uom_qty'], 15),
+                                }),
         'commission': fields.function(get_abs_commission, method=True,
-            type='float', string='Commission',
-            digits_compute=dp.get_precision(
-                'Commission'),
-            store={
-                'account.invoice.line': (lambda self, cr, uid, ids,
-                                       c={}: ids, None, 25),
-            }),
+                                      type='float', string='Commission',
+                                      digits_compute=dp.get_precision(
+                                          'Commission'),
+                                      store={
+                                          'account.invoice.line': (lambda self, cr, uid, ids,
+                                                                   c={}: ids, None, 25),
+                                      }),
     }

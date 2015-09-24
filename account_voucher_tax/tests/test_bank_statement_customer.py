@@ -26,8 +26,8 @@ class TestPaymentTaxCustomer(TestTaxCommon):
             'name': 'invoice to customer',
             'account_id': self.account_receivable_id,
             'type': 'out_invoice',
-            'date_invoice': time.strftime('%Y')+'-07-01',
-            })
+            'date_invoice': time.strftime('%Y') + '-07-01',
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -78,9 +78,9 @@ class TestPaymentTaxCustomer(TestTaxCommon):
             'name': 'invoice to customer',
             'account_id': self.account_receivable_id,
             'type': 'out_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
+            'date_invoice': time.strftime('%Y') + '-06-01',
             'currency_id': self.currency_usd_id
-            })
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -104,7 +104,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         # create payment half
         move_line_ids = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, 58,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-01')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-01')
 
         for move_line in move_line_ids:
             if move_line.account_id.id == self.acc_tax16_customer:
@@ -124,7 +124,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         # create payment complete
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, 58,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-30')
 
         checked_line = 0
         for move_line_complete in move_line_ids_complete:
@@ -179,9 +179,9 @@ class TestPaymentTaxCustomer(TestTaxCommon):
             'name': 'invoice to customer',
             'account_id': self.account_receivable_id,
             'type': 'out_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-30',
+            'date_invoice': time.strftime('%Y') + '-06-30',
             'currency_id': self.currency_usd_id
-            })
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -205,7 +205,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         # create payment almost complete by 115
         move_line_ids = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, 115,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-01')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-01')
 
         for move_line in move_line_ids:
             if move_line.account_id.id == self.acc_tax16_customer:
@@ -225,7 +225,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         # create payment complete
         move_line_ids_complete = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, 1,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30')
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-30')
 
         checked_line = 0
         for move_line_complete in move_line_ids_complete:
@@ -279,9 +279,9 @@ class TestPaymentTaxCustomer(TestTaxCommon):
             'name': 'invoice to customer',
             'account_id': self.account_receivable_id,
             'type': 'out_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
+            'date_invoice': time.strftime('%Y') + '-06-01',
             'currency_id': self.currency_usd_id
-            })
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -305,7 +305,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         # create payment complete
         move_line_ids = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, 100,
-            self.bank_journal_id, time.strftime('%Y')+'-06-01',
+            self.bank_journal_id, time.strftime('%Y') + '-06-01',
             currency=self.currency_usd_id, amount_currency=116)
 
         checked_line = 0
@@ -360,8 +360,8 @@ class TestPaymentTaxCustomer(TestTaxCommon):
             'name': 'invoice to customer',
             'account_id': self.account_receivable_id,
             'type': 'out_invoice',
-            'date_invoice': time.strftime('%Y')+'-07-01',
-            })
+            'date_invoice': time.strftime('%Y') + '-07-01',
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -385,7 +385,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         # create payment complete
         move_line_ids = self.create_statement(
             cr, uid, line_id, self.partner_agrolait_id, 150,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30',
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-30',
             currency=self.currency_eur_id, amount_currency=116)
         for move_line in move_line_ids:
             if move_line.account_id.id == self.acc_tax16_customer:

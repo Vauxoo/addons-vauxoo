@@ -44,7 +44,7 @@ class MrpProduction(osv.Model):
             if production.subproduction_ids:
                 for subprod in production.subproduction_ids:
                     if (subprod.product_lines and
-                    subprod.state not in ('cancel')):
+                            subprod.state not in ('cancel')):
                         for scheduled in subprod.product_lines:
                             if scheduled.product_id.id ==\
                                     production.product_id.id:
@@ -54,11 +54,11 @@ class MrpProduction(osv.Model):
                                     to_uom_id=production.product_uom.id)
 
                     if (subprod.move_lines2 and
-                    subprod.state not in ('cancel')):
+                            subprod.state not in ('cancel')):
                         for consumed in subprod.move_lines2:
                             if (consumed.product_id.id ==
-                            production.product_id.id and
-                            consumed.state not in ('cancel')):
+                                    production.product_id.id and
+                                    consumed.state not in ('cancel')):
                                 subp_real_sum += product_uom_pool._compute_qty(
                                     cr, uid, consumed.product_uom.id,
                                     consumed.product_qty,
@@ -94,7 +94,7 @@ class MrpProduction(osv.Model):
             if production.move_lines2:
                 for consumed in production.move_lines2:
                     if (consumed.product_id.id == parent_product_id and
-                    consumed.state in ('done')):
+                            consumed.state in ('done')):
                         real_qty += product_uom_pool._compute_qty(
                             cr, uid, consumed.product_uom.id,
                             consumed.product_qty,
@@ -119,7 +119,7 @@ class MrpProduction(osv.Model):
 
                 for finished in production.move_created_ids2:
                     if (finished.product_id.id == production.product_id.id and
-                    finished.state in ('done')):
+                            finished.state in ('done')):
                         total_consumed += product_uom_pool._compute_qty(
                             cr, uid, finished.product_uom.id,
                             finished.product_qty,
@@ -130,26 +130,26 @@ class MrpProduction(osv.Model):
             if production.subproduction_ids:
                 for subprods in production.subproduction_ids:
                     if (subprods.move_lines2 and
-                    subprods.state not in ('cancel')):
+                            subprods.state not in ('cancel')):
                         for consumed in subprods.move_lines2:
                             if (consumed.product_id.id ==
-                            production.product_id.id and
-                            consumed.state in ('done')):
+                                    production.product_id.id and
+                                    consumed.state in ('done')):
                                 total_consumed -=\
                                     product_uom_pool._compute_qty(cr, uid,
-                                    consumed.product_uom.id,
-                                    consumed.product_qty,
-                                    to_uom_id=production.product_uom.id)
+                                                                  consumed.product_uom.id,
+                                                                  consumed.product_qty,
+                                                                  to_uom_id=production.product_uom.id)
                         result[production.id] = total_consumed
         return result
 
     _columns = {
         'subproduction_ids': fields.many2many('mrp.production',
-            'rel_mrp_subproduction_self', 'parent_id', 'children_id',
-            'Subproductions'),
+                                              'rel_mrp_subproduction_self', 'parent_id', 'children_id',
+                                              'Subproductions'),
         'superproduction_ids': fields.many2many('mrp.production',
-            'rel_mrp_subproduction_self', 'children_id', 'parent_id',
-            'Superproductions'),
+                                                'rel_mrp_subproduction_self', 'children_id', 'parent_id',
+                                                'Superproductions'),
         'product_subproduction_qty_real': fields.function(
             _get_product_subproduction_qty,
             type='float', digits_compute=dp.get_precision('Product UoM'),

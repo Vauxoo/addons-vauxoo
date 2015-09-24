@@ -15,7 +15,8 @@
 #    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty ofres.partner form
+# but WITHOUT ANY WARRANTY; without even the implied warranty
+# ofres.partner form
 
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU Affero General Public License for more details.
@@ -35,9 +36,9 @@ class AccountInvoice(osv.Model):
                             partner_bank_id=False, company_id=False):
         res = super(
             AccountInvoice, self).onchange_partner_id(cr, uid, ids, type,
-                    partner_id, date_invoice=date_invoice,
-                    payment_term=payment_term, partner_bank_id=partner_bank_id,
-                    company_id=company_id)
+                                                      partner_id, date_invoice=date_invoice,
+                                                      payment_term=payment_term, partner_bank_id=partner_bank_id,
+                                                      company_id=company_id)
         if partner_id:
             partner_invoice_description = self.pool.get(
                 'res.partner').browse(cr, uid, partner_id).description_invoice
@@ -91,8 +92,9 @@ class SaleOrder(osv.Model):
         if not context:
             context = {}
         res = super(SaleOrder, self).action_invoice_create(cr, uid, ids,
-                    grouped=False, states=['confirmed', 'done', 'exception'],
-            date_inv=date_inv, context=context)
+                                                           grouped=False, states=[
+                                                               'confirmed', 'done', 'exception'],
+                                                           date_inv=date_inv, context=context)
         invoice_description = self.pool.get('account.invoice').browse(
             cr, uid, res).partner_id.description_invoice
         if invoice_description:

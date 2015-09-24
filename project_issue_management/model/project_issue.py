@@ -125,7 +125,7 @@ class ProjectIssue(osv.Model):
     def _get_project_id(self, cr, uid, ids, context=None):
         project_obj = self.pool.get('project.project')
         res = project_obj.search(cr, uid, [('analytic_account_id', '=',
-                                 context.get('analytic_account_id'))])
+                                            context.get('analytic_account_id'))])
         if not res:
             raise osv.except_osv(
                 'Error!',

@@ -18,7 +18,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from openerp.osv import osv
 from openerp.tools.translate import _
@@ -33,7 +33,7 @@ class AccountInvoice(osv.Model):
         invoice_duplicate_ids = []
         for invoice in self.browse(cr, uid, ids):
             invoice_ids = invoice_obj.search(cr, uid, [('supplier_invoice_number', '<>', None),
-                        ('company_id', '=', invoice.company_id.id), ('type', '=', invoice.type)])
+                                                       ('company_id', '=', invoice.company_id.id), ('type', '=', invoice.type)])
             if invoice.supplier_invoice_number:
                 for invoice_r in invoice_obj.browse(cr, uid, invoice_ids):
                     if invoice.id != invoice_r.id and invoice.partner_id.id == \
@@ -42,7 +42,7 @@ class AccountInvoice(osv.Model):
                         invoice_duplicate_ids.append(invoice_r.id)
             if invoice_duplicate_ids:
                 raise osv.except_osv(_('Invalid Action!'), _('Error you can not validate the'
-                    ' invoice with supplier invoice number duplicated.'))
+                                                             ' invoice with supplier invoice number duplicated.'))
         return True
 
     def invoice_validate(self, cr, uid, ids, context=None):

@@ -58,7 +58,6 @@ class UserStory(osv.Model):
                     task_obj.write(
                         cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
 
-
         if 'accep_crit_ids' in vals:
             ac_obj = self.pool.get('acceptability.criteria')
             criteria = [False, False]
@@ -87,7 +86,7 @@ class UserStory(osv.Model):
                         cr, uid, ids, body, subject, type='email',
                         context=context, partner_ids=followers)
         return super(UserStory, self).write(cr, uid, ids,
-                                             vals, context=context)
+                                            vals, context=context)
 
     def body_progress(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')

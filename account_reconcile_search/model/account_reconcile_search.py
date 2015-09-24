@@ -26,7 +26,8 @@ class AccountMoveLine(osv.Model):
     _inherit = "account.move.line"
 
     def _get_reconcile(self, cr, uid, ids, name, unknow_none, context=None):
-        res = super(AccountMoveLine, self)._get_reconcile(cr, uid, ids, name, unknow_none, context)
+        res = super(AccountMoveLine, self)._get_reconcile(
+            cr, uid, ids, name, unknow_none, context)
         return res
 
     def fc(s, c, u, ids, cx):

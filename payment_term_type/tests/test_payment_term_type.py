@@ -27,6 +27,7 @@ class TestPaymentTermType(TransactionCase):
         This Tests validate the payment type dependig
         payment terms line to compute
     """
+
     def setUp(self):
         super(TestPaymentTermType, self).setUp()
 

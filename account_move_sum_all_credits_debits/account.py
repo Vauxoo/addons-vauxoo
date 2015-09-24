@@ -51,13 +51,13 @@ class AccountMove(osv.Model):
 
     _columns = {
         'total_debit': fields.function(_sum_credit_debit,
-                               string='Total debit', method=True,
-                               digits_compute=dp.get_precision(
-                                   'Account'),
-            type='float', multi="total_credit_debit"),
+                                       string='Total debit', method=True,
+                                       digits_compute=dp.get_precision(
+                                           'Account'),
+                                       type='float', multi="total_credit_debit"),
         'total_credit': fields.function(_sum_credit_debit,
-                                string='Total credit', method=True,
-                                digits_compute=dp.get_precision(
-                                    'Account'),
-            type='float', multi="total_credit_debit"),
+                                        string='Total credit', method=True,
+                                        digits_compute=dp.get_precision(
+                                            'Account'),
+                                        type='float', multi="total_credit_debit"),
     }

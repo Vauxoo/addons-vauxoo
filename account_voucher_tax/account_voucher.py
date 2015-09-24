@@ -159,7 +159,7 @@ class AccountVoucher(osv.Model):
                     line_tax_id = move_line_tax_dict.get('tax_id')
                     amount_base_secondary =\
                         line_tax_id.amount and\
-                        line.amount_original / (1+line_tax_id.amount) or\
+                        line.amount_original / (1 + line_tax_id.amount) or\
                         move_line_tax_dict.get('amount_base_secondary')
                     account_tax_voucher =\
                         move_line_tax_dict.get('account_tax_voucher')
@@ -429,14 +429,14 @@ class AccountVoucher(osv.Model):
                 statement_currency_line != company_currency:
             credit_line_vals['credit'] = cur_obj.round(
                 cr, uid, src_acct.company_id.currency_id,
-                reference_amount/context.get('st_line_currency_rate'))
+                reference_amount / context.get('st_line_currency_rate'))
             debit_line_vals['debit'] = cur_obj.round(
                 cr, uid, src_acct.company_id.currency_id,
-                reference_amount/context.get('st_line_currency_rate'))
+                reference_amount / context.get('st_line_currency_rate'))
             if amount_tax_sec:
                 debit_line_vals['amount_base'] = cur_obj.round(
                     cr, uid, src_acct.company_id.currency_id,
-                    abs(amount_base)/context.get('st_line_currency_rate'))
+                    abs(amount_base) / context.get('st_line_currency_rate'))
         else:
             if reference_currency_id != src_main_currency_id:
                 # fix credit line:

@@ -30,7 +30,7 @@ class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def create_account_variation_move_line(self, cr, uid, prod_variation,
-            src_account_id, dest_account_id, reference_amount, context=None):
+                                           src_account_id, dest_account_id, reference_amount, context=None):
         res = super(MrpProduction, self).create_account_variation_move_line(
             cr, uid, prod_variation, src_account_id, dest_account_id,
             reference_amount, context=context)
@@ -52,7 +52,7 @@ class MrpProduction(osv.Model):
             account_move_line_id = account_move_line.search(
                 cr, uid, [('production_id', '=', production.id)])
             for move_line in account_move_line.browse(cr, uid,
-                                        account_move_line_id, context=context):
+                                                      account_move_line_id, context=context):
                 result.setdefault(move_line.move_id.id, production.id)
                 account_move_line.unlink(cr, uid, [move_line.id])
         for lin in result.items():
@@ -66,4 +66,4 @@ class MrpProduction(osv.Model):
                     pass
                 account_move.unlink(cr, uid, [lin[0]])
         return super(MrpProduction, self).action_cancel(cr, uid, ids,
-                                                         context=context)
+                                                        context=context)

@@ -18,7 +18,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from openerp.osv import osv
 
@@ -34,8 +34,8 @@ class AccountReconcileAdvance(osv.Model):
 
     def _get_company_currency(self, cr, uid, adv_id, context=None):
         return self.pool.get('account.reconcile.advance').browse(cr,
-            uid, adv_id,
-            context).move_id.journal_id.company_id.currency_id.id
+                                                                 uid, adv_id,
+                                                                 context).move_id.journal_id.company_id.currency_id.id
 
     def _get_current_currency(self, cr, uid, exp_id, context=None):
         exp = self.pool.get('account.reconcile.advance').browse(cr, uid, adv_id,
@@ -49,10 +49,10 @@ class AccountReconcileAdvance(osv.Model):
         adv = self.browse(cr, uid, ids, context=context)[0]
 
         company_currency = self._get_company_currency(cr, uid,
-                            adv.id, context)
+                                                      adv.id, context)
 
         current_currency = self._get_company_currency(cr, uid,
-                            adv.id, context)
+                                                      adv.id, context)
 
         for invoice in adv.invoice_ids:
             for tax in invoice.tax_line:
@@ -62,23 +62,24 @@ class AccountReconcileAdvance(osv.Model):
                     account_tax_collected = tax.tax_id.account_collected_id.id
 
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr,
-                                uid, invoice.amount_total,
-                                amount_inv_pay.get(invoice.id, 0.0),
-                        context=context)
+                                                                        uid, invoice.amount_total,
+                                                                        amount_inv_pay.get(
+                                                                            invoice.id, 0.0),
+                                                                        context=context)
 
                     move_lines_tax = acc_voucher_obj.\
                         _preparate_move_line_tax(cr, uid,
-                        account_tax_voucher, account_tax_collected,
-                        adv.move_id.id, 'payment', invoice.partner_id.id,
-                        adv.move_id.period_id.id, adv.move_id.journal_id.id,
-                        adv.move_id.date, company_currency,
-                        tax.amount * factor, tax.amount * factor,
-                        current_currency, False, tax.tax_id,
-                        tax.account_analytic_id and
-                            tax.account_analytic_id.id or False,
-                        tax.base_amount, factor, context=context)
+                                                 account_tax_voucher, account_tax_collected,
+                                                 adv.move_id.id, 'payment', invoice.partner_id.id,
+                                                 adv.move_id.period_id.id, adv.move_id.journal_id.id,
+                                                 adv.move_id.date, company_currency,
+                                                 tax.amount * factor, tax.amount * factor,
+                                                 current_currency, False, tax.tax_id,
+                                                 tax.account_analytic_id and
+                                                 tax.account_analytic_id.id or False,
+                                                 tax.base_amount, factor, context=context)
 
                     for move_line_tax in move_lines_tax:
                         move_create = aml_obj.create(cr, uid, move_line_tax,
-                                                context=context)
+                                                     context=context)
         return True

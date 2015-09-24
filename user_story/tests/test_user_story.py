@@ -229,7 +229,7 @@ class TestUserStory(TransactionCase):
         approve_user_id = self.user.create(cr, uid, {
             'name': 'Approver User', 'login': 'user_approver',
             'email': 'approver@test.com',
-            })
+        })
         self.assertTrue(approve_user_id)
         user_brw = self.user.browse(cr, uid, approve_user_id)
         # Adding user story group to the user created previously
@@ -252,7 +252,7 @@ class TestUserStory(TransactionCase):
                 msg_data = self.message.read(cr, uid, m_id, [
                     'model', 'author_id', 'create_uid', 'write_uid',
                     'email_from', 'notified_partner_ids', 'partner_ids',
-                    ])[0]
+                ])[0]
                 self.partner = self.registry('res.partner')
                 author_id = msg_data.get('author_id')[0]
                 approver_partner = self.user.browse(

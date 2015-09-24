@@ -18,7 +18,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 #"license" : "AGPL-3",
 {
     "name": "This module inherits standard price field in mrp.bom",
@@ -41,5 +41,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

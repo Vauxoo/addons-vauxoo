@@ -38,5 +38,5 @@ class ProductCategory(osv.Model):
     _defaults = {
         'company_id': lambda self, cr, uid, c:
         self.pool.get('res.company')._company_default_get(cr, uid,
-                                            'product.category', context=c),
+                                                          'product.category', context=c),
     }

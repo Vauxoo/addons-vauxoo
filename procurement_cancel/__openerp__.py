@@ -41,5 +41,4 @@
         "wizard/procurement_cancel_view.xml",
     ],
     "installable": True,
-    "active": False,
 }

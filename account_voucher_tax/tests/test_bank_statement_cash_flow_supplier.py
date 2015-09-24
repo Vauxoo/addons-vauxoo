@@ -14,7 +14,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
         # create advance
         move_line_ids = self.create_statement(
             cr, uid, None, self.partner_agrolait_id, -116,
-            self.bank_journal_id, time.strftime('%Y')+'-06-01',
+            self.bank_journal_id, time.strftime('%Y') + '-06-01',
             self.account_payable_id)
 
         self.assertEquals(len(move_line_ids), 4)
@@ -48,8 +48,8 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
-            })
+            'date_invoice': time.strftime('%Y') + '-06-01',
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -76,10 +76,10 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'journal_id': self.journal_bank_special,
             'account_id': self.account_bnk_id,
-            'date': time.strftime('%Y')+'-06-01',
+            'date': time.strftime('%Y') + '-06-01',
             'type': 'purchase',
             'amount': 0
-            })
+        })
         self.account_voucher_line_model.create(cr, uid, {
             'voucher_id': voucher_id,
             'type': 'cr',
@@ -87,7 +87,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'account_id': self.account_payable_id,
             'amount': 116
-            })
+        })
         self.account_voucher_line_model.create(cr, uid, {
             'voucher_id': voucher_id,
             'type': 'dr',
@@ -95,7 +95,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'account_id': self.account_payable_id,
             'amount': 116
-            })
+        })
 
         self.account_voucher_model.proforma_voucher(cr, uid, voucher_id, {})
 
@@ -140,7 +140,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
         # create advance
         move_line_ids = self.create_statement(
             cr, uid, None, self.partner_agrolait_id, -116,
-            self.bank_journal_id, time.strftime('%Y')+'-06-01',
+            self.bank_journal_id, time.strftime('%Y') + '-06-01',
             self.account_payable_id, currency=self.currency_usd_id,
             amount_currency=-150)
 
@@ -181,9 +181,9 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
+            'date_invoice': time.strftime('%Y') + '-06-01',
             'currency_id': self.currency_usd_id
-            })
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -210,11 +210,11 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'journal_id': self.journal_bank_special_usd,
             'account_id': self.account_bnk_id,
-            'date': time.strftime('%Y')+'-06-01',
+            'date': time.strftime('%Y') + '-06-01',
             'type': 'payment',
             'amount': 0,
             'payment_rate_currency_id': self.currency_usd_id,
-            })
+        })
         self.account_voucher_line_model.create(cr, uid, {
             'voucher_id': voucher_id,
             'type': 'cr',
@@ -222,7 +222,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'account_id': self.account_payable_id,
             'amount': 150,
-            })
+        })
         self.account_voucher_line_model.create(cr, uid, {
             'voucher_id': voucher_id,
             'type': 'dr',
@@ -230,7 +230,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'account_id': self.account_payable_id,
             'amount': 151.96,
-            })
+        })
 
         self.account_voucher_model.proforma_voucher(cr, uid, voucher_id, {})
 
@@ -303,7 +303,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
         # create advance
         move_line_ids = self.create_statement(
             cr, uid, None, self.partner_agrolait_id, -150,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-01',
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-01',
             self.account_payable_id, currency=self.currency_eur_id,
             amount_currency=-116)
 
@@ -349,7 +349,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
         # create advance
         move_line_ids = self.create_statement(
             cr, uid, None, self.partner_agrolait_id, -116,
-            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30',
+            self.bank_journal_usd_id, time.strftime('%Y') + '-06-30',
             self.account_payable_id)
 
         self.assertEquals(len(move_line_ids), 4)
@@ -389,9 +389,9 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
-            'date_invoice': time.strftime('%Y')+'-06-01',
+            'date_invoice': time.strftime('%Y') + '-06-01',
             'currency_id': self.currency_usd_id
-            })
+        })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
             'quantity': 1,
@@ -418,11 +418,11 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'journal_id': self.journal_bank_special_usd,
             'account_id': self.account_bnk_id,
-            'date': time.strftime('%Y')+'-06-30',
+            'date': time.strftime('%Y') + '-06-30',
             'type': 'payment',
             'amount': 0,
             'payment_rate_currency_id': self.currency_usd_id,
-            })
+        })
         self.account_voucher_line_model.create(cr, uid, {
             'voucher_id': voucher_id,
             'type': 'cr',
@@ -430,7 +430,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'account_id': self.account_payable_id,
             'amount': 116,
-            })
+        })
         self.account_voucher_line_model.create(cr, uid, {
             'voucher_id': voucher_id,
             'type': 'dr',
@@ -438,7 +438,7 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
             'partner_id': self.partner_agrolait_id,
             'account_id': self.account_payable_id,
             'amount': 116,
-            })
+        })
 
         self.account_voucher_model.proforma_voucher(cr, uid, voucher_id, {})
 

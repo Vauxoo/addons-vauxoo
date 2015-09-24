@@ -30,6 +30,7 @@
         "stock"],
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "category": "Accounting",
     "data": [
         "view/import_tax_view.xml",
@@ -37,7 +38,6 @@
         "security/ir.model.access.csv"],
     "demo": [],
     "test": [],
-    "active": False,
     "images": [],
     "installable": True,
     "application": True,

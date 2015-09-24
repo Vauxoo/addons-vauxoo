@@ -18,7 +18,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from openerp.osv import osv
 from openerp import SUPERUSER_ID
@@ -44,7 +44,8 @@ class ForwardMail(osv.osv_memory):
                 ], context=context)
 
                 partners_to_notify |= set(fo.partner_id.id
-                        for fo in partner_follower.browse(cr, SUPERUSER_ID, fol_ids, context=context) if fo.partner_id.email)
-                mail_pool.send(cr, uid, [mail.id], recipient_ids=partners_to_notify, context=context)
+                                          for fo in partner_follower.browse(cr, SUPERUSER_ID, fol_ids, context=context) if fo.partner_id.email)
+                mail_pool.send(
+                    cr, uid, [mail.id], recipient_ids=partners_to_notify, context=context)
 
         return True

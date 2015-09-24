@@ -29,4 +29,4 @@ class ProductProduct(osv.osv):
     _inherit = 'product.product'
     _columns = {
         'model_number': fields.char('Model Number', size=64),
-        }
+    }

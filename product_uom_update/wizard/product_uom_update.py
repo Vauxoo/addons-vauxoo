@@ -76,7 +76,7 @@ class ProductUomUpdate(osv.TransientModel):
                     query = '''UPDATE "product_template" SET uos_id = %s ,\
                             uom_id = %s , uom_po_id = %s
                                            WHERE id IN %%s''' % (new_unit,
-                                                   new_unit, new_unit)
+                                                                 new_unit, new_unit)
                     cr.execute(query, (product_ids_tuple,))
 
             if len(product_ids_validate) > 0:
@@ -115,12 +115,12 @@ class ProductUomUpdate(osv.TransientModel):
 
     _columns = {
         'uom_id_from': fields.many2many('product.product',
-                'product_produtc_uom_rel',
-                'product_id', 'uom_id',
-                'products with unit of measure from',
-                help="Default unit of measure used for all stock operation."),
+                                        'product_produtc_uom_rel',
+                                        'product_id', 'uom_id',
+                                        'products with unit of measure from',
+                                        help="Default unit of measure used for all stock operation."),
         'uom_id_to': fields.many2one('product.uom', 'Unit of Measure To',
-                help="Default unit of measure used for all stock operation."),
+                                     help="Default unit of measure used for all stock operation."),
         'result': fields.text('Result'),
 
     }

@@ -30,7 +30,7 @@ class ProjectProject(osv.Model):
     def _get_projects(self, cr, uid, ids, context=None):
         project_project_obj = self.pool.get('project.project')
         return project_project_obj.search(cr, uid,
-                                        [('analytic_account_id', '=', ids[0])])
+                                          [('analytic_account_id', '=', ids[0])])
 
     def action_projects(self, cr, uid, context=None):
         project_ids = self.search(cr, uid, [])
@@ -49,12 +49,12 @@ class ProjectProject(osv.Model):
 
     _columns = {
         'parent_id2': fields.function(_get_parent_id, type='many2one',
-            relation='project.project',
-            string='Parent Project',
-            store={
-                'account.analytic.account':
-                (_get_projects, ['parent_id', 'name'], 10)}, select=2),
+                                      relation='project.project',
+                                      string='Parent Project',
+                                      store={
+                                          'account.analytic.account':
+                                          (_get_projects, ['parent_id', 'name'], 10)}, select=2),
         'child_ids2': fields.one2many('project.project',
-            'parent_id2', 'Child Accounts'),
+                                      'parent_id2', 'Child Accounts'),
 
     }

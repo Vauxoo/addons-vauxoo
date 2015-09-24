@@ -8,7 +8,7 @@ class ProjectProjectInheritImage(osv.Model):
     _inherit = "project.project"
     _columns = {
         'logo': fields.binary("Logo",
-        help="This field holds the image used as logo for the brand, limited to 1024x1024px."),
+                              help="This field holds the image used as logo for the brand, limited to 1024x1024px."),
     }
 
 

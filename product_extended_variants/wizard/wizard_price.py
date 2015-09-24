@@ -44,8 +44,8 @@ class WizardPrice(models.Model):
 
     def default_get(self, cr, uid, field, context=None):
         res = super(WizardPrice, self).default_get(cr,
-                                                    uid,
-                                                    field, context=context)
+                                                   uid,
+                                                   field, context=context)
         product_pool = self.pool.get(context.get('active_model',
                                                  'product.template'))
         tmpl_obj = self.pool.get('product.template')

@@ -450,7 +450,7 @@ class AccountAgingPartnerWizard(osv.osv_memory):
             load=None, context=context)
         aml_data = DataFrame(aml_rd).set_index('id')
         aml_data_grouped = aml_data.groupby(['partner_id',
-                                            'reconcile_partial_id'])
+                                             'reconcile_partial_id'])
 
         aml_data_groups = aml_data_grouped.groups
 

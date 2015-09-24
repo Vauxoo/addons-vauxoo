@@ -78,7 +78,7 @@ class AccountOrderWizard(osv.TransientModel):
         def t(s, p='x'):
             return s.replace(p, '_')
         return [t(i.pattern.strip()) for i in self.browse(cr,
-                                                    uid, id, context).patterns]
+                                                          uid, id, context).patterns]
 
     def _get_pattern(self, lista):
         patron = []
@@ -233,13 +233,13 @@ class AccountOrderWizard(osv.TransientModel):
                           from account_account
                           where id <> %s and code like '%s'
                           order by code''' %
-                      (parent_id, str(code).ljust(int(level), '_')))
+                       (parent_id, str(code).ljust(int(level), '_')))
         else:
             cr.execute('''select id, code
                           from account_account
                           where code like '%s'
                           order by code''' %
-                      (str(code).ljust(int(level), '_')))
+                       (str(code).ljust(int(level), '_')))
 
         return cr.dictfetchall()
 
@@ -264,6 +264,6 @@ class AccountOrderWizard(osv.TransientModel):
                 codex = codes.pop(0)
                 codex.get(
                     'code') != 0 and self.order_without_pattern(cr, uid, ids,
-                                context, codex.get('code'), codex.get('id'))
+                                                                context, codex.get('code'), codex.get('id'))
 
         return True

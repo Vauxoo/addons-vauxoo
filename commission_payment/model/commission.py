@@ -149,7 +149,7 @@ class CommissionPayment(osv.Model):
         'aml_ids': fields.many2many(
             'account.move.line', 'commission_aml_rel', 'commission_id',
             'aml_id', 'Journal Items', readonly=True,
-            ),
+        ),
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
             'commission_id', 'Vouchers afectados en esta comision',
@@ -255,9 +255,9 @@ class CommissionPayment(osv.Model):
                        ]
         # choose the view_mode accordingly
         if len(cl_ids) > 0:
-            result['domain'] = "[('id','in',["+','.join(
+            result['domain'] = "[('id','in',[" + ','.join(
                 [str(cl_id) for cl_id in cl_ids]
-            )+"])]"
+            ) + "])]"
         else:
             result['domain'] = "[('id','in',[])]"
         return result
@@ -281,9 +281,9 @@ class CommissionPayment(osv.Model):
             aml_ids += [aml_brw.id for aml_brw in cp_brw.aml_ids]
         # choose the view_mode accordingly
         if len(aml_ids) > 1:
-            result['domain'] = "[('id','in',["+','.join(
+            result['domain'] = "[('id','in',[" + ','.join(
                 [str(aml_id) for aml_id in aml_ids]
-            )+"])]"
+            ) + "])]"
         else:
             result['domain'] = "[('id','in',[])]"
         return result
@@ -307,9 +307,9 @@ class CommissionPayment(osv.Model):
             inv_ids += [invoice.id for invoice in cp_brw.invoice_ids]
         # choose the view_mode accordingly
         if len(inv_ids) >= 1:
-            result['domain'] = "[('id','in',["+','.join(
+            result['domain'] = "[('id','in',[" + ','.join(
                 [str(inv_id) for inv_id in inv_ids]
-            )+"])]"
+            ) + "])]"
         else:
             result['domain'] = "[('id','in',[])]"
         return result
@@ -1417,7 +1417,7 @@ class CommissionLines(osv.Model):
             'commission_currency': commission_currency,
             'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
             or aml_brw.company_id.currency_id.id,
-            })
+        })
         return True
 
 

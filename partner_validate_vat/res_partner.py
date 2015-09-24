@@ -58,8 +58,8 @@ class ResPartner(osv.Model):
         if not current_parent_id:
             duplicates = self.browse(cr, uid, self.search(
                 cr, uid, [('vat', '=', current_vat),
-                    ('parent_id', '=', None),
-                    ('id', '!=', partner_brw[0].id)]))
+                          ('parent_id', '=', None),
+                          ('id', '!=', partner_brw[0].id)]))
             return not duplicates
 
         return True

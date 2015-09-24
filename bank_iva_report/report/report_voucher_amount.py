@@ -87,13 +87,17 @@ class ReportVoucherAmount(report_sxw.rml_parse):
 
     def debit(self, move_ids):
         debit = 0.0
-        for move in move_ids:  # self.pool.get('account.move.line').browse(self.cr, self.uid, move_ids):
+        # self.pool.get('account.move.line').browse(self.cr, self.uid,
+        # move_ids):
+        for move in move_ids:
             debit += move.debit
         return debit
 
     def credit(self, move_ids):
         credit = 0.0
-        for move in move_ids:  # self.pool.get('account.move.line').browse(self.cr, self.uid, move_ids):
+        # self.pool.get('account.move.line').browse(self.cr, self.uid,
+        # move_ids):
+        for move in move_ids:
             credit += move.credit
         return credit
 

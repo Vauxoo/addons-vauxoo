@@ -32,8 +32,8 @@ class ResCurrencyRate(osv.Model):
     _inherit = "res.currency.rate"
     _columns = {
         'rate': fields.float('Rate',
-            digits_compute=dp.get_precision('Currency'), required=True,
-            help='The rate of the currency to the currency of rate 1'),
+                             digits_compute=dp.get_precision('Currency'), required=True,
+                             help='The rate of the currency to the currency of rate 1'),
     }
 
 
@@ -65,9 +65,9 @@ class ResCurrency(osv.Model):
     _inherit = "res.currency"
     _columns = {
         'rate': fields.function(_current_rate, method=True,
-            string='Current Rate', digits_compute=dp.get_precision('Currency'),
-            help='The rate of the currency to the currency of rate 1'),
+                                string='Current Rate', digits_compute=dp.get_precision('Currency'),
+                                help='The rate of the currency to the currency of rate 1'),
         'rounding': fields.float('Rounding factor',
-            digits_compute=dp.get_precision('Currency')),
+                                 digits_compute=dp.get_precision('Currency')),
 
     }

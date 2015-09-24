@@ -124,7 +124,7 @@ class AccountInvoiceRefund(models.TransientModel):
                 amount_total,
                 inv.currency_id.id,
                 inv.company_id.id
-                )
+            )
 
             if 'value' not in data and data['value']:
                 continue

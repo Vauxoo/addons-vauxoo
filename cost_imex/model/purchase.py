@@ -38,22 +38,22 @@ class InheritPurchase(osv.Model):
 
     _columns = {
         'flete': fields.float('Flete',
-                  digits_compute=dp.get_precision('Cost Imex'),
-                  help='Price to be paid by renting a boat, plane or truck, or\
+                              digits_compute=dp.get_precision('Cost Imex'),
+                              help='Price to be paid by renting a boat, plane or truck, or\
                 cargo carried'),
         'percent_apply': fields.many2many('national.special.tax',
-                  'special_national_tax_rel', 'purchase_id', 'special_tax_id',
-                  'Percents to Apply', help='Percent to compute'),
+                                          'special_national_tax_rel', 'purchase_id', 'special_tax_id',
+                                          'Percents to Apply', help='Percent to compute'),
         'percent_special': fields.float('Other Percent',
-                    digits_compute=dp.get_precision(
-                        'Cost Imex'),
-            help='Percent to special compute'),
+                                        digits_compute=dp.get_precision(
+                                            'Cost Imex'),
+                                        help='Percent to special compute'),
         'import_purchase': fields.boolean('Importation Purchase',
-                    help='Indicate if purchase is a importation '),
+                                          help='Indicate if purchase is a importation '),
         'percent_imex_ids': fields.one2many('percent.imex', 'purchase_id',
-                    'Percen', domain=[('percent_lines', '!=', False)]),
+                                            'Percen', domain=[('percent_lines', '!=', False)]),
         'percent_imex_s_ids': fields.one2many('percent.imex', 'purchase_id',
-                    'Percen', domain=[('percent_lines', '=', False)]),
+                                              'Percen', domain=[('percent_lines', '=', False)]),
 
     }
 

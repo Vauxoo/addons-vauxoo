@@ -15,6 +15,7 @@
     "version": "1.6",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "category": "sale",
     "depends": [
         "sale_service",

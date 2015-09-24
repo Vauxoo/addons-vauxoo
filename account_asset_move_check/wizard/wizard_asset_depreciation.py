@@ -1,7 +1,7 @@
 # coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#Ch
+# Ch
 #    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)

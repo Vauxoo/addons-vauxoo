@@ -79,19 +79,19 @@ class ProductProduct(osv.Model):
                     """UPDATE product_pricelist_item set
                             price_discount='%s'
                             WHERE id=%d """ % (val[2].get('price_discount'),
-                            val[1])
+                                               val[1])
                 val[2].get('price_discount', False) and cr.execute(sql_str)
         return True
 
     _columns = {
         #'price_list_item_ids':fields.one2many('product.pricelit.item','product_id','Price List Item',help='Percent to compute cost from Price list item'),
         'price_list_item_ids': fields.function(_search_price_list_item_p,
-            relation='product.pricelist.item',
-            fnct_inv=_write_price_list_item_p, method=True,
-            string="Price item by product", type='one2many'),
+                                               relation='product.pricelist.item',
+                                               fnct_inv=_write_price_list_item_p, method=True,
+                                               string="Price item by product", type='one2many'),
         'category_item_ids': fields.function(_search_price_list_item_c,
-            relation='product.pricelist.item', method=True,
-            string="Price item by category", type='one2many'),
+                                             relation='product.pricelist.item', method=True,
+                                             string="Price item by category", type='one2many'),
 
     }
 
@@ -120,14 +120,14 @@ class InheritProductCategory(osv.Model):
                     """UPDATE product_pricelist_item set
                             price_discount='%s'
                             WHERE id=%d """ % (val[2].get('price_discount'),
-                            val[1])
+                                               val[1])
                 val[2].get('price_discount', False) and cr.execute(sql_str)
                 cr.commit()
         return True
 
     _columns = {
         'price_list_item_ids': fields.function(_search_price_list_item,
-            relation='product.pricelist.item', fnct_inv=_write_price_list_item,
-            method=True, string="Price item by category", type='one2many'),
+                                               relation='product.pricelist.item', fnct_inv=_write_price_list_item,
+                                               method=True, string="Price item by category", type='one2many'),
 
     }

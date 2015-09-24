@@ -32,9 +32,9 @@ class ConfigureCreateJournal(osv.osv_memory):
 
     _columns = {
         'parent_id': fields.many2one('account.account', 'Parent',
-            ondelete='cascade', domain=[('type', '=', 'view')], required=True),
+                                     ondelete='cascade', domain=[('type', '=', 'view')], required=True),
         'user_type': fields.many2one('account.account.type', 'User Type',
-            required=True)
+                                     required=True)
     }
 
     def configure_journal(self, cr, uid, ids, context=None):
@@ -43,7 +43,7 @@ class ConfigureCreateJournal(osv.osv_memory):
         sequence_obj = self.pool.get('ir.sequence')
         form = self.browse(cr, uid, ids[0])
         company_user = self.pool.get('res.company')._company_default_get(cr,
-                uid, 'configure.create.journal', context=context)
+                                                                         uid, 'configure.create.journal', context=context)
         cr.execute("""
             SELECT
                 nivel.id,
@@ -76,7 +76,7 @@ class ConfigureCreateJournal(osv.osv_memory):
                 'default_credit_account_id': acc_j['id'],
             })
             journal_bwr = journal_obj.browse(cr, uid, journal_id,
-                context=context)
+                                             context=context)
             sequence_obj.write(cr, uid, journal_bwr.sequence_id.id,
-                {'company_id': company_user})
+                               {'company_id': company_user})
         return False

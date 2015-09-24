@@ -68,10 +68,10 @@ class MrpProduction(osv.Model):
         production = production_line.production_id
         res = super(
             MrpProduction, self)._make_production_internal_shipment_line(cr,
-                        uid, production_line, shipment_id,
-                        parent_move_id,
-                        destination_location_id=destination_location_id,
-                        context=context)
+                                                                         uid, production_line, shipment_id,
+                                                                         parent_move_id,
+                                                                         destination_location_id=destination_location_id,
+                                                                         context=context)
         print res
         if parent_move_id and production.analytic_acc_rm:
             stock_move.write(cr, uid, [parent_move_id], {
@@ -94,7 +94,7 @@ class MrpProduction(osv.Model):
         return res
 
         def _make_production_consume_line(self, cr, uid, production_line,
-                    parent_move_id, source_location_id=False, context=None):
+                                          parent_move_id, source_location_id=False, context=None):
             stock_move = self.pool.get('stock.move')
             production = production_line.production_id
             res = super(MrpProduction, self)._make_production_consume_line(
@@ -108,11 +108,11 @@ class MrpProduction(osv.Model):
 
     _columns = {
         'analytic_acc_rm': fields.many2one('account.analytic.account',
-            'Analytic Account RM', readonly=True,
-            states={'draft': [('readonly', False)]}),
+                                           'Analytic Account RM', readonly=True,
+                                           states={'draft': [('readonly', False)]}),
         'analytic_acc_fg': fields.many2one('account.analytic.account',
-            'Analytic Account FG', readonly=True,
-            states={'draft': [('readonly', False)]})
+                                           'Analytic Account FG', readonly=True,
+                                           states={'draft': [('readonly', False)]})
     }
 
 
@@ -121,7 +121,7 @@ class MrpBom(osv.Model):
 
     _columns = {
         'analytic_acc_rm': fields.many2one('account.analytic.account',
-            'Analytic Account RM',),
+                                           'Analytic Account RM',),
         'analytic_acc_fg': fields.many2one('account.analytic.account',
-            'Analytic Account FG',)
+                                           'Analytic Account FG',)
     }

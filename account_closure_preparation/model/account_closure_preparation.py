@@ -34,100 +34,100 @@ class AccountClosurePreparation(osv.TransientModel):
 
     _columns = {
         'company_id': fields.many2one('res.company', 'Company', required=False,
-            help=('Company to which the chart of account is going to be'
-            ' prepared')),
+                                      help=('Company to which the chart of account is going to be'
+                                            ' prepared')),
         'root_id': fields.many2one('account.account', 'Root Account',
-            domain="[('company_id','=',company_id),('type','=','view'),('parent_id','=',None)]",
-            required=False, help=('Root Account, the account that plays as a'
-                'Chart of Accounts')),
+                                   domain="[('company_id','=',company_id),('type','=','view'),('parent_id','=',None)]",
+                                   required=False, help=('Root Account, the account that plays as a'
+                                                         'Chart of Accounts')),
         'view_ut_id': fields.many2one('account.account.type', 'Closure Type',
-            required=False, domain="[('close_method','=','none')]",
-            help=('Select the Account Type that will be used when fixing your'
-            ' chart of account')),
+                                      required=False, domain="[('close_method','=','none')]",
+                                      help=('Select the Account Type that will be used when fixing your'
+                                            ' chart of account')),
         'account_ids': fields.many2many('account.account', 'acp_all_acc_rel',
-            'account_id', 'acp_id', 'Balance Sheet Accounts',
-            domain="[('parent_id','=',root_id)]"),
+                                        'account_id', 'acp_id', 'Balance Sheet Accounts',
+                                        domain="[('parent_id','=',root_id)]"),
         'bs_ids': fields.many2many('account.account', 'acp_bs_acc_rel',
-            'account_id', 'acp_id', 'Balance Sheet Accounts',
-            domain="[('parent_id','=',root_id)]", help=('Balance Sheet '
-                'Accounts, Just Select the most top level in the chart of '
-                'account related to the Balance Sheet')),
+                                   'account_id', 'acp_id', 'Balance Sheet Accounts',
+                                   domain="[('parent_id','=',root_id)]", help=('Balance Sheet '
+                                                                               'Accounts, Just Select the most top level in the chart of '
+                                                                               'account related to the Balance Sheet')),
         'bs_ut_id': fields.many2one('account.account.type', 'BS Closure Type',
-            required=False, domain="[('close_method','=','balance')]",
-            help=('Select the Account Type that will be used when fixing your '
-            'chart of account')),
+                                    required=False, domain="[('close_method','=','balance')]",
+                                    help=('Select the Account Type that will be used when fixing your '
+                                          'chart of account')),
         'is_ids': fields.many2many('account.account', 'acp_is_acc_rel',
-            'account_id', 'acp_id', 'Income Statement Accounts',
-            domain="[('parent_id','=',root_id),('id','not in',bs_ids[0][2])]",
-            help=('Balance Sheet Accounts, Just Select the most top level in '
-                'the chart of account related to the Balance Sheet')),
+                                   'account_id', 'acp_id', 'Income Statement Accounts',
+                                   domain="[('parent_id','=',root_id),('id','not in',bs_ids[0][2])]",
+                                   help=('Balance Sheet Accounts, Just Select the most top level in '
+                                         'the chart of account related to the Balance Sheet')),
         'is_ut_id': fields.many2one('account.account.type', 'IS Closure Type',
-            required=False, domain="[('close_method','=','none')]",
-            help=('Select the Account Type that will be used when fixing your '
-            'chart of account')),
+                                    required=False, domain="[('close_method','=','none')]",
+                                    help=('Select the Account Type that will be used when fixing your '
+                                          'chart of account')),
         'bk_ids': fields.many2many('account.account', 'acp_bk_acc_rel',
-            'account_id', 'acp_id', 'Bank & Cash Accounts',
-            domain=("[('type','=','view'),"
-                    "('parent_id','child_of',bs_ids[0][2])]"),
-            help=('Select the most top '
-            'level in the chart of account related to your Bank Accounts')),
+                                   'account_id', 'acp_id', 'Bank & Cash Accounts',
+                                   domain=("[('type','=','view'),"
+                                           "('parent_id','child_of',bs_ids[0][2])]"),
+                                   help=('Select the most top '
+                                         'level in the chart of account related to your Bank Accounts')),
         'bk_ut_id': fields.many2one('account.account.type', 'Bank Closure Type',
-            required=False, domain="[('close_method','=','balance')]",
-            help=('Select the Account Type that will be used when fixing your '
-            'chart of account')),
+                                    required=False, domain="[('close_method','=','balance')]",
+                                    help=('Select the Account Type that will be used when fixing your '
+                                          'chart of account')),
         'rec_ids': fields.many2many('account.account', 'acp_rec_acc_rel',
-            'account_id', 'acp_id', 'Receivable Accounts',
-            domain=("[('type','=','view'),"
-                    "('parent_id','child_of',bs_ids[0][2])]"),
-            help=('Select the most top '
-            'level in the chart of account related to your Receivable Accounts')),
+                                    'account_id', 'acp_id', 'Receivable Accounts',
+                                    domain=("[('type','=','view'),"
+                                            "('parent_id','child_of',bs_ids[0][2])]"),
+                                    help=('Select the most top '
+                                          'level in the chart of account related to your Receivable Accounts')),
         'rec_ut_id': fields.many2one('account.account.type', 'Receivable  Closure Type',
-            required=False, domain="[('close_method','=','unreconciled')]",
-            help=('Select the Account Type that will be used when fixing your '
-            'chart of account')),
+                                     required=False, domain="[('close_method','=','unreconciled')]",
+                                     help=('Select the Account Type that will be used when fixing your '
+                                           'chart of account')),
         'pay_ids': fields.many2many('account.account', 'acp_pay_acc_rel',
-            'account_id', 'acp_id', 'Payable Accounts',
-            domain=("[('type','=','view'),"
-                    "('parent_id','child_of',bs_ids[0][2])]"),
-            help=('Select the most top '
-            'level in the chart of account related to your Payable Accounts')),
+                                    'account_id', 'acp_id', 'Payable Accounts',
+                                    domain=("[('type','=','view'),"
+                                            "('parent_id','child_of',bs_ids[0][2])]"),
+                                    help=('Select the most top '
+                                          'level in the chart of account related to your Payable Accounts')),
         'pay_ut_id': fields.many2one('account.account.type', 'Payable  Closure Type',
-            required=False, domain="[('close_method','=','unreconciled')]",
-            help=('Select the Account Type that will be used when fixing your '
-            'chart of account')),
+                                     required=False, domain="[('close_method','=','unreconciled')]",
+                                     help=('Select the Account Type that will be used when fixing your '
+                                           'chart of account')),
         'recon_ids': fields.many2many('account.account', 'acp_recon_acc_rel',
-            'account_id', 'acp_id', 'Reconcilable Accounts',
-            domain=("[('type','=','other'),"
-                    "('parent_id','child_of',bs_ids[0][2])]"),
-            help=('Select the most top '
-                'you will regard as Reconcilable. Remember this Accounts are'
-                ' different than your Receivable & Payable Accounts')),
+                                      'account_id', 'acp_id', 'Reconcilable Accounts',
+                                      domain=("[('type','=','other'),"
+                                              "('parent_id','child_of',bs_ids[0][2])]"),
+                                      help=('Select the most top '
+                                            'you will regard as Reconcilable. Remember this Accounts are'
+                                            ' different than your Receivable & Payable Accounts')),
         'recon_ut_id': fields.many2one('account.account.type', 'Reconcilable Closure Type',
-            required=False, domain="[('close_method','=','unreconciled')]",
-            help=('Select the Account Type that will be used when fixing your '
-            'chart of account')),
+                                       required=False, domain="[('close_method','=','unreconciled')]",
+                                       help=('Select the Account Type that will be used when fixing your '
+                                             'chart of account')),
         'det_ids': fields.many2many('account.account', 'acp_det_acc_rel',
-            'account_id', 'acp_id', 'Detail Accounts',
-            domain=("[('type','=','other'),"
-                    "('parent_id','child_of',bs_ids[0][2])]"),
-            help=('Select the most top '
-                'you will regard as Detail. This kind of Account is weirdly '
-                'used. Although is could be used in Depreciation Accounts')),
+                                    'account_id', 'acp_id', 'Detail Accounts',
+                                    domain=("[('type','=','other'),"
+                                            "('parent_id','child_of',bs_ids[0][2])]"),
+                                    help=('Select the most top '
+                                          'you will regard as Detail. This kind of Account is weirdly '
+                                          'used. Although is could be used in Depreciation Accounts')),
         'det_ut_id': fields.many2one('account.account.type', 'Detail Closure Type',
-            required=False, domain="[('close_method','=','detail')]",
-            help=('Select the Account Type that will be used when fixing your '
-            'chart of account')),
+                                     required=False, domain="[('close_method','=','detail')]",
+                                     help=('Select the Account Type that will be used when fixing your '
+                                           'chart of account')),
         'cons_id': fields.many2one('account.account', 'Consolidation Account',
-            domain=("["
-                    "('company_id','=',company_id),"
-                    "('type','=','consolidation'),"
-                    "('parent_id','child_of',bs_ids[0][2])]"),
-            required=False, help=('Consolidation Account, the account that '
-                'plays as a the Consolidation of the Income Statement in Your '
-                'Chart of Accounts')),
+                                   domain=("["
+                                           "('company_id','=',company_id),"
+                                           "('type','=','consolidation'),"
+                                           "('parent_id','child_of',bs_ids[0][2])]"),
+                                   required=False, help=('Consolidation Account, the account that '
+                                                         'plays as a the Consolidation of the Income Statement in Your '
+                                                         'Chart of Accounts')),
         'cons_ids': fields.many2many('account.account', 'acp_cons_acc_rel',
-            'account_id', 'acp_id', 'Detail Accounts', readonly=False,
-            help=('Accounts to be used in the Consolidation Account')),
+                                     'account_id', 'acp_id', 'Detail Accounts', readonly=False,
+                                     help=('Accounts to be used in the Consolidation Account')),
         'state': fields.selection([
             ('stage1', 'Prep Chart'),
             ('stage2', 'Fix Chart'),
@@ -152,7 +152,7 @@ class AccountClosurePreparation(osv.TransientModel):
             ('stage21', 'LAST STEP'),
         ], help='State'),
         'skip': fields.boolean('Skip This Step', help=('Some time it is Ok to '
-            'skip a step because that configuration is not used in your company'
+                                                       'skip a step because that configuration is not used in your company'
                                                        )),
     }
 
@@ -229,7 +229,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '!=', 'none'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage2', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage2', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage2':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res,
@@ -243,7 +244,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '=', 'none'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage4', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage4', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage4':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res,
@@ -267,7 +269,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '!=', 'none'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage6', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage6', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage6':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res,
@@ -283,7 +286,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '!=', 'balance'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage8', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage8', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage8':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res, {
@@ -303,7 +307,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('type', '=', 'liquidity'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage9', 'account_ids': [(6, 0, bank_ids2)]})
+            wzd_brw.write(
+                {'state': 'stage9', 'account_ids': [(6, 0, bank_ids2)]})
         elif wzd_brw.state == 'stage9':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res,
@@ -319,7 +324,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '!=', 'unreconciled'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage11', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage11', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage11':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res, {
@@ -340,7 +346,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('type', '=', 'receivable'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage12', 'account_ids': [(6, 0, rec_ids2)]})
+            wzd_brw.write(
+                {'state': 'stage12', 'account_ids': [(6, 0, rec_ids2)]})
         elif wzd_brw.state == 'stage12':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res,
@@ -356,7 +363,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '!=', 'unreconciled'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage14', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage14', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage14':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res, {
@@ -377,7 +385,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('type', '=', 'payable'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage15', 'account_ids': [(6, 0, pay_ids2)]})
+            wzd_brw.write(
+                {'state': 'stage15', 'account_ids': [(6, 0, pay_ids2)]})
         elif wzd_brw.state == 'stage15':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res,
@@ -407,7 +416,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '=', 'unreconciled'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage17', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage17', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage17':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res, {
@@ -440,7 +450,8 @@ class AccountClosurePreparation(osv.TransientModel):
                 ('user_type.close_method', '=', 'detail'),
                 ('active', '=', True),
             ], context=context)
-            wzd_brw.write({'state': 'stage19', 'account_ids': [(6, 0, view_ids)]})
+            wzd_brw.write(
+                {'state': 'stage19', 'account_ids': [(6, 0, view_ids)]})
         elif wzd_brw.state == 'stage19':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr, uid, res, {

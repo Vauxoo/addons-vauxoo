@@ -45,8 +45,8 @@ class PurchaseOrder(osv.Model):
         if user_id:
             ru_brw = ru_obj.browse(cr, uid, user_id, context=context)
             department_id = (ru_brw.employee_ids
-                and ru_brw.employee_ids[0].department_id
-                and ru_brw.employee_ids[0].department_id.id or False)
+                             and ru_brw.employee_ids[0].department_id
+                             and ru_brw.employee_ids[0].department_id.id or False)
             res.update({'value': {'department_id': department_id}})
         return res
 
@@ -68,5 +68,5 @@ class PurchaseRequisition(osv.Model):
             req_brw = self.browse(cur, uid, req_id, context=context)
             po_obj = self.pool.get('purchase.order')
             po_obj.write(cur, uid, res[req_id], {'department_id':
-                req_brw.department_id.id}, context=context)
+                                                 req_brw.department_id.id}, context=context)
         return res

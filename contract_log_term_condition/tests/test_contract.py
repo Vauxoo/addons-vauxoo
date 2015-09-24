@@ -21,9 +21,9 @@ class TestAnalytic(TransactionCase):
             'description': 'Firs Condition',
         })
         message_ids = self.message.search(cr, uid,
-                                 [('res_id', '=', analytic_id),
-                                  ('model', '=', 'account.analytic.account'),
-                                  ('body', 'ilike', '%' + 'Firs Condition' + '%')])
+                                          [('res_id', '=', analytic_id),
+                                           ('model', '=', 'account.analytic.account'),
+                                              ('body', 'ilike', '%' + 'Firs Condition' + '%')])
 
         self.assertGreaterEqual(len(message_ids),
                                 1,
@@ -33,9 +33,9 @@ class TestAnalytic(TransactionCase):
         })
 
         message_ids = self.message.search(cr, uid,
-                                 [('res_id', '=', analytic_id),
-                                  ('model', '=', 'account.analytic.account'),
-                                  ('body', 'ilike', '%' + 'Term Changed' + '%')])
+                                          [('res_id', '=', analytic_id),
+                                           ('model', '=', 'account.analytic.account'),
+                                              ('body', 'ilike', '%' + 'Term Changed' + '%')])
 
         self.assertGreaterEqual(len(message_ids),
                                 1,

@@ -30,7 +30,8 @@ class ProjectTask(osv.osv):
     def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):
         if auto_follow_fields is None:
             auto_follow_fields = ['user_id']
-        res = super(ProjectTask, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
+        res = super(ProjectTask, self)._message_get_auto_subscribe_fields(
+            cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
         res.append('project_leader_id')
         return res
 
@@ -43,9 +44,11 @@ class ProjectTask(osv.osv):
         if ids.stage_id:
             type_stage = ids.stage_id.name or ''
             if type_stage == 'Backlog':
-                self.send_mail_task(cr, uid, ids, 'template_send_email_task_new', context)
+                self.send_mail_task(
+                    cr, uid, ids, 'template_send_email_task_new', context)
             elif type_stage == 'Testing Leader':
-                self.send_mail_task(cr, uid, ids, 'template_send_email_task_end', context)
+                self.send_mail_task(
+                    cr, uid, ids, 'template_send_email_task_end', context)
 
     def send_mail_task(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')
