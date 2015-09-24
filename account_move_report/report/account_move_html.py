@@ -28,7 +28,7 @@ class AccountMoveReportHtml(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
         super(AccountMoveReportHtml, self).__init__(cr, uid, name,
-                                context=context)
+                                                    context=context)
         self.localcontext.update({
             'time': time,
             'get_total_debit_credit': self.get_total_debit_credit,
