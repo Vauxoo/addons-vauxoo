@@ -32,6 +32,8 @@ class WebsiteSale(website_sale):
         brand_obj = pool['product.brand']
         template_obj = pool['product.template']
         ranges_list = request.httprequest.args.getlist('range')
+        brand_list = request.httprequest.args.getlist('brand')
+        brand_selected_ids = [int(b) for b in brand_list if b]
         ranges_selected_ids = [int(v) for v in ranges_list if v]
         ranges_selected = ranges_obj.browse(cr, uid, ranges_selected_ids,
                                             context=context)
@@ -68,6 +70,7 @@ class WebsiteSale(website_sale):
         res.qcontext['brands'] = brands
         res.qcontext['products'] = new_products
         res.qcontext['price_ranges'] = ranges
+        res.qcontext['brand_set'] = brand_selected_ids
         res.qcontext['ranges_set'] = ranges_selected_ids
         return res
 
@@ -97,7 +100,7 @@ class WebsiteSale(website_sale):
                                           [('public_categ_ids', '=', cond)],
                                           context=context)
             for prod in product_obj.browse(cr, uid, prod_ids, context=context):
-                if prod.product_brand_id.id not in brand_ids:
+                if prod.product_brand_id.id not in brand_ids and prod.product_brand_id.id:  # noqa
                     brand_ids.append(prod.product_brand_id.id)
         return brand_ids
 
