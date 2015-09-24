@@ -72,7 +72,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Price Range</div>
                     <div class="panel-body">
-                      <ul class="nav nav-pills nav-stacked mt16">
+                      <ul class="nav nav-pills nav-stacked">
                         <t t-set="counter" t-value="1"/>
                           <t t-foreach="price_ranges" t-as="r">
                             <t t-if="counter &lt; 5">
@@ -108,7 +108,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Brands</div>
                     <div class="panel-body">
-                      <ul class="nav nav-pills nav-stacked mt16">
+                      <ul class="nav nav-pills nav-stacked">
                           <t t-foreach="brands" t-as="b">
                           <li t-att-class="'brand active' if b.id in brand_set else ''">
                           <label style="margin: 0 20px;">
