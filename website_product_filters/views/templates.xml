@@ -104,18 +104,15 @@
                     </div>
                 </div>
             </t>
-              </form>
-            </t>
-
             <t t-if="brands">
                 <div class="panel panel-default">
                     <div class="panel-heading">Brands</div>
                     <div class="panel-body">
                       <ul class="nav nav-pills nav-stacked mt16">
                           <t t-foreach="brands" t-as="b">
-                          <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
+                          <li t-att-class="'brand active' if b.id in brand_set else ''">
                           <label style="margin: 0 20px;">
-                                  <input type="checkbox" name="brand" t-att-value="'%s' % b.id" t-att-checked="'checked' if b.id == int(brand or 0) else ''"/>
+                                  <input type="checkbox" name="brand" t-att-value="'%s' % b.id" t-att-checked="'checked' if b.id in brand_set else ''"/>
                             <span style="font-weight: normal" t-field="b.name"/>
                             </label>
                           </li>
@@ -123,6 +120,8 @@
                       </ul>
                     </div>
                 </div>
+            </t>
+              </form>
             </t>
           </xpath>
           <xpath expr="//div[@id='products_grid_before']" position="attributes">
