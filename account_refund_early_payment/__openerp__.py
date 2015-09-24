@@ -28,6 +28,7 @@
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
+    'license': 'AGPL-3',
     'depends': ['account_accountant'],
     'data': [
         'data/data.xml',
@@ -38,6 +39,5 @@
     'qweb': [],
     'js': [],
     'css': [],
-    'active': False,
     'installable': True,
 }
