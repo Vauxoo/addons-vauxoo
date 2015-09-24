@@ -43,7 +43,7 @@ class PurchaseOrder(osv.Model):
                 for line in po.order_line:
                     product_id = line.product_id.product_tmpl_id.id
                     if not product_supp_obj.search(cr, uid,
-                                                   [('product_id', '=',
+                                                   [('product_tmpl_id', '=',
                                                                    product_id),
                                                    ('name', '=', partner_id)]):
                         product_obj.write(cr, uid, [product_id],
@@ -53,7 +53,7 @@ class PurchaseOrder(osv.Model):
                                                            'min_qty': 1.0,
                                                            'delay': 1,
                                                            'sequence': 10,
-                                                           'product_id':
+                                                           'product_tmpl_id':
                                                            product_id,
                                                            'company_id':
                                                            company_id,
