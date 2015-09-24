@@ -35,12 +35,10 @@ class WebsiteSale(website_sale):
         brand_list = request.httprequest.args.getlist('brand')
         brand_selected_ids = [int(b) for b in brand_list if b]
         ranges_selected_ids = [int(v) for v in ranges_list if v]
-        print brand_selected_ids
         ranges_selected = ranges_obj.browse(cr, uid, ranges_selected_ids,
                                             context=context)
         filtered_products = res.qcontext['products']
         range_product_ids = []
-
         for rang in ranges_selected:
             for fproduct in filtered_products:
                 if rang.lower <= fproduct.lst_price <= rang.upper:
