@@ -14,6 +14,7 @@
     ],
     "demo": [
         "demo/stock_alias.xml",
+        "demo/purchase_order.xml",
     ],
     "data": [
         "views/layout.xml",
