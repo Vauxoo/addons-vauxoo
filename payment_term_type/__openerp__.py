@@ -25,6 +25,7 @@
     'version': '1.0',
     'author': 'Vauxoo',
     'category': '',
+    'license': 'AGPL-3',
     'depends': [
         'account',
     ],
