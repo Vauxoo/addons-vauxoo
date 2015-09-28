@@ -3,9 +3,9 @@
     <data>
     <template id="product_rss_locs">
         <channel>
-        <title>Yoytec Computer</title>
-        <link>http://www.yoytec.com</link>
-        <description>Something</description>
+        <title><t t-esc="company.name"/></title>
+        <link><t t-esc="company.website"/></link>
+        <description><t t-esc="company.rml_header1"/></description>
         <item t-foreach="products" t-as="product">
             <t t-set="url" t-value="'{0}shop/product/{1}'.format(url_root, slug(product))"/>
             <title><t t-esc="product.name"/></title>
