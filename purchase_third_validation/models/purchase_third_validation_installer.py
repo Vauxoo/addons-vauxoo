@@ -34,7 +34,7 @@ class PurchaseConfigSettings(models.TransientModel):
         res.update({'limit_amount_t': int(value[1])})
         return res
 
-    @api.one
+    @api.multi
     def set_limit_amount(self):
         super(PurchaseConfigSettings, self).set_limit_amount()
         ir_model_data = self.env['ir.model.data']
@@ -42,9 +42,22 @@ class PurchaseConfigSettings(models.TransientModel):
             'purchase_third_validation',
             'trans_less_third')
         waiting.write(
-            {'condition': 'amount_total < %s' % (self.limit_amount_t)})
+            {'condition': 'amount_currency_company(amount_total) < %s' % (
+                self.limit_amount_t)})
+        waiting = ir_model_data.get_object(
+            'purchase_double_validation',
+            'trans_confirmed_double_gt')
+        waiting.write(
+            {'condition': 'amount_currency_company(amount_total) >= %s' % (
+                self.limit_amount)})
+        waiting = ir_model_data.get_object(
+            'purchase_double_validation',
+            'trans_confirmed_double_lt')
+        waiting.write(
+            {'condition': 'amount_currency_company(amount_total) < %s' % (
+                self.limit_amount)})
 
-    @api.one
+    @api.multi
     @api.constrains(
         'limit_amount_t', 'limit_amount', 'module_purchase_double_validation')
     def _check_amount_validations(self):
