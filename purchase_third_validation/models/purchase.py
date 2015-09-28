@@ -23,7 +23,9 @@ class PurchaseOrder(models.Model):
         value = transition.condition.split('<', 1)
         for purchase in self:
             if purchase.state == 'confirmed' and\
-                    purchase.amount_total >= float(value[1]):
+                    purchase.currency_id.compute(
+                        purchase.amount_total,
+                        purchase.company_id.currency_id) >= float(value[1]):
                 purchase.third_level_ok = True
 
     third_level_ok = fields.Boolean(
