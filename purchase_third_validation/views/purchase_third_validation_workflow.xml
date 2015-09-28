@@ -16,7 +16,7 @@
             <field name="act_from" ref="purchase_double_validation.act_double_wait"/>
             <field name="act_to" ref="act_is_approved"/>
             <field name="sequence">1</field>
-            <field name="condition">amount_total &lt; 100000</field>
+            <field name="condition">amount_currency_company(amount_total) &lt; 100000</field>
         </record>
 
         <record id="trans_third_level" model="workflow.transition">
@@ -35,6 +35,14 @@
 
         <record id="purchase_double_validation.trans_double_app_conf" model="workflow.transition">
             <field name="act_from" ref="act_is_approved"/>
+        </record>
+
+        <record id="purchase_double_validation.trans_confirmed_double_gt" model="workflow.transition">
+            <field name="condition">amount_currency_company(amount_total) &gt;= 5000</field>
+        </record>
+
+        <record id="purchase_double_validation.trans_confirmed_double_lt" model="workflow.transition">
+            <field name="condition">amount_currency_company(amount_total) &lt; 5000</field>
         </record>
 
     </data>

@@ -37,3 +37,9 @@ class PurchaseOrder(models.Model):
             body=_('The PO was not approved, you need privileges by the amount'
                    ' of this purchase'))
         return False
+
+    @api.multi
+    def amount_currency_company(self, amount_purchase):
+        amount_currency = self.currency_id.compute(
+            amount_purchase, self.company_id.currency_id)
+        return amount_currency
