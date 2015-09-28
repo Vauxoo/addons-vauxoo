@@ -28,6 +28,8 @@ class WebsiteBlogRSS(http.Controller):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
         ira = request.registry['ir.attachment']
         iuv = request.registry['ir.ui.view']
+        user_obj = request.registry['res.users']
+        user_brw = user_obj.browse(cr, uid, [uid], context=context)
         blog_post_obj = request.registry['blog.post']
         mimetype = 'application/xml;charset=utf-8'
         content = None
@@ -60,6 +62,7 @@ class WebsiteBlogRSS(http.Controller):
             if post_ids:
                 values['posts'] = blog_post_obj.browse(cr, uid, post_ids,
                                                        context)
+            values ['company']= user_brw[0].company_id
             values['url_root'] = request.httprequest.url_root
             urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs',
                               values, context=context)
