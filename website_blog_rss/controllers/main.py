@@ -62,7 +62,7 @@ class WebsiteBlogRSS(http.Controller):
             if post_ids:
                 values['posts'] = blog_post_obj.browse(cr, uid, post_ids,
                                                        context)
-            values ['company']= user_brw[0].company_id
+            values['company'] = user_brw[0].company_id
             values['url_root'] = request.httprequest.url_root
             urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs',
                               values, context=context)

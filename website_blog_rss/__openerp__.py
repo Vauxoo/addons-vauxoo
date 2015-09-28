@@ -5,6 +5,7 @@
     'summary': 'This module enables RSS on Blog',
     'website': 'http://vauxoo.com',
     'version': '1.6',
+    'license': 'LGPL-3',
     'author': 'Vauxoo',
     'depends': [
         'website_blog',
