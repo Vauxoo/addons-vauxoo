@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,14 +24,14 @@ from openerp.tools.translate import _
 from openerp.osv import osv
 
 
-class mrp_bom(osv.Model):
+class MrpBom(osv.Model):
     _inherit = 'mrp.bom'
 
     def check_uom(self, cr, uid, ids, context=None):
-        for mrp_bom in self.browse(cr, uid, ids, context=context):
-            if mrp_bom.product_uom and\
-                mrp_bom.product_id.uom_id.category_id.id !=\
-                    mrp_bom.product_uom.category_id.id:
+        for MrpBom in self.browse(cr, uid, ids, context=context):
+            if MrpBom.product_uom and\
+                MrpBom.product_id.uom_id.category_id.id !=\
+                    MrpBom.product_uom.category_id.id:
                 return False
         return True
 

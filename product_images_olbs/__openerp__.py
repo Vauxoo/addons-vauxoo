@@ -1,3 +1,4 @@
+# coding: utf-8
 #########################################################################
 # Copyright (C) 2009  Sharoon Thomas, Open Labs Business solutions      #
 #                                                                       #
@@ -14,35 +15,27 @@
 #You should have received a copy of the GNU General Public License      #
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Product Image Gallery", 
-    "version": "0.1 ", 
-    "author": "Sharoon Thomas, Open Labs Business Solutions", 
-    "category": "Added functionality - Product Extension", 
-    "description": """
-    This Module implements an Image Gallery for products.
-    You can add images against every product.
-
-    This module is generic but built for Magento ERP connector and
-    the upcoming e-commerce system for Open ERP by Open Labs
-    """, 
-    "website": "http://openlabs.co.in/", 
-    "license": "", 
+    "name": "Product Image Gallery",
+    "version": "0.6",
+    "author": "Sharoon Thomas, Open Labs Business Solutions",
+    "category": "Added functionality - Product Extension",
+    "website": "http://openlabs.co.in/",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "product"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/ir.model.access.csv", 
+        "security/ir.model.access.csv",
         "views/product_images_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

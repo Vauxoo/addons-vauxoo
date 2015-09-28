@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 
 """
 Init file to support all the folders in the stock_location_code Odoo module.

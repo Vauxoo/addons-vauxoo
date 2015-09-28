@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-class update_amount_base_tax_wizard(osv.osv_memory):
+class UpdateAmountBaseTaxWizard(osv.osv_memory):
     _name = 'update.amount.tax.wizard'
 
     _columns = {

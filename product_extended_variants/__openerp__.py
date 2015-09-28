@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -20,22 +21,14 @@
 ##############################################################################
 {
     "name": "Product extension to track sales and purchases from variants",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     'website': 'https://www.vauxoo.com',
     "depends": ['account_anglo_saxon', 'product', 'stock_account',
                 'product_extended'],
     "category": "Generic Modules/Inventory Control",
-    "description": """
-Product extension. This module adds:
-  * Computes standard price from the BoM of the product with a button on the
-    * product variant based
-    on the materials in the BoM and the work centers.  It can create the
-    necessary accounting entries when necessary.
-""",
     "data": ['view/product_view.xml',
              'data/update_price_data.xml'],
     "active": False,
     "installable": True
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

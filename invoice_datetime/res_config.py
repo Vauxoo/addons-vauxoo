@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 #
 #
 #    OpenERP, Open Source Business Applications
@@ -26,7 +26,7 @@ from openerp.osv import fields, osv
 from openerp import SUPERUSER_ID
 
 
-class account_config_settings(osv.osv_memory):
+class AccountConfigSettings(osv.osv_memory):
     _inherit = 'account.config.settings'
 
     _columns = {
@@ -62,7 +62,7 @@ class account_config_settings(osv.osv_memory):
                 context=context)
 
     def onchange_company_id(self, cr, uid, ids, company_id, context=None):
-        result = super(account_config_settings, self).onchange_company_id(
+        result = super(AccountConfigSettings, self).onchange_company_id(
             cr, uid, ids, company_id, context=context)
         type_date = False
         type_date = result.get('value', {})

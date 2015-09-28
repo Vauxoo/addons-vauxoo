@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -24,14 +24,14 @@
 from openerp.osv import fields, osv
 
 
-class account_move_multi_wizard(osv.TransientModel):
+class AccountMoveMultiWizard(osv.TransientModel):
     _name = 'account.move.multi.wizard'
 
     def default_get(self, cr, uid, fields, context=None):
         if not context:
             context = {}
         moves = context.get('active_ids', False)
-        res = super(account_move_multi_wizard, self).default_get(
+        res = super(AccountMoveMultiWizard, self).default_get(
             cr, uid, fields, context=context)
         res.update({'account_move_ids': moves})
         return res

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,12 +24,12 @@
 #
 ##############################################################################
 
-
+from openerp import api
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = "mrp.production"
 
     def _get_product_subproduction_qty(self, cr, uid, ids, field_names,
@@ -179,11 +179,12 @@ class mrp_production(osv.Model):
             method=True, string='Remaining'),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'subproduction_ids': [],
             'superproduction_ids': [],
         })
-        return super(mrp_production, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(default)

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,11 +22,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from openerp import api
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 
 
-class user_story_phase(osv.Model):
+class UserStoryPhase(osv.Model):
     _name = "user.story.phase"
     _description = "User Story Phase"
 
@@ -140,15 +141,16 @@ class user_story_phase(osv.Model):
         (_check_dates, 'Phase start-date must be lower than phase end-date.', ['date_start', 'date_end']),
     ]
 
-    def onchange_user_story(self, cr, uid, ids, user_story, context=None):
+    def onchange_UserStory(self, cr, uid, ids, user_story, context=None):
         return {}
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         if not default.get('name', False):
-            default.update(name=_('%s (copy)') % (self.browse(cr, uid, id, context=context).name))
-        return super(user_story_phase, self).copy(cr, uid, id, default, context)
+            default.update(name=_('%s (copy)') % (self.name))
+        return super(UserStoryPhase, self).copy(default)
 
     def set_draft(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state': 'draft'})
@@ -212,7 +214,7 @@ class user_story_phase(osv.Model):
 #
 
 
-class user_story_user_allocation(osv.Model):
+class UserStoryUserAllocation(osv.Model):
     _name = 'user.story.user.allocation'
     _description = 'Phase User Allocation'
     _rec_name = 'user_id'
@@ -226,7 +228,7 @@ class user_story_user_allocation(osv.Model):
     }
 
 
-class user_story(osv.Model):
+class UserStory(osv.Model):
     _inherit = 'user.story'
 
     def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
@@ -249,7 +251,7 @@ class user_story(osv.Model):
         context['name'] = "User Story / %s" % (vals['name'])
         if vals.get('type', False) not in ('template', 'contract'):
             vals['type'] = 'contract'
-        user_story_id = super(user_story, self).create(cr, uid, vals, context=context)
+        UserStory_id = super(user_story, self).create(cr, uid, vals, context=context)
         return user_story_id
 
 #    def schedule_phases(self, cr, uid, ids, context=None):
@@ -291,5 +293,3 @@ class user_story(osv.Model):
 #                    'date_end': p.end.strftime('%Y-%m-%d %H:%M:%S')
 #                }, context=context)
 #        return True
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

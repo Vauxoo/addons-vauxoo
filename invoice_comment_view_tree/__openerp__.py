@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,15 +25,9 @@
 #
 {
     "name": "Invoice Comment in Tree",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Localization",
-    "description": """
-Invoice Comment in Tree:
-========================
-
-comment field added in the tree and search view by inheritance
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

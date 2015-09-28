@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,46 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Configure Account to partners", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Customization", 
-    "description": """
-Configure Accounts On imported Partners:
-========================================
-
-Background:
------------
-
-When you import a lot of partners from several sources, It is so common that
-all of them are setted with a payable and receiveble account by default, with
-this wizard you can fix this quickly one time you upload all partners.
-
-1.- Creates a wizard where you choose an account and write all partners
-that are customers and selected on the wizard with this selected account.
-
-2.- Clean the company_id on the property to be able to use the same <head></head>
-on all reports.
-
-**TODO:** This feature is so wired, when we fix the correct behaviour this feature
-must be removed.
-
-                    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Configure Account to partners",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Customization",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "group_configurations_account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/conf_wizard.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

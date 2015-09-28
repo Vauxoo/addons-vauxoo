@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 
 """
 Inherit the account.model.line model in the account_model_plans Odoo module.
@@ -31,7 +31,7 @@ Inherit the account.model.line model in the account_model_plans Odoo module.
 from openerp.osv import fields, osv
 
 
-class account_model_line(osv.Model):
+class AccountModelLine(osv.Model):
     """
     Extend the account.model.line model:
         - Add a new field named analytics_id.
@@ -45,7 +45,7 @@ class account_model_line(osv.Model):
     }
 
 
-class account_model(osv.Model):
+class AccountModel(osv.Model):
     """
     Extend the account.model model:
         - overwrite the generate_line_values method to take into account the
@@ -61,7 +61,7 @@ class account_model(osv.Model):
         @return a tuple (val, context) where val is a dictionary.
         """
         context = context or {}
-        val, context = super(account_model_line).generate_line_values(
+        val, context = super(AccountModelLine).generate_line_values(
             cr, uid, line, context=context)
         val.update({'analytics_id':
                     line.analytics_id and line.analytics_id.id or False})

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class picking_from_invoice(osv.TransientModel):
+class PickingFromInvoice(osv.TransientModel):
 
     _name = 'picking.from.invoice'
     _columns = {

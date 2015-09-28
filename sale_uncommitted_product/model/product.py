@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -28,7 +28,7 @@ from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
 
     def _get_product_committed_amount(self, cr, uid, ids, context=None):
@@ -101,6 +101,3 @@ class product_product(osv.Model):
                                                    Committe Sale Orders.i""",
                                            digits_compute=dp.get_precision('Product UoM')),
     }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

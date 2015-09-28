@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -29,10 +29,10 @@ from openerp.osv import osv
 from datetime import datetime
 
 
-class aging_parser(report_sxw.rml_parse):
+class AgingParser(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(aging_parser, self).__init__(cr, uid, name, context=context)
+        super(AgingParser, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'int': int,
@@ -40,38 +40,36 @@ class aging_parser(report_sxw.rml_parse):
         })
 
 
-class aging_parser_qweb_pdf_report(osv.AbstractModel):
+class AgingParserQwebPdfReport(osv.AbstractModel):
     _name = 'report.aging_due_report.aging_due_report_qweb'
     _inherit = 'report.abstract_report'
     _template = 'aging_due_report.aging_due_report_qweb'
-    _wrapped_report_class = aging_parser
+    _wrapped_report_class = AgingParser
 
 
-class aging_detail_parser_qweb_pdf_report(osv.AbstractModel):
+class AgingDetailParserQwebPdfReport(osv.AbstractModel):
     _name = 'report.aging_due_report.aging_detail_due_report_qweb'
     _inherit = 'report.abstract_report'
     _template = 'aging_due_report.aging_detail_due_report_qweb'
-    _wrapped_report_class = aging_parser
+    _wrapped_report_class = AgingParser
 
 
-class formal_parser_qweb_pdf_report(osv.AbstractModel):
+class FormalParserQwebPdfReport(osv.AbstractModel):
     _name = 'report.aging_due_report.formal_due_report_qweb'
     _inherit = 'report.abstract_report'
     _template = 'aging_due_report.formal_due_report_qweb'
-    _wrapped_report_class = aging_parser
+    _wrapped_report_class = AgingParser
 
 
-class detail_parser_qweb_pdf_report(osv.AbstractModel):
+class DetailParserQwebPdfReport(osv.AbstractModel):
     _name = 'report.aging_due_report.detail_due_report_qweb'
     _inherit = 'report.abstract_report'
     _template = 'aging_due_report.detail_due_report_qweb'
-    _wrapped_report_class = aging_parser
+    _wrapped_report_class = AgingParser
 
 
-class supplier_formal_parser_qweb_pdf_report(osv.AbstractModel):
+class SupplierFormalParserQwebPdfReport(osv.AbstractModel):
     _name = 'report.aging_due_report.supplier_formal_due_report_qweb'
     _inherit = 'report.abstract_report'
     _template = 'aging_due_report.supplier_formal_due_report_qweb'
-    _wrapped_report_class = aging_parser
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    _wrapped_report_class = AgingParser

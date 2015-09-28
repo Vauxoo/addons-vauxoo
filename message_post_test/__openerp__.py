@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,18 +24,9 @@
 ###############################################################################
 {
     "name": "Message Post Test",
-    "version": "0.1",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-Test for message_post_model module
-==================================
-
-- This module only is used to test the functionality of message_post_model
-  module
-
-
-""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [
@@ -52,4 +43,3 @@ Test for message_post_model module
     "installable": True,
     "auto_install": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

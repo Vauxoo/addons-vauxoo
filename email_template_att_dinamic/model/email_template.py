@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
@@ -25,7 +25,7 @@ from openerp.osv import osv, fields
 import ast
 
 
-class email_template(osv.Model):
+class EmailTemplate(osv.Model):
 
     _inherit = "email.template"
 
@@ -39,7 +39,7 @@ class email_template(osv.Model):
     }
 
 
-class mail_compose_message(osv.TransientModel):
+class MailComposeMessage(osv.TransientModel):
     _inherit = 'mail.compose.message'
 
     def onchange_template_id(self, cr, uid, ids, template_id,
@@ -52,7 +52,7 @@ class mail_compose_message(osv.TransientModel):
         if template_id and isinstance(template_id, list):
             template_id = template_id[0]
 
-        res = super(mail_compose_message,
+        res = super(MailComposeMessage,
                     self).onchange_template_id(
                         cr, uid, ids, template_id,
                         composition_mode, model, res_id, context=context)

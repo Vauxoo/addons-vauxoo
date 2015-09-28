@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,7 +25,7 @@
 from openerp.osv import fields, osv
 
 
-class project_compute_tasks(osv.osv_memory):
+class ProjectComputeTasks(osv.osv_memory):
     _name = 'project.compute.tasks'
     _description = 'Project Compute Tasks'
     _columns = {
@@ -61,7 +61,3 @@ class project_compute_tasks(osv.osv_memory):
         result = act_obj.read(cr, uid, [id], context=context)[0]
         result['target'] = 'current'
         return result
-
-project_compute_tasks()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

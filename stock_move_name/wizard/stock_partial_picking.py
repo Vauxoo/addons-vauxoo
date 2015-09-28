@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -26,7 +26,7 @@
 from openerp.osv import fields, osv
 
 
-class stock_partial_picking_line(osv.TransientModel):
+class StockPartialPickingLine(osv.TransientModel):
 
     _inherit = "stock.partial.picking.line"
     _columns = {
@@ -34,14 +34,12 @@ class stock_partial_picking_line(osv.TransientModel):
     }
 
 
-class stock_partial_picking(osv.osv_memory):
+class StockPartialPicking(osv.osv_memory):
     _inherit = "stock.partial.picking"
 
     def _partial_move_for(self, cr, uid, move, context=None):
         context = context or {}
-        partial_move = super(stock_partial_picking,
+        partial_move = super(StockPartialPicking,
                              self)._partial_move_for(cr, uid, move)
         partial_move['name'] = move.name
         return partial_move
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

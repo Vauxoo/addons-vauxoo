@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,29 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Product Capacity", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-""", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "MRP Product Capacity",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
+        "base",
+        "mail",
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/ir.model.access.csv", 
+        "security/ir.model.access.csv",
         "view/mrp_product_capacity_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

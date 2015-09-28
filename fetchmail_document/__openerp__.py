@@ -1,25 +1,22 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
-    "name": "Fetchmail Corrections", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Tools", 
-    "description": """
-    This module correct some behaviours on Document and Fetchmail modules combinated.
-                    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Fetchmail Corrections",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Tools",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "fetchmail", 
+        "fetchmail",
         "document"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

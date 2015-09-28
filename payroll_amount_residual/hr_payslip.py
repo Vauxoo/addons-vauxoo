@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv
 
 
-class hr_payslip(osv.osv):
+class HrPayslip(osv.osv):
     _inherit = 'hr.payslip'
 
     def _amount_residual(self, cr, uid, ids, name, args, context=None):

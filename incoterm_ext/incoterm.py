@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,7 +22,7 @@
 from openerp.osv import fields, osv
 
 
-class stock_incoterms(osv.Model):
+class StockIncoterms(osv.Model):
 
     """
     stock_incoterm

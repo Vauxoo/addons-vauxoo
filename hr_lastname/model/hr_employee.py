@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -29,7 +29,7 @@ File to inherit hr.employee and added fields to complete name
 from openerp.osv import osv, fields
 
 
-class hr_employee(osv.Model):
+class HrEmployee(osv.Model):
     '''
     Inherit hr.employee to added fields to complete name
     '''

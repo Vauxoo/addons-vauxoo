@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -21,27 +21,25 @@
 ################################################################################
 #"license" : "AGPL-3",
 {
-    "name": "This module inherits standard price field in mrp.bom", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """This module inherits standard price field in mrp.bom
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "This module inherits standard price field in mrp.bom",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "product", 
+        "product",
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "mrp_bom_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

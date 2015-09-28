@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class product_uom_update(osv.TransientModel):
+class ProductUomUpdate(osv.TransientModel):
 
     _name = 'base.product.merge.uom.wizard'
 
@@ -34,7 +34,7 @@ class product_uom_update(osv.TransientModel):
         if not context:
             context = {}
         products = context.get('active_ids', False)
-        res = super(product_uom_update, self).default_get(
+        res = super(ProductUomUpdate, self).default_get(
             cr, uid, fields, context=context)
         res.update({'uom_id_from': products})
         return res

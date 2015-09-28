@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
@@ -24,7 +24,7 @@ from openerp.osv import osv, orm
 from openerp.tools.translate import _
 
 
-class hr_payslip(osv.Model):
+class HrPayslip(osv.Model):
 
     _inherit = 'hr.payslip'
 
@@ -33,6 +33,4 @@ class hr_payslip(osv.Model):
             if not payroll.employee_id.address_home_id:
                 raise orm.except_orm(
                     _('Warning'), _('This employee don´t have a home address'))
-        return super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
-
-hr_payslip()
+        return super(HrPayslip, self).hr_verify_sheet(cr, uid, ids)

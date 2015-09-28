@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -18,45 +18,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Sign Youtube", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-Sign YouTube
-============
-
-What do you need
-----------------
-You need have a YouTube account and have your client ID and developer key if you don't have one you
-can get here_
-
-.. _here: http://code.google.com/apis/youtube/dashboard/gwt/index.html
-How to Use
-----------
-In the configuration menu you have a new menu with the name: Sign YouTube Config.
-You need fill the required information to load all videos for you YouTube account and make the
-configuration test
-
-If the configuration is correct you can load the YouTube videos for send it in the company inbox
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Sign Youtube",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/ir.model.access.csv", 
+        "security/ir.model.access.csv",
         "view/sign_youtube_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

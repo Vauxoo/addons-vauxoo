@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,12 +25,12 @@
 from openerp.osv import osv, fields
 
 
-class purchase_order(osv.Model):
+class PurchaseOrder(osv.Model):
     _inherit = 'purchase.order'
     _columns = {
         'date_contract_expiry': fields.date(
-            'Expiration of Contract Date',
-            help='Expiration of Contract Date'),
+            'Contract Due Date',
+            help='Contract Due Date'),
     }
 
     def _prepare_order_picking(self, cur, uid, order, context=None):
@@ -40,7 +40,7 @@ class purchase_order(osv.Model):
         picking element.
         """
         context = context or {}
-        res = super(purchase_order, self)._prepare_order_picking(
+        res = super(PurchaseOrder, self)._prepare_order_picking(
             cur, uid, order, context=context)
         res['date_contract_expiry'] = order.date_contract_expiry
         return res

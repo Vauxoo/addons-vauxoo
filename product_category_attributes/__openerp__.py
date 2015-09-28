@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -21,11 +21,8 @@
 
 {
     'name': 'Automatic Product Attributes',
-    'version': '1.0',
+    'version': '1.6',
     'category': 'Tools',
-    'description': """
-    Automated Action to Create Product Attributes
-    """,
     'author': 'Vauxoo',
     'depends': [
         'base_action_rule',

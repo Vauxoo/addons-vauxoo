@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -27,7 +27,7 @@ import time
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class res_currency_rate(osv.Model):
+class ResCurrencyRate(osv.Model):
 
     _inherit = "res.currency.rate"
     _columns = {
@@ -37,7 +37,7 @@ class res_currency_rate(osv.Model):
     }
 
 
-class res_currency(osv.Model):
+class ResCurrency(osv.Model):
 
     def _current_rate(self, cr, uid, ids, name, arg, context=None):
         if context is None:

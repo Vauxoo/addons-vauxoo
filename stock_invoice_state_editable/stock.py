@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
     _columns = {
         'invoice_state': fields.selection([

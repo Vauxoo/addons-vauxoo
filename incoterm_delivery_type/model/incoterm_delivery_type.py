@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class stock_incoterms(osv.Model):
+class StockIncoterms(osv.Model):
 
     _inherit = 'stock.incoterms'
 

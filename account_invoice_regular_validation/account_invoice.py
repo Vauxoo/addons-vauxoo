@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
 
     def action_move_create(self, cr, uid, ids, context=None):
@@ -39,6 +39,6 @@ class account_invoice(osv.Model):
                     raise osv.except_osv(_('Error!'), _(
                         "Can not be used different types of accounts\
                          to 'other' in the lines of the invoice!"))
-        res = super(account_invoice, self).action_move_create(
+        res = super(AccountInvoice, self).action_move_create(
             cr, uid, ids, context=context)
         return res

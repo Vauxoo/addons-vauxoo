@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 # Copyright (c) 2011 OpenERP Venezuela (http://openerp.com.ve)
 # All Rights Reserved.
@@ -29,7 +29,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class inherits_sale(osv.Model):
+class InheritsSale(osv.Model):
 
     '''Inherit sale orde line  model to add constraint and avoid add a prodct
     with a diferent unit measure'''
@@ -60,7 +60,7 @@ class inherits_sale(osv.Model):
         context = context or {}
         product_obj = self.pool.get('product.product')
         res = super(
-            inherits_sale, self).product_id_change(cr, uid, ids, pricelist,
+            InheritsSale, self).product_id_change(cr, uid, ids, pricelist,
                    product, qty=qty,
                    uom=uom, qty_uos=qty_uos, uos=uos, name=name,
                    partner_id=partner_id, lang=lang, update_tax=update_tax,

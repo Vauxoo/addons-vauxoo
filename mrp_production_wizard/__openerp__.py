@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,29 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "MPR Production Wizard", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Production", 
-    "description": """ Add wizard to create a new production order of the
-    selected product in draft state, with the qty added of the selected
-    products. from the stock_picking model
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MPR Production Wizard",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Production",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp_default_location", 
+        "mrp_default_location",
         "mrp_pt_planified"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,24 +1,25 @@
+# coding: utf-8
+
 {
-    "name": "mrp_production_security_force", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "description": """ Add security to the button Force Availability, module mrp """, 
-    "website": "www.vauxoo.com", 
-    "license": "", 
+    "name": "MRP Production Security Force",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "www.vauxoo.com",
+    "license": "",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "mrp_production_security_force_view.xml", 
+        "mrp_production_security_force_view.xml",
         "security/groups.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

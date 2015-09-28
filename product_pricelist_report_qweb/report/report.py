@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,12 +23,12 @@ from openerp.osv import osv
 from openerp.addons.product.report import product_pricelist
 
 
-class parser(product_pricelist.product_pricelist):
+class Parser(product_pricelist.product_pricelist):
     def __init__(self, cr, uid, name, context):
-        super(parser, self).__init__(cr, uid, name, context=context)
+        super(Parser, self).__init__(cr, uid, name, context=context)
 
     def _get_titles(self, form):
-        res = super(parser, self)._get_titles(form)
+        res = super(Parser, self)._get_titles(form)
         if form.get('margin_cost') or form.get('margin_sale'):
             res.append({'cost': 'Cost'})
         if form.get('margin_cost'):
@@ -39,7 +38,7 @@ class parser(product_pricelist.product_pricelist):
         return res
 
     def _get_categories(self, products, form):
-        res = super(parser, self)._get_categories(products, form)
+        res = super(Parser, self)._get_categories(products, form)
         if not form.get('margin_cost') and not form.get('margin_sale'):
             return res
         prod_obj = self.pool.get('product.product')
@@ -85,7 +84,7 @@ class parser(product_pricelist.product_pricelist):
         return price
 
 
-class product_pricelist_report_qweb(osv.AbstractModel):
+class ProductPricelistReportQweb(osv.AbstractModel):
 
     # As we are inheriting a report that was previously a particular report we
     # have to keep it like that, i.e., we will keep _name the same than the
@@ -102,6 +101,4 @@ class product_pricelist_report_qweb(osv.AbstractModel):
     _template = 'product_pricelist_report_qweb.report_template'
     # old wrapper class from original report will be used
     # so we can comment this attribute
-    _wrapped_report_class = parser
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    _wrapped_report_class = Parser

@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,12 +26,12 @@ from lxml import html
 from openerp.report import report_sxw
 
 
-class story_user_html(report_sxw.rml_parse):
+class StoryUserHtml(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
         if context is None:
             context = {}
-        super(story_user_html, self).__init__(
+        super(StoryUserHtml, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
             'parse_html_field': self._parse_html_field,
@@ -50,6 +51,4 @@ class story_user_html(report_sxw.rml_parse):
 report_sxw.report_sxw('report.user.story.report',
                       'user.story',
                       'addons/user_story/report/user_story_report.sxw',
-                      parser=story_user_html)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+                      parser=StoryUserHtml)

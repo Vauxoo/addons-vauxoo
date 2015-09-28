@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # #############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -23,19 +23,19 @@
 ###############################################################################
 import time
 from openerp.osv import fields, osv
-from openerp import workflow
+from openerp import api, workflow
 from openerp.addons import decimal_precision as dp
 from openerp.tools.translate import _
 
 
-class hr_expense_expense(osv.Model):
+class HrExpenseExpense(osv.Model):
     _inherit = "hr.expense.expense"
 
     def expense_canceled(self, cr, uid, ids, context=None):
         obj_move = self.pool.get('account.move')
         obj_move_rec = self.pool.get('account.move.reconcile')
 
-        res = super(hr_expense_expense,
+        res = super(HrExpenseExpense,
                     self).expense_canceled(cr, uid, ids, context=context)
         for expense in self.browse(cr, uid, ids, context=context):
             if expense.account_move_id:
@@ -60,7 +60,7 @@ class hr_expense_expense(osv.Model):
         (Sub total + tax amount ). """
         context = context or {}
         cur_obj = self.pool.get('res.currency')
-        res = super(hr_expense_expense, self)._amount(
+        res = super(HrExpenseExpense, self)._amount(
             cr, uid, ids, field_name, arg, context=context)
         for expense in self.browse(cr, uid, res.keys(), context=context):
             for invoice in expense.invoice_ids:
@@ -253,7 +253,7 @@ class hr_expense_expense(osv.Model):
     }
 
     def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
-        res = super(hr_expense_expense, self).onchange_employee_id(
+        res = super(HrExpenseExpense, self).onchange_employee_id(
             cr, uid, ids, employee_id, context=context)
         if not employee_id:
             return res
@@ -333,7 +333,7 @@ class hr_expense_expense(osv.Model):
                     _('Invalid Procedure'),
                     _('You have not Deductible or No Deductible lines loaded '
                       'into the expense'))
-            super(hr_expense_expense, self).expense_confirm(
+            super(HrExpenseExpense, self).expense_confirm(
                 cr, uid, ids, context=context)
         return True
 
@@ -1051,7 +1051,8 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
-    def copy(self, cr, uid, ids, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default = default.copy()
@@ -1062,8 +1063,7 @@ class hr_expense_expense(osv.Model):
                         'ait_ids': [],
                         'date_post': False,
                         })
-        return super(hr_expense_expense, self).copy(cr, uid, ids, default,
-                                                    context=context)
+        return super(HrExpenseExpense, self).copy(default)
 
     def show_entries(self, cr, uid, ids, context=None):
         context = context or {}
@@ -1109,7 +1109,7 @@ class hr_expense_expense(osv.Model):
         entries related to an expense then this super tries to get rid of
         the Journal Entry Lines in zero
         '''
-        super(hr_expense_expense, self).action_receipt_create(
+        super(HrExpenseExpense, self).action_receipt_create(
             cr, uid, ids, context=context)
         aml_obj = self.pool.get('account.move.line')
         res = []
@@ -1138,7 +1138,7 @@ class hr_expense_expense(osv.Model):
         period_obj = self.pool.get('account.period')
         expense = self.browse(cr, uid, expense_id, context=context)
         date = expense.date_post
-        res = super(hr_expense_expense, self).account_move_get(
+        res = super(HrExpenseExpense, self).account_move_get(
             cr, uid, expense_id, context=context)
         res.update({
             'date': date,
@@ -1147,12 +1147,12 @@ class hr_expense_expense(osv.Model):
         return res
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     def create(self, cr, uid, vals, context=None):
         context = context or {}
-        res = super(account_voucher, self).create(
+        res = super(AccountVoucher, self).create(
             cr, uid, vals, context=context)
         if context.get('employee_payment', False):
             exp_obj = self.pool.get('hr.expense.expense')
@@ -1162,14 +1162,14 @@ class account_voucher(osv.Model):
         return res
 
 
-class account_move_line(osv.osv):
+class AccountMoveLine(osv.osv):
     _inherit = "account.move.line"
 
     # pylint: disable=W0622
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False,
                   writeoff_period_id=False, writeoff_journal_id=False,
                   context=None):
-        res = super(account_move_line, self).reconcile(
+        res = super(AccountMoveLine, self).reconcile(
             cr, uid, ids, type=type, writeoff_acc_id=writeoff_acc_id,
             writeoff_period_id=writeoff_period_id,
             writeoff_journal_id=writeoff_journal_id,
@@ -1201,7 +1201,7 @@ class account_move_line(osv.osv):
         return res
 
 
-class hr_employee(osv.Model):
+class HrEmployee(osv.Model):
     _inherit = 'hr.employee'
 
     _columns = {
@@ -1211,7 +1211,7 @@ class hr_employee(osv.Model):
     }
 
 
-class hr_department(osv.Model):
+class HrDepartment(osv.Model):
     _inherit = "hr.department"
 
     _columns = {
@@ -1221,12 +1221,12 @@ class hr_department(osv.Model):
     }
 
 
-class hr_expense_line(osv.Model):
+class HrExpenseLine(osv.Model):
     _inherit = "hr.expense.line"
 
     def _get_analytic(self, cr, uid, context=None):
         context = context or {}
-        res = super(hr_expense_line, self)._get_analytic(
+        res = super(HrExpenseLine, self)._get_analytic(
             cr, uid, context=context)
         result = context.get('account_analytic_exp', res)
         return result

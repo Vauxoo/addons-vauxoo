@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -18,34 +18,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Validate Stock Picking", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Stock", 
-    "description": """
-Validate Multiples Stock Picking
-================================
-
-Select stock picking from tree view and dropdown action menu to select wizard
-and validate picking selected
-
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Validate Stock Picking",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Stock",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/validate_picking_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

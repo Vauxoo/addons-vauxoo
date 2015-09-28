@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 import werkzeug
 from openerp import http
 from openerp.http import request
@@ -6,7 +6,7 @@ from openerp.addons.web.controllers.main import login_redirect
 from openerp.addons.website_sale.controllers.main import website_sale
 
 
-class website_sale_inh(website_sale):
+class WebsiteSaleInh(website_sale):
 
     @http.route(['/shop/product/comment/<int:product_template_id>'],
                 type='http', auth="public", methods=['POST'], website=True)

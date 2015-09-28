@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,27 +24,26 @@
 #
 ##############################################################################
 {
-    "name": "hr_expense_analytic", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "hr", 
-    "description": """This module add analytic account to departament""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "HR Expense Analytic",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "hr",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "hr", 
-        "hr_expense", 
+        "hr",
+        "hr_expense",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "hr_expense_analytic_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

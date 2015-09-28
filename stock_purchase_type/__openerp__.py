@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -24,16 +23,9 @@
 ###############################################################################
 {
     "name": "Stock Purchase Type",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Stock Purchase Type
-===================
-
-Add Purchase Order type field to the Stock Picking Object.
-
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

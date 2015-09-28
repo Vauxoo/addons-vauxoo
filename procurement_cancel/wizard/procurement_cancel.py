@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -26,7 +26,7 @@ from openerp.osv import osv
 _logger = logging.getLogger(__name__)
 
 
-class cancel_procurement_order(osv.osv_memory):
+class CancelProcurementOrder(osv.osv_memory):
     _name = 'cancel.procurement.order'
     _description = 'Cancel procurement'
 
@@ -43,5 +43,3 @@ class cancel_procurement_order(osv.osv_memory):
         _logger.info('Cancel Procurement is running')
         pr_obj.cancel(cr, uid, context.get('active_ids', False), context=None)
         return {'type': 'ir.actions.act_window_close'}
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

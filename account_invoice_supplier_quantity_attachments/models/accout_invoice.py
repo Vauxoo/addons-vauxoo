@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -31,10 +31,37 @@ class AccountInvoice(models.Model):
 
     _inherit = 'account.invoice'
 
-    qty_attachments = fields.Integer("Attachments",
-                                     help='Number of attachments per invoice',
-                                     compute="count_attachments",
-                                     store=False)
+    def _search_qty_att(self, operator, value):
+        res = []
+        if operator and value:
+            query = '''
+            SELECT distinct (res_id)
+            FROM ir_attachment
+            WHERE res_id IN (
+                SELECT res_id FROM ir_attachment
+                WHERE res_model = 'account.invoice'
+                GROUP BY res_id HAVING Count(*)%s %s)''' % (operator, value)
+            self.env.cr.execute(query)
+            for inv in self.env.cr.fetchall():
+                res.append(inv[0])
+            return [('id', 'in', res)]
+        if not value:
+            query = """
+                SELECT distinct(res_id)
+                FROM ir_attachment
+                WHERE res_id IS NOT NULL and res_model = 'account.invoice'"""
+            self.env.cr.execute(query)
+            for inv in self.env.cr.fetchall():
+                res.append(inv[0])
+            if operator == '!=':
+                return [('id', 'in', res)]
+            elif operator == '=':
+                return [('id', 'not in', res)]
+        return [('id', 'in', [])]
+
+    qty_attachments = fields.Integer(
+        "Attachments", help='Number of attachments per invoice',
+        compute="count_attachments", store=False, search=_search_qty_att)
 
     @api.one
     def count_attachments(self):
@@ -42,5 +69,3 @@ class AccountInvoice(models.Model):
         self.qty_attachments = obj_attachment.search_count(
             [('res_model', '=', 'account.invoice'),
              ('res_id', '=', self.id,)])
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

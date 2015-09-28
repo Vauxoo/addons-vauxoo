@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,7 +22,7 @@
 from openerp.osv import osv, fields
 
 
-class project_issue(osv.Model):
+class ProjectIssue(osv.Model):
 
     _inherit = 'project.issue'
 

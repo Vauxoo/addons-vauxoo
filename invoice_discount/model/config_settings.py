@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -30,7 +30,7 @@ discount and the value of the discount
 from openerp.osv import osv
 
 
-class sale_config_settings(osv.TransientModel):
+class SaleConfigSettings(osv.TransientModel):
     _inherit = 'sale.config.settings'
 
     def get_default_sale_config_settings(self, cr, uid, fields, context=None):

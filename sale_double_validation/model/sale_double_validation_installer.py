@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class sale_double_validation_installer(osv.TransientModel):
+class SaleDoubleValidationInstaller(osv.TransientModel):
     _name = 'sale.double.validation.installer'
     _inherit = 'res.config'
     _columns = {
@@ -56,6 +56,3 @@ class sale_double_validation_installer(osv.TransientModel):
                                       context=context).res_id
         transition_obj.write(cr, uid, waiting_id, {'group_id': group_id})
         return {}
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

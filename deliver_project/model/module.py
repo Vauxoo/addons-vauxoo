@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class module(osv.Model):
+class Module(osv.Model):
     _inherit = 'ir.module.module'
 
     def get_doc_inside(self, cr, uid, ids, context=None):
@@ -60,7 +60,7 @@ class module(osv.Model):
             docStr = docStr + "\n%s" % ActionHelp
         return docStr
 
-    def title_help(self, cr, uid, mod_id, module, context={}):
+    def title_help(self, cr, uid, mod_id, Module, context={}):
         '''
         {'CompleteModuleName':action.__module__
         'ModuleName':action.__module__}
@@ -69,7 +69,7 @@ class module(osv.Model):
         docStr = "==%s==\n%s" % (self.browse(cr, uid,
                                              mod_id,
                                              context=context).shortdesc,
-                                 self.sub_title_help(cr, uid, module,
+                                 self.sub_title_help(cr, uid, Module,
                                                      context=context))
         return docStr
 

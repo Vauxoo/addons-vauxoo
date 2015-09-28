@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,30 +24,26 @@
 #
 ##############################################################################
 {
-    "name": "Product product multi link", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """This module links from products to their journal items,
-    production orders, stock moves with productions, and bill of materials where
-    those products are components
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Product product multi link",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "product", 
-        "stock", 
+        "product",
+        "stock",
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "product_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

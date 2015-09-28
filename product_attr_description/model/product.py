@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -21,11 +22,10 @@
 
 from openerp import models, fields
 
+
 class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 
     description = fields.Html(string='Attribute Description', index=True,
                               help="Description on Module from the descriptor "
                               "file and/or README.md")
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

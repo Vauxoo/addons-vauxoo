@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,12 +25,12 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-from openerp import netsvc
+from openerp import workflow
 
-wf_service = netsvc.LocalService("workflow")
+wf_service = workflow
 
 
-class validate_picking(osv.TransientModel):
+class ValidatePicking(osv.TransientModel):
 
     _name = 'validate.picking.wz'
 

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,37 +25,9 @@
 ##############################################################################
 {
     "name": "BOM Inventory Information",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-
-BOM Inventory Information
-=========================
-
-This module added current and future quantity into
-Bill of materials structure for products variants.
-
-
-For Bill of materials button of Product Variants
-------------------------------------------------
-|
-.. image:: bom_inventory_information/static/src/img/productvariants.png
-|
-|
-In the Bill of Materials Structure -->
---------------------------------------
-|
-.. image:: bom_inventory_information/static/src/img/billofmaterials.png
-|
-|
-Now the 'Quantity on hands' and 'Forecast quantity' of product are displayed.
------------------------------------------------------------------------------
-|
-.. image:: bom_inventory_information/static/src/img/billofmaterialsstructure.png
-
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

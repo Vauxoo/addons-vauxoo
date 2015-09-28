@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def _product_produced(self, cr, uid, ids, field, args, context=None):

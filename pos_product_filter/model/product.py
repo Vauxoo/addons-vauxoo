@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (http://www.vauxoo.com).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
 
     """
     To add two fields which determine if a product is show in restaurant and/or delivery

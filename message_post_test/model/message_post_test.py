@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class message_post_test_line(osv.Model):
+class MessagePostTestLine(osv.Model):
 
     _name = 'message.post.test.line'
 
@@ -38,7 +38,7 @@ class message_post_test_line(osv.Model):
     }
 
 
-class message_post_test(osv.Model):
+class MessagePostTest(osv.Model):
 
     _name = 'message.post.test'
     _inherit = ['message.post.show.all']

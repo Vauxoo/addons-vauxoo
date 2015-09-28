@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
 #
@@ -14,7 +14,7 @@ from openerp.osv import orm, fields
 from openerp.tools.translate import _
 
 
-class account_account_type(orm.Model):
+class AccountAccountType(orm.Model):
     _inherit = "account.account.type"
 
     def _get_policies(self, cr, uid, context=None):
@@ -45,7 +45,7 @@ class account_account_type(orm.Model):
     }
 
 
-class account_invoice_line(orm.Model):
+class AccountInvoiceLine(orm.Model):
     _inherit = "account.invoice.line"
 
     def _get_asset_category_policy(self, cr, uid, account, context=None):
@@ -82,5 +82,3 @@ class account_invoice_line(orm.Model):
          _check_asset_category_required_msg,
          ['account_id']),
     ]
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

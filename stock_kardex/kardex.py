@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -27,7 +27,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
 
     def _product_available_done(self, cr, uid, ids, field_names=None,

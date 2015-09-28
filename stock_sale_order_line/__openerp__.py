@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,17 +23,9 @@
 ###############################################################################
 {
     "name": "Stock Sale Order Line",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "sale",
-    "description": """
-Stock Sale Order Line
-=====================
-
-    Adds two new fields one in Sale Order Line to grab the stock.moves records
-    related to it, and another from stock.move to point to the related Sale
-    Order Line
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

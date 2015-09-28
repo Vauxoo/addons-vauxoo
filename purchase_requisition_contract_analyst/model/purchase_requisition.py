@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,10 +22,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from openerp import api
 from openerp.osv import osv, fields
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {
@@ -37,14 +38,14 @@ class purchase_requisition(osv.Model):
                   ' purchase requisition.')),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         default = default or {}
         default.update({'purchaser_id': False})
-        return super(purchase_requisition, self).copy(cr, uid, id, default,
-                                                      context=context)
+        return super(PurchaseRequisition, self).copy(default)
 
 
-class res_partner(osv.Model):
+class ResPartner(osv.Model):
 
     _inherit = 'res.partner'
     _columns = {
@@ -53,8 +54,8 @@ class res_partner(osv.Model):
             help='Is this a Purchaser?'),
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         default = default or {}
         default.update({'is_purchaser': False})
-        return super(res_partner, self).copy(cr, uid, id, default,
-                                             context=context)
+        return super(ResPartner, self).copy(default)

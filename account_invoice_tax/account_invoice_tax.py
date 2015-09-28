@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -29,7 +29,7 @@ from openerp import models, fields, api, _
 from openerp.exceptions import except_orm
 
 
-class account_invoice(models.Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     @api.multi
@@ -59,7 +59,7 @@ class account_invoice(models.Model):
                     raise except_orm(_('Warning!'), _('Taxes are missing!\nClick on compute button.'))
 
 
-class account_invoice_tax(models.Model):
+class AccountInvoiceTax(models.Model):
     _inherit = 'account.invoice.tax'
 
     tax_id = fields.Many2one('account.tax', string='Tax', required=False, ondelete='set null', index=True,

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp.osv import fields, osv
 import re
 import logging
@@ -6,7 +6,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class account_move_folio_fill_gap(osv.TransientModel):
+class AccountMoveFolioFillGap(osv.TransientModel):
     _name = 'account.move.folio.fill.gap'
     _description = "Fill Gap in Journal Entry Folios"
     _columns = {

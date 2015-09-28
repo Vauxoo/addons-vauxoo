@@ -1,12 +1,13 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
+#	* purchase_order_cancel
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 01:07+0000\n"
-"PO-Revision-Date: 2013-11-07 01:07+0000\n"
+"POT-Creation-Date: 2015-08-11 09:03+0000\n"
+"PO-Revision-Date: 2015-08-11 09:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: purchase_order_cancel
-#: view:purchase.order:0
+#: view:purchase.order:purchase_order_cancel.view_inherit_purchase_cancel_form
 msgid "Cancel Purchase Order"
 msgstr ""
 

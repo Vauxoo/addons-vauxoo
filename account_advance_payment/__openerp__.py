@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,38 +24,26 @@
 #
 #
 {
-    "name": "Account Advance Payment", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-Account Advance Payment
-=======================
-
-This module you can help with advance payment of custom and suppliers.
-
-This module adds the fields Account Supplier Advance, Account Customer Advance,
-Total Customer Advance and Total Supplier Advance in the view form of the partner.
-
-Also adds the field Transaction Type in the view payments of customs and suppliers.
-
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Advance Payment",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
+        "account",
         "account_voucher"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/res_partner_advance_payment_view.xml", 
+        "view/res_partner_advance_payment_view.xml",
         "view/account_voucher_advance_payment_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

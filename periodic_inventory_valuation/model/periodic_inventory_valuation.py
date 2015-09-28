@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -31,21 +31,21 @@ import datetime
 #----------------------------------------------------------
 
 
-class account_invoice_line(osv.Model):
+class AccountInvoiceLine(osv.Model):
     _inherit = 'account.invoice.line'
     _columns = {
         'currency_id': fields.related('invoice_id', 'currency_id', relation='res.currency', type='many2one', string='Currency', help='field'),
     }
 
 
-class res_company(osv.osv):
+class ResCompany(osv.osv):
     _inherit = 'res.company'
     _columns = {
         'inventory_valuation_journal_id': fields.many2one('account.journal', 'Periodical Inventory Valuation Journal', required=True, help="Journal entry"),
     }
 
 
-class periodic_inventory_valuation_line(osv.osv):
+class PeriodicInventoryValuationLine(osv.osv):
     _name = "periodic.inventory.valuation.line"
     _description = "Periodic Inventory Valuation Lines"
     _rec_name = 'product_id'
@@ -70,7 +70,7 @@ class periodic_inventory_valuation_line(osv.osv):
     }
 
 
-class periodic_inventory_valuation(osv.osv):
+class PeriodicInventoryValuation(osv.osv):
     _name = "periodic.inventory.valuation"
     _description = "Periodic Inventory Valuation"
     _columns = {
@@ -158,7 +158,7 @@ class periodic_inventory_valuation(osv.osv):
         self.validate_data(cr, uid, ids, brw_per_inv.date, context=context)
 
         vals['period_id'] = self.get_period(cr, uid, ids, vals.get('date'), context=context)
-        return super(periodic_inventory_valuation, self).write(cr, uid, ids, vals, context=context)
+        return super(PeriodicInventoryValuation, self).write(cr, uid, ids, vals, context=context)
 
     def create(self, cr, uid, vals, context=None):
         if context is None:
@@ -170,7 +170,7 @@ class periodic_inventory_valuation(osv.osv):
 
         self.validate_data(cr, uid, False, vals.get('date'), context=context)
         vals['period_id'] = self.get_period(cr, uid, False, vals.get('date'), context=context)
-        return super(periodic_inventory_valuation, self).create(cr, uid, vals, context=context)
+        return super(PeriodicInventoryValuation, self).create(cr, uid, vals, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
@@ -180,7 +180,7 @@ class periodic_inventory_valuation(osv.osv):
         if brw_per_inv.state == 'done':
             raise osv.except_osv('Can not delete the record', 'When a stock is done, can not be deleted')
 
-        return super(periodic_inventory_valuation, self).unlink(cr, uid, ids, context=context)
+        return super(PeriodicInventoryValuation, self).unlink(cr, uid, ids, context=context)
 
     def load_valuation_items(self, cr, uid, ids, context=None):
         context = context or {}

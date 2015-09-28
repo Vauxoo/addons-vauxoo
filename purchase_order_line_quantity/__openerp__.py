@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Purchase Order Line Quantities",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "purchase",
-    "description": """
-Purchase Order Line Quantities
-==============================
-
-    Adds two new fields in Purchase Order Line that compute how much of a line
-    has already been delivery or how much has already been invoiced
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

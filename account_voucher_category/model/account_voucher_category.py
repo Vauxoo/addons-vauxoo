@@ -1,15 +1,15 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp.osv import fields, osv
 
 
-class account_voucher_category_type(osv.Model):
+class AccountVoucherCategoryType(osv.Model):
     _name = 'account.voucher.category.type'
     _columns = {
         'name': fields.char('Name', 256, help='Type Name', translate=True),
     }
 
 
-class account_voucher_category(osv.Model):
+class AccountVoucherCategory(osv.Model):
     _order = "parent_left"
     _parent_order = "code"
     _parent_store = True
@@ -90,7 +90,7 @@ class account_voucher_category(osv.Model):
         return res
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     _columns = {
@@ -109,7 +109,7 @@ class account_voucher(osv.Model):
         :rtype: dict
         '''
         context = context or {}
-        move_line = super(account_voucher, self).first_move_line_get(cr, uid,
+        move_line = super(AccountVoucher, self).first_move_line_get(cr, uid,
                 voucher_id, move_id, company_currency, current_currency,
                 context=context)
         voucher = self.pool.get('account.voucher').browse(cr, uid, voucher_id, context)
@@ -117,7 +117,7 @@ class account_voucher(osv.Model):
         return move_line
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
 
     _columns = {
@@ -125,7 +125,7 @@ class account_move_line(osv.Model):
     }
 
 
-class scrvw_report_account_voucher_category(osv.Model):
+class ScrvwReportAccountVoucherCategory(osv.Model):
 
     _name = 'scrvw.report.account.voucher.category'
     _auto = False

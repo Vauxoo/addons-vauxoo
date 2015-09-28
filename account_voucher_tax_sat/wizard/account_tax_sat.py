@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,7 +24,7 @@
 from openerp.osv import fields, osv
 
 
-class account_voucher_tax_assigned(osv.TransientModel):
+class AccountVoucherTaxAssigned(osv.TransientModel):
 
     _name = 'account.voucher.tax.assigned'
 

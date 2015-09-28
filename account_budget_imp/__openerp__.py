@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,60 +24,33 @@
 #
 ##############################################################################
 {
-    "name": "Account Budget Improvements", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Accounting & Finance", 
-    "description": """
-Improvements to Account Budget
-==============================
-
-- Added concept of "Estimated Forecast", It is an amount which represent the
-  estimated amount per budget line that the person who report the budget line
-  estimate comply in some moment.
-
-- Added concept of "Actual Amount": The actual amount is the amount related to
-  the sum of account in the fiscal position, with or without
-  account_analityc_line this amount will be recorded in db and will change only
-  with the change on the workflow.
-
-- Added the concept of "Printed Budget" using the original workflow available
-  on the budget we must include the concept of:
-
-  - Posted Date: When the accountant Manager dictaminate that the amount is
-    ready to be reviewed for the Local CFO.
-
-  - Approved Date: When the local CFO says that the Budget can be sent to the
-    CEO.
-
-  - Received Date: When the CEO says that the budget is received.
-
-The Account Budget view will be used to comply with need to show the executed
-Budget per period.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Budget Improvements",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting & Finance",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account_budget", 
-        "account_accountant", 
-        "ifrs_report", 
+        "account_budget",
+        "account_accountant",
+        "ifrs_report",
         "web_kanban"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/account_budget_view.xml", 
-        "security/res_groups.xml", 
+        "view/account_budget_view.xml",
+        "security/res_groups.xml",
         "data/account_budget_data.xml"
-    ], 
-    "test": [], 
+    ],
+    "test": [],
     "js": [
         "static/src/js/account_budget_imp.js"
-    ], 
+    ],
     "css": [
         "static/src/css/account_budget.css"
-    ], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

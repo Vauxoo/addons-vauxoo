@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@ import time
 from openerp.tools.translate import _
 
 
-class wizard_production_make(osv.TransientModel):
+class WizardProductionMake(osv.TransientModel):
     _name = 'wizard.production.make'
 
     _columns = {

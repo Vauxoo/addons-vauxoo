@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -30,7 +30,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class wizard_report_variation(osv.TransientModel):
+class WizardReportVariation(osv.TransientModel):
     _name = 'wizard.report.variation'
 
     _columns = {
@@ -60,7 +60,7 @@ class wizard_report_variation(osv.TransientModel):
         if context is None:
             context = {}
         production_obj = self.pool.get('mrp.production')
-        res = super(wizard_report_variation, self).default_get(
+        res = super(WizardReportVariation, self).default_get(
             cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
         if not production_ids:

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -21,28 +21,26 @@
 ##########################################################################
 #"license" : "AGPL-3",
 {
-    "name": "Add stock_kardex in menuitem", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """This module add stock_kardex in menuitem
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Add stock_kardex in menuitem",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "product", 
-        "stock", 
+        "product",
+        "stock",
         "product_context_date"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "kardex.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

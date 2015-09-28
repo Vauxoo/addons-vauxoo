@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -42,7 +42,7 @@ class AccountInvoiceLine(models.Model):
         help='Indicate if the partner to invoice is broker')
 
 
-class account_invoice_tax(models.Model):
+class AccountInvoiceTax(models.Model):
     _inherit = "account.invoice.tax"
 
     tax_partner_id = fields.Many2one('res.partner', 'Supplier', readonly=True)
@@ -169,7 +169,7 @@ class account_invoice_tax(models.Model):
         line of tax is to register cost of to broker
         '''
         res = []
-        super(account_invoice_tax, self).move_line_get(cr, uid, invoice_id)
+        super(AccountInvoiceTax, self).move_line_get(cr, uid, invoice_id)
         tax_invoice_ids = self.search(cr, uid, [
             ('invoice_id', '=', invoice_id)], context=context)
         for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
@@ -193,14 +193,14 @@ class account_invoice_tax(models.Model):
         return res
 
 
-class account_invoice(models.Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     @api.multi
     def button_reset_taxes(self):
         account_invoice_tax_obj = self.env['account.invoice.tax']
         ctx = dict(self._context)
-        res = super(account_invoice, self).button_reset_taxes()
+        res = super(AccountInvoice, self).button_reset_taxes()
         for invoice in self:
             partner = invoice.partner_id
             if not partner.is_broker_ok:
@@ -236,14 +236,14 @@ class account_invoice(models.Model):
                             'You can´t add a line with quantity = 0 if the '
                             'product not is service, the product must be type '
                             'service.'))
-        return super(account_invoice, self).invoice_validate()
+        return super(AccountInvoice, self).invoice_validate()
 
     @api.model
     def line_get_convert(self, line, part, date):
         '''
         Super to write in the line of move the partner from tax
         '''
-        res = super(account_invoice, self).line_get_convert(
+        res = super(AccountInvoice, self).line_get_convert(
             line, part, date)
         res = dict(res, partner_id=line.get('partner_id', False) or part)
         return res
@@ -252,7 +252,7 @@ class account_invoice(models.Model):
     def check_tax_lines(self, compute_taxes):
         account_invoice_tax_var = self.env['account.invoice.tax']
         if not self.partner_id.is_broker_ok:
-            super(account_invoice, self).check_tax_lines(compute_taxes)
+            super(AccountInvoice, self).check_tax_lines(compute_taxes)
         else:
             for tax in compute_taxes.values():
                 invoice_id = tax.get('invoice_id', False)

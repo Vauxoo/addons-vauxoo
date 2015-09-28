@@ -1,9 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ########### Credits #########################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -22,27 +22,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Requisition Requisitor", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-    Add a user field named Requisitor.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Requisition Requisitor",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "purchase_requisition"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_requisition_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

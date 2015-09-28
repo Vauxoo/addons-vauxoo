@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ########################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -23,7 +23,7 @@
 from openerp.osv import fields, osv
 
 
-class purchase_requisition_line(osv.Model):
+class PurchaseRequisitionLine(osv.Model):
     _inherit = "purchase.requisition.line"
 
     _columns = {
@@ -41,7 +41,7 @@ class purchase_requisition_line(osv.Model):
                             product_uom_id, context=None):
         context = context or {}
         product_obj = self.pool.get('product.product')
-        res = super(purchase_requisition_line, self).onchange_product_id(
+        res = super(PurchaseRequisitionLine, self).onchange_product_id(
             cr, uid, ids, product_id, product_uom_id, context=context)
         res['value'].update({'name': ''})
         if product_id:
@@ -57,17 +57,15 @@ class purchase_requisition_line(osv.Model):
             res['value'].update({'name': name})
         return res
 
-purchase_requisition_line()
 
-
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
     _inherit = "purchase.requisition"
 
     def make_purchase_order(self, cr, uid, ids, partner_id,
                             context=None):
         if context is None:
             context = {}
-        res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
+        res = super(PurchaseRequisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
 
         pol_obj = self.pool.get('purchase.order.line')
         po_obj = self.pool.get('purchase.order')

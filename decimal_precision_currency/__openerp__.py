@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -22,29 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################-
 {
-    "name": "Decimal Precision to Rate Currency", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal", 
-    "description": """
-                    This module, add decimal  precision format to Rate Currency, for the conversion  between currencies is accurate.
-                    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Decimal Precision to Rate Currency",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "decimal_precision"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "decimal_pre_currency_view.xml", 
+        "decimal_pre_currency_view.xml",
         "data/decimal_precision_currency.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

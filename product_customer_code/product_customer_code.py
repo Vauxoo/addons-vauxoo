@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class product_customer_code(osv.Model):
+class ProductCustomerCode(osv.Model):
     _name = "product.customer.code"
     _description = "Add manies Code of Customer's"
 

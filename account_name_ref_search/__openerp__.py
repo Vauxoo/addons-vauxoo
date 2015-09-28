@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -21,26 +21,24 @@
 ################################################################################
 #"license" : "AGPL-3",
 {
-    "name": "Add the Name and referenced in the view search account.move.line model", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """This module Add the Name and referenced in the view search account.move.line model to perform the filter
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Add the Name and referenced in the view search account.move.line model",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_move_line.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

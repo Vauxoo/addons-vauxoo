@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -27,7 +27,7 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 import time
 
 
-class product_historical(models.Model):
+class ProductHistorical(models.Model):
 
     """
     product_historical
@@ -48,7 +48,7 @@ class product_historical(models.Model):
                                           'in the cost of this product')
 
 
-class product_historic_price(models.Model):
+class ProductHistoricPrice(models.Model):
     _order = "name desc"
     _name = "product.historic.price"
     _description = "Historical Price List"

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@
 from openerp.osv import fields, osv
 
 
-class set_accounting_data_wizard(osv.osv_memory):
+class SetAccountingDataWizard(osv.osv_memory):
     _name = 'set.accounting.data.wizard'
 
     _columns = {

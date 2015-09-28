@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,7 +25,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-class merge_object(osv.Model):
+class MergeObject(osv.Model):
     _name = "merge.object"
 
     _columns = {
@@ -142,6 +142,3 @@ class merge_object(osv.Model):
                 raise osv.except_osv(
                     _("Warning"), _("Deletion of the action record failed."))
         return True
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

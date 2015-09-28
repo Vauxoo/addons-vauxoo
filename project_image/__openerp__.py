@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,32 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Project Image", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Customization", 
-    "description": """
-Hierarchical View:
-=========================================================
-    It creates Hierarchical view to projects
-
-
-                    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Project Image",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Customization",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "project", 
+        "project",
         "portal_project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_image_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

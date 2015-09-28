@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,29 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Project Contract Validations", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-        This module adds guidelines and validations in the relation
-        between Project and Analytic Account modules.
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Project Contract Validations",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "project", 
+        "project",
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

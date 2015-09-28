@@ -1,31 +1,25 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
-    "name": "Account Asset Analytic", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-Account Asset Analytic
-======================
-
-A description is intended to fill this space
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Asset Analytic",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
+        "account",
         "account_asset"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/view.xml", 
+        "view/view.xml",
         "view/menues_and_actions.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

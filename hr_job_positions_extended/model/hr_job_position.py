@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -38,7 +38,7 @@ LEVEL_JOB = [
 ]
 
 
-class hr_job(osv.Model):
+class HrJob(osv.Model):
 
     _inherit = "hr.job"
 

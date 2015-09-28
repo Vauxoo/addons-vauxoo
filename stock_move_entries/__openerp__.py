@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,35 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Stock Move Entries", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Account", 
-    "description": """
-Stock Move Entries
-==================
-Creates a relationship between stock.move model records
-    and the regarding account.move record that is created
-    when using realtime valuation and the stock.move is coming
-    from / going to an external stock.location
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Stock Move Entries",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "stock", 
+        "stock",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/stock_move_entries_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

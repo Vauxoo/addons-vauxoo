@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,30 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Purchase Order Cancel", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Account", 
-    "description": """ Add button to cancel purchase in state done
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Order Cancel",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "purchase"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/purchase_security.xml", 
-        "purchase_view.xml", 
+        "security/purchase_security.xml",
+        "purchase_view.xml",
         "purchase_workflow.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

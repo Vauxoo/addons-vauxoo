@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,10 +24,10 @@ import time
 from openerp.report import report_sxw
 
 
-class ir_module_reference_print(report_sxw.rml_parse):
+class IrModuleReferencePrint(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(ir_module_reference_print, self).__init__(
+        super(IrModuleReferencePrint, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
@@ -85,7 +85,4 @@ class ir_module_reference_print(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.ir.module.vauxoo', 'ir.module.module',
                       'addons/deliver_project/report/ir_module_reference.rml',
-                      parser=ir_module_reference_print, header=False)
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+                      parser=IrModuleReferencePrint, header=False)

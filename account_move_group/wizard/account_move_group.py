@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv
 
 
-class account_move_group(osv.TransientModel):
+class AccountMoveGroup(osv.TransientModel):
     _name = 'account.move.group'
 
     def move_group(self, cr, uid, ids, context=None):

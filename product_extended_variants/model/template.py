@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,12 +23,12 @@
 from openerp import models,  _
 
 
-class product_template(models.Model):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     def get_product_accounts(self, cr, uid, product_id, context=None):
         context = context or {}
-        res = super(product_template, self)\
+        res = super(ProductTemplate, self)\
             .get_product_accounts(cr, uid, product_id,
                                   context=context)
         product_brw = self.browse(cr, uid, product_id)
@@ -171,5 +172,3 @@ class product_template(models.Model):
                             }, context=context)
             self.write(cr, uid, rec_id, {'standard_price': new_price})
         return True
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

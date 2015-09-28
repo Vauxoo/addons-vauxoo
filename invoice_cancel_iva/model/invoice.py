@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,16 +25,16 @@
 from openerp.osv import osv
 from openerp.tools.translate import _
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
 
     _inherit = 'account.invoice'
 
     #~ def action_cancel_draft(self, cr, uid, ids, *args):
 #~
-    #~ wf_service = netsvc.LocalService("workflow")
+    #~ wf_service = workflow
     #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
     #~ for i in self.browse(cr,uid,ids,context={}):
     #~ if i.wh_iva_id:
@@ -44,8 +44,8 @@ class account_invoice(osv.Model):
         '''
         Modified to witholding vat validate
         '''
-        wf_service = netsvc.LocalService("workflow")
-        res = super(account_invoice, self).action_number(cr, uid, ids)
+        wf_service = workflow
+        res = super(AccountInvoice, self).action_number(cr, uid, ids)
         iva_line_obj = self.pool.get('account.wh.iva.line')
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         state = [('draft', 'set_to_draft'), (
@@ -85,7 +85,7 @@ class account_invoice(osv.Model):
                 'prev_state': invo_brw.wh_iva_id.state},
                 context=context)
 
-        res = super(account_invoice, self).invoice_cancel(
+        res = super(AccountInvoice, self).invoice_cancel(
             cr, uid, ids, context=context)
 
         return res

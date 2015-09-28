@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -21,14 +21,10 @@
 #
 ##############################################################################
 {
-    "name": "account_bank_statement_unfucked",
-    "version": "1.0",
+    "name": "Account Bank Statement Unfucked",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """
-This module solved errors in bank statement that will not be solved by Odoo
-in V8.0
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

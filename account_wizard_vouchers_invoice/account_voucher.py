@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@ from lxml import etree
 from openerp import SUPERUSER_ID
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     def fields_view_get_address(self, cr, uid, arch, context={}):
@@ -62,7 +62,7 @@ class account_voucher(osv.Model):
 
     def fields_view_get(self, cr, uid, view_id=None, view_type=False,
                         context=None, toolbar=False, submenu=False):
-        res = super(account_voucher, self).fields_view_get(cr, uid,
+        res = super(AccountVoucher, self).fields_view_get(cr, uid,
                                                            view_id=view_id, view_type=view_type, context=context,
                                                            toolbar=toolbar, submenu=submenu)
         if view_type == 'form':

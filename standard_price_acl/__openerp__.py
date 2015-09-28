@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -18,37 +18,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Overwrite field standard_price", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Security", 
-    "description": """
-Fixed groups on field standard_price
-====================================
-
-This module is created because in the definiton of field **standard_price* on the module product.product,
-the asignation of groups is made in file product.py in model definition:
-
-'standard_price': fields.float('Cost', digits_compute=dp.get_precision('Product Price'), help="Cost price of the product used for standard stock valuation in accounting and used as a base price on purchase orders.", groups="base.group_user"),
-
-This way forces to allows work with the groups **base.group_user**.
-
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Overwrite field standard_price",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Security",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "product"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

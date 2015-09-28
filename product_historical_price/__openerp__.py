@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,13 +24,9 @@
 #                    "security/groups.xml",
 {
     "name": "Product Historical Price",
-    "version": "0.2",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Product",
-    "description": """
-    What do this module:
-    This module gets the historical price of a product
-                    """,
     "website": "http://Vauxoo.com",
     "license": "",
     "depends": [

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class inherit_price_list_item(osv.Model):
+class InheritPriceListItem(osv.Model):
 
     """ """
 
@@ -34,7 +34,7 @@ class inherit_price_list_item(osv.Model):
         if context is None:
             context = {}
 
-        res = super(inherit_price_list_item, self).default_get(
+        res = super(InheritPriceListItem, self).default_get(
             cr, uid, fields, context=context)
         res.update({'product_id': context.get('create_item', False)})
         version = context.get('versions', False)

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,26 +27,24 @@
 #~ 'partner_view.xml',
 #~ 'purchase_workflow.xml',
 {
-    "name": "Purchase - supplier", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Purchases", 
-    "description": """Purchse supplier, whe you validate a purchase, the partner is converted in product supplier
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Purchase - supplier",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Purchases",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "account", 
+        "base",
+        "account",
         "purchase"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

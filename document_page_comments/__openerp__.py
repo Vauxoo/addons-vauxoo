@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,37 +24,27 @@
 #
 ##############################################################################
 {
-    "name": "Document Page Comments", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-
-Documents Page Comments
-=======================
-
-This module add messeage history and followers in document page model
-to we can follow each document and receive a mail when those are modified if
-you are follower
-
-                    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Document Page Comments",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "document_page", 
+        "base",
+        "document_page",
         "vauxoo_cms"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/document_page_view.xml", 
+        "view/document_page_view.xml",
         "data/document_pages_data.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

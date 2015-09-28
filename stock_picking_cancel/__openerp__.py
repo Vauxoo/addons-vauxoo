@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,28 +24,27 @@
 #
 ##############################################################################
 {
-    "name": "Stock Picking Cancel", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Stock", 
-    "description": """This module add a button to cancel after to done""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Stock Picking Cancel",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Stock",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "stock", 
+        "stock",
         "account_relation_move"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/picking_security.xml", 
-        "stock_workflow.xml", 
+        "security/picking_security.xml",
+        "stock_workflow.xml",
         "stock_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

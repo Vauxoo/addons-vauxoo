@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class purchase_order(osv.Model):
+class PurchaseOrder(osv.Model):
     _inherit = "purchase.order"
     _columns = {
         'validator2': fields.many2one('res.users', 'Second Validator',
@@ -34,7 +34,7 @@ class purchase_order(osv.Model):
     }
 
     def wkf_approve_order(self, cr, uid, ids, context=None):
-        res = super(purchase_order, self).wkf_approve_order(
+        res = super(PurchaseOrder, self).wkf_approve_order(
             cr, uid, ids, context=context)
         self.write(cr, uid, ids, {'validator2': uid})
         return res

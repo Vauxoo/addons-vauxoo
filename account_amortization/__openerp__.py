@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,43 +24,26 @@
 #
 ##############################################################################
 {
-    "name": "Vauxoo Account Amortization", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Accounting & Finance", 
-    "description": """
-Vauxoo Account Amortization.
-============================
-This module allows to separate the expenses amortization of the assets
-depreciation.
-
-This module adds:
------------------
-- Accounting > Amortization
-- Accounting > Amortization > Amortization
-- Configuration > Amortization
-- Configuration > Amortization > Amortization Categories
-
-See the documentation here:
----------------------------
-http://www.principlesofaccounting.com/chapter13/chapter13.html
-""", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Vauxoo Account Amortization",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Accounting & Finance",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "decimal_precision", 
-        "account_asset", 
+        "decimal_precision",
+        "account_asset",
         "account_asset_date"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_amortization_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

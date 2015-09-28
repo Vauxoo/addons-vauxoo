@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -23,12 +23,12 @@ import time
 from openerp.report import report_sxw
 
 
-class packing_list_report(report_sxw.rml_parse):
+class PackingListReport(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
         if context is None:
             context = {}
-        super(packing_list_report, self).__init__(
+        super(PackingListReport, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
@@ -45,5 +45,4 @@ class packing_list_report(report_sxw.rml_parse):
 report_sxw.report_sxw('report.m321_reports.packing_list_report',
                       'stock.picking',
                       'addons/m321_reports/report/picking.rml',
-                      parser=packing_list_report)
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+                      parser=PackingListReport)

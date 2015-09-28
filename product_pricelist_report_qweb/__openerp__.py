@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -22,18 +21,9 @@
 ###############################################################################
 {
     "name": "Product Pricelist Report QWeb",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Accouting",
-    "description": """
-Product Pricelist Report QWeb
-=============================
-
-This module inherit the original xml_id report on product
-    `action_report_pricelist` and overrides it with a qweb report plus three
-    fields.
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

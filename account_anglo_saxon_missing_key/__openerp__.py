@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,18 +23,9 @@
 ###############################################################################
 {
     "name": "Account Anglo-Saxon Missing Key",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Account Anglo-Saxon Missing Key
--------------------------------
-    As pointed out in PR #6109
-    [IMP] Adding keys to hook from when performing post processing on
-    Anglo_saxon module records
-    https://github.com/odoo/odoo/pull/6109
-
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

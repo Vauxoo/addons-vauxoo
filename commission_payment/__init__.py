@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.

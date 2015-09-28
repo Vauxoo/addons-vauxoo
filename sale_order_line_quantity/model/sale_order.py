@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 import openerp.addons.decimal_precision as dp
 
 
-class sale_order_line(osv.osv):
+class SaleOrderLine(osv.osv):
 
     def _get_inv_quantity(self, cr, uid, ids, context=None):
         context = dict(context or {})

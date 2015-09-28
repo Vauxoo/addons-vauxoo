@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -27,7 +27,7 @@ from openerp.tools.translate import _
 from openerp.addons.product import product as Product
 
 
-class stock_tracking(osv.Model):
+class StockTracking(osv.Model):
 
     """ this class adds three fields for can have packing control on delivery orders lines
     """

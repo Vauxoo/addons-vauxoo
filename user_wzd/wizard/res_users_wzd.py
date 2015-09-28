@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,14 +27,14 @@
 from openerp.osv import fields, osv
 
 
-class employee_user_wizard(osv.TransientModel):
+class EmployeeUserWizard(osv.TransientModel):
     _name = 'employee.user.wizard'
 
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
 
-        res = super(employee_user_wizard, self).default_get(cr, uid, fields, context=context)
+        res = super(EmployeeUserWizard, self).default_get(cr, uid, fields, context=context)
         user_ids = context.get('active_ids', False)
         if user_ids:
             all_ids = self.get_unconfigured_cmp(cr, uid, context)
@@ -66,7 +66,7 @@ class employee_user_wizard(osv.TransientModel):
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         if context is None:
             context = {}
-        res = super(employee_user_wizard, self).fields_view_get(
+        res = super(EmployeeUserWizard, self).fields_view_get(
             cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=False)
         cmp_select = []
         # display in the widget selection only the users that haven't been configured yet

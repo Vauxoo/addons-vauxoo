@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -20,41 +20,32 @@
 #
 ##############################################################################
 {
-    "name": "Fixes and Imrpovements to Bank Statement management", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Accounting & Finance", 
-    "description": """
-Improve management of Bank Statement.
-=====================================
-    1.- Import directly from files given by banks.
-        a.- Costa Rica Banks.
-            Banco Nacional (CRC).
-            Banco Nacional (USD).
-        b.- Mexican Banks.
-        c.- Venezuelan Banks.
-            Banco Exterior #TODO
-    2.-
-                    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Fixes and Imrpovements to Bank Statement management",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Accounting & Finance",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/bank_statement_security.xml", 
-        "security/ir.model.access.csv", 
-        "view/account_bank_statement_view.xml", 
-        "view/account_invoice_view.xml", 
-        "view/account_journal_view.xml", 
+        "security/bank_statement_security.xml",
+        "security/ir.model.access.csv",
+        "view/account_bank_statement_view.xml",
+        "view/account_invoice_view.xml",
+        "view/account_journal_view.xml",
         "data/data.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
-    "active": False
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "active": False,
+    "external_dependencies": {
+        "python": ["xlrd"],
+    },
 }

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 # Copyright (c) 2011 Vauxoo (http://vauxoo.com)
 # All Rights Reserved.
@@ -26,29 +26,25 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name": "Move vat field", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Customer", 
-    "description": """
-Move vat field to show after partner name, to easier searching
--Inherit Partner view form and set vat field after partner name
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Move vat field",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Customer",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "base_vat"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/partner_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

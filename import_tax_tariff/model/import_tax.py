@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # ############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -24,7 +24,7 @@
 from openerp import models, fields
 
 
-class import_tax_tariff(models.Model):
+class ImportTaxTariff(models.Model):
     _name = "import.tax.tariff"
     _description = "Import Tax Tariff"
 
@@ -37,7 +37,7 @@ class import_tax_tariff(models.Model):
     description = fields.Text()
 
 
-class tariff_tariff(models.Model):
+class TariffTariff(models.Model):
     _name = "tariff.tariff"
 
     name = fields.Char(required=True)

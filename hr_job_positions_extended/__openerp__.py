@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,39 +22,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "HR Job Positions Extended", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-HR Job Positions Extended
-=========================
-
-This module adds three fields
-
-- Reports to.
-- Responsibilities.
-- Frequent Activities and Tasks
-
-Modifications:
-
-This module delete attribute options of job_id in employee
-
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "HR Job Positions Extended",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "hr"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/hr_job_positions_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,25 +25,22 @@
 ##############################################################################
 #'account_view.xml',
 {
-    "name": "Account relation move", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Account", 
-    "description": """ Adds 4 fields to generate a connection between account
-    and production models
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Account relation move",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,38 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Order Department", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "purchase", 
-    "description": """
-Purchase Order Department
-=========================
-
-Add a department field to the purchase order model. This check the purchase
-order requisitor (user) and fill the department field with the requisitor
-employee info. Also add a search filter by text to search the department name
-and a gruop by filter by department.
-
-Note: this module do not work propertly for users with multiple employees.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Order Department",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "purchase",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "purchase", 
-        "hr", 
-        "purchase_order_requisitor", 
+        "purchase",
+        "hr",
+        "purchase_order_requisitor",
         "purchase_requisition_department"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_order_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

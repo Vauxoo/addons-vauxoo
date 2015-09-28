@@ -1,9 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
 
     def _search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False,
@@ -41,11 +41,11 @@ class account_move_line(osv.Model):
 
         args.append(no_incluir)
 
-        return super(account_move_line, self)._search(cr, uid, args, offset=offset, limit=limit,
+        return super(AccountMoveLine, self)._search(cr, uid, args, offset=offset, limit=limit,
                 order=order, context=context, count=count, access_rights_uid=access_rights_uid)
 
 
-class account_reconcile_advance(osv.Model):
+class AccountReconcileAdvance(osv.Model):
 
     '''description'''
 
@@ -55,7 +55,7 @@ class account_reconcile_advance(osv.Model):
         ''''''
         context = context or {}
 
-        res = super(account_reconcile_advance, self).default_get(cr, uid, fields, context=context)
+        res = super(AccountReconcileAdvance, self).default_get(cr, uid, fields, context=context)
         if not context.get('default_type', False):
             res.update({'type': 'pay'})
 
@@ -344,7 +344,7 @@ class account_reconcile_advance(osv.Model):
         return res
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     def _get_advance(self, cr, uid, ids, name, args, context=None):

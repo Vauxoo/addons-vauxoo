@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -22,52 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Stock Shipping Packaging", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Warehouse", 
-    "description": """
-========================
-Stock Shipping Packaging
-========================
-
-This module allows to have best control on packaging of stock moves that belong to
-a delivery order.
-
-=============
-Configuration
-=============
-
-Activate permissions:
-
-Settings > Configuration > Warehouse > Manage multiple locations and warehouses.
-
-Settings > Configuration > Warehouse > Allow to define several packaging methods on products.
-
-==========
-How to use
-==========
-
-In an Order Delivery can add línes of stock.moves, to each stock.move you can add a Packs
-(stock.tracking) filtered by the partner of the delivery order.
-
-""", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Stock Shipping Packaging",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Warehouse",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
+        "base",
+        "mail",
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/stock_shipping_packaging_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

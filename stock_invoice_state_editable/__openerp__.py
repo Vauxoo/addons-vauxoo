@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,26 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "Stock invoice state editable", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Stock", 
-    "description": """This module change readonly in field invoice state for a group""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Stock invoice state editable",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Stock",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/stock_security.xml", 
+        "security/stock_security.xml",
         "stock_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

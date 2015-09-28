@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class product_template(osv.Model):
+class ProductTemplate(osv.Model):
     _name = 'product.template'
     _inherit = 'product.template'
     _columns = {

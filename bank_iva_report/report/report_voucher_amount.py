@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -26,14 +27,14 @@
 ##############################################################################
 import time
 from openerp.report import report_sxw
-from tools import amount_to_text_en
+from openerp.tools import amount_to_text_en
 from numero_a_texto import Numero_a_Texto
 
 
-class report_voucher_amount(report_sxw.rml_parse):
+class ReportVoucherAmount(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(report_voucher_amount, self).__init__(cr, uid, name, context)
+        super(ReportVoucherAmount, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
             'convert': self.convert,
@@ -171,5 +172,5 @@ report_sxw.report_sxw(
     'report.cash_amount.iva',
     'voucher.pay.support',
     'addons/bank_iva_report/check/report/report_voucher_amount.rml',
-    parser=report_voucher_amount, header=False
+    parser=ReportVoucherAmount, header=False
 )

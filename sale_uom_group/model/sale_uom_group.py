@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class sale_uom_group(osv.Model):
+class SaleUomGroup(osv.Model):
     _name = "sale.uom.group"
     _description = "Sum by Product Uom"
     _columns = {
@@ -59,7 +59,7 @@ class sale_uom_group(osv.Model):
         return uom_grouped
 
 
-class sale_order(osv.Model):
+class SaleOrder(osv.Model):
     _inherit = 'sale.order'
     _columns = {
         'puom_line': fields.one2many('sale.uom.group', 'sale_id',
@@ -82,14 +82,14 @@ class sale_order(osv.Model):
         return True
 
     def create(self, cr, uid, vals, context={}):
-        sale_id = super(sale_order, self).create(cr, uid, vals, context)
+        sale_id = super(SaleOrder, self).create(cr, uid, vals, context)
         if 'order_line' in vals and vals['order_line']:
             self.button_compute(cr, uid, [sale_id])
 
         return sale_id
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(sale_order, self).write(cr, uid, ids, vals, context)
+        res = super(SaleOrder, self).write(cr, uid, ids, vals, context)
         if 'order_line' in vals and vals['order_line']:
             self.button_compute(cr, uid, ids)
 

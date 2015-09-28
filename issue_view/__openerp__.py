@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -22,28 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Projects", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Projects",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "project", 
-        "project_issue", 
+        "project",
+        "project_issue",
         "project_scrum"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_issue_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": False, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False,
+    "auto_install": False,
     "active": False
 }

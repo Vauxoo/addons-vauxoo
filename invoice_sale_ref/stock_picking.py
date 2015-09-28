@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@
 from openerp.osv import osv
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
 
     def action_invoice_create(self, cursor, user, ids, journal_id=False,
@@ -38,7 +38,7 @@ class stock_picking(osv.Model):
         picking_obj = self.pool.get('stock.picking')
         invoice_obj = self.pool.get('account.invoice')
         picking_id__invoice_id_dict = super(
-            stock_picking, self).action_invoice_create(cursor, user, ids,
+            StockPicking, self).action_invoice_create(cursor, user, ids,
                                                        journal_id=journal_id,
                                                        group=group, type=type,
                                                        context=context)

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@
 from openerp.osv import fields, osv
 
 
-class account_asset_asset(osv.Model):
+class AccountAssetAsset(osv.Model):
 
     _inherit = 'account.asset.asset'
     _description = 'Account Amortization'
@@ -40,7 +40,7 @@ class account_asset_asset(osv.Model):
     }
 
 
-class account_asset_category(osv.Model):
+class AccountAssetCategory(osv.Model):
 
     _inherit = 'account.asset.category'
     _description = 'Account Amortization Category'

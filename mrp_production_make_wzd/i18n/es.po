@@ -8,21 +8,21 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:09+0000\n"
-"PO-Revision-Date: 2013-11-15 20:52+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: Luis Torres - http://www.vauxoo.com <luis_t@vauxoo.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es\n"
 
 #. module: mrp_production_make_wzd
 #: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:63
 #, python-format
 msgid "Not set a location of raw material for the product: "
-msgstr ""
-"No se ha establecido una ubicación de materia prima para el producto: "
+msgstr "No se ha establecido una ubicación de materia prima para el producto: "
 
 #. module: mrp_production_make_wzd
 #: field:wizard.production.make,date_planned:0

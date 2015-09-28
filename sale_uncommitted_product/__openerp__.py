@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -22,47 +22,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Sale of Uncommitted Products", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-This module:
-*) Adds a new state to the sale order model, committed
-*) Adds a new activity to the sale order workflow, commit
-*) Adds two new transitions from draft to commit,
-    -) One which could force commitment of sale order,
-    -) The other will check if any product does not overflow the availability
-*) Modifies the existing Transition from draft to router
-and changes it from commit to router.
-
-*) Adds a wizard so that it is possible to assign groups to the newly transitions.
-*) Adds two fields to the product.product model:
-    -) qty_committed: amounts the quantity of products in sale orders with state committed
-    -) qty_uncommitted: amounts the quantity of available to commit
-    this amount is, qty_available + outgoing - qty_committed
-""", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Sale of Uncommitted Products",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "sale", 
-        "product", 
+        "base",
+        "sale",
+        "product",
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/product_view.xml", 
-        "view/sale_view.xml", 
-        "view/sale_double_validation_installer.xml", 
-        "workflow/sale_workflow.xml", 
+        "view/product_view.xml",
+        "view/sale_view.xml",
+        "view/sale_double_validation_installer.xml",
+        "workflow/sale_workflow.xml",
         "security/groups.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

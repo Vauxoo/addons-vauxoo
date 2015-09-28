@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,32 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Requisition Line Price Unit", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-Purchase Requisition Line Price Unit
-====================================
-
-An estimated unit price per line in the purchase requisition, a subtotal for each line
-of the purchase requisition and a total of all lines is added.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Requisition Line Price Unit",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "purchase_requisition_currency", 
+        "purchase_requisition_currency",
         "purchase_requisition"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_requisition_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

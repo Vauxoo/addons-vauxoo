@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 from openerp.osv import osv, fields
 
 
-class hr_employee(osv.osv):
+class HrEmployee(osv.osv):
     _inherit = 'hr.employee'
     _columns = {
         'twitter': fields.char('Twitter', help="Paste here Twitter URL"),

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@ from openerp.osv import osv, fields
 import openerp.addons.decimal_precision as dp
 
 
-class crossovered_budget(osv.osv):
+class CrossoveredBudget(osv.osv):
     _inherit = "crossovered.budget"
     _description = "Budget"
 
@@ -55,7 +55,7 @@ class crossovered_budget(osv.osv):
     }
 
 
-class crossovered_budget_lines(osv.osv):
+class CrossoveredBudgetLines(osv.osv):
     _inherit = 'crossovered.budget.lines'
 
     def _prac_acc(self, cr, uid, ids, name, args, context=None):
@@ -110,13 +110,13 @@ class crossovered_budget_lines(osv.osv):
         period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context=context)
         values.update({'date_from': period_brw.date_start,
                        'date_to': period_brw.date_stop})
-        return super(crossovered_budget_lines, self).write(cr, uid, ids, values, context=context)
+        return super(CrossoveredBudgetLines, self).write(cr, uid, ids, values, context=context)
 
     def create(self, cr, uid, values, context=None):
         period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context=context)
         values.update({'date_from': period_brw.date_start,
                        'date_to': period_brw.date_stop})
-        return super(crossovered_budget_lines, self).create(cr, uid, values, context=context)
+        return super(CrossoveredBudgetLines, self).create(cr, uid, values, context=context)
 
     def _prac_amt_acc(self, cr, uid, ids, context=None):
         '''

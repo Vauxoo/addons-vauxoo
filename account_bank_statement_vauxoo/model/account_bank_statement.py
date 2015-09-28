@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,13 +24,20 @@ from openerp.osv import fields, osv
 from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp.tools.translate import _
 
+import logging
+
+_logger = logging.getLogger(__name__)
+
 # Excel Stuff
-import xlrd
+try:
+    import xlrd
+except ImportError:
+    _logger.info('account_bank_statement_vauxoo: needs xlrd library')
 import base64
 from datetime import date, datetime, timedelta
 
 
-class account_bank_statement(osv.Model):
+class AccountBankStatement(osv.Model):
     _inherit = 'account.bank.statement'
 
     def _fromto(self, cr, uid, ids, field, arg, context=None):
@@ -367,7 +374,7 @@ class account_bank_statement(osv.Model):
         return True
 
 
-class bank_statement_imported_lines(osv.Model):
+class BankStatementImportedLines(osv.Model):
 
     """
     OpenERP Model : ClassName
@@ -714,7 +721,7 @@ class bank_statement_imported_lines(osv.Model):
         return {}
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
 
     _inherit = 'account.move.line'
     _columns = {

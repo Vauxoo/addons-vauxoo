@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
 
     _inherit = 'account.move.line'
     _columns = {

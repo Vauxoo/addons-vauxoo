@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -23,17 +23,9 @@
 ###############################################################################
 {
     "name": "Customer's Due Report",
-    "version": "0.3",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
-    "description": """
-This module will allow you to get in Multicurrency:
-A Customer & Supplier Detail Due Report,
-A Customer & Supplier Aging Due Report,
-    Comming Soon:
-A Customer's Formal Due Report,
-A Supplier's Formal Due Report,
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
@@ -58,5 +50,10 @@ A Supplier's Formal Due Report,
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
+    "active": False,
+    "external_dependencies": {
+        "python": [
+            'pandas',
+        ]
+    }
 }

@@ -1,5 +1,5 @@
-UOM Security
-============
+Unit of Measure Security
+========================
 
 Odoo add a functionality to mange multiple unit of measures in the system, one
 apply this permission the unit of measure will be shown in the system.

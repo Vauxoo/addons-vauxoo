@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,15 +23,9 @@
 ###############################################################################
 {
     "name": "Account Anglo-Saxon Stock Move Purchase",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "",
-    "description": """
-Account Anglo-Saxon Stock Move Purchase
-------------------------------
-This module allows to gather Journal Item in a Purchase Order
-that were created because of accrual accounts for Stock In with Anglo Saxon
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

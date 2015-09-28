@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -29,8 +30,32 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class AccountInvoice(osv.osv):
+class AccountInvoice(models.Model):
     _inherit = "account.invoice"
+
+    @api.model
+    def line_get_convert(self, line, part, date):
+        res = super(AccountInvoice, self).line_get_convert(line, part, date)
+        if line.get('sm_id', False):
+            res['sm_id'] = line['sm_id']
+        return res
+
+    @api.multi
+    def action_cancel(self):
+        aml_obj = self.env['account.move.line']
+        aml_ids = []
+        for inv in self:
+            if not inv.move_id:
+                continue
+            for aml_brw in inv.move_id.line_id:
+                # Unreconcile all non-receivable and non-payable lines
+                if aml_brw.account_id.reconcile and aml_brw.account_id.type \
+                        not in ('receivable', 'payable'):
+                    aml_ids.append(aml_brw.id)
+        if aml_ids:
+            aml_obj._remove_move_reconcile(aml_ids)
+
+        return super(AccountInvoice, self).action_cancel()
 
     def reconcile_stock_accrual(self, cr, uid, ids, context=None):
         context = dict(context or {})
@@ -94,35 +119,7 @@ class AccountInvoice(osv.osv):
         return res
 
 
-class account_invoice(models.Model):
-    _inherit = "account.invoice"
-
-    @api.model
-    def line_get_convert(self, line, part, date):
-        res = super(account_invoice, self).line_get_convert(line, part, date)
-        if line.get('sm_id', False):
-            res['sm_id'] = line['sm_id']
-        return res
-
-    @api.multi
-    def action_cancel(self):
-        aml_obj = self.env['account.move.line']
-        aml_ids = []
-        for inv in self:
-            if not inv.move_id:
-                continue
-            for aml_brw in inv.move_id.line_id:
-                # Unreconcile all non-receivable and non-payable lines
-                if aml_brw.account_id.reconcile and aml_brw.account_id.type \
-                        not in ('receivable', 'payable'):
-                    aml_ids.append(aml_brw.id)
-        if aml_ids:
-            aml_obj._remove_move_reconcile(aml_ids)
-
-        return super(account_invoice, self).action_cancel()
-
-
-class account_invoice_line(osv.osv):
+class AccountInvoiceLine(osv.osv):
     _inherit = "account.invoice.line"
 
     def _anglo_saxon_stock_move_lines(self, cr, uid, res, ttype='customer',
@@ -164,7 +161,7 @@ class account_invoice_line(osv.osv):
         return rex
 
     def move_line_get(self, cr, uid, invoice_id, context=None):
-        res = super(account_invoice_line,
+        res = super(AccountInvoiceLine,
                     self).move_line_get(cr, uid, invoice_id, context=context)
         inv = self.pool.get('account.invoice').browse(
             cr, uid, invoice_id, context=context)
@@ -175,4 +172,3 @@ class account_invoice_line(osv.osv):
             res = self._anglo_saxon_stock_move_lines(
                 cr, uid, res, ttype='supplier', context=context)
         return res
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,7 +25,7 @@
 from openerp.osv import fields, osv
 
 
-class virtual_items(osv.TransientModel):
+class VirtualItems(osv.TransientModel):
 
     '''Create items by product'''
 
@@ -39,7 +39,7 @@ class virtual_items(osv.TransientModel):
     }
 
 
-class create_price_list(osv.TransientModel):
+class CreatePriceList(osv.TransientModel):
 
     '''Create price list to new product'''
 
@@ -47,7 +47,7 @@ class create_price_list(osv.TransientModel):
         '''Add product'''
         if context is None:
             context = {}
-        res = super(create_price_list, self).default_get(
+        res = super(CreatePriceList, self).default_get(
             cr, uid, fields, context=context)
         res.update({'product_id': context.get('active_id', False)})
 

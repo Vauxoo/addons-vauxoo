@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,7 +22,7 @@ from openerp.osv import fields, orm
 import openerp.addons.decimal_precision as dp
 
 
-class purchase_order_line(orm.Model):
+class PurchaseOrderLine(orm.Model):
     _inherit = "purchase.order.line"
 
     def _amount_line(self, cr, uid, ids, prop, unknow_none, unknow_dict):
@@ -55,7 +55,7 @@ class purchase_order_line(orm.Model):
     ]
 
 
-class purchase_order(orm.Model):
+class PurchaseOrder(orm.Model):
     _inherit = "purchase.order"
 
     def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
@@ -85,7 +85,7 @@ class purchase_order(orm.Model):
 
     def _prepare_inv_line(self, cr, uid, account_id, order_line,
                           context=None):
-        result = super(purchase_order, self)._prepare_inv_line(cr, uid,
+        result = super(PurchaseOrder, self)._prepare_inv_line(cr, uid,
                                                                account_id,
                                                                order_line,
                                                                context)
@@ -137,7 +137,7 @@ class purchase_order(orm.Model):
     }
 
 
-class stock_picking(orm.Model):
+class StockPicking(orm.Model):
     _inherit = 'stock.picking'
 
     def _invoice_line_hook(self, cr, uid, move_line, invoice_line_id):
@@ -147,9 +147,7 @@ class stock_picking(orm.Model):
                                                         uid,
                                                         [invoice_line_id],
                                                         line)
-        return super(stock_picking, self)._invoice_line_hook(cr,
+        return super(StockPicking, self)._invoice_line_hook(cr,
                                                              uid,
                                                              move_line,
                                                              invoice_line_id)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

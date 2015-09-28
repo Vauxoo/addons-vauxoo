@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -22,47 +22,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Expenses Replenishment", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "HR Module", 
-    "description": """
-Expenses Replenishment
-======================
-This module add the functionality to the HR Expense module to manage deductible
-expenses by using invoices asociated to an expense document. Also make an
-automation of the reconciliation process for the expense and the employee
-payment.
-
-Dependencies information
-------------------------
-
-- You can download the *account_invoice_line_currency* module from::
-
-    bzr branch lp:addons-vauxoo/7.0
-
-""", 
-    "website": "http://openerp.com.ve", 
-    "license": "", 
+    "name": "Expenses Replenishment",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "HR Module",
+    "website": "http://openerp.com.ve",
+    "license": "",
     "depends": [
-        "hr_expense", 
-        "account_invoice_line_currency", 
-        "hr_expense_analytic", 
+        "hr_expense",
+        "account_invoice_line_currency",
+        "hr_expense_analytic",
         "account_move_report"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/hr_security.xml", 
-        "wizard/hr_expense_wizard_view.xml", 
-        "view/account_invoice_view.xml", 
-        "view/hr_expense_view.xml", 
+        "security/hr_security.xml",
+        "wizard/hr_expense_wizard_view.xml",
+        "view/account_invoice_view.xml",
+        "view/hr_expense_view.xml",
         "workflow/workflow.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

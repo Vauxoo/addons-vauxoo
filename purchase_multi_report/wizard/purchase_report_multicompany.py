@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 # Copyright (c) 2011 OpenERP Venezuela (http://openerp.com.ve)
 # All Rights Reserved.
@@ -30,10 +30,10 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 import base64
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
-class print_purchase_report(osv.TransientModel):
+class PrintPurchaseReport(osv.TransientModel):
 
     """
     OpenERP Wizard : print.purchase.report

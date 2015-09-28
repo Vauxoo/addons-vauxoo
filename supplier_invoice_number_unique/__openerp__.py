@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -20,32 +20,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "supplier_invoice_number_unique", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Accouting", 
-    "description": """
-This module validates that the supplier_invoice_number field is not repeated
-============================================================================
-The validation doesn't consider uppercase and lowercase, if you have one invoice with supplier
-invoice number:  "A123" and you try validate another invoice with the supplier
-invoice number: "a123", the validation is going to show the message: "Error you can not validate
-the invoice with supplier invoice number duplicated"
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "supplier_invoice_number_unique",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accouting",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_invoice_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

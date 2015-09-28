@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 # Copyright (c) 2011 Vauxoo (http://vauxoo.com)
 # All Rights Reserved.
@@ -26,31 +26,26 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name": "Product RFQ", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Custom", 
-    "description": """
-It's needed know that product need a requisition,
-for this is added a field that indicate if the product
-need a requisition and load in the line the purchase requisition
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Product RFQ",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Custom",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "product", 
+        "base",
+        "product",
         "purchase_requisition"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/product_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

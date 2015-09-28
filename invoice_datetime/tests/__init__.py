@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,3 +24,4 @@
 #
 
 from . import test_invoice_datetime
+from . import test_copy_method

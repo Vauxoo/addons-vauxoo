@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,31 +24,28 @@
 #
 ##############################################################################
 {
-    "name": "Products Customer Code", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Product", 
-    "description": """
-Add manies Codes of Customer's in product
-     """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Products Customer Code",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Product",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "base", 
+        "base",
         "product"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/product_customer_code_security.xml", 
-        "security/ir.model.access.csv", 
-        "product_customer_code_view.xml", 
+        "security/product_customer_code_security.xml",
+        "security/ir.model.access.csv",
+        "product_customer_code_view.xml",
         "product_product_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

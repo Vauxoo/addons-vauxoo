@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,32 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Analytic Entry Line Journal", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-Analytic Entry Line Journal
---------------------------
-
-This module takes journal_id field from move line for grouping of
-analytic entry lines by journal_id.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Analytic Entry Line Journal",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "account", 
+        "account",
         "analytic"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_analytic_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

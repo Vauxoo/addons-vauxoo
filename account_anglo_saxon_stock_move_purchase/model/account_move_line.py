@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class account_move_line(osv.osv):
+class AccountMoveLine(osv.osv):
 
     _inherit = 'account.move.line'
     _columns = {
@@ -36,5 +37,3 @@ class account_move_line(osv.osv):
             type='many2one',
             relation='purchase.order'),
     }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

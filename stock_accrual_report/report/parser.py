@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -29,11 +28,11 @@ from openerp.osv import osv
 from openerp.report import report_sxw
 
 
-class stock_accrual_parser(report_sxw.rml_parse):
+class StockAccrualParser(report_sxw.rml_parse):
     _name = 'stock.accrual.parser'
 
     def __init__(self, cr, uid, name, context=None):
-        super(stock_accrual_parser, self).__init__(cr, uid, name,
+        super(StockAccrualParser, self).__init__(cr, uid, name,
                                                    context=context)
         self.localcontext.update({
             'time': time,
@@ -41,7 +40,7 @@ class stock_accrual_parser(report_sxw.rml_parse):
         self.context = context
 
 
-class ifrs_portrait_pdf_report(osv.AbstractModel):
+class IfrsPortraitPdfReport(osv.AbstractModel):
 
     # _name = `report.` + `report_name`
     # report_name="stock_accrual_report.stock_accrual_report_name"
@@ -50,6 +49,4 @@ class ifrs_portrait_pdf_report(osv.AbstractModel):
     # this inheritance will allow to render this particular report
     _inherit = 'report.abstract_report'
     _template = 'stock_accrual_report.stock_accrual_report_template'
-    _wrapped_report_class = stock_accrual_parser
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    _wrapped_report_class = StockAccrualParser

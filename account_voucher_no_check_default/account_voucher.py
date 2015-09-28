@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import fields, osv
 
 
-class account_voucher(osv.Model):
+class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     def get_cr_dr(self, cr, uid, ids, values, ttype, amount, context=None):
@@ -90,7 +90,7 @@ class account_voucher(osv.Model):
             amount, currency_id, ttype, date, context=None):
         if context is None:
             context = {}
-        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id,
+        res = super(AccountVoucher, self).onchange_partner_id(cr, uid, ids, partner_id,
             journal_id, amount, currency_id, ttype, date, context=context)
         values = res.get('value', {})
 
@@ -105,7 +105,7 @@ class account_voucher(osv.Model):
         if context is None:
             context = {}
 
-        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id,
+        res = super(AccountVoucher, self).onchange_partner_id(cr, uid, ids, partner_id,
             journal_id, amount, currency_id, ttype, date, context=context)
         values = res.get('value', {})
 
@@ -120,7 +120,7 @@ class account_voucher(osv.Model):
         if context is None:
             context = {}
 
-        res = super(account_voucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids,
+        res = super(AccountVoucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids,
             tax_id, partner_id, date, amount, ttype, company_id, context=context)
         values = res and res.get('value', {}) or {}
 
@@ -132,7 +132,7 @@ class account_voucher(osv.Model):
         return res
 
 
-class account_voucher_line(osv.Model):
+class AccountVoucherLine(osv.Model):
     _inherit = 'account.voucher.line'
 
     _columns = {

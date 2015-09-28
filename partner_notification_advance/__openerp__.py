@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,7 +25,7 @@
 #
 {
     "name": "Partner Notification Advance",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
     "website": "http://www.vauxoo.com/",
@@ -46,4 +46,3 @@
     "installable": True,
     "auto_install": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

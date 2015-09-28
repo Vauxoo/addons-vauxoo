@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,26 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "Partner account Sin grupo", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Vauxoo", 
-    "description": """This module replace the fields to account in partner to news fields without groups
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Partner account Sin grupo",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Vauxoo",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "partner_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": False, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False,
+    "auto_install": False,
     "active": False
 }

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,21 +23,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import api
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'variation_ids': [],
             'variation_finished_product_ids': [],
         })
-        return super(mrp_production, self).copy(cr, uid, id, default, context)
+        return super(MrpProduction, self).copy(default)
 
     _columns = {
         'variation_ids': fields.one2many('mrp.variation', 'production_id',
@@ -48,7 +50,7 @@ class mrp_production(osv.Model):
     }
 
     def action_finish(self, cr, uid, ids, context={}):
-        res = super(mrp_production, self).action_finish(
+        res = super(MrpProduction, self).action_finish(
             cr, uid, ids, context=context)
         self.create_variation_consumed(cr, uid, ids, context=context)
         self.create_variation_finished_product(cr, uid, ids, context=context)
@@ -174,7 +176,7 @@ class mrp_production(osv.Model):
         return True
 
 
-class mrp_variation(osv.Model):
+class MrpVariation(osv.Model):
     _name = 'mrp.variation'
     _rec_name = 'product_id'
 
@@ -197,7 +199,7 @@ class mrp_variation(osv.Model):
     }
 
 
-class mrp_variation_finished_product(osv.Model):
+class MrpVariationFinishedProduct(osv.Model):
     _name = 'mrp.variation.finished.product'
     _rec_name = 'product_id'
 

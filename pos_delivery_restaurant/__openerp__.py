@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,33 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "POS Delivery Restaurant", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Point Of Sale", 
-    "description": """
-POS Delivery Restaurant
-=======================
-
-With this module deli_rest field is added in the point of sale, which can be a
-restaurant or delivery.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "POS Delivery Restaurant",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Point Of Sale",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "base", 
-        "point_of_sale", 
+        "base",
+        "point_of_sale",
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/point_of_sale_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,31 +25,24 @@
 #
 ##############################################################################
 {
-    "name": "Active in view Journal and Period", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Account", 
-    "description": """
-Add active for journal and Period
-===================================
-
-Module to added field active in view journal and view period.
-
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Active in view Journal and Period",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

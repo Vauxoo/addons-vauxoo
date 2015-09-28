@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class sale_order_line(osv.Model):
+class SaleOrderLine(osv.Model):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
                     uom=False, qty_uos=0, uos=False, name='', partner_id=False,
@@ -45,7 +45,7 @@ class sale_order_line(osv.Model):
         product_brw = product and product_obj.browse(
             cr, uid, product, context=context)
         res = super(
-            sale_order_line, self).product_id_change(cr, uid, ids, pricelist,
+            SaleOrderLine, self).product_id_change(cr, uid, ids, pricelist,
                         product, qty=qty,
                         uom=uom, qty_uos=qty_uos,
                         uos=uos, name=name,
@@ -98,7 +98,7 @@ class sale_order_line(osv.Model):
     }
 
 
-class sale_order(osv.Model):
+class SaleOrder(osv.Model):
 
     _inherit = 'sale.order'
 

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class product_pricelist_item(osv.Model):
+class ProductPricelistItem(osv.Model):
     _inherit = 'product.pricelist.item'
     _order = "date DESC, sequence, min_quantity desc"
 

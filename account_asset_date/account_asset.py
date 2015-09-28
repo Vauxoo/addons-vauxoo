@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@ from openerp import models, fields
 from openerp.tools.translate import _
 
 
-class account_asset_asset(models.Model):
+class AccountAssetAsset(models.Model):
     _inherit = 'account.asset.asset'
 
     purchase_date = fields.Date('Start Depreciation Date', required=True,

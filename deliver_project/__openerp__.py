@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 # Copyright (c) 2011 Vauxoo (http://vauxoo.com)
 # All Rights Reserved.
@@ -27,41 +27,26 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    "name": "Deliver Project Report", 
-    "version": "", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Projects & Services", 
-    "description": """
-    Used to improve documentation module to deliver a report to customer one time
-    project is delivered.
-
-    TODO:
-    List of modules Installed.
-    List of menues (Adding help from action)
-    List of Views (Adding printScreens)
-    List of Tasks related (From Launchpad, Internal OpenERP, External OpenERP, CRM, Mails etc.)
-    Funcional Intro
-    Blueprints Related
-    Hours
-    Sales Orders related (From your own OpenERP Instance)
-    Invoices Related (From your OpenERP Instance)
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Deliver Project Report",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Projects & Services",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/module_view.xml", 
-        "report/ir_report.xml", 
+        "view/module_view.xml",
+        "report/ir_report.xml",
         "report/module_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

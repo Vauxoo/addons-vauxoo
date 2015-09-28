@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,32 +24,30 @@
 #
 ##############################################################################
 {
-    "name": "MRP variation webkit report", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Reporting", 
-    "description": """This module adds a report of the variation on production orders of the selected product
-    in the selected range of time""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "MRP variation webkit report",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Reporting",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "mrp", 
-        "report_webkit", 
-        "mrp_variation", 
-        "mrp_subproduction", 
+        "mrp",
+        "report_webkit",
+        "mrp_variation",
+        "mrp_subproduction",
         "mrp_subproduct_pt_planified"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "data.xml", 
-        "mrp_webkit_report.xml", 
+        "data.xml",
+        "mrp_webkit_report.xml",
         "wizard/wizard_report_variation.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": False, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False,
+    "auto_install": False,
     "active": False
 }

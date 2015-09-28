@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import osv, fields
 import time
 
 
-class account_chart(osv.TransientModel):
+class AccountChart(osv.TransientModel):
     _inherit = "account.chart"
 
     _columns = {
@@ -46,7 +46,7 @@ class account_chart(osv.TransientModel):
                             val_filter=False, context=None):
         res = {}
         if val_filter == 'periods':
-            res = super(account_chart, self).onchange_fiscalyear(
+            res = super(AccountChart, self).onchange_fiscalyear(
                 cr, uid, ids, fiscalyear_id=fiscalyear_id, context=context)
         return res
 
@@ -60,7 +60,7 @@ class account_chart(osv.TransientModel):
                 'initial_date': time.strftime('%Y-01-01'),
                 'end_date': time.strftime('%Y-%m-%d')}
         elif val_filter == 'periods':
-            res = super(account_chart, self).onchange_fiscalyear(
+            res = super(AccountChart, self).onchange_fiscalyear(
                 cr, uid, ids, fiscalyear_id=fiscalyear_id, context=context)
             res['value']['initial_date'] = False
             res['value']['end_date'] = False
@@ -72,7 +72,7 @@ class account_chart(osv.TransientModel):
     def account_chart_open_window(self, cr, uid, ids, context=None):
         data = self.read(cr, uid, ids, [], context=context)[0]
         filter_val = data.get('filter', False) and data['filter'] or False
-        result = super(account_chart, self).account_chart_open_window(
+        result = super(AccountChart, self).account_chart_open_window(
             cr, uid, ids, context=context)
         if filter_val == 'dates':
             # date_from=str({'date_from':data.get('initial_date', False)})

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -22,49 +22,31 @@
 ###############################################################################
 #TODO:
 {
-    "name": "Warranties Enterprise", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Contracts", 
-    "description": """
-Enterprise Contract Management.
-===============================
-
-When you are partner sometimes need to be sure manage internally the tickets
-and the renewal process of OpenERP Enterprise licences regarding to your
-customer contracts this module allow you manage this informatio related to
-this contracts.
-
-* Start Date.
-* End Date.
-* Licence KEy.
-
-#TODO:
-
-* Expiration Warnings.
-* Manage Comunication with OpenERP.
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Warranties Enterprise",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Contracts",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "account_analytic_analysis", 
+        "base",
+        "account_analytic_analysis",
         "project"
-    ], 
+    ],
     "demo": [
         "demo/demo_account_analytic_account.xml"
-    ], 
+    ],
     "data": [
-        "security/ir.model.access.csv", 
+        "security/ir.model.access.csv",
         "view/account_analytic_analysis_view.xml"
-    ], 
+    ],
     "test": [
         "test/contract_enterprise_license.yml"
-    ], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

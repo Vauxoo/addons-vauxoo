@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
@@ -25,5 +25,5 @@
 from openerp.osv import osv
 
 
-class mrp_request_return(osv.TransientModel):
+class MrpRequestReturn(osv.TransientModel):
     _inherit = 'mrp.request.return'

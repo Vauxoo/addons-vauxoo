@@ -1,12 +1,13 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-################# Credits######################################################
+#
+#    CREDITS:
 #    Coded by: Luis Escobar <Luis@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
-###############################################################################
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
 #    by the Free Software Foundation, either version 3 of the License, or
@@ -21,36 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Convert Note to Task", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Tools", 
-    "description": """
-Convert Note to Task
-====================
-    Add a button in Notes showing a wizard to convert the note into a task
-    asking:
-            1. - Estimated time for this task.
-            2.- Associate Project.
-            3.- Date to end.
-            """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Convert Note to Task",
+    "version": "1.6.1",
+    "author": "Vauxoo",
+    "category": "Tools",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "note", 
+        "base",
+        "note",
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/convert_note_view.xml", 
+        "wizard/convert_note_view.xml",
         "view/note_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,15 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
     "name": "Website Product Manufacturer URL",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "eCommerce",
-    "description": """
-Website Product Manufacturer URL
-================================
-    This app shows you on the product url of the Manufacturer
-    of the product shown on the website.
-    """,
     "website": "http://www.vauxoo.com/",
     "depends": [
         "purchase",

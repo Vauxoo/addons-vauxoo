@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,42 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Requisition Line Description", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-A description is added in purchase requisition lines
-
-Add description on product.
-
-Technical warning 
-
-Add method override to def make_purchase_order from purchase_requisition
-
-When you install this module in the server show this warning:
-
-     WARNING: unable to set column name of table purchase_requisition_line not null !
-
-When you upgrade this module the field 'name' is set product name and
-this warning not be displayed more.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Requisition Line Description",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "purchase_requisition", 
-        "purchase_requisition_line_view", 
+        "purchase_requisition",
+        "purchase_requisition_line_view",
         "pr_line_related_po_line"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_requisition_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

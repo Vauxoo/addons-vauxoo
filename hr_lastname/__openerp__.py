@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,13 +26,9 @@
 
 {
     "name": "HR Employee Last Name",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "hr",
-    "description": """
-        This module add fields to set last name, second name, second last name
-        & couple last name, and a field function to concatenate this values.
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

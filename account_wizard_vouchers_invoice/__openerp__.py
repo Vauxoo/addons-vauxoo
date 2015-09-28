@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,36 +24,25 @@
 #
 #
 #~ "account_voucher_view.xml",
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Wizard Vouchers Partner Invoice", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-Wizard Vouchers Partner Invoice
-===============================
-
-This wizard is used when you make advances to suppliers,
-without even the invoice issued. With this wizard you can
-relate the payments that have already been made ​​to the
-bill to which must belong, in turn making reconciliation of
-payment with invoice
-""", 
-    "website": "", 
-    "license": "", 
+    "name": "Wizard Vouchers Partner Invoice",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "",
+    "license": "",
     "depends": [
         "account_voucher"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/vouchers_partner_invoice.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

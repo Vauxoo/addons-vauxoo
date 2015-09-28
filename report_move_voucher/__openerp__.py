@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,28 +24,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name": "Report Move Voucher ", 
-    "version": "0.7", 
-    "author": "OpenERP", 
-    "category": "Generic Modules/Others", 
-    "description": """
- \t\t\tImprime el Comprobante de Asiento
-                    """, 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+    "name": "Report Move Voucher",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Others",
+    "website": "http://wiki.openerp.org.ve/",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "move_voucher_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

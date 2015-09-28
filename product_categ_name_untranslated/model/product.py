@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -23,11 +24,10 @@
 from openerp.osv import osv, fields
 
 
-class product_category(osv.osv):
+class ProductCategory(osv.osv):
     _inherit = "product.category"
 
     _columns = {
         'name': fields.char('Name', size=64, required=True, translate=False,
                             select=True),
     }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

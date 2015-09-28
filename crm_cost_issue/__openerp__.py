@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,36 +24,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 ###
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "CRM Cost Issue", 
-    "version": "0.2", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Accounting", 
-    "description": """
-        Este modulo agrega el costo de una incidencia segun las horas estimadas.
-
-        Para definir el costo de la Hora, hay que crear un producto de tipo servicio y asociarlo al usuario para que asi pueda generar el costo.
-
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "CRM Cost Issue",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "crm", 
-        "project", 
-        "project_issue", 
+        "base",
+        "crm",
+        "project",
+        "project_issue",
         "product"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_task_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

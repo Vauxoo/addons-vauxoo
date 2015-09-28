@@ -1,9 +1,19 @@
+# coding: utf-8
 from openerp.osv import osv, fields
-import mx.DateTime
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime
 from openerp.tools.translate import _
-from pandas import DataFrame
+import logging
+
+_logger = logging.getLogger(__name__)
+
+# Extra Imports
+try:
+    from pandas import DataFrame
+except ImportError:
+    _logger.info('account_currency_tools is declared '
+                 ' from addons-vauxoo '
+                 ' you will need: sudo pip install pandas')
 
 COMMISSION_STATES = [
     ('draft', 'Draft'),
@@ -56,7 +66,7 @@ def t_time(date):
     return date.strftime("%Y-%m-%d")
 
 
-class commission_payment(osv.Model):
+class CommissionPayment(osv.Model):
 
     """
     OpenERP Model : commission_payment
@@ -403,9 +413,9 @@ class commission_payment(osv.Model):
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         # Determinar dias entre la emision de la factura del producto y el pago
         # del mismo
-        pay_date = mx.DateTime.strptime(pay_date, '%Y-%m-%d')
-        inv_date = mx.DateTime.strptime(inv_date, '%Y-%m-%d')
-        emission_days = (pay_date - inv_date).day
+        pay_date = datetime.datetime.strptime(pay_date, '%Y-%m-%d')
+        inv_date = datetime.datetime.strptime(inv_date, '%Y-%m-%d')
+        emission_days = (pay_date - inv_date).days
 
         # Teniendose dias y descuento por producto se procede a buscar en el
         # baremo el correspondiente valor de comision para el producto en
@@ -1196,7 +1206,7 @@ class commission_payment(osv.Model):
         return True
 
 
-class commission_sale_noid(osv.Model):
+class CommissionSaleNoid(osv.Model):
 
     """
     Commission Payment : commission_sale_noid
@@ -1215,7 +1225,7 @@ class commission_sale_noid(osv.Model):
     }
 
 
-class commission_noprice(osv.Model):
+class CommissionNoprice(osv.Model):
 
     """
     Commission Payment : commission_sale_noid
@@ -1236,7 +1246,7 @@ class commission_noprice(osv.Model):
     }
 
 
-class commission_lines(osv.Model):
+class CommissionLines(osv.Model):
 
     """
     Commission Payment : commission_lines
@@ -1411,7 +1421,7 @@ class commission_lines(osv.Model):
         return True
 
 
-class commission_salesman(osv.Model):
+class CommissionSalesman(osv.Model):
 
     """
     Commission Payment : commission_salesman
@@ -1454,7 +1464,7 @@ class commission_salesman(osv.Model):
     }
 
 
-class commission_voucher(osv.Model):
+class CommissionVoucher(osv.Model):
 
     """
     Commission Payment : commission_voucher
@@ -1477,7 +1487,7 @@ class commission_voucher(osv.Model):
     }
 
 
-class commission_invoice(osv.Model):
+class CommissionInvoice(osv.Model):
 
     """
     Commission Payment : commission_invoice
@@ -1503,7 +1513,7 @@ class commission_invoice(osv.Model):
     }
 
 
-class commission_lines_2(osv.Model):
+class CommissionLines2(osv.Model):
 
     """
     Commission Payment : commission_lines_2
@@ -1517,7 +1527,7 @@ class commission_lines_2(osv.Model):
     }
 
 
-class res_company(osv.Model):
+class ResCompany(osv.Model):
     _inherit = "res.company"
     _description = 'Companies'
 

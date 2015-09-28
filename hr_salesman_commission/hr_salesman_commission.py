@@ -1,9 +1,10 @@
+# coding: utf-8
 from openerp.osv import osv, fields
 
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class salesman_commission_payment(osv.Model):
+class SalesmanCommissionPayment(osv.Model):
     _name = 'salesman.commission.payment'
     _description = 'Salesman Commissions due to effective payments'
     _columns = {
@@ -232,7 +233,7 @@ class salesman_commission_payment(osv.Model):
         return True
 
 
-class salesman_commission_payment_line(osv.Model):
+class SalesmanCommissionPaymentLine(osv.Model):
     _name = 'salesman.commission.payment.line'
     _columns = {
         'commission_id': fields.many2one('salesman.commission.payment',

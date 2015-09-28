@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class mrp_workcenter(osv.Model):
+class MrpWorkcenter(osv.Model):
 
     _inherit = 'mrp.workcenter'
     _columns = {
@@ -37,7 +37,7 @@ class mrp_workcenter(osv.Model):
     }
 
 
-class mrp_routing_workcenter(osv.Model):
+class MrpRoutingWorkcenter(osv.Model):
 
     _inherit = 'mrp.routing.workcenter'
     _columns = {
@@ -49,7 +49,7 @@ class mrp_routing_workcenter(osv.Model):
     }
 
 
-class mrp_workcenter_product_capacity(osv.Model):
+class MrpWorkcenterProductCapacity(osv.Model):
 
     _name = 'mrp.workcenter.product.capacity'
     _description = 'Workcenter Product Capacity'
@@ -83,7 +83,7 @@ class mrp_workcenter_product_capacity(osv.Model):
     ]
 
 
-class mrp_workcenter_operation_product_quantity(osv.Model):
+class MrpWorkcenterOperationProductQuantity(osv.Model):
 
     _name = 'mrp.workcenter.operation.product.quantity'
     _description = 'Work Center Operation Product Quantity'

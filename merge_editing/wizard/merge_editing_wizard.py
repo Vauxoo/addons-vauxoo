@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -27,12 +27,12 @@ from openerp.tools.translate import _
 
 
 
-class merge_fuse_wizard(osv.TransientModel):
+class MergeFuseWizard(osv.TransientModel):
     _name = 'merge.fuse.wizard'
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
-        result = super(merge_fuse_wizard, self).fields_view_get(
+        result = super(MergeFuseWizard, self).fields_view_get(
             cr, uid, view_id, view_type, context, toolbar, submenu)
         if context.get('merge_fuse_object'):
             merge_object = self.pool.get('merge.object')
@@ -127,19 +127,19 @@ class merge_fuse_wizard(osv.TransientModel):
                 to_unlink = list(set(active_ids) - set([base_id]))
                 model_obj.unlink(cr, uid, to_unlink)
                 cr.commit()
-        result = super(merge_fuse_wizard, self).create(cr, uid, {}, context)
+        result = super(MergeFuseWizard, self).create(cr, uid, {}, context)
         return result
 
     def action_apply(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
 
 
-class merge_editing_wizard(osv.TransientModel):
+class MergeEditingWizard(osv.TransientModel):
     _name = 'merge.editing.wizard'
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
-        result = super(merge_editing_wizard, self).fields_view_get(
+        result = super(MergeEditingWizard, self).fields_view_get(
             cr, uid, view_id, view_type, context, toolbar, submenu)
         if context.get('merge_editing_object'):
             merge_object = self.pool.get('merge.object')
@@ -307,11 +307,8 @@ class merge_editing_wizard(osv.TransientModel):
             if dict:
                 model_obj.write(
                     cr, uid, context.get('active_ids'), dict, context)
-        result = super(merge_editing_wizard, self).create(cr, uid, {}, context)
+        result = super(MergeEditingWizard, self).create(cr, uid, {}, context)
         return result
 
     def action_apply(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

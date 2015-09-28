@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,28 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Update amount base tax in account move line", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """""", 
-    "website": "", 
-    "license": "", 
+    "name": "Update amount base tax in account move line",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "",
+    "license": "",
     "depends": [
         "account_move_line_base_tax"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/wizard_update_amount_tax.xml", 
+        "security/wizard_update_amount_tax.xml",
         "wizard/update_amount_base_tax_wizard.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

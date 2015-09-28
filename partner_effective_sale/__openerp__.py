@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -22,28 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Effective Sales to Partners", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-
-""", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Effective Sales to Partners",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/groups.xml", 
+        "security/groups.xml",
         "view/partner_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

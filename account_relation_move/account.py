@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@
 from openerp.osv import osv, fields
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = "account.move.line"
 
     """
@@ -40,7 +40,7 @@ class account_move_line(osv.Model):
     }
 
 
-class account_move(osv.Model):
+class AccountMove(osv.Model):
     _inherit = "account.move"
 
     """
@@ -52,7 +52,7 @@ class account_move(osv.Model):
     }
 
 
-class stock_move(osv.Model):
+class StockMove(osv.Model):
     _inherit = "stock.move"
 
     """
@@ -61,7 +61,7 @@ class stock_move(osv.Model):
     def _create_account_move_line(self, cr, uid, move, src_account_id,
             dest_account_id, reference_amount, reference_currency_id,
             context=None):
-        res = super(stock_move, self)._create_account_move_line(
+        res = super(StockMove, self)._create_account_move_line(
             cr, uid, move, src_account_id, dest_account_id, reference_amount,
             reference_currency_id, context=context)
         cr.execute(
@@ -78,7 +78,7 @@ class stock_move(osv.Model):
     def action_consume(self, cr, uid, ids, product_qty,
                        location_id=False, context=None):
         account_move_line_pool = self.pool.get('account.move.line')
-        res = super(stock_move, self).action_consume(
+        res = super(StockMove, self).action_consume(
             cr, uid, ids, product_qty, location_id=location_id,
             context=context)
         for move_id in res:

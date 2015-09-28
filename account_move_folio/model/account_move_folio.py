@@ -1,8 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
+from openerp import api
 from openerp.osv import fields, osv
 
 
-class account_move_folio(osv.Model):
+class AccountMoveFolio(osv.Model):
     _name = 'account.move.folio'
     _order = 'company_id, journal_id, name'
     _description = "Records of Folios in Journal Entries"
@@ -26,7 +27,7 @@ class account_move_folio(osv.Model):
     }
 
 
-class account_move(osv.Model):
+class AccountMove(osv.Model):
     _inherit = 'account.move'
 
     _columns = {
@@ -50,12 +51,13 @@ class account_move(osv.Model):
             ['folio_id']),
     ]
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         default = {} if default is None else default.copy()
         default.update({
             'folio_id': False
         })
-        return super(account_move, self).copy(cr, uid, id, default=default, context=context)
+        return super(AccountMove, self).copy(default=default)
 
     def foliate(self, cr, uid, ids, context=None):
         context = context or {}
@@ -88,6 +90,6 @@ class account_move(osv.Model):
 
     def post(self, cr, uid, ids, context=None):
         context = context or {}
-        super(account_move, self).post(cr, uid, ids, context=context)
+        super(AccountMove, self).post(cr, uid, ids, context=context)
         self.foliate(cr, uid, ids, context=context)
         return True

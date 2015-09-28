@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -20,34 +20,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Journal Entries report", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Accouting", 
-    "description": """
-Report for Journal Entries
-==========================
-
-This module adds a report in journal entries. You can print one o several
-journal entries in PDF file.
-
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Journal Entries report",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accouting",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
+        "account",
         "report_webkit"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "data.xml", 
+        "data.xml",
         "account_move_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

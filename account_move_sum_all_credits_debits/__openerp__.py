@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,27 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "Account move sum all credits debits", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Production", 
-    "description": """ Add two function fields to sum all of the credits and
-    debits of the account move lines
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Account move sum all credits debits",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Production",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

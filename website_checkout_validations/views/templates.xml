@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+  	<openerp>
+		<data>
+			<template id="checkout_validated" inherit_id="website_sale.checkout">
+				<!-- Extra fields -->
+				<xpath expr="//div[@class='row']/div[10]" position="replace">
+				   <div t-attf-class="form-group #{error.get('mobile') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="mobile" style="font-weight: normal">Mobile</label>
+                      <input type="text" name="mobile" class="form-control" t-att-value="checkout.get('mobile')"/>
+                  </div>
+				</xpath>
+                <xpath expr="//div[@class='row']/div[7]" position="replace">
+                  <div t-attf-class="form-group #{error.get('street2') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="street2">Address</label>
+                      <input type="text" placeholder="Street, House, building, apartment" name="street2" class="form-control" t-att-value="checkout.get('street2')"/>
+                  </div>
+                </xpath>
+
+				<xpath expr="//div[@class='row']/div[12]" position="after">
+                  <div id="zip" t-attf-class="form-group #{error.get('zip') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label label-optional" for="zip">Zip / Postal Code</label>
+                      <input type="text" name="zip" class="form-control" t-att-value="checkout.get('zip')"/>
+                  </div>
+                  <div t-attf-class="form-group col-lg-12">
+                      <label class="control-label" for="comments">Comments</label>
+                      <textarea type="text" name="comments" class="form-control" t-att-value="checkout.get('comments')"/>
+                  </div>
+				</xpath>
+				<xpath expr="//div[@class='row']/div[2]" position="before">
+                  <div t-attf-class="form-group #{error.get('is_company') and 'has-error' or ''} col-lg-3 pull-right">
+                      <label class="control-label mt32">
+                      <input class="partner_type" value="company" type="radio" name="is_company" id="partner_type_c" t-att-checked="'checked' if checkout.get('is_company') == True else ''"/> Company
+                  </label>
+                  </div>
+                  <div t-attf-class="form-group #{error.get('is_particular') and 'has-error' or ''} col-lg-3 pull-right">
+                      <label class="control-label mt32">
+                      <input class="partner_type" value="particular" type="radio" name="is_company" id="partner_type_p" t-att-checked="'checked' if checkout.get('is_particular') == True else ''"/> Personal
+                  </label>
+                  </div>
+				</xpath>
+				<xpath expr="//label[@for='vat']/.." position="replace">
+            <div id="ruc_values">
+              <div class="form-group col-lg-3">
+                      <label class="control-label" for="vat_alone">
+                        TIN
+                        <input type="text" placeholder="TIN" name="vat_alone" class="form-control" t-att-value="checkout.get('vat_alone')"/>
+                        </label>
+                  </div>
+                  <div class="form-group col-lg-2">
+                      <label class="control-label" for="vat_dv" style="font-weight: normal">
+                        DV
+                        <input type="text" maxlength="2" placeholder="Check Digit" name="vat_dv" class="form-control" t-att-value="checkout.get('vat_dv')"/>
+                        </label>
+                  </div>
+            </div>
+
+				</xpath>
+
+                <!-- Extra options for inherited fields -->
+                <xpath expr="//select[@name='country_id']" position="replace">
+                      <select name="country_id" class="form-control">
+                          <option value="">Country...</option>
+                          <t t-foreach="countries or []" t-as="country">
+                              <option t-att-id="country.code" t-att-value="country.id" t-att-selected="country.id == checkout.get('country_id')"><t t-esc="country.name"/></option>
+                          </t>
+                      </select>                </xpath>
+
+				<!-- Field validations, renders a small badge on the right side of the label -->
+				<xpath expr="//label[@for='contact_name']" position="after">
+                      <t t-if="error.get('name')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+<!--                 <xpath expr="//label[@for='contact_name']" position="replace">
+                      <label class="control-label" for="contact_name">Contact Name</label>
+                </xpath> -->
+				<xpath expr="//label[@for='city']" position="after">
+                      <t t-if="error.get('zip_id')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//input[@name='city']" position="replace">
+                      <select name="zip_id" class="form-control">
+                          <option value="">City...</option>
+                          <t t-foreach="cities or []" t-as="city">
+                              <option t-att-value="city.id" t-att-selected="city.id == checkout.get('zip_id')"><t t-esc="city.city"/></option>
+                          </t>
+                      </select>
+				</xpath>
+				<xpath expr="//label[@for='vat_dv']" position="after">
+                      <t t-if="error.get('vat_dv') == 'invalid'"><span class="label label-danger"> Invalid </span></t>
+                      <t t-if="error.get('vat_dv') == 'missing'"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='vat_alone']" position="after">
+                      <t t-if="error.get('vat_alone') == 'invalid'"><span class="label label-danger"> Invalid </span></t>
+                      <t t-if="error.get('vat_alone') == 'missing'"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//input[@type='email']" position="before">
+                      <t t-if="error.get('email') == 'invalid'"><span class="label label-danger"> Invalid Email </span></t>
+                      <t t-if="error.get('email') == 'missing'"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='phone']" position="after">
+                      <t t-if="error.get('phone')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='street']" position="after">
+                      <t t-if="error.get('street')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='street2']" position="after">
+                      <t t-if="error.get('street2')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='country_id']" position="after">
+                      <t t-if="error.get('country_id')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+				<xpath expr="//label[@for='state_id']" position="after">
+                      <t t-if="error.get('state_id')"><span class="label label-danger"> Required </span></t>
+				</xpath>
+                <xpath expr="//div[@class='row']/div[@class='col-md-8 oe_cart']/div[@class='row']/div[1]" position="replace">
+                  <div id="company" t-attf-class="form-group #{error.get('street') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label label-optional" for="street">Company Name</label>
+                      <input type="text" name="street" class="form-control" t-att-value="checkout.get('street')"/>
+                  </div>
+                </xpath>
+                <xpath expr="//div[@class='row']/div[@class='col-md-8 oe_cart']/div[@class='row']/div[5]" position="replace">
+                  <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="contact_name">Contact Name</label>
+                      <input type="text" name="name" class="form-control" t-att-value="checkout.get('name')"/>
+                  </div>
+                </xpath>
+			</template>
+		</data>
+	</openerp>

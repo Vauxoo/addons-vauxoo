@@ -1,3 +1,4 @@
+# coding: utf-8
 #########################################################################
 # Copyright (C) 2009  Sharoon Thomas, Open Labs Business solutions      #
 #                                                                       #
@@ -19,7 +20,7 @@ import base64
 import urllib
 
 
-class product_images(osv.Model):
+class ProductImages(osv.Model):
 
     "Products Image gallery"
     _name = "product.images"

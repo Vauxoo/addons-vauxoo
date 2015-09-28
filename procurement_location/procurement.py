@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,11 +26,11 @@
 from openerp.osv import osv
 
 
-class procurement_order(osv.Model):
+class ProcurementOrder(osv.Model):
     _inherit = 'procurement.order'
 
     def make_mo(self, cr, uid, ids, context=None):
-        res = super(procurement_order, self).make_mo(
+        res = super(ProcurementOrder, self).make_mo(
             cr, uid, ids, context=context)
         mrp_prod_obj = self.pool.get('mrp.production')
         cat_prod = self.browse(

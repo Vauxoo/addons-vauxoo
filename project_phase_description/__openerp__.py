@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,33 +24,26 @@
 #
 #
 {
-    "name": "Project Phase Description", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "description": """
-Project Phase Description
-=========================
-
-This module added field description in view Project Phase.
-
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Project Phase Description",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "project", 
+        "base",
+        "project",
         "project_long_term"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_phase_inherit.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

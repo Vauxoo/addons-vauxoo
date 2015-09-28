@@ -1,14 +1,14 @@
-# -*- encoding: utf-8 -*- #
-############################################################################
+# coding: utf-8
+# ######################################################################## #
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).                           #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# ##############Credits################################################### #
 #    Coded by: Sabrina Romero (sabrina@vauxoo.com)                         #
 #    Planified by: Nhomar Hernandez (nhomar@vauxoo.com)                    #
 #    Finance by: COMPANY NAME <EMAIL-COMPANY>                              #
 #    Audited by: author NAME LASTNAME <email@vauxoo.com>                   #
-############################################################################
+# ######################################################################## #
 #    This program is free software: you can redistribute it and/or modify  #
 #    it under the terms of the GNU General Public License as published by  #
 #    the Free Software Foundation, either version 3 of the License, or     #
@@ -21,5 +21,5 @@
 #                                                                          #
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
-############################################################################
+# ######################################################################## #
 from . import account_journal

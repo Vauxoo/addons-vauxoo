@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,16 +25,9 @@
 #
 {
     "name": "Sale Order Line Copy",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Sale Order",
-    "description": """
-Sale Order Line Copy
-====================
-
-This module add the button in the sale order line for copy data.
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

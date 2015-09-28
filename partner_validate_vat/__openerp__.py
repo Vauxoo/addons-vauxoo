@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,28 +24,22 @@
 #
 #
 {
-    "name": "Partner Validate VAT", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Addons-vauxoo", 
-    "description": """
-Partner Validate VAT:
-=====================
-
-This module validate that Partner's VAT must be a unique value in each company
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Partner Validate VAT",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons-vauxoo",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

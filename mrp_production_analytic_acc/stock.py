@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,13 +26,13 @@
 from openerp.osv import osv, fields
 
 
-class stock_move(osv.Model):
+class StockMove(osv.Model):
     _inherit = "stock.move"
 
     def _create_account_move_line(self, cr, uid, move, src_account_id,
                                   dest_account_id, reference_amount,
                                   reference_currency_id, context=None):
-        res = super(stock_move, self)._create_account_move_line(
+        res = super(StockMove, self)._create_account_move_line(
             cr, uid, move, src_account_id, dest_account_id, reference_amount,
             reference_currency_id, context=None)
         if 'analytic_acc' in self.pool.get('stock.move')._columns:

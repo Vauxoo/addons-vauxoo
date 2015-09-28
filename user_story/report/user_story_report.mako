@@ -3,8 +3,7 @@
         <style type="text/css">${css}</style>
     </head>
     <body>
-        <% setLang(user.lang) %>
-        % for user.story in objects:
+        %for user.story in objects:
             <table width="100%">
                 <tr>
                     <th class="panel_bg_color_title">${_("User Story")}</th>
@@ -46,14 +45,14 @@
                     <th width="40%" class="th_center panel_bg_color_title">${_("Name")}</th>
                     <th width="60%" class="th_center panel_bg_color_title">${_("Scenario")}</th>
                 </tr>
-                % for criteria in (user and user.story and user.story.accep_crit_ids):
+                %for criteria in (user and user.story and user.story.accep_crit_ids):
                     <tr>
                         <td class="panel_bg_color">${criteria.name}</td>
                         <td class="panel_bg_color">${criteria.scenario}</td>
                     </tr>
-                % endfor
+                %endfor
             </table>
             <p style="page-break-before: always;"></p>
-        % endfor
+        %endfor
     </body>
 </html>

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,12 +26,12 @@
 from openerp.osv import osv, fields
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = "mrp.production"
 
     def product_id_change(self, cr, uid, ids, product_id, context=None):
         bom_obj = self.pool.get('mrp.bom')
-        res = super(mrp_production, self).product_id_change(
+        res = super(MrpProduction, self).product_id_change(
             cr, uid, ids, product_id, context=context)
         if not product_id:
             res['value']['analytic_acc_rm'] = False
@@ -47,7 +47,7 @@ class mrp_production(osv.Model):
 
     def bom_id_change(self, cr, uid, ids, bom_id, context=None):
         bom_obj = self.pool.get('mrp.bom')
-        res = super(mrp_production, self).bom_id_change(
+        res = super(MrpProduction, self).bom_id_change(
             cr, uid, ids, bom_id, context=context)
         if bom_id:
             bom = bom_obj.browse(cr, uid, [bom_id], context=context)
@@ -67,7 +67,7 @@ class mrp_production(osv.Model):
         stock_move = self.pool.get('stock.move')
         production = production_line.production_id
         res = super(
-            mrp_production, self)._make_production_internal_shipment_line(cr,
+            MrpProduction, self)._make_production_internal_shipment_line(cr,
                         uid, production_line, shipment_id,
                         parent_move_id,
                         destination_location_id=destination_location_id,
@@ -85,7 +85,7 @@ class mrp_production(osv.Model):
 
     def _make_production_produce_line(self, cr, uid, production, context=None):
         stock_move = self.pool.get('stock.move')
-        res = super(mrp_production, self)._make_production_produce_line(
+        res = super(MrpProduction, self)._make_production_produce_line(
             cr, uid, production, context=context)
         if production.analytic_acc_fg:
             stock_move.write(cr, uid, [res], {
@@ -97,7 +97,7 @@ class mrp_production(osv.Model):
                     parent_move_id, source_location_id=False, context=None):
             stock_move = self.pool.get('stock.move')
             production = production_line.production_id
-            res = super(mrp_production, self)._make_production_consume_line(
+            res = super(MrpProduction, self)._make_production_consume_line(
                 cr, uid, production_line, parent_move_id,
                 source_location_id=False, context=context)
             if production.analytic_acc_rm.id:
@@ -116,7 +116,7 @@ class mrp_production(osv.Model):
     }
 
 
-class mrp_bom(osv.Model):
+class MrpBom(osv.Model):
     _inherit = "mrp.bom"
 
     _columns = {

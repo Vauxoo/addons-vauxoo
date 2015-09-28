@@ -1,9 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 import time
 from openerp.report import report_sxw
 
 
-class crm_report_profile(report_sxw.rml_parse):
+class CrmReportProfile(report_sxw.rml_parse):
 
     """
     Description about crm_report_profile
@@ -17,7 +17,7 @@ class crm_report_profile(report_sxw.rml_parse):
         @param name: name of the reports it self
         @param context: context arguments, like lang, time zone
         """
-        super(crm_report_profile, self).__init__(
+        super(CrmReportProfile, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
                                  'time': time,
@@ -27,5 +27,5 @@ report_sxw.report_sxw(
     'report.crm.profile.reporting',
     'res.partner',
     'addons/crm_profile_reporting/report/crm_profile_report.rml',
-    parser=crm_report_profile
+    parser=CrmReportProfile
 )

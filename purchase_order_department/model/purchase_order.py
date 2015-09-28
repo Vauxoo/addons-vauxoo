@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class purchase_order(osv.Model):
+class PurchaseOrder(osv.Model):
 
     _inherit = 'purchase.order'
     _columns = {
@@ -51,7 +51,7 @@ class purchase_order(osv.Model):
         return res
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
 
     _inherit = "purchase.requisition"
 
@@ -61,7 +61,7 @@ class purchase_requisition(osv.Model):
         purchase requisition.
         """
         context = context or {}
-        res = super(purchase_requisition, self).make_purchase_order(
+        res = super(PurchaseRequisition, self).make_purchase_order(
             cur, uid, ids, partner_id, context=context)
         if res:
             req_id = res.keys()[0]

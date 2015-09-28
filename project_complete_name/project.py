@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,7 +24,7 @@ from openerp import tools
 from openerp.osv import fields, osv
 
 
-class project_project(osv.Model):
+class ProjectProject(osv.Model):
 
     _inherit = 'project.project'
 
@@ -63,7 +63,7 @@ class project_project(osv.Model):
         return ids
 
     def _complete_name(self, cr, uid, ids, name, args, context=None):
-        return super(project_project, self)._complete_name(cr, uid, ids, name,
+        return super(ProjectProject, self)._complete_name(cr, uid, ids, name,
                                                         args, context=context)
     _columns = {
         'complete_name2': fields.function(_complete_name,
@@ -84,7 +84,7 @@ class project_project(osv.Model):
                 ids.update(self.search(cr, user, args + [(
                     'complete_name2', operator, name)],
                     limit=limit, context=context))
-                ids.update(map(lambda a: a[0], super(project_project,
+                ids.update(map(lambda a: a[0], super(ProjectProject,
                                                     self).name_search(cr, user,
                                                         name=name, args=args,
                                                         operator=operator,
@@ -97,7 +97,7 @@ class project_project(osv.Model):
         return result
 
 
-class project_task(osv.Model):
+class ProjectTask(osv.Model):
     _inherit = 'project.task'
 
     _columns = {

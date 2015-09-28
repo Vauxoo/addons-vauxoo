@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {
@@ -51,7 +51,7 @@ class purchase_requisition(osv.Model):
         context = context or {}
         po_obj = self.pool.get('purchase.order')
         pl_obj = self.pool.get('product.pricelist')
-        res = super(purchase_requisition, self).make_purchase_order(
+        res = super(PurchaseRequisition, self).make_purchase_order(
             cr, uid, ids, partner_id, context=context)
         for pr_brw in self.browse(cr, uid, res.keys(), context=context):
             # extract the po_ids generated for the purchase requisition.

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,52 +24,30 @@
 #
 ##############################################################################
 # use this command
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "MRP Consume Produce", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Production", 
-    "description": """
-MRP Consume Produce
-===================
-
-Add wizard to consume and produce.
-It will be necesary to apply the patch patch/stock.patch located in
-this module over the stock module::
-
-    # use this command
-    patch -b stock.py  stock.patch
-
-Also is necesary to configure some permissions to use the implemented wizard.
-You have to options: Go to check some options at the user:
-
-- ``Access Rights > Other > Mrp Consume``
-- ``Access Rights > Other > Mrp Consume / Manager``
-- ``Access Rights > Other > MRP / Button Consume-Produce``
-
-Or go to the ``Settings > Configuration > Manufacturing > Manufacturing Order``
-and active the ``Real Consume and Produce`` option plus selecting a user type.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Consume Produce",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Production",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp", 
+        "mrp",
         "mrp_button_box"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/wizard_view.xml", 
-        "mrp_consume_produce_view.xml", 
-        "security/mrp_security.xml", 
-        "security/ir.model.access.csv", 
+        "wizard/wizard_view.xml",
+        "mrp_consume_produce_view.xml",
+        "security/mrp_security.xml",
+        "security/ir.model.access.csv",
         "res_config_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

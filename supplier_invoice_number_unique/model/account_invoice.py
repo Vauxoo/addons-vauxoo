@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,7 +24,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _name = "account.invoice"
     _inherit = 'account.invoice'
 
@@ -47,4 +47,4 @@ class account_invoice(osv.Model):
 
     def invoice_validate(self, cr, uid, ids, context=None):
         self.action_validate_ref_invoice(cr, uid, ids, context=None)
-        return super(account_invoice, self).invoice_validate(cr, uid, ids, context=context)
+        return super(AccountInvoice, self).invoice_validate(cr, uid, ids, context=context)

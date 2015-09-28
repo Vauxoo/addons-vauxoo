@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -29,7 +29,7 @@ from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class account_move(osv.Model):
+class AccountMove(osv.Model):
     _inherit = "account.move"
 
     """example of query that get these fields ---

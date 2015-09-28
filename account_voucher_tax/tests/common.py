@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 from openerp.tests import common
 import time
@@ -39,14 +39,19 @@ class TestTaxCommon(common.TransactionCase):
         # Data to tax
         self.tax_16 = self.ref(
             "account_voucher_tax.account_voucher_tax_purchase_iva16")
+        self.tax_0 = self.ref(
+            "account_voucher_tax.account_voucher_tax_purchase_0iva")
         self.tax_16_customer = self.ref(
             "account_voucher_tax.account_voucher_tax_sale_ova16")
         self.tax_ret = self.ref(
-            "account_voucher_tax.account_voucher_tax_purchase_iva1067_retencion_iva")
+            "account_voucher_tax."
+            "account_voucher_tax_purchase_iva1067_retencion_iva")
 
         # Data account to tax
         self.acc_tax16 = self.ref(
             "account_voucher_tax.account_iva_voucher_16")
+        self.acc_tax0 = self.ref(
+            "account_voucher_tax.account_iva_voucher0_purchase_0")
         self.acc_tax16_customer = self.ref(
             "account_voucher_tax.account_ova_voucher_16")
         self.acc_ret1067 = self.ref(
@@ -56,6 +61,8 @@ class TestTaxCommon(common.TransactionCase):
 
         self.acc_tax_16_payment = self.ref(
             "account_voucher_tax.account_iva_voucher")
+        self.acc_tax_0_payment = self.ref(
+            "account_voucher_tax.account_iva_voucher0_purchase")
         self.acc_tax_16_payment_customer = self.ref(
             "account_voucher_tax.account_ova_voucher")
         self.acc_ret1067_payment = self.ref(
@@ -116,3 +123,28 @@ class TestTaxCommon(common.TransactionCase):
             cr, uid, bank_stmt_id).move_line_ids
 
         return move_line_ids_complete
+
+    def create_invoice_supplier(
+            self, cr, uid, amount_total, taxes_line, date, currency=False):
+        invoice_id = self.account_invoice_model.create(
+            cr, uid, {
+                'partner_id': self.partner_agrolait_id,
+                'journal_id': self.invoice_supplier_journal_id,
+                'reference_type': 'none',
+                'name': 'invoice to supplier',
+                'account_id': self.account_payable_id,
+                'type': 'in_invoice',
+                'date_invoice': date,
+                'check_total': amount_total,
+            })
+        if currency:
+            self.account_invoice_model.write(
+                cr, uid, invoice_id, {'currency_id': currency})
+        self.account_invoice_line_model.create(cr, uid, {
+            'product_id': self.product_id,
+            'quantity': 1,
+            'price_unit': 100,
+            'invoice_line_tax_id': [(6, 0, taxes_line)],
+            'invoice_id': invoice_id,
+            'name': 'product that cost 100'})
+        return invoice_id

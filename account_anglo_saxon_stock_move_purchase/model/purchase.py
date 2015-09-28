@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,7 +25,7 @@ from openerp.tools.translate import _
 from openerp.osv import osv, fields
 
 
-class purchase_order(osv.osv):
+class PurchaseOrder(osv.osv):
 
     _inherit = "purchase.order"
     _columns = {
@@ -55,4 +56,3 @@ class purchase_order(osv.osv):
             'view_id': False,
             'type': 'ir.actions.act_window'
         }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

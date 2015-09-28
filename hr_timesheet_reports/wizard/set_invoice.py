@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp.osv import osv, fields
 
 
-class set_invoice(osv.osv_memory):
+class SetInvoice(osv.osv_memory):
 
     _name = 'set.invoice'
 
@@ -10,7 +10,7 @@ class set_invoice(osv.osv_memory):
         if context is None:
             context = {}
         htr = False
-        res = super(set_invoice, self).default_get(
+        res = super(SetInvoice, self).default_get(
             cr, uid, field, context=context)
         ids = context.get('active_ids', False)
         model = context.get('active_model', False)

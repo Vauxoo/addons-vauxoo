@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
@@ -22,36 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP WorkOrder Variation", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "description": """
-
-MRP WorkOrder Variation
-=======================
-
-Lets have a detailed control of the number of products in and out in a work order. That is,
-this module adds a table in the work orders with the real products that are received and outgoing.
-In this way the user can make a comparison of the variation of quantities and avoid loss of
-material.
-
-""", 
-    "website": "http://vauxoo.com", 
-    "license": "AGPL-3", 
+    "name": "MRP WorkOrder Variation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://vauxoo.com",
+    "license": "AGPL-3",
     "depends": [
-        "mrp", 
+        "mrp",
         "mrp_operations"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/mrp_production_workcenter_line_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

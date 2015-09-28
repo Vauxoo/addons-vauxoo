@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@
 from openerp.osv import osv
 
 
-class document_page(osv.Model):
+class DocumentPage(osv.Model):
 
     _name = 'document.page'
 

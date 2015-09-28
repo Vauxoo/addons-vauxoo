@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -20,30 +20,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Fields Active, Company And Sequence For Model Ir_actions_report_xml", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic", 
-    "description": """
-Fields Active, Company And Sequence For Model Ir_actions_report_xml
-===================================================================
-
-Add fields Active, Company And Sequence to Model Ir_actions_report_xml
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Fields Active, Company And Sequence For Model Ir_actions_report_xml",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/ir_actions_report_xml.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

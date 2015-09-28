@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 #
 #
 #    OpenERP, Open Source Management Solution
@@ -25,17 +25,9 @@
 #
 {
     "name": "Account move type account filter",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-This module add 5 filters to journal items
-- account type in payable or receivable
-- account type is payable
-- account type is receivable
-- account type not is payable
-- account type is nor receivable
-""",
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
@@ -51,4 +43,3 @@ This module add 5 filters to journal items
     "installable": True,
     "auto_install": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

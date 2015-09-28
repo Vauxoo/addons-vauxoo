@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (http://www.vauxoo.com).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class pos_config(osv.Model):
+class PosConfig(osv.Model):
 
     """
     To add a field which determine if the point of sale is a restaurant or delivery

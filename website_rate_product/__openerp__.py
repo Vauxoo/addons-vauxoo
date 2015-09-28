@@ -1,15 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
     "name": "Website Product Rate",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Website",
-    "description": """
-Website Product Rate
-====================
-    This app shows you a widget with five stars to give product ratings on the
-    e-commerce platform.
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

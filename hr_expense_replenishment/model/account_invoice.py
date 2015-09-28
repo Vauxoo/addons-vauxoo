@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -21,10 +21,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp import api
 from openerp.osv import fields, osv
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
     _columns = {
         'expense_id': fields.many2one('hr.expense.expense', 'Expense',
@@ -57,15 +58,16 @@ class account_invoice(osv.Model):
             exp_obj.write(cr, uid, exp_id, {'line_ids': data}, context=context)
         return True
 
-    def copy(self, cr, uid, ids, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default = default.copy()
         default.update({'expense_id': False})
-        return super(account_invoice, self).copy(cr, uid, ids, default, context=context)
+        return super(AccountInvoice, self).copy(default)
 
 
-class account_invoice_line(osv.Model):
+class AccountInvoiceLine(osv.Model):
     _inherit = 'account.invoice.line'
     _columns = {
         'expense_id': fields.related('invoice_id', 'expense_id',

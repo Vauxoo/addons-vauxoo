@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,40 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "POS Product Filter", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Point Of Sale", 
-    "description": """
-POS Product Filter
-==================
-
-This module adds two fields (delivery and restaurant) to the product model, each field is a boolean
-and determine if the product will show in delivery and/or restaurant point of sale. The products
-view depends of the deli_rest field of the point of sale configuration which can be a restaurant or
-delivery.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "POS Product Filter",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Point Of Sale",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "base", 
-        "point_of_sale", 
-        "sale", 
+        "base",
+        "point_of_sale",
+        "sale",
         "pos_delivery_restaurant"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/product_view.xml"
-    ], 
-    "test": [], 
+    ],
+    "test": [],
     "js": [
-        "static/src/js/backbone-super-min.js", 
-        "static/src/js/models.js", 
+        "static/src/js/backbone-super-min.js",
+        "static/src/js/models.js",
         "static/src/js/main.js"
-    ], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

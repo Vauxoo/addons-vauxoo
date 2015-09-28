@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,7 +22,7 @@
 from openerp.osv import fields, osv
 
 
-class product_price_list(osv.osv_memory):
+class ProductPriceList(osv.osv_memory):
     _inherit = 'product.price_list'
     _description = 'Price List'
     _rec_name = 'price_list'
@@ -71,5 +70,3 @@ class product_price_list(osv.osv_memory):
         return self.pool['report'].get_action(
             cr, uid, [], 'product.report_pricelist', data=datas,
             context=context)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 # Copyright (c) 2011 OpenERP Venezuela (http://openerp.com.ve)
 # All Rights Reserved.
@@ -28,7 +28,7 @@
 from openerp.osv import fields, osv
 
 
-class inherited_product(osv.Model):
+class InheritedProduct(osv.Model):
 
     """
     Inherit to add rfq field for indicate which product has requisition

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,33 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Requisition Department", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "purchase", 
-    "description": """
-Purchase Requisition Department
-===============================
-
-Add the department field relational field to deparment_id extract for the
-current purchase requisition responsible. Also add the filter ins the purchase
-requisition list view to discriminate the purchase requisition by department.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Requisition Department",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "purchase",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "purchase_requisition", 
+        "purchase_requisition",
         "hr"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_requisition_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

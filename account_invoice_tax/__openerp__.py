@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,27 +24,22 @@
 #
 ##############################################################################
 {
-    "name": "account_invoice_tax", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "description": """This module add tax relation to original tax, to be able to take off all data from invoices.
-Technical Warning - This module add method override
-     def check_tax_lines from account_invoice
-     def compute from account_invoice_tax
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Invoice Tax",
+    "version": "2.1",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

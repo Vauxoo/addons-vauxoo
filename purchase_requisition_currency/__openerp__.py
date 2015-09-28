@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,39 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Requisition Currency", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "purchase", 
-    "description": """
-Purchase Requisition Currency
-=============================
-
-Adds the currency field in the purchase requisition model. When you use the
-Request a Quotation button the purchase requisition currency new field will be
-take into account to generate the purchase orders with a pricelist that have
-the same currency. If there is not pricelist with the same purchase requisition
-currency then it will raise an exception. You need to active some User
-Technical Settings to take advantage of this functionality:
-
-- Multi Currencies.
-- Purchase Pricelist.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Requisition Currency",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "purchase",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "purchase_requisition"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_requisition_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

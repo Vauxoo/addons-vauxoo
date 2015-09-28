@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,7 +24,7 @@ from openerp.osv import osv
 from lxml import etree
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
     _columns = {
 
@@ -32,7 +32,7 @@ class account_move_line(osv.Model):
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
-        result = super(account_move_line, self).fields_view_get(
+        result = super(AccountMoveLine, self).fields_view_get(
             cr, uid, view_id, view_type, context=context, toolbar=toolbar,
             submenu=submenu)
         # fields_get = self.fields_get(cr, uid, ['stock_move_id'], context)

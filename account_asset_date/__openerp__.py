@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,15 +24,10 @@
 #
 ##############################################################################
 {
-    "name": "account_asset_date",
-    "version": "1.0",
+    "name": "Account Asset Date",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "account asset",
-    "description": """
-        This module adds a date field in assets and change the
-        translation of the purchase date field to use as the start date
-        for depreciation
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

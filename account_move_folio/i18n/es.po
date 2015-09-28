@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:13+0000\n"
-"PO-Revision-Date: 2013-11-07 07:58+0000\n"
-"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
-"<humbertoarocha@gmail.com>\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com <humbertoarocha@gmail."
+"com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:45+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es\n"
 
 #. module: account_move_folio
 #: view:account.move.folio:0
@@ -59,8 +60,7 @@ msgid "Period: Close"
 msgstr "Período: Cerrado"
 
 #. module: account_move_folio
-#: view:account.move.folio:0
-#: field:account.move.folio,period_state:0
+#: view:account.move.folio:0 field:account.move.folio,period_state:0
 #: help:account.move.folio,period_state:0
 msgid "Period State"
 msgstr "Estado de Período"
@@ -117,8 +117,7 @@ msgid "Account Move Folio Form"
 msgstr "Forma de Movimiento de Folio de Cuenta"
 
 #. module: account_move_folio
-#: view:account.move.folio:0
-#: field:account.move.folio,company_id:0
+#: view:account.move.folio:0 field:account.move.folio,company_id:0
 msgid "Company"
 msgstr "Compañía"
 
@@ -193,8 +192,7 @@ msgid "Entry Period"
 msgstr "Período de Comprante"
 
 #. module: account_move_folio
-#: view:account.move.folio:0
-#: field:account.move.folio,period_id:0
+#: view:account.move.folio:0 field:account.move.folio,period_id:0
 msgid "Period"
 msgstr "Período"
 
@@ -204,8 +202,7 @@ msgid "Fill Gaps"
 msgstr "Llenar brechas"
 
 #. module: account_move_folio
-#: field:account.move.folio,move_state:0
-#: help:account.move.folio,move_state:0
+#: field:account.move.folio,move_state:0 help:account.move.folio,move_state:0
 msgid "Entry State"
 msgstr "Estado de Comprobante"
 
@@ -225,14 +222,12 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: account_move_folio
-#: field:account.move.folio,move_id:0
-#: help:account.move.folio,move_id:0
+#: field:account.move.folio,move_id:0 help:account.move.folio,move_id:0
 msgid "Journal Entry"
 msgstr "Comprobante Diario"
 
 #. module: account_move_folio
-#: view:account.move.folio:0
-#: field:account.move.folio,journal_id:0
+#: view:account.move.folio:0 field:account.move.folio,journal_id:0
 msgid "Journal"
 msgstr "Diario"
 

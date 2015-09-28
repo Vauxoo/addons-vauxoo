@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import osv
 import os
 
 
-class document_storage(osv.Model):
+class DocumentStorage(osv.Model):
     _inherit = 'document.storage'
 
     def recovery_attachments(self, cr, uid, ids, context=None):

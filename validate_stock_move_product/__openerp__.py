@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -20,38 +20,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 {
-    "name": "Validate Stock Move Product", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "description": """
-Validate Stock Move Product
-===========================
-
-This module validates the quantity of product to be moved to
-destination location in the source location exists. If you do
-not have the amount in the source location display a warning
-saying 'Not enough products in the source location according
-to the quantity ordered.'
-
-This module will extend when will count with decorators
-support in version 7.0
-
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Validate Stock Move Product",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/validate_stock_move_product.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

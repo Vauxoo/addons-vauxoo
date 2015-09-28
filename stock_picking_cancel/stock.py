@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,11 +24,11 @@
 #
 ##############################################################################
 from openerp.osv import osv
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 from openerp.tools.translate import _
 
 
-class stock_picking(osv.Model):
+class StockPicking(osv.Model):
     _inherit = 'stock.picking'
 
     def action_cancel_draft(self, cr, uid, ids, *args):
@@ -36,7 +36,7 @@ class stock_picking(osv.Model):
             return False
         move_obj = self.pool.get('stock.move')
         self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for p_id in ids:
             moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
             move_obj.write(cr, uid, moves, {'state': 'draft'})
@@ -49,7 +49,7 @@ class stock_picking(osv.Model):
         return True
 
 
-class stock_picking_in(osv.Model):
+class StockPickingIn(osv.Model):
     _inherit = 'stock.picking.in'
 
     def action_cancel_draft(self, cr, uid, ids, *args):
@@ -57,7 +57,7 @@ class stock_picking_in(osv.Model):
             return False
         move_obj = self.pool.get('stock.move')
         self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for p_id in ids:
             moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
             move_obj.write(cr, uid, moves, {'state': 'draft'})
@@ -70,7 +70,7 @@ class stock_picking_in(osv.Model):
         return True
 
 
-class stock_picking_out(osv.Model):
+class StockPickingOut(osv.Model):
     _inherit = 'stock.picking.out'
 
     def action_cancel_draft(self, cr, uid, ids, *args):
@@ -78,7 +78,7 @@ class stock_picking_out(osv.Model):
             return False
         move_obj = self.pool.get('stock.move')
         self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for p_id in ids:
             moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
             move_obj.write(cr, uid, moves, {'state': 'draft'})
@@ -91,7 +91,7 @@ class stock_picking_out(osv.Model):
         return True
 
 
-class stock_move(osv.Model):
+class StockMove(osv.Model):
     _inherit = 'stock.move'
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -114,4 +114,4 @@ class stock_move(osv.Model):
                 except BaseException:
                     pass
                 account_move.unlink(cr, uid, [lin[0]])
-        return super(stock_move, self).action_cancel(cr, uid, ids, context=context)
+        return super(StockMove, self).action_cancel(cr, uid, ids, context=context)

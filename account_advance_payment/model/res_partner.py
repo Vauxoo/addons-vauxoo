@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,30 +26,28 @@
 from openerp.osv import osv, fields
 
 
-class res_partner(osv.Model):
+class ResPartner(osv.Model):
     _inherit = 'res.partner'
 
-    def _supplier_customer_advance_get(self, cr, uid, ids, field, arg, context=None):
+    def _supplier_customer_advance_get(self, cr, uid, ids, field, arg,
+                                       context=None):
         res = {}
         for record_id in ids:
-            res = {record_id: {'customer_advance': 0.0, 'supplier_advance': 0.0}}
+            res = {record_id: {'customer_advance': 0.0,
+                               'supplier_advance': 0.0}}
         return res
 
     _columns = {
         'property_account_supplier_advance': fields.property(
-            'account.account',
             type='many2one',
             relation='account.account',
             string="Account Supplier Advance",
-            view_load=True,
             domain="[('type','=','payable')]",
             help="This account will be used for advance payment of suppliers"),
         'property_account_customer_advance': fields.property(
-            'account.account',
             type='many2one',
             relation='account.account',
             string="Account Customer Advance",
-            view_load=True,
             domain="[('type','=','receivable')]",
             help="This account will be used for advance payment of custom"),
         #        'customer_advance': fields.function(

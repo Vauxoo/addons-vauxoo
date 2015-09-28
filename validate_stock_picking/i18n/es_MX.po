@@ -1,19 +1,21 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* validate_stock_picking
+# 	* validate_stock_picking
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-16 05:16+0000\n"
-"PO-Revision-Date: 2013-06-16 05:16+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: validate_stock_picking
 #: field:validate.picking.wz,sure:0
@@ -35,9 +37,11 @@ msgstr "Validar Albaranes"
 
 #. module: validate_stock_picking
 #: view:validate.picking.wz:0
-msgid "You need select both confirmation checkbox\n"
+msgid ""
+"You need select both confirmation checkbox\n"
 "                 When you press Validate Picking button the picking selected will be validates and receiveds"
-msgstr "Usted necesita seleccionar ambos checkbos de confirmación para estar segro de la operación\n"
+msgstr ""
+"Usted necesita seleccionar ambos checkbos de confirmación para estar segro de la operación\n"
 "                 Cuando usted presione el boton Validar Alabaran sera validados todos los albaranes que usted ha seleccionado"
 
 #. module: validate_stock_picking
@@ -63,8 +67,7 @@ msgid "Close"
 msgstr "Cerrar"
 
 #. module: validate_stock_picking
-#: help:validate.picking.wz,confirm:0
-#: help:validate.picking.wz,sure:0
+#: help:validate.picking.wz,confirm:0 help:validate.picking.wz,sure:0
 msgid "Are sure this operation"
 msgstr "Esta seguro de esta operación"
 
@@ -72,4 +75,3 @@ msgstr "Esta seguro de esta operación"
 #: model:ir.model,name:validate_stock_picking.model_validate_picking_wz
 msgid "validate.picking.wz"
 msgstr "validate.picking.wz"
-

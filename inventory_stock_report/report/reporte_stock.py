@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -26,10 +26,10 @@ import time
 from openerp.report import report_sxw
 
 
-class rep_conteo_stock(report_sxw.rml_parse):
+class RepConteoStock(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(rep_conteo_stock, self).__init__(cr, uid, name, context)
+        super(RepConteoStock, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
             'get_data': self.get_data,
@@ -185,7 +185,5 @@ report_sxw.report_sxw(
     'report.hoja.conteo.stock',
     'stock.count',
     'addons/inventory_stock_report/report/hoja_conteo.rml',
-    parser=rep_conteo_stock,
+    parser=RepConteoStock,
 )
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -18,38 +18,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Clean Groups", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Technical", 
-    "description": """
-Clean Users Groups
-====================================
-How to
---------------------------------------------
-- Select the users to which you want to remove the permissions
-- Open de Clean Groups wizard in client windows from users view
-- Select both confirm checkbox
-- Press Clean Groups
-
-You need have Technical group
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Clean Groups",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Technical",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/clean_group_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

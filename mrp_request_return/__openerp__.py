@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,30 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "MRP Acreation", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/MRP", 
-    "description": """ Add wizard to request or return product to the stock
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Acreation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/MRP",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp", 
+        "mrp",
         "mrp_consume_produce"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/mrp_request_return_view.xml", 
+        "wizard/mrp_request_return_view.xml",
         "mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

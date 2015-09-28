@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp.osv import osv
 
 
-class document(osv.Model):
+class Document(osv.Model):
 
     """
     fetchmail

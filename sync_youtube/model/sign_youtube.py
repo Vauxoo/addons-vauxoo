@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -37,7 +37,7 @@ except ImportError:
     _logger.error("You need the gdata library ---> sudo pip install gdata")
 
 
-class sign_youtube_conf(osv.Model):
+class SignYoutubeConf(osv.Model):
     _name = 'sign.youtube.conf'
 
     _columns = {
@@ -179,7 +179,7 @@ class sign_youtube_conf(osv.Model):
         return entry_datas
 
 
-class sign_youtube_conf_line(osv.Model):
+class SignYoutubeConfLine(osv.Model):
     _name = 'sign.youtube.conf.line'
 
     _columns = {

@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,11 +25,11 @@
 from openerp.osv import osv
 
 
-class account_invoice_line(osv.osv):
+class AccountInvoiceLine(osv.osv):
     _inherit = "account.invoice.line"
 
     def _anglo_saxon_sale_move_lines(self, cr, uid, i_line, res, context=None):
-        res = super(account_invoice_line, self)._anglo_saxon_sale_move_lines(
+        res = super(AccountInvoiceLine, self)._anglo_saxon_sale_move_lines(
             cr, uid, i_line, res, context=context)
         if res:
             res[0]['invl_id'] = res[1]['invl_id'] = i_line.id
@@ -36,12 +37,10 @@ class account_invoice_line(osv.osv):
         return res
 
     def _anglo_saxon_purchase_move_lines(self, cr, uid, i_line, res, context=None):
-        res = super(account_invoice_line,
+        res = super(AccountInvoiceLine,
                     self)._anglo_saxon_purchase_move_lines(
                         cr, uid, i_line, res, context=context)
         if res:
             res[0]['invl_id'] = i_line.id
 
         return res
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

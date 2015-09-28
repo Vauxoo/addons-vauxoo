@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,11 +26,11 @@
 from openerp.osv import osv
 
 
-class stock_partial_move(osv.TransientModel):
+class StockPartialMove(osv.TransientModel):
     _inherit = "stock.partial.move"
 
     def do_partial(self, cr, uid, ids, context=None):
-        res = super(stock_partial_move, self).do_partial(
+        res = super(StockPartialMove, self).do_partial(
             cr, uid, ids, context=context)
         stock_move_obj = self.pool.get('stock.move')
         ids_validate = context.get('active_ids')

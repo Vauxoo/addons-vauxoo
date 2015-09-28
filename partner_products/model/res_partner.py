@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,10 +22,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from openerp import api
 from openerp.osv import osv, fields
 
 
-class res_partner(osv.Model):
+class ResPartner(osv.Model):
 
     _inherit = 'res.partner'
     _columns = {
@@ -37,12 +38,11 @@ class res_partner(osv.Model):
             help='Supplier List of Offered Products'),
     }
 
-    def copy(self, cur, uid, ids, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
         """
         overwrite the copy orm method to clean the produc_ids list.
         """
-        context = context or {}
         default = default or {}
         default.update({'product_ids': []})
-        return super(res_partner, self).copy(
-            cur, uid, ids, default=default, context=context)
+        return super(ResPartner, self).copy(default=default)

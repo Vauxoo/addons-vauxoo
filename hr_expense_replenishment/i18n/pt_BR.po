@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:11+0000\n"
-"PO-Revision-Date: 2013-09-11 09:36+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: CDAS <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:45+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: pt_BR\n"
 
 #. module: hr_expense_replenishment
 #: model:ir.actions.act_window,name:hr_expense_replenishment.action_add_invoice_to_expense
@@ -41,8 +42,8 @@ msgstr "Departamento"
 #: view:account.invoice:0
 msgid ""
 "{'partner_id': partner_id, 'price_type': context.get('price_type') or False, "
-"'type': type, 'analytic_exp': context.get('expense_id', False), "
-"'domain_exp':context.get('domain_exp_parent',[])}"
+"'type': type, 'analytic_exp': context.get('expense_id', False), 'domain_exp':"
+"context.get('domain_exp_parent',[])}"
 msgstr ""
 
 #. module: hr_expense_replenishment
@@ -57,8 +58,7 @@ msgid "Entries"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: help:account.invoice,expense_id:0
-#: help:account.invoice.line,expense_id:0
+#: help:account.invoice,expense_id:0 help:account.invoice.line,expense_id:0
 msgid "Expense Document Name"
 msgstr "Despesa Nome do Documento"
 
@@ -209,8 +209,7 @@ msgid "Print Journal Entries"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: field:account.invoice,expense_id:0
-#: field:account.invoice.line,expense_id:0
+#: field:account.invoice,expense_id:0 field:account.invoice.line,expense_id:0
 #: view:attach.invoice.to.expense.wizard:0
 #: field:attach.invoice.to.expense.wizard,expense_id:0
 #: model:ir.model,name:hr_expense_replenishment.model_hr_expense_expense
@@ -220,8 +219,7 @@ msgstr "Despesa"
 #. module: hr_expense_replenishment
 #: code:addons/hr_expense_replenishment/model/hr_expense.py:261
 #, python-format
-msgid ""
-"You have not Deductible or No Deductible lines loaded into the expense"
+msgid "You have not Deductible or No Deductible lines loaded into the expense"
 msgstr "Você linhas dedutíveis não dedutíveis ou não carregado na despesa"
 
 #. module: hr_expense_replenishment
@@ -246,8 +244,7 @@ msgid "Payment through Expense"
 msgstr "Pagamento atraves de Despesa"
 
 #. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-#: field:hr.expense.expense,invoice_ids:0
+#: view:hr.expense.expense:0 field:hr.expense.expense,invoice_ids:0
 msgid "Invoices"
 msgstr "Faturas"
 
@@ -257,8 +254,7 @@ msgid "Invoice Line"
 msgstr "Linha de Fatura"
 
 #. module: hr_expense_replenishment
-#: view:account.voucher:0
-#: view:attach.invoice.to.expense.wizard:0
+#: view:account.voucher:0 view:attach.invoice.to.expense.wizard:0
 msgid "or"
 msgstr "ou"
 
@@ -430,8 +426,7 @@ msgstr ""
 "': account_analytic_id}"
 
 #. module: hr_expense_replenishment
-#: view:account.voucher:0
-#: view:attach.invoice.to.expense.wizard:0
+#: view:account.voucher:0 view:attach.invoice.to.expense.wizard:0
 #: view:hr.expense.expense:0
 msgid "Cancel"
 msgstr "Cancelar"
@@ -442,8 +437,7 @@ msgid "Total Allocation"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: view:account.voucher:0
-#: view:hr.expense.expense:0
+#: view:account.voucher:0 view:hr.expense.expense:0
 msgid "Pay"
 msgstr "Pagar"
 

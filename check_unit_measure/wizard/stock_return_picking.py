@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -19,14 +19,14 @@
 #
 ##############################################################################
 
-from openerp import netsvc
+from openerp import workflow
 import time
 
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class stock_return_picking_memory(osv.TransientModel):
+class StockReturnPickingMemory(osv.TransientModel):
     _inherit = "stock.return.picking.memory"
 
     _columns = {
@@ -35,7 +35,7 @@ class stock_return_picking_memory(osv.TransientModel):
     }
 
 
-class stock_return_picking(osv.TransientModel):
+class StockReturnPicking(osv.TransientModel):
     _inherit = 'stock.return.picking'
 
     def default_get(self, cr, uid, fields, context=None):
@@ -51,7 +51,7 @@ class stock_return_picking(osv.TransientModel):
         result1 = []
         if context is None:
             context = {}
-        res = super(stock_return_picking, self).default_get(
+        res = super(StockReturnPicking, self).default_get(
             cr, uid, fields, context=context)
         record_id = context and context.get('active_id', False) or False
         pick_obj = self.pool.get('stock.picking')
@@ -96,7 +96,7 @@ class stock_return_picking(osv.TransientModel):
         pick_obj = self.pool.get('stock.picking')
         uom_obj = self.pool.get('product.uom')
         data_obj = self.pool.get('stock.return.picking.memory')
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         pick = pick_obj.browse(cr, uid, record_id, context=context)
         data = self.read(cr, uid, ids[0], context=context)
         date_cur = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -177,6 +177,3 @@ class stock_return_picking(osv.TransientModel):
             'type': 'ir.actions.act_window',
             'context': context,
         }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

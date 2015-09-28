@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,29 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Project Complete Name", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """ search by complete_name in model Project
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Project Complete Name",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "project_view.xml", 
+        "project_view.xml",
         "security/project_security.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

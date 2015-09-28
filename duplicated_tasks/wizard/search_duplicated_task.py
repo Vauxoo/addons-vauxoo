@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,7 +22,7 @@
 from openerp.osv import osv, fields
 
 
-class search_duplicated_task(osv.TransientModel):
+class SearchDuplicatedTask(osv.TransientModel):
 
     """  """
 
@@ -106,7 +106,7 @@ class search_duplicated_task(osv.TransientModel):
         if context is None:
             context = {}
         lines = False
-        res = super(search_duplicated_task, self).default_get(cr, uid, fields,
+        res = super(SearchDuplicatedTask, self).default_get(cr, uid, fields,
                                                               context=context)
         if context.get('task_name', False):
             lines = self.get_match_task(cr, uid, context.get('task_name'),
@@ -186,7 +186,7 @@ class search_duplicated_task(osv.TransientModel):
         return True
 
 
-class search_duplicated_task_line(osv.TransientModel):
+class SearchDuplicatedTaskLine(osv.TransientModel):
 
     """  """
     _name = 'search.duplicated.task.line'

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
@@ -26,7 +26,7 @@ from openerp.tools.translate import _
 from lxml import etree
 
 
-class account_invoice_parent(osv.osv_memory):
+class AccountInvoiceParent(osv.osv_memory):
 
     """Assign parent to invoice"""
 
@@ -61,7 +61,7 @@ class account_invoice_parent(osv.osv_memory):
         """
         if context is None:
             context = {}
-        res = super(account_invoice_parent, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+        res = super(AccountInvoiceParent, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
             doc = etree.XML(res['arch'])
             nodes = doc.xpath("//field[@name='partner_id']")
@@ -103,7 +103,7 @@ class account_invoice_parent(osv.osv_memory):
     def default_get(self, cr, uid, fields, context=None):
         """ Change value for default of the type field
         """
-        res = super(account_invoice_parent, self).default_get(cr, uid, fields, context=context)
+        res = super(AccountInvoiceParent, self).default_get(cr, uid, fields, context=context)
         if context.get('op_type', False):
             res.update({'type': context.get('op_type', 'modify')})
         return res
@@ -226,8 +226,3 @@ class account_invoice_parent(osv.osv_memory):
         operation_method = getattr(self, "action_%s" % data['type'])
 
         return operation_method(cr, uid, ids, data, context=context)
-
-
-account_invoice_parent()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

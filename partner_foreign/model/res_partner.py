@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -27,7 +27,7 @@ from openerp import fields, models, api
 from openerp.tools.translate import _
 
 
-class res_partner(models.Model):
+class ResPartner(models.Model):
 
     _inherit = 'res.partner'
 

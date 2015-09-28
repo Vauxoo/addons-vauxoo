@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,31 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "MRP Variation", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/MRP", 
-    "description": """ Add table to veiw variation
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Variation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/MRP",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "mrp_consume_produce", 
+        "mrp_consume_produce",
         "mrp_pt_planified"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "mrp_variation_view.xml", 
-        "security/mrp_variation_security.xml", 
+        "mrp_variation_view.xml",
+        "security/mrp_variation_security.xml",
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class mail_message(osv.Model):
+class MailMessage(osv.Model):
     _inherit = 'mail.message'
     _defaults = {
         'rating': 0,
@@ -36,7 +36,7 @@ class mail_message(osv.Model):
 
     def _message_read_dict(self, cr, uid, message, parent_id=False,
                            context=None):
-        res = super(mail_message, self)._message_read_dict(cr, uid,
+        res = super(MailMessage, self)._message_read_dict(cr, uid,
                                                            message,
                                                            parent_id=parent_id,
                                                            context=context)
@@ -44,7 +44,7 @@ class mail_message(osv.Model):
         return res
 
 
-class product_template(osv.Model):
+class ProductTemplate(osv.Model):
     _inherit = 'product.template'
     _defaults = {
         'rating': 3,

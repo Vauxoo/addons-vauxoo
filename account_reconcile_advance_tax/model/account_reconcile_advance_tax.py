@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,11 +23,11 @@
 from openerp.osv import osv
 
 
-class account_reconcile_advance(osv.Model):
+class AccountReconcileAdvance(osv.Model):
     _inherit = 'account.reconcile.advance'
 
     def payment_reconcile(self, cr, uid, ids, context=None):
-        res = super(account_reconcile_advance,
+        res = super(AccountReconcileAdvance,
                     self).payment_reconcile(cr, uid, ids, context=context)
         self.create_ara_tax(cr, uid, ids, amount_inv_pay=res, context=context)
         return res

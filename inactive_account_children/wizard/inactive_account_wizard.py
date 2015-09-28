@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 ########################################################################
@@ -29,7 +29,7 @@ from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 
 
-class inactive_account_wizard(osv.osv_memory):
+class InactiveAccountWizard(osv.osv_memory):
     _name = 'inactive.account.wizard'
 
     def get_accounts(self, cr, uid, ids, context=None):

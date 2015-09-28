@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,33 +24,25 @@
 #
 #
 {
-    "name": "Account Reconcile Grouping", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
-    "description": """
-Account Reconcile Grouping
-==========================
-
-This module allows you to group your journal items by reconciliation with a new filter in the search view.
-
-
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Account Reconcile Grouping",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
+        "account",
         "account_move_line_grouping"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/account_move_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

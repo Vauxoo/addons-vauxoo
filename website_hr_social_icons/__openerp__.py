@@ -1,12 +1,10 @@
+# coding: utf-8
 {
     'name': 'Team Social Icons',
     'category': 'Website',
     'summary': 'Present your social icons on team page',
     'website': 'www.vauxoo.com',
-    'version': '1.0',
-    'description': """
-Team Social Icons on Our team page
-        """,
+    'version': '1.6',
     'author': 'Vauxoo',
     'depends': [
         'website_hr',

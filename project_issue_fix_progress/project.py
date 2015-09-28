@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,11 +23,11 @@
 from openerp.osv import osv
 
 
-class project_task(osv.osv):
+class ProjectTask(osv.osv):
     _inherit = 'project.task'
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(project_task, self).write(cr, uid, ids, vals, context)
+        res = super(ProjectTask, self).write(cr, uid, ids, vals, context)
         try:
             issue_obj = self.pool.get('project.issue')
             issue_ids = issue_obj.search(cr, uid, [(

@@ -1,12 +1,22 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 from openerp.addons.report.controllers import main
-from openerp.addons.web.http import route, request # pylint: disable=F0401
-from werkzeug import url_decode # pylint: disable=E0611
+from openerp.addons.web.http import route, request  # pylint: disable=F0401
+from werkzeug import url_decode  # pylint: disable=E0611
 import simplejson
-from bs4 import BeautifulSoup
+
+import logging
+_logger = logging.getLogger(__name__)
+
 import xlwt
 import StringIO
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    _logger.info('You have report_xls from addons-vauxoo'
+                 'declared in your system you will need '
+                 ' bs4 library in order to use '
+                 'this module')
 
 
 class ReportController(main.ReportController):
@@ -58,6 +68,8 @@ class ReportController(main.ReportController):
         soup = BeautifulSoup(html)
         row = 0
         for tag_id in ['table_header', 'table_body']:
+            # Include a dependency extra when we have a library that
+            # Can achieve the deal is incorrect, TODO: fixme
             table = soup.find("table", id=tag_id)
             rows = table.findAll("tr")
             for tr in rows:
@@ -79,7 +91,6 @@ class ReportController(main.ReportController):
                 # update the row pointer AFTER a row has been printed
                 # this avoids the blank row at the top of your table
                 row += 1
-
         stream = StringIO.StringIO()
         wb.save(stream)
         return stream.getvalue()

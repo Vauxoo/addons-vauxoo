@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,7 +23,7 @@
 from openerp.osv import osv, fields
 
 
-class procurement_compute_all(osv.TransientModel):
+class ProcurementComputeAll(osv.TransientModel):
     _inherit = 'procurement.order.compute.all'
 
     _columns = {
@@ -36,9 +36,6 @@ class procurement_compute_all(osv.TransientModel):
         form = self.read(cr, uid, ids, [])
         products = form and form[0]['product_ids'] or False
         context.update({'product_ids': products})
-        res = super(procurement_compute_all, self).procure_calculation(
+        res = super(ProcurementComputeAll, self).procure_calculation(
             cr, uid, ids, context=context)
         return res
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,3 +1,4 @@
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,7 +25,7 @@ from openerp.tools.translate import _
 from openerp.osv import osv, fields
 
 
-class sale_order(osv.osv):
+class SaleOrder(osv.osv):
 
     _inherit = "sale.order"
     _columns = {
@@ -55,5 +56,3 @@ class sale_order(osv.osv):
             'view_id': False,
             'type': 'ir.actions.act_window'
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

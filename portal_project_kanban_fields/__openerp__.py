@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,35 +22,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Portal Project Kanban Fields", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "", 
-    "description": """
-Add three fields to the project.
-
-- Project URL: Link to the project in launchpad.
-- Documentation URL: Link to the project documentation.
-- Image: Logo of the Project
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Portal Project Kanban Fields",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "project", 
+        "base",
+        "project",
         "portal_project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
+    ],
+    "test": [],
+    "js": [],
     "css": [
         "static/src/css/project.css"
-    ], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

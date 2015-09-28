@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,7 +25,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-class account_invoice_debit(osv.TransientModel):
+class AccountInvoiceDebit(osv.TransientModel):
 
     """Debits Note from Invoice"""
 
@@ -75,7 +75,7 @@ class account_invoice_debit(osv.TransientModel):
         if context is None:
             context = {}
         journal_obj = self.pool.get('account.journal')
-        res = super(account_invoice_debit, self).fields_view_get(
+        res = super(AccountInvoiceDebit, self).fields_view_get(
             cr, uid, view_id=view_id, view_type=view_type, context=context,
             toolbar=toolbar, submenu=submenu)
         # Debit note only from customer o purchase invoice
@@ -263,6 +263,3 @@ class account_invoice_debit(osv.TransientModel):
 
     def invoice_debit(self, cr, uid, ids, context=None):
         return self.compute_debit(cr, uid, ids, context=context)
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

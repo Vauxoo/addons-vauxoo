@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,12 +26,12 @@
 from openerp.osv import osv
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def create_account_variation_move_line(self, cr, uid, prod_variation,
             src_account_id, dest_account_id, reference_amount, context=None):
-        res = super(mrp_production, self).create_account_variation_move_line(
+        res = super(MrpProduction, self).create_account_variation_move_line(
             cr, uid, prod_variation, src_account_id, dest_account_id,
             reference_amount, context=context)
         for lin in res:
@@ -65,5 +65,5 @@ class mrp_production(osv.Model):
                 except:
                     pass
                 account_move.unlink(cr, uid, [lin[0]])
-        return super(mrp_production, self).action_cancel(cr, uid, ids,
+        return super(MrpProduction, self).action_cancel(cr, uid, ids,
                                                          context=context)

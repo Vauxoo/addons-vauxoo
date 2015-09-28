@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
@@ -19,33 +19,26 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Email template dinamic attachment", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "description": """
-Added field in email_template to allow get attachment in mail_compose_message of the follow way:
-------------------------------------------------------------------------------------------------
-* By default get attachment of record
-* From other fields with relation to ir.attachment
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Email template dinamic attachment",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "mail", 
+        "mail",
         "email_template"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/email_template_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

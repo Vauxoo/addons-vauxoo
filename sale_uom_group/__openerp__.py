@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -22,32 +22,27 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "salem_uom_group", 
-    "version": "0.1", 
-    "author": "Openerp Venzuela", 
-    "category": "Generic Modules/MRP", 
-    "description": """
-    What do this module:
-    Add multi product uom sum of order line.
-                    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Sale UOM Group",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/MRP",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/groups.xml", 
-        "security/ir.model.access.csv", 
+        "security/groups.xml",
+        "security/ir.model.access.csv",
         "view/sale_uom_group_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

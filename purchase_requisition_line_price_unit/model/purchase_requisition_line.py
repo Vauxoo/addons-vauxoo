@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ########################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -24,7 +24,7 @@ from openerp.osv import fields, osv
 import openerp.addons.decimal_precision as dp
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
     _inherit = "purchase.requisition"
 
     def _get_requisition(self, cr, uid, ids, context=None):
@@ -61,7 +61,7 @@ class purchase_requisition(osv.Model):
     }
 
 
-class purchase_requisition_line(osv.Model):
+class PurchaseRequisitionLine(osv.Model):
     _inherit = "purchase.requisition.line"
 
     def _amount_line(self, cr, uid, ids, prop, arg, context=None):

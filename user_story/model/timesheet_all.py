@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,7 +25,7 @@ from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
 
-class custom_timesheet_all(osv.Model):
+class CustomTimesheetAll(osv.Model):
 
     '''
     Class that contains the methods needed to return the data to the view.

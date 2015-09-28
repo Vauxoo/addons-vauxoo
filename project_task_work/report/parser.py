@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -27,10 +27,10 @@ import time
 from openerp.report import report_sxw
 
 
-class project_task_work_report(report_sxw.rml_parse):
+class ProjectTaskWorkReport(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(project_task_work_report, self).__init__(
+        super(ProjectTaskWorkReport, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
@@ -94,7 +94,6 @@ report_sxw.report_sxw(
     'report.project_task_work',
     'project.task.work',
     'addons/project_task_work/report/project_task_work.rml',
-    parser=project_task_work_report,
+    parser=ProjectTaskWorkReport,
     header=False
 )
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

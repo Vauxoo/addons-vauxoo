@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -30,7 +30,7 @@ attributes to childrens of employee.
 from openerp.osv import osv, fields
 
 
-class hr_employee(osv.Model):
+class HrEmployee(osv.Model):
     '''
     Inherit hr_employee to add date_start and to add yours childrens
     '''
@@ -43,7 +43,7 @@ class hr_employee(osv.Model):
     }
 
 
-class hr_children(osv.Model):
+class HrChildren(osv.Model):
     '''
     Class to add object of childrens to employee
     '''

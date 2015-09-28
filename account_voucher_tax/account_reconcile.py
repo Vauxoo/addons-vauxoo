@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@ from openerp.osv import osv
 import time
 
 
-class account_move_line_reconcile_writeoff(osv.osv_memory):
+class AccountMoveLineReconcileWriteoff(osv.osv_memory):
 
     _inherit = 'account.move.line.reconcile.writeoff'
 
@@ -37,7 +37,7 @@ class account_move_line_reconcile_writeoff(osv.osv_memory):
         if context is None:
             context = {}
         res = super(
-            account_move_line_reconcile_writeoff,
+            AccountMoveLineReconcileWriteoff,
             self).trans_rec_reconcile_partial(cr, uid, ids, context=context)
 
         self.trans_rec_reconcile_tax(
@@ -58,7 +58,7 @@ class account_move_line_reconcile_writeoff(osv.osv_memory):
         period_id = False
 
         res = super(
-            account_move_line_reconcile_writeoff,
+            AccountMoveLineReconcileWriteoff,
             self).trans_rec_reconcile(cr, uid, ids, context=context)
 
         for writeoff_rec in self.browse(cr, uid, ids, context=context):

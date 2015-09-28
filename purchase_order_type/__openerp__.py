@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -22,34 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Order Type", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "purchase", 
-    "description": """
-Purchase Order Type
-===================
-
-Add a new field name type that can discriminate a materials and service
-purchase order. Also add to the purchase order search view the
-filters need to visually make the discrimination.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Purchase Order Type",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "purchase",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "purchase", 
-        "purchase_requisition_type", 
+        "purchase",
+        "purchase_requisition_type",
         "pr_line_related_po_line"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/purchase_order_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

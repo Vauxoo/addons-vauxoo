@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import fields, osv
 
 
-class project(osv.Model):
+class Project(osv.Model):
     _inherit = 'project.project'
 
     def _get_followers(self, cr, uid, ids, field_name, arg, context=None):

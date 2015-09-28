@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -29,7 +29,7 @@ import base64
 from openerp.osv import osv, fields
 
 
-class wizard_import(osv.TransientModel):
+class WizardImport(osv.TransientModel):
     _name = 'wizard.import'
     _columns = {
         'name': fields.binary('File'),

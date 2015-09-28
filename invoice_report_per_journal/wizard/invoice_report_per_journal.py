@@ -1,14 +1,14 @@
-# -*- encoding: utf-8 -*- #
-############################################################################
+# coding: utf-8
+# ######################################################################## #
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).                           #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# ##############Credits################################################### #
 #    Coded by: Sabrina Romero (sabrina@vauxoo.com)                         #
 #    Planified by: Nhomar Hernandez (nhomar@vauxoo.com)                    #
 #    Finance by: COMPANY NAME <EMAIL-COMPANY>                              #
 #    Audited by: author NAME LASTNAME <email@vauxoo.com>                   #
-############################################################################
+# ######################################################################## #
 #    This program is free software: you can redistribute it and/or modify  #
 #    it under the terms of the GNU General Public License as published by  #
 #    the Free Software Foundation, either version 3 of the License, or     #
@@ -21,7 +21,7 @@
 #                                                                          #
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
-############################################################################
+# ######################################################################## #
 '''
 File to added wizard to print report that is selected in the journal of
 invoice to print.
@@ -30,12 +30,12 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 import base64
-import openerp.netsvc as netsvc
+import openerp.report
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class invoice_report_per_journal(osv.TransientModel):
+class InvoiceReportPerJournal(osv.TransientModel):
 
     """
     OpenERP Wizard: invoice.report.per.journal
@@ -88,9 +88,9 @@ class invoice_report_per_journal(osv.TransientModel):
         @param context: A standard dictionary
         @return : result of creation of report
         '''
-        service = netsvc.LocalService('report.' + report.report_name)
-        (result, formato) = service.create(cr, uid, context[
-            'active_ids'], {'model': context['active_model']}, {})
+        (result, formato) = openerp.report.render_report(
+            cr, uid, context.get('active_ids', []), report.report_name,
+            {'model': context.get('active_model', '')}, context=None)
         return (result, formato)
 
     def _get_report(self, cr, uid, context=None):
@@ -112,7 +112,7 @@ class invoice_report_per_journal(osv.TransientModel):
             try:
                 (result, _) = self._prepare_service(cr, uid, report,
                                                     context=context)
-            except BaseException, e:
+            except BaseException:
                 if report:
                     _logger.warning("Error occurred in the report, the "
                                     "report set to the journal will be "
@@ -126,8 +126,9 @@ class invoice_report_per_journal(osv.TransientModel):
                 (result, _) = self._prepare_service(cr, uid, report_,
                                                     context=context)
             try:
-                act_id = self.pool.get('ir.actions.act_window').search(cr, uid,
-                    [('name', '=', report.name + ' txt')], context=context)[0]
+                act_id = self.pool.get('ir.actions.act_window').search(
+                    cr, uid, [('name', '=', report.name + ' txt')],
+                    context=context)[0]
                 if act_id:
                     act_brw = self.pool.get('ir.actions.act_window').browse(
                         cr, uid, act_id, context=context)

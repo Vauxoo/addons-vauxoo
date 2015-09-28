@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
 
     def action_move_create(self, cr, uid, ids, context=None):
@@ -57,4 +57,4 @@ class account_invoice(osv.Model):
                type_acc_invo != 'payable':
                 raise osv.except_osv(_('Error'), _(
                     "Type of account in invoice to Partner must be 'payable'"))
-        return super(account_invoice, self).action_move_create(cr, uid, ids)
+        return super(AccountInvoice, self).action_move_create(cr, uid, ids)

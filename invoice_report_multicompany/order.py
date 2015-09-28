@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp.osv import fields, osv
 
 
-class sale_order_line(osv.Model):
+class SaleOrderLine(osv.Model):
 
     """
     OpenERP Model : sale_order_line
@@ -13,7 +13,7 @@ class sale_order_line(osv.Model):
     }
 
 
-class sale_order(osv.Model):
+class SaleOrder(osv.Model):
 
     """
     OpenERP Model : sale_order_line

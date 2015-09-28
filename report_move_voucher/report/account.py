@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -28,10 +28,10 @@ import time
 from openerp.report import report_sxw
 
 
-class move_voucher_report(report_sxw.rml_parse):
+class MoveVoucherReport(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(move_voucher_report, self).__init__(
+        super(MoveVoucherReport, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
@@ -52,6 +52,6 @@ report_sxw.report_sxw(  # nuevo
     'report.account.move_vauxoo',
     'account.move',
     'addons/report_move_voucher/report/move_voucher.rml',
-    parser=move_voucher_report,
+    parser=MoveVoucherReport,
     header=False
 )

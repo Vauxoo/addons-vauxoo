@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,7 +25,7 @@
 from openerp.osv import osv
 
 
-class mail_message(osv.Model):
+class MailMessage(osv.Model):
     _inherit = 'mail.message'
     _defaults = {
         'website_published': False,
@@ -33,7 +33,7 @@ class mail_message(osv.Model):
 
     def _message_read_dict(self, cr, uid, message, parent_id=False,
                            context=None):
-        ret = super(mail_message, self)._message_read_dict(cr, uid,
+        ret = super(MailMessage, self)._message_read_dict(cr, uid,
                                                            message,
                                                            parent_id=parent_id,
                                                            context=context)

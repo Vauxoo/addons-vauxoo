@@ -1,7 +1,8 @@
+# coding: utf-8
 from openerp.osv import osv
 
 
-class account_invoices(osv.Model):
+class AccountInvoices(osv.Model):
 
     """
     account_invoices

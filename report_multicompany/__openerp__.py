@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,34 +24,26 @@
 #
 #
 {
-    "name": "Report Multicompany", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "description": """
-Report Multicompany
-===================
-
-This module adds a model report_multicompany which helps to have a report
-relationship with company (similar to a property).
-
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Report Multicompany",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/ir.model.access.csv", 
-        "view/report_multicompany_view.xml", 
+        "security/ir.model.access.csv",
+        "view/report_multicompany_view.xml",
         "security/report_multicompany_security.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

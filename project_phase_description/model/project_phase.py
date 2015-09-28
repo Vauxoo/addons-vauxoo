@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class project_phase(osv.Model):
+class ProjectPhase(osv.Model):
     _inherit = 'project.phase'
 
     _columns = {
@@ -33,5 +33,5 @@ class project_phase(osv.Model):
     }
 
 
-class project_task(osv.Model):
+class ProjectTask(osv.Model):
     _inherit = 'project.task'

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -40,7 +40,7 @@ SUMINISTRO = [('comprar', 'Comprar'),
               ]
 
 
-class stock_count(osv.TransientModel):
+class StockCount(osv.TransientModel):
 
     """
     Conteo del Stock
@@ -55,6 +55,3 @@ class stock_count(osv.TransientModel):
         'comprable': fields.boolean("Comprable"),
         'alquilable': fields.boolean("Alquilable"),
     }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

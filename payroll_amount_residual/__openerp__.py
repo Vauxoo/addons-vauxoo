@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,29 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "Amount Residual Payslip", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic", 
-    "description": """
-
-    This module adda field to save the amount residual in an payslip
-
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Amount Residual Payslip",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "hr_payroll_account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "hr_payslip_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

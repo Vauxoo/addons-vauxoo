@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -28,31 +28,26 @@
 ###
 ### res_company --> account_management ver si se puede eliminar esta dependencia ####
 ### retencion_iva, base_vat_ve  ver si se puede eliminar esta dependencia
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Voucher Paid support report", 
-    "version": "0.2", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Accounting", 
-    "description": """
-        Este modulo agrega al reporte del soporte de pago detallado las retenciones del Impuesto al valor agregado (IVA)
-
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Voucher Paid support report",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "l10n_ve_withholding_iva", 
+        "l10n_ve_withholding_iva",
         "bank_management"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "bank_iva_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": False, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False,
+    "auto_install": False,
     "active": False
 }

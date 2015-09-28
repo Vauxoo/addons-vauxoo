@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -26,12 +26,12 @@ from openerp.osv import osv
 _logger = logging.getLogger(__name__)
 
 
-class timesheet_report_qweb_html(report_sxw.rml_parse):
+class TimesheetReportQwebHtml(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
         if context is None:
             context = {}
-        super(timesheet_report_qweb_html, self).\
+        super(TimesheetReportQwebHtml, self).\
             __init__(cr, uid, name, context=context)
         self.localcontext.update({
             'translatable': True,
@@ -45,7 +45,7 @@ class timesheet_report_qweb_html(report_sxw.rml_parse):
         return records
 
 
-class timesheet_report_qweb_pdf_report(osv.AbstractModel):
+class TimesheetReportQwebPdfReport(osv.AbstractModel):
 
     # _name = `report.` + `report_name`
     _name = 'report.hr_timesheet_reports.timesheet_report_vauxoo'
@@ -53,12 +53,10 @@ class timesheet_report_qweb_pdf_report(osv.AbstractModel):
     # this inheritance will allow to render this particular report
     _inherit = 'report.abstract_report'
     _template = 'hr_timesheet_reports.timesheet_report_vauxoo'
-    _wrapped_report_class = timesheet_report_qweb_html
+    _wrapped_report_class = TimesheetReportQwebHtml
 
     def render_html(self, cr, uid, ids, data=None, context=None):
         context = dict(context or {})
         context.update({'translatable': True})
-        return super(timesheet_report_qweb_pdf_report, self).\
+        return super(TimesheetReportQwebPdfReport, self).\
             render_html(cr, uid, ids, data=data, context=context)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

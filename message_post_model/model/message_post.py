@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # ##########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -26,7 +26,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class message_post_show_all(osv.Model):
+class MessagePostShowAll(osv.Model):
 
     '''
     With this object you can add an extensive log in your model like the
@@ -228,6 +228,6 @@ class message_post_show_all(osv.Model):
             body = body and '%s\n</ul>' % body
             if body and message:
                 self.message_post(cr, uid, [idx], body, _('Changes in Fields'))
-        res = super(message_post_show_all, self).write(cr, uid, ids, vals,
+        res = super(MessagePostShowAll, self).write(cr, uid, ids, vals,
                                                        context=context)
         return res

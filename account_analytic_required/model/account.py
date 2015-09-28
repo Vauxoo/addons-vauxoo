@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class account_invoice_line(osv.Model):
+class AccountInvoiceLine(osv.Model):
     _inherit = 'account.invoice.line'
 
     _columns = {
@@ -42,7 +42,7 @@ class account_invoice_line(osv.Model):
         if not account_id:
             return {}
         res = super(
-            account_invoice_line, self).onchange_account_id(
+            AccountInvoiceLine, self).onchange_account_id(
                 cr, uid, ids, product_id, partner_id, inv_type, fposition_id,
                 account_id)
         account_obj = self.pool.get('account.account')

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -23,10 +23,10 @@ import time
 from openerp.report import report_sxw
 
 
-class account_invoice2(report_sxw.rml_parse):
+class AccountInvoice2(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(account_invoice2, self).__init__(cr, uid, name, context=context)
+        super(AccountInvoice2, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'cg': self.context_get,
@@ -48,6 +48,5 @@ report_sxw.report_sxw(
     'report.account.invoices.amd',
     'account.invoice',
     'addons/invoice_report_multicompany/report/account_print_invoices.rml',
-    parser=account_invoice2
+    parser=AccountInvoice2
 )
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

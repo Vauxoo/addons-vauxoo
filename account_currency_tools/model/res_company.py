@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,7 +22,7 @@
 from openerp.osv import fields, osv
 
 
-class res_company(osv.Model):
+class ResCompany(osv.Model):
     _inherit = "res.company"
     _description = 'Companies'
 

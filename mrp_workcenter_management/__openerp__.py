@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -23,37 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Workcenter Management", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "description": """
-
-MRP Management Workcenter.
-==========================
-
-This module adds a better management of Work Centers on Manufacturing module.
-List of new functionalities:
-
-- adds a new menuitem at **Manufacturing** > **Manufacturing** > **Work Centers**  that shows the work centers registered.
-
- """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "MRP Workcenter Management",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "mrp", 
+        "base",
+        "mrp",
         "mrp_operations"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/mrp_workcenter_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

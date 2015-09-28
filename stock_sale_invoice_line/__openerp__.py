@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,15 +23,9 @@
 ###############################################################################
 {
     "name": "Stock Sale Invoice Line",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "sale",
-    "description": """
-Stock Sale Invoice Line
-=======================
-
-    Adds a new field in invoice line to link sale_order_line to it
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

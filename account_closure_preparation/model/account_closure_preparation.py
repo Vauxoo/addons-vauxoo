@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class account_closure_preparation(osv.TransientModel):
+class AccountClosurePreparation(osv.TransientModel):
 
     '''Prepare a Chart of Account to be used properly when closing a
     fiscayear'''

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,45 +25,33 @@
 #'data/user_story_template.xml',
 #'wizard/user_story_compute_phases_view.xml',
 #'wizard/user_story_compute_tasks_view.xml',
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Long Term User Story", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "User Story Management", 
-    "description": """
-Long Term User Story Management module
-======================================
-
-Features:
----------
-    * Define various Phases of User Story
-    * Send mail to the followers of the user story as an acceptance criteria is accepted.
-    * Send mail to the owner, responsible supervisor and execution responsible when the user story
-      pass from in progress to pending state.
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Long Term User Story",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "User Story Management",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
-        "user_story", 
-        "project_conf", 
+        "base",
+        "mail",
+        "user_story",
+        "project_conf",
         "project_long_term"
-    ], 
+    ],
     "demo": [
         "demo/user_story_conf.xml"
-    ], 
+    ],
     "data": [
-        "security/ir.model.access.csv", 
-        "user_story_long_term_view.xml", 
+        "security/ir.model.access.csv",
+        "user_story_long_term_view.xml",
         "workflow/user_story_long_term_workflow.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class stock_move(osv.Model):
+class StockMove(osv.Model):
     _inherit = "stock.move"
 
     _columns = {
@@ -45,7 +45,7 @@ class stock_move(osv.Model):
     }
 
     def action_confirm(self, cr, uid, ids, context=None):
-        res = super(stock_move, self).action_confirm(
+        res = super(StockMove, self).action_confirm(
             cr, uid, ids, context=context)
         for id_move in ids:
             move = self.browse(cr, uid, id_move)
@@ -56,7 +56,7 @@ class stock_move(osv.Model):
         return res
 
     def action_done(self, cr, uid, ids, context=None):
-        res = super(stock_move, self).action_done(
+        res = super(StockMove, self).action_done(
             cr, uid, ids, context=context)
         for id_move in ids:
             move = self.browse(cr, uid, id_move)

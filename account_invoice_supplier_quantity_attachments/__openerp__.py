@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,7 +22,7 @@
 
 {
     'name': 'Supplier invoice - Quantity attachments',
-    'version': '1.0',
+    'version': '1.6',
     'author': 'Vauxoo',
     'category': '',
     'depends': [
@@ -30,12 +30,6 @@
     ],
     'demo': [],
     'website': 'https://www.vauxoo.com',
-    'description': """
-    This module was developed by request of the customer,
-    consisting visualize the amount of attachments on each invoice.
-    The module add a field into invoice to show the
-    number of attachments by record in the tree view.
-    """,
     'data': [
         'views/account_invoice.xml',
     ],
@@ -44,5 +38,3 @@
     'auto_install': False,
     'images': [],
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

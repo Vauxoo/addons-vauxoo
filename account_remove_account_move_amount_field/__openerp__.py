@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,27 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "Account remove account move amount field", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Account", 
-    "description": """ Removes from the account move form view the amount field
-    Enhaces speed of account move model a bit.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Account remove account move amount field",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "account_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

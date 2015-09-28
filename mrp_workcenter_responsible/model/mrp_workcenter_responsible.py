@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class mrp_workcenter(osv.Model):
+class MrpWorkcenter(osv.Model):
 
     _inherit = 'mrp.workcenter'
     _columns = {
@@ -36,7 +36,7 @@ class mrp_workcenter(osv.Model):
     }
 
 
-class mrp_production_workcenter_line(osv.Model):
+class MrpProductionWorkcenterLine(osv.Model):
 
     _inherit = 'mrp.production.workcenter.line'
     _columns = {

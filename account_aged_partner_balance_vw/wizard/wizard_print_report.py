@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import fields, osv
 from .webkit_parser_header_fix import HeaderFooterTextWebKitParser
 
 
-class wizard_report_aged_partner_balance(osv.osv_memory):
+class WizardReportAgedPartnerBalance(osv.osv_memory):
     _name = 'wizard.report.aged.partner.balance'
 
     def default_get(self, cr, uid, fields_list=None, context=None):

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,29 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Sale Line Import", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Product", 
-    "description": """Import a CSV file to lines of Sale Order
-    """, 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Sale Line Import",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Product",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/wizard_import_line_security.xml", 
+        "security/wizard_import_line_security.xml",
         "wizard/sale_line_import_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

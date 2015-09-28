@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,29 +24,24 @@
 #
 #
 {
-    "name": "Project Required", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Project", 
-    "description": """
-    This module set as required the field project_id on
-    model project.task from the view by inheritance.
-    Also warns the hours and add negative future dates.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Project Required",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Project",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/project_task_view_inherit.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

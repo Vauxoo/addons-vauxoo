@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
@@ -28,10 +28,11 @@
 #
 ##############################################################################
 
+from openerp import api
 from openerp.osv import fields, osv
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
     _columns = {
         'parent_id': fields.many2one('account.invoice',
@@ -49,17 +50,13 @@ class account_invoice(osv.Model):
                                      'to this invoice'),
     }
 
-    def copy(self, cr, uid, id, default={}, context=None):
+    @api.one
+    def copy(self, default={}):
         """ Allows you to duplicate a record,
         child_ids, nro_ctrl and reference fields are
         cleaned, because they must be unique
         """
-        if context is None:
-            context = {}
         default.update({
             'child_ids': [],
         })
-        return super(account_invoice, self).copy(cr, uid, id, default, context)
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        return super(AccountInvoice, self).copy(default)

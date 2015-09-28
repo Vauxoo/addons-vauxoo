@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -22,21 +21,19 @@
 ###############################################################################
 {
     "name": "XLS Report Controller",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Tools",
-    "description": """
-XLS Report Controller
-=====================
-This module does nothing by itself is meant to be imported by other modules to
-    enable them to export their QWeb reports into XLS format. Special treatment
-    on qweb template and layouts is required to leverage from this module.
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
         "report",
     ],
+    "external_dependencies": {
+        "python": [
+            "bs4",
+        ]
+    },
     "demo": [],
     "data": [
     ],

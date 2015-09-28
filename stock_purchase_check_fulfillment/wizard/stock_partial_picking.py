@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -26,7 +26,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class stock_partial_picking(osv.osv_memory):
+class StockPartialPicking(osv.osv_memory):
     _inherit = "stock.partial.picking"
 
     def do_partial(self, cr, uid, ids, context=None):
@@ -39,7 +39,7 @@ class stock_partial_picking(osv.osv_memory):
         partial = self.browse(cr, uid, ids[0], context=context)
         picking_id = partial.picking_id.id
 
-        fnc_super = super(stock_partial_picking, self).do_partial
+        fnc_super = super(StockPartialPicking, self).do_partial
 
         ru_brw = ru_obj.browse(cr, uid, uid, context=context)
         rc_brw = ru_brw.company_id

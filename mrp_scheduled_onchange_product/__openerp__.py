@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,28 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "mrp scheduled onchange product", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Production", 
-    "description": """When you add a product, it sets automatically the default uom
-    for the product and the name of the product. Adds too a domain to the field
-    product_uom to only show the uom matching the selected product.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "mrp scheduled onchange product",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Production",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

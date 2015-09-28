@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,26 +23,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp import api
 from openerp.osv import osv
 
 
-class product_product(osv.Model):
+class ProductProduct(osv.Model):
     _inherit = "product.product"
 
-    def copy(self, cr, uid,
-             id, default=None, context=None):  # pylint: disable=W0622
+    @api.one
+    def copy(self, default=None):  # pylint: disable=W0622
 
         if not default:
             default = {}
 
-        product_default_code = self.browse(cr, uid, id, context=context)
-
         default[
-            'default_code'] = product_default_code.default_code and\
-            product_default_code.default_code + ' (copy)' or False
+            'default_code'] = self.default_code and\
+            self.default_code + ' (copy)' or False
 
-        return super(product_product, self).copy(cr, uid, id, default=default,
-                                                 context=context)
+        return super(ProductProduct, self).copy(default=default)
 
     _sql_constraints = [
         ('default_code_unique', 'unique (default_code)',

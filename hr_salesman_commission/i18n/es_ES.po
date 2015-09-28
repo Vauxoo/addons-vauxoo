@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* hr_salesman_commission
+# 	* hr_salesman_commission
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.7\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2013-11-07 01:11+0000\n"
-"PO-Revision-Date: 2013-11-07 04:21+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: Moisés López - http://www.vauxoo.com "
 "<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es_ES\n"
 
 #. module: hr_salesman_commission
 #: model:ir.ui.menu,name:hr_salesman_commission.sales_commission_payment_new_mi

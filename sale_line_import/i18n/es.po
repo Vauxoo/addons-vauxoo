@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* sale_line_import
+# 	* sale_line_import
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:07+0000\n"
-"PO-Revision-Date: 2013-11-08 21:59+0000\n"
+"PO-Revision-Date: 2015-08-03 16:07+0200\n"
 "Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
 "<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:47+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es\n"
 
 #. module: sale_line_import
 #: field:wizard.import,validate:0

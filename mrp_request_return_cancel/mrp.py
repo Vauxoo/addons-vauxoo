@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,10 +25,10 @@
 ##############################################################################
 from openerp.osv import osv
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = "mrp.production"
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -36,11 +36,11 @@ class mrp_production(osv.Model):
         if context is None:
             context = {}
 
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
 
         for production in self.browse(cr, uid, ids, context=context):
             for line in production.picking_ids:
                 wf_service.trg_validate(
                     uid, 'stock.picking', line.id, 'button_cancel', cr)
-        return super(mrp_production, self).action_cancel(cr, uid, ids,
+        return super(MrpProduction, self).action_cancel(cr, uid, ids,
                                                          context=context)

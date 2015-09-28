@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,7 +25,7 @@
 from openerp.osv import osv, fields
 
 
-class product_product(osv.osv):
+class ProductProduct(osv.osv):
     _inherit = 'product.product'
     _columns = {
         'model_number': fields.char('Model Number', size=64),

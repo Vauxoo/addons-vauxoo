@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,11 +25,11 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 #~ from DateTime import DateTime
 
 
-class account_move_cancel(osv.TransientModel):
+class AccountMoveCancel(osv.TransientModel):
 
     _name = 'account.move.cancel'
     _columns = {
@@ -55,7 +55,7 @@ class account_move_cancel(osv.TransientModel):
         iva_ids = []
         islr_ids = []
         journal_ids = []
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         print "context", context
         if not invoice_ids:
             invo_brw = self.browse(cr, uid, ids, context=context)

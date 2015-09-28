@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,27 +24,24 @@
 #
 ##############################################################################
 {
-    "name": "MRP Subproduction", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """This module allows to assign production orders to another parent production
-    order, showing how many of the parent product was consumed in each of its children production orders.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "MRP Subproduction",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "mrp_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,10 +25,10 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
-class procurement_order_merge_jit_extended(osv.TransientModel):
+class ProcurementOrderMergeJitExtended(osv.TransientModel):
     _name = 'procurement.order.merge.jit.extended'
     _columns = {
         'date_planned': fields.datetime('Scheduled date', select=1),
@@ -64,7 +64,7 @@ class procurement_order_merge_jit_extended(osv.TransientModel):
                     (line.product_id.type != 'service'):
                 res.append(line.id)
         # forwards procurements that were merged
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         new_ids = []
         for line in res:
             wf_service.trg_validate(

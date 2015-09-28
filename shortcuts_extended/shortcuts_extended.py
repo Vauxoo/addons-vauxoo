@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@
 from openerp.osv import osv, fields
 
 
-class res_users(osv.Model):
+class ResUsers(osv.Model):
     _inherit = 'res.users'
     _columns = {
         'shorcut_ids': fields.one2many('ir.ui.view_sc', 'user_id', string='Shortcuts'),

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -25,31 +25,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name": "Report Order customisation Vnzla", 
-    "version": "0.2", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Others", 
-    "description": """
-                    Purchase Order customisation for Vauxoo
-                    Add new field for Payment Terms in purchase order
-                    Changed in purchase order fields to required
-                    """, 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+    "name": "Report Order customisation Vnzla",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Others",
+    "website": "http://wiki.openerp.org.ve/",
+    "license": "",
     "depends": [
-        "purchase", 
+        "purchase",
         "multireport_base"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/purchase_report_multicompany.xml", 
+        "wizard/purchase_report_multicompany.xml",
         "purchase_report_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": False, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": False,
+    "auto_install": False,
     "active": False
 }

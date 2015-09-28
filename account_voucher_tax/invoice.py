@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@
 from openerp.osv import osv
 
 
-class invoice(osv.osv):
+class Invoice(osv.osv):
     _inherit = 'account.invoice'
 
     def invoice_pay_customer(self, cr, uid, ids, context=None):
@@ -37,23 +37,29 @@ class invoice(osv.osv):
         act_obj = self.pool.get('ir.actions.act_window')
         inv = self.browse(cr, uid, ids[0], context=context)
         inv_ids = []
-        result = mod_obj.get_object_reference(cr, uid, 'account_voucher', 'action_voucher_list')
+        result = mod_obj.get_object_reference(cr, uid, 'account_voucher',
+                                              'action_voucher_list')
         id_pay = result and result[1] or False
         if inv.type == 'out_invoice' or inv.type == 'out_refund':
             view_type = 'view_vendor_receipt_form'
         else:
             view_type = 'view_vendor_payment_form'
-        res = mod_obj.get_object_reference(cr, uid, 'account_voucher', view_type)
+        res = mod_obj.get_object_reference(cr, uid, 'account_voucher',
+                                           view_type)
         result = act_obj.read(cr, uid, [id_pay], context=context)[0]
         result['views'] = [(res and res[1] or False, 'form')]
         result['context'] = {
-            'default_partner_id': self.pool.get('res.partner')._find_accounting_partner(inv.partner_id).id,
-            'default_amount': inv.type in ('out_refund', 'in_refund') and -inv.residual or inv.residual,
+            'default_partner_id': self.pool.get(
+                'res.partner')._find_accounting_partner(inv.partner_id).id,
+            'default_amount': inv.type in ('out_refund', 'in_refund') and
+            -inv.residual or inv.residual,
             'default_reference': inv.name,
             'invoice_type': inv.type,
             'invoice_id': inv.id,
-            'default_type': inv.type in ('out_invoice', 'out_refund') and 'receipt' or 'payment',
-            'type': inv.type in ('out_invoice', 'out_refund') and 'receipt' or 'payment'
+            'default_type': inv.type in ('out_invoice', 'out_refund') and
+            'receipt' or 'payment',
+            'type': inv.type in ('out_invoice', 'out_refund') and 'receipt' or
+            'payment'
         }
         result['res_id'] = inv_ids and inv_ids[0] or False
         return result

@@ -1,9 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ########### Credits #########################################################
 #    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
 #    Planified by: Katherine Zaoral      <kathy@vauxoo.com>
 #    Audited by: Humberto Arocha         <hbto@vauxoo.com>
@@ -27,14 +27,14 @@ from openerp.tools.translate import _
 from openerp import tools
 
 
-def rounding(f, r):
+def rounding(fff, rrr):
     import math
-    if not r:
-        return f
-    return math.ceil(f / r) * r
+    if not rrr:
+        return fff
+    return math.ceil(fff / rrr) * rrr
 
 
-class stock_move(osv.Model):
+class StockMove(osv.Model):
     _inherit = 'stock.move'
 
     def write(self, cr, uid, ids, values, context=None):
@@ -43,26 +43,26 @@ class stock_move(osv.Model):
         prodlot_id when creating stock move through the confirmation of the
         manufacturing order.
         """
-        #~ TODO: check the def _make_production_produce_line(self, cr, uid,
-        #~ production, context=None) in addons/mrp/mrp.py
+        # TODO: check the def _make_production_produce_line(self, cr, uid,
+        # production, context=None) in addons/mrp/mrp.py
         context = context or {}
         production_obj = self.pool.get('mrp.production')
-        #~ When confirming a manufacturing order a set of internal move to
-        #~ productd to produce are made. this moves need to have a prodlot id
-        #~ too. that corresponding to the one given in the production order.
-        #~ When move.write() have into the values 'production_id' it means that
-        #~ this movement its have been associated to an manufacturing order so
-        #~ there is how we go to add that value to the move line.
+        # When confirming a manufacturing order a set of internal move to
+        # productd to produce are made. this moves need to have a prodlot id
+        # too. that corresponding to the one given in the production order.
+        # When move.write() have into the values 'production_id' it means that
+        # this movement its have been associated to an manufacturing order so
+        # there is how we go to add that value to the move line.
         if values.get('production_id', False):
             prodlot_id = production_obj.browse(
                 cr, uid, values['production_id'],
                 context=context).prodlot_id.id
             values.update({'prodlot_id': prodlot_id})
-        return super(stock_move, self).write(
+        return super(StockMove, self).write(
             cr, uid, ids, values, context=context)
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
 
     _inherit = 'mrp.production'
     _columns = {
@@ -115,9 +115,9 @@ class mrp_production(osv.Model):
                                    ' process. Or, you can uncheck the Track'
                                    ' Manufacturing Lost option at the'
                                    ' Inventory tab in the Product Form.\n')
-                #~ TODO: guess what do the product_obj track_incoming and
-                #~ track_outgoing fields to add the exceptions necesarry to be
-                #~ manage here.
+                # TODO: guess what do the product_obj track_incoming and
+                # track_outgoing fields to add the exceptions necesarry to be
+                # manage here.
         else:
             error_msg += _('Programing Error. Cants process the write from'
                            ' of manufacturing order from another model.')
@@ -125,7 +125,7 @@ class mrp_production(osv.Model):
         if error_msg:
             raise osv.except_osv(_('Invalid Procedure'), error_msg)
 
-        res = super(mrp_production, self).write(
+        res = super(MrpProduction, self).write(
             cr, uid, ids, values, context=context)
         return res
 
@@ -142,7 +142,7 @@ class mrp_production(osv.Model):
         wo_obj = self.pool.get('mrp.production.workcenter.line')
 
         # normal process of confirm
-        res = super(mrp_production, self).action_compute(
+        res = super(MrpProduction, self).action_compute(
             cr, uid, ids, properties=properties, context=context)
 
         for production in self.browse(cr, uid, ids, context=context):
@@ -153,17 +153,19 @@ class mrp_production(osv.Model):
                 context=context)
             wo_obj.unlink(cr, uid, wo_ids, context=context)
 
-            #~ create work orders by wc capacity and work order lots
+            # create work orders by wc capacity and work order lots
             wo_dict_list = self.create_wo_dict(
                 cr, uid, [production.id], context=context)
-            wo_dict_list and self.write(
-                cr, uid, [production.id],
-                {'workcenter_lines': map(lambda x: (0, 0, x), wo_dict_list)},
-                context=context)
+            if wo_dict_list:
+                self.write(
+                    cr, uid, [production.id],
+                    {'workcenter_lines':
+                     [(0, 0, item) for item in wo_dict_list]},
+                    context=context)
 
         return res
 
-    #~ TODO: development in progress
+    # TODO: development in progress
     def get_wc_capacity(self, cr, uid, ids, rounting_id, context=None):
         """
         It calculate every workcenters capacity in the rounting_id.
@@ -177,8 +179,8 @@ class mrp_production(osv.Model):
         routing_brw = routing_obj.browse(cr, uid, rounting_id, context=context)
         production = self.browse(cr, uid, ids, context=context)
 
-        #~ print _('\n...Extracting Manufacturing Order Raw Material Needed'
-        #~ ' Information')
+        # print _('\n...Extracting Manufacturing Order Raw Material Needed'
+        # ' Information')
         production_rm = dict()
         for bom in production.bom_id.bom_lines:
             production_rm[bom.product_id.id] = \
@@ -186,11 +188,11 @@ class mrp_production(osv.Model):
                  'qty': bom.product_qty * production.product_qty,
                  'uom': bom.product_uom.id}
 
-        #~ print 'production_rm'
-        #~ pprint.pprint(production_rm)
+        # print 'production_rm'
+        # pprint.pprint(production_rm)
 
-        #~ print _('...Extractiong Work Centers Information: Product Capacity'
-            #~ ' and Operations')
+        # print _('...Extractiong Work Centers Information: Product Capacity'
+            # ' and Operations')
         wc_brws = [operation.workcenter_id
                    for operation in routing_brw.workcenter_lines]
         wc_brws = list(set(wc_brws))
@@ -217,10 +219,10 @@ class mrp_production(osv.Model):
         for item in wc_operation:
             wc_dict[item[1]]['operations'] += [item[0]]
 
-        #~ print 'wc_dict'
-        #~ pprint.pprint(wc_dict)
+        # print 'wc_dict'
+        # pprint.pprint(wc_dict)
 
-        #~ print _('...Extracting Routing Operations Products Quantity Needed')
+        # print _('...Extracting Routing Operations Products Quantity Needed')
         wc_ope_product_qty = dict()
         for wc_ope in routing_brw.workcenter_lines:
             wc_ope_product_qty[wc_ope.id] = dict()
@@ -234,10 +236,10 @@ class mrp_production(osv.Model):
                             product.qty * production.product_qty,
                             production_rm[product.product_id.id]['uom'])})
 
-        #~ print 'wc_ope_product_qty', wc_ope_product_qty
+        # print 'wc_ope_product_qty', wc_ope_product_qty
 
-        #~ print _('...Checking that Operation Quantities are <= to '
-                #~ 'Manufacturing Order Quantities')
+        # print _('...Checking that Operation Quantities are <= to '
+                # 'Manufacturing Order Quantities')
         routing_qty_error = str()
         routing_qty = {}.fromkeys(production_rm.keys(), 0.0)
 
@@ -245,27 +247,27 @@ class mrp_production(osv.Model):
             for product_id in wc_ope_product_qty[operation].keys():
                 routing_qty[product_id] += \
                     wc_ope_product_qty[operation][product_id]
-        #~ TODO: Ask rotuing qty will be the max of
-        #~ wc_ope_product_qty[operation][product_id] or the summatory of all?
+        # TODO: Ask rotuing qty will be the max of
+        # wc_ope_product_qty[operation][product_id] or the summatory of all?
 
-        #~ print 'routing_qty', routing_qty
+        # print 'routing_qty', routing_qty
 
-        #~ for product_id in routing_qty.keys():
-            #~ if routing_qty[product_id] > production_rm[product_id]['qty']:
-                #~ routing_qty_error += \
-                #~ _('\n - It Needs at least %s %s of %s and only %s %s is'
-                #~ ' given.') % (
-                #~ routing_qty[product_id],
-                #~ uom_obj.browse(
-                #~ cr, uid, production_rm[product_id]['uom'],
-                #~ context=context).name,
-                #~ product_obj.browse(
-                #~ cr, uid, product_id, context=context).name,
-                #~ production_rm[product_id]['qty'],
-                #~ uom_obj.browse(
-                #~ cr, uid, production_rm[product_id]['uom'],
-                #~ context=context).name,
-                #~ )
+        # for product_id in routing_qty.keys():
+            # if routing_qty[product_id] > production_rm[product_id]['qty']:
+                # routing_qty_error += \
+                # _('\n - It Needs at least %s %s of %s and only %s %s is'
+                # ' given.') % (
+                # routing_qty[product_id],
+                # uom_obj.browse(
+                # cr, uid, production_rm[product_id]['uom'],
+                # context=context).name,
+                # product_obj.browse(
+                # cr, uid, product_id, context=context).name,
+                # production_rm[product_id]['qty'],
+                # uom_obj.browse(
+                # cr, uid, production_rm[product_id]['uom'],
+                # context=context).name,
+                # )
         if routing_qty_error:
             raise osv.except_osv(
                 _('Error!'),
@@ -274,16 +276,16 @@ class mrp_production(osv.Model):
                   ' that the one is given in themanufacturing order:\n'
                   + str(routing_qty_error)))
 
-        #~ print _('...Cheking the Work Center Capacity with the Work Center'
-            #~ ' Operation quantities (Calculate Bottleneck)')
-        #~ print "(wc, operation, product_id, capacty, qty)"
+        # print _('...Cheking the Work Center Capacity with the Work Center'
+            # ' Operation quantities (Calculate Bottleneck)')
+        # print "(wc, operation, product_id, capacty, qty)"
         for wc_id in wc_dict:
             for op_id in wc_dict[wc_id]['operations']:
                 for (product_id, product_qty) in \
                         wc_ope_product_qty[op_id].iteritems():
-                    #~ print (wc_id, op_id, product_id,
-                           #~ wc_dict[wc_id]['capacity'][product_id],
-                           #~ product_qty)
+                    # print (wc_id, op_id, product_id,
+                    # wc_dict[wc_id]['capacity'][product_id],
+                    # product_qty)
                     if wc_dict[wc_id]['capacity'][product_id] and \
                        wc_dict[wc_id]['capacity'][product_id] < product_qty:
                         div, mod = \
@@ -295,14 +297,14 @@ class mrp_production(osv.Model):
                               wc_dict[wc_id]['capacity'][product_id],
                               product_id)]
 
-        #~ print 'wc_dict'
-        #~ pprint.pprint(wc_dict)
+        # print 'wc_dict'
+        # pprint.pprint(wc_dict)
 
         bottleneck_list = list()
         for wc_id in wc_dict:
             bottleneck_list.extend(wc_dict[wc_id]['bottleneck'])
         bottleneck_list.sort(reverse=True)
-        #~ print 'bottleneck_list', bottleneck_list
+        # print 'bottleneck_list', bottleneck_list
 
         return bottleneck_list and bottleneck_list[0] or False
 
@@ -315,8 +317,8 @@ class mrp_production(osv.Model):
         create.
         """
 
-        #~ import pprint
-        #~ print "\n"*3, 'create_wo_dict()'
+        # import pprint
+        # print "\n"*3, 'create_wo_dict()'
 
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -325,7 +327,7 @@ class mrp_production(osv.Model):
 
         for production in self.browse(cr, uid, ids, context=context):
 
-            #~ calculate factor
+            # calculate factor
             factor = uom_obj._compute_qty(
                 cr, uid, production.product_uom.id, production.product_qty,
                 production.bom_id.product_uom.id)
@@ -353,14 +355,14 @@ class mrp_production(osv.Model):
 
                 if batch_mode == 'max_cost':
                     wc_capacity = wc_brw.capacity_per_cycle
-                    d, m = divmod(factor, wc_capacity)
-                    mult = int(d + (m and 1.0 or 0.0))
+                    ddd, mmm = divmod(factor, wc_capacity)
+                    mult = int(ddd + (mmm and 1.0 or 0.0))
                 elif batch_mode == 'bottleneck':
                     mult, wc_capacity, critic_product_id = \
                         self.get_wc_capacity(
                             cr, uid, production.id, routing_brw.id,
                             context=context) or (1, product_qty, False)
-                    d, m = divmod(factor, wc_capacity)
+                    ddd, mmm = divmod(factor, wc_capacity)
 
                 if critic_product_id:
                     critic_product_income_qty = \
@@ -368,14 +370,14 @@ class mrp_production(osv.Model):
                          for rm_bom in production.bom_id.bom_lines
                          if rm_bom.product_id.id == critic_product_id]
                     critic_product_income_qty = critic_product_income_qty[0]
-                    #~ TODO: need to manage here product_uom too?
+                    # TODO: need to manage here product_uom too?
                 else:
                     critic_product_income_qty = 100.0
 
-                percentage = {}.fromkeys(m and ['d', 'm'] or ['d'])
+                percentage = {}.fromkeys(mmm and ['d', 'm'] or ['d'])
                 percentage['d'] = \
                     (wc_capacity / critic_product_income_qty) * 100.0
-                percentage['m'] = m and (m / critic_product_income_qty) * 100.0 \
+                percentage['m'] = mmm and (mmm / critic_product_income_qty) * 100.0 \
                     or percentage['d']
 
                 # create wo lots
@@ -390,7 +392,7 @@ class mrp_production(osv.Model):
                         and wc_capacity or product_qty - process_qty
                     process_qty += qty
 
-                    #~ print '(process_qty, qty)', (process_qty, qty)
+                    # print '(process_qty, qty)', (process_qty, qty)
 
                     result.append({
                         'name':
@@ -414,13 +416,13 @@ class mrp_production(osv.Model):
                             context=context),
                     })
 
-                #~ print 'result'
-                #~ pprint.pprint(result)
+                # print 'result'
+                # pprint.pprint(result)
 
         return result
 
-    #~ TODO: This calculation needs to be check. I think that is retorning a
-    #~ incorrect value
+    # TODO: This calculation needs to be check. I think that is retorning a
+    # incorrect value
     def get_wo_hour(self, cr, uid, op_hours, op_cycle, wc_capacity,
                     wc_time_start=0.0, wc_time_stop=0.0, wc_time_cycle=0.0,
                     wc_time_efficiency=1.0, context=None):
@@ -537,7 +539,7 @@ class mrp_production(osv.Model):
             'number': '%05i' % (lot_nbr + 1,),
             'production_id': production.id,
             'percentage': fwol_brw.percentage,
-            'wo_ids': map(lambda x: (0, 0, x), wo_values),
+            'wo_ids': [(0, 0, item) for item in wo_values],
         }
         new_wol_id = wol_obj.create(cr, uid, values, context=context)
         return new_wol_id
@@ -597,21 +599,21 @@ class mrp_production(osv.Model):
         wol_obj = self.pool.get('mrp.workorder.lot')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for production in self.browse(cr, uid, ids, context=context):
-            #~ get first work order lot id and its belongs work orders ids.
+            # get first work order lot id and its belongs work orders ids.
             fwol_id = self.get_first_work_order(
                 cr, uid, production.id, context=context)
             fwo_ids = \
                 [wo_brw.id for wo_brw in wol_obj.browse(
                     cr, uid, fwol_id, context=context).wo_ids]
-            #~ create new work order lot
+            # create new work order lot
             wo_values = self.get_dict_duplicate_wo(
                 cr, uid, production.id, fwo_ids, context=context)
-            new_wol_id = self.create_orphan_wol(
+            self.create_orphan_wol(
                 cr, uid, production.id, fwol_id, wo_values, context=context)
         return True
 
 
-class mrp_workorder_stage(osv.Model):
+class MrpWorkorderStage(osv.Model):
 
     _name = 'mrp.workorder.stage'
     _description = 'Work Order Stage'
@@ -624,6 +626,7 @@ class mrp_workorder_stage(osv.Model):
 
     def _get_wo_state(self, cr, uid, context=None):
         """
+        Get work order center line state
         """
         context = context or {}
         wo_obj = self.pool.get('mrp.production.workcenter.line')
@@ -661,12 +664,13 @@ class mrp_workorder_stage(osv.Model):
     }
 
 
-class mrp_production_workcenter_line(osv.Model):
+class MrpProductionWorkcenterLine(osv.Model):
 
     _inherit = 'mrp.production.workcenter.line'
 
     def _get_draft_stage_id(self, cr, uid, context=None):
         """
+        get draft stage.
         """
         context = context or {}
         wos_obj = self.pool.get('mrp.workorder.stage')
@@ -795,10 +799,10 @@ class mrp_production_workcenter_line(osv.Model):
                           troble_wo[trb]['state'],
                           troble_wo[trb]['lot_name'],
                           troble_wo[trb]['lot_state'])
-                     for trb in troble_wo
+                       for trb in troble_wo
                        ])))
 
-        #~ manage changes in the kanban view
+        # manage changes in the kanban view
         if values.get('stage_id', False):
             wos_brw = wos_obj.browse(cr, uid, values.get('stage_id'),
                                      context=context)
@@ -808,13 +812,13 @@ class mrp_production_workcenter_line(osv.Model):
                 cr, uid, [('state', '=', values.get('state'))],
                 context=context)[0]})
 
-        res = super(mrp_production_workcenter_line, self).write(
+        res = super(MrpProductionWorkcenterLine, self).write(
             cr, uid, wo_ids, values, context=context, update=update)
 
         return res
 
 
-class mrp_workorder_lot(osv.Model):
+class MrpWorkorderLot(osv.Model):
 
     _name = 'mrp.workorder.lot'
     _description = "Work Order Lot"
@@ -866,6 +870,7 @@ class mrp_workorder_lot(osv.Model):
         res = list(set(res))
         return res
 
+    # pylint: disable=W0622
     def _set_lot_state(self, cr, uid, id, field, value, arg, context=None):
         """
         Write the field state in Work Order Lot.

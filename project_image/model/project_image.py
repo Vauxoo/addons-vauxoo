@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 from openerp.osv import osv, fields
 
 
-class project_project_inherit_image(osv.Model):
+class ProjectProjectInheritImage(osv.Model):
 
     _inherit = "project.project"
     _columns = {
@@ -12,7 +12,7 @@ class project_project_inherit_image(osv.Model):
     }
 
 
-class project_task_inherit_image(osv.Model):
+class ProjectTaskInheritImage(osv.Model):
 
     _inherit = "project.task"
     _columns = {

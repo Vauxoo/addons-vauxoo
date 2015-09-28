@@ -22,5 +22,47 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="product_product_stock_wh_product_form_view" model="ir.ui.view">
+            <field name="name">product.product.stock.wh.product.form.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='store']" position="after">
+                    <group name="location_quants" string="Location Quants">
+                        <field name="product_stock_quants_ids"
+                            nolabel="1" colspan="2">
+                            <tree create="false" edit="false" delete="false">
+                                <field name="location_id"/>
+                                <field name="stock_state"/>
+                                <field name="qty"/>
+
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="dates_planned_2_delivery" string="Dates Planned to delivery">
+                        <field name="product_planned_dates_ids"
+                            nolabel="1">
+                            <tree create="false" edit="false" delete="false">
+                                <field name="date_planned"/>
+                                <field name="order_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_location_alias_form_view" model="ir.ui.view">
+            <field name="name">stock.location.alias.form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h2/field[@name='location_id']" position="after">
+                     <label for="stock_alias" class="oe_edit_only"/>
+                    <h2><field name="stock_alias"/></h2>
+                    <field name="website_published" widget="website_button"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

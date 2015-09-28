@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 #
 #
 #    OpenERP, Open Source Management Solution
@@ -18,48 +18,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Expired Task Information", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Project", 
-    "description": """
-Information about status tasks
-==============================
-It's very important know status for our tasks, details like  when it's expire?
-When was the last change? And other important info for project management  and
-task personal control.
-
-For this management we create this module, that  verify the task status
-automatically  and sends emails if finds something relevant in task
-
-Technical features
----------------------------
-Created a new model to add configuration for the sending emails with the task
-status. To access in this module you need have access rule and is in the setup
-menu of projects. In this module you can configure the day number before the
-expire date to send  email reporting it, and also the day number that a task
-must have without changes(Taking like changes, work summary or messages in the
-task)""", 
-    "website": "http://www.vauxoo.com", 
-    "license": "", 
+    "name": "Expired Task Information",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Project",
+    "website": "http://www.vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "project"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/config_task_security.xml", 
-        "security/ir.model.access.csv", 
-        "view/task_expiry_config_view.xml", 
+        "security/config_task_security.xml",
+        "security/ir.model.access.csv",
+        "view/task_expiry_config_view.xml",
         "data/config_task_expired_data.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

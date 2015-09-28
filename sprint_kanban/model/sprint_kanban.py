@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 from openerp.osv import osv, fields
 
 
-class sprint_kanban(osv.Model):
+class SprintKanban(osv.Model):
 
     def set_done(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'done'}, context=context)
@@ -99,7 +99,7 @@ class sprint_kanban(osv.Model):
     }
 
 
-class sprint_kanban_tasks(osv.Model):
+class SprintKanbanTasks(osv.Model):
 
     _inherit = 'project.task'
 

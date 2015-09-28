@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:12+0000\n"
-"PO-Revision-Date: 2013-10-12 02:38+0000\n"
-"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
-"<humbertoarocha@gmail.com>\n"
+"PO-Revision-Date: 2015-08-03 16:06+0200\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com <humbertoarocha@gmail."
+"com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-11-21 06:45+0000\n"
-"X-Generator: Launchpad (build 17252)\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: es\n"
 
 #. module: account_voucher_category
 #: field:scrvw.report.account.voucher.category,avc_parent_id:0
@@ -40,8 +41,7 @@ msgid "Amounts"
 msgstr ""
 
 #. module: account_voucher_category
-#: view:account.move.line:0
-#: field:account.move.line,av_cat_id:0
+#: view:account.move.line:0 field:account.move.line,av_cat_id:0
 #: field:account.voucher,av_cat_id:0
 #: model:ir.ui.menu,name:account_voucher_category.voucher_category_main_menu
 #: view:scrvw.report.account.voucher.category:0
@@ -244,8 +244,7 @@ msgid "Accounting Voucher"
 msgstr "Comprobantes Contables"
 
 #. module: account_voucher_category
-#: field:account.voucher.category,type:0
-#: help:account.voucher.category,type:0
+#: field:account.voucher.category,type:0 help:account.voucher.category,type:0
 msgid "Category Type"
 msgstr "Tipo de Categoría"
 

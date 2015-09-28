@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -21,34 +21,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Pos Calculator", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Point Of Sale", 
-    "description": """
-    Add Calculator functionality in Payment Screen of Point Of Sale
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Pos Calculator",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Point Of Sale",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "point_of_sale"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
     "js": [
-        "static/src/js/backbone-super-min.js", 
+        "static/src/js/backbone-super-min.js",
         "static/src/js/widgets.js"
-    ], 
+    ],
     "css": [
-        "static/src/css/pos_popup.css", 
+        "static/src/css/pos_popup.css",
         "static/src/css/pos.css"
-    ], 
+    ],
     "qweb": [
         "static/src/xml/pos.xml"
-    ], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

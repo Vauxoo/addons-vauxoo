@@ -1,15 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 {
     "name": "Website Comments With Purchase",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Website",
-    "description": """
-Website Comments With Purchase
-==============================
-    This app shows you on the comments on website/e-commerce whether the
-    customer purchased the item reviewed or not.
-    """,
     "website": "http://www.vauxoo.com/",
     "depends": [
         "website_sale"

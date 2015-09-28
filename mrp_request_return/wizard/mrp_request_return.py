@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
-class mrp_request_return(osv.TransientModel):
+class MrpRequestReturn(osv.TransientModel):
     _name = 'mrp.request.return'
     _columns = {
         're_line_ids': fields.one2many('mrp.request.return.line', 'wizard_id',
@@ -86,7 +86,7 @@ class mrp_request_return(osv.TransientModel):
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
-        res = super(mrp_request_return, self).default_get(
+        res = super(MrpRequestReturn, self).default_get(
             cr, uid, fields, context=context)
         mrp_ids = context.get('active_ids', [])
         if not mrp_ids or (not context.get('active_model') == 'mrp.production') \
@@ -122,14 +122,14 @@ class mrp_request_return(osv.TransientModel):
         return partial_move
 
 
-class mrp_request_return_line(osv.TransientModel):
+class MrpRequestReturnLine(osv.TransientModel):
     _name = 'mrp.request.return.line'
     _rec_name = 'product_id'
 
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
-        res = super(mrp_request_return_line, self).default_get(
+        res = super(MrpRequestReturnLine, self).default_get(
             cr, uid, fields, context=context)
         mrp_ids = context.get('act_ids', [])
         if not mrp_ids or len(mrp_ids) != 1:
@@ -167,7 +167,7 @@ class mrp_request_return_line(osv.TransientModel):
         return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
 
 
-class mrp_consume(osv.TransientModel):
+class MrpConsume(osv.TransientModel):
     _inherit = 'mrp.consume'
 
     def action_consume(self, cr, uid, ids, context=None):
@@ -218,4 +218,4 @@ class mrp_consume(osv.TransientModel):
                                         'production_id': production.id})
                     shipment_move_id = mrp_production._make_production_internal_shipment_line(
                         cr, uid, fetch_record, pick_id, False)
-        return super(mrp_consume, self).action_consume(cr, uid, ids, context)
+        return super(MrpConsume, self).action_consume(cr, uid, ids, context)

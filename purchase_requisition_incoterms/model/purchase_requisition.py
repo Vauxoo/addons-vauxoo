@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -27,7 +26,7 @@
 from openerp.osv import fields, osv
 
 
-class purchase_requisition(osv.Model):
+class PurchaseRequisition(osv.Model):
     """
     Extend the purchase.requisition  model to add a new field m2o to
     stock.incoterm model named 'delivery'.

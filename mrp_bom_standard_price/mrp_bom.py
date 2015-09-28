@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,7 +23,7 @@
 from openerp.osv import osv, fields
 
 
-class mrp_bom(osv.Model):
+class MrpBom(osv.Model):
     _inherit = 'mrp.bom'
 
     _columns = {

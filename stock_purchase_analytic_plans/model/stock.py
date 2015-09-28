@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -25,11 +25,11 @@
 from openerp.osv import osv
 
 
-class stock_move(osv.osv):
+class StockMove(osv.osv):
     _inherit = "stock.move"
 
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
-        res = super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
+        res = super(StockMove, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
         if move.purchase_line_id and move.purchase_line_id.analytics_id:
             debit_line_vals, credit_line_vals = res[0][2], res[1][2]
             debit_line_vals['analytics_id'] = move.purchase_line_id.analytics_id.id

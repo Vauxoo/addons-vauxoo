@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #   Module Writen to OpenERP, Open Source Management Solution
 #   Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
@@ -24,7 +24,7 @@
 from openerp.osv import osv
 
 
-class mail_notification(osv.Model):
+class MailNotification(osv.Model):
 
     _inherit = 'mail.notification'
 
@@ -33,10 +33,12 @@ class mail_notification(osv.Model):
             Overwrite this method to allow receive your own message sent
             validating the field @receive_my_emails added in model of partner
         """
-        res = super(mail_notification, self).get_partners_to_email(
+        res = super(MailNotification, self).get_partners_to_email(
             cr, uid, ids, message, context=context)
-        if message.author_id and\
-            (message.author_id.receive_my_emails and
-                message.author_id.notify_email != "none"):
-            res.append(message.author_id.id)
+
+        for notification in self.browse(cr, uid, ids, context=context):
+            if message.author_id and\
+                (message.author_id.receive_my_emails and
+                    message.author_id.notify_email != "none"):
+                res.append(message.author_id.id)
         return res

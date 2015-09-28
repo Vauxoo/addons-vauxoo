@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -23,10 +23,10 @@ import time
 from openerp.report import report_sxw
 
 
-class process_report(report_sxw.rml_parse):
+class ProcessReport(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(process_report, self).__init__(cr, uid, name, context=context)
+        super(ProcessReport, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
                                  'time': time,
                                  'get_production': self._get_production,
@@ -131,4 +131,4 @@ class process_report(report_sxw.rml_parse):
         return obj
 
 report_sxw.report_sxw('report.process.report', 'mrp.production',
-                      'addons/report_process_production/report/process_production_report.rml', parser=process_report, header=False)
+                      'addons/report_process_production/report/process_production_report.rml', parser=ProcessReport, header=False)

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
@@ -22,33 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Accounting Closure Preparation", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
-    "description": """
-Accounting Closure Preparation.
-==============================
-
-Let accounting people do a revision of the Chart of account, in order to avoid
-undesirable outcomes when closing a fiscalyear, i.e., transferring balance from
-a fiscalyear to be closed to another to be open.
-""", 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Accounting Closure Preparation",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/views.xml", 
+        "view/views.xml",
         "view/menues_and_actions.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

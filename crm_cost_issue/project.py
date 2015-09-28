@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -28,11 +28,11 @@
 from openerp.osv import osv, fields
 
 
-class project_task(osv.Model):
+class ProjectTask(osv.Model):
     _inherit = 'project.task'
 
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
-        data = super(project_task, self)._hours_get(
+        data = super(ProjectTask, self)._hours_get(
             cr, uid, ids, field_names, args, context=context)
         empl_obj = self.pool.get('hr.employee')
         for l in self.browse(cr, uid, ids, context=context):
@@ -50,7 +50,7 @@ class project_task(osv.Model):
         return data
 
     def _get_task(self, cr, uid, ids, context=None):
-        return super(project_task, self)._get_task(cr, uid, ids,
+        return super(ProjectTask, self)._get_task(cr, uid, ids,
                                                    context=context)
 
     _columns = {

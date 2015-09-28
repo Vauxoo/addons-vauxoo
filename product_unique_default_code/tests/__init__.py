@@ -1,3 +1,4 @@
+# coding: utf-8
 #    info@vauxoo.com
 ############################################################################
 #    Coded by: julio (julio@vauxoo.com)
@@ -19,3 +20,4 @@
 ##############################################################################
 
 from . import test_for_unique_ref
+from . import test_copy_method

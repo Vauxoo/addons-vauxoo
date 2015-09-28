@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -28,7 +28,7 @@ from openerp.osv import osv, fields
 _logger = logging.getLogger(__name__)
 
 
-class warranty_oerp(osv.Model):
+class WarrantyOerp(osv.Model):
     _name = 'account.warranty_oerp'
 
     def _check_overlapping(self, cr, uid, ids, context=None):
@@ -72,7 +72,7 @@ class warranty_oerp(osv.Model):
     ]
 
 
-class account_analytic_account(osv.Model):
+class AccountAnalyticAccount(osv.Model):
     _inherit = 'account.analytic.account'
     _columns = {
         'license_oerp': fields.boolean('This contract has Enterprise License',

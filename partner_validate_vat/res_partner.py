@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class res_partner(osv.Model):
+class ResPartner(osv.Model):
     _inherit = 'res.partner'
 
     def _check_vat_uniqueness(self, cr, uid, ids, context=None):

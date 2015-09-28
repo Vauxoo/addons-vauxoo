@@ -1,9 +1,9 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ########### Credits #########################################################
 #    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
 #    Planified by: Katherine Zaoral      <kathy@vauxoo.com>
 #    Audited by: Humberto Arocha         <hbto@vauxoo.com>

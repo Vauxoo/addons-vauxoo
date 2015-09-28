@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to Odoo, Open Source Management Solution
 #
@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class product_category(osv.osv):
+class ProductCategory(osv.osv):
     _inherit = 'product.category'
     _columns = {
         'attribute_ids': fields.many2many('product.attribute',
@@ -34,5 +34,5 @@ class product_category(osv.osv):
     }
 
 
-class product_template(osv.osv):
+class ProductTemplate(osv.osv):
     _inherit = 'product.template'

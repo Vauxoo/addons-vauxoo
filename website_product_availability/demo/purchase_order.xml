@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record id="purchase_order_stock" model="purchase.order">
+            <field name="partner_id" ref='base.res_partner_1'/>
+            <field name="pricelist_id" ref='purchase.list0'/>
+            <field name="currency_id" ref='base.EUR'/>
+            <field name="picking_type_id" ref='stock.chi_picking_type_in'/>
+            <field name="date_order" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='location_id' ref='stock.stock_location_stock'/>
+            <field name='invoice_method'>order</field>
+        </record>
+
+        <record id="purchase_order_line_stock" model="purchase.order.line">
+            <field name="product_id" ref='product.product_product_11b'/>
+            <field name="name">A product</field>
+            <field name="product_qty">3</field>
+            <field name="price_unit">800</field>
+            <field name="order_id" ref='purchase_order_stock'/>
+            <field name="date_planned" eval="time.strftime('%Y-%m-%d')"/>
+        </record>
+    </data>
+</openerp>

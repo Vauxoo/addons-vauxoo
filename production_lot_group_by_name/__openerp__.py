@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -20,32 +20,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 {
-    "name": "Stock Production Group Serial Number", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Addons Vauxoo", 
-    "description": """
-Stock Production Group Serial Number
-====================================
-
-This module added in the search view a "group by"
-that your name is "Serial Number"
-
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Stock Production Group Serial Number",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Addons Vauxoo",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/production_lot_group.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

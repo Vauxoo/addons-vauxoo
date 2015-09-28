@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 import tempfile
 
 
-class test_yaml_data_sale(osv.osv_memory):
+class TestYamlDataSale(osv.osv_memory):
 
     _name = 'test.yaml.data.sale'
 

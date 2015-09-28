@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,26 +24,25 @@
 #
 ##############################################################################
 {
-    "name": "report_process_production", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "MRP", 
-    "description": """Report Process Production""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Report Process Production",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "MRP",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "wizard/wizard_report_process.xml", 
+        "wizard/wizard_report_process.xml",
         "process_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

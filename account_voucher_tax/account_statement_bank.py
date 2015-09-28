@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -29,7 +29,7 @@ import openerp
 import time
 
 
-class account_bank_statement_line(osv.osv):
+class AccountBankStatementLine(osv.osv):
 
     _inherit = 'account.bank.statement.line'
 
@@ -161,7 +161,7 @@ class account_bank_statement_line(osv.osv):
             statement_currency, move_id=move_id_old,
             statement_currency_line=statement_currency_line, context=context)
 
-        res = super(account_bank_statement_line, self).process_reconciliation(
+        res = super(AccountBankStatementLine, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=context)
 
         move_line_obj.write(cr, uid, move_line_rec_ids[0],
@@ -223,15 +223,23 @@ class account_bank_statement_line(osv.osv):
 
                 lines_tax = voucher_obj._preparate_move_line_tax(
                     cr, uid,
-                    account_tax_voucher,  # cuenta del impuesto(account.tax)
-                    account_tax_collected,  # cuenta del impuesto para notas de credito/debito(account.tax)
+                    # cuenta del impuesto(account.tax)
+                    account_tax_voucher,
+                    # cuenta del impuesto para notas de credito/debito
+                    # (account.tax)
+                    account_tax_collected,
                     move_id, type_payment, partner_id, period_id, journal_id,
                     date_st, company_currency,
-                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
-                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    # Monto del impuesto por el factor(cuanto le
+                    # corresponde)(aml)
+                    amount_total_tax * abs(factor),
+                    # Monto del impuesto por el factor(cuanto le
+                    # corresponde)(aml)
+                    amount_total_tax * abs(factor),
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
-                    move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
+                    # Cuenta analitica del impuesto(aml)
+                    move_line_tax.get('tax_analytic_id'),
                     amount_base_secondary,  # Monto base(aml)
                     factor, statement_currency_line=statement_currency_line,
                     context=context)
@@ -406,7 +414,8 @@ class account_bank_statement_line(osv.osv):
             return [[new_id, move_line_exch_id], rec_ids]
         return [[], rec_ids]
 
-    def _get_factor_type(self, cr, uid, amount=False, ttype=False, context=None):
+    def _get_factor_type(self, cr, uid, amount=False, ttype=False,
+                         context=None):
         if context is None:
             context = {}
         factor_type = [-1, 1]
@@ -510,7 +519,8 @@ class account_bank_statement_line(osv.osv):
                     # En la posicion [1] agregamos el ID de la aml que contiene
                     # el impuesto para ser pagado y conciliado con la aml del
                     # pago en voucher o bank statement
-                    account_group[move_line_id.account_id.id][1] = move_line_id.id
+                    account_group[move_line_id.account_id.id][1] = \
+                        move_line_id.id
 
         for move_account_tax in account_group:
             amount_base_secondary = 0
@@ -532,8 +542,12 @@ class account_bank_statement_line(osv.osv):
                     amount_base_secondary = account_group.get(
                         move_account_tax)[0]
                 else:
-                    amount_total_tax =\
-                        account_group.get(move_account_tax)[0]+amount_ret_tax
+                    if account_group.get(move_account_tax)[1]:
+                        amount_total_tax =\
+                            account_group.get(move_account_tax)[0] +\
+                            amount_ret_tax
+                    else:
+                        amount_total_tax = 0
                 res = self.preparate_dict_tax(
                     tax_id=tax_id, amount=amount_total_tax)
                 res.update({
@@ -654,7 +668,7 @@ class account_bank_statement_line(osv.osv):
         return res
 
 
-class account_bank_statement(osv.osv):
+class AccountBankStatement(osv.osv):
 
     _inherit = 'account.bank.statement'
 
@@ -663,7 +677,7 @@ class account_bank_statement(osv.osv):
         aml_obj = self.pool.get('account.move.line')
         move_line_ids = []
 
-        res = super(account_bank_statement, self).button_journal_entries(
+        res = super(AccountBankStatement, self).button_journal_entries(
             cr, uid, ids, context=context)
 
         aml_id_statement = aml_obj.search(cr, uid, res.get('domain', []))

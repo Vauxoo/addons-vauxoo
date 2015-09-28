@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,16 +23,9 @@
 ###############################################################################
 {
     "name": "Stock Accrual Report",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "stock",
-    "description": """
-Stock Accrual Report
-====================
-
-    Allow to retrieves a report for Sale or Purchase fetching delivered &
-    invoiced quantities and how much was accrued.
-""",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [

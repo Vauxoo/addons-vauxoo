@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,11 +22,11 @@
 from openerp.osv import osv, fields
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = "account.move.line"
 
     def _get_reconcile(self, cr, uid, ids, name, unknow_none, context=None):
-        res = super(account_move_line, self)._get_reconcile(cr, uid, ids, name, unknow_none, context)
+        res = super(AccountMoveLine, self)._get_reconcile(cr, uid, ids, name, unknow_none, context)
         return res
 
     def fc(s, c, u, ids, cx):

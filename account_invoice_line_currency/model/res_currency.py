@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv
 
 
-class res_currency(osv.Model):
+class ResCurrency(osv.Model):
 
     _inherit = "res.currency"
 
@@ -42,6 +42,7 @@ class res_currency(osv.Model):
         will indicate the conversio rate to use.
         """
         context = context or {}
+        context = dict(context)
         if from_currency_id == to_currency_id:
             return from_amount
         context['date'] = exchange_date

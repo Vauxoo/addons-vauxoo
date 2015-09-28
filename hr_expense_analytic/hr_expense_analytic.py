@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class hr_department(osv.Model):
+class HrDepartment(osv.Model):
     _inherit = "hr.department"
 
     _columns = {
@@ -35,7 +35,7 @@ class hr_department(osv.Model):
     }
 
 
-class hr_expense_line(osv.Model):
+class HrExpenseLine(osv.Model):
     _inherit = "hr.expense.line"
 
     def _get_analytic(self, cr, uid, context=None):

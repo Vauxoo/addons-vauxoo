@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,10 +25,10 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
-import openerp.netsvc as netsvc
+import openerp.workflow as workflow
 
 
-class mrp_production(osv.Model):
+class MrpProduction(osv.Model):
     _inherit = 'mrp.production'
 
     def _check_boolean(self, cr, uid, ids, field_name, args, context={}):
@@ -93,7 +93,7 @@ class mrp_production(osv.Model):
             for moves in production.move_created_ids:
                 stock_move.action_cancel(cr, uid, [moves.id], context=context)
             try:
-                wf_service = netsvc.LocalService("workflow")
+                wf_service = workflow
                 wf_service.trg_validate(
                     uid, 'mrp.production', production.id,
                     'button_produce_done', cr)

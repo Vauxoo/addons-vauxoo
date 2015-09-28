@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class sale_order_line(osv.osv):
+class SaleOrderLine(osv.osv):
     _inherit = 'sale.order.line'
 
     _columns = {
@@ -44,7 +44,7 @@ class sale_order_line(osv.osv):
 
         context = context or {}
 
-        res = super(sale_order_line, self).product_id_change(
+        res = super(SaleOrderLine, self).product_id_change(
             cr, uid, ids, pricelist, product, qty=qty, uom=uom,
             qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
             lang=lang, update_tax=update_tax, date_order=date_order,
@@ -63,13 +63,13 @@ class sale_order_line(osv.osv):
         return res
 
 
-class sale_order(osv.osv):
+class SaleOrder(osv.osv):
 
     _inherit = 'sale.order'
 
     def create(self, cr, uid, values, context=None):
 
-        new_id = super(sale_order, self).create(
+        new_id = super(SaleOrder, self).create(
             cr, uid, values, context=context)
 
         if values.get('order_line'):
@@ -81,7 +81,7 @@ class sale_order(osv.osv):
         if isinstance(ids, (int, long)):
             ids = [ids]
 
-        res = super(sale_order, self).write(
+        res = super(SaleOrder, self).write(
             cr, uid, ids, vals, context=context)
 
         if 'order_line' in vals:

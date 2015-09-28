@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -22,33 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "MRP Button Box", 
-    "version": "1.0", 
-    "author": "Vauxoo C.A.", 
-    "category": "", 
-    "description": """
-MRP Button Box
-==============
-
-Dummy module to add a button box at the manufacturing order right uper corner.
-This module can be find at lp:addons-vauxoo/7.0/mrp_button_box
-""", 
-    "website": "http://www.openerp.com.ve", 
-    "license": "", 
+    "name": "MRP Button Box",
+    "version": "1.6",
+    "author": "Vauxoo C.A.",
+    "category": "",
+    "website": "http://www.openerp.com.ve",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
+        "base",
+        "mail",
         "mrp"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "view/mrp_button_box_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

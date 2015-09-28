@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 # Copyright (c) 2011 OpenERP Venezuela (http://openerp.com.ve)
 # All Rights Reserved.
@@ -28,7 +28,7 @@
 from openerp.osv import osv
 
 
-class product_inherited(osv.Model):
+class ProductInherited(osv.Model):
 
     """
     Checks if a loaded product already exists on the database

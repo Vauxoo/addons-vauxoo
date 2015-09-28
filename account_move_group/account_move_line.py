@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,12 +27,12 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
 
     def _create_move_group(self, cr, uid, ids, context=None):
         account_move = self.pool.get('account.move')
-        account_move_line = self.pool.get('account.move.line')
+        AccountMoveLine = self.pool.get('account.move.line')
 
         res_journal = {}
         res_period = {}
@@ -71,6 +71,6 @@ class account_move_line(osv.Model):
                 'journal_id': res_journal.keys()[0],
                 'ref': reference
             })
-            account_move_line.write(cr, uid, moves_line, {'move_id': move_id})
+            AccountMoveLine.write(cr, uid, moves_line, {'move_id': move_id})
             account_move.unlink(cr, uid, ids)
         return move_id

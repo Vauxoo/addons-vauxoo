@@ -1,3 +1,4 @@
+# coding: utf-8
 ########################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -20,20 +21,15 @@
 #######################################################################
 {
     "name": "Product extension to track sales and purchases from variants",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Technical",
     'website': 'https://www.vauxoo.com',
     "depends": ['product'],
     "category": "Generic Modules/Inventory Control",
-    "description": """
-
-""",
     "data": [
         'view/product_view.xml',
     ],
     "active": False,
     "installable": True
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

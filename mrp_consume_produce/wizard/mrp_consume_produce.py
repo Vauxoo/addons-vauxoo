@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp.tools.translate import _
 
 
-class mrp_consume(osv.TransientModel):
+class MrpConsume(osv.TransientModel):
     _name = 'mrp.consume'
 
     def _get_moves_grouped_by_product(self, cr, uid, move_ids,
@@ -279,7 +279,7 @@ class mrp_consume(osv.TransientModel):
         return values
 
 
-class mrp_produce(osv.TransientModel):
+class MrpProduce(osv.TransientModel):
     _name = 'mrp.produce'
 
     def _get_produce_line_list(self, cr, uid, production_id, context=None):
@@ -387,7 +387,7 @@ class mrp_produce(osv.TransientModel):
         return active_move_ids
 
 
-class mrp_consume_line(osv.TransientModel):
+class MrpConsumeLine(osv.TransientModel):
     _name = 'mrp.consume.line'
     _rec_name = 'product_id'
     _columns = {
@@ -408,7 +408,7 @@ class mrp_consume_line(osv.TransientModel):
     }
 
 
-class mrp_produce_line(osv.TransientModel):
+class MrpProduceLine(osv.TransientModel):
 
     _name = 'mrp.produce.line'
     _rec_name = 'product_id'
@@ -449,7 +449,7 @@ class mrp_produce_line(osv.TransientModel):
     }
 
 
-class mrp_consume_line_move(osv.TransientModel):
+class MrpConsumeLineMove(osv.TransientModel):
 
     """
     This model refered to stock moves dummy data that is used in the

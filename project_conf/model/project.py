@@ -1,3 +1,4 @@
+# coding: utf-8
 #
 #
 #    OpenERP, Open Source Management Solution
@@ -22,14 +23,14 @@
 from openerp.osv import fields, osv
 
 
-class project_task(osv.osv):
+class ProjectTask(osv.osv):
 
     _inherit = 'project.task'
 
     def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):
         if auto_follow_fields is None:
             auto_follow_fields = ['user_id']
-        res = super(project_task, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
+        res = super(ProjectTask, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
         res.append('project_leader_id')
         return res
 

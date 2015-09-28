@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,13 +26,9 @@
 
 {
     "name": "Account tax importation",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """
-    This module added functionality to supplier invoice to relate this with
-    other invoice to payment to tax importation to broker.
-""",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,31 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Pricelist", 
-    "version": "1.1", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "description": """ This module allows get the rule that has the most current date.
-                    Also contains a patch that modifies the query of the item,
-                    return to the rule depending on _order defined in the class.
-                """, 
-    "website": "", 
-    "license": "", 
+    "name": "Pricelist",
+    "version": "1.6",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "website": "",
+    "license": "",
     "depends": [
-        "product", 
+        "product",
         "sale"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "product_pricelist_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

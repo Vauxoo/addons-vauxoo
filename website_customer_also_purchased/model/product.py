@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -27,7 +27,7 @@ from openerp.osv import osv
 from openerp.osv import fields
 
 
-class product_template(osv.osv):
+class ProductTemplate(osv.osv):
     _inherit = 'product.template'
 
     def _get_purchased(self, cr, uid, ids, field_names, arg=None,

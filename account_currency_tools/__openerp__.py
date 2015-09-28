@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -22,14 +21,9 @@
 ###############################################################################
 {
     "name": "Account Currency Tools",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Tools",
-    "description": """
-Account Currency Tools
-======================
-    This module will be a hub for providing tools related to multicurrency
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
@@ -49,5 +43,10 @@ Account Currency Tools
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
+    "active": False,
+    "external_dependencies": {
+        "python": [
+            'pandas'
+        ]
+    }
 }

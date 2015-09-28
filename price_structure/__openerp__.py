@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -22,42 +22,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Price Structure", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-   This module adds a new functionality to manage price lists for products adding a new tab on the product
-   view where you can see the price lists where this product is affected either by product or by category.
-
-   It also adds a new feature to the time of a sale, allowing you to choose a price list through which Live
-   will calculate to give a product price depending on the price list q be selected, regardless of whether
-   the list price selected at the beginning of the order.
-
-   This also adds a blockade preventing sold when selling a product at a price higher or lower than estimated
-   by their price lists
-
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Price Structure",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "product", 
-        "sale", 
+        "product",
+        "sale",
         "cost_structure"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/product_view.xml", 
-        "view/sale_view.xml", 
-        "view/product_pricelist_view.xml", 
-        "workflow/sale_workflow.xml", 
+        "view/product_view.xml",
+        "view/sale_view.xml",
+        "view/product_pricelist_view.xml",
+        "workflow/sale_workflow.xml",
         "wizard/create_list_price_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

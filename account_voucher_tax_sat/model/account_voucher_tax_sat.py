@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #   Module Writen to OpenERP, Open Source Management Solution
 #   Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,7 +23,7 @@ from openerp import models, fields, api, _
 from openerp.exceptions import except_orm
 
 
-class account_voucher_tax_sat(models.Model):
+class AccountVoucherTaxSat(models.Model):
 
     _name = 'account.voucher.tax.sat'
 

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-class mrp_production_wizard(osv.TransientModel):
+class MrpProductionWizard(osv.TransientModel):
     _name = 'mrp.production.wizard'
     _columns = {
         'product_id': fields.many2one('product.product', 'Product',
@@ -79,7 +79,7 @@ class mrp_production_wizard(osv.TransientModel):
     #    return res
 
 
-class wizard_data(osv.TransientModel):
+class WizardData(osv.TransientModel):
     _name = 'wizard.data'
 
     _columns = {

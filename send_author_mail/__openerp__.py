@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #   Module Writen to OpenERP, Open Source Management Solution
 #   Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
@@ -21,13 +21,9 @@
 ###############################################################################
 {
     "name": "Send Email Author",
-    "version": "1.1",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Addons Vauxoo",
-    "description": """
-This module added one field in view of partner to allow you receive your own
-message sent to others
-    """,
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [

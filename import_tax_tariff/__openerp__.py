@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # ############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -23,16 +23,12 @@
 # ############################################################################
 {
     "name": "Import Tax and Tariff",
-    "version": "1.0",
+    "version": "1.6",
     "summary": "Import Tax and Tariff",
     "depends": [
         "account_accountant",
         "stock"],
     "author": "Vauxoo",
-    "description": """
-Import Tax and Tariff
-=====================
-    """,
     "website": "http://www.vauxoo.com/",
     "category": "Accounting",
     "data": [

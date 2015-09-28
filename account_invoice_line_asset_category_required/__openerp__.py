@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
 #
@@ -10,7 +10,7 @@
 ############################################################################
 {
     'name': 'Account Invoice Line Asset Category Required',
-    'version': '1.0',
+    'version': '1.6',
     'author': 'Vauxoo',
     'category': '',
     'depends': [
@@ -27,5 +27,3 @@
     'auto_install': False,
     'images': [],
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

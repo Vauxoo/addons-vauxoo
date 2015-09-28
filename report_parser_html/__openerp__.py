@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,16 +25,9 @@
 ##############################################################################
 {
     "name": "Report Parser HTML",
-    "version": "0.1",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-Report Parser HTML
-==================
-
-This module adds a class to be used by other reports where translating
-    HTML formatted text is required to be printed as plain text
-""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [

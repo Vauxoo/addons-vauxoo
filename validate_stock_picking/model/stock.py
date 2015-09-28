@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,11 +25,11 @@
 import time
 
 from openerp.osv import osv
-from openerp import netsvc
+from openerp import workflow
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
-class inherit_stock_move(osv.Model):
+class InheritStockMove(osv.Model):
 
     _inherit = 'stock.move'
 
@@ -39,7 +39,7 @@ class inherit_stock_move(osv.Model):
         """
         picking_ids = []
         move_ids = []
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         if context is None:
             context = {}
 

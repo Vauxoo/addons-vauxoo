@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,10 +24,10 @@ import time
 from .webkit_parser_header_fix import HeaderFooterTextWebKitParser
 
 
-class account_move_report_html(report_sxw.rml_parse):
+class AccountMoveReportHtml(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(account_move_report_html, self).__init__(cr, uid, name,
+        super(AccountMoveReportHtml, self).__init__(cr, uid, name,
                                 context=context)
         self.localcontext.update({
             'time': time,
@@ -47,6 +47,4 @@ HeaderFooterTextWebKitParser(
     'report.account.move.report.webkit',
     'account.move',
     'addons/report_account_move/report/account_move_report_html.mako',
-    parser=account_move_report_html)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    parser=AccountMoveReportHtml)

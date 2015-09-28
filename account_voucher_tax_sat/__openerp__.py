@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #   Module Writen to OpenERP, Open Source Management Solution
 #   Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -19,20 +19,11 @@
 #   You should have received a copy of the GNU Affero General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Account Voucher Tax SAT",
-    "version": "1.0",
+    "version": "1.6",
     "author": "Vauxoo",
     "category": "Accounting",
-    "description": """
-Polizas de SAT:
-===============
-
-1.- Crea los apuntes contables para los impuestos con retenciones
-2.- Crea provicion de pago al SAT
-3.- Crea apuntes contables para las retenciones de IVA
-    """,
     "website": "http://www.vauxoo.com/",
     "depends": [
         "account",

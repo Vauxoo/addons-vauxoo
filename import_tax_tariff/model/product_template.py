@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # ############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -24,7 +24,7 @@
 from openerp import models, fields
 
 
-class product_template(models.Model):
+class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     tariff_id = fields.Many2one("import.tax.tariff", string="Tariff")

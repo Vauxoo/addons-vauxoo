@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -25,7 +25,7 @@
 from openerp.osv import osv
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = "account.move.line"
 
     def _remove_move_reconcile(self, cr, uid, move_ids=None,
@@ -33,7 +33,7 @@ class account_move_line(osv.Model):
         # Function remove move reconcile ids related with moves
         if opening_reconciliation:
             # We will return original method
-            super(account_move_line, self)._remove_move_reconcile(
+            super(AccountMoveLine, self)._remove_move_reconcile(
                 cr, uid, move_ids=move_ids,
                 opening_reconciliation=opening_reconciliation, context=context)
         context = dict(context or {})

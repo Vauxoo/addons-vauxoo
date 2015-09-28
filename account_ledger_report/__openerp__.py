@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -23,39 +23,26 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Ledger Report", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Accounting", 
-    "description": """
-    Module that replace original ledger report to optimize the printing space.
-    The reports changed are:
-        - account_general_ledger.rml
-        - account_general_ledger_landscape.rml
-        - account_partner_ledger.rml
-        - account_partner_ledger_other.rml
-    In these reports were eliminated:
-        - Journal (header)
-        - Partner field
-        - Ref field
- """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    "name": "Account Ledger Report",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Accounting",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "acc_ledger_report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

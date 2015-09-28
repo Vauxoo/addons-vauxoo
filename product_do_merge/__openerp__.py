@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -20,46 +20,27 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Merge Duplicate Products", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
-    "description": """
-Merge Products
-==============
-We can merge duplicates products and set the new id in all documents of
-product merged.
-
-We can merge products using like mach parameter these fields:
-    * Name
-    * Reference
-
-We can select which product will be the main product.
-
-This feature do not change anything if the products to be merged have
-operations in different units of measure.
-
-This feature is in the follow path Warehouse/Tools/Duplicate products
-also is created an action menu in the product view.
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    "name": "Merge Duplicate Products",
+    "version": "0.6",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "base", 
+        "base",
         "stock"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/res_groups.xml", 
+        "security/res_groups.xml",
         "wizard/base_product_merge_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

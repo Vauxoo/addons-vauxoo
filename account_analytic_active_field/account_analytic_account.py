@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class account_analytic_account(osv.Model):
+class AccountAnalyticAccount(osv.Model):
     _name = "account.analytic.account"
     _inherit = "account.analytic.account"
     _columns = {

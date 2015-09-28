@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 from openerp import tools
 
 
-class portal_project(osv.Model):
+class PortalProject(osv.Model):
 
     """ Add five fields to the project, project_url and documentation_url is in Othe Info and
     image in header.

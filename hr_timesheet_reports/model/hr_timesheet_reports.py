@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 from openerp import models, fields, api, _
 from openerp.tools.safe_eval import safe_eval
 from openerp import SUPERUSER_ID
@@ -20,7 +20,7 @@ def clean_name(name):
     return text
 
 
-class hr_timesheet_reports_base(models.Model):
+class HrTimesheetReportsBase(models.Model):
 
     _name = "hr.timesheet.reports.base"
     _inherit = ['mail.thread']

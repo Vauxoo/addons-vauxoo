@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
@@ -24,7 +24,7 @@
 from openerp.osv import osv, fields
 
 
-class email_template(osv.Model):
+class EmailTemplate(osv.Model):
 
     _inherit = 'email.template'
 

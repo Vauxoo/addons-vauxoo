@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -29,14 +29,14 @@ from lxml import etree
 import openerp.tools as tools
 
 
-class account_move_line(osv.Model):
+class AccountMoveLine(osv.Model):
     _inherit = 'account.move.line'
     _columns = {
         'address_id': fields.many2one('res.partner.address', 'Address', domain="[('partner_id','=',partner_id)]")
     }
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        result = super(account_move_line, self).fields_view_get(
+        result = super(AccountMoveLine, self).fields_view_get(
             cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
         xml_form = etree.fromstring(result['arch'])
         placeholder = xml_form.xpath("//field[@name='partner_id']")
@@ -48,7 +48,7 @@ class account_move_line(osv.Model):
         return result
 
 
-class account_entries_report(osv.Model):
+class AccountEntriesReport(osv.Model):
     _inherit = 'account.entries.report'
     _columns = {
         'address_id': fields.many2one('res.partner.address', 'Address')

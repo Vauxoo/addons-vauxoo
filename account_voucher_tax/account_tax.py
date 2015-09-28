@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -27,7 +27,7 @@
 from openerp.osv import osv, fields
 
 
-class account_tax(osv.Model):
+class AccountTax(osv.Model):
     _inherit = "account.tax"
 
     _columns = {
@@ -51,7 +51,7 @@ class account_tax(osv.Model):
     }
 
 
-class account_journal(osv.Model):
+class AccountJournal(osv.Model):
     _inherit = 'account.journal'
 
     _columns = {
@@ -63,7 +63,7 @@ class account_journal(osv.Model):
     }
 
 
-class res_company(osv.Model):
+class ResCompany(osv.Model):
     _inherit = 'res.company'
 
     _columns = {

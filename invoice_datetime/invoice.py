@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # ##########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,7 +28,7 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from openerp import tools
+from openerp import tools, api
 import datetime
 from datetime import timedelta
 from pytz import timezone
@@ -36,7 +36,7 @@ import pytz
 import time
 
 
-class account_payment_term(osv.Model):
+class AccountPaymentTerm(osv.Model):
     _inherit = "account.payment.term"
 
     # pylint: disable=W0622
@@ -50,11 +50,11 @@ class account_payment_term(osv.Model):
                     date_ref, '%Y-%m-%d %H:%M:%S'))
             except BaseException:
                 pass
-        return super(account_payment_term, self).compute(
+        return super(AccountPaymentTerm, self).compute(
             cr, uid, id, value, date_ref, context=context)
 
 
-class account_invoice(osv.Model):
+class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
     # _order = 'invoice_datetime asc'
 
@@ -113,7 +113,7 @@ class account_invoice(osv.Model):
                 vals.update(
                     {'date_invoice_tz': self._get_datetime_with_user_tz(
                         cr, uid, datetime_inv)})
-        return super(account_invoice, self).create(
+        return super(AccountInvoice, self).create(
             cr, uid, vals, context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -125,7 +125,7 @@ class account_invoice(osv.Model):
                 vals.update(
                     {'date_invoice_tz': self._get_datetime_with_user_tz(
                         cr, uid, datetime_inv)})
-        return super(account_invoice, self).write(
+        return super(AccountInvoice, self).write(
             cr, uid, ids, vals, context=context)
 
     def _get_default_type(self, cr, uid, ids):
@@ -141,17 +141,15 @@ class account_invoice(osv.Model):
         "date_type": _get_default_type
     }
 
-    def copy(self, cr, uid, ids, default=None, context=None):
-        if context is None:
-            context = {}
+    @api.one
+    def copy(self, default=None):
         if default is None:
             default = {}
         default.update({
             'invoice_datetime': False,
             'date_invoice': False,
             'date_invoice_tz': False})
-        return super(account_invoice, self).copy(
-            cr, uid, ids, default, context)
+        return super(AccountInvoice, self).copy(default)
 
     def _get_time_zone(self, cr, uid, invoice_id, context=None):
         if context is None:
@@ -183,7 +181,7 @@ class account_invoice(osv.Model):
         if values.get('date_invoice', False) and\
                 not values.get('invoice_datetime', False):
             user_hour = self._get_time_zone(cr, uid, [], context=context)
-            time_invoice = datetime.time(abs(user_hour), 0, 0)
+            time_invoice = datetime.datetime.utcnow().time()
 
             date_invoice = datetime.datetime.strptime(
                 values['date_invoice'], '%Y-%m-%d').date()
@@ -255,5 +253,5 @@ class account_invoice(osv.Model):
                                    'date_invoice': inv.date_invoice},
                     context=context)
                 self.write(cr, uid, ids, vals_date, context=context)
-        return super(account_invoice,
+        return super(AccountInvoice,
                      self).action_move_create(cr, uid, ids, context=context)

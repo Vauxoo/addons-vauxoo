@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
@@ -24,12 +24,9 @@
 ###############################################################################
 {
     "name": "Message Post Log",
-    "version": "0.1",
+    "version": "0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
-    "description": """
-
-""",
     "website": "http://vauxoo.com",
     "license": "",
     "depends": [
@@ -46,4 +43,3 @@
     "installable": True,
     "auto_install": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
