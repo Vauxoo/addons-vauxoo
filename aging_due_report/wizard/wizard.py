@@ -392,7 +392,7 @@ class AccountAgingPartnerWizard(osv.osv_memory):
             help='Partners'),
         'company_id': fields.many2one(
             'res.company', 'Company', required=True,
-            default='_get_default_company'),
+            default=lambda s: s._get_default_company()),
         'period_length': fields.integer(
             'Period Length (days)', required=True, default='30'),
         'user_id': fields.many2one('res.users', 'User',
