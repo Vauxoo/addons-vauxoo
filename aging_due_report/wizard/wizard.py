@@ -364,20 +364,20 @@ class AccountAgingPartnerWizard(osv.osv_memory):
             # ('html', 'HTML'),
             ('xls', 'Spreadsheet')],
             'Report Format',
-            required=True),
+            required=True, default='pdf'),
         'result_selection': fields.selection(
             [
                 ('supplier', 'Payable'),
                 ('customer', 'Receivable')],
             "Target",
-            required=True),
+            required=True, default='customer'),
         'type': fields.selection(
             [('aging', 'Aging Report'),
              ('detail', 'Detailed Report'),
              ('aging_detail', 'Aging Detailed Report'), ],
             # ('formal', 'Formal Report')],
             "Type",
-            required=True),
+            required=True, default='aging'),
         'currency_ids': fields.one2many(
             'account.aging.wizard.currency',
             'aaw_id', 'Balance by Currency',
@@ -391,27 +391,18 @@ class AccountAgingPartnerWizard(osv.osv_memory):
             'aaw_id', 'Partners',
             help='Partners'),
         'company_id': fields.many2one(
-            'res.company', 'Company', required=True),
+            'res.company', 'Company', required=True,
+            default='_get_default_company'),
         'period_length': fields.integer(
-            'Period Length (days)', required=True),
-        'user_id': fields.many2one('res.users', 'User'),
+            'Period Length (days)', required=True, default='30'),
+        'user_id': fields.many2one('res.users', 'User',
+                                   default=lambda s: s._uid),
         'direction': fields.selection(
             [
                 ('future', 'Future'),
                 ('past', 'Past')],
             "Direction",
-            required=True),
-    }
-
-    _defaults = {
-        'report_format': lambda *args: 'pdf',
-        'result_selection': lambda *args: 'customer',
-        'type': lambda *args: 'aging',
-        'company_id': _get_default_company,
-        'period_length': 30,
-        'user_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u, u,
-                                                                      cx).id,
-        'direction': lambda *args: 'past',
+            required=True, default='past'),
     }
 
     def _get_lines_by_partner_without_invoice(
