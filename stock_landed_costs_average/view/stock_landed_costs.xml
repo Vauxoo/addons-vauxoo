@@ -11,7 +11,7 @@
                         name="invoice_ids"
                         widget="many2many_tags"
                         domain="[
-                            ('state', 'in', ('draft','open','paid')),
+                            ('state', 'in', ('open','paid')),
                             ('type', '=', 'in_invoice'),
                         ]"
                         attrs="{'readonly': [('state','!=','draft')]}"
