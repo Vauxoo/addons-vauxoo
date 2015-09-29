@@ -28,7 +28,17 @@ class StockLandedCost(models.Model):
             for cl_brw in lc_brw.cost_lines:
                 cl_brw.unlink()
             for inv_brw in lc_brw.invoice_ids:
+                company_currency = inv_brw.company_id.currency_id
+                diff_currency = inv_brw.currency_id != company_currency
+                if diff_currency:
+                    currency = inv_brw.currency_id.with_context(
+                        date=inv_brw.date_invoice)
                 for ail_brw in inv_brw.invoice_line:
+                    if diff_currency:
+                        price_subtotal = currency.compute(
+                            ail_brw.price_subtotal, company_currency)
+                    else:
+                        price_subtotal = ail_brw.price_subtotal
                     vals = {
                         'cost_id': lc_brw.id,
                         'name': ail_brw.name,
@@ -36,7 +46,7 @@ class StockLandedCost(models.Model):
                         ail_brw.account_id.id,
                         'product_id': ail_brw.product_id and
                         ail_brw.product_id.id,
-                        'price_unit': ail_brw.price_subtotal,
+                        'price_unit': price_subtotal,
                         'split_method': 'by_quantity',
                     }
                     slcl_obj.create(vals)
