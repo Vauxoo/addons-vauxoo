@@ -23,8 +23,6 @@
 #
 
 from openerp.addons.purchase_third_validation.tests.common import TestTaxCommon
-import logging
-_logger = logging.getLogger(__name__)
 from openerp import workflow
 
 
@@ -33,66 +31,92 @@ class TestPurchaseThirdValidation(TestTaxCommon):
     def setUp(self):
         super(TestPurchaseThirdValidation, self).setUp()
 
-    def test_purchase_less_2000(self):
+    def test_purchase_by_1000(self):
+        '''Test with the amount of purchase order by a total less that minimum \
+        required to not need a second validation, (amount = 1000).
         '''
-            Test with the amount of purchase order by a total less that minimum
-            required to not need a second validation.
-        '''
-        _logger.info("I test with a total less that 2000")
-        purchase = self.generate_confirm_po(100)
-        _logger.info("I check that the state of order now is approved")
+        purchase = self.generate_confirm_po(1000)
         state = self.purchase_obj.browse(purchase.id).state
-        self.assertEquals(
-            state, 'approved', 'No order approved')
+        self.assertEquals(state, 'approved', 'No order approved')
 
     def test_purchase_by_5000(self):
+        '''Test with the amount of purchase order by a total higher that \
+        minimum required to need a second validation, but not need a third, \
+        (amount = 5000).
         '''
-            Test with the amount of purchase order by a total higher that
-            minimum required to need a second validation, but not need a third.
-        '''
-        _logger.info("I test with a total equal to 5000")
-        purchase = self.generate_confirm_po(2000)
-        _logger.info("I check the state of order is confirmed")
+        purchase = self.generate_confirm_po(5000)
         state = self.purchase_obj.browse(purchase.id).state
         self.assertEquals(
             state, 'confirmed', 'The order state is not confirmed')
-        _logger.info("I try approve the purchase order")
         self.assertRaises(workflow.trg_validate(
             self.uid, 'purchase.order', purchase.id, 'purchase_approve',
             self.cr))
-        _logger.info("I check that the state of order now is approved")
         state = self.purchase_obj.browse(purchase.id).state
         self.assertEquals(
             state, 'approved', 'No order approved')
 
     def test_purchase_by_100000(self):
+        '''Test with the amount of purchase order by a total higher that \
+        minimum required to need a third validation, (amount = 100000).
         '''
-            Test with the amount of purchase order by a total higher that
-            minimum required to need a third validation.
-        '''
-        _logger.info("I test with total equal to 100000")
         purchase = self.generate_confirm_po(100000)
-        _logger.info("I check the state of order is confirmed")
         state = self.purchase_obj.browse(purchase.id).state
         self.assertEquals(
             state, 'confirmed', 'The order state is not confirmed')
-        _logger.info("I try approve the purchase order with demo user")
         self.assertRaises(workflow.trg_validate(
             self.uid, 'purchase.order', purchase.id, 'purchase_approve',
             self.cr))
-        _logger.info(
-            "I check that the state even is confirmed")
         state = self.purchase_obj.browse(purchase.id).state
         self.assertEquals(
             state, 'confirmed', 'The order was approved')
-        _logger.info(
-            "I try make the third approbation the purchase order whit root "
-            "user")
         self.assertRaises(workflow.trg_validate(
             self.user_root, 'purchase.order', purchase.id, 'purchase_approve',
             self.cr))
-        _logger.info(
-            "I check that the state of order now is approve")
         state = self.purchase_obj.browse(purchase.id).state
         self.assertEquals(
             state, 'approved', 'No order approved')
+
+    def test_purchase_by_100_usd(self):
+        '''Test with the amount of purchase order in USD by a total less that \
+        minimum required to not need a second validation (amount = 100 USD).
+        '''
+        purchase = self.generate_confirm_po(100, self.currency_usd.id)
+        state = self.purchase_obj.browse(purchase.id).state
+        self.assertEquals(state, 'approved', 'Order in USD no approved')
+
+    def test_purchase_by_5000_usd(self):
+        '''Test with the amount of purchase order in USD by a total higher \
+        that minimum required to need a second validation, but not need a \
+        third, (amount = 500 USD).
+        '''
+        purchase = self.generate_confirm_po(500, self.currency_usd.id)
+        state = self.purchase_obj.browse(purchase.id).state
+        self.assertEquals(
+            state, 'confirmed', 'The order state in USD is not confirmed')
+        self.assertRaises(workflow.trg_validate(
+            self.uid, 'purchase.order', purchase.id, 'purchase_approve',
+            self.cr))
+        state = self.purchase_obj.browse(purchase.id).state
+        self.assertEquals(
+            state, 'approved', 'Order in USD no approved')
+
+    def test_purchase_by_10000_usd(self):
+        '''Test with the amount of purchase order in USD by a total higher \
+        that minimum required to need a third validation (amount = 10000 USD).
+        '''
+        purchase = self.generate_confirm_po(10000, self.currency_usd.id)
+        state = self.purchase_obj.browse(purchase.id).state
+        self.assertEquals(
+            state, 'confirmed', 'The order state is not confirmed')
+        self.assertRaises(workflow.trg_validate(
+            self.uid, 'purchase.order', purchase.id, 'purchase_approve',
+            self.cr))
+        state = self.purchase_obj.browse(purchase.id).state
+        self.assertEquals(
+            state, 'confirmed', 'The order in USD was approved')
+        self.assertRaises(workflow.trg_validate(
+            self.user_root, 'purchase.order', purchase.id, 'purchase_approve',
+            self.cr))
+        state = self.purchase_obj.browse(purchase.id).state
+        self.assertEquals(
+            state, 'approved', 'Order in USD no approved')

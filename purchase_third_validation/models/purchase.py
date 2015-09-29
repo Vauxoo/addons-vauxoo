@@ -23,7 +23,9 @@ class PurchaseOrder(models.Model):
         value = transition.condition.split('<', 1)
         for purchase in self:
             if purchase.state == 'confirmed' and\
-                    purchase.amount_total >= float(value[1]):
+                    purchase.currency_id.compute(
+                        purchase.amount_total,
+                        purchase.company_id.currency_id) >= float(value[1]):
                 purchase.third_level_ok = True
 
     third_level_ok = fields.Boolean(
@@ -37,3 +39,9 @@ class PurchaseOrder(models.Model):
             body=_('The PO was not approved, you need privileges by the amount'
                    ' of this purchase'))
         return False
+
+    @api.multi
+    def amount_currency_company(self, amount_purchase):
+        amount_currency = self.currency_id.compute(
+            amount_purchase, self.company_id.currency_id)
+        return amount_currency
