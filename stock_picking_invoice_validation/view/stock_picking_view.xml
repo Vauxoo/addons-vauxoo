@@ -8,13 +8,13 @@
             <field name="inherit_id" ref="stock.view_stock_enter_transfer_details"/>
             <field name="arch" type="xml">
                 <xpath expr="//group/field[@name='item_ids']/.." position="before">
-                    <field name="picking_type_code" invisible="False"/>
-                    <field name="check_inv_pick" invisible="False"/>
+                    <field name="picking_type_code" invisible="True"/>
+                    <field name="check_inv_pick" invisible="True"/>
                     <field name="invoice_id"
                         attrs="{'invisible':['|', ('picking_type_code', 'in', ('internal', 'incoming')),
-                                             ('check_inv_pick', '=', 'False')],
+                                             ('check_inv_pick', '=', 'no_check')],
                                 'required':[('picking_type_code', 'in', ('outgoing')),
-                                            ('check_inv_pick', '=', 'True')]}"/>
+                                            ('check_inv_pick', '=', 'check')]}"/>
                 </xpath>
             </field>
         </record>
@@ -25,8 +25,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//div/field[@name='module_stock_landed_costs']/.." position="after">
                     <div>
-                        <field name="check_inv_pick" class="oe_inline"/>
                         <label for="check_inv_pick"/>
+                        <field name="check_inv_pick" class="oe_inline"/>
+                        
                     </div>
                 </xpath>
             </field>

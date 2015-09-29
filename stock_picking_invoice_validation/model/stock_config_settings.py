@@ -14,18 +14,20 @@ from openerp import api, fields, models
 class StockConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
-    check_inv_pick = fields.Boolean("Check invoice vs picking")
+    check_inv_pick = fields.Selection(
+        [('check', 'Check'),
+         ('no_check', 'No Check')], "Check invoice vs picking")
 
     @api.model
     def get_default_check_inv_pick(self, fields_name):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default=False)
+            key, default='no_check')
         return {'check_inv_pick': check_inv_pick}
 
-    @api.one
+    @api.multi
     def set_default_check_inv_pick(self):
         config_parameters = self.env["ir.config_parameter"]
         key = "stock.check_inv_pick"
         config_parameters.set_param(
-            key, self.check_inv_pick or False,)
+            key, self.check_inv_pick or 'no_check', [])

@@ -19,22 +19,21 @@ class StockTansferDetails(models.TransientModel):
     def get_chec_inv_pick(self):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default=False)
+            key, default='no_check')
         for record in self:
             record.check_inv_pick = check_inv_pick
-
     invoice_id = fields.Many2one('account.invoice', string='Invoice')
     picking_type_code = fields.Char(
         string='Picking Type Code', related='picking_id.picking_type_code')
-    check_inv_pick = fields.Boolean(
+    check_inv_pick = fields.Char(
         "Check invoice vs picking", compute=get_chec_inv_pick)
 
     @api.multi
     def do_detailed_transfer(self):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default=False)
-        if not check_inv_pick:
+            key, default='False')
+        if not check_inv_pick == 'check':
             res = super(StockTansferDetails, self).do_detailed_transfer()
             return res
         for transfer in self:
@@ -58,7 +57,8 @@ class StockTansferDetails(models.TransientModel):
                     if lines != moves:
                         raise exceptions.Warning(
                             ('Warning!'), 'Incorrect Invoice, '
-                            'products and quantities are different')
+                            'products and quantities are different '
+                            'between moves and invoice lines.')
                     else:
                         transfer.picking_id.invoice_id = invoice.id
                         res = super(
