@@ -17,6 +17,21 @@
         </record>
 
         <report auto="False"
+                id="report_aging_detail_due_report_qweb"
+                model="account.aging.wizard"
+                name="aging_due_report.aging_detail_due_report_qweb"
+                file="aging_due_report.aging_detail_due_report_qweb"
+                string="Aging Detail Report"
+                report_type="qweb-pdf"
+                attachment_use="0"
+                attachment=""
+                menu="False"/>
+
+        <record id="aging_due_report.report_aging_detail_due_report_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_landscape_euro"/>
+        </record>
+
+        <report auto="False"
                 id="report_formal_due_report_qweb"
                 model="res.partner"
                 name="aging_due_report.formal_due_report_qweb"

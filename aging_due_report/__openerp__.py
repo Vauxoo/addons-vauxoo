@@ -36,12 +36,13 @@
     "data": [
         "data/aging_due_report_paper_format.xml",
         "data/aging_due_report_style.xml",
+        "report/aging_due_report_qweb.xml",
+        "report/aging_detail_due_report_qweb.xml",
+        "report/detail_due_report_qweb.xml",
+        "report/customer_formal_due_report_qweb.xml",
+        "report/supplier_formal_due_report_qweb.xml",
         "views/wizard.xml",
-        "views/customer_aging_due_report_qweb.xml",
-        "views/customer_formal_due_report_qweb.xml",
-        "views/customer_detail_due_report_qweb.xml",
-        "views/supplier_formal_due_report_qweb.xml",
-        "views/aging_due_report.xml"
+        "views/report.xml"
     ],
     "test": [],
     "js": [],
@@ -49,7 +50,6 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False,
     "external_dependencies": {
         "python": [
             'pandas',
