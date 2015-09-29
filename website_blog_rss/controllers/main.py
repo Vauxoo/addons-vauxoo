@@ -29,6 +29,8 @@ class WebsiteBlogRSS(http.Controller):
         ira = request.registry['ir.attachment']
         iuv = request.registry['ir.ui.view']
         user_obj = request.registry['res.users']
+        blog_obj = request.registry['blog.blog']
+        blog_ids = blog_obj.search(cr, uid, [], context=context)
         user_brw = user_obj.browse(cr, uid, [uid], context=context)
         blog_post_obj = request.registry['blog.post']
         mimetype = 'application/xml;charset=utf-8'
@@ -62,6 +64,9 @@ class WebsiteBlogRSS(http.Controller):
             if post_ids:
                 values['posts'] = blog_post_obj.browse(cr, uid, post_ids,
                                                        context)
+            if blog_ids:
+                blog = blog_obj.browse(cr, uid, blog_ids, context=context)[0]
+                values['blog'] = blog
             values['company'] = user_brw[0].company_id
             values['url_root'] = request.httprequest.url_root
             urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs',

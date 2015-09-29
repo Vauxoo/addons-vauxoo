@@ -3,15 +3,16 @@
     <data>
     <template id="blog_rss_locs">
         <channel>
-        <title><t t-esc="company.name"/></title>
+        <title><t t-esc="blog[0].name"/></title>
         <link><t t-esc="company.website"/></link>
-        <description><t t-esc="company.rml_header1"/></description>
+        <description><t t-esc="blog[0].description"/></description>
         <t t-foreach="posts" t-as="post">
                 <t t-set="url_x" t-value="'{0}blog/{1}/post/{2}'.format(url_root, slug(post.blog_id), slug(post))"/>
             <item>
                 <title><t t-esc="post.name"/></title>
                 <link><t t-raw="url_x"/></link>
                 <guid><t t-raw="url_x"/></guid>
+                <pubDate><t t-esc="post.write_date"/></pubDate>
                 <description><t t-esc="post.content"/></description>
                 <category><t t-esc="post.blog_id.name"/></category>
             </item>
