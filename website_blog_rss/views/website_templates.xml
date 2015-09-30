@@ -6,6 +6,10 @@
         <title><t t-esc="blog[0].name"/></title>
         <link><t t-esc="company.website"/></link>
         <description><t t-esc="blog[0].description"/></description>
+        <!-- This ttl tag is wired now, when the controller become generic
+             it will be dynamically stored in ir.config_parameters or the
+             model published itself. -->
+        <ttl>60</ttl>
         <t t-foreach="posts" t-as="post">
                 <t t-set="url_x" t-value="'{0}blog/{1}/post/{2}'.format(url_root, slug(post.blog_id), slug(post))"/>
             <item>
