@@ -16,7 +16,7 @@
                 <title><t t-esc="post.name"/></title>
                 <link><t t-raw="url_x"/></link>
                 <guid><t t-raw="url_x"/></guid>
-                <pubDate><t t-esc="post.write_date"/></pubDate>
+                <pubDate><t t-esc="post.date_rfc2822"/></pubDate>
                 <description><t t-esc="post.content"/></description>
                 <category><t t-esc="post.blog_id.name"/></category>
             </item>
