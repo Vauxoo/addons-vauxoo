@@ -27,6 +27,8 @@ class WebsiteProductRSS(http.Controller):
     def rss_xml_index(self):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
         ira = request.registry['ir.attachment']
+        user_obj = request.registry['res.users']
+        user_brw = user_obj.browse(cr, uid, [uid], context=context)
         iuv = request.registry['ir.ui.view']
         product_obj = request.registry['product.template']
         mimetype = 'application/xml;charset=utf-8'
@@ -60,6 +62,7 @@ class WebsiteProductRSS(http.Controller):
             if product_ids:
                 values['products'] = product_obj.browse(cr, uid, product_ids,
                                                         context)
+            values['company'] = user_brw[0].company_id
             values['url_root'] = request.httprequest.url_root
             urls = iuv.render(cr, uid, 'website_product_rss.product_rss_locs',
                               values, context=context)

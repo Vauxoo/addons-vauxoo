@@ -3,24 +3,26 @@
     <data>
     <template id="product_rss_locs">
         <channel>
-        <title>Yoytec Computer</title>
-        <link>http://www.yoytec.com</link>
-        <description>Something</description>
-        <item t-foreach="products" t-as="product">
+        <title><t t-esc="company.name"/></title>
+        <link><t t-esc="company.website"/></link>
+        <description><t t-esc="company.rml_header1"/></description>
+        <t t-foreach="products" t-as="product">
             <t t-set="url" t-value="'{0}shop/product/{1}'.format(url_root, slug(product))"/>
-            <title><t t-esc="product.name"/></title>
-            <link><t t-raw="url"/></link>
-            <lastBuildDate><t t-esc="product.write_date"/></lastBuildDate>
-            <description><t t-esc="product.website_description"/></description>
-            <category><t t-esc="product.categ_id.name"/></category>
-        </item>
+            <item>
+                <title><t t-esc="product.name"/></title>
+                <link><t t-raw="url"/></link>
+                <guid><t t-raw="url"/></guid>
+                <description><t t-esc="product.website_description"/></description>
+                <category><t t-esc="product.categ_id.name"/></category>
+            </item>
+        </t>
         </channel>
     </template>
 
     <template id="product_rss_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-        <rss t-attf-xmlns="" version="2.0">
+        &lt;rss  xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"&gt;
             <t t-raw="content"/>
-        </rss>
+        &lt;/rss&gt;
     </template>
     </data>
 </openerp>
