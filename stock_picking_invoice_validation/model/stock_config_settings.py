@@ -22,7 +22,7 @@ class StockConfigSettings(models.TransientModel):
     def get_default_check_inv_pick(self, fields_name):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='no_check')
+            key, default='check')
         return {'check_inv_pick': check_inv_pick}
 
     @api.multi
@@ -30,4 +30,4 @@ class StockConfigSettings(models.TransientModel):
         config_parameters = self.env["ir.config_parameter"]
         key = "stock.check_inv_pick"
         config_parameters.set_param(
-            key, self.check_inv_pick or 'no_check', [])
+            key, self.check_inv_pick or 'check', [])

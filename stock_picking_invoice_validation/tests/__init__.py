@@ -8,22 +8,4 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-{
-    "name": "Stock Picking with Invoice Validations",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "",
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": [
-        "sale",
-        "stock_account",
-        ],
-    "demo": [
-        "demo/stock_product_lot_demo.xml",
-    ],
-    "data": [
-        "view/stock_picking_view.xml",
-    ],
-    "installable": True,
-}
+from . import test_picking_invoice_validation

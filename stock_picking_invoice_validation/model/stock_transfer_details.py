@@ -19,7 +19,7 @@ class StockTansferDetails(models.TransientModel):
     def get_chec_inv_pick(self):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='no_check')
+            key, default='check')
         for record in self:
             record.check_inv_pick = check_inv_pick
     invoice_id = fields.Many2one('account.invoice', string='Invoice')
@@ -32,7 +32,7 @@ class StockTansferDetails(models.TransientModel):
     def do_detailed_transfer(self):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='False')
+            key, default='check')
         if not check_inv_pick == 'check':
             res = super(StockTansferDetails, self).do_detailed_transfer()
             return res
