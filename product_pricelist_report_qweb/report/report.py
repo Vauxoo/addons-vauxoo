@@ -20,12 +20,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 from openerp.osv import osv
-from openerp.addons.product.report import product_pricelist
+from openerp.addons.product.report.product_pricelist\
+    import product_pricelist as ParserReport
 
 
-class Parser(product_pricelist.product_pricelist):
+class Parser(ParserReport):
     def __init__(self, cr, uid, name, context):
         super(Parser, self).__init__(cr, uid, name, context=context)
+        self.localcontext.update({
+            'get_dict_titles': self._get_dict_titles,
+        })
+
+    def _get_dict_titles(self, form):
+        titles_list = self._get_titles(form)
+        titles = {}
+        for title in titles_list:
+            titles.update(title)
+        return titles
 
     def _get_titles(self, form):
         res = super(Parser, self)._get_titles(form)
@@ -75,12 +86,12 @@ class Parser(product_pricelist.product_pricelist):
         price_dict = self.pool.get('product.pricelist').price_get(
             self.cr, self.uid, [pricelist_id], product_id, qty,
             context=context)
+        price = 0.0
         if price_dict[pricelist_id]:
             price = price_dict[pricelist_id]
-        else:
-            res = self.pool.get('product.product').read(self.cr, self.uid,
-                                                        [product_id])
-            price = res[0]['list_price']
+        elif not context.get('only_prod_pricelist'):
+            price = self.pool.get('product.product').browse(
+                self.cr, self.uid, product_id).list_price
         return price
 
 
