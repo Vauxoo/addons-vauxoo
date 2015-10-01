@@ -18,7 +18,7 @@
     "depends": [
         "sale",
         "stock_account",
-        ],
+    ],
     "demo": [
         "demo/stock_product_lot_demo.xml",
     ],

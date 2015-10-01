@@ -159,10 +159,10 @@ class TestStockPickingInvoiceValidation(TransactionCase):
         # Validate the invoice.
         invoice_id2.signal_workflow('invoice_open')
         invoice_id2.pay_and_reconcile(
-                invoice_id2.amount_total, self.pay_account_id.id,
-                self.period_id.id, self.journal_id.id, self.pay_account_id.id,
-                self.period_id.id, self.journal_id.id,
-                name="Payment for Invoice")
+            invoice_id2.amount_total, self.pay_account_id.id,
+            self.period_id.id, self.journal_id.id, self.pay_account_id.id,
+            self.period_id.id, self.journal_id.id,
+            name="Payment for Invoice")
 
         sale = self.create_sale_order()
         self.create_sale_order_lines(sale)
