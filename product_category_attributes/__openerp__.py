@@ -24,7 +24,7 @@
     'version': '1.6',
     'category': 'Tools',
     'author': 'Vauxoo',
-    'license': 'AGPL-3'
+    'license': 'AGPL-3',
     'depends': [
         'base_action_rule',
         'product',
