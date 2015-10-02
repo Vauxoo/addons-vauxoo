@@ -50,7 +50,8 @@ class UserStoryPhase(osv.Model):
         next_ids = [rec.id for rec in next_ids]
         # iter prev_ids
         while prev_ids:
-            cr.execute('SELECT distinct prv_phase_id FROM user_story_phase_rel WHERE next_phase_id IN %s', (tuple(prev_ids),))
+            cr.execute(
+                'SELECT distinct prv_phase_id FROM user_story_phase_rel WHERE next_phase_id IN %s', (tuple(prev_ids),))
             prv_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
             if data_phase.id in prv_phase_ids:
                 return False
@@ -60,7 +61,8 @@ class UserStoryPhase(osv.Model):
             prev_ids = prv_phase_ids
         # iter next_ids
         while next_ids:
-            cr.execute('SELECT distinct next_phase_id FROM user_story_phase_rel WHERE prv_phase_id IN %s', (tuple(next_ids),))
+            cr.execute(
+                'SELECT distinct next_phase_id FROM user_story_phase_rel WHERE prv_phase_id IN %s', (tuple(next_ids),))
             next_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
             if data_phase.id in next_phase_ids:
                 return False
@@ -116,7 +118,7 @@ class UserStoryPhase(osv.Model):
         'next_phase_ids': fields.many2many('user.story.phase', 'user_story_phase_rel', 'prv_phase_id', 'next_phase_id', 'Next Phases', states={'cancelled': [('readonly', True)]}),
 
         'previous_phase_ids': fields.many2many('user.story.phase', 'user_story_phase_rel',
-            'next_phase_id', 'prv_phase_id', 'Previous Phases', states={'cancelled': [('readonly', True)]}),
+                                               'next_phase_id', 'prv_phase_id', 'Previous Phases', states={'cancelled': [('readonly', True)]}),
 
         'product_uom': fields.many2one('product.uom', 'Duration Unit of Measure', required=True, help="Unit of Measure (Unit of Measure) is the unit of measurement for Duration", states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
 
@@ -125,7 +127,7 @@ class UserStoryPhase(osv.Model):
         'constraint_date_end': fields.datetime('Deadline', help='force the phase to finish before this date', states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
         'user_force_ids': fields.many2many('res.users', string='Force Assigned Users'),
         'user_ids': fields.one2many('user.story.user.allocation', 'phase_id', "Assigned Users", states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]},
-            help="The resources on the project can be computed automatically by the scheduler."),
+                                    help="The resources on the project can be computed automatically by the scheduler."),
     }
 
 #        'task_ids': fields.one2many('project.task', 'phase_id', "Project Tasks", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
@@ -137,8 +139,10 @@ class UserStoryPhase(osv.Model):
     }
     _order = "user_story_id, date_start, sequence"
     _constraints = [
-        (_check_recursion, 'Loops in phases not allowed', ['next_phase_ids', 'previous_phase_ids']),
-        (_check_dates, 'Phase start-date must be lower than phase end-date.', ['date_start', 'date_end']),
+        (_check_recursion, 'Loops in phases not allowed',
+         ['next_phase_ids', 'previous_phase_ids']),
+        (_check_dates, 'Phase start-date must be lower than phase end-date.',
+         ['date_start', 'date_end']),
     ]
 
     def onchange_UserStory(self, cr, uid, ids, user_story, context=None):
@@ -222,7 +226,7 @@ class UserStoryUserAllocation(osv.Model):
         'user_id': fields.many2one('res.users', 'User', required=True),
         'phase_id': fields.many2one('user.story.phase', 'User Story Phase', ondelete='cascade', required=True),
         'project_id': fields.related('phase_id', 'user_story_id', type='many2one',
-            relation="user.story", string='Project', store=True),
+                                     relation="user.story", string='Project', store=True),
         'date_start': fields.datetime('Start Date', help="Starting Date"),
         'date_end': fields.datetime('End Date', help="Ending Date"),
     }
@@ -233,7 +237,8 @@ class UserStory(osv.Model):
 
     def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
         res = dict.fromkeys(ids, 0)
-        phase_ids = self.pool.get('user.story.phase').search(cr, uid, [('user_story_id', 'in', ids)])
+        phase_ids = self.pool.get('user.story.phase').search(
+            cr, uid, [('user_story_id', 'in', ids)])
         for phase in self.pool.get('user.story.phase').browse(cr, uid, phase_ids, context):
             res[phase.user_story_id.id] += 1
         return res
@@ -251,7 +256,8 @@ class UserStory(osv.Model):
         context['name'] = "User Story / %s" % (vals['name'])
         if vals.get('type', False) not in ('template', 'contract'):
             vals['type'] = 'contract'
-        UserStory_id = super(user_story, self).create(cr, uid, vals, context=context)
+        UserStory_id = super(user_story, self).create(
+            cr, uid, vals, context=context)
         return user_story_id
 
 #    def schedule_phases(self, cr, uid, ids, context=None):

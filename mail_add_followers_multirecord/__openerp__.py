@@ -45,6 +45,5 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False,
     'images': ['images/main_screenshot.png'],
 }

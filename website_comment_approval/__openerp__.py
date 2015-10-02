@@ -16,8 +16,7 @@
     "test": [],
     "qweb": [
         "static/src/xml/mail.xml",
-             ],
+    ],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

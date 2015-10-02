@@ -29,13 +29,12 @@ class UpdateAnalytic(osv.TransientModel):
 
     _name = 'update.analytic'
 
-
     def default_get(self, cr, uid, l_fields, context=None):
         context = context or {}
         issue_obj = self.pool.get('project.issue')
         analytic_ids = set()
         res = super(UpdateAnalytic, self).default_get(cr, uid, l_fields,
-                                                       context=context)
+                                                      context=context)
         if context.get('active_ids'):
             for issue in issue_obj.browse(cr, uid, context.get('active_ids')):
                 if issue.analytic_account_id:
@@ -68,7 +67,7 @@ class UpdateAnalytic(osv.TransientModel):
                 if context.get('active_ids'):
                     issue_obj.write(cr, uid,
                                     context.get('active_ids'),
-                                    {'analytic_account_id': \
+                                    {'analytic_account_id':
                                      wzr_brw.analytic_account_id.id})
                     issue_obj.update_project(cr, uid,
                                              context.get('active_ids'))

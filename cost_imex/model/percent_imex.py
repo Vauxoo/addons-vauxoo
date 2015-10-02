@@ -40,36 +40,36 @@ class PercentImex(osv.Model):
     _columns = {
 
         'line_purchase_id': fields.many2one('purchase.order.line', 'Line',
-                help='Purchase line to compute apply'),
+                                            help='Purchase line to compute apply'),
         'total_with_flete': fields.float('Total with Flete',
-                 digits_compute=dp.get_precision(
-                     'Cost Imex'),
-            help='Compute total with flete'),
+                                         digits_compute=dp.get_precision(
+                                             'Cost Imex'),
+                                         help='Compute total with flete'),
         'price_unit_bf_flete': fields.float('Price Unit before Flete',
-                digits_compute=dp.get_precision(
-                    'Cost Imex'),
-            help='Price Unit compute before Flete'),
+                                            digits_compute=dp.get_precision(
+                                                'Cost Imex'),
+                                            help='Price Unit compute before Flete'),
         'tax_base': fields.float('Tax Base',
-                 digits_compute=dp.get_precision('Cost Imex'),
-                 help='Tax base is total + currency '),
+                                 digits_compute=dp.get_precision('Cost Imex'),
+                                 help='Tax base is total + currency '),
         'purchase_id': fields.many2one('purchase.order', 'Purchase'),
         'percent_lines': fields.one2many('percent.imex.line',
-                'percent_id', 'Percents to Apply', help='Percent to compute'),
+                                         'percent_id', 'Percents to Apply', help='Percent to compute'),
         'total_national_expense': fields.float('Total national spending',
-                   digits_compute=dp.get_precision(
-                       'Cost Imex'),
-            help='Sum of all taxes calculated'),
+                                               digits_compute=dp.get_precision(
+                                                   'Cost Imex'),
+                                               help='Sum of all taxes calculated'),
         'cost_unit': fields.float('Cost Unit',
-                  digits_compute=dp.get_precision('Cost Imex'),
-                  help='Cost unit comput betewen Total national\
+                                  digits_compute=dp.get_precision('Cost Imex'),
+                                  help='Cost unit comput betewen Total national\
                 spending, quantity and price '),
         'cost_unit_total': fields.float('Cost Unit Total',
-                digits_compute=dp.get_precision(
-                    'Cost Imex'),
-            help='Compute of cost with cost unit'),
+                                        digits_compute=dp.get_precision(
+                                            'Cost Imex'),
+                                        help='Compute of cost with cost unit'),
         'cost_qty': fields.float('Total',
-                 digits_compute=dp.get_precision('Cost Imex'),
-                 help='Compute betewen  Cost unit total ant quantity in the line'),
+                                 digits_compute=dp.get_precision('Cost Imex'),
+                                 help='Compute betewen  Cost unit total ant quantity in the line'),
     }
     _rec_name = 'line_purchase_id'
 

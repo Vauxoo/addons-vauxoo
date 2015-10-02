@@ -59,13 +59,13 @@ class PeriodicInventoryValuationLine(osv.osv):
         'uom_id': fields.many2one('product.uom', 'Unit of Measure', help='Product Unit of Measure being used to compute Inventory Valuation'),
         'valuation': fields.float('Product Valuation', help='Product Valuation'),
         'company_id': fields.related('piv_id', 'company_id', string='Company',
-            relation='res.company', type='many2one', store=True, help='Company for this Document Line'),
+                                     relation='res.company', type='many2one', store=True, help='Company for this Document Line'),
         'currency_id': fields.related('piv_id', 'company_id', 'currency_id', string='Company',
-            relation='res.currency', type='many2one', store=True, help='Currency to be used when creating Journal Entries and Accounting Entries'),
+                                      relation='res.currency', type='many2one', store=True, help='Currency to be used when creating Journal Entries and Accounting Entries'),
         'period_id': fields.related('piv_id', 'period_id', string='Company',
-            relation='account.period', type='many2one', store=True, help='Company for this Document Line'),
+                                    relation='account.period', type='many2one', store=True, help='Company for this Document Line'),
         'date': fields.related('piv_id', 'date', string='Company',
-            type='date', store=True, help='Date to be used when creating Journal Entries and Accounting Entries'),
+                               type='date', store=True, help='Date to be used when creating Journal Entries and Accounting Entries'),
         'average_cost': fields.float('Average Cost', help='Is the average cost of the product'),
     }
 
@@ -95,9 +95,11 @@ class PeriodicInventoryValuation(osv.osv):
         s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
         'first': False,
         'currency_id': lambda s, c, u, ctx:
-        s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.currency_id.id,
+        s.pool.get('res.users').browse(
+            c, u, u, context=ctx).company_id.currency_id.id,
         'inventory_valuation_journal_id': lambda s, c, u, ctx:
-        s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.inventory_valuation_journal_id.id,
+        s.pool.get('res.users').browse(
+            c, u, u, context=ctx).company_id.inventory_valuation_journal_id.id,
     }
 
     def get_period(self, cr, uid, ids, date, context=None):
@@ -110,7 +112,8 @@ class PeriodicInventoryValuation(osv.osv):
             ('id', 'in', period_ids), ('special', '=', False)], context=context)
         period_ids = period_ids and period_ids[0] or False
         if not period_ids:
-            raise osv.except_osv(_('Error!'), _('There is no fiscal year defined for this date.\nPlease create one from the configuration of the accounting menu.'))
+            raise osv.except_osv(_('Error!'), _(
+                'There is no fiscal year defined for this date.\nPlease create one from the configuration of the accounting menu.'))
 
         return period_ids
 
@@ -129,17 +132,21 @@ class PeriodicInventoryValuation(osv.osv):
 
         if ids:
             if type(ids) is list:
-                peri_inv_allowed = self.search(cr, uid, [('id', '!=', ids[0])], order='id desc', limit=1, context=context)
+                peri_inv_allowed = self.search(
+                    cr, uid, [('id', '!=', ids[0])], order='id desc', limit=1, context=context)
             else:
-                peri_inv_allowed = self.search(cr, uid, [('id', '!=', ids)], order='id desc', limit=1, context=context)
+                peri_inv_allowed = self.search(
+                    cr, uid, [('id', '!=', ids)], order='id desc', limit=1, context=context)
         else:
-            peri_inv_allowed = self.search(cr, uid, [], order='id desc', limit=1, context=context)
+            peri_inv_allowed = self.search(
+                cr, uid, [], order='id desc', limit=1, context=context)
 
         all_per_inv = self.browse(cr, uid, peri_inv_allowed, context=context)
         #$$$
         for i in all_per_inv:
             if date <= i.date:
-                raise osv.except_osv('Record with this data existing !', 'Can not create a record with repeated date')
+                raise osv.except_osv(
+                    'Record with this data existing !', 'Can not create a record with repeated date')
 
         return True
 
@@ -153,23 +160,28 @@ class PeriodicInventoryValuation(osv.osv):
             brw_per_inv = self.browse(cr, uid, ids, context=context)
 
         if brw_per_inv.state == 'done':
-            raise osv.except_osv('Can not write the record', 'When a stock is done, can not be write')
+            raise osv.except_osv('Can not write the record',
+                                 'When a stock is done, can not be write')
 
         self.validate_data(cr, uid, ids, brw_per_inv.date, context=context)
 
-        vals['period_id'] = self.get_period(cr, uid, ids, vals.get('date'), context=context)
+        vals['period_id'] = self.get_period(
+            cr, uid, ids, vals.get('date'), context=context)
         return super(PeriodicInventoryValuation, self).write(cr, uid, ids, vals, context=context)
 
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
 
-        inv = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.inventory_valuation_journal_id
+        inv = self.pool.get('res.users').browse(
+            cr, uid, uid, context=context).company_id.inventory_valuation_journal_id
         if not inv.id:
-            raise osv.except_osv('You need to define the journal', 'Must be defined in the company the journal to generate the journal items for periodic inventory')
+            raise osv.except_osv('You need to define the journal',
+                                 'Must be defined in the company the journal to generate the journal items for periodic inventory')
 
         self.validate_data(cr, uid, False, vals.get('date'), context=context)
-        vals['period_id'] = self.get_period(cr, uid, False, vals.get('date'), context=context)
+        vals['period_id'] = self.get_period(
+            cr, uid, False, vals.get('date'), context=context)
         return super(PeriodicInventoryValuation, self).create(cr, uid, vals, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
@@ -178,7 +190,8 @@ class PeriodicInventoryValuation(osv.osv):
         brw_per_inv = self.browse(cr, uid, ids[0], context=context)
 
         if brw_per_inv.state == 'done':
-            raise osv.except_osv('Can not delete the record', 'When a stock is done, can not be deleted')
+            raise osv.except_osv('Can not delete the record',
+                                 'When a stock is done, can not be deleted')
 
         return super(PeriodicInventoryValuation, self).unlink(cr, uid, ids, context=context)
 
@@ -205,9 +218,11 @@ class PeriodicInventoryValuation(osv.osv):
 
         # Se obtiene la linea del producto del registro anterior
         if type(ids) is list:
-            piv_id = self.search(cr, uid, [('id', '!=', ids[0]), ('state', '=', 'done')], order='id desc', limit=1, context=context)
+            piv_id = self.search(cr, uid, [('id', '!=', ids[
+                                 0]), ('state', '=', 'done')], order='id desc', limit=1, context=context)
         else:
-            piv_id = self.search(cr, uid, [('id', '!=', ids), ('state', '=', 'done')], order='id desc', limit=1, context=context)
+            piv_id = self.search(cr, uid, [(
+                'id', '!=', ids), ('state', '=', 'done')], order='id desc', limit=1, context=context)
 
         piv = self.browse(cr, uid, ids[0], context=context)
         fecha_now = datetime.datetime.strptime(piv.date, '%Y-%m-%d')
@@ -215,7 +230,8 @@ class PeriodicInventoryValuation(osv.osv):
         if piv_id:
             piv_id = piv_id[0]
             piv_before = self.browse(cr, uid, piv_id, context=context)
-            fecha_before = datetime.datetime.strptime(piv_before.date, '%Y-%m-%d')
+            fecha_before = datetime.datetime.strptime(
+                piv_before.date, '%Y-%m-%d')
         else:
             fecha_before = False
 
@@ -235,21 +251,25 @@ class PeriodicInventoryValuation(osv.osv):
             ], context=context)
 
         if not inv_ids:
-            raise osv.except_osv(_('Error!'), _('There are no invoices defined for this period.\nMake sure you are using the right date.'))
+            raise osv.except_osv(_('Error!'), _(
+                'There are no invoices defined for this period.\nMake sure you are using the right date.'))
         ail_obj = self.pool.get('account.invoice.line')
         ail_ids = ail_obj.search(cr, uid, [
             ('invoice_id', 'in', inv_ids), ('product_id', 'in', prod_ids)
         ], context=context)
         if not ail_ids:
-            raise osv.except_osv(_('Error!'), _('There are no invoices lines defined for this period.\nMake sure you are using the right date.'))
+            raise osv.except_osv(_('Error!'), _(
+                'There are no invoices lines defined for this period.\nMake sure you are using the right date.'))
 
         period_brw = period_obj.browse(cr, uid, period_id, context=context)
         date_start = period_brw.date_start
         date_stop = period_brw.date_stop
 
         sl_obj = self.pool.get('stock.location')
-        int_sl_ids = sl_obj.search(cr, uid, [('usage', '=', 'internal')], context=context)
-        ext_sl_ids = sl_obj.search(cr, uid, [('usage', '!=', 'internal')], context=context)
+        int_sl_ids = sl_obj.search(
+            cr, uid, [('usage', '=', 'internal')], context=context)
+        ext_sl_ids = sl_obj.search(
+            cr, uid, [('usage', '!=', 'internal')], context=context)
 
         sm_obj = self.pool.get('stock.move')
         incoming_sm_ids = sm_obj.search(cr, uid, [
@@ -276,18 +296,21 @@ class PeriodicInventoryValuation(osv.osv):
             state = 'confirm'
 
             pivline_init_ids = []
-            # Se itera sobre los productos que sean de tipo producto y con valuation tipo manual_periodic
+            # Se itera sobre los productos que sean de tipo producto y con
+            # valuation tipo manual_periodic
             for prod_id in prod_ids:
                 prod = prod_obj.browse(cr, uid, prod_id, context=context)
 
                 piv_line_id = False
 
                 if piv_id:
-                    piv_line_id = periodic_line.search(cr, uid, [('piv_id', '=', piv_id), ('product_id', '=', prod_id)], context=context)
+                    piv_line_id = periodic_line.search(
+                        cr, uid, [('piv_id', '=', piv_id), ('product_id', '=', prod_id)], context=context)
 
                 # condicional aqui de piv_line_brw, puede que no exista
                 if piv_line_id:
-                    piv_line_brw = periodic_line.browse(cr, uid, piv_line_id, context=context)[0]
+                    piv_line_brw = periodic_line.browse(
+                        cr, uid, piv_line_id, context=context)[0]
                     line_qty_init = piv_line_brw.qty_final
                     line_average_cost = piv_line_brw.average_cost
                     line_valuation = piv_line_brw.valuation
@@ -296,7 +319,8 @@ class PeriodicInventoryValuation(osv.osv):
                     line_average_cost = 0.0
                     line_valuation = 0.0
 
-                # Guardar informacion de la linea piv a crear en el registro actual
+                # Guardar informacion de la linea piv a crear en el registro
+                # actual
                 pivline_init_ids.append(periodic_line.create(cr, uid, {
                     'piv_id': ids[0],
                     'product_id': prod_id,
@@ -324,23 +348,28 @@ class PeriodicInventoryValuation(osv.osv):
             for ail_id in ail_ids:
                 ail = ail_obj.browse(cr, uid, ail_id, context=context)
 
-                # si la factura se relaciona a la lista de productos que se filtraron
+                # si la factura se relaciona a la lista de productos que se
+                # filtraron
                 if ail.product_id.id in prod_ids:
 
-                    produc_obj = prod_obj.browse(cr, uid, ail.product_id.id, context=context)
+                    produc_obj = prod_obj.browse(
+                        cr, uid, ail.product_id.id, context=context)
 
-                    price_unit = self.exchange(cr, uid, ids, ail.price_unit, ail.invoice_id.currency_id.id, currency_id, date, context=context)
+                    price_unit = self.exchange(
+                        cr, uid, ids, ail.price_unit, ail.invoice_id.currency_id.id, currency_id, date, context=context)
 
                     if ail.invoice_id.type == 'in_invoice':
                         p_p_pur = {'qty': ail.quantity, 'price': price_unit}
                         if product_price_purs.get(ail.product_id.id, False):
-                            product_price_purs[ail.product_id.id].append(p_p_pur)
+                            product_price_purs[
+                                ail.product_id.id].append(p_p_pur)
                         else:
                             product_price_purs[ail.product_id.id] = [p_p_pur]
                     elif ail.invoice_id.type == 'out_invoice':
                         p_p_sale = {'qty': ail.quantity, 'price': price_unit}
                         if product_price_sales.get(ail.product_id.id, False):
-                            product_price_sales[ail.product_id.id].append(p_p_sale)
+                            product_price_sales[
+                                ail.product_id.id].append(p_p_sale)
                         else:
                             product_price_sales[ail.product_id.id] = [p_p_sale]
                     else:
@@ -351,8 +380,10 @@ class PeriodicInventoryValuation(osv.osv):
             for i in prod_ids:
 
                 prod = prod_obj.browse(cr, uid, i, context=context)
-                val_line_ids = periodic_line.search(cr, uid, [('product_id', '=', i), ('piv_id', '=', ids[0])], context=context)
-                val_line = periodic_line.browse(cr, uid, val_line_ids, context=context)[0]
+                val_line_ids = periodic_line.search(
+                    cr, uid, [('product_id', '=', i), ('piv_id', '=', ids[0])], context=context)
+                val_line = periodic_line.browse(
+                    cr, uid, val_line_ids, context=context)[0]
                 #~~~~~~~~~~~
                 qty_pur = 0
                 costo = 0.0
@@ -371,14 +402,16 @@ class PeriodicInventoryValuation(osv.osv):
                 inventario_final = val_line.qty_init + qty_pur - qty_sale
 
                 costo += val_line.valuation
-                qty = val_line.qty_init + qty_pur  # este val_line.init es el final de la linea anterior
+                # este val_line.init es el final de la linea anterior
+                qty = val_line.qty_init + qty_pur
 
                 if qty == 0:
                     costo_promedio = 0
                 else:
                     costo_promedio = round(costo / qty, 2)
 
-                valuation = (val_line.valuation) + (qty_pur * costo_promedio) - (qty_sale * costo_promedio)
+                valuation = (val_line.valuation) + (qty_pur *
+                                                    costo_promedio) - (qty_sale * costo_promedio)
                 # ~~~~~~~~~~~
 
                 # Algo pasa con prod.property_account_expense y prod.property_account_income
@@ -399,7 +432,8 @@ class PeriodicInventoryValuation(osv.osv):
                     account_income = prod.product_tmpl_id.categ_id.property_stock_valuation_account_id
 
                     if not account_expense or not account_income:
-                        raise osv.except_osv(_('Error!'), _('Product Account.\nThere are no accounts defined for the product %s.' % (prod.name)))
+                        raise osv.except_osv(_('Error!'), _(
+                            'Product Account.\nThere are no accounts defined for the product %s.' % (prod.name)))
 
                     context['journal_id'] = inventory_valuation_journal_id
                     context['period_id'] = period_id
@@ -416,14 +450,16 @@ class PeriodicInventoryValuation(osv.osv):
                         'credit': credit,
                     }
 
-                    line_id = self.pool.get('account.move.line').create(cr, uid, move_line, context=context)
+                    line_id = self.pool.get('account.move.line').create(
+                        cr, uid, move_line, context=context)
                     lineas.append(line_id)
 
                     move_line['account_id'] = account_expense.id
                     move_line['debit'] = credit
                     move_line['credit'] = debit
 
-                    line_id = self.pool.get('account.move.line').create(cr, uid, move_line, context=context)
+                    line_id = self.pool.get('account.move.line').create(
+                        cr, uid, move_line, context=context)
                     lineas.append(line_id)
 
                 periodic_line.write(cr, uid, val_line.id, {
@@ -435,7 +471,8 @@ class PeriodicInventoryValuation(osv.osv):
                 })
             ##############################################################
             if lineas:
-                move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
+                move_id = self.pool.get('account.move.line').browse(
+                    cr, uid, lineas[0], context=context).move_id.id
             else:
                 move_id = False
 

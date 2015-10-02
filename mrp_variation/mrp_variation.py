@@ -43,7 +43,7 @@ class MrpProduction(osv.Model):
 
     _columns = {
         'variation_ids': fields.one2many('mrp.variation', 'production_id',
-            'Variation Product Consumed', readonly=True),
+                                         'Variation Product Consumed', readonly=True),
         'variation_finished_product_ids': fields.one2many(
             'mrp.variation.finished.product', 'production_id',
             'Variation Product Finished', readonly=True),
@@ -72,7 +72,7 @@ class MrpProduction(osv.Model):
                 val = {'product_id': val_diff[0],
                        'quantity': (val_diff[1]) * -1,
                        'product_uom': prod_product.browse(cr, uid,
-                                        val_diff[0]).uom_id.id,
+                                                          val_diff[0]).uom_id.id,
                        'production_id': production.id
                        }
                 list_val.append(val)
@@ -87,8 +87,9 @@ class MrpProduction(osv.Model):
             res.setdefault(lin['product_id'], 0)
             product = product_product.browse(cr, uid, lin['product_id'])
             qty_uom_convert = self.pool.get('product.uom')._compute_qty(cr,
-                                uid, lin['product_uom'], lin['product_qty'],
-                to_uom_id=product.uom_id.id)
+                                                                        uid, lin['product_uom'], lin[
+                                                                            'product_qty'],
+                                                                        to_uom_id=product.uom_id.id)
             res[lin['product_id']] += qty_uom_convert
         return res
 
@@ -190,12 +191,13 @@ class MrpVariation(osv.Model):
     _columns = {
         'product_id': fields.many2one('product.product', 'Product'),
         'quantity': fields.float('Quantity',
-            digits_compute=dp.get_precision('Product UoM')),
+                                 digits_compute=dp.get_precision('Product UoM')),
         'production_id': fields.many2one('mrp.production', 'production'),
         'product_uom': fields.many2one('product.uom', 'UoM'),
         'cost_variation': fields.function(_get_variation_cost, type='float',
-            digits_compute=dp.get_precision('Purchase Price'),
-            string='Variation Cost')
+                                          digits_compute=dp.get_precision(
+                                              'Purchase Price'),
+                                          string='Variation Cost')
     }
 
 
@@ -213,10 +215,11 @@ class MrpVariationFinishedProduct(osv.Model):
     _columns = {
         'product_id': fields.many2one('product.product', 'Product'),
         'quantity': fields.float('Quantity',
-            digits_compute=dp.get_precision('Product UoM')),
+                                 digits_compute=dp.get_precision('Product UoM')),
         'production_id': fields.many2one('mrp.production', 'production'),
         'product_uom': fields.many2one('product.uom', 'UoM'),
         'cost_variation': fields.function(_get_variation_cost, type='float',
-            digits_compute=dp.get_precision('Purchase Price'),
-            string='Variation Cost')
+                                          digits_compute=dp.get_precision(
+                                              'Purchase Price'),
+                                          string='Variation Cost')
     }

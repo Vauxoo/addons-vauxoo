@@ -43,7 +43,8 @@ class ConvertNoteTask(osv.TransientModel):
         cvt_brw = self.browse(cr, uid, ids, context=context)
         task_obj = self.pool.get('project.task')
         note_obj = self.pool.get('note.note')
-        note_brw = note_obj.browse(cr, uid, [context.get('active_id')], context=context)
+        note_brw = note_obj.browse(
+            cr, uid, [context.get('active_id')], context=context)
         task_id = task_obj.create(cr, uid, {
             'name': note_brw[0].name,
             'description': note_brw[0].memo,
@@ -57,9 +58,9 @@ class ConvertNoteTask(osv.TransientModel):
         obj_model = self.pool.get('ir.model.data')
         model_data_ids = obj_model.search(
             cr, uid, [('model', '=', 'ir.ui.view'),
-                     ('name', '=', 'view_task_form2')])
+                      ('name', '=', 'view_task_form2')])
         resource_id = obj_model.read(cr, uid, model_data_ids,
-                                    fields=['res_id'])[0]['res_id']
+                                     fields=['res_id'])[0]['res_id']
         return {
             'view_type': 'form',
             'view_mode': 'form',

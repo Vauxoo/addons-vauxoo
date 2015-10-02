@@ -50,13 +50,14 @@ class PurchaseRequisition(osv.Model):
                     val += c.get('amount', 0.0)
             #res[requisition.id]['amount_tax']=cur_obj.round(cr, uid, cur, val)
             amount_untaxed = cur_obj.round(cr, uid, cur, val1)
-            res[requisition.id]['amount_total'] = amount_untaxed  # + res[requisition.id]['amount_tax']
+            # + res[requisition.id]['amount_tax']
+            res[requisition.id]['amount_total'] = amount_untaxed
         return res
 
     _columns = {
         'amount_total': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Total',
-            store={
-                'purchase.requisition.line': (_get_requisition, None, 10),
+                                        store={
+            'purchase.requisition.line': (_get_requisition, None, 10),
         }, multi="sums", help="The total amount"),
     }
 
@@ -69,7 +70,8 @@ class PurchaseRequisitionLine(osv.Model):
         cur_obj = self.pool.get('res.currency')
         tax_obj = self.pool.get('account.tax')
         for line in self.browse(cr, uid, ids, context=context):
-            taxes = tax_obj.compute_all(cr, uid, [], line.price_unit, line.product_qty, line.product_id)
+            taxes = tax_obj.compute_all(
+                cr, uid, [], line.price_unit, line.product_qty, line.product_id)
             #cur = line.requisition_id.pricelist_id.currency_id
             cur = line.requisition_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])

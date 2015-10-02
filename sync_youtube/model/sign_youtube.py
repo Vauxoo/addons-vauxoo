@@ -139,7 +139,7 @@ class SignYoutubeConf(osv.Model):
                 entry_datas = []
             except BaseException, e:
                 _logger.error(
-                    "Connection error, login to Youtube we got this " + \
+                    "Connection error, login to Youtube we got this " +
                     "error %s please verify the parameters and try again", e)
             for entry in userfeed_entry:
                 item = self.get_items(entry)
@@ -207,7 +207,7 @@ class SignYoutubeConfLine(osv.Model):
         'description': fields.text('Description', help='Description added for this video when was '
                                    'created'),
         'public_information': fields.text('Public Information', help='This information accept html'
-                                   'and is the information that will be used in the portal page.'),
+                                          'and is the information that will be used in the portal page.'),
     }
     _defaults = {
         'update': 0,
@@ -274,7 +274,7 @@ class SignYoutubeConfLine(osv.Model):
                 (dummy, mail_group_id) = data_obj.get_object_reference(cr, uid, 'mail',
                                                                        'group_all_employees')
             dummy = message_obj.message_post(cr, uid, [mail_group_id],
-                                                  body=wzr.message, subject=wzr.name,
-                                                  attachment_ids=attachment_ids,
-                                                  subtype='mail.mt_comment', context=context)
+                                             body=wzr.message, subject=wzr.name,
+                                             attachment_ids=attachment_ids,
+                                             subtype='mail.mt_comment', context=context)
         return {'type': 'ir.actions.act_window_close'}

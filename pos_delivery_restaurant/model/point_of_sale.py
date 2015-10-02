@@ -34,7 +34,7 @@ class PosConfig(osv.Model):
     _description = ('')
     _columns = {
         'deli_rest': fields.selection([('delivery', 'Delivery'), ('restaurant', 'Restaurant'), ('all', 'All')],
-            'Product Type', required=True, help='Is a delivery or restaurant?'),
+                                      'Product Type', required=True, help='Is a delivery or restaurant?'),
     }
 
     _defaults = {

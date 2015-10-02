@@ -32,5 +32,5 @@ class AccountAnalyticLine(osv.Model):
 
     _columns = {
         'period_id': fields.related('move_id', 'period_id', string='Period',
-            type='many2one', relation='account.period', store=True),
+                                    type='many2one', relation='account.period', store=True),
     }

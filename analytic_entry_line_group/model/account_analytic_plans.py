@@ -32,6 +32,6 @@ class AccountAnalyticLine(osv.Model):
 
     _columns = {
         'analytic_group_id': fields.related('account_id', 'analytic_group_id',
-            type='many2one', relation='account.analytic.group', string='Analytic Group',
-            store=True, readonly=True),
+                                            type='many2one', relation='account.analytic.group', string='Analytic Group',
+                                            store=True, readonly=True),
     }

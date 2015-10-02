@@ -44,7 +44,8 @@ class AccountMoveLine(osv.Model):
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        res = super(AccountMoveLine, self).create_analytic_lines(cr, uid, ids, context=context)
+        res = super(AccountMoveLine, self).create_analytic_lines(
+            cr, uid, ids, context=context)
 
         analytic_line_obj = self.pool.get('account.analytic.line')
         for move_line in self.browse(cr, uid, ids, context=context):

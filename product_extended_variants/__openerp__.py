@@ -24,11 +24,11 @@
     "version": "1.6",
     "author": "Vauxoo",
     'website': 'https://www.vauxoo.com',
+    "license": "AGPL-3",
     "depends": ['account_anglo_saxon', 'product', 'stock_account',
                 'product_extended'],
     "category": "Generic Modules/Inventory Control",
     "data": ['view/product_view.xml',
              'data/update_price_data.xml'],
-    "active": False,
     "installable": True
 }

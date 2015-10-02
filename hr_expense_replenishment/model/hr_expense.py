@@ -810,7 +810,7 @@ class HrExpenseExpense(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         exp = self.browse(cr, uid, ids, context=context)
         vals = {}.fromkeys(['partner_id', 'debit', 'credit',
-                           'name', 'move_id', 'account_id'])
+                            'name', 'move_id', 'account_id'])
         vals['move_id'] = am_id
         no_advance_account = \
             exp.employee_id.address_home_id.property_account_payable.id
@@ -1072,7 +1072,7 @@ class HrExpenseExpense(osv.Model):
 
         return {
             'domain': "[('id','in',\
-                ["+','.join([str(res_id) for res_id in res[ids[0]]])+"])]",
+                [" + ','.join([str(res_id) for res_id in res[ids[0]]]) + "])]",
             'name': _('Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',

@@ -102,7 +102,7 @@ class StockMove(osv.Model):
             account_move_line_id = account_move_line.search(
                 cr, uid, [('stock_move_id', '=', move.id)])
             for move_line in account_move_line.browse(cr, uid, account_move_line_id,
-                                                    context=context):
+                                                      context=context):
                 result.setdefault(move_line.move_id.id, move.id)
                 account_move_line.unlink(cr, uid, [move_line.id])
         for lin in result.items():
@@ -110,7 +110,8 @@ class StockMove(osv.Model):
                 cr, uid, lin[0], context=context)
             if len(account_production.line_id) == 0:
                 try:
-                    account_move.button_cancel(cr, uid, [lin[0]], context=context)
+                    account_move.button_cancel(
+                        cr, uid, [lin[0]], context=context)
                 except BaseException:
                     pass
                 account_move.unlink(cr, uid, [lin[0]])

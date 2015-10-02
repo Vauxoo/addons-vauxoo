@@ -25,6 +25,7 @@
     "author": "Vauxoo",
     "category": "Accounting",
     "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account",
         "account_voucher_tax"
@@ -43,5 +44,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

@@ -35,9 +35,9 @@ class HrExpenseExpense(osv.Model):
         for expense in self.browse(cr, uid, ids, context=context):
             if expense.account_move_id:
                 obj_move_line._remove_move_reconcile(cr, uid,
-                    [move_line.id
-                        for move_line in expense.account_move_id.line_id],
-                    context=context)
+                                                     [move_line.id
+                                                      for move_line in expense.account_move_id.line_id],
+                                                     context=context)
                 obj_move.unlink(cr, uid, [expense.account_move_id.id],
                                 context=context)
         return res

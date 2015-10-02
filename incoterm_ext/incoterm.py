@@ -31,5 +31,5 @@ class StockIncoterms(osv.Model):
     _inherit = 'stock.incoterms'
     _columns = {
         'description': fields.text('Description',
-            help='Formal description for this incoterm.'),
+                                   help='Formal description for this incoterm.'),
     }

@@ -32,22 +32,22 @@ class SetAccountingDataWizard(osv.osv_memory):
 
     _columns = {
         'account_ids': fields.many2many('account.account',
-            'account_account_partner_rel', 'parent_id', 'account_id',
-            'Account'),
+                                        'account_account_partner_rel', 'parent_id', 'account_id',
+                                        'Account'),
         'parent_id': fields.many2one('account.account', 'Parent',
-            help='This account will be assigned as parent for '
-            'the accounts selects in the previous field.',
-            ondelete='cascade', domain=[('type', '=', 'view')]),
+                                     help='This account will be assigned as parent for '
+                                     'the accounts selects in the previous field.',
+                                     ondelete='cascade', domain=[('type', '=', 'view')]),
         'account_analytic_ids': fields.many2many('account.analytic.account',
-            'account__analytic_account_partner_rel', 'parent_id', 'account_id',
-            'Account'),
+                                                 'account__analytic_account_partner_rel', 'parent_id', 'account_id',
+                                                 'Account'),
         'parent_analytic_id': fields.many2one('account.analytic.account',
-            'Parent', help='This account will be assigned as parent for '
-            'the analytic accounts selects in the previous field.',
-            ondelete='cascade', domain=[('type', '=', 'view')]),
+                                              'Parent', help='This account will be assigned as parent for '
+                                              'the analytic accounts selects in the previous field.',
+                                              ondelete='cascade', domain=[('type', '=', 'view')]),
         'type_accounts': fields.selection([('accounts', 'Accounts'),
-            ('analytic_accounts', 'Analytic Accounts')], 'Type Accounts',
-            required=True),
+                                           ('analytic_accounts', 'Analytic Accounts')], 'Type Accounts',
+                                          required=True),
     }
 
     _defaults = {
@@ -70,11 +70,11 @@ class SetAccountingDataWizard(osv.osv_memory):
             for acc in data.account_ids:
                 if acc.id != data.parent_id.id:
                     self.pool.get('account.account').write(cr, uid, [acc.id],
-                        {'parent_id': data.parent_id.id})
+                                                           {'parent_id': data.parent_id.id})
 
         if data.type_accounts == 'analytic_accounts':
             for acc in data.account_analytic_ids:
                 if acc != data.parent_analytic_id.id:
                     self.pool.get('account.analytic.account').write(cr, uid,
-                        [acc.id], {'parent_id': data.parent_analytic_id.id})
+                                                                    [acc.id], {'parent_id': data.parent_analytic_id.id})
         return True

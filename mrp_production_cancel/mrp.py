@@ -49,4 +49,4 @@ class MrpProduction(osv.Model):
                 move_obj.action_cancel(cr, uid, [
                     x.id for x in production.move_created_ids2])
         return super(MrpProduction, self).action_cancel(cr, uid, ids,
-                                                         context=context)
+                                                        context=context)

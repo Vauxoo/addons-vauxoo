@@ -30,7 +30,7 @@ class IslrWhDoc(osv.Model):
 
     _columns = {
         'prev_state': fields.char('Previos State', 12,
-            help="Field to keep the previous state of the invoice at\
+                                  help="Field to keep the previous state of the invoice at\
                 the time of canceling")
 
     }

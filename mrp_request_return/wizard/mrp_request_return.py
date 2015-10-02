@@ -31,9 +31,9 @@ class MrpRequestReturn(osv.TransientModel):
     _name = 'mrp.request.return'
     _columns = {
         're_line_ids': fields.one2many('mrp.request.return.line', 'wizard_id',
-            'Acreation'),
+                                       'Acreation'),
         'type': fields.selection([('request', 'Request')], 'Type',
-            required=True)
+                                 required=True)
     }
 
     _defaults = {
@@ -145,15 +145,15 @@ class MrpRequestReturnLine(osv.TransientModel):
 
     _columns = {
         'product_id': fields.many2one('product.product', string="Product",
-            required=True),
+                                      required=True),
         'product_qty': fields.float("Quantity",
-            digits_compute=dp.get_precision('Product UoM'), required=True),
+                                    digits_compute=dp.get_precision('Product UoM'), required=True),
         'product_uom': fields.many2one('product.uom', 'Unit of Measure',
-            required=True,),
+                                       required=True,),
         'location_id': fields.many2one('stock.location', 'Location',
-            required=True),
+                                       required=True),
         'location_dest_id': fields.many2one('stock.location', 'Dest. Location',
-            required=True),
+                                            required=True),
         'move_id': fields.many2one('stock.move', "Move"),
         'production_id': fields.many2one('mrp.production', 'Production'),
         'product_uos': fields.many2one('product.uom', 'Product UOS'),
@@ -198,12 +198,12 @@ class MrpConsume(osv.TransientModel):
                     move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {
                         'product_qty': qty_to_consume - current_qty})
                     mrp_production.write(cr, uid,
-                                context.get('active_ids', False), {
-                                    'move_lines': [(4, move_id)]}, context=context)
+                                         context.get('active_ids', False), {
+                                             'move_lines': [(4, move_id)]}, context=context)
                     stock_move_obj.action_consume(cr, uid, [move_id],
-                                                qty_to_consume - current_qty,
-                                                line.location_id.id,
-                                                context=context)
+                                                  qty_to_consume - current_qty,
+                                                  line.location_id.id,
+                                                  context=context)
                     mrp_consume_line.write(cr, uid, line.id, {
                         'quantity': current_qty,
                         'product_uom': fetch_record.product_uom.id})

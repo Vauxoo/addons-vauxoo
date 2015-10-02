@@ -44,7 +44,7 @@ class ResPartner(osv.osv):
             if res_name:
                 name = name.replace('[' + res_name.group(2) + '] ', '')
             partner_search = super(ResPartner, self).name_search(cr, user,
-                                        name, args, operator, context, limit)
+                                                                 name, args, operator, context, limit)
             ids = [partner[0] for partner in partner_search]
             if not ids:
                 ids = self.search(cr, user, [('vat', operator, name)] + args,
@@ -54,11 +54,11 @@ class ResPartner(osv.osv):
                 res = ptrn.search(name)
                 if res:
                     ids = self.search(cr, user,
-                        [('vat', operator, res.group(2))] + args, limit=limit,
-                        context=context)
+                                      [('vat', operator, res.group(2))] + args, limit=limit,
+                                      context=context)
         else:
             return super(ResPartner, self).name_search(cr, user,
-                                        name, args, operator, context, limit)
+                                                       name, args, operator, context, limit)
 
         return self.name_get(cr, user, ids, context=context)
 

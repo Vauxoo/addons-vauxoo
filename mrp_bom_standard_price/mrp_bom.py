@@ -28,5 +28,5 @@ class MrpBom(osv.Model):
 
     _columns = {
         'standard_price': fields.related('product_id', 'standard_price',
-            type='float', relation='product.template', string='Cost price'),
+                                         type='float', relation='product.template', string='Cost price'),
     }

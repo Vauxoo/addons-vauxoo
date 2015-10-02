@@ -37,7 +37,7 @@ class MailMessage(osv.Model):
             FROM ( {1} )
             {2}
             """.format(sale_report_obj._select(), sale_report_obj._from(),
-                   sale_report_obj._group_by()))
+                       sale_report_obj._group_by()))
         mail_cache = self.browse(cr, uid, ids, context)[0]
         for rep in cr.fetchall():
             product_id = rep[1]

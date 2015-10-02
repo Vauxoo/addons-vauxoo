@@ -43,4 +43,4 @@ class MrpProduction(osv.Model):
                 wf_service.trg_validate(
                     uid, 'stock.picking', line.id, 'button_cancel', cr)
         return super(MrpProduction, self).action_cancel(cr, uid, ids,
-                                                         context=context)
+                                                        context=context)

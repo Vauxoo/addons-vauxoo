@@ -33,7 +33,7 @@ class MrpProduction(osv.Model):
 
     _columns = {
         'picking_ids': fields.one2many('stock.picking', 'production_id',
-            'Picking')
+                                       'Picking')
     }
 
     def action_finished_consume(self, cr, uid, ids, context=None):
@@ -51,9 +51,9 @@ class MrpProduction(osv.Model):
             pick_id_return = mrp_production2._make_production_internal_shipment2(
                 cr, uid, production, context=context)
             StockPicking.write(cr, uid, pick_id_return, {
-                                'state': 'draft',
-                                'auto_picking': False,
-                                'production_id': production.id})
+                'state': 'draft',
+                'auto_picking': False,
+                'production_id': production.id})
             for wiz_move2 in wizard_moves.move_lines:
                 if wiz_move2.product_qty > 0.0:
                     shipment_move_id = mrp_production2._make_production_internal_shipment_line2(
@@ -66,10 +66,10 @@ class MrpProduction(osv.Model):
         return res
 
     def _make_production_internal_shipment_line2(self, cr, uid, production,
-                                                production_line, shipment_id,
-                                                parent_move_id,
-                                                destination_location_id=False,
-                                                context=None):
+                                                 production_line, shipment_id,
+                                                 parent_move_id,
+                                                 destination_location_id=False,
+                                                 context=None):
         stock_move = self.pool.get('stock.move')
         date_planned = production.date_planned
         if production_line.product_id.type not in ('product', 'consu'):

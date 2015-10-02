@@ -44,7 +44,7 @@ class HrJob(osv.Model):
 
     _columns = {
         'name': fields.char('Job Name', size=128, required=True, select=True,
-            translate=True),
+                            translate=True),
         'level': fields.selection(LEVEL_JOB,
                                   'Level',
                                   help="level of job position."),

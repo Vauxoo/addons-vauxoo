@@ -33,10 +33,10 @@ class ProcurementOrder(osv.Model):
 
     _columns = {
         'production_ids': fields.many2many('mrp.production',
-            'mrp_production_procurement_order_rel', 'procurement_id',
-            'production_id', 'Production orders'),
+                                           'mrp_production_procurement_order_rel', 'procurement_id',
+                                           'production_id', 'Production orders'),
         'production_created': fields.many2one('mrp.production',
-            'Production order'),
+                                              'Production order'),
     }
 
     def make_mo(self, cr, uid, ids, context=None):

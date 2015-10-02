@@ -140,8 +140,8 @@ class StockReturnPicking(osv.TransientModel):
                 new_move = move_obj.copy(cr, uid, move.id, {
                     'product_qty': new_qty,
                     'product_uos_qty': uom_obj._compute_qty(cr, uid,
-                                        move.product_uom.id, new_qty,
-                                        move.product_uos.id),
+                                                            move.product_uom.id, new_qty,
+                                                            move.product_uos.id),
                     'product_uom': uom_id,
                     'picking_id': new_picking,
                     'state': 'draft',

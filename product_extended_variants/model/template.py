@@ -141,7 +141,7 @@ class ProductTemplate(models.Model):
                         move_id = move_obj.create(cr, uid, move_vals,
                                                   context=context)
 
-                        if diff*qty > 0:
+                        if diff * qty > 0:
                             amount_diff = qty * diff
                             debit_account_id = \
                                 datas['property_difference_price_account_id']
@@ -169,6 +169,6 @@ class ProductTemplate(models.Model):
                             'ref': ref,
                             'credit': amount_diff,
                             'move_id': move_id
-                            }, context=context)
+                        }, context=context)
             self.write(cr, uid, rec_id, {'standard_price': new_price})
         return True

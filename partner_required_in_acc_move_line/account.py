@@ -32,8 +32,8 @@ class AccountAccount(osv.Model):
 
     _columns = {
         'partner_required': fields.boolean('Partner Required', help='If this '
-        'field is active, the journal items that used this account should '
-        'have a partner'),
+                                           'field is active, the journal items that used this account should '
+                                           'have a partner'),
     }
 
 
@@ -50,7 +50,7 @@ class AccountMove(osv.Model):
                         moves_without_partner += '\n' + line.name
             if moves_without_partner:
                 raise osv.except_osv(_('Error'), _('Need add partner in moves'
-                ' with name ' + moves_without_partner + '.'))
+                                                   ' with name ' + moves_without_partner + '.'))
         res = super(AccountMove, self).button_validate(
             cr, uid, ids, context=context)
         return res

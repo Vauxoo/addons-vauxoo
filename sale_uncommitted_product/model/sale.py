@@ -59,8 +59,8 @@ class SaleOrder(osv.Model):
 
     def action_commit(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'committed',
-                   'date_committed': time.strftime(
-                                  '%Y-%m-%d %H:%M:%S')}, context=context)
+                                  'date_committed': time.strftime(
+                                      '%Y-%m-%d %H:%M:%S')}, context=context)
         return True
 
     def _check_so(self, cr, uid, id, context=None):

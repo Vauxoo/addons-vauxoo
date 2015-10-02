@@ -130,5 +130,5 @@ class ResCompany(osv.Model):
             relation='baremo.book',
             string="Baremo",
             multi='baremo',
-            ),
+        ),
     }

@@ -36,10 +36,10 @@ class MrpProductionWorkcenterLine(osv.Model):
 
     _columns = {
         'mrp_workorder_variation_line_ids': fields.one2many('mrp.workorder.variation.line',
-        'mrp_production_workcenter_line_id', 'Real Products Quantity'),
+                                                            'mrp_production_workcenter_line_id', 'Real Products Quantity'),
 
         'mrp_workorder_variation_output_line_ids': fields.one2many('mrp.workorder.output.variation.line',
-        'mrp_production_workcenter_output_line_id', 'Real Output Products Quantity'),
+                                                                   'mrp_production_workcenter_output_line_id', 'Real Output Products Quantity'),
     }
 
 
@@ -56,7 +56,7 @@ class MrpWorkorderVariationLine(osv.Model):
                                          string='Production Order', relation='mrp.production', type='many2one', store=True,
                                          help='Id Manufacturing Order'),
         'mrp_production_workcenter_line_id': fields.many2one('mrp.production.workcenter.line',
-        'Production Workcenter Line ID', required=True, help='Id Work Order'),
+                                                             'Production Workcenter Line ID', required=True, help='Id Work Order'),
         'product_id': fields.many2one('product.product', _('Product'), required=True,
                                       help=_('Product')),
         'product_qty': fields.float(_('Capacity'), required=True, help=_('Real Quantity')),
@@ -85,7 +85,7 @@ class MrpWorkorderOutputVariationLine(osv.Model):
                                          string='Production Order', relation='mrp.production', type='many2one', store=True,
                                          help='Id Manufacturing Order'),
         'mrp_production_workcenter_output_line_id': fields.many2one('mrp.production.workcenter.line',
-        'Production Workcenter Line ID', required=True, help='Id Work Order'),
+                                                                    'Production Workcenter Line ID', required=True, help='Id Work Order'),
         'product_id': fields.many2one('product.product', _('Product'), required=True,
                                       help=_('Product')),
         'product_qty': fields.float(_('Capacity'), required=True, help=_('Real Quantity')),

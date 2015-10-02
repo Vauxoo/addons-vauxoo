@@ -29,7 +29,7 @@ class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
     _columns = {
         'sale_ids': fields.many2many('sale.order', 'sale_order_invoice_rel',
-            'invoice_id', 'order_id',
-            'Sale Orders',
-            help='This is the list of sale orders that generated this invoice')
+                                     'invoice_id', 'order_id',
+                                     'Sale Orders',
+                                     help='This is the list of sale orders that generated this invoice')
     }

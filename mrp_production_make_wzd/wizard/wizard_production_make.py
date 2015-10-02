@@ -33,15 +33,15 @@ class WizardProductionMake(osv.TransientModel):
 
     _columns = {
         'products_ids': fields.many2many('product.product', 'production_make',
-            'product_id', 'production_make_id', 'Products'),
+                                         'product_id', 'production_make_id', 'Products'),
         'date_planned': fields.datetime('Scheduled date', required=True,
-            select=1),
+                                        select=1),
         'location_src_id': fields.many2one('stock.location',
-            'Raw Materials Location', readonly=False,
-            help="Location where the system will look for components."),
+                                           'Raw Materials Location', readonly=False,
+                                           help="Location where the system will look for components."),
         'location_dest_id': fields.many2one('stock.location',
-            'Finished Products Location', readonly=False,
-            help="Location where the system will stock the\
+                                            'Finished Products Location', readonly=False,
+                                            help="Location where the system will stock the\
                 finished products."),
     }
     _defaults = {

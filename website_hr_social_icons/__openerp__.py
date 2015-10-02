@@ -6,6 +6,7 @@
     'website': 'www.vauxoo.com',
     'version': '1.6',
     'author': 'Vauxoo',
+    'license': 'AGPL-3',
     'depends': [
         'website_hr',
     ],

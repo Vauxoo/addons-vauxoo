@@ -37,9 +37,9 @@ class MailMessage(osv.Model):
     def _message_read_dict(self, cr, uid, message, parent_id=False,
                            context=None):
         res = super(MailMessage, self)._message_read_dict(cr, uid,
-                                                           message,
-                                                           parent_id=parent_id,
-                                                           context=context)
+                                                          message,
+                                                          parent_id=parent_id,
+                                                          context=context)
         res['rating'] = message.rating
         return res
 

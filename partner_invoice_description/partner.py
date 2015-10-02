@@ -30,5 +30,5 @@ class ResPartner(osv.Model):
     _inherit = 'res.partner'
     _columns = {
         'description_invoice': fields.text('Description Invoice',
-            translate=True),
+                                           translate=True),
     }

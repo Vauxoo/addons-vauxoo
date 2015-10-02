@@ -52,8 +52,8 @@ class StockPicking(osv.Model):
                 cur, uid, [sp_brw.id], context=context)
         else:
             raise osv.except_osv(_('Invalid Procedure'),
-                _('The Contract Due Date already pass. You cannot'
-                  ' process the stock picking.'))
+                                 _('The Contract Due Date already pass. You cannot'
+                                   ' process the stock picking.'))
         return res
 
     @api.one
@@ -91,8 +91,8 @@ class StockPickingIn(osv.Model):
                 cur, uid, [sp_brw.id], context=context)
         else:
             raise osv.except_osv(_('Invalid Procedure'),
-                _('The Contract Due Date already pass. You cannot'
-                  ' process the stock picking in.'))
+                                 _('The Contract Due Date already pass. You cannot'
+                                   ' process the stock picking in.'))
         return res
 
     @api.one
@@ -130,8 +130,8 @@ class StockPickingOut(osv.Model):
                 cur, uid, [sp_brw.id], context=context)
         else:
             raise osv.except_osv(_('Invalid Procedure'),
-                _('The Contract Due Date already pass. You cannot'
-                  ' process the stock picking out.'))
+                                 _('The Contract Due Date already pass. You cannot'
+                                   ' process the stock picking out.'))
         return res
 
     @api.one

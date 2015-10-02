@@ -23,13 +23,12 @@
     "name": "Product extension to track sales and purchases from variants",
     "version": "1.6",
     "author": "Vauxoo",
-    "category": "Technical",
+    "category": "Technical, Generic Modules/Inventory Control",
     'website': 'https://www.vauxoo.com',
+    "license": "AGPL-3",
     "depends": ['product'],
-    "category": "Generic Modules/Inventory Control",
     "data": [
         'view/product_view.xml',
     ],
-    "active": False,
     "installable": True
 }

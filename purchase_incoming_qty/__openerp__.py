@@ -28,6 +28,7 @@
     "summary": "Differentiate the Purchase Virtual Incoming Inventory",
     "version": "1.6",
     "author": "Vauxoo",
+    "license": "AGPL-3",
     "website": "http://www.vauxoo.com/",
     "category": "Inventory Control",
     "depends": [

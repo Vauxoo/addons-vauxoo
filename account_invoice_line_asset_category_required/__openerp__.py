@@ -12,6 +12,7 @@
     'name': 'Account Invoice Line Asset Category Required',
     'version': '1.6',
     'author': 'Vauxoo',
+    'license': 'AGPL-3',
     'category': '',
     'depends': [
         'account',

@@ -26,7 +26,6 @@ from openerp import tools
 from openerp.tools.translate import _
 
 
-
 class MergeFuseWizard(osv.TransientModel):
     _name = 'merge.fuse.wizard'
 
@@ -160,7 +159,8 @@ class MergeEditingWizard(osv.TransientModel):
                     all_fields[field.name] = field_info[field.name]
                     all_fields["selection_" + field.name] = {'type': 'selection',
                                                              'string':
-                                                             field_info[field.name]['string'],
+                                                             field_info[field.name][
+                                                                 'string'],
                                                              'selection': [('set', 'Set'),
                                                                            ('remove_m2m',
                                                                             'Remove'),

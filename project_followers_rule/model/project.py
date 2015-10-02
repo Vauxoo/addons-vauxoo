@@ -45,12 +45,12 @@ class Project(osv.Model):
             partner_ids = cond[2]
             task_ids = self.pool.get('project.task').search(
                 cr, uid, [('message_follower_ids', 'in', partner_ids),
-                    ('project_id.privacy_visibility', '=', 'followers')])
+                          ('project_id.privacy_visibility', '=', 'followers')])
         project_ids = set(task.project_id.id for task in self.pool.get(
             'project.task').browse(cr, uid, task_ids))
         return [('id', 'in', tuple(project_ids))]
     _columns = {
         'followers_tasks_ids': fields.function(_get_followers, type='many2many',
-            relation="res.partner", string="Followers Task", method=True, store=False,
-                fnct_search=_search_project),
+                                               relation="res.partner", string="Followers Task", method=True, store=False,
+                                               fnct_search=_search_project),
     }

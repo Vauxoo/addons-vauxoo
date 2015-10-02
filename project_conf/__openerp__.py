@@ -29,15 +29,15 @@
     "version": "0.6",
     "depends": ["base", "project", "email_template"],
     "author": "Vauxoo",
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
+    "website": "http://vauxoo.com",
+    "license": "AGPL-3",
+    "category": "Generic Modules",
     "demo": [
     ],
     "data": [
-      "data/project_conf.xml",
-      "view/project_view.xml",
+        "data/project_conf.xml",
+        "view/project_view.xml",
     ],
-    "active": False,
     "images": [],
     "installable": True,
 }

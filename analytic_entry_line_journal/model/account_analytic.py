@@ -32,5 +32,5 @@ class AccountAnalyticLine(osv.Model):
 
     _columns = {
         'general_journal_id': fields.related('move_id', 'journal_id', string='General Journal',
-            type='many2one', relation='account.journal', store=True),
+                                             type='many2one', relation='account.journal', store=True),
     }

@@ -46,5 +46,4 @@
     "qweb": [],
     "installable": False,
     "auto_install": False,
-    "active": False
 }

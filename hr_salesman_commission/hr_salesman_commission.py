@@ -10,16 +10,16 @@ class SalesmanCommissionPayment(osv.Model):
     _columns = {
         'commission_number': fields.char('Number', size=64),
         'company_id': fields.many2one('res.company', 'Company', required=True,
-            states={'draft': [('readonly', False)]}),
+                                      states={'draft': [('readonly', False)]}),
         'user_id': fields.many2one('res.users', 'Salesman', required=True,
-            states={'draft': [('readonly', False)]}),
+                                   states={'draft': [('readonly', False)]}),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year',
-            required=True, states={'draft': [('readonly', False)]}),
+                                         required=True, states={'draft': [('readonly', False)]}),
         'period_ids': fields.many2one('account.period', 'Periods',
-            required=True, states={'draft': [('readonly', False)]}),
+                                      required=True, states={'draft': [('readonly', False)]}),
         'payment_ids': fields.many2many('account.move.line',
-            'hr_salesman_commission_payment', 'line_id', 'payment_id',
-            'Payments', states={'draft': [('readonly', False)]}),
+                                        'hr_salesman_commission_payment', 'line_id', 'payment_id',
+                                        'Payments', states={'draft': [('readonly', False)]}),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('open', 'Open'),
@@ -27,9 +27,9 @@ class SalesmanCommissionPayment(osv.Model):
             ('cancel', 'Cancelled')
         ], 'State', select=True, readonly=True),
         'commission_rate': fields.float('Rate(%)',
-            digits_compute=dp.get_precision('Commission'), readonly=False),
+                                        digits_compute=dp.get_precision('Commission'), readonly=False),
         'commission_amount': fields.float('Commission',
-            digits_compute=dp.get_precision('Commission'),),
+                                          digits_compute=dp.get_precision('Commission'),),
         #'date_created': fields.date('Created Date'),
         #'date_due': fields.date('Due Date'),
         #'date_commissioned' : fields.date('Commissioned Date'),
@@ -37,8 +37,8 @@ class SalesmanCommissionPayment(osv.Model):
         # REVISAR CON MUCHO DETENIMIENTO
         #'move_line' : fields.many2one(),
         'commission_line_id': fields.one2many('salesman.commission.payment.line',
-            'commission_id', 'Commission Lines', readonly=True,
-            states={'draft': [('readonly', False)]}),
+                                              'commission_id', 'Commission Lines', readonly=True,
+                                              states={'draft': [('readonly', False)]}),
     }
 
 # Copied from account.py (line 297)
@@ -47,7 +47,7 @@ class SalesmanCommissionPayment(osv.Model):
         if user.company_id:
             return user.company_id.id
         return self.pool.get('res.company').search(cr, uid,
-                                                [('parent_id', '=', False)])[0]
+                                                   [('parent_id', '=', False)])[0]
 
     _defaults = {
         'company_id': _default_company,
@@ -237,25 +237,25 @@ class SalesmanCommissionPaymentLine(osv.Model):
     _name = 'salesman.commission.payment.line'
     _columns = {
         'commission_id': fields.many2one('salesman.commission.payment',
-            'Commission Lines', required=True),
+                                         'Commission Lines', required=True),
         'date_effective': fields.date('Effective of the Payment',
-            required=True),
+                                      required=True),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year',
-            required=True, states={'draft': [('readonly', False)]}),
+                                         required=True, states={'draft': [('readonly', False)]}),
         'period_id': fields.many2one('account.period', 'Period', required=True,
-            select=2),
+                                     select=2),
         'partner_id': fields.many2one('res.partner', 'Partner Ref.'),
         'ref': fields.char('Ref.', size=32),
         'name': fields.char('Name', size=64, required=True),
         'journal_id': fields.many2one('account.journal', 'Journal',
-            required=True, select=1),
+                                      required=True, select=1),
         'debit': fields.float('Debit', digits=(16, 2)),
         'commission_rate': fields.float('Rate(%)',
-            digits_compute=dp.get_precision('Commission'), readonly=True),
+                                        digits_compute=dp.get_precision('Commission'), readonly=True),
         'commissioned_amount_line': fields.float('Commission',
-            digits_compute=dp.get_precision('Commission'), readonly=True),
+                                                 digits_compute=dp.get_precision('Commission'), readonly=True),
         'user_id': fields.many2one('res.users', 'Salesman', required=True,
-            states={'draft': [('readonly', False)]}),
+                                   states={'draft': [('readonly', False)]}),
         'commission_paid': fields.boolean('Paid Commission'),
     }
 

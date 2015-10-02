@@ -57,14 +57,14 @@ class SaleOrder(osv.Model):
                 if line.purchase_price:
                     res[line.id] = round((line.price_unit *
                                           line.product_uos_qty *
-                                         (100.0 - line.discount) / 100.0) -
-                                        (line.purchase_price *
-                                         line.product_uos_qty), 2)
+                                          (100.0 - line.discount) / 100.0) -
+                                         (line.purchase_price *
+                                          line.product_uos_qty), 2)
                 else:
                     res[line.id] = round((line.price_unit * line.product_uos_qty
                                           * (100.0 - line.discount) / 100.0) -
-                                        (line.product_id.standard_price *
-                                         line.product_uos_qty), 2)
+                                         (line.product_id.standard_price *
+                                          line.product_uos_qty), 2)
         return res
 
     _inherit = 'sale.order'

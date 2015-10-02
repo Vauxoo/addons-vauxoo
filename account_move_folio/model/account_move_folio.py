@@ -15,11 +15,11 @@ class AccountMoveFolio(osv.Model):
         'date': fields.date('Date', help='Entry Date'),
         'company_id': fields.many2one('res.company', 'Company', help='Entry Company'),
         'move_state': fields.related('move_id', 'state', type='selection',
-            selection=[('draft', 'Unposted'), ('posted', 'Posted')], store=True,
-            string='Entry State', help='Entry State'),
+                                     selection=[('draft', 'Unposted'), ('posted', 'Posted')], store=True,
+                                     string='Entry State', help='Entry State'),
         'period_state': fields.related('period_id', 'state', type='selection',
-            selection=[('draft', 'Open'), ('done', 'Closed')], store=True,
-            string='Period State', help='Period State'),
+                                       selection=[('draft', 'Open'), ('done', 'Closed')], store=True,
+                                       string='Period State', help='Period State'),
     }
 
     _defaults = {
@@ -74,17 +74,21 @@ class AccountMove(osv.Model):
                 }
                 if invoice:
                     folio_ids = folio_obj.search(cr, uid,
-                            [('name', '=', move.name),
-                                ('journal_id', '=', move.journal_id.id),
-                                ('company_id', '=', move.company_id.id)],
-                        context=context)
+                                                 [('name', '=', move.name),
+                                                  ('journal_id', '=',
+                                                   move.journal_id.id),
+                                                     ('company_id', '=', move.company_id.id)],
+                                                 context=context)
                     if folio_ids:
                         folio_id = folio_ids[0]
-                        folio_obj.write(cr, uid, folio_id, values, context=context)
+                        folio_obj.write(cr, uid, folio_id,
+                                        values, context=context)
                     else:
-                        folio_id = folio_obj.create(cr, uid, values, context=context)
+                        folio_id = folio_obj.create(
+                            cr, uid, values, context=context)
                 else:
-                    folio_id = folio_obj.create(cr, uid, values, context=context)
+                    folio_id = folio_obj.create(
+                        cr, uid, values, context=context)
                 move.write({'folio_id': folio_id}, context=context)
         return True
 

@@ -34,7 +34,7 @@ class VirtualItems(osv.TransientModel):
     _columns = {
         'price_create_id': fields.many2one('create.price.list', 'List'),
         'items_id': fields.many2one('product.pricelist.item', 'List items',
-            help='items by roduct'),
+                                    help='items by roduct'),
 
     }
 
@@ -57,16 +57,16 @@ class CreatePriceList(osv.TransientModel):
 
     _columns = {
         'version_ids': fields.many2many('product.pricelist.version',
-            'version_to_item_create', 'wz_id', 'version_id', 'Versions',
-            help='Version from price_list'),
+                                        'version_to_item_create', 'wz_id', 'version_id', 'Versions',
+                                        help='Version from price_list'),
         'pricelist_id': fields.many2one('product.pricelist', 'Price List',
-            help='Price list to create version'),
+                                        help='Price list to create version'),
 
         'pricelist_ids': fields.one2many('virtual.items', 'price_create_id',
-            'Items', help='Create items for this product'),
+                                         'Items', help='Create items for this product'),
 
         'product_id': fields.many2one('product.product', 'Product',
-            help='Product'),
+                                      help='Product'),
 
 
     }

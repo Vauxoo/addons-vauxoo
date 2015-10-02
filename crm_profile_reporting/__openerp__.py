@@ -2,10 +2,10 @@
 {
     "name": "Crm Profiling Report",
     "version": "0.6",
-    "author": "",
+    "author": "Vauxoo",
     "category": "Generic Modules/Accounting",
     "website": "http://vauxoo.com",
-    "license": "",
+    "license": "AGPL-3",
     "depends": [
         "base",
         "crm_profiling",
@@ -22,5 +22,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

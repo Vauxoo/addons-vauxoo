@@ -30,7 +30,7 @@ class AccountInvoice(osv.Model):
 
     _columns = {
         'cancel_true': fields.boolean('Invoice Cancel',
-            help="Field that indicates whether the invoice was canceled\
+                                      help="Field that indicates whether the invoice was canceled\
              earlier, to generate actions automatically")
 
     }

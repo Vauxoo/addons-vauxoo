@@ -92,7 +92,7 @@ class TestTaxCommon(common.TransactionCase):
                          amount_currency=0):
         bank_stmt_id = self.acc_bank_stmt_model.create(cr, uid, {
             'journal_id': journal,
-            'date': date_bank or time.strftime('%Y')+'-07-01',
+            'date': date_bank or time.strftime('%Y') + '-07-01',
         })
 
         bank_stmt_line_id = self.acc_bank_stmt_line_model.create(cr, uid, {
@@ -102,12 +102,12 @@ class TestTaxCommon(common.TransactionCase):
             'amount': amount,
             'currency_id': currency,
             'amount_currency': amount_currency,
-            'date': date_bank or time.strftime('%Y')+'-07-01'})
+            'date': date_bank or time.strftime('%Y') + '-07-01'})
         amount = amount_currency and amount_currency or amount
 
         val = {
             'credit': amount > 0 and amount or 0,
-            'debit': amount < 0 and amount*-1 or 0,
+            'debit': amount < 0 and amount * -1 or 0,
             'name': line_invoice and line_invoice.name or 'cash flow'}
 
         if line_invoice:

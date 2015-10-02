@@ -33,7 +33,7 @@ class TaskExpiredConfig(osv.Model):
         if context is None:
             context = {}
         res = super(TaskExpiredConfig, self).default_get(cr, uid, fields,
-                                                           context=context)
+                                                         context=context)
         model_ids = self.search(cr, uid, [], context=context)
         if model_ids:
             return self.read(cr, uid, model_ids[0], [], context=context)
@@ -87,10 +87,11 @@ class TaskExpiredConfig(osv.Model):
                 msg_expired = ''
                 msg_expiredp = ''
                 last_message_ids = message.search(cr, uid,
-                                   [('res_id', '=', task.id),
-                                   ('model', '=', 'project.task')],
-                    context, order='date desc')
-                last_fecha = last_message_ids and message.browse(cr, uid, last_message_ids[0]).date
+                                                  [('res_id', '=', task.id),
+                                                   ('model', '=', 'project.task')],
+                                                  context, order='date desc')
+                last_fecha = last_message_ids and message.browse(
+                    cr, uid, last_message_ids[0]).date
                 #~ Para cuando la tarea se vencio a la fecha de hoy.
                 #~ if task.date_deadline and task.date_deadline <= today:
                 #~ msg_expired = ('<p>Esta tarea ha expirado el dia %s \
@@ -601,6 +602,7 @@ Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos just
                                                }, context=context)
                     if task.user_id:
                         mail_mail.send(cr, uid, [mail_id],
-                                       recipient_ids=[task.user_id.partner_id.id],
+                                       recipient_ids=[
+                                           task.user_id.partner_id.id],
                                        context=context)
         return True

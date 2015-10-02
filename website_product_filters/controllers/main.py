@@ -7,6 +7,7 @@ from openerp.addons.website_sale.controllers.main import QueryURL
 
 
 class WebsiteSale(website_sale):
+
     @http.route([
         '/shop',
         '/shop/page/<int:page>',

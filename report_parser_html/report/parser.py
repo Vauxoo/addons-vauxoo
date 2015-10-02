@@ -26,6 +26,7 @@ from lxml import html
 
 
 class ReportParserHtml(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context=None):
         context = context or {}
         super(ReportParserHtml, self).__init__(

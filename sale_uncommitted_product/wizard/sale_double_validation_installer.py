@@ -31,13 +31,13 @@ class SaleDoubleValidationInstaller(osv.TransientModel):
     _inherit = 'res.config'
     _columns = {
         'force_commit_group_id': fields.many2one('res.groups', 'Force Commit Group', required=False,
-        help='''Setting this field to a group will only allow to that group to make Commitment Sale Orders without checking if complying with contraints.
+                                                 help='''Setting this field to a group will only allow to that group to make Commitment Sale Orders without checking if complying with contraints.
         Leave blank to allow any group to force to'''),
         'commit_group_id': fields.many2one('res.groups', 'Commit Group', required=False,
-        help='''Setting this field to a group will only allow to that group to make Commitment Sale Orders checking if complying with contraints.
+                                           help='''Setting this field to a group will only allow to that group to make Commitment Sale Orders checking if complying with contraints.
         Leave blank to allow any group to commit to'''),
         'group_id': fields.many2one('res.groups', 'Approval Group', required=False,
-        help='''Setting this field to a group will only allow to that group to approve Sale Orders.
+                                    help='''Setting this field to a group will only allow to that group to approve Sale Orders.
         Leave blank to allow any group to approve to'''),
     }
 

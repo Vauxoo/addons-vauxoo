@@ -28,8 +28,8 @@ class ProcurementComputeAll(osv.TransientModel):
 
     _columns = {
         'product_ids': fields.many2many('product.product',
-            'procurement_product_rel', 'procurement_id',
-            'product_id', 'Products')
+                                        'procurement_product_rel', 'procurement_id',
+                                        'product_id', 'Products')
     }
 
     def procure_calculation(self, cr, uid, ids, context=None):

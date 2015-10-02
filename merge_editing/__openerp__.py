@@ -29,6 +29,7 @@
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.serpentcs.com",
+    "license": "AGPL-3",
     'depends': [
         'base'
     ],

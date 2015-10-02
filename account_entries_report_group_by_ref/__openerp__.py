@@ -18,7 +18,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 #"license" : "AGPL-3",
 {
     "name": "Inherits the xml account_entries_report_view a button grouping by origin",
@@ -40,5 +40,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

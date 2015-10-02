@@ -32,7 +32,7 @@ class AccountAccountType(osv.osv):
             ('optional', 'Optional'),
             ('always', 'Always'),
             ('never', 'Never')
-            ], 'Policy for analytic account',
+        ], 'Policy for analytic account',
             help=('Set the policy for analytic accounts : if you select '
                   '"Optional", the accountant is free to put an analytic '
                   'account on an account move line with this type of account; '
@@ -44,4 +44,4 @@ class AccountAccountType(osv.osv):
 
     _defaults = {
         'analytic_policy': lambda *a: 'optional',
-        }
+    }

@@ -53,7 +53,7 @@ class AccountInvoice(osv.Model):
                     """Type of account in invoice to Customer
                        must be 'receivable'"""))
             if (type_invoice == 'in_invoice' or
-               type_invoice == 'in_refound') and \
+                type_invoice == 'in_refound') and \
                type_acc_invo != 'payable':
                 raise osv.except_osv(_('Error'), _(
                     "Type of account in invoice to Partner must be 'payable'"))

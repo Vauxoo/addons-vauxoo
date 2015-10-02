@@ -34,7 +34,8 @@ class EmployeeUserWizard(osv.TransientModel):
         if context is None:
             context = {}
 
-        res = super(EmployeeUserWizard, self).default_get(cr, uid, fields, context=context)
+        res = super(EmployeeUserWizard, self).default_get(
+            cr, uid, fields, context=context)
         user_ids = context.get('active_ids', False)
         if user_ids:
             all_ids = self.get_unconfigured_cmp(cr, uid, context)
@@ -69,7 +70,8 @@ class EmployeeUserWizard(osv.TransientModel):
         res = super(EmployeeUserWizard, self).fields_view_get(
             cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=False)
         cmp_select = []
-        # display in the widget selection only the users that haven't been configured yet
+        # display in the widget selection only the users that haven't been
+        # configured yet
         unconfigured_cmp = self.get_unconfigured_cmp(cr, uid, context=context)
         for field in res['fields']:
             if field == 'user_ids':
@@ -93,26 +95,33 @@ class EmployeeUserWizard(osv.TransientModel):
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
         form = self.read(cr, uid, ids, context=context)
-        users_ids = form[0]['user_ids'] or self.get_unconfigured_cmp(cr, uid, context=context)
+        users_ids = form[0]['user_ids'] or self.get_unconfigured_cmp(
+            cr, uid, context=context)
         for user in users_obj.browse(cr, uid, users_ids, context):
-            vals_resource = {'name': user.name or False, 'user_id': user.id or False}
-            resource_id = resource_obj.create(cr, uid, vals_resource, context=context)
+            vals_resource = {'name': user.name or False,
+                             'user_id': user.id or False}
+            resource_id = resource_obj.create(
+                cr, uid, vals_resource, context=context)
             vals_employee = {'name_related': user.name or False,
                              'resource_id': resource_id or False,
                              'image': user.image or False,
                              'company_id': user.company_id.id or False,
                              'work_email': user.email or False}
-            employee_id = employee_obj.create(cr, uid, vals_employee, context=context)
+            employee_id = employee_obj.create(
+                cr, uid, vals_employee, context=context)
             employee_id = int(employee_id)
             employee_list.append(employee_id)
         if employee_list:
-            result = mod_obj.get_object_reference(cr, uid, 'hr', 'open_view_employee_list_my')
+            result = mod_obj.get_object_reference(
+                cr, uid, 'hr', 'open_view_employee_list_my')
             id = result and result[1] or False
             result = act_obj.read(cr, uid, [id], context=context)[0]
             # choose the view_mode accordingly
-            result['domain'] = "[('id','in',[" + ','.join(map(str, employee_list)) + "])]"
+            result[
+                'domain'] = "[('id','in',[" + ','.join(map(str, employee_list)) + "])]"
             result['res_id'] = employee_list and employee_list[0] or False
             # choose the order
-            result['views'] = [(False, u'tree'), (False, u'kanban'), (False, u'form')]
+            result['views'] = [
+                (False, u'tree'), (False, u'kanban'), (False, u'form')]
             return result
         return True

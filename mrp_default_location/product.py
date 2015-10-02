@@ -31,7 +31,7 @@ class ProductCategory(osv.Model):
     _inherit = 'product.category'
     _columns = {
         'location_src_id': fields.many2one('stock.location',
-            'Raw Materials Location'),
+                                           'Raw Materials Location'),
         'location_dest_id': fields.many2one('stock.location',
-            'Finished Products Location'),
+                                            'Finished Products Location'),
     }

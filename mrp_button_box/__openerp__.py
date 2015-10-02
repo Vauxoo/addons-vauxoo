@@ -24,10 +24,10 @@
 {
     "name": "MRP Button Box",
     "version": "1.6",
-    "author": "Vauxoo C.A.",
+    "author": "Vauxoo",
     "category": "",
     "website": "http://www.openerp.com.ve",
-    "license": "",
+    "license": "AGPL-3",
     "depends": [
         "base",
         "mail",
@@ -43,5 +43,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

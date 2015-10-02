@@ -48,11 +48,12 @@ class AccountVoucher(osv.Model):
         acc_line = line.get('move_line_id', False)
         move_exclude = False
         move_id = acc_line and acc_move_line_obj.browse(cr, uid, acc_line,
-            context=context).move_id or False
+                                                        context=context).move_id or False
         invoice_line = move_id and acc_invoice_obj.search(cr, uid, [
             ('move_id', '=', move_id.id)], context=context) or False
         if invoice_line:
-            line.update({'reconcile': False, 'line_to_invoice': True, 'amount': 0})
+            line.update(
+                {'reconcile': False, 'line_to_invoice': True, 'amount': 0})
             move_exclude = acc_line
         return move_exclude
 
@@ -66,13 +67,14 @@ class AccountVoucher(osv.Model):
         return list(set(value_cr + value_dr) - set(val_exclude))
 
     def recompute_moves(self, cr, uid, ids, partner_id, journal_id, amount, currency_id,
-            ttype, date, values, move_exclude, context=None):
+                        ttype, date, values, move_exclude, context=None):
 
-        move_include = self.move_include(cr, uid, values, move_exclude, context=context)
+        move_include = self.move_include(
+            cr, uid, values, move_exclude, context=context)
         context['move_line_ids'] = move_include
 
         result = self.recompute_voucher_lines(cr, uid, ids, partner_id, journal_id,
-                amount, currency_id, ttype, date, context=context)
+                                              amount, currency_id, ttype, date, context=context)
         values_new = result.get('value', {})
 
         for val_cr in values.get('line_cr_ids', {}):
@@ -87,48 +89,52 @@ class AccountVoucher(osv.Model):
         return True
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id,
-            amount, currency_id, ttype, date, context=None):
+                            amount, currency_id, ttype, date, context=None):
         if context is None:
             context = {}
         res = super(AccountVoucher, self).onchange_partner_id(cr, uid, ids, partner_id,
-            journal_id, amount, currency_id, ttype, date, context=context)
+                                                              journal_id, amount, currency_id, ttype, date, context=context)
         values = res.get('value', {})
 
-        move_exclude = self.get_cr_dr(cr, uid, ids, values, ttype, amount, context=context)
+        move_exclude = self.get_cr_dr(
+            cr, uid, ids, values, ttype, amount, context=context)
 
         self.recompute_moves(cr, uid, ids, partner_id, journal_id, amount, currency_id,
                              ttype, date, values, move_exclude, context=context)
         return res
 
     def onchange_amount(self, cr, uid, ids, amount, rate, partner_id, journal_id, currency_id,
-            ttype, date, payment_rate_currency_id, company_id, context=None):
+                        ttype, date, payment_rate_currency_id, company_id, context=None):
         if context is None:
             context = {}
 
         res = super(AccountVoucher, self).onchange_partner_id(cr, uid, ids, partner_id,
-            journal_id, amount, currency_id, ttype, date, context=context)
+                                                              journal_id, amount, currency_id, ttype, date, context=context)
         values = res.get('value', {})
 
-        move_exclude = self.get_cr_dr(cr, uid, ids, values, ttype, amount, context=context)
+        move_exclude = self.get_cr_dr(
+            cr, uid, ids, values, ttype, amount, context=context)
 
         self.recompute_moves(cr, uid, ids, partner_id, journal_id, amount, currency_id,
                              ttype, date, values, move_exclude, context=context)
         return res
 
     def onchange_journal(self, cr, uid, ids, journal_id, line_ids, tax_id,
-            partner_id, date, amount, ttype, company_id, context=None):
+                         partner_id, date, amount, ttype, company_id, context=None):
         if context is None:
             context = {}
 
         res = super(AccountVoucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids,
-            tax_id, partner_id, date, amount, ttype, company_id, context=context)
+                                                           tax_id, partner_id, date, amount, ttype, company_id, context=context)
         values = res and res.get('value', {}) or {}
 
-        move_exclude = self.get_cr_dr(cr, uid, ids, values, ttype, amount, context=context)
+        move_exclude = self.get_cr_dr(
+            cr, uid, ids, values, ttype, amount, context=context)
 
         self.recompute_moves(cr, uid, ids, partner_id, journal_id, amount,
-                values.get('currency_id', False), ttype, date, values,
-            move_exclude, context=context)
+                             values.get('currency_id',
+                                        False), ttype, date, values,
+                             move_exclude, context=context)
         return res
 
 
@@ -137,5 +143,5 @@ class AccountVoucherLine(osv.Model):
 
     _columns = {
         'line_to_invoice': fields.boolean('Line to Invoice', help='If this field is true indicates'
-            ' that this line coming from an invoice refound')
+                                          ' that this line coming from an invoice refound')
     }

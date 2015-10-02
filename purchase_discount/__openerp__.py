@@ -21,10 +21,10 @@
 {
     "name": "Purchase order lines with discounts",
     "version": "1.6",
-    "author": "Tiny, Acysos S.L.",
+    "author": "Tiny, Acysos S.L.",  # pylint: disable=C8101
     "category": "Generic Modules/Sales & Purchases",
     "website": "",
-    "license": "",
+    "license": "AGPL-3",
     "depends": [
         "stock",
         "purchase"
@@ -40,5 +40,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

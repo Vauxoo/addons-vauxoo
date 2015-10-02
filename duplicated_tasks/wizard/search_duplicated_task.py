@@ -33,7 +33,7 @@ class SearchDuplicatedTask(osv.TransientModel):
         task_obj = self.pool.get('project.task')
         task_ids = task_obj.search(cr, uid,
                                    [(operator, 'ilike', name),
-                                   ('id', 'not in', list(set(list_ids)))],
+                                    ('id', 'not in', list(set(list_ids)))],
                                    context=context)
 
         return task_ids
@@ -107,7 +107,7 @@ class SearchDuplicatedTask(osv.TransientModel):
             context = {}
         lines = False
         res = super(SearchDuplicatedTask, self).default_get(cr, uid, fields,
-                                                              context=context)
+                                                            context=context)
         if context.get('task_name', False):
             lines = self.get_match_task(cr, uid, context.get('task_name'),
                                         context)

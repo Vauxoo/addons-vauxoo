@@ -47,13 +47,17 @@ class TestYamlDataPurchase(osv.osv_memory):
             context = {}
         assertion_obj = assertion_report.assertion_report()
         this = self.browse(cr, uid, ids)[0]
-        fp_data = tools.file_open(os.path.join('purchase_test_data_imp', 'test/purchase_order_test_data.xml'))
-        fp_test = tools.file_open(os.path.join('purchase_test_data_imp', 'test/purchase_order_product_can_be_purchased.yml'))
+        fp_data = tools.file_open(os.path.join(
+            'purchase_test_data_imp', 'test/purchase_order_test_data.xml'))
+        fp_test = tools.file_open(os.path.join(
+            'purchase_test_data_imp', 'test/purchase_order_product_can_be_purchased.yml'))
         try:
             cr.execute("SAVEPOINT test_yaml_purchase_savepoint")
             context.update({'uid': uid})
-            tools.convert_xml_import(cr, 'purchase_test_data_imp', fp_data, {}, 'init', False, assertion_obj)
-            tools.convert_yaml_import(cr, 'purchase_test_data_imp', fp_test, 'test', {}, 'init', False, assertion_obj, context=context)
+            tools.convert_xml_import(cr, 'purchase_test_data_imp', fp_data, {
+            }, 'init', False, assertion_obj)
+            tools.convert_yaml_import(cr, 'purchase_test_data_imp', fp_test, 'test', {
+            }, 'init', False, assertion_obj, context=context)
         finally:
             if this.test_commit:
                 cr.execute("RELEASE SAVEPOINT test_yaml_purchase_savepoint")
@@ -64,8 +68,10 @@ class TestYamlDataPurchase(osv.osv_memory):
         fp_test.close()
 
         tmp_path = tempfile.gettempdir()
-        file_purchase_order_wrong = base64.encodestring(open(os.path.join(tmp_path, 'purchase_order_product_log.csv'), 'rb+').read())
-        file_purchase_order_log = base64.encodestring(open(os.path.join(tmp_path, 'purchase_order_general_log.csv'), 'rb+').read())
+        file_purchase_order_wrong = base64.encodestring(
+            open(os.path.join(tmp_path, 'purchase_order_product_log.csv'), 'rb+').read())
+        file_purchase_order_log = base64.encodestring(
+            open(os.path.join(tmp_path, 'purchase_order_general_log.csv'), 'rb+').read())
 
         self.write(cr, uid, ids, {
             'yaml_file': file_purchase_order_wrong,

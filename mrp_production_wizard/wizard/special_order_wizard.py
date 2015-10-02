@@ -31,11 +31,11 @@ class MrpProductionWizard(osv.TransientModel):
     _name = 'mrp.production.wizard'
     _columns = {
         'product_id': fields.many2one('product.product', 'Product',
-            required=True, ),
+                                      required=True, ),
         #'product_qty': fields.float('Product Qty', required=True),
         #'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
         'wiz_data': fields.one2many('wizard.data', 'mrp_production_wiz',
-            'Prod lines'),
+                                    'Prod lines'),
     }
 
     def pass_products_to_parent(self, cr, uid, ids, context={}):
@@ -84,13 +84,13 @@ class WizardData(osv.TransientModel):
 
     _columns = {
         'mrp_production_wiz': fields.many2one('mrp.production.wizard',
-            'Padre'),
+                                              'Padre'),
         'name': fields.char('Name', size=64, required=True),
         'product_id_consume': fields.many2one('product.product', 'Product',
-            required=True),
+                                              required=True),
         'product_qty': fields.float('Product Qty', required=True),
         'product_uom': fields.many2one('product.uom', 'Product UOM',
-            required=True),
+                                       required=True),
     }
 
     def onchange_production_wizard_product_name(self, cr, uid, ids,

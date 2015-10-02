@@ -38,12 +38,11 @@
     "data": [
         "view/asset_line.xml",
         "wizard/wizard_asset_depreciation.xml"
-        ],
+    ],
     "test": [],
     "js": [],
     "css": [],
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

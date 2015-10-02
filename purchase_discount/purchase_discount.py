@@ -42,7 +42,7 @@ class PurchaseOrderLine(orm.Model):
     _columns = {
         'discount': fields.float('Discount (%)', digits=(16, 2)),
         'price_subtotal': fields.function(_amount_line, string='Subtotal',
-                                digits_compute=dp.get_precision('Account')),
+                                          digits_compute=dp.get_precision('Account')),
     }
 
     _defaults = {
@@ -86,9 +86,9 @@ class PurchaseOrder(orm.Model):
     def _prepare_inv_line(self, cr, uid, account_id, order_line,
                           context=None):
         result = super(PurchaseOrder, self)._prepare_inv_line(cr, uid,
-                                                               account_id,
-                                                               order_line,
-                                                               context)
+                                                              account_id,
+                                                              order_line,
+                                                              context)
         result['discount'] = order_line.discount or 0.0
         return result
 
@@ -101,38 +101,40 @@ class PurchaseOrder(orm.Model):
 
     _columns = {
         'amount_untaxed': fields.function(_amount_all, method=True,
-            digits_compute=dp.get_precision('Account'),
-            string='Untaxed Amount',
-            store={
-                'purchase.order.line': (_get_order, None, 10),
-            }, multi="sums", help="The amount without tax"),
+                                          digits_compute=dp.get_precision(
+                                              'Account'),
+                                          string='Untaxed Amount',
+                                          store={
+                                              'purchase.order.line': (_get_order, None, 10),
+                                          }, multi="sums", help="The amount without tax"),
         'amount_tax': fields.function(_amount_all, method=True,
-            digits_compute=dp.get_precision('Account'), string='Taxes',
-            store={
-                'purchase.order.line': (_get_order, None, 10),
-            }, multi="sums", help="The tax amount"),
+                                      digits_compute=dp.get_precision('Account'), string='Taxes',
+                                      store={
+                                          'purchase.order.line': (_get_order, None, 10),
+                                      }, multi="sums", help="The tax amount"),
         'amount_total': fields.function(_amount_all, method=True,
-                digits_compute=dp.get_precision('Account'), string='Total',
-            store={
-                'purchase.order.line': (_get_order, None, 10),
-                }, multi="sums", help="The total amount"),
+                                        digits_compute=dp.get_precision('Account'), string='Total',
+                                        store={
+                                            'purchase.order.line': (_get_order, None, 10),
+                                        }, multi="sums", help="The total amount"),
         'amount_untaxed': fields.function(_amount_all,
-            digits_compute=dp.get_precision('Account'),
-            string='Untaxed Amount',
-            store={
-                'purchase.order.line': (_get_order, None, 10),
-            }, multi="sums", help="The amount without tax",
-            track_visibility='always'),
+                                          digits_compute=dp.get_precision(
+                                              'Account'),
+                                          string='Untaxed Amount',
+                                          store={
+                                              'purchase.order.line': (_get_order, None, 10),
+                                          }, multi="sums", help="The amount without tax",
+                                          track_visibility='always'),
         'amount_tax': fields.function(_amount_all,
-            digits_compute=dp.get_precision('Account'), string='Taxes',
-            store={
-                'purchase.order.line': (_get_order, None, 10),
-            }, multi="sums", help="The tax amount"),
+                                      digits_compute=dp.get_precision('Account'), string='Taxes',
+                                      store={
+                                          'purchase.order.line': (_get_order, None, 10),
+                                      }, multi="sums", help="The tax amount"),
         'amount_total': fields.function(_amount_all,
-            digits_compute=dp.get_precision('Account'), string='Total',
-            store={
-                'purchase.order.line': (_get_order, None, 10),
-            }, multi="sums", help="The total amount"),
+                                        digits_compute=dp.get_precision('Account'), string='Total',
+                                        store={
+                                            'purchase.order.line': (_get_order, None, 10),
+                                        }, multi="sums", help="The total amount"),
 
     }
 
@@ -148,6 +150,6 @@ class StockPicking(orm.Model):
                                                         [invoice_line_id],
                                                         line)
         return super(StockPicking, self)._invoice_line_hook(cr,
-                                                             uid,
-                                                             move_line,
-                                                             invoice_line_id)
+                                                            uid,
+                                                            move_line,
+                                                            invoice_line_id)

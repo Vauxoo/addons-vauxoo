@@ -92,7 +92,7 @@ class AccountBankStatementLine(osv.osv):
         move_line = {
             'journal_id': move_line_payment_tax.journal_id.id,
             'period_id': move_line_payment_tax.period_id.id,
-            'name': _('change')+': '+(move_line_counterpart.ref or '/'),
+            'name': _('change') + ': ' + (move_line_counterpart.ref or '/'),
             'account_id': move_line_counterpart.account_id.id,
             'move_id': move_line_payment_tax.move_id.id,
             'partner_id': move_line_payment_tax.partner_id.id,
@@ -106,7 +106,7 @@ class AccountBankStatementLine(osv.osv):
         move_line_counterpart = {
             'journal_id': move_line_payment_tax.journal_id.id,
             'period_id': move_line_payment_tax.period_id.id,
-            'name': _('change')+': '+(move_line_counterpart.ref or '/'),
+            'name': _('change') + ': ' + (move_line_counterpart.ref or '/'),
             'account_id': account_id.id,
             'move_id': move_line_payment_tax.move_id.id,
             'amount_currency': 0.0,
@@ -142,7 +142,7 @@ class AccountBankStatementLine(osv.osv):
             'date': time.strftime('%Y-%m-%d'),
             'period_id': st_line.statement_id.period_id.id,
             'journal_id': st_line.statement_id.journal_id.id,
-            }
+        }
         move_id_old = move_obj.create(cr, uid, vals_move, context)
 
         self._get_factor_type(cr, uid, st_line.amount, False, context=context)
@@ -213,7 +213,7 @@ class AccountBankStatementLine(osv.osv):
                 # de compra 0% o EXENTO y necesitamos enviar el monto base
                 amount_base_secondary =\
                     line_tax_id.amount and\
-                    move_amount_counterpart[1] / (1+line_tax_id.amount) or\
+                    move_amount_counterpart[1] / (1 + line_tax_id.amount) or\
                     move_line_tax.get('amount_base_secondary')
                 account_tax_voucher =\
                     move_line_tax.get('account_tax_voucher')
@@ -246,7 +246,7 @@ class AccountBankStatementLine(osv.osv):
                 for move_line_dict_tax in lines_tax:
                     move_tax = move_line_obj.create(
                         cr, uid, move_line_dict_tax, context=context
-                        )
+                    )
                     move_line_ids.append(move_tax)
 
                     # En esta lista solo interesa conservar las aml que se
@@ -329,7 +329,6 @@ class AccountBankStatementLine(osv.osv):
             move_line_tax, move_line_rec,
             amount_rec_payable, amount_unreconcile_rec_pay,
             parent, company_currency, statement_currency, context=None):
-
         ''' This function create reconcile of taxes and validate
             if there is rate exchange difference to called function that create
             the two lines of adjust
@@ -380,7 +379,7 @@ class AccountBankStatementLine(osv.osv):
 
         factor = move_line_payment_tax.debit > 0 and -1 or 1
 
-        amount_residual = amount_tax_counterpart-amount_tax_payment
+        amount_residual = amount_tax_counterpart - amount_tax_payment
 
         prec = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
@@ -393,7 +392,7 @@ class AccountBankStatementLine(osv.osv):
                          precision_digits=prec):
             amount_residual = 0.0
         else:
-            amount_residual = amount_residual*factor
+            amount_residual = amount_residual * factor
 
         # Si el amount_residual no es igual a cero y la aml tiene
         # moneda secundaria se crea las aml de diferencial
@@ -512,10 +511,10 @@ class AccountBankStatementLine(osv.osv):
                     # solo monto dependiendo de valor que quede +/- determina
                     # si se escribe por el lado del credit/debit
                     account_group[move_line_id.account_id.id][0] +=\
-                        move_line_id.amount_currency*factor[0] or\
+                        move_line_id.amount_currency * factor[0] or\
                         move_line_id.debit > 0 and\
-                        move_line_id.debit*factor[0] or\
-                        move_line_id.credit*factor[1]
+                        move_line_id.debit * factor[0] or\
+                        move_line_id.credit * factor[1]
                     # En la posicion [1] agregamos el ID de la aml que contiene
                     # el impuesto para ser pagado y conciliado con la aml del
                     # pago en voucher o bank statement
@@ -554,7 +553,7 @@ class AccountBankStatementLine(osv.osv):
                     'amount_base_secondary': amount_base_secondary,
                     'move_line_reconcile': [account_group.get(
                         move_account_tax)[1]]
-                    })
+                })
                 dat.append(res)
 
                 if amount_ret_tax:
@@ -571,7 +570,7 @@ class AccountBankStatementLine(osv.osv):
                             tax_id.account_retention_voucher_id.id,
                         'move_line_reconcile': [account_group.get(
                             move_account_tax)[1]]
-                        })
+                    })
                     dat.append(retention_dict)
 
         if not counterpart_move_line_ids:
@@ -664,7 +663,7 @@ class AccountBankStatementLine(osv.osv):
             'tax_analytic_id':
                 tax_id.account_analytic_collected_id and
                 tax_id.account_analytic_collected_id.id or False,
-            }
+        }
         return res
 
 

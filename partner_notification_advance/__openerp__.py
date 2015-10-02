@@ -38,7 +38,7 @@
     "demo": [],
     "data": [
         "view/res_partner_view.xml"
-        ],
+    ],
     "test": [],
     "js": [],
     "css": [],

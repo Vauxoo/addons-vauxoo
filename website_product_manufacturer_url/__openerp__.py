@@ -5,6 +5,7 @@
     "author": "Vauxoo",
     "category": "eCommerce",
     "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "purchase",
         "website_sale",
@@ -21,5 +22,4 @@
     ],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

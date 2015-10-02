@@ -82,14 +82,14 @@ class ProcurementOrderMergeJitExtended(osv.TransientModel):
                 for wiz_data in self.browse(cr, uid, ids, context):
                     if wiz_data.date_planned:
                         mrp_production_pool.write(cr, uid,
-                            new_production_id[0], {
-                                'subproduction_ids':
-                                    [(6, 0, subproduction_ids)],
-                                'date_planned': wiz_data.date_planned})
+                                                  new_production_id[0], {
+                                                      'subproduction_ids':
+                                                      [(6, 0, subproduction_ids)],
+                                                      'date_planned': wiz_data.date_planned})
                     else:
                         mrp_production_pool.write(cr, uid,
-                            new_production_id[0],
-                            {'subproduction_ids': [(6, 0, subproduction_ids)]})
+                                                  new_production_id[0],
+                                                  {'subproduction_ids': [(6, 0, subproduction_ids)]})
 
         if new_ids:
             self.procurement_merge_jit(cr, uid, ids, context, new_ids)

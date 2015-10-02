@@ -28,6 +28,7 @@
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
+    "license": "AGPL-3",
     "depends": [
         "project",
         "project_issue",
@@ -45,5 +46,4 @@
     "qweb": [],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

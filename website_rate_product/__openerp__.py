@@ -20,8 +20,7 @@
     "qweb": [
         "static/src/xml/rate.xml",
         "static/src/xml/mail.xml",
-        ],
+    ],
     "installable": True,
     "auto_install": False,
-    "active": False
 }

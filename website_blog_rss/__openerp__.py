@@ -7,6 +7,7 @@
     'version': '1.6',
     'license': 'LGPL-3',
     'author': 'Vauxoo',
+    'license': 'AGPL-3',
     'depends': [
         'website_blog',
     ],

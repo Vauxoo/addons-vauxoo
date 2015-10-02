@@ -33,7 +33,7 @@
     "license": "AGPL-3",
     "depends": [
         "hr",
-        ],
+    ],
     "test": [
         "test/test_employee.yml",
     ],
