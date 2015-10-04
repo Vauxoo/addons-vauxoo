@@ -96,11 +96,12 @@ class StockLandedCost(models.Model):
         return lines
 
     @api.multi
-    def compute_average_cost(self):
+    def compute_average_cost(self, move_id, dct):
         '''
         This method updates standard_price field in products with costing
         method equal to average
         '''
+        self.ensure_one()
         product_obj = self.env['product.product']
 
         for cost in self:
@@ -113,6 +114,18 @@ class StockLandedCost(models.Model):
 
                 if line.move_id.product_id.cost_method != 'average':
                     continue
+
+                if dct.get(line.move_id.product_id.id):
+                    # TODO: A new way of computing Average has to be developed
+                    # when products have gone prior to allocate landed costs.
+                    # This way of computing it does not work
+                    continue
+
+                qty_out = 0
+                for quant in line.move_id.quant_ids:
+                    if quant.location_id.usage != 'internal':
+                        qty_out += quant.qty
+                self._create_accounting_entries(line, move_id, qty_out)
 
                 # Current quantity of products available
                 if not prod_qty_dict.get(line.move_id.product_id.id):
@@ -206,6 +219,7 @@ class StockLandedCost(models.Model):
             # END OF TODO 01
 
             # TODO: 02 Method to compute standard_price for average cost_method
+            cost.compute_average_cost(move_id, prod_quant_dict)
             # END OF TODO 02
 
             cost.write(
