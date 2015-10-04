@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import osv
 from openerp import models, fields, api, _
 from pprint import pprint
+from openerp.exceptions import except_orm, Warning
 
 
 class StockLandedCost(models.Model):
@@ -86,7 +86,7 @@ class StockLandedCost(models.Model):
         except Exception as e:
             pprint(e)
         if not lines:
-            raise osv.except_osv(
+            raise except_orm(
                 _('Error!'),
                 _('The selected picking does not contain any move that would '
                   'be impacted by landed costs. Landed costs are only possible'
