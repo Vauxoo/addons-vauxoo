@@ -150,6 +150,64 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def button_validate(self):
-        super(StockLandedCost, self).button_validate()
-        self.compute_average_cost()
+        self.ensure_one()
+        quant_obj = self.env['stock.quant']
+        ctx = dict(self._context)
+
+        for cost in self:
+            if cost.state != 'draft':
+                raise Warning(
+                    _('Only draft landed costs can be validated'))
+            if not cost.valuation_adjustment_lines or \
+                    not self._check_sum(cost):
+                raise Warning(
+                    _('You cannot validate a landed cost which has no valid '
+                      'valuation adjustments lines. Did you click on '
+                      'Compute?'))
+
+            # TODO: 01 put this piece of code in a new method
+            move_id = self._model._create_account_move(
+                self._cr, self._uid, cost, context=ctx)
+            quant_dict = {}
+            prod_quant_dict = {}
+            for line in cost.valuation_adjustment_lines:
+                if not line.move_id:
+                    continue
+                per_unit = line.final_cost / line.quantity
+                diff = per_unit - line.former_cost_per_unit
+                quants = [quant for quant in line.move_id.quant_ids]
+                for quant in quants:
+                    if quant.id not in quant_dict:
+                        quant_dict[quant.id] = quant.cost + diff
+                    else:
+                        quant_dict[quant.id] += diff
+                for key, value in quant_dict.items():
+                    quant_obj.browse(key).write(
+                        {'cost': value})
+
+                qty_out = 0
+                for quant in line.move_id.quant_ids:
+                    if quant.location_id.usage != 'internal':
+                        qty_out += quant.qty
+
+                # TODO: 03
+                # THIS CAN BE CALL WHEN COMPUTING AVERAGE WHERE IT IS ACTUALLY
+                # USEFUL
+                if line.product_id.cost_method != 'real':
+                    if line.product_id.id not in prod_quant_dict:
+                        prod_quant_dict[line.product_id.id] = bool(qty_out)
+                    else:
+                        prod_quant_dict[line.product_id.id] = any(
+                            bool(qty_out), prod_quant_dict[line.product_id.id])
+                    continue
+                # END OF TODO 03
+
+                self._create_accounting_entries(line, move_id, qty_out)
+            # END OF TODO 01
+
+            # TODO: 02 Method to compute standard_price for average cost_method
+            # END OF TODO 02
+
+            cost.write(
+                {'state': 'done', 'account_move_id': move_id})
         return True
