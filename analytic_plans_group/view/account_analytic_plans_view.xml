@@ -36,8 +36,8 @@
             <field name="model">account.analytic.account</field>
             <field name="inherit_id" ref="account.view_account_analytic_account_search"/>
             <field name="arch" type="xml">
-                    <xpath expr="//group[@string='Group By...']" position="inside">
-                        <filter string="Analytic Group" 
+                    <xpath expr="//group" position="inside">
+                        <filter string="Analytic Group"
                             groups="analytic_plans_group.group_account_analytic_group"
                             context="{'group_by':'analytic_group_id'}"/>
                     </xpath>
