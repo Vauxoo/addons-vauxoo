@@ -38,5 +38,6 @@ class AccountAnalyticAccount(osv.Model):
     _inherit = 'account.analytic.account'
 
     _columns = {
-        'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
+        'analytic_group_id': fields.many2one(
+            'account.analytic.group', 'Analytic Group'),
     }
