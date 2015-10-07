@@ -1,13 +1,13 @@
 # coding: utf-8
-###############################################################################
+# #############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ########### Credits #########################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
-###############################################################################
+# #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
 #    by the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-###############################################################################
+# #############################################################################
 
 
 from openerp.osv import fields, osv
@@ -38,5 +38,6 @@ class AccountAnalyticAccount(osv.Model):
     _inherit = 'account.analytic.account'
 
     _columns = {
-        'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
+        'analytic_group_id': fields.many2one(
+            'account.analytic.group', 'Analytic Group'),
     }
