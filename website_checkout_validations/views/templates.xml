@@ -118,7 +118,7 @@
                 </xpath>
                 <xpath expr="//div[@class='row']/div[@class='col-md-8 oe_cart']/div[@class='row']/div[5]" position="replace">
                   <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
-                      <label class="control-label" for="contact_name">Contact Name</label>
+                      <label class="control-label" for="contact_name_partner">Contact Name</label>
                       <input type="text" name="name" class="form-control" t-att-value="checkout.get('name')"/>
                   </div>
                 </xpath>

@@ -47,17 +47,25 @@
         {
           $("div[id=ruc_values]").css('visibility','hidden');
           $("div[id=company]").hide();
+          $("label[for=contact_name_partner]").text('Contact Name');
+        }
+        else
+        {
+          $("div[id=company]").hide();
+          $("label[for=contact_name_partner]").text('Copany Name');
         }
        $(".partner_type").click(function(){
          var selectedBox = this.id;
          if (this.value == 'particular')
          {
+          $("label[for=contact_name_partner]").text('Contact Name');
           $("div[id=ruc_values]").css('visibility','hidden');
           $("div[id=company]").hide();
          }
          else
          {
-          $("div[id=company]").show();
+          //$("div[id=company]").show();
+          $("label[for=contact_name_partner]").text('Copany Name');
           // If is company and is foreign
           if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
