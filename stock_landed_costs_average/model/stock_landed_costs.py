@@ -112,10 +112,10 @@ class StockLandedCost(models.Model):
                 if not line.move_id:
                     continue
 
-                if line.move_id.product_id.cost_method != 'average':
+                if line.product_id.cost_method != 'average':
                     continue
 
-                if dct.get(line.move_id.product_id.id):
+                if dct.get(line.product_id.id):
                     # TODO: A new way of computing Average has to be developed
                     # when products have gone prior to allocate landed costs.
                     # This way of computing it does not work
@@ -128,22 +128,22 @@ class StockLandedCost(models.Model):
                 self._create_accounting_entries(line, move_id, qty_out)
 
                 # Current quantity of products available
-                if not prod_qty_dict.get(line.move_id.product_id.id):
-                    prod_qty_dict[line.move_id.product_id.id] = \
-                        line.move_id.product_id.product_tmpl_id.qty_available
+                if not prod_qty_dict.get(line.product_id.id):
+                    prod_qty_dict[line.product_id.id] = \
+                        line.product_id.product_tmpl_id.qty_available
 
                 # Current valuation of products available
-                if not prod_val_dict.get(line.move_id.product_id.id):
-                    prod_val_dict[line.move_id.product_id.id] = \
-                        line.move_id.product_id.standard_price * \
-                        line.move_id.product_id.product_tmpl_id.qty_available
+                if not prod_val_dict.get(line.product_id.id):
+                    prod_val_dict[line.product_id.id] = \
+                        line.product_id.standard_price * \
+                        line.product_id.product_tmpl_id.qty_available
 
                 # Current Landed Value for product
-                if not prod_adj_dict.get(line.move_id.product_id.id):
-                    prod_adj_dict[line.move_id.product_id.id] = \
+                if not prod_adj_dict.get(line.product_id.id):
+                    prod_adj_dict[line.product_id.id] = \
                         line.additional_landed_cost
                 else:
-                    prod_adj_dict[line.move_id.product_id.id] += \
+                    prod_adj_dict[line.product_id.id] += \
                         line.additional_landed_cost
 
             for k in prod_qty_dict.keys():
