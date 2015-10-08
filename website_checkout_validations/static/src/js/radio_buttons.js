@@ -51,8 +51,16 @@
         }
         else
         {
-          $("div[id=company]").hide();
-          $("label[for=contact_name_partner]").text('Copany Name');
+          if ($("#partner_type_c").is(':checked'))
+            {
+              $("div[id=ruc_values]").css('visibility','visible');
+              $("div[id=company]").hide();
+              $("label[for=contact_name_partner]").text('Copany Name');
+            }
+          else{
+            $("div[id=company]").hide();
+            $("label[for=contact_name_partner]").text('Contact Name');
+          }
         }
        $(".partner_type").click(function(){
          var selectedBox = this.id;
