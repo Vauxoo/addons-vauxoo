@@ -204,7 +204,6 @@ class WebsiteSaleInh(website_sale):
         cr, uid, registry = request.cr, request.uid, request.registry
 
         # Validation
-        print data
         error = dict()
         country = registry.get('res.country').browse(
             cr, SUPERUSER_ID, [data.get('country_id')])
