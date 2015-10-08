@@ -1,6 +1,10 @@
 language: python
 
 sudo: false
+cache:
+  apt: true
+  directories:
+    - $HOME/.pip-cache/
 
 python:
   - "2.7"
@@ -9,8 +13,12 @@ virtualenv:
   system_site_packages: true
 
 env:
-  - VERSION="8.0" ODOO_REPO="vauxoo/odoo" LINT_CHECK=1 TESTS=0 ODOO_LINT=0
-  - VERSION="8.0" ODOO_REPO="vauxoo/odoo" LINT_CHECK=0 TESTS=0 ODOO_LINT=1
+  global:
+  - LINT_CHECK=0 ODOO_LINT=0 TESTS="0" VERSION="8.0" ODOO_REPO="vauxoo/odoo"
+
+  matrix:
+  - LINT_CHECK=1
+  - ODOO_LINT=1
 
 addons:
   apt:
@@ -30,4 +38,7 @@ script:
   - PYTHONPATH=${PATH} python -c "import getaddons;print 'export INCLUDE_LINT=\"' + ' '.join(getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}')) + '\"'" >${TRAVIS_BUILD_DIR}/modules_changed.profile
   - source ${TRAVIS_BUILD_DIR}/modules_changed.profile
   - if [ "x${INCLUDE_LINT}" == "x" ]; then exit 0; fi
-  - travis_run_tests
+  - travis_wait travis_run_tests
+
+after_success:
+  - travis_after_tests_success
