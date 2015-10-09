@@ -8,7 +8,7 @@
     "license": "AGPL-3",
     "depends": [
         "website_sale",
-        "website_product_brand",
+        "website_sale_product_brand",
         "website_rate_product",
     ],
     "demo": [],
