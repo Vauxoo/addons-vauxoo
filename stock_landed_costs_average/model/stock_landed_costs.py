@@ -95,6 +95,134 @@ class StockLandedCost(models.Model):
                   'the case, or you selected the correct picking'))
         return lines
 
+    @api.v7
+    def _create_account_move_line(
+            self, cr, uid, line, move_id, credit_account_id, debit_account_id,
+            qty_out, already_out_account_id, context=None):
+        # TODO: Change DocString
+        """
+        Generate the account.move.line values to track the landed cost.
+        Afterwards, for the goods that are already out of stock, we should
+        create the out moves
+        """
+        if line.product_id.cost_method != 'average':
+            return super(StockLandedCost, self)._create_account_move_line(
+                cr, uid, line, move_id, credit_account_id, debit_account_id,
+                qty_out, already_out_account_id, context=context)
+
+        import pdb
+        pdb.set_trace()
+
+        # TODO: Create a new function for this option
+        domain = [('date', '<=', line.move_id.date)]
+        domain += [('product_id', '=', line.product_id.id)]
+        field_names = ['product_id', 'quantity']
+        sh_obj = self.pool.get('stock.history')
+        Q = sh_obj.read_group(cr, uid, domain, field_names, ['product_id'])
+        Q = sum(elem['quantity'] for elem in Q)
+        # END TODO: Create a new function for this option
+
+        pdb.set_trace()
+
+        if Q <= 0:
+            # If quantity available a that moment is less or equal than zero
+            # return True doing nothing
+            return True
+
+        aml_obj = self.pool.get('account.move.line')
+        base_line = {
+            'name': line.name,
+            'move_id': move_id,
+            'product_id': line.product_id.id,
+            'quantity': line.quantity,
+        }
+        debit_line = dict(base_line, account_id=debit_account_id)
+        credit_line = dict(base_line, account_id=credit_account_id)
+        diff = line.additional_landed_cost
+        if (1 - qty_out / Q):
+            if diff > 0:
+                debit_line['debit'] = diff * (1 - qty_out / Q)
+                credit_line['credit'] = diff * (1 - qty_out / Q)
+            else:
+                # negative cost, reverse the entry
+                # TODO: Have to look for an approach when reversing landed cost
+                # with average cost_method
+                debit_line['credit'] = -diff
+                credit_line['debit'] = -diff
+            aml_obj.create(cr, uid, debit_line, context=context)
+            aml_obj.create(cr, uid, credit_line, context=context)
+
+        # Create account move lines for quants already out of stock
+        if qty_out > 0:
+            debit_line = dict(
+                debit_line,
+                name=(line.name + ": " + str(qty_out) + _(' already out')),
+                quantity=qty_out,
+                account_id=already_out_account_id)
+            credit_line = dict(
+                credit_line,
+                name=(line.name + ": " + str(qty_out) + _(' already out')),
+                quantity=qty_out,
+                account_id=debit_account_id)
+            diff = diff * (qty_out / Q)
+            if diff > 0:
+                debit_line['debit'] = diff
+                credit_line['credit'] = diff
+            else:
+                # negative cost, reverse the entry
+                # TODO: Have to look for an approach when reversing landed cost
+                # with average cost_method
+                debit_line['credit'] = -diff
+                credit_line['debit'] = -diff
+            aml_obj.create(cr, uid, debit_line, context=context)
+            aml_obj.create(cr, uid, credit_line, context=context)
+        return True
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @api.multi
+    def compute_average_cost_used_quants(self, move_id, dct):
+        '''
+        This method updates standard_price field in products with costing
+        method equal to average
+        '''
+        self.ensure_one()
+        product_obj = self.env['product.product']
+        sm_obj = self.env['stock.move']
+        sval_obj = self.env['stock.valuation.adjustment.lines']
+
+        for prod_id, sm_ids in dct.iteritems():
+            sm_ids = list(sm_ids)
+
+            sval_ids = []
+            for sm_id in sm_obj._search(
+                    [('id', 'in', sm_ids)], order='date asc'):
+
+                args = [('cost_id', '=', self.id), ('move_id', '=', sm_id)]
+                sval_ids += sval_obj._search(args)
+
+            for sval_id in sval_ids:
+                sval_brw = sval_obj.browse(sval_id)
+                qty_out = 0
+                # TODO: memoize()
+                for quant in sval_brw.move_id.quant_ids:
+                    if quant.location_id.usage != 'internal':
+                        qty_out += quant.qty
+                self._create_accounting_entries(sval_brw, move_id, qty_out)
+
+
+        return True
+
     @api.multi
     def compute_average_cost(self, move_id, dct):
         '''
@@ -182,7 +310,7 @@ class StockLandedCost(models.Model):
             move_id = self._model._create_account_move(
                 self._cr, self._uid, cost, context=ctx)
             quant_dict = {}
-            prod_quant_dict = {}
+            prod_dict = {}
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
                     continue
@@ -207,11 +335,10 @@ class StockLandedCost(models.Model):
                 # THIS CAN BE CALL WHEN COMPUTING AVERAGE WHERE IT IS ACTUALLY
                 # USEFUL
                 if line.product_id.cost_method != 'real':
-                    if line.product_id.id not in prod_quant_dict:
-                        prod_quant_dict[line.product_id.id] = bool(qty_out)
+                    if line.product_id.id not in prod_dict:
+                        prod_dict[line.product_id.id] = set([line.move_id.id])
                     else:
-                        prod_quant_dict[line.product_id.id] = any(
-                            bool(qty_out), prod_quant_dict[line.product_id.id])
+                        prod_dict[line.product_id.id].add(line.move_id.id)
                     continue
                 # END OF TODO 03
 
@@ -219,7 +346,8 @@ class StockLandedCost(models.Model):
             # END OF TODO 01
 
             # TODO: 02 Method to compute standard_price for average cost_method
-            cost.compute_average_cost(move_id, prod_quant_dict)
+            cost.compute_average_cost(move_id, prod_dict)
+            cost.compute_average_cost_used_quants(move_id, prod_dict)
             # END OF TODO 02
 
             cost.write(
