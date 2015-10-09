@@ -1,13 +1,12 @@
 # coding: utf-8
 
-from openerp.osv import fields, osv
+from openerp import models, fields
 
 
-class StockQuant(osv.osv):
+class StockQuant(models.Model):
     _inherit = "stock.quant"
-    _columns = {
-        'material_cost': fields.float('Material Cost'),
-        'production_cost': fields.float('Material Cost'),
-        'subcontracting_cost': fields.float('Material Cost'),
-        'landed_cost': fields.float('Material Cost'),
-    }
+
+    material_cost = fields.Float(string='Material Cost')
+    production_cost = fields.Float(string='Production Cost')
+    subcontracting_cost = fields.Float(string='Subcontracting Cost')
+    landed_cost = fields.Float(string='Landed Cost')
