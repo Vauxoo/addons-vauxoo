@@ -2,7 +2,7 @@
 
 from openerp import models, fields, api, _
 from pprint import pprint
-from openerp.exceptions import except_orm, Warning
+from openerp.exceptions import except_orm, Warning as UserError
 
 
 class StockLandedCost(models.Model):
