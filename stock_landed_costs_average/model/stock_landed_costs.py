@@ -272,7 +272,7 @@ class StockLandedCost(models.Model):
             for k in prod_qty_dict.keys():
                 if prod_qty_dict[k] < 0:
                     prod = product_obj.browse(k)
-                    raise Warning(
+                    raise UserError(
                         _('Product %s has negative quantities' % prod.name))
                 if prod_qty_dict[k] == 0.0:
                     continue
@@ -292,11 +292,11 @@ class StockLandedCost(models.Model):
 
         for cost in self:
             if cost.state != 'draft':
-                raise Warning(
+                raise UserError(
                     _('Only draft landed costs can be validated'))
             if not cost.valuation_adjustment_lines or \
                     not self._check_sum(cost):
-                raise Warning(
+                raise UserError(
                     _('You cannot validate a landed cost which has no valid '
                       'valuation adjustments lines. Did you click on '
                       'Compute?'))
