@@ -1,7 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, api, _
+from openerp import models, fields, api, _
 from openerp.exceptions import Warning
+
+SEGMENTATION_COST = [
+    ('landed_cost', 'Landed Cost'),
+    ('subcontracting_cost', 'Subcontracting Cost'),
+    ('material_cost', 'Material Cost'),
+    ('production_cost', 'Production Cost'),
+]
+
+
+class StockLandedCostLines(models.Model):
+    _inherit = 'stock.landed.cost.lines'
+
+    segmentation_cost = fields.Selection(
+        SEGMENTATION_COST,
+        string='Segmentation',
+        default='landed_cost',
+        required=True)
 
 
 class StockLandedCost(models.Model):
@@ -24,20 +41,28 @@ class StockLandedCost(models.Model):
                       'valuation adjustments lines. Did you click on '
                       'Compute?'))
 
-            quant_dict = {}
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
                     continue
 
+                segment = line.cost_line_id.segmentation_cost
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
 
+                quant_dict = {}
                 for quant in line.move_id.quant_ids:
                     if quant.id not in quant_dict:
-                        quant_dict[quant.id] = quant.landed_cost + diff
+                        quant_dict[quant.id] = {}
+                        quant_dict[quant.id][segment] = getattr(
+                            quant, segment) + diff
                     else:
-                        quant_dict[quant.id] += diff
-                for key, value in quant_dict.items():
-                    quant_obj.browse(key).write(
-                        {'landed_cost': value})
+                        if segment not in quant_dict[quant.id]:
+                            quant_dict[quant.id][segment] = getattr(
+                                quant, segment) + diff
+                        else:
+                            quant_dict[quant.id][segment] += diff
+
+                for key, pair in quant_dict.items():
+                    for segment, value in pair.items():
+                        quant_obj.browse(key).write({segment: value})
         return super(StockLandedCost, self).button_validate()
