@@ -10,6 +10,7 @@
     "depends": [
         "base",
         "stock",
+        "stock_landed_costs_average",
     ],
     "demo": [
     ],
