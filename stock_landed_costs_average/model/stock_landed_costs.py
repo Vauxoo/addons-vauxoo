@@ -110,9 +110,6 @@ class StockLandedCost(models.Model):
                 cr, uid, line, move_id, credit_account_id, debit_account_id,
                 qty_out, already_out_account_id, context=context)
 
-        import pdb
-        pdb.set_trace()
-
         # TODO: Create a new function for this option
         domain = [('date', '<=', line.move_id.date)]
         domain += [('product_id', '=', line.product_id.id)]
@@ -121,8 +118,6 @@ class StockLandedCost(models.Model):
         Q = sh_obj.read_group(cr, uid, domain, field_names, ['product_id'])
         Q = sum(elem['quantity'] for elem in Q)
         # END TODO: Create a new function for this option
-
-        pdb.set_trace()
 
         if Q <= 0:
             # If quantity available a that moment is less or equal than zero
