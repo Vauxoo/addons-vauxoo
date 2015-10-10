@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
 SEGMENTATION_COST = [
     ('landed_cost', 'Landed Cost'),
@@ -32,11 +32,11 @@ class StockLandedCost(models.Model):
 
         for cost in self:
             if cost.state != 'draft':
-                raise Warning(
+                raise UserError(
                     _('Only draft landed costs can be validated'))
             if not cost.valuation_adjustment_lines or \
                     not self._check_sum(cost):
-                raise Warning(
+                raise UserError(
                     _('You cannot validate a landed cost which has no valid '
                       'valuation adjustments lines. Did you click on '
                       'Compute?'))
