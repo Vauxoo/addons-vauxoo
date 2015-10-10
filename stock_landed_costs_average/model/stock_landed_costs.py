@@ -173,18 +173,6 @@ class StockLandedCost(models.Model):
             aml_obj.create(cr, uid, credit_line, context=context)
         return True
 
-
-
-
-
-
-
-
-
-
-
-
-
     @api.multi
     def compute_average_cost_used_quants(self, move_id, dct):
         '''
@@ -192,7 +180,6 @@ class StockLandedCost(models.Model):
         method equal to average
         '''
         self.ensure_one()
-        product_obj = self.env['product.product']
         sm_obj = self.env['stock.move']
         sval_obj = self.env['stock.valuation.adjustment.lines']
 
@@ -214,8 +201,6 @@ class StockLandedCost(models.Model):
                     if quant.location_id.usage != 'internal':
                         qty_out += quant.qty
                 self._create_accounting_entries(sval_brw, move_id, qty_out)
-
-
         return True
 
     @api.multi
