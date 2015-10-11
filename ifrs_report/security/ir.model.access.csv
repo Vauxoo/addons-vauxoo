@@ -1,9 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_account_account_user","account.account","account.model_account_account","account.group_account_user",1,1,1,1
-"access_account_analytic_account","account.analytic.account","analytic.model_account_analytic_account","base.group_user",1,0,0,0
-"access_ifrs_ifrs_user","ifrs.ifrs.user","model_ifrs_ifrs","group_ifrsreport",1,1,1,1
-"access_ifrs_lines_user","ifrs.lines.user","model_ifrs_lines","group_ifrsreport",1,1,1,1
-"access_account_period_user","account.period.user","model_account_period","group_ifrsreport",1,1,1,1
-"access_account_move_line_user","account.move.line.user","model_account_move_line","group_ifrsreport",1,1,1,1
-"access_account_fiscalyear_user","account.fiscalyear.user","model_account_fiscalyear","group_ifrsreport",1,1,1,1
-"access_res_currency_user","res.currency.user","base.model_res_currency","group_ifrsreport",1,1,1,1
