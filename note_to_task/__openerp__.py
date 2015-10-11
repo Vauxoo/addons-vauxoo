@@ -31,7 +31,8 @@
     "depends": [
         "base",
         "note",
-        "project"
+        "project",
+        "web_ckeditor4"
     ],
     "demo": [],
     "data": [
