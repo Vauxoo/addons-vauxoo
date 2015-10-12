@@ -371,7 +371,7 @@ class StockLandedCost(models.Model):
             total_volume = 0.0
             total_line = 0.0
             vals = self.get_valuation_lines(
-                cr, uid, [cost.id], picking_ids=picking_ids, context=context)
+                cr, uid, [cost.id], picking_ids, context=context)
             for v in vals:
                 for line in cost.cost_lines:
                     v.update({'cost_id': cost.id, 'cost_line_id': line.id})
