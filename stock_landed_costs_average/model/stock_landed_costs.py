@@ -16,6 +16,18 @@ class StockLandedCost(models.Model):
         help='Invoices which contain items to be used as landed costs',
         copy=False,
     )
+    move_ids = fields.Many2many(
+        'stock.move',
+        'stock_landed_move_rel',
+        'stock_landed_cost_id',
+        'move_id',
+        string='Production Moves',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        domain=[('production_id', '!=', False), ('state', 'in', ('done',))],
+        help='Production Moves to be increased in costs',
+        copy=False,
+    )
 
     @api.multi
     def get_costs_from_invoices(self):
