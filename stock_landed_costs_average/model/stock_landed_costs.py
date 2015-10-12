@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api, _
-from pprint import pprint
 from openerp.exceptions import except_orm, Warning as UserError
+import openerp.addons.decimal_precision as dp
+from openerp.tools import float_round
 
 
 class StockLandedCost(models.Model):
@@ -68,35 +69,41 @@ class StockLandedCost(models.Model):
     def get_valuation_lines(self, picking_ids=None):
         picking_obj = self.env['stock.picking']
         lines = []
-        if not picking_ids:
+        if not picking_ids and not self.move_ids:
             return lines
 
-        for picking in picking_obj.browse(picking_ids):
-            for move in picking.move_lines:
-                if move.product_id.valuation != 'real_time' or \
-                        move.product_id.cost_method != 'average':
-                    continue
-                total_cost = 0.0
-                total_qty = move.product_qty
-                weight = move.product_id and \
-                    move.product_id.weight * move.product_qty
-                volume = move.product_id and \
-                    move.product_id.volume * move.product_qty
-                for quant in move.quant_ids:
-                    total_cost += quant.cost
-                vals = dict(product_id=move.product_id.id,
-                            move_id=move.id,
-                            quantity=move.product_uom_qty,
-                            former_cost=total_cost * total_qty,
-                            weight=weight,
-                            volume=volume)
-                lines.append(vals)
-        try:
-            lines += super(
-                StockLandedCost, self).get_valuation_lines(
-                    picking_ids=picking_ids)
-        except Exception as e:
-            pprint(e)
+        move_ids = [
+            move_id
+            for picking in picking_obj.browse(picking_ids)
+            for move_id in picking.move_lines
+            if move_id.product_id.valuation == 'real_time' and
+            move_id.product_id.cost_method in ('average', 'real')
+            ]
+
+        move_ids += [
+            move_id
+            for move_id in self.move_ids
+            if move_id.product_id.valuation == 'real_time' and
+            move_id.product_id.cost_method in ('average', 'real')
+            ]
+
+        for move in move_ids:
+            total_cost = 0.0
+            total_qty = move.product_qty
+            weight = move.product_id and \
+                move.product_id.weight * move.product_qty
+            volume = move.product_id and \
+                move.product_id.volume * move.product_qty
+            for quant in move.quant_ids:
+                total_cost += quant.cost
+            vals = dict(
+                product_id=move.product_id.id,
+                move_id=move.id,
+                quantity=move.product_uom_qty,
+                former_cost=total_cost * total_qty,
+                weight=weight,
+                volume=volume)
+            lines.append(vals)
         if not lines:
             raise except_orm(
                 _('Error!'),
