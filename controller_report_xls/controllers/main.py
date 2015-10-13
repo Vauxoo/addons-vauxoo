@@ -4,19 +4,45 @@ from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
 import simplejson
+import lxml.html
 
 import logging
 _logger = logging.getLogger(__name__)
 
 import xlwt
 import StringIO
-try:
-    from bs4 import BeautifulSoup
-except ImportError:
-    _logger.info('You have report_xls from addons-vauxoo'
-                 'declared in your system you will need '
-                 ' bs4 library in order to use '
-                 'this module')
+
+
+def get_xls(html):
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet('Sheet 1')
+    elements = lxml.html.fromstring(html)
+    row = 0
+    for tag_id in ['table_header', 'table_body']:
+        table = elements.get_element_by_id(tag_id)
+        rows = table.findall(".//tr")
+        for tr in rows:
+            cols = tr.findall(".//td")
+            if not cols:
+                cols = tr.findall(".//th")
+            if not cols:
+                continue
+            col = 0
+            for td in cols:
+                text = "%s" % td.text_content().encode('ascii', 'ignore')
+                text = text.replace("&nbsp;", " ")
+                text = text.strip()
+                try:
+                    ws.row(row).set_cell_number(col, float(text))
+                except ValueError:
+                    ws.write(row, col, text)
+                col += 1
+            # update the row pointer AFTER a row has been printed
+            # this avoids the blank row at the top of your table
+            row += 1
+    stream = StringIO.StringIO()
+    wb.save(stream)
+    return stream.getvalue()
 
 
 class ReportController(main.ReportController):
@@ -62,39 +88,6 @@ class ReportController(main.ReportController):
             response.headers.add(key, value)
         return response
 
-    def get_xls(self, html):
-        wb = xlwt.Workbook()
-        ws = wb.add_sheet('Sheet 1')
-        soup = BeautifulSoup(html)
-        row = 0
-        for tag_id in ['table_header', 'table_body']:
-            # Include a dependency extra when we have a library that
-            # Can achieve the deal is incorrect, TODO: fixme
-            table = soup.find("table", id=tag_id)
-            rows = table.findAll("tr")
-            for tr in rows:
-                cols = tr.findAll("td")
-                if not cols:
-                    cols = tr.findAll("th")
-                if not cols:
-                    continue
-                col = 0
-                for td in cols:
-                    text = "%s" % td.text.encode('ascii', 'ignore')
-                    text = text.replace("&nbsp;", " ")
-                    text = text.strip()
-                    try:
-                        ws.row(row).set_cell_number(col, float(text))
-                    except ValueError:
-                        ws.write(row, col, text)
-                    col += 1
-                # update the row pointer AFTER a row has been printed
-                # this avoids the blank row at the top of your table
-                row += 1
-        stream = StringIO.StringIO()
-        wb.save(stream)
-        return stream.getvalue()
-
     @route([
         '/report/<path:converter>/<reportname>',
         '/report/<path:converter>/<reportname>/<docids>',
@@ -124,7 +117,7 @@ class ReportController(main.ReportController):
 
         html = report_obj.get_html(cr, uid, docids, reportname,
                                    data=options_data, context=context)
-        xls_stream = self.get_xls(html)
+        xls_stream = get_xls(html)
         xlshttpheaders = [('Content-Type', 'application/vnd.ms-excel'),
                           ('Content-Length', len(xls_stream)),
                           ]
