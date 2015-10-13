@@ -35,7 +35,9 @@
         'data/data.xml',
         'view/refund_early_payment.xml',
     ],
-    'demo': [],
+    'demo': [
+        'demo/account_invoice_demo.xml',
+    ],
     'test': [],
     'qweb': [],
     'js': [],
