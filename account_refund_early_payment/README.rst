@@ -12,7 +12,7 @@ from tree view
 .. image:: account_refund_early_payment/static/src/img/refundfrominvoices.png
     :width: 300pt
 
-Choosing the option Refun Method Early Payment
+Choosing the option Refund Method Early Payment
 You can set one percent or amount to create customer refund
 by default is set with percent of 5.0
 
