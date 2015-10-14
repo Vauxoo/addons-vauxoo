@@ -43,14 +43,14 @@
               <div class="form-group col-lg-3">
                       <label class="control-label" for="vat_alone">
                         TIN
+                      </label>
                         <input type="text" placeholder="TIN" name="vat_alone" class="form-control" t-att-value="checkout.get('vat_alone')"/>
-                        </label>
                   </div>
                   <div class="form-group col-lg-2">
                       <label class="control-label" for="vat_dv" style="font-weight: normal">
                         DV
+                      </label>
                         <input type="text" maxlength="2" placeholder="Check Digit" name="vat_dv" class="form-control" t-att-value="checkout.get('vat_dv')"/>
-                        </label>
                   </div>
             </div>
 
@@ -113,12 +113,12 @@
                 <xpath expr="//div[@class='row']/div[@class='col-md-8 oe_cart']/div[@class='row']/div[1]" position="replace">
                   <div id="company" t-attf-class="form-group #{error.get('street') and 'has-error' or ''} col-lg-6">
                       <label class="control-label label-optional" for="street">Company Name</label>
-                      <input type="text" name="street" class="form-control" t-att-value="checkout.get('street')"/>
+                      <input type="text" placeholder="Company Name" name="street" class="form-control" t-att-value="checkout.get('street')"/>
                   </div>
                 </xpath>
                 <xpath expr="//div[@class='row']/div[@class='col-md-8 oe_cart']/div[@class='row']/div[5]" position="replace">
                   <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
-                      <label class="control-label" for="contact_name">Contact Name</label>
+                      <label class="control-label" for="contact_name_partner">Contact Name</label>
                       <input type="text" name="name" class="form-control" t-att-value="checkout.get('name')"/>
                   </div>
                 </xpath>

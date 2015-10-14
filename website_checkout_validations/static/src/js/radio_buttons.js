@@ -25,40 +25,70 @@
          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
           $("div[id=zip]").hide();
+          $("div[id=ruc_values]").css('visibility','visible');
+         }
+         else{
+          $("div[id=ruc_values]").css('visibility','hidden');
          }
        $("select[name=country_id]").click(function(){
          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
           $("div[id=zip]").hide();
+          $("div[id=ruc_values]").css('visibility','visible');
          }
          else
-         {
+         {  
           $("div[id=zip]").show();
+          $("div[id=ruc_values]").css('visibility','hidden');
          }
        });
        // THIS CODE HIDES THE COMPANY INPUT IF PARTNER IS PARTICULAR
        if ($("#partner_type_p").is(':checked'))
         {
-          $("div[id=ruc_values]").hide();
+          $("div[id=ruc_values]").css('visibility','hidden');
           $("div[id=company]").hide();
+          $("label[for=contact_name_partner]").text('Contact Name');
+        }
+        else
+        {
+          if ($("#partner_type_c").is(':checked'))
+            {
+              $("div[id=ruc_values]").css('visibility','visible');
+              $("div[id=company]").hide();
+              $("label[for=contact_name_partner]").text('Copany Name');
+            }
+          else{
+            $("div[id=company]").hide();
+            $("label[for=contact_name_partner]").text('Contact Name');
+          }
         }
        $(".partner_type").click(function(){
          var selectedBox = this.id;
          if (this.value == 'particular')
          {
-          $("div[id=ruc_values]").hide();
+          $("label[for=contact_name_partner]").text('Contact Name');
+          $("div[id=ruc_values]").css('visibility','hidden');
           $("div[id=company]").hide();
          }
          else
          {
-          $("div[id=company]").show();
-          $("div[id=ruc_values]").show();
+          //$("div[id=company]").show();
+          $("label[for=contact_name_partner]").text('Copany Name');
+          // If is company and is foreign
+          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
+         {
+          $("div[id=ruc_values]").css('visibility','visible');
+         }
+         else
+         {
+          $("div[id=ruc_values]").css('visibility','hidden');
+         }
          }
 
        });
 
     },
 
-  })
+  });
 
 })();

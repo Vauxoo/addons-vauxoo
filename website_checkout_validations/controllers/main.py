@@ -58,7 +58,12 @@ class WebsiteSaleInh(website_sale):
                                 "billing",
                                 order.partner_id))
             checkout['mobile'] = partner.mobile
-            checkout['is_company'] = partner.is_company
+            if partner.is_company:
+                checkout['is_company'] = partner.is_company
+                checkout['is_particular'] = False
+            else:
+                checkout['is_company'] = partner.is_company
+                checkout['is_particular'] = True
         else:
             order_to_update = request.website.sale_get_order(context=context)
             sale_order_obj.write(cr, SUPERUSER_ID, [order_to_update.id],
@@ -167,16 +172,17 @@ class WebsiteSaleInh(website_sale):
             query[prefix + 'zip_id'] = int(query[prefix + 'zip_id'])
         if query.get(prefix + 'mobile'):
             query[prefix + 'mobile'] = int(query[prefix + 'mobile'])
-        if query.get(prefix + 'is_company') == 'company' or query.get(prefix + 'is_company') == True:  # noqa
-            query[prefix + 'is_company'] = True
+        if query.get(prefix + 'is_company', False):
+            is_company = query.get(prefix + 'is_company')
+            if is_company == 'company':
+                query[prefix + 'is_company'] = True
+                query[prefix + 'is_particular'] = False
+            elif is_company == 'particular':
+                query[prefix + 'is_company'] = False
+                query[prefix + 'is_particular'] = True
         else:
             query[prefix + 'is_company'] = False
             query[prefix + 'is_particular'] = True
-        if query.get(prefix + 'is_company', False):
-            query[prefix + 'is_company'] = query[prefix + 'is_company']
-        else:
-            query[prefix + 'is_company'] = False
-
         if query.get(prefix + 'vat_dv') and \
                 query.get(prefix + 'vat_alone') and \
                 query.get(prefix + 'country_id'):
