@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 # ##########################################################################
 #    Module Writen to ODOO, Open Source Management Solution
 #
