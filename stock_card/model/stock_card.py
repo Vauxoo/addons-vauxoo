@@ -55,7 +55,14 @@ class StockCardProduct(models.TransientModel):
 
 class StockCardMove(models.TransientModel):
     _name = 'stock.card.move'
-    product_ids = fields.Many2many(
-        'product.product',
-        string='Products'
-        )
+
+    stock_card_product_id = fields.Many2one(
+        'stock.card.product', string='Stock Card Product')
+    move_id = fields.Many2one('stock.move', string='Stock Moves')
+    product_qty = fields.Float('Cumulative Quantity')
+    qty = fields.Float('Move Quantity')
+    move_valuation = fields.Float('Move Valuation')
+    inventory_valuation = fields.Float('Inventory Valuation')
+    average = fields.Float('Average')
+    cost_unit = fields.Float('Unit Cost')
+    date = fields.Datetime(string='Date')
