@@ -18,9 +18,11 @@ class StockCardProduct(models.TransientModel):
         self._cr.execute(
             '''
             SELECT
-                sm.id, sm.date, sm.product_id, prod.product_tmpl_id,
-                sm.product_qty, sl_src.usage, sl_dst.usage,
-                ir_prop_cost.value_text AS cost_method
+                sm.id AS move_id, sm.date, sm.product_id, prod.product_tmpl_id,
+                sm.product_qty, sl_src.usage AS src_usage,
+                sl_dst.usage AS dst_usage,
+                ir_prop_cost.value_text AS cost_method,
+                sm.date AS date
             FROM stock_move AS sm
             INNER JOIN
                 stock_location AS sl_src ON sm.location_id = sl_src.id
@@ -47,10 +49,7 @@ class StockCardProduct(models.TransientModel):
             ORDER BY sm.date
             ''', (self.product_id.id,)
         )
-        res = self._cr.dictfetchall()
-        import pdb; pdb.set_trace()
-        res = res  # Just to cheat on PYLINT, will be deleted
-        return True
+        return self._cr.dictfetchall()
 
 
 class StockCardMove(models.TransientModel):
