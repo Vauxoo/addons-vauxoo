@@ -13,7 +13,7 @@ class StockCardProduct(models.TransientModel):
     product_id = fields.Many2one('product.product', string='Product')
 
     @api.multi
-    def stock_card_move_get(self, *args, **kwargs):
+    def _stock_card_move_get(self):
         self.ensure_one()
         self._cr.execute(
             '''
