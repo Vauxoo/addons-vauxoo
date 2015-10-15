@@ -4,35 +4,35 @@
 Account Refund Early Payment
 ============================
 
-This module add the option Early Payment to create Customer Refund
+This module adds the option Early Payment to create Customer Refund
 
-You can create one Customer Refund by Early Payment from several invoices
+You can create one Customer Refund with Early Payment for several invoices
 from tree view
 
 .. image:: account_refund_early_payment/static/src/img/refundfrominvoices.png
     :width: 300pt
 
 Choosing the option Refund Method Early Payment
-You can set one percent or amount to create customer refund
-by default is set with percent of 5.0
+You can set one percent or another amount to create customer refund. By
+default is set with percent of 5.0
 
 .. image:: account_refund_early_payment/static/src/img/refundwizard.png
     :width: 300pt
 
-The customer refund created show you in Source Document all invoices that
-was used in this customer refund
+The customer refund created shows in Source Document all invoices that
+were used in this customer refund
 
 .. image:: account_refund_early_payment/static/src/img/refundsourcedocument.png
     :width: 300pt
 
-The section Payment show you all invoices that was reconciled with this
+The section Payment depicts all invoices that were reconciled with this
 customer refund
 
 .. image:: account_refund_early_payment/static/src/img/refundpayment.png
     :width: 300pt
 
-This module make split into journal entry of customer refund
-creating one journal item by invoice in order to create independent reconciliations
+This module splits into journal entry of customer refund
+creating one journal item per invoice in order to create independent reconciliations
 
 .. image:: account_refund_early_payment/static/src/img/refundjournalentries.png
     :width: 300pt
