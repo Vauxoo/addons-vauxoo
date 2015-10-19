@@ -28,13 +28,15 @@ class StockCardProduct(models.TransientModel):
         inventory_valuation = 0.0
         lines = []
         for row in self._stock_card_move_get():
+            dst = row['dst_usage']
             move_id = row['move_id']
-            if row['dst_usage'] == 'internal':
+            if dst == 'internal':
                 direction = 1
             else:
                 direction = -1
             qty = direction * row['product_qty']
             product_qty += qty
+
             self._cr.execute(
                 '''
                 SELECT cost, qty
@@ -43,8 +45,15 @@ class StockCardProduct(models.TransientModel):
                 WHERE sqm_rel.move_id = %s
                 ''', (move_id,)
                 )
-            move_valuation = sum([val[0] * val[1]
-                                 for val in self._cr.fetchall()])
+
+            if dst == 'customer':
+                move_valuation = sum([average * val[1]
+                                     for val in self._cr.fetchall()])
+
+            if dst != 'customer':
+                move_valuation = sum([val[0] * val[1]
+                                     for val in self._cr.fetchall()])
+
             cost_unit = move_valuation / qty  # TODO: Need to be changed
             inventory_valuation += direction * move_valuation
             average = inventory_valuation / product_qty
