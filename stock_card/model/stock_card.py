@@ -36,13 +36,14 @@ class StockCardProduct(models.TransientModel):
             product_qty += qty
             self._cr.execute(
                 '''
-                SELECT cost
+                SELECT cost, qty
                 FROM stock_quant_move_rel AS sqm_rel
                 INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
                 WHERE sqm_rel.move_id = %s
                 ''', (move_id,)
                 )
-            move_valuation = sum([val[0] for val in self._cr.fetchall()])
+            move_valuation = sum([val[0] * val[1]
+                                 for val in self._cr.fetchall()])
             cost_unit = move_valuation / qty  # TODO: Need to be changed
             inventory_valuation += direction * move_valuation
             average = inventory_valuation / product_qty
