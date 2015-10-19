@@ -11,6 +11,7 @@
         "account",
         "stock_landed_costs",
         "purchase",
+        "mrp",
     ],
     "demo": [
         "demo/account_invoice_demo.xml",
