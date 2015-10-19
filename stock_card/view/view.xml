@@ -43,6 +43,7 @@
             <field name="arch" type="xml">
                 <tree string="Stock Card Move">
                     <field name="date"/>
+                    <field name="move_id"/>
                     <field name="cost_unit"/>
                     <field name="average"/>
                     <field name="qty"/>
