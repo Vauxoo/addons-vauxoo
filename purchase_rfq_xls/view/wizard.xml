@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--   Purchase Quotation Wizard -->
+
+        <record id="view_purchase_quotation" model="ir.ui.view">
+            <field name="name">Purchase Quotation Wizard</field>
+            <field name="model">purchase.quotation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Update a Quotation Prices">
+                    <group string="Import / Export a Quotation Template">
+                        <field name="template_action" widget="selection" required='1'/>
+                    </group>
+                    <group invisible='1'>
+                        <field name="report_format" widget="selection" required='1'/>
+                    </group>
+                    <group attrs="{'invisible': [('template_action', '=', 'export')]}">
+                        <field name="xls_name" invisible="1" />
+                        <field name="xls_file" filename="xls_name" />
+                        <!-- <field name="product_include" />
+                        <field name="price_zero" /> -->
+                    </group>
+                    <footer>
+                        <button name="import_xls" string="Import" type="object" class="oe_highlight" attrs="{'invisible': [('template_action', '=', 'export')]}"/>
+                        <button name="print_report" string="Export" type="object" class="oe_highlight" attrs="{'invisible': [('template_action', '=', 'import')]}"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_purchase_quotation"
+            key2="client_print_multi"
+            name="Update a Quotation Prices"
+            res_model="purchase.quotation.wizard"
+            src_model="purchase.order"
+            view_mode="form" target="new" view_type="form" />
+
+    </data>
+</openerp>
+
