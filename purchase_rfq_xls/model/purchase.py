@@ -31,8 +31,8 @@ class PurchaseOrder(models.Model):
 
     @api.multi
     def wkf_send_rfq(self):
-        assert len(self) == 1, "This option should "
-        "only be used for a single id at a time."
+        assert len(self) == 1, _('This option should only be used '
+                                 'for a single id at a time.)
         try:
             if self._context.get('send_rfq'):
                 template = self.env.ref(
@@ -123,19 +123,22 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    @api.one
+    @api.multi
     def _compute_external_id(self):
-        xml_id = self.get_external_id()[self.id]
-        xml_id = len(xml_id) and xml_id or self._BaseModel__export_xml_id()
-        self.xml_id = xml_id
+        for record in self:
+            xml_id = record.get_external_id()[self.id]
+            xml_id = len(xml_id) and xml_id or \
+                record._BaseModel__export_xml_id()
+            record.xml_id = xml_id
 
-    @api.one
+    @api.multi
     def _compute_vendor_code(self):
-        domain = [('product_tmpl_id', '=',
-                   self.product_id.product_tmpl_id.id),
-                  ('name', '=', self.order_id.partner_id.id)]
-        supplierinf = self.env['product.supplierinfo'].search(domain)
-        self.vendor_code = supplierinf.product_code
+        for record in self:
+            domain = [('product_tmpl_id', '=',
+                       record.product_id.product_tmpl_id.id),
+                      ('name', '=', record.order_id.partner_id.id)]
+            supplierinf = self.env['product.supplierinfo'].search(domain)
+            record.vendor_code = supplierinf.product_code
 
     xml_id = fields.Char(compute=_compute_external_id,
                          store=False,

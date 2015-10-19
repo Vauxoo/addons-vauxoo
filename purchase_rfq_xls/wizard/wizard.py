@@ -20,7 +20,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 from openerp import models, fields, api, _
-from openerp.exceptions import ValidationError, Warning
+from openerp.exceptions import ValidationError, Warning as UserError
 import xlrd
 import base64
 
@@ -97,7 +97,7 @@ class PurchaseQuotationWizard(models.TransientModel):
         if sheet.cell_type(2, 5) not in \
                 (xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK) and \
                 sheet.cell_value(2, 5) != purchase.name:
-            raise Warning(' '.join([
+            raise UserError(' '.join([
                 _('Is not a valid template for Quotation'),
                 str(purchase.name)]))
         eof = self.get_xls_eof(sheet)
@@ -146,7 +146,7 @@ class PurchaseQuotationWizard(models.TransientModel):
             order_line_diff = purchase.order_line - order_line_done
             order_line_diff.unlink()
         else:
-            raise Warning(_('This template not has new prices to update'))
+            raise UserError(_('This template not has new prices to update'))
         return {}
 
     @api.multi
