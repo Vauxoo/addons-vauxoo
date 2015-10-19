@@ -3,6 +3,8 @@
 from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
+# TODO: multi-company awareness to be developed
+
 
 class StockCard(models.TransientModel):
     _name = 'stock.card'
@@ -22,20 +24,24 @@ class StockCardProduct(models.TransientModel):
                 self.product_id.cost_method in ('average', 'real')):
             return True
         scm_obj = self.env['stock.card.move']
+        sm_obj = self.env['stock.move']
         self.stock_card_move_ids.unlink()
         product_qty = 0.0
         average = 0.0
         inventory_valuation = 0.0
         lines = []
+        avg_move_dict = {}
         for row in self._stock_card_move_get():
             dst = row['dst_usage']
+            src = row['src_usage']
             move_id = row['move_id']
+            move_brw = sm_obj.browse(move_id)
             if dst == 'internal':
                 direction = 1
             else:
                 direction = -1
-            qty = direction * row['product_qty']
-            product_qty += qty
+            qty = row['product_qty']
+            product_qty += (direction * qty)
 
             self._cr.execute(
                 '''
@@ -45,25 +51,56 @@ class StockCardProduct(models.TransientModel):
                 WHERE sqm_rel.move_id = %s
                 ''', (move_id,)
                 )
+            values = self._cr.fetchall()
 
-            if dst == 'customer':
-                move_valuation = sum([average * val[1]
-                                     for val in self._cr.fetchall()])
+            # TODO: What is to be done with `procurement` & `view`
 
-            if dst != 'customer':
-                move_valuation = sum([val[0] * val[1]
-                                     for val in self._cr.fetchall()])
+            if dst in ('customer', 'production', 'inventory', 'transit'):
+                # TODO: move to `transit` could be a return
+                # average is kept unchanged products are taken at average price
+                avg_move_dict[move_id] = average
+                move_valuation = sum([average * val[1] for val in values])
+                # NOTE: For production
+                # a) it could be a consumption: if so average is kept unchanged
+                # products are taken at average price
+                # TODO: Consider the case that
+                # b) it could be a return: defective good, reworking, etc.
+
+            if dst in ('supplier',):
+                # Cost is the one record in the stock_move, cost in the
+                # quant record includes other segmentation cost: landed_cost,
+                # material_cost, production_cost, subcontracting_cost
+                # Inventory Value has to be decreased by the amount of purchase
+                # TODO: BEWARE price_unit needs to be normalised
+                move_valuation = sum([move_brw.cost_price * val[1]
+                                     for val in values])
+
+            if src in ('supplier', 'production', 'inventory', 'transit'):
+                # TODO: transit could be a return that shall be recorded at
+                # average cost of transaction
+                # average is to be computed considering all the segmentation
+                # costs inside quant
+                move_valuation = sum([val[0] * val[1] for val in values])
+
+            if src in ('customer',):
+                # NOTE: Identify the originatin move_id of returning move
+                origin_id = move_brw.origin_returned_move_id.id
+                # NOTE: Falling back to average in case customer return is
+                # orphan, i.e., return was created from scratch
+                old_average = avg_move_dict.get(origin_id, 0.0) or average
+                move_valuation = sum([old_average * val[1] for val in values])
 
             cost_unit = move_valuation / qty  # TODO: Need to be changed
             inventory_valuation += direction * move_valuation
-            average = inventory_valuation / product_qty
+            average = (product_qty and inventory_valuation / product_qty or
+                       average)
             lines.append(dict(
                 date=row['date'],
                 move_id=move_id,
                 stock_card_product_id=self.id,
                 product_qty=product_qty,
-                qty=qty,
-                move_valuation=move_valuation,
+                qty=direction * qty,
+                move_valuation=direction * move_valuation,
                 inventory_valuation=inventory_valuation,
                 average=average,
                 cost_unit=cost_unit,
