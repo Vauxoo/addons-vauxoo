@@ -36,7 +36,7 @@ class PurchaseQuotationWizard(models.TransientModel):
     template_action = fields.Selection([
         ('export', "Get a quotation template without prices"),
         ('import', "Update a quotation prices"),
-    ], default='export')
+    ], default='import')
     xls_file = fields.Binary("Upload template")
     xls_name = fields.Char()
     product_include = fields.Boolean(
@@ -57,7 +57,7 @@ class PurchaseQuotationWizard(models.TransientModel):
     @api.model
     def _update_price(self, order_line, price, qty):
         data = {}
-        if order_line.product_qty == qty:
+        if order_line.product_qty <= qty:
             data['price_unit'] = price
         else:
             data.update({'price_unit': price, 'product_qty': qty})
