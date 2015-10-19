@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from openerp import models, fields, api
+import openerp.addons.decimal_precision as dp
 
 
 class StockCard(models.TransientModel):
@@ -136,10 +137,22 @@ class StockCardMove(models.TransientModel):
     stock_card_product_id = fields.Many2one(
         'stock.card.product', string='Stock Card Product')
     move_id = fields.Many2one('stock.move', string='Stock Moves')
-    product_qty = fields.Float('Cumulative Quantity')
+    product_qty = fields.Float('Inventory Quantity')
     qty = fields.Float('Move Quantity')
-    move_valuation = fields.Float('Move Valuation')
-    inventory_valuation = fields.Float('Inventory Valuation')
-    average = fields.Float('Average')
-    cost_unit = fields.Float('Unit Cost')
+    move_valuation = fields.Float(
+        string='Move Valuation',
+        digits=dp.get_precision('Account'),
+        readonly=True)
+    inventory_valuation = fields.Float(
+        string='Inventory Valuation',
+        digits=dp.get_precision('Account'),
+        readonly=True)
+    average = fields.Float(
+        string='Average',
+        digits=dp.get_precision('Account'),
+        readonly=True)
+    cost_unit = fields.Float(
+        string='Unit Cost',
+        digits=dp.get_precision('Account'),
+        readonly=True)
     date = fields.Datetime(string='Date')
