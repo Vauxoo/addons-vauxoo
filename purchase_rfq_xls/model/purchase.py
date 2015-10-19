@@ -32,7 +32,7 @@ class PurchaseOrder(models.Model):
     @api.multi
     def wkf_send_rfq(self):
         assert len(self) == 1, _('This option should only be used '
-                                 'for a single id at a time.)
+                                 'for a single id at a time.)')
         try:
             if self._context.get('send_rfq'):
                 template = self.env.ref(
