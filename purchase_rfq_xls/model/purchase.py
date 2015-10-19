@@ -126,7 +126,7 @@ class PurchaseOrderLine(models.Model):
     @api.multi
     def _compute_external_id(self):
         for record in self:
-            xml_id = record.get_external_id()[self.id]
+            xml_id = record.get_external_id()[record.id]
             xml_id = len(xml_id) and xml_id or \
                 record._BaseModel__export_xml_id()
             record.xml_id = xml_id
