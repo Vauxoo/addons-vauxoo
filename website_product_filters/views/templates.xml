@@ -146,9 +146,9 @@
         <template id="product_sort_bar" inherit_id="website_sale.products" active="True">
           <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="replace">
 
-            <div class="panel panel-default">
+            <div class="panel panel-heading">
             <div class="col-md-6">
-                <ul class="breadcrumb">
+                <ul class="breadcrumb pull-left">
                     <li><a id="bread_home" href="/">Home</a></li>
                     <li><a id="bread_products" href="/shop">Products</a></li>
                     <li class="active"><a id="bread_category">All Products</a></li>
