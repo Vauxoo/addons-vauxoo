@@ -1,20 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* purchase_rfq_xls
+#	* purchase_rfq_xls
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-19 17:49+0000\n"
-"PO-Revision-Date: 2015-10-19 13:19-0400\n"
+"POT-Creation-Date: 2015-10-20 18:18+0000\n"
+"PO-Revision-Date: 2015-10-20 18:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
 
 #. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.external_layout_footer
@@ -32,35 +31,38 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: purchase_rfq_xls
+#: view:purchase.quotation.wizard:purchase_rfq_xls.view_purchase_quotation
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: purchase_rfq_xls
 #: code:addons/purchase_rfq_xls/model/purchase.py:111
 #, python-format
 msgid "Compose Email"
-msgstr "Componer Email"
+msgstr "Redactar correo electrónico"
 
 #. module: purchase_rfq_xls
+#: field:purchase.quotation.wizard.line,cost:0
 #: view:website:purchase_rfq_xls.report_document
 msgid "Cost"
 msgstr "Costo"
 
 #. module: purchase_rfq_xls
-#: field:purchase.quotation.wizard,product_include:0
-msgid "Create products included by supplier in quotation template"
-msgstr "Crear productos incluidos por el proveedor en la plantilla de cotización"
-
-#. module: purchase_rfq_xls
 #: field:purchase.quotation.wizard,create_uid:0
+#: field:purchase.quotation.wizard.line,create_uid:0
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: purchase_rfq_xls
 #: field:purchase.quotation.wizard,create_date:0
+#: field:purchase.quotation.wizard.line,create_date:0
 msgid "Created on"
-msgstr "Creado el"
+msgstr "Creado el:"
 
 #. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.external_layout_header
 msgid "Creation By:"
-msgstr "Creado por:"
+msgstr "Creado Por:"
 
 #. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.external_layout_header
@@ -73,11 +75,7 @@ msgid "Cust.#:"
 msgstr "Cliente #:"
 
 #. module: purchase_rfq_xls
-#: field:purchase.quotation.wizard,price_zero:0
-msgid "Delete products with price=0 in quotation template"
-msgstr "Eliminar productos con precio=0 en plantilla de cotizacion"
-
-#. module: purchase_rfq_xls
+#: field:purchase.quotation.wizard.line,description:0
 #: view:website:purchase_rfq_xls.report_document
 msgid "Description"
 msgstr "Descripción"
@@ -109,6 +107,7 @@ msgstr "Exportar una plantilla de esta cotización"
 
 #. module: purchase_rfq_xls
 #: field:purchase.quotation.wizard,id:0
+#: field:purchase.quotation.wizard.line,id:0
 #: field:report.purchase_rfq_xls.report_template,id:0
 msgid "ID"
 msgstr "ID"
@@ -124,25 +123,48 @@ msgid "Import / Export a Quotation Template"
 msgstr "Importar / Exportar Plantilla de Cotización"
 
 #. module: purchase_rfq_xls
-#: code:addons/purchase_rfq_xls/wizard/wizard.py:101
+#: view:purchase.quotation.wizard:purchase_rfq_xls.view_purchase_quotation
+msgid "Import successful"
+msgstr "Importación exitosa"
+
+#. module: purchase_rfq_xls
+#: code:addons/purchase_rfq_xls/wizard/wizard.py:104
 #, python-format
 msgid "Is not a valid template for Quotation"
-msgstr "No es una plantilla valida para la Cotización"
+msgstr "No es una plantilla válida para la Cotización"
 
 #. module: purchase_rfq_xls
 #: field:purchase.quotation.wizard,write_uid:0
+#: field:purchase.quotation.wizard.line,write_uid:0
 msgid "Last Updated by"
 msgstr "Ultima actualización por"
 
 #. module: purchase_rfq_xls
 #: field:purchase.quotation.wizard,write_date:0
+#: field:purchase.quotation.wizard.line,write_date:0
 msgid "Last Updated on"
 msgstr "Ultima actualización en"
+
+#. module: purchase_rfq_xls
+#: field:purchase.quotation.wizard,lines_ids:0
+msgid "Lines ids"
+msgstr "Detalles"
 
 #. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.report_document
 msgid "Model"
 msgstr "Model"
+
+#. module: purchase_rfq_xls
+#: view:purchase.quotation.wizard:purchase_rfq_xls.view_purchase_quotation
+msgid "No issue to report!"
+msgstr "Sin incidencias que notificar!"
+
+#. module: purchase_rfq_xls
+#: code:addons/purchase_rfq_xls/wizard/wizard.py:148
+#, python-format
+msgid "Nothing to update! Probably not has product cost defined in template"
+msgstr "Nada que actualizar! Probablemente en la plantilla no estan definidos los costos de los productos"
 
 #. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.external_layout_header
@@ -162,12 +184,12 @@ msgstr "Página:"
 #. module: purchase_rfq_xls
 #: model:ir.model,name:purchase_rfq_xls.model_purchase_order
 msgid "Purchase Order"
-msgstr "Pedido de Compra"
+msgstr "Pedido de compra"
 
 #. module: purchase_rfq_xls
 #: model:ir.model,name:purchase_rfq_xls.model_purchase_order_line
 msgid "Purchase Order Line"
-msgstr "Línea de Pedido de Compra"
+msgstr "Línea pedido de compra"
 
 #. module: purchase_rfq_xls
 #: model:ir.model,name:purchase_rfq_xls.model_purchase_quotation_wizard
@@ -175,9 +197,14 @@ msgid "Purchase Quotation"
 msgstr "Cotización de Compra"
 
 #. module: purchase_rfq_xls
+#: model:ir.model,name:purchase_rfq_xls.model_purchase_quotation_wizard_line
+msgid "Purchase Quotation Details"
+msgstr "Detalles de la Cotización"
+
+#. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.report_document
 msgid "Qty"
-msgstr "Ctd."
+msgstr "Ctdad"
 
 #. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.external_layout_header
@@ -200,27 +227,37 @@ msgid "Spreadsheet"
 msgstr "Hoja de Calculo"
 
 #. module: purchase_rfq_xls
+#: field:purchase.quotation.wizard,state:0
+msgid "State"
+msgstr "State"
+
+#. module: purchase_rfq_xls
 #: field:purchase.quotation.wizard,template_action:0
 msgid "Template action"
 msgstr "Acción de plantilla"
 
 #. module: purchase_rfq_xls
-#: code:addons/purchase_rfq_xls/wizard/wizard.py:55
+#: code:addons/purchase_rfq_xls/wizard/wizard.py:56
 #, python-format
 msgid "The file must be a xls file"
 msgstr "El archivo debe tener extension .xls"
 
 #. module: purchase_rfq_xls
-#: code:addons/purchase_rfq_xls/wizard/wizard.py:52
+#: view:purchase.quotation.wizard:purchase_rfq_xls.view_purchase_quotation
+msgid "The following items should be added to the P.O. manually:"
+msgstr "Los siguientes items deben ser añadidos a la P.O manualmente:"
+
+#. module: purchase_rfq_xls
+#: code:addons/purchase_rfq_xls/wizard/wizard.py:53
 #, python-format
 msgid "There is no file"
 msgstr "No se encontró archivo"
 
-#. module: purchuase_rfq_xls
-#: code:addons/purchase_rfq_xls/wizard/wizard.py:149
+#. module: purchase_rfq_xls
+#: code:addons/purchase_rfq_xls/model/purchase.py:34
 #, python-format
-msgid "This template not has new prices to update"
-msgstr "Esta plantilla no tiene precios por actualizar"
+msgid "This option should only be used for a single id at a time.)"
+msgstr "Esta opción sólo puede ser usada por un solo ID a la vez."
 
 #. module: purchase_rfq_xls
 #: model:ir.actions.act_window,name:purchase_rfq_xls.action_purchase_quotation
@@ -245,9 +282,19 @@ msgid "Vendor Code"
 msgstr "Código Proveedor"
 
 #. module: purchase_rfq_xls
+#: field:purchase.quotation.wizard.line,vendor_code:0
+msgid "Vendor code"
+msgstr "Código Proveedor"
+
+#. module: purchase_rfq_xls
+#: field:purchase.quotation.wizard.line,wizard_id:0
+msgid "Wizard id"
+msgstr "Wizard id"
+
+#. module: purchase_rfq_xls
 #: field:purchase.quotation.wizard,xls_name:0
 msgid "Xls name"
-msgstr "Nombre del Xls"
+msgstr "Nombre del archivo"
 
 #. module: purchase_rfq_xls
 #: view:website:purchase_rfq_xls.layout
@@ -265,6 +312,11 @@ msgid "data_report_margin_top if data_report_margin_top else None"
 msgstr "data_report_margin_top if data_report_margin_top else None"
 
 #. module: purchase_rfq_xls
+#: selection:purchase.quotation.wizard,state:0
+msgid "form"
+msgstr "form"
+
+#. module: purchase_rfq_xls
 #: view:purchase.quotation.wizard:purchase_rfq_xls.view_purchase_quotation
 msgid "or"
 msgstr "o"
@@ -273,3 +325,14 @@ msgstr "o"
 #: view:website:purchase_rfq_xls.layout
 msgid "purchase_rfq_xls.layout"
 msgstr "purchase_rfq_xls.layout"
+
+#. module: purchase_rfq_xls
+#: selection:purchase.quotation.wizard,state:0
+msgid "success"
+msgstr "success"
+
+#. module: purchase_rfq_xls
+#: selection:purchase.quotation.wizard,state:0
+msgid "success2"
+msgstr "success2"
+
