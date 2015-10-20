@@ -33,20 +33,7 @@ class Parser(report_sxw.rml_parse):
 
 
 class PurchaseQuotationReportXLS(osv.AbstractModel):
-
-    # As we are inheriting a report that was previously a particular report we
-    # have to keep it like that, i.e., we will keep _name the same than the
-    # original
-
-    # _name = `report.` + `report_name` (FQN)
-    # report_name="purchase_rfq_xls.report_template"
     _name = 'report.purchase_rfq_xls.report_template'
-
-    # this inheritance will allow to render this particular report
-    # here old report class is being reused
     _inherit = 'report.abstract_report'
-    # new template will be used this because we want something more customized
     _template = 'purchase_rfq_xls.report_template'
-    # old wrapper class from original report will be used
-    # so we can comment this attribute
     _wrapped_report_class = Parser

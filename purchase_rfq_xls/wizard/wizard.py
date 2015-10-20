@@ -116,8 +116,6 @@ class PurchaseQuotationWizard(models.TransientModel):
                 continue
             # External ID
             xml_id = sheet.cell_value(row, 0)
-            # Model
-            # default_code = sheet.cell_value(row, 1)
             # Vendor Code
             vendor_code = sheet.cell_value(row, 2)
             # Description

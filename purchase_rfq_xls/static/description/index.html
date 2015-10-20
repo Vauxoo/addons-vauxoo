@@ -9,8 +9,29 @@
    Update Purchase RFQ using XLS
   </h2>
   <p class="oe_mt32">
-   This module update and export purchase RFQ using xls files
+  The general purpose of this module is to update the prices of products of a 
+RFQ using a xls template.
   </p>
+  <p>
+  When an RFQ is created and then this is sent by email, this module attached 
+to the mail an xls template without prices so that the provider fill their prices. 
+Once send it to me back to the supplier module is able to allow load the template 
+and update the prices of products taking into account the following considerations:
+  </p>
+  <ul class="simple">
+      <li>
+      If the product in the RFQ is equal in quantity and code to the request answered 
+      ( Filled excel ) then only the cost is updated.
+      </li>
+      <li>
+      If the product in the RFQ is equal in code but not in quantity then updated 
+      quantity and price.
+      </li>
+      <li>
+      If the Product is listed in my RFQ but the Supplier removed in their answered 
+      template, then this product will be removed of my RFQ.
+      </li>
+  </ul>
  </div>
 </section>
 <section class="oe_container">
