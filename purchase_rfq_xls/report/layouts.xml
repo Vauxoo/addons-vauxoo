@@ -153,7 +153,7 @@
                       <tr><td></td></tr>
                       <tr><td></td><td></td><td></td><td></td>
                           <td class="text-right">
-                              <span t-field="o.date_order" t-field-options='{"format": "dd/MM/yyyy"}'/>
+                              <span t-esc="datetime.now().strftime('%d/%m/%Y')"/>
                           </td>
                       </tr>
                       <tr><td></td><td></td><td></td><td></td>
