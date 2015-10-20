@@ -39,10 +39,8 @@ class PurchaseQuotationWizard(models.TransientModel):
     ], default='import')
     xls_file = fields.Binary("Upload template")
     xls_name = fields.Char()
-    product_include = fields.Boolean(
-        "Create products included by supplier in quotation template")
-    price_zero = fields.Boolean(
-        "Delete products with price=0 in quotation template")
+    state = fields.Selection([('form', 'form'),
+                              ('success', 'success')], default='form')
 
     @api.multi
     @api.constrains('xls_name')
@@ -124,8 +122,6 @@ class PurchaseQuotationWizard(models.TransientModel):
             price_unit = sheet.cell_value(row, 5)
             # check xml reference
             try:
-                # TODO: validate if price_unit = 0
-                # if not self.price_zero or int(price_unit) > 0:
                 order_line = self.env.ref(xml_id)
                 if self._update_price(order_line, price_unit, product_qty):
                     done_ids.append(order_line.id)
@@ -147,7 +143,17 @@ class PurchaseQuotationWizard(models.TransientModel):
             order_line_diff.unlink()
         else:
             raise UserError(_('This template not has new prices to update'))
-        return {}
+        self.write({'state': 'success'})
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'purchase.quotation.wizard',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_id': self.id,
+            'views': [(False, 'form')],
+            'target': 'new',
+            'context': context,
+        }
 
     @api.multi
     def print_report(self):
