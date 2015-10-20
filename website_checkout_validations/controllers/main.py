@@ -23,6 +23,24 @@ class WebsiteSaleInh(website_sale):
         cities = orm_city.browse(cr, SUPERUSER_ID, city_ids, context)
         states_ids = state_orm.search(cr, SUPERUSER_ID, [], context=context)
         states = state_orm.browse(cr, SUPERUSER_ID, states_ids, context)
+
+        distroct_orm = registry.get('res.country.state.district')
+        district_ids = distroct_orm.search(
+            cr, SUPERUSER_ID, [], context=context)
+        districts = distroct_orm.browse(
+            cr, SUPERUSER_ID, district_ids, context)
+
+        township_orm = registry.get('res.country.state.district.township')
+        township_ids = township_orm.search(
+            cr, SUPERUSER_ID, [], context=context)
+        townships = township_orm.browse(
+            cr, SUPERUSER_ID, township_ids, context)
+
+        hood_orm = registry.get('res.country.state.district.township.hood')
+        hood_ids = hood_orm.search(
+            cr, SUPERUSER_ID, [], context=context)
+        hoods = hood_orm.browse(
+            cr, SUPERUSER_ID, hood_ids, context)
         partner = orm_user.browse(
             cr,
             SUPERUSER_ID,
@@ -127,7 +145,9 @@ class WebsiteSaleInh(website_sale):
             'error': {},
             'has_check_vat': hasattr(registry['res.partner'], 'check_vat')
         }
-
+        values['districts'] = districts
+        values['townships'] = townships
+        values['hoods'] = hoods
         return values
 
     mandatory_billing_fields = [
@@ -135,6 +155,9 @@ class WebsiteSaleInh(website_sale):
     optional_billing_fields = [
         "street",
         "state_id",
+        "district_id",
+        "township_id",
+        "hood_id",
         "vat", "vat_dv", "vat_alone", "vat_subjected",
         "zip", "mobile", "is_company", "zip_id"]
     mandatory_shipping_fields = [
@@ -164,6 +187,13 @@ class WebsiteSaleInh(website_sale):
                 for field_name in all_fields if getattr(data, field_name))  # noqa
             if address_type == 'billing' and data.parent_id:
                 query[prefix + 'street'] = data.parent_id.name
+        if query.get(prefix + 'district_id'):
+            query[prefix + 'district_id'] = int(query[prefix + 'district_id'])
+        if query.get(prefix + 'township_id'):
+            query[prefix + 'township_id'] = int(query[prefix + 'township_id'])
+        if query.get(prefix + 'hood_id'):
+            query[prefix + 'hood_id'] = int(query[prefix + 'hood_id'])
+
         if query.get(prefix + 'state_id'):
             query[prefix + 'state_id'] = int(query[prefix + 'state_id'])
         if query.get(prefix + 'country_id'):

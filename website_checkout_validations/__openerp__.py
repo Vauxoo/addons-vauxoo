@@ -9,6 +9,7 @@
     "depends": [
         "website_sale",
         "base_location",
+        "l10n_pa_localization",
     ],
     "demo": [],
     "data": [

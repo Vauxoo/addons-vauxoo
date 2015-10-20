@@ -65,6 +65,42 @@
                           </t>
                       </select>                </xpath>
 
+            <xpath expr="//div/select[@name='state_id']/.." position="after">
+                <div t-attf-class="form-group #{error.get('district_id') and 'has-error' or ''} col-lg-6" sequence="1">
+                    <label class="control-label" for="district_id" style="font-weight: normal">District</label>
+                        <select name="district_id" class="form-control">
+                            <option value="">select...</option>
+                            <t t-foreach="districts or []" t-as="district">
+                                <option t-att-value="district.id" style="display:none;" t-att-data-state_id="district.state_id.id"
+                                t-att-selected="district.id == checkout.get('district_id')"><t t-esc="district.name"/></option>
+                            </t>
+                        </select>
+                </div>
+
+                <div t-attf-class="form-group #{error.get('township_id') and 'has-error' or ''} col-lg-6" sequence="1">
+                    <label class="control-label" for="township_id" style="font-weight: normal">Township</label>
+                        <select name="township_id" class="form-control">
+                            <option value="">select...</option>
+                            <t t-foreach="townships or []" t-as="township">
+                                <option t-att-value="township.id" style="display:none;" t-att-data-district_id="township.district_id.id"
+                                t-att-selected="township.id == checkout.get('township_id')"><t t-esc="township.name"/></option>
+                            </t>
+                        </select>
+                </div>
+
+                <div t-attf-class="form-group #{error.get('hood_id') and 'has-error' or ''} col-lg-6" sequence="1">
+                    <label class="control-label" for="hood_id" style="font-weight: normal">Neighborhood</label>
+                        <select name="hood_id" class="form-control">
+                            <option value="">select...</option>
+                            <t t-foreach="hoods or []" t-as="hood">
+                                <option t-att-value="hood.id" style="display:none;" t-att-data-township_id="hood.township_id.id"
+                                t-att-selected="hood.id == checkout.get('hood_id')"><t t-esc="hood.name"/></option>
+                            </t>
+                        </select>
+                </div>
+                
+            </xpath>
+
 				<!-- Field validations, renders a small badge on the right side of the label -->
 				<xpath expr="//label[@for='contact_name']" position="after">
                       <t t-if="error.get('name')"><span class="label label-danger"> Required </span></t>

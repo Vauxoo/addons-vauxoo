@@ -26,20 +26,36 @@
          {
           $("div[id=zip]").hide();
           $("div[id=ruc_values]").css('visibility','visible');
+          $("select[name='state_id']").parent().toggle(true);
+          $("select[name='district_id']").parent().toggle(true);
+          $("select[name='township_id']").parent().toggle(true);
+          $("select[name='hood_id']").parent().toggle(true);
          }
          else{
           $("div[id=ruc_values]").css('visibility','hidden');
+          $("select[name='state_id']").parent().toggle(false);
+          $("select[name='district_id']").parent().toggle(false);
+          $("select[name='township_id']").parent().toggle(false);
+          $("select[name='hood_id']").parent().toggle(false);
          }
        $("select[name=country_id]").click(function(){
          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
           $("div[id=zip]").hide();
           $("div[id=ruc_values]").css('visibility','visible');
+          $("select[name='state_id']").parent().toggle(true);
+          $("select[name='district_id']").parent().toggle(true);
+          $("select[name='township_id']").parent().toggle(true);
+          $("select[name='hood_id']").parent().toggle(true);
          }
          else
          {  
           $("div[id=zip]").show();
           $("div[id=ruc_values]").css('visibility','hidden');
+          $("select[name='state_id']").parent().toggle(false);
+          $("select[name='district_id']").parent().toggle(false);
+          $("select[name='township_id']").parent().toggle(false);
+          $("select[name='hood_id']").parent().toggle(false);
          }
        });
        // THIS CODE HIDES THE COMPANY INPUT IF PARTNER IS PARTICULAR
@@ -86,6 +102,30 @@
          }
 
        });
+
+       $("select[name='state_id']").change(function(){
+        var $select = $("select[name='district_id']");
+        $select.find("option:not(:first)").hide();
+        var nb = $select.find("option[data-state_id="+($(this).val() || 0)+"]").show().size();
+        //$select.parent().toggle(nb>=1);
+       });       
+    $("select[name='state_id']").change();
+
+    $("select[name='district_id']").change(function(){
+        var $select = $("select[name='township_id']");
+        $select.find("option:not(:first)").hide();
+        var nb = $select.find("option[data-district_id="+($(this).val() || 0)+"]").show().size();
+        //$select.parent().toggle(nb>=1);
+       });       
+    $("select[name='district_id']").change();
+
+    $("select[name='township_id']").change(function(){
+        var $select = $("select[name='hood_id']");
+        $select.find("option:not(:first)").hide();
+        var nb = $select.find("option[data-township_id="+($(this).val() || 0)+"]").show().size();
+        //$select.parent().toggle(nb>=1);
+       });       
+    $("select[name='township_id']").change();
 
     },
 
