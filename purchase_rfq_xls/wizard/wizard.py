@@ -40,7 +40,10 @@ class PurchaseQuotationWizard(models.TransientModel):
     xls_file = fields.Binary("Upload template")
     xls_name = fields.Char()
     state = fields.Selection([('form', 'form'),
-                              ('success', 'success')], default='form')
+                              ('success', 'success'),
+                              ('success2', 'success2')], default='form')
+    lines_ids = fields.One2many(
+        'purchase.quotation.wizard.line', 'wizard_id')
 
     @api.multi
     @api.constrains('xls_name')
@@ -55,11 +58,13 @@ class PurchaseQuotationWizard(models.TransientModel):
     @api.model
     def _update_price(self, order_line, price, qty):
         data = {}
-        if order_line.product_qty <= qty:
-            data['price_unit'] = price
-        else:
-            data.update({'price_unit': price, 'product_qty': qty})
-        return order_line.write(data)
+        if type(price) == type(qty) == float:
+            if order_line.product_qty <= qty:
+                data['price_unit'] = price
+            else:
+                data.update({'price_unit': price, 'product_qty': qty})
+            return order_line.write(data)
+        return False
 
     @api.model
     def get_xls_eof(self, sheet):
@@ -103,6 +108,7 @@ class PurchaseQuotationWizard(models.TransientModel):
         col_start = "External ID"
         can_start = False
         done_ids = []
+        new_products = []
         for row in range(eof):
             if not can_start:
                 if col_start == sheet.cell_value(row, 0):
@@ -111,9 +117,9 @@ class PurchaseQuotationWizard(models.TransientModel):
             # External ID
             xml_id = sheet.cell_value(row, 0)
             # Model
-            default_code = sheet.cell_value(row, 1)
+            # default_code = sheet.cell_value(row, 1)
             # Vendor Code
-            # vendor_code = sheet.cell_value(row, 2)
+            vendor_code = sheet.cell_value(row, 2)
             # Description
             description = sheet.cell_value(row, 3)
             # Qty
@@ -126,15 +132,11 @@ class PurchaseQuotationWizard(models.TransientModel):
                 if self._update_price(order_line, price_unit, product_qty):
                     done_ids.append(order_line.id)
             except:
-                if self.product_include:
-                    product_data = {
-                        'name': description,
-                        'default_code': default_code,
-                        'categ_id': self.env.ref(
-                            'product.product_category_all').id,
-                        'standard_price': price_unit,
-                    }
-                    self.env['product.product'].create(product_data)
+                new_products.append((0, 0, {
+                    'description': description,
+                    'vendor_code': vendor_code,
+                    'cost': price_unit,
+                }))
 
         if done_ids:
             order_line_done = self.env['purchase.order.line'].browse(done_ids)
@@ -142,8 +144,13 @@ class PurchaseQuotationWizard(models.TransientModel):
             order_line_diff = purchase.order_line - order_line_done
             order_line_diff.unlink()
         else:
-            raise UserError(_('This template not has new prices to update'))
-        self.write({'state': 'success'})
+            raise UserError(
+                _('Nothing to update! Probably not has product cost defined '
+                  'in template'))
+        if new_products:
+            self.write({'state': 'success', 'lines_ids': new_products})
+        else:
+            self.write({'state': 'success2'})
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'purchase.quotation.wizard',
@@ -168,3 +175,13 @@ class PurchaseQuotationWizard(models.TransientModel):
             purchase,
             'purchase_rfq_xls.report_template',
             data={'ids': purchase.id})
+
+
+class PurchaseQuotationWizardLine(models.TransientModel):
+    _description = 'Purchase Quotation Details'
+    _name = 'purchase.quotation.wizard.line'
+
+    description = fields.Char()
+    vendor_code = fields.Char()
+    wizard_id = fields.Many2one('purchase.quotation.wizard')
+    cost = fields.Float()

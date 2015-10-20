@@ -11,8 +11,21 @@
                 <form string="Update a Quotation Prices">
                     <field name="state" invisible="1" />
                     <div states="success">
-                        <h2>Successful import</h2>
+                        <h2>Import successful</h2>
                         <p>The following items should be added to the P.O. manually:</p>
+                        <group>
+                            <field name="lines_ids" nolabel="1" readonly="1">
+                                <tree delete='0'>
+                                    <field name="vendor_code"/>
+                                    <field name="description"/>
+                                    <field name="cost"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </div>
+                    <div states="success2">
+                        <h2>Import successful</h2>
+                        <p>No issue to report!</p>
                     </div>
                     <group states="form">
                         <group string="Import / Export a Quotation Template">
@@ -32,8 +45,8 @@
                         or
                         <button string="Cancel" class="oe_link" special="cancel" />
                     </footer>
-                    <footer states="success">
-                        <button string="Cancel" special="cancel" type="object" />
+                    <footer states="success,success2">
+                        <button string="Close" special="cancel" type="object" />
                     </footer>
                 </form>
             </field>
