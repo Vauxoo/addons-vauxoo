@@ -14,14 +14,9 @@ Once send it to me back to the supplier module is able
 to allow load the template and update the prices of
 products taking into account the following 
 considerations:
-- If the product in the RFQ is equal in quantity
-and code to the request answered ( Filled excel )
-then only the cost is updated.
-- If thhe product in the RFQ is equal in code but
-not in quantity then updated quantity and price.
-- If the Product is listed in my RFQ but the Supplier
-removed in their answered template, then this product
-will be removed of my RFQ.
+- If the product in the RFQ is equal in quantity and code to the request answered (filled excel) then only the cost is updated
+- If the product in the RFQ is equal in code but not in quantity then updated quantity and price.
+- If the product is listed in my RFQ but the supplier removed in their answered template, then this product will be removed of my RFQ.
 
 
 Extras:
