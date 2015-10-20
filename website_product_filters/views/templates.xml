@@ -154,10 +154,9 @@
                     <li class="active"><a id="bread_category">All Products</a></li>
                 </ul>
             </div>
-              <div class="col-md-3 mt8">
-                <label for="prduct_sorter" class="form-group">Sort by : </label>
-                <select id="product_sorter" name="product_sorter">
-                  <option value="0" selected="selected">Select...</option>
+              <div class="col-md-3">
+                <select class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
+                  <option value="0" selected="selected">Sort By...</option>
                   <option value="name">Product Name</option>
                   <option value="pasc">Price Lowest</option>
                   <option value="pdesc">Price Highest</option>
@@ -166,8 +165,21 @@
                   <option value="popularity">Popularity</option>
                 </select>
               </div>
-              <t t-call="website_sale.search"><t t-set="search_class">col-md-3</t></t>
+              <form t-att-action="keep('/shop'+ ('/category/'+slug(category)) if category else '', search=0)" method="get" t-att-class="search_class">
 
+                <t t-if="attrib_values">
+                  <t t-foreach="attrib_values" t-as="a">
+                    <input class="yoytec-input mt3" type="hidden" name="attrib" t-att-value="'%s-%s' % (a[0], a[1])"/>
+                  </t>
+                </t>
+                <div class="input-group">
+                  <input type="text" name="search" class="search-query form-control yoytec-input mt3" placeholder="Search..." t-att-value="search"/>
+                  <span class="input-group-btn">
+                    <a class="btn btn-default a-submit yoytec-btn"><i class="fa fa-search"/></a>
+                  </span>
+              </div>
+
+            </form>
             </div>
           </xpath>
           <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website.pager']" position="replace">
