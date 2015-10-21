@@ -181,6 +181,17 @@
 
             </form>
             </div>
+            <div class="panel panel-body panel-no-borders">
+              <div class="pull-left">
+                <t t-foreach="attributes" t-as="a">
+                  <t t-foreach="a.value_ids" t-as="v">
+                    <t t-if="v.id in attrib_set">
+                      <span class="label label-default" t-field="v.name"></span>
+                    </t>
+                  </t>
+                </t>
+              </div>
+            </div>
           </xpath>
           <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website.pager']" position="replace">
           </xpath>
