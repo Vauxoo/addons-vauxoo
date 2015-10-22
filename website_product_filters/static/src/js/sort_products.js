@@ -24,7 +24,7 @@
       $("#product_sorter").change(function() {
           var val = "";
           $("#product_sorter option:selected").each(function() {
-            val += $( this ).val();;
+            val += $( this ).val();
           });
           var $wrapper = $('#products_grid');
           if (val == 'rating'){
@@ -72,6 +72,6 @@
         });
     },
 
-  })
+  });
 
 })();
