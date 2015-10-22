@@ -31,6 +31,11 @@
         "purchase",
         "controller_report_xls",
     ],
+    "external_dependencies": {
+        "python": [
+            "xlrd",
+        ]
+    },
     "demo": [],
     "data": [
         "view/wizard.xml",
