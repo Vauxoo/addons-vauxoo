@@ -37,4 +37,4 @@ msgstr "Puntuacion"
 #: code:addons/website_rate_product/static/src/xml/mail.xml:4
 #, python-format
 msgid "Rating:"
-msgstr "Puntuacion:"
+msgstr "Puntuación:"
