@@ -23,6 +23,12 @@ class StockCardProduct(models.TransientModel):
         if not (self.product_id.valuation == 'real_time' and
                 self.product_id.cost_method in ('average', 'real')):
             return True
+        self.stock_card_move_ids.unlink()
+        self._stock_card_move_get(self.product_id.id)
+
+        return True
+
+    def _stock_card_move_get(self, product_id, return_average=False):
         scm_obj = self.env['stock.card.move']
         sm_obj = self.env['stock.move']
         self.stock_card_move_ids.unlink()
@@ -31,7 +37,7 @@ class StockCardProduct(models.TransientModel):
         inventory_valuation = 0.0
         lines = []
         avg_move_dict = {}
-        for row in self._stock_card_move_get():
+        for row in self._stock_card_move_history_get(product_id):
             dst = row['dst_usage']
             src = row['src_usage']
             move_id = row['move_id']
@@ -83,7 +89,7 @@ class StockCardProduct(models.TransientModel):
                 move_valuation = sum([val[0] * val[1] for val in values])
 
             if src in ('customer',):
-                # NOTE: Identify the originatin move_id of returning move
+                # NOTE: Identify the originating move_id of returning move
                 origin_id = move_brw.origin_returned_move_id.id
                 # NOTE: Falling back to average in case customer return is
                 # orphan, i.e., return was created from scratch
@@ -94,6 +100,8 @@ class StockCardProduct(models.TransientModel):
             inventory_valuation += direction * move_valuation
             average = (product_qty and inventory_valuation / product_qty or
                        average)
+            if return_average:
+                continue
             lines.append(dict(
                 date=row['date'],
                 move_id=move_id,
@@ -105,6 +113,8 @@ class StockCardProduct(models.TransientModel):
                 average=average,
                 cost_unit=cost_unit,
                 ))
+        if return_average:
+            return average
         for line in lines:
             scm_obj.create(line)
 
@@ -138,7 +148,7 @@ class StockCardProduct(models.TransientModel):
         return action
 
     @api.multi
-    def _stock_card_move_get(self):
+    def _stock_card_move_history_get(self, product_id):
         self.ensure_one()
         self._cr.execute(
             '''
@@ -172,7 +182,7 @@ class StockCardProduct(models.TransientModel):
                 ) -- Actual incoming or outgoing Stock Moves
                 AND sm.product_id = %s
             ORDER BY sm.date
-            ''', (self.product_id.id,)
+            ''', (product_id,)
         )
         return self._cr.dictfetchall()
 
