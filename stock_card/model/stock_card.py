@@ -120,6 +120,9 @@ class StockCardProduct(models.TransientModel):
 
         return True
 
+    def get_average(self, product_id):
+        return self._stock_card_move_get(product_id, return_average=True)
+
     @api.multi
     def action_view_moves(self):
         '''
