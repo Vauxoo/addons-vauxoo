@@ -21,8 +21,18 @@
 ###############################################################################
 from openerp import models, fields, api, _
 from openerp.exceptions import ValidationError, Warning as UserError
-import xlrd
 import base64
+
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    import xlrd
+except ImportError:
+    _logger.info('You have purchase_rfq_xls from '
+                 'addons-vauxoo declared in your '
+                 'system you will need xlrd library '
+                 'in order to use this module')
 
 
 class PurchaseQuotationWizard(models.TransientModel):
