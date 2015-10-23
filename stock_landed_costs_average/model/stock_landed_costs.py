@@ -115,6 +115,85 @@ class StockLandedCost(models.Model):
                   'the case, or you selected the correct picking'))
         return lines
 
+    def _create_deviation_account_move_line(
+            self, move_id, gain_account_id, loss_account_id,
+            valuation_account_id, diff, product_brw):
+        # TODO: Change DocString
+        """
+        Generate the account.move.line values to track the landed cost.
+        Afterwards, for the goods that are already out of stock, we should
+        create the out moves
+        """
+        ctx = dict(self._context)
+        aml_obj = self.pool.get('account.move.line')
+
+        base_line = {
+            'move_id': move_id,
+            'product_id': product_brw.id,
+        }
+
+        if diff > 0:
+            name = product_brw.name + ": " + _('Gains on Inventory Deviation')
+            debit_line = dict(
+                base_line,
+                name=name,
+                account_id=valuation_account_id,
+                debit=diff,)
+            credit_line = dict(
+                base_line,
+                name=name,
+                account_id=gain_account_id,
+                credit=diff,)
+        else:
+            name = product_brw.name + ": " + _('Losses on Inventory Deviation')
+            debit_line = dict(
+                base_line,
+                name=name,
+                account_id=loss_account_id,
+                credit=-diff,)
+            credit_line = dict(
+                base_line,
+                name=name,
+                account_id=valuation_account_id,
+                debit=-diff,)
+            # negative cost, reverse the entry
+        aml_obj.create(self._cr, self._uid, debit_line, context=ctx)
+        aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
+        return True
+
+    def _create_deviation_accounting_entries(
+            self, move_id, product_id, old_avg, new_avg, qty):
+        '''
+        This method takes the variation in value for average and books it as
+        Inventory Valuation Deviation
+        '''
+        product_obj = self.env['product.product']
+        template_obj = self.pool.get('product.template')
+        if not abs(old_avg - new_avg) or not qty:
+            return False
+        ctx = dict(self._context)
+        product_brw = product_obj.browse(product_id)
+        accounts = template_obj.get_product_accounts(
+            self._cr, self._uid, product_brw.product_tmpl_id.id, context=ctx)
+        valuation_account_id = accounts['property_stock_valuation_account_id']
+
+        # TODO: Accounts for gains & losses because of change in inventory
+        # valuation show be set in company
+        gain_account_id = accounts['stock_account_output']
+        loss_account_id = accounts['stock_account_input']
+
+        if not gain_account_id or not loss_account_id:
+            raise osv.except_osv(
+                _('Error!'),
+                _('Please configure Gain & Loss Inventory Valuation in your'
+                  ' Company'))
+
+        amount = (old_avg - new_avg) * qty
+
+        return self._create_deviation_account_move_line(
+            move_id, gain_account_id, loss_account_id,
+            valuation_account_id, amount, product_brw)
+
     @api.multi
     def _create_cogs_accounting_entries(self, line, move_id, old_avg, new_avg):
         '''
@@ -218,14 +297,19 @@ class StockLandedCost(models.Model):
             return True
 
         product_obj = self.env['product.product']
+        get_qty = self.env['stock.card.product'].get_qty
 
         for product_id, avg in dct.iteritems():
             # Write the standard price, as SUDO because a warehouse
             # manager may not have the right to write on products
+            product_brw = product_obj.sudo().browse(product_id)
+
             # NOTE: if there is a variation among avg and standard_price set on
             # product new Journal Entry Lines shall be created
-            # TODO: provide method to right Journal Entries for Inventory
-            # Valuation Deviation
+            qty = get_qty(product_id)
+            self._create_deviation_accounting_entries(
+                move_id, product_id,
+                product_brw.standard_price, avg, qty)
 
             product_obj.sudo().browse(product_id).write(
                 {'standard_price': avg})
