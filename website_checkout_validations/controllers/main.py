@@ -24,10 +24,10 @@ class WebsiteSaleInh(website_sale):
         states_ids = state_orm.search(cr, SUPERUSER_ID, [], context=context)
         states = state_orm.browse(cr, SUPERUSER_ID, states_ids, context)
 
-        distroct_orm = registry.get('res.country.state.district')
-        district_ids = distroct_orm.search(
+        district_orm = registry.get('res.country.state.district')
+        district_ids = district_orm.search(
             cr, SUPERUSER_ID, [], context=context)
-        districts = distroct_orm.browse(
+        districts = district_orm.browse(
             cr, SUPERUSER_ID, district_ids, context)
 
         township_orm = registry.get('res.country.state.district.township')
