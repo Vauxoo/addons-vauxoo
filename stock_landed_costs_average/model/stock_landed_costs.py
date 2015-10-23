@@ -195,7 +195,8 @@ class StockLandedCost(models.Model):
             valuation_account_id, amount, product_brw)
 
     @api.multi
-    def _create_cogs_accounting_entries(self, line, move_id, old_avg, new_avg):
+    def _create_cogs_accounting_entries(
+            self, line, move_id, old_avg, new_avg, qty):
         '''
         This method takes the amount of cost that needs to be booked as
         inventory value and later takes the amount of COGS that is needed to
@@ -225,12 +226,12 @@ class StockLandedCost(models.Model):
 
         return self._create_cogs_account_move_line(
             line, move_id, credit_account_id, debit_account_id,
-            cogs_account_id, old_avg, new_avg)
+            cogs_account_id, old_avg, new_avg, qty)
 
     @api.multi
     def _create_cogs_account_move_line(
             self, line, move_id, credit_account_id, debit_account_id,
-            cogs_account_id, old_avg, new_avg):
+            cogs_account_id, old_avg, new_avg, qty):
         # TODO: Change DocString
         """
         Generate the account.move.line values to track the landed cost.
@@ -262,7 +263,7 @@ class StockLandedCost(models.Model):
         # Create COGS account move lines for products that were sold prior to
         # applying landing costs
         # TODO: Rounding problems could arise here, this needs to be checked
-        diff = new_avg - old_avg
+        diff -= (new_avg - old_avg) * qty
         if not abs(diff):
             return True
 
@@ -320,6 +321,7 @@ class StockLandedCost(models.Model):
         self.ensure_one()
         quant_obj = self.env['stock.quant']
         get_average = self.env['stock.card.product'].get_average
+        get_qty = self.env['stock.card.product'].get_qty
         ctx = dict(self._context)
 
         for cost in self:
@@ -337,6 +339,7 @@ class StockLandedCost(models.Model):
                 self._cr, self._uid, cost, context=ctx)
             quant_dict = {}
             prod_dict = {}
+            prod_qty = {}
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
                     continue
@@ -344,6 +347,8 @@ class StockLandedCost(models.Model):
                 if product_id.cost_method == 'average':
                     if product_id.id not in prod_dict:
                         prod_dict[product_id.id] = get_average(product_id.id)
+                    if product_id.id not in prod_qty:
+                        prod_qty[product_id.id] = get_qty(product_id.id)
 
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
@@ -369,7 +374,9 @@ class StockLandedCost(models.Model):
                     # costs
                     new_avg = get_average(product_id.id)
                     self._create_cogs_accounting_entries(
-                        line, move_id, prod_dict[product_id.id], new_avg)
+                        line, move_id, prod_dict[product_id.id], new_avg,
+                        prod_qty[product_id.id])
+                    prod_dict[product_id.id] = new_avg
 
                 if product_id.cost_method != 'real':
                     continue
