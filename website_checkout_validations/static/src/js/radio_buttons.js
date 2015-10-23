@@ -102,7 +102,7 @@
          }
 
        });
-
+       //JS for billing fields
        $("select[name='state_id']").change(function(){
         var $select = $("select[name='district_id']");
         $select.find("option:not(:first)").hide();
@@ -127,6 +127,33 @@
        });       
     $("select[name='township_id']").change();
 
+    //JS for shipping fields
+
+    $("select[name='shipping_state_id']").change(function(){
+        var $select = $("select[name='shipping_district_id']");
+        $select.find("option:not(:first)").hide();
+        var nb = $select.find("option[data-state_id="+($(this).val() || 0)+"]").show().size();
+        //$select.parent().toggle(nb>=1);
+       });       
+    $("select[name='shipping_state_id']").change();
+
+    $("select[name='shipping_district_id']").change(function(){
+        var $select = $("select[name='shipping_township_id']");
+        $select.find("option:not(:first)").hide();
+        var nb = $select.find("option[data-district_id="+($(this).val() || 0)+"]").show().size();
+        //$select.parent().toggle(nb>=1);
+       });       
+    $("select[name='shipping_district_id']").change();
+
+    $("select[name='shipping_township_id']").change(function(){
+        var $select = $("select[name='shipping_hood_id']");
+        $select.find("option:not(:first)").hide();
+        var nb = $select.find("option[data-township_id="+($(this).val() || 0)+"]").show().size();
+        //$select.parent().toggle(nb>=1);
+       });       
+    $("select[name='shipping_township_id']").change();
+
+    
     },
 
   });

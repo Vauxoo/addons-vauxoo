@@ -148,6 +148,9 @@ class WebsiteSaleInh(website_sale):
         values['districts'] = districts
         values['townships'] = townships
         values['hoods'] = hoods
+        print shipping_id
+        print shippings
+        print partner.id
         return values
 
     mandatory_billing_fields = [
@@ -162,7 +165,11 @@ class WebsiteSaleInh(website_sale):
         "zip", "mobile", "is_company", "zip_id"]
     mandatory_shipping_fields = [
         "name", "phone", "street", "country_id"]
-    optional_shipping_fields = ["state_id", "zip"]
+    optional_shipping_fields = [
+        "district_id",
+        "township_id",
+        "hood_id",
+        "state_id", "zip"]
 
     def checkout_parse(self, address_type, data, remove_prefix=False):
         """ data is a dict OR a partner browse record
