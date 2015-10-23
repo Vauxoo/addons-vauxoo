@@ -148,9 +148,6 @@ class WebsiteSaleInh(website_sale):
         values['districts'] = districts
         values['townships'] = townships
         values['hoods'] = hoods
-        print shipping_id
-        print shippings
-        print partner.id
         return values
 
     mandatory_billing_fields = [
