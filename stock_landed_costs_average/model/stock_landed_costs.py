@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api, _
+from openerp import osv
 from openerp.exceptions import except_orm, Warning as UserError
 import openerp.addons.decimal_precision as dp
 from openerp.tools import float_round
@@ -114,35 +115,51 @@ class StockLandedCost(models.Model):
                   'the case, or you selected the correct picking'))
         return lines
 
-    @api.v7
-    def _create_account_move_line(
-            self, cr, uid, line, move_id, credit_account_id, debit_account_id,
-            qty_out, already_out_account_id, context=None):
+    @api.multi
+    def _create_cogs_accounting_entries(self, line, move_id, old_avg, new_avg):
+        '''
+        This method takes the amount of cost that needs to be booked as
+        inventory value and later takes the amount of COGS that is needed to
+        book if any sale was done because of this landing cost been applied
+        '''
+        product_obj = self.pool.get('product.template')
+        cost_product = line.cost_line_id and line.cost_line_id.product_id
+        if not cost_product:
+            return False
+        ctx = dict(self._context)
+        accounts = product_obj.get_product_accounts(
+            self._cr, self._uid, line.product_id.product_tmpl_id.id,
+            context=ctx)
+        debit_account_id = accounts['property_stock_valuation_account_id']
+        # NOTE: BEWARE of accounts when account_anglo_saxon applies
+        # TODO: Do we have to set another account for cogs_account_id?
+        cogs_account_id = accounts['stock_account_output']
+        credit_account_id = line.cost_line_id.account_id.id or \
+            cost_product.property_account_expense.id or \
+            cost_product.categ_id.property_account_expense_categ.id
+
+        if not credit_account_id:
+            raise osv.except_osv(
+                _('Error!'),
+                _('Please configure Stock Expense Account for product: %s.') %
+                (cost_product.name))
+
+        return self._create_cogs_account_move_line(
+            line, move_id, credit_account_id, debit_account_id,
+            cogs_account_id, old_avg, new_avg)
+
+    @api.multi
+    def _create_cogs_account_move_line(
+            self, line, move_id, credit_account_id, debit_account_id,
+            cogs_account_id, old_avg, new_avg):
         # TODO: Change DocString
         """
         Generate the account.move.line values to track the landed cost.
         Afterwards, for the goods that are already out of stock, we should
         create the out moves
         """
-        if line.product_id.cost_method != 'average':
-            return super(StockLandedCost, self)._create_account_move_line(
-                cr, uid, line, move_id, credit_account_id, debit_account_id,
-                qty_out, already_out_account_id, context=context)
 
-        # TODO: Create a new function for this option
-        domain = [('date', '<=', line.move_id.date)]
-        domain += [('product_id', '=', line.product_id.id)]
-        field_names = ['product_id', 'quantity']
-        sh_obj = self.pool.get('stock.history')
-        Q = sh_obj.read_group(cr, uid, domain, field_names, ['product_id'])
-        Q = sum(elem['quantity'] for elem in Q)
-        # END TODO: Create a new function for this option
-
-        if Q <= 0:
-            # If quantity available a that moment is less or equal than zero
-            # return True doing nothing
-            return True
-
+        ctx = dict(self._context)
         aml_obj = self.pool.get('account.move.line')
         base_line = {
             'name': line.name,
@@ -153,145 +170,72 @@ class StockLandedCost(models.Model):
         debit_line = dict(base_line, account_id=debit_account_id)
         credit_line = dict(base_line, account_id=credit_account_id)
         diff = line.additional_landed_cost
-        if (1 - qty_out / Q):
-            if diff > 0:
-                debit_line['debit'] = diff * (1 - qty_out / Q)
-                credit_line['credit'] = diff * (1 - qty_out / Q)
-            else:
-                # negative cost, reverse the entry
-                # TODO: Have to look for an approach when reversing landed cost
-                # with average cost_method
-                debit_line['credit'] = -diff
-                credit_line['debit'] = -diff
-            aml_obj.create(cr, uid, debit_line, context=context)
-            aml_obj.create(cr, uid, credit_line, context=context)
+        if diff > 0:
+            debit_line['debit'] = diff
+            credit_line['credit'] = diff
+        else:
+            # negative cost, reverse the entry
+            debit_line['credit'] = -diff
+            credit_line['debit'] = -diff
+        aml_obj.create(self._cr, self._uid, debit_line, context=ctx)
+        aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
 
-        # Create account move lines for quants already out of stock
-        if qty_out > 0:
-            debit_line = dict(
-                debit_line,
-                name=(line.name + ": " + str(qty_out) + _(' already out')),
-                quantity=qty_out,
-                account_id=already_out_account_id)
-            credit_line = dict(
-                credit_line,
-                name=(line.name + ": " + str(qty_out) + _(' already out')),
-                quantity=qty_out,
-                account_id=debit_account_id)
-            diff = diff * (qty_out / Q)
-            if diff > 0:
-                debit_line['debit'] = diff
-                credit_line['credit'] = diff
-            else:
-                # negative cost, reverse the entry
-                # TODO: Have to look for an approach when reversing landed cost
-                # with average cost_method
-                debit_line['credit'] = -diff
-                credit_line['debit'] = -diff
-            aml_obj.create(cr, uid, debit_line, context=context)
-            aml_obj.create(cr, uid, credit_line, context=context)
+        # Create COGS account move lines for products that were sold prior to
+        # applying landing costs
+        # TODO: Rounding problems could arise here, this needs to be checked
+        diff = new_avg - old_avg
+        if not abs(diff):
+            return True
+
+        # NOTE: knowing how many products that were affected, COGS was to
+        # change, by this landed cost is not really necessary
+        debit_line = dict(
+            debit_line,
+            name=(line.name + ": " + _(' COGS')),
+            account_id=cogs_account_id)
+        credit_line = dict(
+            credit_line,
+            name=(line.name + ": " + _(' [COGS] already out')),
+            account_id=debit_account_id)
+        if diff > 0:
+            debit_line['debit'] = diff
+            credit_line['credit'] = diff
+        else:
+            # negative cost, reverse the entry
+            debit_line['credit'] = -diff
+            credit_line['debit'] = -diff
+        aml_obj.create(self._cr, self._uid, debit_line, context=ctx)
+        aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
         return True
 
-    @api.multi
-    def compute_average_cost_used_quants(self, move_id, dct):
+    def compute_average_cost(self, move_id, dct=None):
         '''
         This method updates standard_price field in products with costing
         method equal to average
         '''
-        self.ensure_one()
-        sm_obj = self.env['stock.move']
-        sval_obj = self.env['stock.valuation.adjustment.lines']
+        dct = dict(dct or {})
+        if not dct:
+            return True
 
-        for prod_id, sm_ids in dct.iteritems():
-            sm_ids = list(sm_ids)
-
-            sval_ids = []
-            for sm_id in sm_obj._search(
-                    [('id', 'in', sm_ids)], order='date asc'):
-
-                args = [('cost_id', '=', self.id), ('move_id', '=', sm_id)]
-                sval_ids += sval_obj._search(args)
-
-            for sval_id in sval_ids:
-                sval_brw = sval_obj.browse(sval_id)
-                qty_out = 0
-                # TODO: memoize()
-                for quant in sval_brw.move_id.quant_ids:
-                    if quant.location_id.usage != 'internal':
-                        qty_out += quant.qty
-                self._create_accounting_entries(sval_brw, move_id, qty_out)
-        return True
-
-    @api.multi
-    def compute_average_cost(self, move_id, dct):
-        '''
-        This method updates standard_price field in products with costing
-        method equal to average
-        '''
-        self.ensure_one()
         product_obj = self.env['product.product']
 
-        for cost in self:
-            prod_qty_dict = {}
-            prod_val_dict = {}
-            prod_adj_dict = {}
-            for line in cost.valuation_adjustment_lines:
-                if not line.move_id:
-                    continue
+        for product_id, avg in dct.iteritems():
+            # Write the standard price, as SUDO because a warehouse
+            # manager may not have the right to write on products
+            # NOTE: if there is a variation among avg and standard_price set on
+            # product new Journal Entry Lines shall be created
+            # TODO: provide method to right Journal Entries for Inventory
+            # Valuation Deviation
 
-                if line.product_id.cost_method != 'average':
-                    continue
-
-                if dct.get(line.product_id.id):
-                    # TODO: A new way of computing Average has to be developed
-                    # when products have gone prior to allocate landed costs.
-                    # This way of computing it does not work
-                    continue
-
-                qty_out = 0
-                for quant in line.move_id.quant_ids:
-                    if quant.location_id.usage != 'internal':
-                        qty_out += quant.qty
-                self._create_accounting_entries(line, move_id, qty_out)
-
-                # Current quantity of products available
-                if not prod_qty_dict.get(line.product_id.id):
-                    prod_qty_dict[line.product_id.id] = \
-                        line.product_id.product_tmpl_id.qty_available
-
-                # Current valuation of products available
-                if not prod_val_dict.get(line.product_id.id):
-                    prod_val_dict[line.product_id.id] = \
-                        line.product_id.standard_price * \
-                        line.product_id.product_tmpl_id.qty_available
-
-                # Current Landed Value for product
-                if not prod_adj_dict.get(line.product_id.id):
-                    prod_adj_dict[line.product_id.id] = \
-                        line.additional_landed_cost
-                else:
-                    prod_adj_dict[line.product_id.id] += \
-                        line.additional_landed_cost
-
-            for k in prod_qty_dict.keys():
-                if prod_qty_dict[k] < 0:
-                    prod = product_obj.browse(k)
-                    raise UserError(
-                        _('Product %s has negative quantities' % prod.name))
-                if prod_qty_dict[k] == 0.0:
-                    continue
-                new_std_price = ((prod_val_dict[k] + prod_adj_dict[k]) /
-                                 prod_qty_dict[k])
-                # Write the standard price, as SUDO because a warehouse
-                # manager may not have the right to write on products
-                product_obj.sudo().browse(k).write(
-                    {'standard_price': new_std_price})
+            product_obj.sudo().browse(product_id).write(
+                {'standard_price': avg})
         return True
 
     @api.multi
     def button_validate(self):
         self.ensure_one()
         quant_obj = self.env['stock.quant']
+        get_average = self.env['stock.card.product'].get_average
         ctx = dict(self._context)
 
         for cost in self:
@@ -305,7 +249,6 @@ class StockLandedCost(models.Model):
                       'valuation adjustments lines. Did you click on '
                       'Compute?'))
 
-            # TODO: 01 put this piece of code in a new method
             move_id = self._model._create_account_move(
                 self._cr, self._uid, cost, context=ctx)
             quant_dict = {}
@@ -313,6 +256,11 @@ class StockLandedCost(models.Model):
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
                     continue
+                product_id = line.product_id
+                if product_id.cost_method == 'average':
+                    if product_id.id not in prod_dict:
+                        prod_dict[product_id.id] = get_average(product_id.id)
+
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
                 quants = [quant for quant in line.move_id.quant_ids]
@@ -330,24 +278,21 @@ class StockLandedCost(models.Model):
                     if quant.location_id.usage != 'internal':
                         qty_out += quant.qty
 
-                # TODO: 03
-                # THIS CAN BE CALL WHEN COMPUTING AVERAGE WHERE IT IS ACTUALLY
-                # USEFUL
-                if line.product_id.cost_method != 'real':
-                    if line.product_id.id not in prod_dict:
-                        prod_dict[line.product_id.id] = set([line.move_id.id])
-                    else:
-                        prod_dict[line.product_id.id].add(line.move_id.id)
+                if product_id.cost_method == 'average':
+                    # NOTE: After adding value to product in its quants average
+                    # needs to be recomputed in order to find out the change in
+                    # COGS in case of sales were performed prior to landing
+                    # costs
+                    new_avg = get_average(product_id.id)
+                    self._create_cogs_accounting_entries(
+                        line, move_id, prod_dict[product_id.id], new_avg)
+
+                if product_id.cost_method != 'real':
                     continue
-                # END OF TODO 03
 
                 self._create_accounting_entries(line, move_id, qty_out)
-            # END OF TODO 01
 
-            # TODO: 02 Method to compute standard_price for average cost_method
             cost.compute_average_cost(move_id, prod_dict)
-            cost.compute_average_cost_used_quants(move_id, prod_dict)
-            # END OF TODO 02
 
             cost.write(
                 {'state': 'done', 'account_move_id': move_id})
