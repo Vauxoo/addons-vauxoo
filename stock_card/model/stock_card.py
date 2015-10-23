@@ -150,9 +150,7 @@ class StockCardProduct(models.TransientModel):
             action['domain'] = "[('id','in',[])]"
         return action
 
-    @api.multi
     def _stock_card_move_history_get(self, product_id):
-        self.ensure_one()
         self._cr.execute(
             '''
             SELECT
