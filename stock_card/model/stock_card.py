@@ -28,7 +28,7 @@ class StockCardProduct(models.TransientModel):
 
         return True
 
-    def _stock_card_move_get(self, product_id, return_average=False):
+    def _stock_card_move_get(self, product_id, return_values=False):
         scm_obj = self.env['stock.card.move']
         sm_obj = self.env['stock.move']
         self.stock_card_move_ids.unlink()
@@ -100,7 +100,7 @@ class StockCardProduct(models.TransientModel):
             inventory_valuation += direction * move_valuation
             average = (product_qty and inventory_valuation / product_qty or
                        average)
-            if return_average:
+            if return_values:
                 continue
             lines.append(dict(
                 date=row['date'],
@@ -113,15 +113,20 @@ class StockCardProduct(models.TransientModel):
                 average=average,
                 cost_unit=cost_unit,
                 ))
-        if return_average:
-            return average
+        if return_values:
+            return dict(average=average, product_qty=product_qty)
         for line in lines:
             scm_obj.create(line)
 
         return True
 
     def get_average(self, product_id):
-        return self._stock_card_move_get(product_id, return_average=True)
+        values = self._stock_card_move_get(product_id, return_values=True)
+        return values.get('average')
+
+    def get_qty(self, product_id):
+        values = self._stock_card_move_get(product_id, return_values=True)
+        return values.get('product_qty')
 
     @api.multi
     def action_view_moves(self):
