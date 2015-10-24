@@ -16,7 +16,7 @@ Features
 #. The field name in res.partner it's concatenated with the name, city, township (corregimiento) and phone number.
 
 E.g.:
-    * Carlos, Alcalde DÃaz, ALCALDE DIAZ, (507) 2680968
+    * Carlos, Alcalde Diaz, ALCALDE DIAZ, (507) 2680968
 
 Requirements:
 -------------
