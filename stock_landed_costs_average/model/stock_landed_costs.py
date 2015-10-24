@@ -192,6 +192,30 @@ class StockLandedCost(models.Model):
             move_id, gain_account_id, loss_account_id,
             valuation_account_id, amount, product_brw)
 
+    def create_deviation_accounting_entries(self, move_id, dct=None):
+        '''
+        This method books the losses or gains due to difference between old
+        average in product and the first computed average prior to apply
+        landing costs
+        '''
+        dct = dict(dct or {})
+        if not dct:
+            return True
+
+        product_obj = self.env['product.product']
+        get_qty = self.env['stock.card.product'].get_qty
+
+        for product_id, avg in dct.iteritems():
+            product_brw = product_obj.sudo().browse(product_id)
+
+            # NOTE: if there is a variation among avg and standard_price set on
+            # product new Journal Entry Lines shall be created
+            qty = get_qty(product_id)
+            self._create_deviation_accounting_entries(
+                move_id, product_id,
+                product_brw.standard_price, avg, qty)
+        return True
+
     @api.multi
     def _create_cogs_accounting_entries(
             self, line, move_id, old_avg, new_avg, qty):
@@ -273,7 +297,7 @@ class StockLandedCost(models.Model):
             account_id=cogs_account_id)
         credit_line = dict(
             credit_line,
-            name=(line.name + ": " + _(' [COGS] already out')),
+            name=(line.name + ": " + _(' COGS')),
             account_id=debit_account_id)
         if diff > 0:
             debit_line['debit'] = diff
@@ -286,7 +310,7 @@ class StockLandedCost(models.Model):
         aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
         return True
 
-    def compute_average_cost(self, move_id, dct=None):
+    def compute_average_cost(self, dct=None):
         '''
         This method updates standard_price field in products with costing
         method equal to average
@@ -296,20 +320,10 @@ class StockLandedCost(models.Model):
             return True
 
         product_obj = self.env['product.product']
-        get_qty = self.env['stock.card.product'].get_qty
 
         for product_id, avg in dct.iteritems():
             # Write the standard price, as SUDO because a warehouse
             # manager may not have the right to write on products
-            product_brw = product_obj.sudo().browse(product_id)
-
-            # NOTE: if there is a variation among avg and standard_price set on
-            # product new Journal Entry Lines shall be created
-            qty = get_qty(product_id)
-            self._create_deviation_accounting_entries(
-                move_id, product_id,
-                product_brw.standard_price, avg, qty)
-
             product_obj.sudo().browse(product_id).write(
                 {'standard_price': avg})
         return True
@@ -337,6 +351,7 @@ class StockLandedCost(models.Model):
                 self._cr, self._uid, cost, context=ctx)
             quant_dict = {}
             prod_dict = {}
+            first_avg = {}
             prod_qty = {}
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
@@ -344,7 +359,9 @@ class StockLandedCost(models.Model):
                 product_id = line.product_id
                 if product_id.cost_method == 'average':
                     if product_id.id not in prod_dict:
-                        prod_dict[product_id.id] = get_average(product_id.id)
+                        avg = get_average(product_id.id)
+                        prod_dict[product_id.id] = avg
+                        first_avg[product_id.id] = avg
                     if product_id.id not in prod_qty:
                         prod_qty[product_id.id] = get_qty(product_id.id)
 
@@ -381,7 +398,8 @@ class StockLandedCost(models.Model):
 
                 self._create_accounting_entries(line, move_id, qty_out)
 
-            cost.compute_average_cost(move_id, prod_dict)
+            cost.create_deviation_accounting_entries(move_id, first_avg)
+            cost.compute_average_cost(prod_dict)
 
             cost.write(
                 {'state': 'done', 'account_move_id': move_id})
