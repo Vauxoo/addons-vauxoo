@@ -10,6 +10,7 @@
     "depends": [
         "account",
         "stock_landed_costs",
+        "stock_deviation_account",
         "purchase",
         "mrp",
     ],
