@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api, _
-from openerp import osv
 from openerp.exceptions import except_orm, Warning as UserError
 import openerp.addons.decimal_precision as dp
 from openerp.tools import float_round
@@ -177,13 +176,12 @@ class StockLandedCost(models.Model):
             self._cr, self._uid, product_brw.product_tmpl_id.id, context=ctx)
         valuation_account_id = accounts['property_stock_valuation_account_id']
 
-        # TODO: Accounts for gains & losses because of change in inventory
-        # valuation show be set in company
-        gain_account_id = accounts['stock_account_output']
-        loss_account_id = accounts['stock_account_input']
+        company_brw = self.env.user.company_id
+        gain_account_id = company_brw.gain_inventory_deviation_account_id.id
+        loss_account_id = company_brw.loss_inventory_deviation_account_id.id
 
         if not gain_account_id or not loss_account_id:
-            raise osv.except_osv(
+            raise except_orm(
                 _('Error!'),
                 _('Please configure Gain & Loss Inventory Valuation in your'
                   ' Company'))
@@ -219,7 +217,7 @@ class StockLandedCost(models.Model):
             cost_product.categ_id.property_account_expense_categ.id
 
         if not credit_account_id:
-            raise osv.except_osv(
+            raise except_orm(
                 _('Error!'),
                 _('Please configure Stock Expense Account for product: %s.') %
                 (cost_product.name))
