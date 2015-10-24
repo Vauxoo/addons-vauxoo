@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="report_translated">
+            <t t-foreach="doc_ids" t-as="doc_id">
+                <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang','crm_claim_summary_report.summary_report')"/>
+            </t>
+        </template>
+        <template id="summary_report">
+            <t t-set="body_classname" t-value="'container'"/>
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="crm_claim_summary_report.layout">
+                    <t t-set="page_copy_title" t-value="'customer'"/>
+                    <t t-call="crm_claim_summary_report.claim_copy_page"/>
+                    <t t-set="page_copy_title" t-value="'internal'"/>
+                    <t t-call="crm_claim_summary_report.claim_copy_page"/>
+                    <t t-call="crm_claim_summary_report.product_labels"/>
+                </t>
+            </t>
+        </template>
+        <template id="claim_copy_page">
+            <t t-call="crm_claim_summary_report.claim_external_layout">
+                <div class="page page-summary-report" >
+                    <t t-set="claim" t-value="doc"/>
+                    <t t-call="crm_claim_summary_report.page_summary_report" />
+                </div>
+            </t>
+        </template>
+        <template id="product_labels">
+            <t t-call="crm_claim_summary_report.product_external_layout">
+                <div class="page">
+                    <t t-set="claim" t-value="doc"/>
+                    <t t-call="crm_claim_summary_report.product_on_claim" />
+                </div>
+            </t>
+        </template>
+        <template id="page_summary_report">
+            <div class="row">
+            <!-- Claim important information -->
+                <h2>
+                    Claim No.<span>: </span><span t-field="claim.code"/>
+                </h2>
+                <h3 t-if="claim.name">
+                    <span t-field="claim.name"/>
+                </h3><br/><br/>
+            </div>
+            <div class="row" >
+                <div class="col-xs-2" style="text-align:right;">
+                    <t t-if="claim.partner_id.customer">
+                        <p class="row" style="font-size:12px"><strong>Customer Name<span>:</span></strong></p>
+                    </t>
+                        <p class="row" style="font-size:12px" ><strong>Delivery Address<span>: </span></strong></p>
+                </div>
+                <!-- DATA -->
+                <div class="col-xs-2">
+
+                    <t t-if="claim.partner_id.customer">
+                        <t t-if="claim.claim_type">
+                            <p t-field="claim.partner_id.name" style="font-size:12px"/>
+                        </t>
+                    </t>
+
+                    <t t-if="not claim.pick and claim.delivery_address_id">
+                        <p style="font-size:12px;white-space: nowrap;">
+                                <t t-if="claim.delivery_address_id.street" >
+                                    <span t-field="claim.delivery_address_id.street"/>,
+                                </t>
+                                <t t-if="claim.delivery_address_id.street2">
+                                    <span t-field="claim.delivery_address_id.street2"/>,
+                                </t>
+                                <t t-if="claim.delivery_address_id.city">
+                                    <span t-field="claim.delivery_address_id.city"/>,
+                                </t>
+                                <t t-if="claim.delivery_address_id.state_id.name">
+                                    <span t-field="claim.delivery_address_id.state_id.name"/>
+                                </t>
+                                <t t-if="claim.delivery_address_id.zip">
+                                    <span t-field="claim.delivery_address_id.zip"/>
+                                </t>
+                                <t t-if="claim.delivery_address_id.country_id.name">
+                                    <span t-field="claim.delivery_address_id.country_id.name"/>
+                                </t>
+                            </p>
+                    </t>
+                    <t t-if="claim.pick">
+                        <p style="font-size:12px; white-space: nowrap;"><span>(</span>Pick the product in the store<span>)</span></p>
+                    </t>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-2" style="text-align:right;">
+                    <t t-if="claim.email_from">
+                        <p class="row" style="font-size:12px"><strong>Email<span>: </span></strong></p>
+                    </t>
+                    <t t-if="claim.date">
+                        <p class="row" style="font-size:12px"> <strong>Claim Date<span>: </span></strong> </p>
+                    </t>
+                </div>
+                <!-- DATA -->
+                <div class="col-xs-2">
+                    <t t-if="claim.email_from">
+
+                        <p t-field="claim.email_from" style="font-size:12px; white-space: nowrap;"/>
+
+                    </t>
+                    <t t-if="claim.date">
+                        <p t-field="claim.date" t-field-options='{"format": "dd/MM/yyyy"}' style="font-size:12px; white-space: nowrap;"/>
+                    </t>
+                </div>
+                <div class="col-xs-2" style="text-align:right;">
+                    <t t-if="claim.email_from">
+                        <p class="row" style="font-size:12px"><strong>Phone Number<span>: </span></strong></p>
+                    </t>
+                    <t t-if="claim.date">
+                        <p class="row" style="font-size:12px"> <strong>Date Deadline<span>: </span></strong> </p>
+                    </t>
+                </div>
+                <!-- DATA -->
+                <div class="col-xs-2">
+                    <t t-if="claim.email_from">
+
+                        <p t-field="claim.partner_phone" style="font-size:12px; white-space: nowrap;"/>
+
+                    </t>
+                    <t t-if="claim.date">
+                        <p t-field="claim.date_deadline" t-field-options='{"format": "dd/MM/yyyy"}' style="font-size:12px; white-space: nowrap;"/>
+                    </t>
+                </div>
+                <div class="col-xs-2" style="text-align:right;">
+                    <t t-if="claim.email_from">
+                        <p class="row" style="font-size:12px"><strong>Responsible<span>: </span></strong></p>
+                    </t>
+                    <t t-if="claim.date">
+                        <p  class="row" style="font-size:12px"> <strong>Print Date<span>: </span></strong> </p>
+                    </t>
+                </div>
+
+                <div class="col-xs-2" style="padding-right:5px; text-align:left;">
+                        <t t-if="claim.email_from">
+
+                            <p t-field="claim.user_id.name" style="font-size:12px; white-space: nowrap;"/>
+
+                        </t>
+                        <t t-if="claim.date">
+                            <p t-esc="time.strftime('%d/%m/%Y')" t-field-options='{"format": "dd/MM/yyyy"}' style="font-size:12px; white-space: nowrap;"/>
+                        </t>
+                </div>
+            </div>
+            <div class="row table-product-info">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Product</th>
+                            <th>Description</th>
+                            <th>Serial/Lot</th>
+                            <th>Invoice</th>
+                            <th>Claim</th>
+                            <th>Warranty</th>
+                        </tr>
+                    </thead>
+                    <tbody class="body-product-info">
+                        <tr t-foreach="claim.claim_line_ids" t-as="line_id">
+                            <td class="col-xs-1"><span t-field="line_id.number"/></td>
+                            <td class="col-xs-3"><t t-if="line_id.product_id.default_code"> <span t-field="line_id.product_id.default_code"></span> - </t>
+                            <span t-field="line_id.product_id.name"/></td>
+                            <td class="col-xs-3"><span t-field="line_id.claim_origin"/></td>
+                            <td class="col-xs-1"><span t-field="line_id.prodlot_id.ref"/></td>
+                            <td class="col-xs-1"><span t-field="line_id.invoice_line_id.invoice_id.number"/></td>
+                            <td class="col-xs-1"><span t-field="line_id.name"/></td>
+                            <td class="col-xs-1"><span t-field="line_id.warning"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+        <template id="product_on_claim">
+            <t t-foreach="claim.claim_line_ids" t-as="line">
+                <div style="margin-top:20px; border:1px dotted black">
+                    <div class="row" >
+                        <div class="col-xs-3" style="width:50%;">
+                            <h2>RMA Line No.<span>: </span></h2>
+                            <p>
+                                <h2 style="margin-top:10px;" t-field="line.number"/>
+                            </p>
+                        </div>
+                        <div class="col-xs-3" style="width:50%;">
+                            <p>
+                                <h3>RMA No.<span>: </span><span t-field="line.claim_id.code"/></h3>
+                            </p>
+                            <p>
+
+                                <h3>Responsible<span>: </span><span t-field="line.claim_id.user_id.name"/></h3>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <t t-if="line.product_id.default_code">
+                                <p class="list-group-item-text" >
+                                    <strong>Internal Code<span>: </span></strong><span t-field="line.product_id.default_code"/>
+                                </p>
+                                <p class="list-group-item-text"><strong>Product<span>: </span></strong><span t-field="line.product_id.name"/></p>
+                            </t>
+                        </div>
+                        <div class="col-xs-3">
+                            <p class="list-group-item-text"><strong>Serial/Lot Number<span>: </span></strong><span t-field="line.prodlot_id.ref"/></p>
+                            <p class="list-group-item-text"><strong>Priority<span>: </span></strong><span t-field="line.priority"/></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="list-group-item-text"><strong>Customer description<span>: </span></strong>
+                                <span t-field="line.claim_diagnosis"/>This is a very long long description for what customer was doing at this time, I don't know what else to say for this, please help me to say something useful and funny, this is not anymore
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <report
+            id="claim_summary_report"
+            model="crm.claim"
+            string="Claim Summary Report"
+            name="crm_claim_summary_report.report_translated"
+            file="crm_claim_summary_report.report_translated"
+            report_type="qweb-pdf"/>
+
+        <record id="claim_summary_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report.paperformat_us"/>
+        </record>
+    </data>
+</openerp>
