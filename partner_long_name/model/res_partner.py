@@ -32,7 +32,10 @@ class ResPartner(models.Model):
 
     def name_get(self, cr, user, ids, context=None):
         """
-        overwrite openerp method like the one for res.partner model.
+        Because there is a high possibility to get customers or partners
+        with the same name, is really important to show more information in a
+        many2one search. So, there added x, y and z data to
+        make it possible. For e.g.: city, township and phone.
         """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
