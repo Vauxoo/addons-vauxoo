@@ -107,7 +107,10 @@
         var $select = $("select[name='district_id']");
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-state_id="+($(this).val() || 0)+"]").show().size();
-        //$select.parent().toggle(nb>=1);
+        $select.val(0);
+        $("select[name='township_id']").val(0);
+        $("select[name='hood_id']").val(0);
+
        });
     $("select[name='state_id']").change();
 
@@ -115,7 +118,8 @@
         var $select = $("select[name='township_id']");
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-district_id="+($(this).val() || 0)+"]").show().size();
-        //$select.parent().toggle(nb>=1);
+        $select.val(0);
+        $("select[name='hood_id']").val(0);
        });
     $("select[name='district_id']").change();
 
@@ -123,7 +127,7 @@
         var $select = $("select[name='hood_id']");
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-township_id="+($(this).val() || 0)+"]").show().size();
-        //$select.parent().toggle(nb>=1);
+        $select.val(0);
        });
     $("select[name='township_id']").change();
 
@@ -133,7 +137,6 @@
         var $select = $("select[name='shipping_district_id']");
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-state_id="+($(this).val() || 0)+"]").show().size();
-        //$select.parent().toggle(nb>=1);
        });
     $("select[name='shipping_state_id']").change();
 
@@ -141,7 +144,6 @@
         var $select = $("select[name='shipping_township_id']");
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-district_id="+($(this).val() || 0)+"]").show().size();
-        //$select.parent().toggle(nb>=1);
        });
     $("select[name='shipping_district_id']").change();
 
@@ -149,7 +151,6 @@
         var $select = $("select[name='shipping_hood_id']");
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-township_id="+($(this).val() || 0)+"]").show().size();
-        //$select.parent().toggle(nb>=1);
        });
     $("select[name='shipping_township_id']").change();
 
