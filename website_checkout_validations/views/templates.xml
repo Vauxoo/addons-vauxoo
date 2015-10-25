@@ -50,12 +50,14 @@
                       </label>
                         <input type="text" placeholder="TIN" name="vat_alone" class="form-control" t-att-value="checkout.get('vat_alone')"/>
                   </div>
-                  <div class="form-group col-lg-2">
-                      <label class="control-label" for="vat_dv" style="font-weight: normal">
-                        DV
-                      </label>
-                        <input type="text" maxlength="2" placeholder="Check Digit" name="vat_dv" class="form-control" t-att-value="checkout.get('vat_dv')"/>
-                  </div>
+                  <div class="col-lg-2">
+                    <div class="form-group col-lg-9">
+                        <label class="control-label" for="vat_dv" style="font-weight: normal">
+                          DV
+                        </label>
+                          <input type="text" maxlength="2" placeholder="Check Digit" name="vat_dv" class="form-control" t-att-value="checkout.get('vat_dv')"/>
+                    </div>
+                </div>
             </div>
 
         </xpath>
