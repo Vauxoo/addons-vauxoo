@@ -25,7 +25,7 @@
       var selects = [$("select[name='state_id']"),
                        $("select[name='district_id']"),
                        $("select[name='township_id']"),
-                       $("select[name='hood_id']")]
+                       $("select[name='hood_id']")];
          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
           $("div[id=zip]").hide();
