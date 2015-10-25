@@ -6,20 +6,21 @@ Partner Long Name
 
 New partner_long_name module to discriminate partners with the same name in a preselection field.
 
-When you create some customer, the data of city, and phone will be concatenated to name.
+When you create some customer, the data of city, township (corregimiento) and phone will be concatenated to name.
 
 
 
 Features
 --------
 
-#. The field name in res.partner it's concatenated with the name, city and phone number.
+#. The field name in res.partner it's concatenated with the name, city township and phone number.
 
 E.g.:
-    * Carlos, Alcalde Diaz, (507) 2680968
+    * Carlos | Alcalde Diaz | ALCALDE DIAZ | (507) 2680968
 
 Requirements:
 -------------
+- Go to https://github.com/Vauxoo/odoo-panama/ and download the repo in order to install l10n_pa_localization module.
 - Go to https://github.com/Vauxoo/addons-vauxoo and download the repo in order to install partner_long_name module.
 
 Contributors
