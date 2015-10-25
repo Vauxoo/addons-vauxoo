@@ -100,7 +100,7 @@
                             </t>
                         </select>
                 </div>
-                
+
             </xpath>
             <!--> Shipping form, Adding panama Fields<-->
             <xpath expr="//div/select[@name='shipping_state_id']/.." position="after">
@@ -136,7 +136,7 @@
                             </t>
                         </select>
                 </div>
-                
+
             </xpath>
 
         <!-- Field validations, renders a small badge on the right side of the label -->
@@ -150,7 +150,7 @@
                       <t t-if="error.get('zip_id')"><span class="label label-danger"> Required </span></t>
         </xpath>
         <xpath expr="//input[@name='city']" position="replace">
-                      <select name="zip_id" class="form-control">
+                      <select name="zip_id" t-attf-class="form-control #{error.get('zip_id') and 'has-error' or ''}">
                           <option value="">City...</option>
                           <t t-foreach="cities or []" t-as="city">
                               <option t-att-value="city.id" t-att-selected="city.id == checkout.get('zip_id')"><t t-esc="city.city"/></option>
