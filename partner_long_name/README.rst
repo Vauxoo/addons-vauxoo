@@ -6,17 +6,17 @@ Partner Long Name
 
 New partner_long_name module to discriminate partners with the same name in a preselection field.
 
-When you create some customer, the data of city, township (corregimiento) and phone will be concatenated to name.
+When you create some customer, the data of city, and phone will be concatenated to name.
 
 
 
 Features
 --------
 
-#. The field name in res.partner it's concatenated with the name, city, township (corregimiento) and phone number.
+#. The field name in res.partner it's concatenated with the name, city and phone number.
 
 E.g.:
-    * Carlos, Alcalde Diaz, ALCALDE DIAZ, (507) 2680968
+    * Carlos, Alcalde Diaz, (507) 2680968
 
 Requirements:
 -------------

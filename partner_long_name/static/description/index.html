@@ -9,7 +9,7 @@
    Partner Long Name
   </h2>
   <p class="oe_mt32">
-   This module concatenates costumer data (city, township and phone) to the customer field name.
+   This module concatenates costumer data (city and phone) to the customer field name.
   </p>
   <p class="oe_mt32">
    This is in order to depreciate clients with the same name in a preselection select, like sale orders.
@@ -17,10 +17,10 @@
    <strong>
     Technical Description:
    </strong>
-   This module inherit from res_partner and add method to override customer name:
+   This module inherit from res_partner and the following method to override customer name:
   </p>
   <pre class="literal-block">
-   def _name_get
+   def name_get
   </pre>
  </div>
 </section>

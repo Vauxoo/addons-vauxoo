@@ -13,7 +13,6 @@
     'category': '',
     'depends': [
         'base',
-        'l10n_pa_localization',
     ],
     'data': [
     ],
