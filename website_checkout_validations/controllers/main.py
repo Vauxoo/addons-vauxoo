@@ -151,13 +151,19 @@ class WebsiteSaleInh(website_sale):
         return values
 
     mandatory_billing_fields = [
-        "name", "phone", "email", "street2", "zip_id", "country_id"]
-    optional_billing_fields = [
-        "street",
-        "state_id",
+        "name",
+        "phone",
+        "email",
+        "street2",
+        "zip_id",
+        "country_id",
         "district_id",
         "township_id",
         "hood_id",
+        "state_id",
+        ]
+    optional_billing_fields = [
+        "street",
         "vat", "vat_dv", "vat_alone", "vat_subjected",
         "zip", "mobile", "is_company", "zip_id"]
     mandatory_shipping_fields = [
