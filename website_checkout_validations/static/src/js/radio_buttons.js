@@ -22,40 +22,40 @@
 
     build: function(debug){
       // THIS CODE HIDES OR SHOWS THE ZIP IF PANAMA SELECTED OR NOT
+      var selects = [$("select[name='state_id']"),
+                       $("select[name='district_id']"),
+                       $("select[name='township_id']"),
+                       $("select[name='hood_id']")]
          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
           $("div[id=zip]").hide();
           $("div[id=ruc_values]").css('visibility','visible');
-          $("select[name='state_id']").parent().toggle(true);
-          $("select[name='district_id']").parent().toggle(true);
-          $("select[name='township_id']").parent().toggle(true);
-          $("select[name='hood_id']").parent().toggle(true);
+          $.each(selects, function(index, select){
+            select.parent().toggle(true);
+          });
          }
          else{
           $("div[id=ruc_values]").css('visibility','hidden');
-          $("select[name='state_id']").parent().toggle(false);
-          $("select[name='district_id']").parent().toggle(false);
-          $("select[name='township_id']").parent().toggle(false);
-          $("select[name='hood_id']").parent().toggle(false);
+          $.each(selects, function(index, select){
+            select.parent().toggle(false);
+          });
          }
        $("select[name=country_id]").click(function(){
          if ($("select[name=country_id]").find(":selected").attr("id") == 'PA')
          {
           $("div[id=zip]").hide();
           $("div[id=ruc_values]").css('visibility','visible');
-          $("select[name='state_id']").parent().toggle(true);
-          $("select[name='district_id']").parent().toggle(true);
-          $("select[name='township_id']").parent().toggle(true);
-          $("select[name='hood_id']").parent().toggle(true);
+          $.each(selects, function(index, select){
+            select.parent().toggle(true);
+          });
          }
          else
-         {  
+         {
           $("div[id=zip]").show();
           $("div[id=ruc_values]").css('visibility','hidden');
-          $("select[name='state_id']").parent().toggle(false);
-          $("select[name='district_id']").parent().toggle(false);
-          $("select[name='township_id']").parent().toggle(false);
-          $("select[name='hood_id']").parent().toggle(false);
+          $.each(selects, function(index, select){
+            select.parent().toggle(false);
+          });
          }
        });
        // THIS CODE HIDES THE COMPANY INPUT IF PARTNER IS PARTICULAR
@@ -108,7 +108,7 @@
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-state_id="+($(this).val() || 0)+"]").show().size();
         //$select.parent().toggle(nb>=1);
-       });       
+       });
     $("select[name='state_id']").change();
 
     $("select[name='district_id']").change(function(){
@@ -116,7 +116,7 @@
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-district_id="+($(this).val() || 0)+"]").show().size();
         //$select.parent().toggle(nb>=1);
-       });       
+       });
     $("select[name='district_id']").change();
 
     $("select[name='township_id']").change(function(){
@@ -124,7 +124,7 @@
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-township_id="+($(this).val() || 0)+"]").show().size();
         //$select.parent().toggle(nb>=1);
-       });       
+       });
     $("select[name='township_id']").change();
 
     //JS for shipping fields
@@ -134,7 +134,7 @@
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-state_id="+($(this).val() || 0)+"]").show().size();
         //$select.parent().toggle(nb>=1);
-       });       
+       });
     $("select[name='shipping_state_id']").change();
 
     $("select[name='shipping_district_id']").change(function(){
@@ -142,7 +142,7 @@
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-district_id="+($(this).val() || 0)+"]").show().size();
         //$select.parent().toggle(nb>=1);
-       });       
+       });
     $("select[name='shipping_district_id']").change();
 
     $("select[name='shipping_township_id']").change(function(){
@@ -150,10 +150,10 @@
         $select.find("option:not(:first)").hide();
         var nb = $select.find("option[data-township_id="+($(this).val() || 0)+"]").show().size();
         //$select.parent().toggle(nb>=1);
-       });       
+       });
     $("select[name='shipping_township_id']").change();
 
-    
+
     },
 
   });

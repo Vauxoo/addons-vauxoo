@@ -97,7 +97,7 @@
                 <div t-attf-class="form-group #{error.get('hood_id') and 'has-error' or ''} col-lg-6" sequence="1">
                     <label class="control-label" for="hood_id" style="font-weight: normal">Neighborhood</label>
                         <select name="hood_id" class="form-control">
-                            <option value="">select...</option>
+                            <option value="0">select...</option>
                             <t t-foreach="hoods or []" t-as="hood">
                                 <option t-att-value="hood.id" style="display:none;" t-att-data-township_id="hood.township_id.id"
                                 t-att-selected="hood.id == checkout.get('hood_id')"><t t-esc="hood.name"/></option>
@@ -111,7 +111,7 @@
                 <div t-attf-class="form-group #{error.get('shipping_district_id') and 'has-error' or ''} col-lg-6" sequence="1">
                     <label class="control-label" for="shipping_district_id" style="font-weight: normal">District</label>
                         <select name="shipping_district_id" class="form-control">
-                            <option value="">select...</option>
+                            <option value="0">select...</option>
                             <t t-foreach="districts or []" t-as="district">
                                 <option t-att-value="district.id" style="display:none;" t-att-data-state_id="district.state_id.id"
                                 t-att-selected="district.id == checkout.get('shipping_district_id')"><t t-esc="district.name"/></option>
@@ -122,7 +122,7 @@
                 <div t-attf-class="form-group #{error.get('shipping_township_id') and 'has-error' or ''} col-lg-6" sequence="1">
                     <label class="control-label" for="shipping_township_id" style="font-weight: normal">Township</label>
                         <select name="shipping_township_id" class="form-control">
-                            <option value="">select...</option>
+                            <option value="0">select...</option>
                             <t t-foreach="townships or []" t-as="township">
                                 <option t-att-value="township.id" style="display:none;" t-att-data-district_id="township.district_id.id"
                                 t-att-selected="township.id == checkout.get('shipping_township_id')"><t t-esc="township.name"/></option>
@@ -133,7 +133,7 @@
                 <div t-attf-class="form-group #{error.get('shipping_hood_id') and 'has-error' or ''} col-lg-6" sequence="1">
                     <label class="control-label" for="shipping_hood_id" style="font-weight: normal">Neighborhood</label>
                         <select name="shipping_hood_id" class="form-control">
-                            <option value="">select...</option>
+                            <option value="0">select...</option>
                             <t t-foreach="hoods or []" t-as="hood">
                                 <option t-att-value="hood.id" style="display:none;" t-att-data-township_id="hood.township_id.id"
                                 t-att-selected="hood.id == checkout.get('shipping_hood_id')"><t t-esc="hood.name"/></option>
