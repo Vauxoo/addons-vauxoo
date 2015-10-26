@@ -68,6 +68,16 @@ class WebsiteSale(website_sale):
                     category=category and int(category),
                     search=search)
         brands = brand_obj.browse(cr, uid, brand_ids, context=context)
+
+        parent_category_ids = []
+        if category:
+            parent_category_ids = [category.id]
+            current_category = category
+            while current_category.parent_id:
+                parent_category_ids.append(current_category.parent_id.id)
+                current_category = current_category.parent_id
+
+        res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['brands'] = brands
         res.qcontext['products'] = new_products
         res.qcontext['price_ranges'] = ranges
