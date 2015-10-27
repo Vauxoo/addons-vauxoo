@@ -10,6 +10,7 @@
         "base",
         "account",
         "mrp",
+        "account_move_line_production",
     ],
     "demo": [
         'demo/demo.xml',
