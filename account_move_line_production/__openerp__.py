@@ -25,7 +25,7 @@
 ##############################################################################
 #'account_view.xml',
 {
-    "name": "Account relation move",
+    "name": "Account Move Line Production",
     "version": "1.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
