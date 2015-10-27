@@ -38,12 +38,13 @@ class WebsiteSeoMetadata(models.Model):
         help='This field shows the decimal time when a product is published'
         'on the website.')
 
-    @api.one
+    @api.multi
     def write(self, values):
-        if values.get('website_published', False):
-            now = datetime.now()
-            decimal_time = time.mktime(now.timetuple())
-            values['decimal_time'] = decimal_time
+        for record in self:
+            if values.get('website_published', False):
+                now = datetime.now()
+                self.decimal_time = time.mktime(now.timetuple())
+                values['decimal_time'] = self.decimal_time
         return super(WebsiteSeoMetadata, self).write(values)
 
 
