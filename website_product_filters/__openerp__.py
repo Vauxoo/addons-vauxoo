@@ -13,6 +13,8 @@
     ],
     "demo": [],
     "data": [
+        'security/price_ranges_security.xml',
+        'security/ir.model.access.csv',
         'views/product_price_ranges_view.xml',
         'views/assets.xml',
         'views/templates.xml',
