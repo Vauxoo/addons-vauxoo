@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* account_relation_move
+#	* account_move_line_production
 #
 msgid ""
 msgstr ""
@@ -15,30 +15,30 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: account_relation_move
-#: model:ir.model,name:account_relation_move.model_account_move_line
+#. module: account_move_line_production
+#: model:ir.model,name:account_move_line_production.model_account_move_line
 msgid "Journal Items"
 msgstr ""
 
-#. module: account_relation_move
+#. module: account_move_line_production
 #: field:account.move,production_id:0
 #: field:account.move.line,production_id:0
 msgid "Production ID"
 msgstr ""
 
-#. module: account_relation_move
-#: model:ir.model,name:account_relation_move.model_account_move
+#. module: account_move_line_production
+#: model:ir.model,name:account_move_line_production.model_account_move
 msgid "Account Entry"
 msgstr ""
 
-#. module: account_relation_move
+#. module: account_move_line_production
 #: field:account.move,stock_move_id:0
 #: field:account.move.line,stock_move_id:0
 msgid "Stock move ID"
 msgstr ""
 
-#. module: account_relation_move
-#: model:ir.model,name:account_relation_move.model_stock_move
+#. module: account_move_line_production
+#: model:ir.model,name:account_move_line_production.model_stock_move
 msgid "Stock Move"
 msgstr ""
 
