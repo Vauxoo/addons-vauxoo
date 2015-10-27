@@ -28,6 +28,7 @@
         "views/warehouse_receipt.xml",
         "views/stock_move_views.xml",
         "views/stock_picking_views.xml",
+        "views/res_config_views.xml",
     ],
     "demo": [
         "demo/stock_move.yml",

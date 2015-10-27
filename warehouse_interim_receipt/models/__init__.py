@@ -11,3 +11,4 @@
 
 from . import warehouse_receipt
 from . import stock_move
+from . import res_config

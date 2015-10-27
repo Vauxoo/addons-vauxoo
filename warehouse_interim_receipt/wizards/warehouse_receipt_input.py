@@ -38,6 +38,12 @@ class WarehouseReceiptInput(models.TransientModel):
     whr_filter = fields.Boolean(
         string='Generate Filter',
         help='Generates the filter to build the report')
+    location_id = fields.Many2one(
+        'stock.location', 'Source Location',
+        help='Source location of the moves to show')
+    location_dest_id = fields.Many2one(
+        'stock.location', 'Destination Location',
+        help='Destination location of the moves to show')
 
     @api.multi
     def view_moves(self):
@@ -72,6 +78,10 @@ class WarehouseReceiptInput(models.TransientModel):
         model = 'stock.move'
         domain = [
             ('purchase_order_id', 'in', self.purchase_order_ids.mapped('id'))]
+        if self.location_id:
+            domain.append(('location_id', '=', self.location_id.id))
+        if self.location_dest_id:
+            domain.append(('location_dest_id', '=', self.location_dest_id.id))
         context = {'group_by': ['purchase_order_id', 'warehouse_receipt_id']}
         return name, domain, model, context
 
