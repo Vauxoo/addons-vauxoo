@@ -110,7 +110,6 @@ warehouse_interim_receipt%0Aversion:%20
 TODO
 ====
 
-- Manage a source/destination location in the warehouse receipt wizard.
 - This module add a ``purchase_order_id`` field to the ``stock.move``. This
   could be a generic functionality need to be consider to be add in a new
   generic module.

@@ -38,6 +38,10 @@ class WarehouseReceiptInput(models.TransientModel):
     whr_filter = fields.Boolean(
         string='Generate Filter',
         help='Generates the filter to build the report')
+    picking_type_id = fields.Many2one(
+        'stock.picking.type',
+        string='Picking Type',
+        help='Type of picking to filter')
 
     @api.multi
     def view_moves(self):
@@ -72,6 +76,8 @@ class WarehouseReceiptInput(models.TransientModel):
         model = 'stock.move'
         domain = [
             ('purchase_order_id', 'in', self.purchase_order_ids.mapped('id'))]
+        if self.picking_type_id:
+            domain.append(('picking_type_id', '=', self.picking_type_id.id))
         context = {'group_by': ['purchase_order_id', 'warehouse_receipt_id']}
         return name, domain, model, context
 
