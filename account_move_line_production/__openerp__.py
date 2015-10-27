@@ -1,13 +1,14 @@
 # coding: utf-8
+
 {
-    "name": "Account relation move",
+    "name": "Account Move Line Production",
     "version": "1.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        'account_move_line_production',
+        "mrp"
     ],
     "demo": [],
     "data": [],
