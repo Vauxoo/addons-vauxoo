@@ -132,35 +132,6 @@
           </xpath>
         </template>
 
-        <!-- TEMPLATE TO SHOW BRAND LIST -->
-        <template id="product_brands_column" inherit_id="website_sale.products" active="False" customize_show="True" name="Product Brands">
-          <xpath expr="//div[@id='products_grid_before']" position="inside">
-              <div class="dropdown">
-                  <p class="active">Select a Brand</p>
-                  <button class="btn btn-default dropdown-toggle" type="button" id="brandDropDown" data-toggle="dropdown" aria-haspopup="true">Select a Brand
-                  <span class="caret"></span>
-                  </button>
-                      <ul class="dropdown-menu" aria-labelledby="brandDropDown">
-                      <li t-att-class=" '' if brand else 'brand active' "><a t-att-href="keep('/shop',brand=0)"><b>All Brands</b></a></li>
-                      <t t-foreach="brands" t-as="b">
-                          <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
-                                  <label style="margin: 0 20px;">
-                                  <input type="checkbox" name="attrib" t-att-value="'%s' % (b.id)" t-att-checked="'checked' if b.id == int(brand or 0) else ''"/>
-                                  <span style="font-weight: normal" t-field="b.name"/>
-                              </label>
-                          </li>
-                      </t>
-                      </ul>
-              </div>
-          </xpath>
-          <xpath expr="//div[@id='products_grid_before']" position="attributes">
-              <attribute name="class">col-md-3 hidden-xs</attribute>
-          </xpath>
-          <xpath expr="//div[@id='products_grid']" position="attributes">
-              <attribute name="class">col-md-9</attribute>
-          </xpath>
-        </template>
-
         <!-- TEMPLATE TO ADD DATA RATING TO EACH DIV -->
         <template id="product_div_rating" inherit_id="website_sale.products_list_view" active="True">
           <xpath expr="//div[@class='oe_product oe_list oe_product_cart']" position="attributes">
