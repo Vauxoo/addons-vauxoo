@@ -51,7 +51,7 @@ class MrpProduction(models.Model):
         if msg:
             raise UserError(msg)
 
-        return super(MrpProduction, self).test_production_done()
+        return True
 
     @api.multi
     def test_production_done(self):
