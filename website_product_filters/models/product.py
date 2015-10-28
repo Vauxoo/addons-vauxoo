@@ -50,7 +50,7 @@ class WebsiteSeoMetadata(models.Model):
                 self.decimal_time = time.mktime(now.timetuple())
                 values['decimal_time'] = self.decimal_time
         return super(WebsiteSeoMetadata, self).write(
-            cr, uid, [ids], values)
+            cr, uid, ids, values)
 
 
 class WebsiteProductMetadata(models.Model):
