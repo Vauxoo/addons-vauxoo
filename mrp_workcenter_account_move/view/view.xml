@@ -1,5 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
+        <record id="mrp_routing_journal_form_view" model="ir.ui.view">
+            <field name="name">mrp.routing.journal.form.view</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_form_view"/>
+            <field name="model">mrp.routing</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="journal_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
