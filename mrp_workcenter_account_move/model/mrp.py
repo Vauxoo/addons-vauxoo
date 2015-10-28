@@ -1,6 +1,7 @@
 # coding: utf-8
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
 
 
 class MrpProduction(models.Model):
@@ -12,10 +13,15 @@ class MrpProduction(models.Model):
 
     @api.multi
     def test_production_done(self):
-        # TODO: make a check on costs_general_account_id in workcenter_lines as
-        # this will become mandatory by using this module and journal_id in
-        # routings as it will be used to create Journal Entries
         self.ensure_one()
+        if not self.routing_id:
+            return super(MrpProduction, self).test_production_done()
+
+        if not self.routing_id.journal_id:
+            raise UserError(
+                    _('Please set a Journal in Routing: {routing} to book '
+                      'Production Cost Journal Entries'.format(
+                          routing=self.routing_id.name)))
         return super(MrpProduction, self).test_production_done()
 
     @api.v7
