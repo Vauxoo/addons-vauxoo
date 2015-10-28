@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from openerp import models, api
+from openerp import models, fields, api
 
 
 class MrpProduction(models.Model):
@@ -25,3 +25,15 @@ class MrpProduction(models.Model):
         @return: Calculated amount.
         """
         return super(MrpProduction, self)._costs_generate(cr, uid, production)
+
+
+class MrpRouting(models.Model):
+    """
+    For specifying the routings of Work Centers.
+    """
+    _inherit = 'mrp.routing'
+    journal_id = fields.Many2one(
+        'account.journal',
+        string='Journal',
+        readonly=False,
+        )
