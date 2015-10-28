@@ -12,16 +12,51 @@ class MrpProduction(models.Model):
     _description = 'Manufacturing Order'
 
     @api.multi
-    def test_production_done(self):
+    def test_accounting_setting(self):
         self.ensure_one()
         if not self.routing_id:
-            return super(MrpProduction, self).test_production_done()
+            return True
+
+        # TODO: Check for analytical accounts. At company level set attribute
+        analytical_account = True
+        msg = ''
+        msg_financial = _('Add Financial Account on Worcenter: {wc}\n')
+        msg_hour = _('Add Hour Analytical Account on Worcenter: {wc}\n')
+        msg_cycle = _('Add Cycle Analytical Account on Worcenter: {wc}\n')
+        msg_journal = _('Please set a Journal in Routing: {routing} to book '
+                        'Production Cost Journal Entries\n')
 
         if not self.routing_id.journal_id:
-            raise UserError(
-                    _('Please set a Journal in Routing: {routing} to book '
-                      'Production Cost Journal Entries'.format(
-                          routing=self.routing_id.name)))
+            msg += msg_journal.format(routing=self.routing_id.name)
+
+        for line in self.workcenter_lines:
+            wc = line.workcenter_id
+            hour_cost = line.hour * wc.costs_hour
+            cycle_cost = line.cycle * wc.costs_cycle
+
+            if any([hour_cost, cycle_cost]):
+                if not wc.costs_general_account_id:
+                    msg += msg_financial.format(wc=wc.name)
+
+            if not analytical_account:
+                continue
+
+            if hour_cost:
+                if not wc.costs_hour_account_id:
+                    msg += msg_hour.format(wc=wc.name)
+
+            if cycle_cost:
+                if not wc.costs_cycle_account_id:
+                    msg += msg_cycle.format(wc=wc.name)
+        if msg:
+            raise UserError(msg)
+
+        return super(MrpProduction, self).test_production_done()
+
+    @api.multi
+    def test_production_done(self):
+        self.ensure_one()
+        self.test_accounting_setting()
         return super(MrpProduction, self).test_production_done()
 
     @api.v7
