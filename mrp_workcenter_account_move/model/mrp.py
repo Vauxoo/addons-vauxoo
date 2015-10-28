@@ -10,6 +10,14 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order'
 
+    @api.multi
+    def test_production_done(self):
+        # TODO: make a check on costs_general_account_id in workcenter_lines as
+        # this will become mandatory by using this module and journal_id in
+        # routings as it will be used to create Journal Entries
+        self.ensure_one()
+        return super(MrpProduction, self).test_production_done()
+
     @api.v7
     def _costs_generate(self, cr, uid, production):
         """ Calculates total costs at the end of the production.
