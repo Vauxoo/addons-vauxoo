@@ -3,7 +3,7 @@
 from openerp import models, api
 
 
-class MrpProduction(models.TransientModel):
+class MrpProduction(models.Model):
     """
     Production Orders / Manufacturing Orders
     """
