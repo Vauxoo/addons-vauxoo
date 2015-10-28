@@ -68,8 +68,8 @@ class ProductTemplate(osv.osv):
             ".format(pids))
             res = cr.fetchall()
             for ret in res:
-                if self.browse(cr, SUPERUSER_ID,
-                    [ret[0]], context)[0].website_published:
+                if self.browse(cr, SUPERUSER_ID, [ret[0]],
+                               context)[0].website_published:
                     result[ids[0]].append(ret[0])
         return result
 
