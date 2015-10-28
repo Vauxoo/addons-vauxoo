@@ -44,15 +44,13 @@ class WebsiteSeoMetadata(models.Model):
         for record in ids:
             if values.get('views', False):
                 return super(WebsiteSeoMetadata, self).write(
-                        cr, SUPERUSER_ID, [record], values)
-
+                    cr, SUPERUSER_ID, [record], values)
             if values.get('website_published', False):
-
                 now = datetime.now()
                 self.decimal_time = time.mktime(now.timetuple())
                 values['decimal_time'] = self.decimal_time
         return super(WebsiteSeoMetadata, self).write(
-                    cr, uid, [record], values)
+            cr, uid, [ids], values)
 
 
 class WebsiteProductMetadata(models.Model):
