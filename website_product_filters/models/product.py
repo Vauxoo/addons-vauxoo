@@ -25,6 +25,7 @@
 from openerp import models, fields, api
 from datetime import datetime
 import time
+from openerp import SUPERUSER_ID
 
 
 class WebsiteSeoMetadata(models.Model):
@@ -38,14 +39,15 @@ class WebsiteSeoMetadata(models.Model):
         help='This field shows the decimal time when a product is published'
         'on the website.')
 
-    @api.multi
-    def write(self, values):
-        for record in self:
+    @api.cr_uid_ids_context
+    def write(self, cr, uid, ids, values, context=None):
+        for record in ids:
             if values.get('website_published', False):
                 now = datetime.now()
                 self.decimal_time = time.mktime(now.timetuple())
                 values['decimal_time'] = self.decimal_time
-        return super(WebsiteSeoMetadata, self).write(values)
+        return super(WebsiteSeoMetadata, self).write(
+            cr, SUPERUSER_ID, [record], values)
 
 
 class WebsiteProductMetadata(models.Model):
