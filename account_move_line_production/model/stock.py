@@ -13,6 +13,9 @@ class StockQuant(models.Model):
         res = super(StockQuant, self)._prepare_account_move_line(
             cr, uid, move, qty, cost, credit_account_id, debit_account_id,
             context)
+        production_id = move.production_id or move.raw_material_production_id
+        if not production_id:
+            return res
         for line in res:
-            line[2]['production_id'] = move.production_id.id
+            line[2]['production_id'] = production_id.id
         return res
