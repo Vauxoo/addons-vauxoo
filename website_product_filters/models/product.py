@@ -47,8 +47,8 @@ class WebsiteSeoMetadata(models.Model):
                     cr, SUPERUSER_ID, [record], values)
             if values.get('website_published', False):
                 now = datetime.now()
-                self.decimal_time = time.mktime(now.timetuple())
-                values['decimal_time'] = self.decimal_time
+                decimal_time = time.mktime(now.timetuple())
+                values['decimal_time'] = decimal_time
         return super(WebsiteSeoMetadata, self).write(
             cr, uid, ids, values)
 
