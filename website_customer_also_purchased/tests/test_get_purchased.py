@@ -42,17 +42,13 @@ class TestProductTemplate(TransactionCase):
             sale order.
         """
         sale_order_id = self.sale_order.create(
-            {
-             'partner_id': self.partner_agrolait.id,
-            })
+            {'partner_id': self.partner_agrolait.id, })
         for product in self.product_objs:
             self.sale_order_line.create(
-                {
-                 'order_id': sale_order_id.id,
+                {'order_id': sale_order_id.id,
                  'product_id': product.id,
                  'name': product.name,
                  'product_uom_qty': 2,
-                 'price_unit': product.lst_price,
-                })
+                 'price_unit': product.lst_price, })
         ids = self.product_template_id.customer_purchased
         self.assertEqual(set(ids.ids), set([self.p1, self.p2]))
