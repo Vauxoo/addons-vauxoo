@@ -21,5 +21,15 @@
                 </xpath>
             </field>
         </record>
+        <record id="mrp_production_account_move_form_view" model="ir.ui.view">
+            <field name="name">mrp.production.account.move.form</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_prod_id']" position="after">
+                    <field name="account_move_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
