@@ -10,6 +10,11 @@ class MrpProduction(models.Model):
     """
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order'
+    account_move_id = fields.Many2one(
+        'account.move',
+        string='Cost Journal Entry',
+        readonly=True,
+        )
 
     @api.multi
     def test_accounting_setting(self):
@@ -173,6 +178,7 @@ class MrpProduction(models.Model):
 
         # TODO: Link this newly created record to production
         move_id = self._create_account_move(cr, uid, production.id)
+        production.write({'account_move_id': move_id.id})
         self._create_accounting_entries(cr, uid, production.id, move_id)
 
         return amount
