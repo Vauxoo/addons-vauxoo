@@ -17,8 +17,9 @@ class MrpProduction(models.Model):
         if not self.routing_id:
             return True
 
-        # TODO: Check for analytical accounts. At company level set attribute
-        analytical_account = True
+        company_brw = self.env.user.company_id
+        require_workcenter_analytic = company_brw.require_workcenter_analytic
+
         msg = ''
         msg_financial = _('Add Financial Account on Worcenter: {wc}\n')
         msg_hour = _('Add Hour Analytical Account on Worcenter: {wc}\n')
@@ -44,7 +45,7 @@ class MrpProduction(models.Model):
                 if not wc.costs_general_account_id:
                     msg += msg_financial.format(wc=wc.name)
 
-            if not analytical_account:
+            if not require_workcenter_analytic:
                 continue
 
             if hour_cost:
