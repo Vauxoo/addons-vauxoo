@@ -1,6 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
+        <record id="company_require_workcenter_analytic_form" model="ir.ui.view">
+            <field name="name">res.company.require.workcenter.analytic.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="require_workcenter_analytic"/>
+                </xpath>
+            </field>
+        </record>
         <record id="mrp_routing_journal_form_view" model="ir.ui.view">
             <field name="name">mrp.routing.journal.form.view</field>
             <field name="inherit_id" ref="mrp.mrp_routing_form_view"/>
