@@ -11,7 +11,7 @@ show "[code] name" location in the many2one fields (This emule the product
 model of product module).
 
 New Feature
---------
+-----------
 
 #. When you search a location by code or name if is it related to a warehouse, it is shown like (Warehouse).
 
