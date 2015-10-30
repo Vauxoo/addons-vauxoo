@@ -2,7 +2,7 @@
 import werkzeug
 from openerp import http
 from openerp.http import request
-from openerp.addons.web.controllers.main import login_redirect
+from openerp.addons.web.controllers.main import login_and_redirect
 from openerp.addons.website_sale.controllers.main import website_sale
 
 
@@ -12,7 +12,7 @@ class WebsiteSaleInh(website_sale):
                 type='http', auth="public", methods=['POST'], website=True)
     def product_comment(self, product_template_id, **post):
         if not request.session.uid:
-            return login_redirect()
+            return login_and_redirect()
         cr, uid, context = request.cr, request.uid, request.context
         if post.get('comment'):
             mid = request.registry['product.template'].message_post(

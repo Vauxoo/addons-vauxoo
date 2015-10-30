@@ -2,10 +2,10 @@
 <openerp>
     <data>
     
-        <record model="ir.ui.view" id="att_dinamic_email_template_form">
-            <field name="name">att.dinamic.email.template</field>
-            <field name="model">email.template</field>
-            <field name="inherit_id" ref="email_template.email_template_form"/>
+        <record model="ir.ui.view" id="att_dinamic_mail_template_form">
+            <field name="name">att.dinamic.mail.template</field>
+            <field name="model">mail.template</field>
+            <field name="inherit_id" ref="mail.email_template_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='lang']" position="after">
                     <field name="att_default"/>

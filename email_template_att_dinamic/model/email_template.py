@@ -25,9 +25,9 @@ from openerp.osv import osv, fields
 import ast
 
 
-class EmailTemplate(osv.Model):
+class MailTemplate(osv.Model):
 
-    _inherit = "email.template"
+    _inherit = "mail.template"
 
     _columns = {
         'att_default': fields.boolean(
@@ -47,7 +47,7 @@ class MailComposeMessage(osv.TransientModel):
         if not context:
             context = {}
 
-        template_obj = self.pool.get('email.template')
+        template_obj = self.pool.get('mail.template')
 
         if template_id and isinstance(template_id, list):
             template_id = template_id[0]

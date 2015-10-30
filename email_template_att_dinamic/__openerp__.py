@@ -28,7 +28,6 @@
     "license": "",
     "depends": [
         "mail",
-        "email_template"
     ],
     "demo": [],
     "data": [
