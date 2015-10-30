@@ -19,27 +19,27 @@ msgstr ""
 "X-Generator: Poedit 1.8.2\n"
 "Language: es\n"
 
-#. module: account_relation_move
-#: model:ir.model,name:account_relation_move.model_account_move_line
+#. module: account_move_line_production
+#: model:ir.model,name:account_move_line_production.model_account_move_line
 msgid "Journal Items"
 msgstr "Apuntes contables"
 
-#. module: account_relation_move
+#. module: account_move_line_production
 #: field:account.move,production_id:0 field:account.move.line,production_id:0
 msgid "Production ID"
 msgstr "ID de Producción"
 
-#. module: account_relation_move
-#: model:ir.model,name:account_relation_move.model_account_move
+#. module: account_move_line_production
+#: model:ir.model,name:account_move_line_production.model_account_move
 msgid "Account Entry"
 msgstr "Comprobante Contable"
 
-#. module: account_relation_move
+#. module: account_move_line_production
 #: field:account.move,stock_move_id:0 field:account.move.line,stock_move_id:0
 msgid "Stock move ID"
 msgstr "ID de movimiento de inventario"
 
-#. module: account_relation_move
-#: model:ir.model,name:account_relation_move.model_stock_move
+#. module: account_move_line_production
+#: model:ir.model,name:account_move_line_production.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de stock"

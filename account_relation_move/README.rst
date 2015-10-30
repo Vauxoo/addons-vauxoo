@@ -1,5 +1,5 @@
-Account relation move
+Account Relation Move
 =====================
 
-Adds 4 fields to generate a connection between account
-and production models
+This is a deprecated module. It is here to allow backward compatibility.
+Instead use `Account Move Line Production`
