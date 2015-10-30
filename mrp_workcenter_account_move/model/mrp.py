@@ -17,6 +17,14 @@ class MrpProduction(models.Model):
         )
 
     @api.multi
+    def action_production_end(self):
+        """ Changes production state to Finish and writes finished date.
+        @return: True
+        """
+        res = super(MrpProduction, self).action_production_end()
+        return res
+
+    @api.multi
     def test_accounting_setting(self):
         self.ensure_one()
         if not self.routing_id:
