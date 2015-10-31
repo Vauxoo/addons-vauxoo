@@ -30,12 +30,13 @@ class StockTransferDetails(models.TransientModel):
 
     _inherit = 'stock.transfer_details'
 
-    @api.one
+    @api.multi
     def do_detailed_transfer(self):
         """
         Before transfer the picking move lines will check if the transfer lines
         differ from the move lines.
         """
+        self.ensure_one()
         self.check_transfer_lines()
         res = super(StockTransferDetails, self).do_detailed_transfer()
         return res
