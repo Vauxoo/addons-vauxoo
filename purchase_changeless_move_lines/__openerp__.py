@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -27,6 +27,7 @@
     "name": "Purchase Changeless Move Lines",
     "summary": "Do not change lines of Picking generate from a Purchase Order",
     "version": "1.0",
+    "license": "LGPL-3",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "category": "",
