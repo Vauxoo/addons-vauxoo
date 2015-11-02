@@ -17,14 +17,6 @@ class MrpProduction(models.Model):
         )
 
     @api.multi
-    def action_production_end(self):
-        """ Changes production state to Finish and writes finished date.
-        @return: True
-        """
-        res = super(MrpProduction, self).action_production_end()
-        return res
-
-    @api.multi
     def test_accounting_setting(self):
         self.ensure_one()
         if not self.routing_id:
@@ -189,14 +181,6 @@ class MrpProduction(models.Model):
         self._create_accounting_entries(cr, uid, production.id, move_id)
 
         return amount
-
-    @api.v8
-    def _costs_generate(self, production):
-        """ Calculates total costs at the end of the production.
-        @param production: Id of production order.
-        @return: Calculated amount.
-        """
-        return self._model._costs_generate(self._cr, self._uid, production)
 
 
 class MrpRouting(models.Model):
