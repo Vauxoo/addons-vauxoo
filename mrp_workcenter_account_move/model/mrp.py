@@ -72,6 +72,21 @@ class MrpProduction(models.Model):
         return super(MrpProduction, self).test_production_done()
 
     @api.multi
+    def check_create_adjustment_accounting_entry(self, amount):
+        self.ensure_one()
+        amount_consumed = 0.0
+        for raw_mat in self.move_lines2:
+            for quant in raw_mat.quant_ids:
+                amount_consumed += quant.cost * quant.qty
+
+        amount_produced = 0.0
+        for raw_mat in self.move_created_ids2:
+            for quant in raw_mat.quant_ids:
+                amount_produced += quant.cost * quant.qty
+
+        return amount + amount_consumed - amount_produced
+
+    @api.multi
     def check_create_accounting_entry(self):
         self.ensure_one()
         amount = 0.0
@@ -227,18 +242,8 @@ class MrpProduction(models.Model):
         """
         amount = self.check_create_accounting_entry(cr, uid, production.id)
 
-        # TODO: This piece of code shall be taken to a new method
-        amount_consumed = 0.0
-        for raw_mat in production.move_lines2:
-            for quant in raw_mat.quant_ids:
-                amount_consumed += quant.cost * quant.qty
-
-        amount_produced = 0.0
-        for raw_mat in production.move_created_ids2:
-            for quant in raw_mat.quant_ids:
-                amount_produced += quant.cost * quant.qty
-
-        diff = amount + amount_consumed - amount_produced
+        diff = self.check_create_adjustment_accounting_entry(
+            cr, uid, production.id, amount)
 
         if not diff and not amount:
             return amount
