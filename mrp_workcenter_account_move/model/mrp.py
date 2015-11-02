@@ -245,12 +245,6 @@ class MrpProduction(models.Model):
         diff = self.check_create_adjustment_accounting_entry(
             cr, uid, production.id, amount)
 
-        if not diff and not amount:
-            return amount
-
-        if not amount:
-            return amount
-
         if not any([amount, diff]):
             return amount
 
