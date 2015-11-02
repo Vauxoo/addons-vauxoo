@@ -234,6 +234,28 @@ class MrpProduction(models.Model):
         return self._create_adjustment_account_move_line(
             move_id, production_account_id, valuation_account_id, diff)
 
+    # TODO: Should this be moved to a new module?
+    @api.multi
+    def adjust_quant_diff(self, diff):
+        self.ensure_one()
+        qty = sum([
+            quant.qty
+            for raw_mat in self.move_created_ids2
+            for quant in raw_mat.quant_ids])
+        cost = sum([
+            quant2.cost
+            for raw_mat2 in self.move_created_ids2
+            for quant2 in raw_mat2.quant_ids])
+
+        quant_diff = (cost + diff) / qty
+
+        # FIXME: Does this apply to all (AVG, REAL & STD)
+        for raw_mat in self.move_created_ids2:
+            for quant in raw_mat.quant_ids:
+                quant.write({'cost': quant_diff})
+
+        return True
+
     @api.v7
     def _costs_generate(self, cr, uid, production):
         """ Calculates total costs at the end of the production.
@@ -258,7 +280,7 @@ class MrpProduction(models.Model):
             self._create_adjustment_accounting_entries(
                 cr, uid, production.id, move_id, diff)
             # TODO: if product produced is AVG recompute avg value
-            # TODO: increase/decrease quant value
+            self.adjust_quant_diff(cr, uid, production.id, diff)
             # TODO: increase/decrease segmentation cost on quants
 
         return amount
