@@ -190,6 +190,14 @@ class MrpProduction(models.Model):
 
         return amount
 
+    @api.v8
+    def _costs_generate(self, production):
+        """ Calculates total costs at the end of the production.
+        @param production: Id of production order.
+        @return: Calculated amount.
+        """
+        return self._model._costs_generate(self._cr, self._uid, production)
+
 
 class MrpRouting(models.Model):
     """
