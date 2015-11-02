@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_warehouse_receipt,access_warehouse_receipt,model_warehouse_receipt,,1,1,1,1
