@@ -36,3 +36,16 @@ class ProcurementRule(models.Model):
         string='Location of Raw Material',
         domain="[('usage', '=', 'internal'), ('id', '!=', location_id)]"
     )
+
+
+class ProcurementOrder(models.Model):
+
+    _inherit = 'procurement.order'
+
+    @api.model
+    def _prepare_mo_vals(self, procurement):
+        res = super(ProcurementOrder, self)._prepare_mo_vals(procurement)
+        if procurement.rule_id.location_bom_id:
+            res.update(
+                {'location_src_id': procurement.rule_id.location_bom_id.id})
+        return res
