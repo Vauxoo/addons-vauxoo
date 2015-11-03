@@ -34,7 +34,8 @@ class ProcurementRule(models.Model):
     location_bom_id = fields.Many2one(
         'stock.location',
         string='Location of Raw Material',
-        domain="[('usage', '=', 'internal'), ('id', '!=', location_id)]"
+        domain="[('usage', '=', 'internal'), ('id', '!=', location_id)]",
+        help='MO created from procurement will take raw material from here'
     )
 
 
