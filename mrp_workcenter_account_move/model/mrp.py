@@ -194,7 +194,7 @@ class MrpProduction(models.Model):
                     base_cycle,
                     credit=cycle_cost,
                     account_id=wc.costs_general_account_id.id,
-                    analytic_account_i= wc.costs_cycle_account_id.id,
+                    analytic_account_id=wc.costs_cycle_account_id.id,
                     )
                 aml_obj.create(debit_cycle)
                 aml_obj.create(credit_cycle)
@@ -213,7 +213,7 @@ class MrpProduction(models.Model):
                     base_hour,
                     credit=hour_cost,
                     account_id=wc.costs_general_account_id.id,
-                    analytic_account_i= wc.costs_hour_account_id.id,
+                    analytic_account_id=wc.costs_hour_account_id.id,
                     )
                 aml_obj.create(debit_hour)
                 aml_obj.create(credit_hour)
