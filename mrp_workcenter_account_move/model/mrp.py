@@ -2,6 +2,12 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
+SEGMENTATION_COST = [
+    'landed_cost',
+    'subcontracting_cost',
+    'material_cost',
+    'production_cost',
+]
 
 
 class MrpProduction(models.Model):
@@ -31,12 +37,14 @@ class MrpProduction(models.Model):
         msg_cycle = _('Add Cycle Analytical Account on Worcenter: {wc}\n')
         msg_journal = _('Please set a Journal in Routing: {routing} to book '
                         'Production Cost Journal Entries\n')
-        msg_location = _('Add Financial Account on Location: {location}\n')
+        msg_location = _('Add Financial Account on Location: {location} '
+                         'For product: {product}\n')
 
         if not self.product_id.property_stock_production.\
                 valuation_in_account_id:
             msg += msg_location.format(
-                location=self.product_id.property_stock_production.name)
+                location=self.product_id.property_stock_production.name,
+                product=self.product_id.name,)
 
         if not self.routing_id.journal_id:
             msg += msg_journal.format(routing=self.routing_id.name)
@@ -234,7 +242,31 @@ class MrpProduction(models.Model):
         return self._create_adjustment_account_move_line(
             move_id, production_account_id, valuation_account_id, diff)
 
+    @api.multi
+    def adjust_quant_segmentation_cost(self):
+        self.ensure_one()
+
+        sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
+        for fn in SEGMENTATION_COST:
+            sgmnt_dict[fn] = sum([
+                quant2.qty * getattr(quant2, fn)
+                for raw_mat2 in self.move_lines2
+                for quant2 in raw_mat2.quant_ids])
+
+        fg_quants = [quant for raw_mat in self.move_created_ids2
+                     for quant in raw_mat.quant_ids]
+
+        qty = sum([quant.qty for quant in fg_quants])
+
+        for fg_quant in fg_quants:
+            values = {}.fromkeys(SEGMENTATION_COST, 0.0)
+            for fn in SEGMENTATION_COST:
+                values[fn] = getattr(fg_quant, fn) + sgmnt_dict[fn] / qty
+            quant.write(values)
+        return True
+
     # TODO: Should this be moved to a new module?
+    # TODO: Verify validity of this method
     @api.multi
     def adjust_quant_diff(self, diff):
         self.ensure_one()
@@ -243,7 +275,7 @@ class MrpProduction(models.Model):
             for raw_mat in self.move_created_ids2
             for quant in raw_mat.quant_ids])
         cost = sum([
-            quant2.cost
+            quant2.cost * quant2.qty
             for raw_mat2 in self.move_created_ids2
             for quant2 in raw_mat2.quant_ids])
 
@@ -252,8 +284,11 @@ class MrpProduction(models.Model):
         # FIXME: Does this apply to all (AVG, REAL & STD)
         for raw_mat in self.move_created_ids2:
             for quant in raw_mat.quant_ids:
-                quant.write({'cost': quant_diff})
-
+                production_cost = quant.production_cost + diff / qty
+                quant.write({
+                    'cost': quant_diff,
+                    'production_cost': production_cost,
+                    })
         return True
 
     @api.v7
@@ -270,6 +305,7 @@ class MrpProduction(models.Model):
         if not any([amount, diff]):
             return amount
 
+        # /!\ TODO: If product is not real_time Do Not Create Journal Entries
         move_id = self._create_account_move(cr, uid, production.id)
         production.write({'account_move_id': move_id.id})
 
@@ -282,6 +318,7 @@ class MrpProduction(models.Model):
             # TODO: if product produced is AVG recompute avg value
             self.adjust_quant_diff(cr, uid, production.id, diff)
             # TODO: increase/decrease segmentation cost on quants
+            self.adjust_quant_segmentation_cost(cr, uid, production.id)
 
         return amount
 
