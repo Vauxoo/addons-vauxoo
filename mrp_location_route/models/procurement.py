@@ -26,8 +26,13 @@
 
 from openerp import models, fields, api
 
+
 class ProcurementRule(models.Model):
 
     _inherit = 'procurement.rule'
 
-    location_bom_id = fields.Many2one('stock.location', string='Location of Raw Material')
+    location_bom_id = fields.Many2one(
+        'stock.location',
+        string='Location of Raw Material',
+        domain="[('usage', '=', 'internal'), ('id', '!=', location_id)]"
+    )

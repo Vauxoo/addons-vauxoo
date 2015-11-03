@@ -7,7 +7,7 @@
                 <field name="inherit_id" ref="procurement.view_procurement_rule_form"/>
                 <field name="arch" type="xml">
                     <xpath expr="//group[@string='General Information']" position="after">
-                        <group string="Manufacturing Location">
+                        <group string="Manufacturing Location" attrs="{'invisible': [('action', '!=', 'manufacture')]}">
                             <field name="location_bom_id"/>
                         </group>
                     </xpath>
