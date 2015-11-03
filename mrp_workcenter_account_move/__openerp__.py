@@ -11,6 +11,7 @@
         "account",
         "mrp",
         "account_move_line_production",
+        "stock_quant_cost_segmentation",
     ],
     "demo": [
         'demo/demo.xml',
