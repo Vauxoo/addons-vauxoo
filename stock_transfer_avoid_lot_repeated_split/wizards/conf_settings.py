@@ -26,18 +26,21 @@
 from openerp import api, models
 
 
-class StockTransferDetailsItems(models.TransientModel):
+class StockConfigSettings(models.TransientModel):
+    """
+    Add method to configure the stock config settings.
+    """
+    _inherit = "stock.config.settings"
 
-    _inherit = 'stock.transfer_details_items'
-
-    @api.multi
-    def split_quantities(self):
-        for det in self:
-            if det.quantity > 1:
-                det.quantity = (det.quantity-1)
-                new_id = det.copy(context=self.env.context)
-                new_id.quantity = 1
-                new_id.lot_id = False
-                new_id.packop_id = False
-        if self and self[0]:
-            return self[0].transfer_id.wizard_view()
+    @api.model
+    def action_stock_config_settings_lot_repeated(self):
+        """
+        Active tracks lots or serial numbers
+        @return True
+        """
+        res = self.create({
+            "group_stock_production_lot": True,
+            "company_id": self.env.ref("base.main_company").id
+        })
+        res.execute()
+        return True

@@ -34,5 +34,11 @@
     "depends": [
         "stock",
     ],
+    "data": [
+        "data/stock_config_settings.xml",
+    ],
+    "demo": [
+        "demo/stock_production_lot.xml",
+    ],
     "installable": True,
 }

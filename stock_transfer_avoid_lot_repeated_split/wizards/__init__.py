@@ -23,4 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from . import conf_settings
 from . import stock_transfer_details_items
