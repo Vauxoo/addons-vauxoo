@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* base_vat_country
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-20 21:39+0000\n"
+"PO-Revision-Date: 2015-10-20 21:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_vat_country
+#: model:ir.model,name:base_vat_country.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: base_vat_country
+#: field:res.partner,vat_without_country:0
+msgid "TIN"
+msgstr "RFC"
+
+#. module: base_vat_country
+#: help:res.partner,vat_without_country:0
+msgid "Tax Identification Number. Fill it if the company is subjected to taxes. Used by the some of the legal statements. You no set the prefix of country."
+msgstr "Registro Federal de Contribuyentes. Llenar si la empresa está sujeta a impuestos. Utilizado por algunas declaraciones legales. No configurar el prefijo del país"
+
+#. module: base_vat_country
+#: help:res.company,vat_without_country:0
+msgid "Tax Identification Number. You no set the prefix of country."
+msgstr "Registro Federal de Contribuyentes. No configurar el prefijo del país"
+
+#. module: base_vat_country
+#: view:res.company:base_vat_country.view_compant_inherit_vat_without_country
+#: view:res.partner:base_vat_country.view_partner_inherit_vat_without_country
+msgid "e.g. ABC123456T1B"
+msgstr "Ej. ABC123456T1B"
