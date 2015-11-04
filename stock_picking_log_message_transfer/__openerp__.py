@@ -39,8 +39,5 @@
         "demo/sale_order.xml",
         "demo/transfer_details.xml",
     ],
-    "test": [
-        "tests/test_message_log.py",
-    ],
     "installable": True,
 }
