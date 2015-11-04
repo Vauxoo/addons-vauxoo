@@ -266,29 +266,20 @@ class MrpProduction(models.Model):
         return True
 
     # TODO: Should this be moved to a new module?
-    # TODO: Verify validity of this method
     @api.multi
-    def adjust_quant_diff(self, diff):
+    def adjust_quant_cost(self, diff):
         self.ensure_one()
-        qty = sum([
-            quant.qty
-            for raw_mat in self.move_created_ids2
-            for quant in raw_mat.quant_ids])
-        cost = sum([
-            quant2.cost * quant2.qty
-            for raw_mat2 in self.move_created_ids2
-            for quant2 in raw_mat2.quant_ids])
+        # NOTE: this apply to AVG, REAL not to STD
+        if self.product_id.cost_method == 'standard':
+            return True
 
-        quant_diff = (cost + diff) / qty
+        all_quants = [quant for raw_mat in self.move_created_ids2
+                      for quant in raw_mat.quant_ids]
+        qty = sum([quant.qty for quant in all_quants])
+        cost = sum([quant2.cost * quant2.qty for quant2 in all_quants])
 
-        # FIXME: Does this apply to all (AVG, REAL & STD)
-        for raw_mat in self.move_created_ids2:
-            for quant in raw_mat.quant_ids:
-                production_cost = quant.production_cost + diff / qty
-                quant.write({
-                    'cost': quant_diff,
-                    'production_cost': production_cost,
-                    })
+        for quant in all_quants:
+            quant.write({'cost': (cost + diff) / qty})
         return True
 
     @api.v7
@@ -316,7 +307,7 @@ class MrpProduction(models.Model):
             self._create_adjustment_accounting_entries(
                 cr, uid, production.id, move_id, diff)
             # TODO: if product produced is AVG recompute avg value
-            self.adjust_quant_diff(cr, uid, production.id, diff)
+            self.adjust_quant_cost(cr, uid, production.id, diff)
             # TODO: increase/decrease segmentation cost on quants
             self.adjust_quant_segmentation_cost(cr, uid, production.id)
 
