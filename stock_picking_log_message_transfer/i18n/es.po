@@ -18,11 +18,11 @@ msgstr ""
 #. module: stock_picking_log_message_transfer
 #: code:addons/stock_picking_log_message_transfer/wizards/stock_transfer_details.py:41
 #, python-format
-msgid "<b>Picking transfered. The transfer was made by %s</b>:\n"
+msgid "<b>Picking transfered</b>\n"
 "<ul><li><b>Date:</b> %s</li>\n"
 "</ul>\n"
 ""
-msgstr "Albarán transferido. La transferencia fue hecha por %s</b>:\n"
+msgstr "<b>Albarán transferido</b>\n"
 "<ul><li><b>Fecha:</b> %s</li>\n"
 "</ul>\n"
 ""

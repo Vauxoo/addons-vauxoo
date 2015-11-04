@@ -18,7 +18,7 @@ msgstr ""
 #. module: stock_picking_log_message_transfer
 #: code:addons/stock_picking_log_message_transfer/wizards/stock_transfer_details.py:41
 #, python-format
-msgid "<b>The transfer was made by %s</b>:\n"
+msgid "<b>Picking transfered</b>\n"
 "<ul><li><b>Date:</b> %s</li>\n"
 "</ul>\n"
 ""

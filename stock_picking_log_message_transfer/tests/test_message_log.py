@@ -39,7 +39,7 @@ class TestMessageLog(TransactionCase):
                                  "_transfer.so_log_message_transfer")
 
     def test_01(self):
-        msg = ".*Picking transfered. The transfer was made by .*"
+        msg = ".*Picking transfered.*"
         for picking in self.sale.picking_ids:
             last_message_id = max(picking.message_ids.mapped("id"))
             last_message = self.env["mail.message"].search(last_message_id)

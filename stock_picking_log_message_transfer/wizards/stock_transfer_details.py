@@ -35,15 +35,11 @@ class StockTransferDetails(models.TransientModel):
         """
         When the transfer was made, a message in log is displayed
         """
-        uid = self.env.context.get('uid')
-        user = self.env['res.users'].browse(uid)
         for transfer_detail in self:
-            message = _("<b>Picking transfered. "
-                        "The transfer was made by %s</b>:\n"
+            message = _("<b>Picking transfered</b>\n"
                         "<ul><li><b>Date:</b> %s</li>\n"
                         "</ul>\n") % \
-                (user.name,
-                 fields.datetime.now().
+                (fields.datetime.now().
                  strftime("%x %X"))
             transfer_detail.picking_id.message_post(body=message)
         return super(StockTransferDetails, self).do_detailed_transfer()
