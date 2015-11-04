@@ -282,6 +282,21 @@ class MrpProduction(models.Model):
             quant.write({'cost': (cost + diff) / qty})
         return True
 
+    # TODO: Should this be moved to a new module?
+    @api.multi
+    def adjust_quant_production_cost(self, amount):
+        self.ensure_one()
+        # NOTE: Updating production_cost in segmentation applies to all
+        # products AVG, REAL & STD
+        all_quants = [quant for raw_mat in self.move_created_ids2
+                      for quant in raw_mat.quant_ids]
+        qty = sum([quant.qty for quant in all_quants])
+
+        for quant in all_quants:
+            quant.write(
+                {'production_cost': quant.production_cost + amount / qty})
+        return True
+
     @api.v7
     def _costs_generate(self, cr, uid, production):
         """ Calculates total costs at the end of the production.
@@ -304,11 +319,17 @@ class MrpProduction(models.Model):
             self._create_accounting_entries(cr, uid, production.id, move_id)
         if diff:
             # NOTE: Subproduct are not taken into accounting in this approach
+            # TODO: make different between (REAL, AVG) and STD products
+            # STD diff shall be booked onto a deviation account
             self._create_adjustment_accounting_entries(
                 cr, uid, production.id, move_id, diff)
             # TODO: if product produced is AVG recompute avg value
+            # NOTE: Recompute quant cost if not STD
             self.adjust_quant_cost(cr, uid, production.id, diff)
-            # TODO: increase/decrease segmentation cost on quants
+            # NOTE: Add segmentation cost to quants in finished goods
+            self.adjust_quant_production_cost(cr, uid, production.id, amount)
+            # NOTE: increase/decrease segmentation cost on quants from raw
+            # material
             self.adjust_quant_segmentation_cost(cr, uid, production.id)
 
         return amount
