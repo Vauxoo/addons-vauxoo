@@ -10,11 +10,12 @@
                 <xpath expr="//group/field[@name='item_ids']/.." position="before">
                     <field name="picking_type_code" invisible="True"/>
                     <field name="check_inv_pick" invisible="True"/>
-                    <field name="invoice_id"
+                    <field name="invoice_id" options="{'no_create': True}"
                         attrs="{'invisible':['|', ('picking_type_code', 'in', ('internal', 'incoming')),
                                              ('check_inv_pick', '=', 'no_check')],
                                 'required':[('picking_type_code', 'in', ('outgoing')),
-                                            ('check_inv_pick', '=', 'check')]}"/>
+                                ('check_inv_pick', '=', 'check')]}"
+                        domain="[('state','in',('open', 'paid'))]"/>
                 </xpath>
             </field>
         </record>
@@ -27,7 +28,7 @@
                     <div>
                         <label for="check_inv_pick"/>
                         <field name="check_inv_pick" class="oe_inline"/>
-                        
+
                     </div>
                 </xpath>
             </field>
