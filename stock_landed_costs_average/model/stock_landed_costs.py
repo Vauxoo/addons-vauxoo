@@ -14,6 +14,9 @@ class StockLandedCost(models.Model):
         string='Invoices',
         readonly=True,
         states={'draft': [('readonly', False)]},
+        domain=[
+            ('state', 'in', ('open', 'paid')),
+            ('stock_landed_cost_id', '=', False)],
         help='Invoices which contain items to be used as landed costs',
         copy=False,
     )
