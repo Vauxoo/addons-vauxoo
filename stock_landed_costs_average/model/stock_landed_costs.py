@@ -159,16 +159,13 @@ class StockLandedCost(models.Model):
         aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
         return True
 
-    def _create_deviation_accounting_entries(
-            self, move_id, product_id, old_avg, new_avg, qty):
+    def _get_deviation_accounts(self, product_id):
         '''
         This method takes the variation in value for average and books it as
         Inventory Valuation Deviation
         '''
         product_obj = self.env['product.product']
         template_obj = self.pool.get('product.template')
-        if not abs(old_avg - new_avg) or not qty:
-            return False
         ctx = dict(self._context)
         product_brw = product_obj.browse(product_id)
         accounts = template_obj.get_product_accounts(
@@ -185,7 +182,22 @@ class StockLandedCost(models.Model):
                 _('Please configure Gain & Loss Inventory Valuation in your'
                   ' Company'))
 
+        return valuation_account_id, gain_account_id, loss_account_id
+
+    def _create_deviation_accounting_entries(
+            self, move_id, product_id, old_avg, new_avg, qty):
+        '''
+        This method takes the variation in value for average and books it as
+        Inventory Valuation Deviation
+        '''
+        if not abs(old_avg - new_avg) or not qty:
+            return False
+
+        valuation_account_id, gain_account_id, loss_account_id = \
+            self._get_deviation_accounts(product_id)
+
         amount = (old_avg - new_avg) * qty
+        product_brw = self.env['product.product'].browse(product_id)
 
         return self._create_deviation_account_move_line(
             move_id, gain_account_id, loss_account_id,
@@ -214,6 +226,50 @@ class StockLandedCost(models.Model):
                 move_id, product_id,
                 product_brw.standard_price, avg, qty)
         return True
+
+    def _create_standard_deviation_entry_lines(
+            self, line, move_id, valuation_account_id, gain_account_id,
+            loss_account_id):
+        # FIXME: Docstring
+        """
+        Generate the account.move.line values to track the landed cost.
+        Afterwards, for the goods that are already out of stock, we should
+        create the out moves
+        """
+        aml_obj = self.env['account.move.line']
+        base_line = {
+            'name': line.name,
+            'move_id': move_id,
+            'product_id': line.product_id.id,
+            'quantity': line.quantity,
+        }
+        debit_line = dict(base_line)
+        credit_line = dict(base_line)
+        diff = line.additional_landed_cost
+        if diff > 0:
+            debit_line['account_id'] = loss_account_id
+            debit_line['debit'] = diff
+            credit_line['account_id'] = valuation_account_id
+            credit_line['credit'] = diff
+        else:
+            # negative cost, reverse the entry
+            debit_line['account_id'] = valuation_account_id
+            debit_line['debit'] = -diff
+            credit_line['account_id'] = gain_account_id
+            credit_line['credit'] = -diff
+        aml_obj.create(debit_line)
+        aml_obj.create(credit_line)
+        return True
+
+    @api.multi
+    def _create_standard_deviation_entries(self, line, move_id):
+
+        valuation_account_id, gain_account_id, loss_account_id = \
+            self._get_deviation_accounts(line.product_id.id)
+
+        return self._create_standard_deviation_entry_lines(
+            line, move_id, valuation_account_id, gain_account_id,
+            loss_account_id)
 
     @api.multi
     def _create_cogs_accounting_entries(
@@ -356,6 +412,13 @@ class StockLandedCost(models.Model):
                 if not line.move_id:
                     continue
                 product_id = line.product_id
+
+                # TODO: New method to create deviation entries is to be
+                # developed
+                if product_id.cost_method == 'standard':
+                    self._create_standard_deviation_entries(line, move_id)
+                    continue
+
                 if product_id.cost_method == 'average':
                     if product_id.id not in prod_dict:
                         avg = get_average(product_id.id)
@@ -394,11 +457,6 @@ class StockLandedCost(models.Model):
 
                 if product_id.cost_method == 'real':
                     self._create_accounting_entries(line, move_id, qty_out)
-
-                # TODO: New method to create deviation entries is to be
-                # developed
-                if product_id.cost_method == 'standard':
-                    continue
 
             if any([first_avg, prod_dict]):
                 cost.create_deviation_accounting_entries(move_id, first_avg)
