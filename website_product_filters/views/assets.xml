@@ -5,6 +5,12 @@
       <xpath expr="//script[last()]" position="after">
         <script src="/website_product_filters/static/src/js/sort_products.js" rel="stylesheet" type="text/less"/>
         <script src="/website_product_filters/static/src/js/collapse_filters.js" rel="stylesheet" type="text/less"/>
+        <script type="text/javascript" src="/website_product_filters/static/src/js/test_attributes.js"></script>
+      </xpath>
+    </template>
+    <template id="assets_frontend_product_filters_tests" name="Product Filters Assets Tests" inherit_id="website_sale_options.assets_frontend">
+      <xpath expr="//script[@src='/website_sale_options/static/src/js/website_sale.test.js']" position="replace">
+        <script type="text/javascript" src="/website_product_filters/static/src/js/test_attributes.js"></script>
       </xpath>
     </template>
     <template id="assets_frontend_filters_less" name="Product filters frontend assets" inherit_id="website.theme">
