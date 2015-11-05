@@ -417,8 +417,6 @@ class StockLandedCost(models.Model):
                     continue
                 product_id = line.product_id
 
-                # TODO: New method to create deviation entries is to be
-                # developed
                 if product_id.cost_method == 'standard':
                     self._create_standard_deviation_entries(line, move_id)
                     continue
