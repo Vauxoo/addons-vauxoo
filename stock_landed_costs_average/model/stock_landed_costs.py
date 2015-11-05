@@ -72,19 +72,18 @@ class StockLandedCost(models.Model):
         if not picking_ids and not self.move_ids:
             return lines
 
+        # NOTE: Now it is valid for all costing methods available
         move_ids = [
             move_id
             for picking in picking_obj.browse(picking_ids)
             for move_id in picking.move_lines
-            if move_id.product_id.valuation == 'real_time' and
-            move_id.product_id.cost_method in ('average', 'real')
+            if move_id.product_id.valuation == 'real_time'
             ]
 
         move_ids += [
             move_id
             for move_id in self.move_ids
-            if move_id.product_id.valuation == 'real_time' and
-            move_id.product_id.cost_method in ('average', 'real')
+            if move_id.product_id.valuation == 'real_time'
             ]
 
         for move in move_ids:
@@ -109,9 +108,9 @@ class StockLandedCost(models.Model):
                 _('Error!'),
                 _('The selected picking does not contain any move that would '
                   'be impacted by landed costs. Landed costs are only possible'
-                  ' for products configured in real time valuation with real'
-                  ' price or average costing method. Please make sure it is '
-                  'the case, or you selected the correct picking'))
+                  ' for products configured in real time valuation. Please '
+                  'make sure it is the case, or you selected the correct '
+                  'picking.'))
         return lines
 
     def _create_deviation_account_move_line(
@@ -393,13 +392,17 @@ class StockLandedCost(models.Model):
                         prod_qty[product_id.id])
                     prod_dict[product_id.id] = new_avg
 
-                if product_id.cost_method != 'real':
+                if product_id.cost_method == 'real':
+                    self._create_accounting_entries(line, move_id, qty_out)
+
+                # TODO: New method to create deviation entries is to be
+                # developed
+                if product_id.cost_method == 'standard':
                     continue
 
-                self._create_accounting_entries(line, move_id, qty_out)
-
-            cost.create_deviation_accounting_entries(move_id, first_avg)
-            cost.compute_average_cost(prod_dict)
+            if any([first_avg, prod_dict]):
+                cost.create_deviation_accounting_entries(move_id, first_avg)
+                cost.compute_average_cost(prod_dict)
 
             cost.write(
                 {'state': 'done', 'account_move_id': move_id})
