@@ -13,6 +13,7 @@
                         domain="[
                             ('state', 'in', ('open','paid')),
                             ('type', '=', 'in_invoice'),
+                            ('stock_landed_cost_id', '=', False),
                         ]"
                         attrs="{'readonly': [('state','!=','draft')]}"
                         />
