@@ -118,7 +118,7 @@ class AccountInvoice(osv.osv):
         total = 0.0
         res = {}
         for inv in self.browse(cr, uid, ids, context=context):
-            for line in inv.invoice_line:
+            for line in inv.invoice_line_ids:
                 total += line.subtotal_wo_discount
             res[inv.id] = total
         return res
@@ -139,7 +139,7 @@ class AccountInvoice(osv.osv):
         total = 0.0
         res = {}
         for inv in self.browse(cr, uid, ids, context=context):
-            for line in inv.invoice_line:
+            for line in inv.invoice_line_ids:
                 total += line.discount_amount
             res[inv.id] = total
         return res

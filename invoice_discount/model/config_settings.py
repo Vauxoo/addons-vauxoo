@@ -34,10 +34,10 @@ class SaleConfigSettings(osv.TransientModel):
     _inherit = 'sale.config.settings'
 
     def get_default_sale_config_settings(self, cr, uid, fields, context=None):
-        return {'group_discount_per_so_line': True}
+        return {'group_discount_per_so_line': 1}
 
     def action_sale_config_settings(self, cr, uid, context=None):
-        res = self.create(cr, uid, {'group_discount_per_so_line': True},
+        res = self.create(cr, uid, {'group_discount_per_so_line': 1},
                           context=context)
         self.execute(cr, uid, [res], context=context)
         return True
