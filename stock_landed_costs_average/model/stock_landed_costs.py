@@ -47,6 +47,10 @@ class StockLandedCost(models.Model):
                     currency = inv_brw.currency_id.with_context(
                         date=inv_brw.date_invoice)
                 for ail_brw in inv_brw.invoice_line:
+                    if not ail_brw.product_id:
+                        continue
+                    if not ail_brw.product_id.landed_cost_ok:
+                        continue
                     if diff_currency:
                         price_subtotal = currency.compute(
                             ail_brw.price_subtotal, company_currency)
