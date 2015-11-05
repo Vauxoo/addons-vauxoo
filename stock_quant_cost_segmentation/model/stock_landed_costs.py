@@ -17,8 +17,7 @@ class StockLandedCostLines(models.Model):
     segmentation_cost = fields.Selection(
         SEGMENTATION_COST,
         string='Segmentation',
-        default='landed_cost',
-        required=True)
+        )
 
 
 class StockLandedCost(models.Model):
@@ -40,6 +39,10 @@ class StockLandedCost(models.Model):
                     _('You cannot validate a landed cost which has no valid '
                       'valuation adjustments lines. Did you click on '
                       'Compute?'))
+
+            if not all([cl.segmentation_cost for cl in cost.cost_lines]):
+                raise UserError(
+                    _('Please fill the segmentation field in Cost Lines'))
 
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
