@@ -134,6 +134,7 @@ class MrpProduction(models.Model):
 
         base_line = dict(
             move_id=move_id.id,
+            production_id=self.id,
             name=self.product_id.name + _(' (Valuation Adjustment)'),
             product_id=self.product_id.id,)
 
@@ -178,6 +179,7 @@ class MrpProduction(models.Model):
 
             base_line = dict(
                 move_id=move_id.id,
+                production_id=self.id,
                 product_id=wc.product_id.id,
                 product_uom_id=wc.product_id and wc.product_id.uom_id.id,)
 
