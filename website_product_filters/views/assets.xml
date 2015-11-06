@@ -6,6 +6,7 @@
         <script src="/website_product_filters/static/src/js/sort_products.js" rel="stylesheet" type="text/less"/>
         <script src="/website_product_filters/static/src/js/collapse_filters.js" rel="stylesheet" type="text/less"/>
         <script type="text/javascript" src="/website_product_filters/static/src/js/test_attributes.js"></script>
+        <script src="/website_product_filters/static/src/js/collapsible_categories.js" rel="stylesheet" type="text/less"/>
       </xpath>
     </template>
     <template id="assets_frontend_product_filters_tests" name="Product Filters Assets Tests" inherit_id="website_sale_options.assets_frontend">
