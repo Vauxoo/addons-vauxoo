@@ -31,10 +31,9 @@ class TestEarlyPayment(TransactionCase):
         self.account_invoice_refund_model = self.env['account.invoice.refund']
 
     def test_early_payment_from_invoices(self):
-        """
-            This test validate the split of reconciliatio between
-            one refund and invoices to apply early payment refund
-        """
+        'This test validate the split of reconciliatio between '\
+            'one refund and invoices to apply early payment refund'
+
         move_line_id = []
         invoice_ids = []
         invoice_number = []
