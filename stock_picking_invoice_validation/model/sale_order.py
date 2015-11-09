@@ -19,8 +19,8 @@ class SaleOrder(models.Model):
         [('check', 'Check'),
          ('no_check', 'No Check')], "Check invoice vs picking")
 
-    def action_button_confirm(self, cr, uid, ids, context=None):
-        res = super(SaleOrder, self).action_button_confirm(
+    def action_ship_create(self, cr, uid, ids, context=None):
+        res = super(SaleOrder, self).action_ship_create(
             cr, uid, ids, context=None)
         for order in self.browse(cr, uid, ids):
             if order.check_invoice == 'check':
