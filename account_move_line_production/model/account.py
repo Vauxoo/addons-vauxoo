@@ -8,6 +8,6 @@ class AccountMoveLine(models.Model):
 
     production_id = fields.Many2one(
         'mrp.production',
-        string='Production ID',
+        string='Manufacturing Order',
         readonly=True,
         )

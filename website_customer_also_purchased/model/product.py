@@ -52,7 +52,7 @@ class ProductTemplate(osv.osv):
         pids = '(%s)' % ', '.join(map  # pylint: disable=W0141,W0110
                                   (repr,
                                    tuple(pids_t)))
-        if pids:
+        if pids and pids != '()':
             cr.execute("\
                 SELECT product_tmpl_id\
                 FROM product_product\

@@ -61,5 +61,5 @@ class WebsiteProductMetadata(models.Model):
 class ProductPriceRanges(models.Model):
     _name = "product.price.ranges"
 
-    lower = fields.Float("Lower")
-    upper = fields.Float("Upper")
+    lower = fields.Integer("Lower")
+    upper = fields.Integer("Upper")
