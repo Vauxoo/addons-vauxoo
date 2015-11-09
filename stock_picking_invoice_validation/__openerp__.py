@@ -18,16 +18,14 @@
     "depends": [
         "sale",
         "stock_account",
-        # Conflicts!
-        "stock_picking_log_message_transfer",
-        "crm_rma_lot_mass_return",
-        "yoytec_customer_rma_workflow",
+        "sale_stock",
     ],
     "demo": [
         "demo/stock_product_lot_demo.xml",
     ],
     "data": [
         "view/stock_picking_view.xml",
+        "view/sale_order_view.xml",
     ],
     "installable": True,
 }

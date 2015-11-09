@@ -14,6 +14,7 @@ from openerp import api, fields, models
 class StockConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
+    # general validation to check picking vs invoice
     check_inv_pick = fields.Selection(
         [('check', 'Check'),
          ('no_check', 'No Check')], "Check invoice vs picking")

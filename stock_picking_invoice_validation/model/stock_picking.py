@@ -17,3 +17,7 @@ class StockPicking(models.Model):
     invoice_id = fields.Many2one(
         string='Invoice', comodel_name='account.invoice',
         ondelete='cascade')
+    check_invoice = fields.Selection(
+        [('check', 'Check'),
+         ('no_check', 'No Check')], "Check invoice vs picking",
+        readonly=True,)

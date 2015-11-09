@@ -37,7 +37,8 @@ class StockTansferDetails(models.TransientModel):
             res = super(StockTansferDetails, self).do_detailed_transfer()
             return res
         for transfer in self:
-            if transfer.picking_type_code == 'outgoing':
+            if transfer.picking_type_code == 'outgoing' and \
+                    transfer.picking_id.check_invoice == 'check':
                 invoice = transfer.invoice_id
                 old_invoice = self.env['stock.picking'].search(
                     [('picking_type_code', '=', 'outgoing'),
