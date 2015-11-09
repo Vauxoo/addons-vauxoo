@@ -8,11 +8,14 @@
     "license": "AGPL-3",
     "depends": [
         "website_sale",
-        "website_sale_product_brand",
+        "website_product_brand",
         "website_rate_product",
     ],
     "demo": [],
     "data": [
+        'data/price_ranges_data.xml',
+        'security/price_ranges_security.xml',
+        'security/ir.model.access.csv',
         'views/product_price_ranges_view.xml',
         'views/assets.xml',
         'views/templates.xml',

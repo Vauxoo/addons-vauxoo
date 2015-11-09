@@ -79,8 +79,14 @@
                             <li t-att-class="'active' if r.id in ranges_set else 'hidden'">
                                 <label style="margin: 0 20px;">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
-                                    <span style="font-weight: normal" t-raw="'{0} - {1}'.format(r.lower, r.upper)" t-field-options='{
+                                    <span style="font-weight: normal" t-field="r.lower" t-field-options='{
                                         "widget": "monetary",
+                                        "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
+                                        "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                    }'/>
+                                    - <span style="font-weight: normal" t-field="r.upper" t-field-options='{
+                                        "widget": "monetary",
+                                        "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
                                         "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
                                     }'/>
                                 </label>
@@ -90,8 +96,14 @@
                             <li t-att-class="'hidden active' if r.id in ranges_set else ''">
                                 <label style="margin: 0 20px;">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
-                                    <span style="font-weight: normal" t-raw="'{0} - {1}'.format(r.lower, r.upper)" t-field-options='{
+                                    <span style="font-weight: normal" t-field="r.lower" t-field-options='{
                                         "widget": "monetary",
+                                        "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
+                                        "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                    }'/>
+                                    - <span style="font-weight: normal" t-field="r.upper" t-field-options='{
+                                        "widget": "monetary",
+                                        "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
                                         "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
                                     }'/>
                                 </label>
@@ -132,35 +144,6 @@
           </xpath>
         </template>
 
-        <!-- TEMPLATE TO SHOW BRAND LIST -->
-        <template id="product_brands_column" inherit_id="website_sale.products" active="False" customize_show="True" name="Product Brands">
-          <xpath expr="//div[@id='products_grid_before']" position="inside">
-              <div class="dropdown">
-                  <p class="active">Select a Brand</p>
-                  <button class="btn btn-default dropdown-toggle" type="button" id="brandDropDown" data-toggle="dropdown" aria-haspopup="true">Select a Brand
-                  <span class="caret"></span>
-                  </button>
-                      <ul class="dropdown-menu" aria-labelledby="brandDropDown">
-                      <li t-att-class=" '' if brand else 'brand active' "><a t-att-href="keep('/shop',brand=0)"><b>All Brands</b></a></li>
-                      <t t-foreach="brands" t-as="b">
-                          <li t-att-class="'brand active' if b.id == int(brand or 0) else ''">
-                                  <label style="margin: 0 20px;">
-                                  <input type="checkbox" name="attrib" t-att-value="'%s' % (b.id)" t-att-checked="'checked' if b.id == int(brand or 0) else ''"/>
-                                  <span style="font-weight: normal" t-field="b.name"/>
-                              </label>
-                          </li>
-                      </t>
-                      </ul>
-              </div>
-          </xpath>
-          <xpath expr="//div[@id='products_grid_before']" position="attributes">
-              <attribute name="class">col-md-3 hidden-xs</attribute>
-          </xpath>
-          <xpath expr="//div[@id='products_grid']" position="attributes">
-              <attribute name="class">col-md-9</attribute>
-          </xpath>
-        </template>
-
         <!-- TEMPLATE TO ADD DATA RATING TO EACH DIV -->
         <template id="product_div_rating" inherit_id="website_sale.products_list_view" active="True">
           <xpath expr="//div[@class='oe_product oe_list oe_product_cart']" position="attributes">
@@ -175,18 +158,17 @@
         <template id="product_sort_bar" inherit_id="website_sale.products" active="True">
           <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="replace">
 
-            <div class="panel panel-default">
-            <div class="col-md-6">
-                <ul class="breadcrumb">
+            <div class="container">
+            <div class="col-md-6 panel-no-margins">
+                <ul class="breadcrumb pull-left panel-no-borders">
                     <li><a id="bread_home" href="/">Home</a></li>
                     <li><a id="bread_products" href="/shop">Products</a></li>
                     <li class="active"><a id="bread_category">All Products</a></li>
                 </ul>
             </div>
-              <div class="col-md-3 mt8">
-                <label for="prduct_sorter" class="form-group">Sort by : </label>
-                <select id="product_sorter" name="product_sorter">
-                  <option value="0" selected="selected">Select...</option>
+              <div class="col-md-3 pull-right">
+                <select class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
+                  <option value="0" selected="selected">Sort By...</option>
                   <option value="name">Product Name</option>
                   <option value="pasc">Price Lowest</option>
                   <option value="pdesc">Price Highest</option>
@@ -195,12 +177,33 @@
                   <option value="popularity">Popularity</option>
                 </select>
               </div>
-              <t t-call="website_sale.search"><t t-set="search_class">col-md-3</t></t>
+              <form t-att-action="keep('/shop'+ ('/category/'+slug(category)) if category else '', search=0)" method="get" t-att-class="search_class">
+
+                <t t-if="attrib_values">
+                  <t t-foreach="attrib_values" t-as="a">
+                    <input class="yoytec-input mt3" type="hidden" name="attrib" t-att-value="'%s-%s' % (a[0], a[1])"/>
+                  </t>
+                </t>
+            </form>
+
 
             </div>
+              <div class="">
+              <div class="panel-no-borders pull-left">
+                  <t t-foreach="attributes" t-as="a">
+                    <t t-foreach="a.value_ids" t-as="v">
+                      <t t-if="v.id in attrib_set">
+                        <h4 class="inline-hs panel-no-borders"><span class="label label-info" t-field="v.name"></span></h4>
+                      </t>
+                    </t>
+                  </t>
+              </div>
+            </div>
+
           </xpath>
           <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website.pager']" position="replace">
           </xpath>
+
         </template>
         <!-- TEMPLATE TO SHOW RATING ON PRODUCT LIST -->
         <template id="product_list_rating" inherit_id="website_sale.products_item" active="True">

@@ -27,6 +27,7 @@ addons:
       - python-lxml  # because pip installation is slow
       - python-simplejson
       - python-serial
+      - python-xlrd
 
 install:
   - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools

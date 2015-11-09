@@ -25,6 +25,7 @@
 from openerp import models, fields, api
 from datetime import datetime
 import time
+from openerp import SUPERUSER_ID
 
 
 class WebsiteSeoMetadata(models.Model):
@@ -38,13 +39,18 @@ class WebsiteSeoMetadata(models.Model):
         help='This field shows the decimal time when a product is published'
         'on the website.')
 
-    @api.one
-    def write(self, values):
-        if values.get('website_published', False):
-            now = datetime.now()
-            decimal_time = time.mktime(now.timetuple())
-            values['decimal_time'] = decimal_time
-        return super(WebsiteSeoMetadata, self).write(values)
+    @api.cr_uid_ids_context
+    def write(self, cr, uid, ids, values, context=None):
+        for record in ids:
+            if values.get('views', False):
+                return super(WebsiteSeoMetadata, self).write(
+                    cr, SUPERUSER_ID, [record], values)
+            if values.get('website_published', False):
+                now = datetime.now()
+                decimal_time = time.mktime(now.timetuple())
+                values['decimal_time'] = decimal_time
+        return super(WebsiteSeoMetadata, self).write(
+            cr, uid, ids, values)
 
 
 class WebsiteProductMetadata(models.Model):
@@ -55,5 +61,5 @@ class WebsiteProductMetadata(models.Model):
 class ProductPriceRanges(models.Model):
     _name = "product.price.ranges"
 
-    lower = fields.Float("Lower")
-    upper = fields.Float("Upper")
+    lower = fields.Integer("Lower")
+    upper = fields.Integer("Upper")
