@@ -22,11 +22,9 @@ class TestMrpLocationSrcFromRule(TransactionCase):
             'route_ids': [(6, 0, [self.route_manufacture.id])]})
 
     def test_mrp_location_src_different(self):
-        """
-            This validate when pull rule of manufacture
-            has set one location_bom_id different to
-            location_id
-        """
+        'This validate when pull rule of manufacture '\
+            'has set one location_bom_id different to '\
+            'location_id'
 
         # Search procurement rule of manufacture
         rule_ids = self.procurement_rule.search(
@@ -61,11 +59,9 @@ class TestMrpLocationSrcFromRule(TransactionCase):
             self.warehouse_id.lot_stock_id.id)
 
     def test_mrp_location_same(self):
-        """
-            This test validate the normally behavior
-            when MO is created from procurement order
-            and procurement rule is not set location_bom_id
-        """
+        'This test validate the normally behavior '\
+            'when MO is created from procurement order '\
+            'and procurement rule is not set location_bom_id'
 
         procurement_id = self.procurement_order.create({
             'product_id': self.product_id.id,
