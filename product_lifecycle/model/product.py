@@ -66,18 +66,19 @@ class ProductProduct(models.Model):
         """ Try to set the state2 to obsolete when quantity on hand will change
         the product to end instead.
         """
-        state2 = values.get('state2', self.state2)
-        available = (
-            values.get('qty_available', self.qty_available) or
-            values.get('purchase_incoming_qty', self.purchase_incoming_qty)
-        )
+        for product in self:
+            state2 = values.get('state2', product.state2)
+            available = (
+                values.get('qty_available', product.qty_available) or
+                values.get('purchase_incoming_qty',
+                           product.purchase_incoming_qty))
 
-        if state2 == 'obsolete' and available:
-            values.update({'state2': 'end'})
-        elif state2 == 'end' and not available:
-            values.update({'state2': 'obsolete'})
-        res = super(ProductProduct, self).write(values)
-        return res
+            if state2 == 'obsolete' and available:
+                values.update({'state2': 'end'})
+            elif state2 == 'end' and not available:
+                values.update({'state2': 'obsolete'})
+            super(ProductProduct, product).write(values)
+        return True
 
     @api.cr_uid
     def update_product_state(self, cr, uid):
