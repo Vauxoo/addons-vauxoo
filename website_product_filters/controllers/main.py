@@ -76,9 +76,14 @@ class WebsiteSale(website_sale):
             while current_category.parent_id:
                 parent_category_ids.append(current_category.parent_id.id)
                 current_category = current_category.parent_id
+        category_obj = pool['product.public.category']
+        category_ids = category_obj.search(
+            cr, uid, [('parent_id', '=', False)], context=context)
+        categs = category_obj.browse(cr, uid, category_ids, context=context)
 
         res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['brands'] = brands
+        res.qcontext['categories'] = categs
         res.qcontext['products'] = new_products
         res.qcontext['price_ranges'] = ranges
         res.qcontext['brand_set'] = brand_selected_ids
