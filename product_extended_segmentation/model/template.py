@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from openerp import models
+from openerp import models, fields
 SEGMENTATION_COST = [
     'landed_cost',
     'subcontracting_cost',
@@ -11,6 +11,11 @@ SEGMENTATION_COST = [
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
+
+    material_cost = fields.Float(string='Material Cost')
+    production_cost = fields.Float(string='Production Cost')
+    subcontracting_cost = fields.Float(string='Subcontracting Cost')
+    landed_cost = fields.Float(string='Landed Cost')
 
     def _calc_price(
             self, cr, uid, bom, test=False, real_time_accounting=False,
@@ -26,6 +31,7 @@ class ProductTemplate(models.Model):
             return quant_obj.search(
                 cr, uid, ARGS, order='in_date DESC', limit=1)
 
+        sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
         for sbom in bom.bom_line_ids:
             my_qty = sbom.product_qty / sbom.product_efficiency
             if sbom.attribute_value_ids:
@@ -49,6 +55,7 @@ class ProductTemplate(models.Model):
                     cr, uid, sbom.product_id.uom_id.id,
                     getattr(quant_brw, fieldname),
                     sbom.product_uom.id) * my_qty
+                sgmnt_dict[fieldname] += getattr(quant_brw, fieldname)
 
         if bom.routing_id:
             for wline in bom.routing_id.workcenter_lines:
@@ -57,10 +64,12 @@ class ProductTemplate(models.Model):
                 hour = \
                     (wc.time_start + wc.time_stop + cycle * wc.time_cycle) * \
                     (wc.time_efficiency or 1.0)
-                price += wc.costs_cycle * cycle + wc.costs_hour * hour
-                price = uom_obj._compute_price(
-                    cr, uid, bom.product_uom.id, price,
+                routing_price = wc.costs_cycle * cycle + wc.costs_hour * hour
+                routing_price = uom_obj._compute_price(
+                    cr, uid, bom.product_uom.id, routing_price,
                     bom.product_id.uom_id.id)
+                price += routing_price
+                sgmnt_dict['production_cost'] = routing_price
 
         # Convert on product UoM quantities
         if price > 0:
@@ -85,4 +94,5 @@ class ProductTemplate(models.Model):
                 wiz_id = wizard_obj.create(
                     cr, uid, {'new_price': price}, context=ctx)
                 wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
+            tmpl_obj.write(cr, uid, [product.id], sgmnt_dict, context=context)
         return price
