@@ -7,6 +7,7 @@
     'website': 'https://www.vauxoo.com',
     "license": "AGPL-3",
     "depends": [
+        'product',
         'product_extended_variants',
         ],
     "category": "Generic Modules/Inventory Control",
