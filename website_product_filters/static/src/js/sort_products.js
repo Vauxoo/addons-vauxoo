@@ -21,6 +21,7 @@
     // },
 
     build: function(debug){
+      console.log("VAINA 2");
       $("#product_sorter").change(function() {
           var val = "";
           $("#product_sorter option:selected").each(function() {
