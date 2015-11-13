@@ -20,4 +20,5 @@ class StockPicking(models.Model):
     check_invoice = fields.Selection(
         [('check', 'Check'),
          ('no_check', 'No Check')], "Check invoice vs picking",
-        readonly=True,)
+        readonly=True,
+        default="no_check")
