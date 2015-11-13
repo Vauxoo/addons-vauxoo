@@ -17,7 +17,8 @@ class SaleOrder(models.Model):
     # field to make an exception invalidation invoice vs picking
     check_invoice = fields.Selection(
         [('check', 'Check'),
-         ('no_check', 'No Check')], "Check invoice vs picking")
+         ('no_check', 'No Check')], "Check invoice vs picking",
+        default="check")
 
     def action_ship_create(self, cr, uid, ids, context=None):
         res = super(SaleOrder, self).action_ship_create(
