@@ -63,3 +63,22 @@ class ProductPriceRanges(models.Model):
 
     lower = fields.Integer("Lower")
     upper = fields.Integer("Upper")
+
+
+class ProductCategory(models.Model):
+    _inherit = 'product.public.category'
+
+    @api.multi
+    def _get_products(self):
+        product_obj = self.env["product.template"]
+        for record in self:
+            product_ids = []
+            product_published = product_obj.search(
+                [("website_published", "=", True)])
+
+            for product in product_published:
+                if record in product.public_categ_ids:
+                    product_ids.append(product.id)
+            record.product_ids = product_ids
+
+    product_ids = fields.Many2many('product.template', compute="_get_products")
