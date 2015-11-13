@@ -80,7 +80,7 @@ class WebsiteSale(website_sale):
         category_ids = category_obj.search(
             cr, uid, [('parent_id', '=', False)], context=context)
         categs = category_obj.browse(cr, uid, category_ids, context=context)
-        has_products = lambda categ:self._child_has_products(categ)    # noqua
+        has_products = lambda categ: self._child_has_products(categ)    # noqua
 
         res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['brands'] = brands
