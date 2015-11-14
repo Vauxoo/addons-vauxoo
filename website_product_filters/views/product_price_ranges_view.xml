@@ -33,15 +33,26 @@
             <field name="model">product.public.category</field>
             <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//group" position="after">
-                    <group>
-                        <field name="product_ids"
-                            nolabel="1" colspan="2">
-                            <tree create="false" edit="false" delete="false">
-                                <field name="name"/>
-                            </tree>
-                        </field>
-                    </group>
+                <xpath expr="//sheet" position="replace">
+                    <sheet>
+                    <field name="image_medium" widget='image' class="oe_avatar"/>
+                    <div>
+                        <group>
+                            <field name="name"/>
+                            <field name="parent_id"/>
+                            <field name="sequence"/>
+                        </group>
+
+                        <group>
+                            <field name="product_ids"
+                                nolabel="1" colspan="2">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </div>
+                    </sheet>
                 </xpath>
             </field>
         </record>
