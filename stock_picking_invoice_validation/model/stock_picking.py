@@ -19,6 +19,6 @@ class StockPicking(models.Model):
         ondelete='cascade')
     check_invoice = fields.Selection(
         [('check', 'Check'),
-         ('no_check', 'No Check')], "Check invoice vs picking",
+         ('no_check', 'No Check')], "Verified Invoice",
         readonly=True,
         default="no_check")
