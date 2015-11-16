@@ -10,6 +10,7 @@
                 <xpath expr="//group/field[@name='item_ids']/.." position="before">
                     <field name="picking_type_code" invisible="True"/>
                     <field name="check_inv_pick" invisible="True"/>
+                    <label for="invoice_id"/>
                     <field name="invoice_id" options="{'no_create': True}"
                         attrs="{'invisible':['|', ('picking_type_code', 'in', ('internal', 'incoming')),
                                              ('check_inv_pick', '=', 'no_check')],
@@ -30,6 +31,21 @@
                         <field name="check_inv_pick" class="oe_inline"/>
 
                     </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_stock_picking_inh_check_invoice" model="ir.ui.view">
+            <field name="name">stock.stock.picking.check.inv.pick</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="check_invoice" invisible="True"/>
+                    <field name="invoice_id"
+                        attrs="{'invisible':['|', ('picking_type_code', 'in', ('internal', 'incoming')),
+                                             ('check_invoice', '=', 'no_check')]}"
+                        domain="[('state','in',('open', 'paid'))]"/>
                 </xpath>
             </field>
         </record>

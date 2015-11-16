@@ -15,10 +15,11 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     invoice_id = fields.Many2one(
-        string='Invoice', comodel_name='account.invoice',
-        ondelete='cascade')
+        string="Verified Invoice", comodel_name='account.invoice',
+        ondelete='set null',
+        readonly=True,)
     check_invoice = fields.Selection(
         [('check', 'Check'),
-         ('no_check', 'No Check')], "Verified Invoice",
+         ('no_check', 'No Check')],
         readonly=True,
         default="no_check")
