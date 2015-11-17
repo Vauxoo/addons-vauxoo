@@ -34,7 +34,6 @@
     "depends": [
         "stock",
         "sale",
-        "stock_picking_invoice_validation",
     ],
     "demo": [
         "demo/sale_order.xml",

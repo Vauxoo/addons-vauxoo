@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
     check_invoice = fields.Selection(
         [('check', 'Check'),
          ('no_check', 'No Check')], "Verified Invoice",
-        default="check")
+        default="no_check")
 
     def action_ship_create(self, cr, uid, ids, context=None):
         res = super(SaleOrder, self).action_ship_create(

@@ -10,7 +10,6 @@
             <field name="partner_id" ref="base.res_partner_21"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="pricelist_id" ref="product.list0"/>
-            <field name="check_invoice">no_check</field>
         </record>
 
         <!-- Sale Order Lines-->
