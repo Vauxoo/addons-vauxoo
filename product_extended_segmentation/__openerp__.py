@@ -9,6 +9,7 @@
     "depends": [
         'product',
         'product_extended_variants',
+        'stock_quant_cost_segmentation',
         ],
     "category": "Generic Modules/Inventory Control",
     "data": [
