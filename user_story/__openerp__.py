@@ -43,8 +43,8 @@
         "demo/demo.xml"
     ],
     "data": [
-        #"data/data_us_report.xml",
-        #"report/user_story_report_view.xml",
+        # "data/data_us_report.xml",
+        # "report/user_story_report_view.xml",
         "security/userstory_security.xml",
         "security/ir.model.access.csv",
         "view/userstory_view.xml",
