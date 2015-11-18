@@ -5,7 +5,6 @@
             <field name="name">Project Status Report</field>
             <field name="email_from">${(object.user_id.email or ''|safe)}</field>
             <field name="subject">${(object.title|safe)}</field>
-            <field name="email_recipients">${(object.partner_id.id|safe)}</field>
             <field name="model_id" ref="hr_timesheet_reports.model_hr_timesheet_reports_base"/>
             <field name="auto_delete" eval="True"/>
             <field name="report_template" ref="hr_timesheet_reports_base"/>
