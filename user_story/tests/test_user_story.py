@@ -241,8 +241,9 @@ class TestUserStory(TransactionCase):
         i = 0
         for criterial in user_brw and story_brw and story_brw.accep_crit_ids:
             if i == 0:
-                mes = 'El criterio%{0}%ha sido aceptado por%'.\
-                    format(criterial.name)
+                mes = ('The acceptability criterion %{criteria}%'
+                       ' has been accepted by %').format(
+                           criteria=criterial.name)
                 self.assertFalse(criterial.accepted)
                 self.criterial.approve(cr, user_brw.id, [criterial.id])
                 self.assertTrue(criterial.accepted)
