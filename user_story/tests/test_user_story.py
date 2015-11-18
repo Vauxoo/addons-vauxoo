@@ -245,6 +245,7 @@ class TestUserStory(TransactionCase):
                     format(criterial.name)
                 self.assertFalse(criterial.accepted)
                 self.criterial.approve(cr, user_brw.id, [criterial.id])
+                self.assertTrue(criterial.accepted)
                 m_id = self.message.search(cr, uid,
                                            [('res_id', '=', story_brw.id),
                                             ('body', 'ilike', mes)])
