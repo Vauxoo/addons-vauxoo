@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="stock_card_product_form" model="ir.ui.view">
+            <field name="name">stock.card.product.form</field>
+            <field name="model">stock.card.product</field>
+            <field name="arch" type="xml">
+                <form string="Stock Card Product">
+                    <header>
+                        <button
+                            name="stock_card_move_get"
+                            type="object"
+                            string="Get Moves"/>
+                        <button
+                            name="action_view_moves"
+                            type="object"
+                            string="Show Moves"/>
+                    </header>
+                    <sheet string="Stock Card Product">
+                        <h1>
+                            <label string="Product"/>
+                            <field name="product_id" readonly="0" class="oe_inline"/>
+                        </h1>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_card_product_action" model="ir.actions.act_window">
+            <field name="name">Stock Card Wizard</field>
+            <field name="res_model">stock.card.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain"></field>
+            <field name="context">[]</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="stock_card_move_tree" model="ir.ui.view">
+            <field name="name">stock.card.move.tree</field>
+            <field name="model">stock.card.move</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Card Move">
+                    <field name="date"/>
+                    <field name="move_id"/>
+                    <field name="cost_unit"/>
+                    <field name="average"/>
+                    <field name="qty"/>
+                    <field name="product_qty"/>
+                    <field name="move_valuation"/>
+                    <field name="inventory_valuation"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stock_card_move_action" model="ir.actions.act_window">
+            <field name="name">Stock Card Move</field>
+            <field name="res_model">stock.card.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain"></field>
+            <field name="context">[]</field>
+        </record>
+
+        <menuitem
+            id="menu_stock_card_main"
+            name="Stock Card"
+            parent="stock.menu_stock_root"/>
+
+        <menuitem
+            id="menu_stock_card_wizard"
+            action="stock_card_product_action"
+            name="Stock Card Wizard"
+            parent="menu_stock_card_main"/>
+    </data>
+</openerp>
