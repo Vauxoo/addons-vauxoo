@@ -265,8 +265,7 @@ class TestUserStory(TransactionCase):
                                 "The criterial was not accepted")
 
             elif i == 1:
-                mes = 'El criterio%{0}%ha sido terminado por%'.\
-                    format(criterial.name)
+                mes = 'Please Review%{0}'.format(criterial.name)
                 self.criterial.ask_review(cr, user_brw.id, [criterial.id])
                 m_id = self.message.search(cr, uid,
                                            [('res_id', '=', story_brw.id),
