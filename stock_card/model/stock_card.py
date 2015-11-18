@@ -78,7 +78,7 @@ class StockCardProduct(models.TransientModel):
                 # material_cost, production_cost, subcontracting_cost
                 # Inventory Value has to be decreased by the amount of purchase
                 # TODO: BEWARE price_unit needs to be normalised
-                move_valuation = sum([move_brw.cost_price * val[1]
+                move_valuation = sum([move_brw.price_unit * val[1]
                                      for val in values])
 
             if src in ('supplier', 'production', 'inventory', 'transit'):
@@ -96,7 +96,7 @@ class StockCardProduct(models.TransientModel):
                 old_average = avg_move_dict.get(origin_id, 0.0) or average
                 move_valuation = sum([old_average * val[1] for val in values])
 
-            cost_unit = move_valuation / qty  # TODO: Need to be changed
+            cost_unit = move_valuation / qty  if qty else 0.0
             inventory_valuation += direction * move_valuation
             average = (product_qty and inventory_valuation / product_qty or
                        average)
