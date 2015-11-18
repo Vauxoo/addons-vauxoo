@@ -8,7 +8,7 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 from openerp import exceptions
 
 
@@ -22,7 +22,8 @@ class StockTansferDetails(models.TransientModel):
             key, default='check')
         for record in self:
             record.check_inv_pick = check_inv_pick
-    invoice_id = fields.Many2one('account.invoice', string='Invoice')
+    invoice_id = fields.Many2one(
+        'account.invoice', string='Invoice to validate')
     picking_type_code = fields.Char(
         string='Picking Type Code', related='picking_id.picking_type_code')
     check_inv_pick = fields.Char(
@@ -44,7 +45,7 @@ class StockTansferDetails(models.TransientModel):
                     [('picking_type_code', '=', 'outgoing'),
                      ('invoice_id', '=', invoice.id)])
                 if old_invoice:
-                    msg = (
+                    msg = _(
                         'You cannot transfer the current picking, '
                         'because the invoice is already registered with the '
                         'picking %s') % (transfer.picking_id.name)
@@ -57,16 +58,18 @@ class StockTansferDetails(models.TransientModel):
                              for move in transfer.item_ids]
                     if lines != moves:
                         raise exceptions.Warning(
-                            ('Warning!'), 'Incorrect Invoice, '
-                            'products and quantities are different '
-                            'between moves and invoice lines.')
+                            _('Warning!'),
+                            _('Incorrect Invoice, '
+                              'products and quantities are different '
+                              'between moves and invoice lines.'))
                     else:
                         transfer.picking_id.invoice_id = invoice.id
                         res = super(
                             StockTansferDetails, self).do_detailed_transfer()
                         return res
                 else:
-                    raise exceptions.Warning(('Warning!'), 'Incorrect Invoice')
+                    raise exceptions.Warning(
+                        _('Warning!'), _('Incorrect Invoice'))
             else:
                 res = super(StockTansferDetails, self).do_detailed_transfer()
                 return res
