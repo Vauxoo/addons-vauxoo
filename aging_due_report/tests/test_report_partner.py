@@ -51,7 +51,8 @@ class TestReportAging(TestAgingCommon):
 
     def _generate_register(self):
         invoice_id = self.invoice_demo.copy(
-            {'partner_id': self.partner_id.id})
+            {'partner_id': self.partner_id.id,
+             'check_total': self.invoice_demo.amount_total})
         workflow.trg_validate(
             self.uid, 'account.invoice', invoice_id.id, 'invoice_open',
             self.cr)

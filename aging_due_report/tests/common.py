@@ -41,4 +41,4 @@ class TestAgingCommon(common.TransactionCase):
 
         self.invoice_demo = self.env.ref('account.test_invoice_1')
 
-        self.partner_id = self.env.ref('base.res_partner_1').copy()
+        self.partner_id = self.partner_obj.create({'name': 'Partner'})
