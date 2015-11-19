@@ -528,7 +528,7 @@ class MergeProductAutomatic(osv.TransientModel):
         context = dict(context or {}, active_test=False)
         this = self.browse(cr, uid, ids[0], context=context)
         p_ids = this.product_ids and this.product_ids
-        p_ids and p_ids.append(this.product_to)
+        p_ids += this.product_to
         product_ids = set(map(int, this.product_from and
                               [this.product_to, this.product_from] or
                               p_ids))
