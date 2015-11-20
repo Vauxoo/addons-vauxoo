@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning as UserError
+from openerp.exceptions import except_orm, Warning as UserError
 SEGMENTATION_COST = [
     'landed_cost',
     'subcontracting_cost',
@@ -241,6 +241,22 @@ class MrpProduction(models.Model):
         # TODO: make different between (REAL, AVG) and STD products
         # STD diff shall be booked onto a deviation account
         valuation_account_id = accounts['property_stock_valuation_account_id']
+
+        if self.product_id.cost_method == 'standard':
+            company_brw = self.env.user.company_id
+            gain_id = \
+                company_brw.gain_inventory_deviation_account_id.id
+            loss_id = \
+                company_brw.loss_inventory_deviation_account_id.id
+
+            if not all([gain_id, loss_id]):
+                raise except_orm(
+                    _('Error!'),
+                    _('Please configure Gain & Loss Inventory Valuation in '
+                      'your Company'))
+
+            valuation_account_id = loss_id if diff > 0 else gain_id
+
         return self._create_adjustment_account_move_line(
             move_id, production_account_id, valuation_account_id, diff)
 
