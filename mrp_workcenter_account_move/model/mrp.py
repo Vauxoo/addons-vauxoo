@@ -300,6 +300,40 @@ class MrpProduction(models.Model):
         return True
 
     @api.v7
+    def ws_action_compute_lines(
+            self, cr, uid, ids, properties=None, context=None):
+        """ Compute product_lines and workcenter_lines from BoM structure
+        @return: product_lines
+        """
+        workcenter_line_obj = self.pool.get('mrp.production.workcenter.line')
+        for production in self.browse(cr, uid, ids, context=context):
+            res = self._prepare_lines(
+                cr, uid, production, properties=properties, context=context)
+            results2 = res[1]  # workcenter_lines
+
+            # reset workcenter_lines in production order
+            for line in results2:
+                line['production_id'] = production.id
+                workcenter_line_obj.create(cr, uid, line, context)
+        return True
+
+    @api.v7
+    def costs_generate(self, cr, uid, ids):
+        ids = isinstance(ids, (int, long)) and ids or ids[0]
+        production = self.browse(cr, uid, ids)
+        if not production.workcenter_lines:
+            self.ws_action_compute_lines(cr, uid, [ids])
+        if production.state != 'done':
+            return False
+        if production.account_move_id:
+            return True
+        if not production.routing_id:
+            if not production.bom_id.routing_id:
+                return False
+            production.write({'routing_id': production.bom_id.routing_id.id})
+        return self._costs_generate(cr, uid, production)
+
+    @api.v7
     def _costs_generate(self, cr, uid, production):
         """ Calculates total costs at the end of the production.
         @param production: Id of production order.
