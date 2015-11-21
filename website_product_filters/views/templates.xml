@@ -246,5 +246,11 @@
             </ul>
           </xpath>
         </template>
+        <template id="remove_search_on_product"
+          name="Remove Search On Product" inherit_id="website_sale.product" active="True">
+          <xpath expr="//t[@t-call='website_sale.search']" position="replace">
+
+          </xpath>
+        </template>
     </data>
 </openerp>
