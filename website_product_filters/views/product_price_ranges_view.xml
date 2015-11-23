@@ -42,6 +42,7 @@
                             <field name="parent_id"/>
                             <field name="sequence"/>
                             <field name="total_tree_products"/>
+                            <field name="has_products_ok"/>
                         </group>
 
                         <group>

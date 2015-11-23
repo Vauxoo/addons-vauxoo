@@ -68,10 +68,11 @@ class ProductPriceRanges(models.Model):
 class ProductCategory(models.Model):
     _inherit = 'product.public.category'
 
+    @api.depends('product_ids')
     @api.multi
-    def _get_products(self):
-        product_obj = self.env["product.template"]
+    def _get_has_products_ok(self):
         for record in self:
+            product_obj = self.env["product.template"]
             product_ids = []
             product_published = product_obj.search(
                 [("website_published", "=", True)])
@@ -135,3 +136,13 @@ class ProductCategory(models.Model):
                 [('public_categ_ids', 'child_of', rec.id),
                  ('website_published', '=', True)])
             rec.total_tree_products = len(prod_ids)
+            if rec.product_ids:
+                rec.has_products_ok = True
+
+    product_ids = fields.Many2many(
+        "product.template", "product_public_category_product_template_rel",
+        "product_template_id",
+        "product_public_category_id",
+        domain="[('website_published','=',True)]", readonly=True)
+    has_products_ok = fields.Boolean(compute="_get_has_products_ok",
+                                     store=True, readonly=True)
