@@ -94,7 +94,6 @@ class WebsiteSale(website_sale):
 
     def _child_has_products(self, category):
         if category.child_id:
-            print "No MAME!! \°/"
             return any(self._child_has_products(child)
                        for child in category.child_id)
         elif category.has_products_ok:
