@@ -165,13 +165,15 @@
                     <li><a id="bread_products" href="/shop">Products</a></li>
                     <li class="active"><a id="bread_category">All Products</a></li>
                 </ul>
+                <div class="text-left mt3">
                   <t t-foreach="attributes" t-as="a">
                     <t t-foreach="a.value_ids" t-as="v">
                       <t t-if="v.id in attrib_set">
-                        <h4 class="inline-hs panel-no-borders text-left"><span class="label label-info" t-field="v.name"></span></h4>
+                          <h4 class="inline-hs panel-no-borders"><span class="label label-info" t-field="v.name"></span></h4>
                       </t>
                     </t>
                   </t>
+                </div>
             </div>
               <div class="col-md-3 pull-right">
                 <select class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
