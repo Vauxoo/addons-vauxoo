@@ -57,6 +57,12 @@ class WebsiteProductMetadata(models.Model):
     _inherit = ["product.template", "website.seo.metadata"]
     _name = "product.template"
 
+    public_categ_ids = fields.Many2many(
+        "product.public.category",
+        "product_public_category_product_template_rel",
+        "product_template_id",
+        "product_public_category_id")
+
 
 class ProductPriceRanges(models.Model):
     _name = "product.price.ranges"
@@ -68,9 +74,17 @@ class ProductPriceRanges(models.Model):
 class ProductCategory(models.Model):
     _inherit = 'product.public.category'
 
+    # @api.depends('product_ids')
+    # def _get_has_products_ok(self, cr , uid, ids, context):
+    #     import pdb; pdb.set_trace()
+    #     ids_with_products = self.search(
+    #         cr, uid, [('product_ids', '!=', False)], context=context)
+    #     ids_with_products.write({'has_products_ok': True})
+
     @api.depends('product_ids')
     @api.multi
     def _get_has_products_ok(self):
+        ids_with_products = []
         for record in self:
             product_obj = self.env["product.template"]
             product_ids = []
@@ -138,11 +152,29 @@ class ProductCategory(models.Model):
             rec.total_tree_products = len(prod_ids)
             if rec.product_ids:
                 rec.has_products_ok = True
+            if record.product_ids:
+                ids_with_products.append(record.id)
+        ids = self.browse(ids_with_products)
+        ids.write({'has_products_ok': True})
 
     product_ids = fields.Many2many(
         "product.template", "product_public_category_product_template_rel",
-        "product_template_id",
         "product_public_category_id",
+        "product_template_id",
         domain="[('website_published','=',True)]", readonly=True)
     has_products_ok = fields.Boolean(compute="_get_has_products_ok",
                                      store=True, readonly=True)
+    # @api.multi
+    # def _get_default_print_order_ids(self):
+    #     for record in self:
+    #         record.product_ids = self.env['product.template'].search(
+    #             [('website_published', '=', True)]
+    #             )
+
+    # product_ids = fields.Many2many(
+    #     comodel_name="product.template",
+    #     relation="product_public_category_product_template_rel",
+    #     column1="product_public_category_id",
+    #     column2="product_template_id",
+    #     default=_get_default_print_order_ids,
+    #     readonly=Tr

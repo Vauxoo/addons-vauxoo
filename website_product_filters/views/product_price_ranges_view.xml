@@ -50,6 +50,7 @@
                                 nolabel="1" colspan="2">
                                 <tree create="false" edit="false" delete="false">
                                     <field name="name"/>
+                                    <field name="website_published"/>
                                 </tree>
                             </field>
                         </group>
