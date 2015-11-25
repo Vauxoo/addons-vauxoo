@@ -219,7 +219,12 @@
             <i t-if="categ.child_id and _has_products(categ)"
               t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}"/>
             <t t-if="_has_products(categ) or categ.product_ids">
-              <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)" t-field="categ.name"></a>
+              <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
+                <t t-esc="'%s ' %(categ.name)"/>
+                <span class="badge">
+                  <t t-esc="'%s' %(len(categ.product_ids))"/>
+                </span>
+              </a>
             </t>
             <ul t-if="_has_products(categ)" class="nav nav-pills nav-stacked nav-hierarchy"
               t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
