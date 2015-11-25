@@ -41,6 +41,7 @@
                             <field name="name"/>
                             <field name="parent_id"/>
                             <field name="sequence"/>
+                            <field name="total_tree_products"/>
                         </group>
 
                         <group>

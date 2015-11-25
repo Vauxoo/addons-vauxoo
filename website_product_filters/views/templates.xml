@@ -222,7 +222,7 @@
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
                 <span class="badge">
-                  <t t-esc="'%s' %(len(categ.product_ids))"/>
+                  <t t-esc="'%s' %(categ.total_tree_products)"/>
                 </span>
               </a>
             </t>
