@@ -316,24 +316,6 @@ class MrpProduction(models.Model):
         return True
 
     @api.v7
-    def ws_action_compute_lines(
-            self, cr, uid, ids, properties=None, context=None):
-        """ Compute product_lines and workcenter_lines from BoM structure
-        @return: product_lines
-        """
-        workcenter_line_obj = self.pool.get('mrp.production.workcenter.line')
-        for production in self.browse(cr, uid, ids, context=context):
-            res = self._prepare_lines(
-                cr, uid, production, properties=properties, context=context)
-            results2 = res[1]  # workcenter_lines
-
-            # reset workcenter_lines in production order
-            for line in results2:
-                line['production_id'] = production.id
-                workcenter_line_obj.create(cr, uid, line, context)
-        return True
-
-    @api.v7
     def costs_generate(self, cr, uid, ids):
         ids = isinstance(ids, (int, long)) and ids or ids[0]
         production = self.browse(cr, uid, ids)
