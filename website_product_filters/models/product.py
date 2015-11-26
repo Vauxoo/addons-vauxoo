@@ -82,3 +82,16 @@ class ProductCategory(models.Model):
             record.product_ids = product_ids
 
     product_ids = fields.Many2many('product.template', compute="_get_products")
+    total_tree_products = fields.Integer("Total Subcategory Prods",
+                                         compute="_get_product_count",
+                                         store=True,)
+
+    @api.multi
+    @api.depends('product_ids')
+    def _get_product_count(self):
+        prod_obj = self.env["product.template"]
+        for rec in self:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', rec.id),
+                 ('website_published', '=', True)])
+            rec.total_tree_products = len(prod_ids)
