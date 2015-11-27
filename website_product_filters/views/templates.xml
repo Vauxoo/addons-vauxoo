@@ -219,7 +219,7 @@
         </template>
 
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
-          <li t-att-class="'active' if categ.id == int(category or 0) else ''">
+          <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
             <i t-if="categ.child_id and _has_products(categ)"
               t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}"/>
             <t t-if="_has_products(categ) or categ.product_ids">
@@ -240,7 +240,7 @@
         </template>
 
         <template id="option_collapse_products_categories"
-          name="Collapsible Category List" inherit_id="website_sale.products_categories" active="False" customize_show="True">
+          name="Collapsible Category List" inherit_id="website_sale.products_categories" active="True">
           <xpath expr="//div[@id='products_grid_before']/ul" position="replace">
             <ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
               <li t-att-class=" '' if category else 'active' ">
@@ -258,5 +258,12 @@
 
           </xpath>
         </template>
+
+        <template id="async_response" name="Async Response List" active="True">
+          <div>
+            <h1>test</h1>
+          </div>
+        </template>
+
     </data>
 </openerp>
