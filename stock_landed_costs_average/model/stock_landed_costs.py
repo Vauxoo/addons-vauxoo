@@ -539,3 +539,7 @@ class StockLandedCost(models.Model):
                     cr, uid, key, {'additional_landed_cost': value},
                     context=context)
         return True
+
+    @api.v8
+    def compute_landed_cost(self):
+        return self._model.compute_landed_cost(self._cr, self._uid, self.ids)
