@@ -238,7 +238,7 @@ class MrpProduction(models.Model):
         accounts = template_obj.get_product_accounts(
             self._cr, self._uid, self.product_id.product_tmpl_id.id,
             context=ctx)
-        # TODO: make different between (REAL, AVG) and STD products
+        # NOTE: make different between (REAL, AVG) and STD products
         # STD diff shall be booked onto a deviation account
         valuation_account_id = accounts['property_stock_valuation_account_id']
 
@@ -345,18 +345,23 @@ class MrpProduction(models.Model):
         if not any([amount, diff]):
             return amount
 
-        # /!\ TODO: If product is not real_time Do Not Create Journal Entries
-        move_id = self._create_account_move(cr, uid, production.id)
-        production.write({'account_move_id': move_id.id})
+        # /!\ NOTE: If product is not real_time Do Not Create Journal Entries
+        if production.product_id.valuation == 'real_time':
+            move_id = self._create_account_move(cr, uid, production.id)
+            production.write({'account_move_id': move_id.id})
 
-        if amount:
-            self._create_accounting_entries(cr, uid, production.id, move_id)
+            if amount:
+                self._create_accounting_entries(
+                    cr, uid, production.id, move_id)
+            if diff:
+                # NOTE: Subproduct are not taken into accounting in this
+                # approach
+                # NOTE: make different between (REAL, AVG) and STD products
+                # STD diff shall be booked onto a deviation account
+                self._create_adjustment_accounting_entries(
+                    cr, uid, production.id, move_id, diff)
+
         if diff:
-            # NOTE: Subproduct are not taken into accounting in this approach
-            # TODO: make different between (REAL, AVG) and STD products
-            # STD diff shall be booked onto a deviation account
-            self._create_adjustment_accounting_entries(
-                cr, uid, production.id, move_id, diff)
             # TODO: if product produced is AVG recompute avg value
             # NOTE: Recompute quant cost if not STD
             self.adjust_quant_cost(cr, uid, production.id, diff)
