@@ -101,7 +101,8 @@ class ProductCategory(models.Model):
                             count_dict[value.id] += 1
                         else:
                             count_dict[value.id] = 1
-            return count_dict
+            to_jsonfy = [{'id': k, 'qty': count_dict[k]} for k in count_dict]
+            return to_jsonfy
 
     @api.multi
     @api.depends('product_ids')

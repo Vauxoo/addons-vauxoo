@@ -1,6 +1,7 @@
 # coding: utf-8
 from openerp import http
 from openerp.http import request
+import json
 
 
 class WebsiteAsync(http.Controller):
@@ -16,9 +17,6 @@ class WebsiteAsync(http.Controller):
         """
         cr, uid, pool = request.cr, request.uid, request.registry
         category_obj = pool.get('product.public.category')
-        prods_per_attr = category_obj._get_async_values(cr, uid, post.get('category'))
-        print prods_per_attr
-        print "Post", post.get('category')
-        values = {'something': 'stupid'}
-        return request.website.render("website_product_filters.async_response",
-                                      values)
+        prods_per_attr = category_obj._get_async_values(
+            cr, uid, post.get('category'))
+        return request.make_response(json.dumps(prods_per_attr))
