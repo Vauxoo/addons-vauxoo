@@ -12,7 +12,6 @@
         "stock",
         "purchase",
         "mrp",
-        "stock_landed_costs_average",
     ],
     "demo": [
     ],
