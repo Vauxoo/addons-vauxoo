@@ -13,6 +13,7 @@
         "stock_deviation_account",
         "purchase",
         "mrp",
+        "stock_card",
     ],
     "demo": [
         "demo/account_invoice_demo.xml",
