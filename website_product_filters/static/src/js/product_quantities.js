@@ -8,13 +8,13 @@
           method: "POST",
           data: { category: $("#products_grid_before li.active").data("categid")},
           beforeSend: function( xhr ) {
-            $('*[data-oe-model="product.attribute.value"]').after(' <i class="fa fa-spinner fa-spin"></i>');
+            $('.att-value').after(' <i class="fa fa-spinner fa-spin"></i>');
           }
         }).done(function( data ) {
             if ( console && console.log ) {
               console.log( "Sample of data:", data);
               $.each(JSON.parse(data), function(i, obj) {
-              $('*[data-oe-model="product.attribute.value"][data-oe-id="'+obj.id+'"]').next().replaceWith('<span class="badge">'+obj.qty+'</span>');
+              $('.att-value#'+obj.id).next().replaceWith('<span class="badge">'+obj.qty+'</span>');
               });
             }
           });
