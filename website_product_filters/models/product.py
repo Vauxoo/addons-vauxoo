@@ -75,7 +75,6 @@ class ProductCategory(models.Model):
             product_ids = []
             product_published = product_obj.search(
                 [("website_published", "=", True)])
-
             for product in product_published:
                 if record in product.public_categ_ids:
                     product_ids.append(product.id)
@@ -85,6 +84,27 @@ class ProductCategory(models.Model):
     total_tree_products = fields.Integer("Total Subcategory Prods",
                                          compute="_get_product_count",
                                          store=True,)
+
+    @api.model
+    def _get_async_ranges(self, category):
+        prod_obj = self.env['product.template']
+        ranges_obj = self.env['product.price.ranges'].search([])
+        count_dict = {}
+        prod_ids = prod_obj.search(
+            [('public_categ_ids', 'child_of', int(category)),
+             ('website_published', '=', True)])
+        if prod_ids:
+            for prod in prod_ids:
+                for ran in ranges_obj:
+                    if ran.upper > prod.list_price > ran.lower:
+                        if ran.id in count_dict.keys():
+                            count_dict[ran.id] += 1
+                        else:
+                            count_dict[ran.id] = 1
+                    if ran.id not in count_dict.keys():
+                        count_dict[ran.id] = 0
+            to_jsonfy = [{'id': k, 'qty': count_dict[k]} for k in count_dict]
+            return to_jsonfy
 
     @api.model
     def _get_async_values(self, category):
