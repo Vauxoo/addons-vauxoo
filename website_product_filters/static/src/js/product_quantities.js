@@ -14,8 +14,6 @@
             if ( console && console.log ) {
               console.log( "Sample of data:", data);
               $.each(JSON.parse(data), function(i, obj) {
-                console.log(obj.id);
-                console.log(obj.qty);
               $('*[data-oe-model="product.attribute.value"][data-oe-id="'+obj.id+'"]').next().replaceWith('<span class="badge">'+obj.qty+'</span>');
               });
             }

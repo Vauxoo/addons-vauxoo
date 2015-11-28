@@ -113,7 +113,7 @@
                                 </t>
                             <t t-set="counter" t-value="counter+1"/>
                           </t>
-                          <t t-if="counter >= 5">
+                          <t t-if="counter > 6">
                             <a class="show-more"><span class="fa fa-plus-square"></span> Show More</a>
                           </t>
                       </ul>
