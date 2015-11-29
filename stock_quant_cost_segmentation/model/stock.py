@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from openerp import models, fields, api
+from openerp import SUPERUSER_ID
 
 
 class StockQuant(models.Model):
@@ -22,5 +23,7 @@ class StockQuant(models.Model):
             force_location_from=force_location_from,
             force_location_to=force_location_to, context=context)
         if move.purchase_line_id:
-            quant.write({'material_cost': quant.cost})
+            self.write(
+                cr, SUPERUSER_ID, quant.id, {'material_cost': quant.cost},
+                context=context)
         return quant
