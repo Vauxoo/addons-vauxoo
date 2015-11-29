@@ -162,7 +162,7 @@
         <template id="product_sort_bar" inherit_id="website_sale.products" active="True">
           <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="replace">
 
-            <div class="container">
+            <div class="container sort_bar">
             <div class="col-md-9 panel-no-margins">
                 <ul class="breadcrumb pull-left panel-no-borders">
                     <li><a id="bread_home" href="/">Home</a></li>
@@ -173,7 +173,14 @@
                   <t t-foreach="attributes" t-as="a">
                     <t t-foreach="a.value_ids" t-as="v">
                       <t t-if="v.id in attrib_set">
-                          <h4 class="inline-hs panel-no-borders"><span class="label label-info" t-field="v.name"></span></h4>
+                          <h4 class="inline-hs panel-no-borders" style="margin: 0 1px;">
+                            <span class="label label-warning">
+                              <t t-esc="v.name"></t>
+                                <a t-att-data-attrvalue="v.id" class="removable-badge">
+                                  <i class="fa fa-times"></i>
+                                </a>
+                            </span>
+                          </h4>
                       </t>
                     </t>
                   </t>
