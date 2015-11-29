@@ -2,7 +2,6 @@
 from openerp import http
 from openerp.http import request
 import json
-import time
 
 
 class WebsiteAsync(http.Controller):
@@ -35,4 +34,4 @@ class WebsiteAsync(http.Controller):
         category_obj = pool.get('product.public.category')
         response = category_obj._get_async_ranges(
             cr, uid, post.get('category'))
-        return request.make_response(json.dumps(response));
+        return request.make_response(json.dumps(response))

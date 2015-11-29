@@ -96,7 +96,7 @@
                            </t>
                            <t t-if="counter >= 6">
                             <li t-att-class="'hidden active' if r.id in ranges_set else 'hidden'">
-                                <label style="margin: 0 5px;" t-att-class="'upper'+str(r.id)" t-att-id="r.id">
+                                <label style="margin: 0 5px;" t-att-class="'upper upper'+str(r.id)" t-att-id="r.id">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
                                     <span style="font-weight: normal" t-field="r.lower" t-field-options='{
                                         "widget": "monetary",
