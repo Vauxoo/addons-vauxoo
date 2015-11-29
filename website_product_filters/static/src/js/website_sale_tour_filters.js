@@ -7,22 +7,23 @@
         mode: 'test',
         steps: [
             {
-                title: 'Click on category computers all-in-one',
-                element: 'a:contains("Computer all-in-one")',
+                title: 'Click on category computers Keyboard Mouse',
+                element: 'a:contains("Keyboard / Mouse")',
             },
             {
                 title: 'Select 16 GB filter on memory section',
-                waitFor: 'form.js_attributes',
-                element: 'form.js_attributes label:contains(16 GB) input',
+                waitNot: '*[data-name="iPad Mini"],[data-name="iPad Retina Display"]',
+                waitFor: '.js_attributes',
+                element: 'label:contains(16 GB) input',
             },
             {
                 title: 'Select price range of 0 to 100 USD',
                 waitFor: 'h4:contains(16 GB)',
+                waitNot: '*[data-name="Apple Wireless Keyboard"]',
                 element: '.js_attributes input[name=range]input[value=1]',
             },
             {
                 title: 'Select an iPod',
-                waitNot: '*[data-name="iPad Retina Display"],[data-name="iMac"]',
                 element: '.oe_product_cart a:contains("iPod")',
             },
             {
