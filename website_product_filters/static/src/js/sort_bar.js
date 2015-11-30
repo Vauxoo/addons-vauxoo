@@ -1,7 +1,6 @@
 (function (){
     'use strict';
     openerp.website.if_dom_contains('.sort_bar', function(){
-        console.log("Loaded on filter bar");
         $('.removable-badge').click(function(ev) {
             ev.preventDefault();
             var $element = jQuery(this);
