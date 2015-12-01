@@ -7,8 +7,18 @@
         mode: 'test',
         steps: [
             {
-                title: 'Click on category computers Keyboard Mouse',
-                element: 'a:contains("Keyboard / Mouse")',
+                title: 'Click on category Computers',
+                element: 'i[data-arrowid="2"]',
+            },
+            {
+                title: 'Click on category Devices',
+                waitFor: 'a:contains(Devices)',
+                element: 'i[data-arrowid="11"]',
+            },
+            {
+                title: 'Click on category Keyboard / Mouse',
+                waitFor: 'a:contains("Keyboard / Mouse")',
+                element: 'li[data-categid="15"] a:contains("Keyboard / Mouse")',
             },
             {
                 title: 'Select 16 GB filter on memory section',

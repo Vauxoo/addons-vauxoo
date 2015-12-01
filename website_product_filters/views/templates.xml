@@ -228,7 +228,7 @@
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
           <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
             <i t-if="categ.child_id and _has_products(categ)"
-              t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}"/>
+              t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}" t-att-data-arrowid="categ.id"/>
             <t t-if="_has_products(categ) or categ.product_ids">
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
@@ -265,12 +265,5 @@
 
           </xpath>
         </template>
-
-        <template id="async_response" name="Async Response List" active="True">
-          <div>
-            <h1>test</h1>
-          </div>
-        </template>
-
     </data>
 </openerp>
