@@ -6,7 +6,7 @@
             var $element = jQuery(this);
             var value_id = $element.data('attrvalue');
             $element.parents("h4").remove();
-            $('span.att-value#'+value_id).trigger('click');
+            $('.att-value#'+value_id).trigger('click');
         });
     });
 }());

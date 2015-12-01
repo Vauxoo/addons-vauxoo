@@ -7,15 +7,13 @@
           method: "POST",
           data: { category: $("#products_grid_before li.active").data("categid")},
           beforeSend: function( xhr ) {
-            $('.att-value').after(' <i class="fa fa-spinner fa-spin"></i>');
+            $('span.att-value').after(' <i class="fa fa-spinner fa-spin"></i>');
           }
         }).done(function( data ) {
-            if ( console && console.log ) {
               $.each(JSON.parse(data), function(i, obj) {
-                $('.att-value#'+obj.id).next().replaceWith('<span class="badge">'+obj.qty+'</span>');
-                $('.att-value').next('.fa-spinner').replaceWith(' <span class="badge">0</span>');
+                $('span.att-value#'+obj.id).next().replaceWith('<span class="badge">'+obj.qty+'</span>');
+                $('span.att-value').next('.fa-spinner').replaceWith(' <span class="badge">0</span>');
               });
-            }
           });
     });
 
