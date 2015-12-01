@@ -13,6 +13,7 @@
             if ( console && console.log ) {
               $.each(JSON.parse(data), function(i, obj) {
                 $('.att-value#'+obj.id).next().replaceWith('<span class="badge">'+obj.qty+'</span>');
+                $('.att-value').next('.fa-spinner').replaceWith(' <span class="badge">0</span>');
               });
             }
           });

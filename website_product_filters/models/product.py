@@ -123,6 +123,7 @@ class ProductCategory(models.Model):
                             count_dict[value.id] = 1
                         if value.id not in count_dict.keys():
                             count_dict[value.id] = 0
+            print count_dict
             to_jsonfy = [{'id': k, 'qty': count_dict[k]} for k in count_dict]
             return to_jsonfy
 
