@@ -25,6 +25,22 @@ class ProductTemplate(models.Model):
         uom_obj = self.pool.get("product.uom")
         quant_obj = self.pool.get("stock.quant")
         tmpl_obj = self.pool.get('product.template')
+        bom_obj = self.pool.get('mrp.bom')
+        prod_obj = self.pool.get('product.product')
+
+        model = 'product.product'
+
+        def _bom_find(prod_id):
+            if model == 'product.product':
+                # if not look for template
+                bom_id = bom_obj._bom_find(
+                    cr, uid, product_id=prod_id, context=context)
+                if bom_id:
+                    return bom_id
+                prod_id = prod_obj.browse(
+                    cr, uid, prod_id, context=context).product_tmpl_id.id
+            return bom_obj._bom_find(
+                cr, uid, product_tmpl_id=prod_id, context=context)
 
         def quant_search(product_id):
             ARGS = [('product_id', '=', product_id)]
