@@ -26,26 +26,26 @@
                                 <ul class="nav nav-pills nav-stacked">
                                   <t t-set="counter" t-value="1"/>
                                     <t t-foreach="a.value_ids" t-as="v">
-                                      <t t-if="counter &lt; 5">
+                                      <t t-if="counter &lt; 6">
 
-                                        <li t-att-class="'active' if v.id in attrib_set else ''">
-                                            <label style="margin: 0 20px;">
+                                        <li t-att-class="'active attribute' if v.id in attrib_set else 'attribute'">
+                                            <label style="margin: 0 5px;">
                                                 <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
-                                                <span style="font-weight: normal" t-field="v.name"/>
+                                                <span t-att-id="v.id" class="att-value" style="font-weight: normal" t-field="v.name"/>
                                             </label>
                                         </li>
                                       </t>
-                                      <t t-if="counter >= 5">
-                                        <li t-att-class="'hidden active' if v.id in attrib_set else 'hidden'">
-                                            <label style="margin: 0 20px;">
+                                      <t t-if="counter >= 6">
+                                        <li t-att-class="'hidden active attribute' if v.id in attrib_set else 'hidden attribute'">
+                                            <label style="margin: 0 5px;">
                                                 <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
-                                                <span style="font-weight: normal" t-field="v.name"/>
+                                                <span t-att-id="v.id" class="att-value" style="font-weight: normal" t-field="v.name"/>
                                             </label>
                                         </li>
                                       </t>
                                       <t t-set="counter" t-value="counter+1"/>
                                     </t>
-                                    <t t-if="counter >= 5">
+                                    <t t-if="counter > 6">
                                       <a class="show-more"><span class="fa fa-plus-square"></span> Show More</a>
                                     </t>
                                 </ul>
@@ -56,6 +56,8 @@
                                       t-attf-class="css_attribute_color #{'active' if v.id in attrib_set else ''}">
                                       <input type="checkbox"
                                           name="attrib"
+                                          t-att-id="v.id"
+                                          class="att-value"
                                           t-att-value="'%s-%s' % (a.id,v.id)"
                                           t-att-checked="'checked' if v.id in attrib_set else ''"
                                           t-att-title="v.name"/>
@@ -78,8 +80,8 @@
                         <t t-set="counter" t-value="1"/>
                           <t t-foreach="price_ranges" t-as="r">
                             <t t-if="counter &lt; 6">
-                            <li t-att-class="'active' if r.id in ranges_set else ''">
-                                <label style="margin: 0 20px;">
+                            <li t-att-class="'range active' if r.id in ranges_set else 'range'">
+                                <label style="margin: 0 5px;" t-att-class="'upper upper'+str(r.id)" t-att-id="r.id">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
                                     <span style="font-weight: normal" t-field="r.lower" t-field-options='{
                                         "widget": "monetary",
@@ -95,8 +97,8 @@
                             </li>
                            </t>
                            <t t-if="counter >= 6">
-                            <li t-att-class="'hidden active' if r.id in ranges_set else 'hidden'">
-                                <label style="margin: 0 20px;">
+                            <li t-att-class="'hidden range active' if r.id in ranges_set else 'range hidden'">
+                                <label style="margin: 0 5px;" t-att-class="'upper upper'+str(r.id)" t-att-id="r.id">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
                                     <span style="font-weight: normal" t-field="r.lower" t-field-options='{
                                         "widget": "monetary",
@@ -113,7 +115,7 @@
                                 </t>
                             <t t-set="counter" t-value="counter+1"/>
                           </t>
-                          <t t-if="counter >= 5">
+                          <t t-if="counter > 6">
                             <a class="show-more"><span class="fa fa-plus-square"></span> Show More</a>
                           </t>
                       </ul>
@@ -127,7 +129,7 @@
                       <ul class="nav nav-pills nav-stacked">
                           <t t-foreach="brands" t-as="b">
                           <li t-att-class="'brand active' if b.id in brand_set else ''">
-                          <label style="margin: 0 20px;">
+                          <label style="margin: 0 5px;">
                                   <input type="checkbox" name="brand" t-att-value="'%s' % b.id" t-att-checked="'checked' if b.id in brand_set else ''"/>
                             <span style="font-weight: normal" t-field="b.name"/>
                             </label>
@@ -158,22 +160,52 @@
             <attribute name="t-att-data-price">product.lst_price and product.lst_price or '0'</attribute>
           </xpath>
         </template>
+        <template id="breadcrumbs" name="Recursive breadcrumbs">
+            <t t-if="current_category.parent_id">
+                <t t-set="old_category" t-value="current_category"/>
+                <t t-set="current_category"
+                   t-value="current_category.parent_id"/>
+                <t t-call="website_product_filters.breadcrumbs"/>
+                <t t-set="current_category" t-value="old_category"/>
+            </t>
+
+            <li t-if="not current_category.parent_id">
+                <a t-att-href="keep(category=0)">
+                    Shop
+                </a>
+            </li>
+
+            <li>
+                <a t-att-href="keep(
+                        '/shop/category/%s' % slug(current_category),
+                        category=0)"
+                   t-field="current_category.name"/>
+            </li>
+        </template>
 
         <template id="product_sort_bar" inherit_id="website_sale.products" active="True">
           <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="replace">
 
-            <div class="container">
+            <div class="container sort_bar">
             <div class="col-md-9 panel-no-margins">
+              <t t-if="category">
                 <ul class="breadcrumb pull-left panel-no-borders">
-                    <li><a id="bread_home" href="/">Home</a></li>
-                    <li><a id="bread_products" href="/shop">Products</a></li>
-                    <li class="active"><a id="bread_category">All Products</a></li>
+                    <t t-set="current_category" t-value="category"/>
+                    <t t-call="website_product_filters.breadcrumbs"/>
                 </ul>
+              </t>
                 <div class="text-left mt3">
                   <t t-foreach="attributes" t-as="a">
                     <t t-foreach="a.value_ids" t-as="v">
                       <t t-if="v.id in attrib_set">
-                          <h4 class="inline-hs panel-no-borders"><span class="label label-info" t-field="v.name"></span></h4>
+                          <h4 class="inline-hs panel-no-borders" style="margin: 0 1px;">
+                            <span class="label label-warning">
+                              <t t-esc="v.name"></t>
+                                <a t-att-data-attrvalue="v.id" class="removable-badge">
+                                  <i class="fa fa-times"></i>
+                                </a>
+                            </span>
+                          </h4>
                       </t>
                     </t>
                   </t>
@@ -219,9 +251,9 @@
         </template>
 
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
-          <li t-att-class="'active' if categ.id == int(category or 0) else ''">
+          <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
             <i t-if="categ.child_id and _has_products(categ)"
-              t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}"/>
+              t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}" t-att-data-arrowid="categ.id"/>
             <t t-if="_has_products(categ) or categ.product_ids">
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
@@ -240,7 +272,7 @@
         </template>
 
         <template id="option_collapse_products_categories"
-          name="Collapsible Category List" inherit_id="website_sale.products_categories" active="False" customize_show="True">
+          name="Collapsible Category List" inherit_id="website_sale.products_categories" active="True">
           <xpath expr="//div[@id='products_grid_before']/ul" position="replace">
             <ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
               <li t-att-class=" '' if category else 'active' ">
