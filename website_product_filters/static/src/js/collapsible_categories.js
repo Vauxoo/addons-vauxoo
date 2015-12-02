@@ -21,7 +21,6 @@
     // },
 
     build: function(debug){
-      console.log("VAINA");
         if(!$('#o_shop_collapse_category, .oe_website_sale').length) {
           return $.Deferred().reject("DOM doesn't contain '#o_shop_collapse_category, .oe_website_sale'");
         }
