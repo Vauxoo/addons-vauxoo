@@ -55,23 +55,25 @@ class ProductTemplate(models.Model):
             # No attribute_value_ids means the bom line is not variant
             # specific
 
-            # NOTE: find for this product last quant available and cycle
-            # over ll the segmentation costs
+            # NOTE: find for this product last quant
             quant = quant_search(sbom.product_id.id)
-            if not quant:
-                price += uom_obj._compute_price(
-                    cr, uid, sbom.product_id.uom_id.id,
-                    sbom.product_id.standard_price,
-                    sbom.product_uom.id) * my_qty
+            # NOTE: find for this product if any bom available
+            bom_id = _bom_find(sbom.product_id.id)
 
-            quant_brw = quant_obj.browse(cr, uid, quant[0], context=context)
+            if bom_id or not quant:
+                # NOTE: if any bom them use segmentation on product
+                obj_brw = sbom.product_id
+            else:
+                obj_brw = quant_obj.browse(cr, uid, quant[0], context=context)
+
             for fieldname in SEGMENTATION_COST:
-                # TODO: Is this price well Normalized
-                price += uom_obj._compute_price(
+                # NOTE: Is this price well Normalized
+                price_sgmnt = uom_obj._compute_price(
                     cr, uid, sbom.product_id.uom_id.id,
-                    getattr(quant_brw, fieldname),
+                    getattr(obj_brw, fieldname),
                     sbom.product_uom.id) * my_qty
-                sgmnt_dict[fieldname] += getattr(quant_brw, fieldname)
+                price += price_sgmnt
+                sgmnt_dict[fieldname] += price_sgmnt
 
         if bom.routing_id:
             for wline in bom.routing_id.workcenter_lines:
@@ -85,7 +87,7 @@ class ProductTemplate(models.Model):
                     cr, uid, bom.product_uom.id, routing_price,
                     bom.product_id.uom_id.id)
                 price += routing_price
-                sgmnt_dict['production_cost'] = routing_price
+                sgmnt_dict['production_cost'] += routing_price
 
         # Convert on product UoM quantities
         if price > 0:
