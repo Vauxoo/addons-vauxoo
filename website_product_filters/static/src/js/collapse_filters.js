@@ -17,8 +17,9 @@
     build: function(debug){
       var $show_more = this.$(".show-more");
       this.$(".show-more").click(function(){
-        var parent = $show_more.parent(),
-            button = $show_more,
+        var $element = jQuery(this),
+            parent = $element.parent(),
+            button = $element,
             hidden_elements = parent.find(".hidden");
         if (button.hasClass("clicked")){
           var shown_elements = parent.find(".un-hidden");
