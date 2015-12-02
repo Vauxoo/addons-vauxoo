@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_sale_register_session_tree" model="ir.ui.view">
+            <field name="name">sale.register.session.tree</field>
+            <field name="model">sale.register.session</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Register Session">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_register_session_form" model="ir.ui.view">
+            <field name="name">sale.register.session.form</field>
+            <field name="model">sale.register.session</field>
+            <field name="arch" type="xml">
+                <form string="Sales Register Session">
+                    <header>
+                        <button name="action_close" type="object" string="Close Session" states="opened"
+                            class="oe_highlight" />
+                        <button name="action_open" type="object" string="Open Session" states="opening"
+                            class="oe_highlight" />
+                        <field name="state" widget="statusbar" statusbar_visible="opening,opened,closed" nolabel="1" />
+                    </header>
+                <sheet>
+                    <h1 class="oe_title">
+                        Session:
+                        <field name="name" attrs="{'invisible': [('name','=','/')]}" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                        <field name="user_id"/>
+                        </group>
+                        <group>
+                            <field name="start_at" attrs="{'invisible' : [('state', '=', 'opening')]}"/>
+                            <field name="stop_at" attrs="{'invisible' : [('state', '!=', 'closed')]}"/>
+                        </group>
+                    </group>
+                    <notebook attrs="{'invisible':[('state','=','opening')]}">
+                        <page string="Sales">
+                            <field name="sale_ids"/>
+                        </page>
+                        <page string="Invoice">
+                            <field name="invoice_ids"/>
+                        </page>
+                        <page string="Picking">
+                            <field name="picking_ids"/>
+                        </page>
+                        <page string="Payment">
+                            <field name="payment_ids"/>
+                        </page>
+                </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_sessions" model="ir.actions.act_window">
+            <field name="name">Sales Sessions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.register.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a sale session per user to use in each
+                        sale order created
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            action="action_sessions"
+            id="menu_sale_register_session"
+            parent="base.menu_sales"
+            sequence="100"
+            groups="base.group_sale_salesman,base.group_sale_manager"/>
+
+
+        <record id="sale_order_session_form_view" model="ir.ui.view">
+            <field name="name">sale.order.session.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="session_id" required="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_invoice_session_form_view" model="ir.ui.view">
+            <field name="name">account.invoice.session.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="session_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_picking_session_form_view" model="ir.ui.view">
+            <field name="name">stock.picking.session.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="session_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_bank_statement_session_form_view" model="ir.ui.view">
+            <field name="name">account.bank.statement.session.form.inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='balance_end_real']" position="after">
+                    <field name="session_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

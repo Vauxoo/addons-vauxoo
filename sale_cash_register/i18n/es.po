@@ -1,0 +1,179 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_cash_register
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-01 22:26+0000\n"
+"PO-Revision-Date: 2015-12-01 22:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_cash_register
+#: model:ir.actions.act_window,help:sale_cash_register.action_sessions
+msgid "<p class=\"oe_view_nocontent_create\">\n"
+"                    Click to create a sale session per user to use in each\n"
+"                        sale order created\n"
+"                </p>\n"
+"            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n"
+"                    Click para crear una sesión de venta por usuario para ser usada en cada\n"
+"                        Venta creada\n"
+"                </p>\n"
+"            "
+
+
+#. module: sale_cash_register
+#: model:ir.model,name:sale_cash_register.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Extracto Bancario"
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+msgid "Close Session"
+msgstr "Cerrar Sesión"
+
+#. module: sale_cash_register
+#: selection:sale.register.session,state:0
+msgid "Closed"
+msgstr "Cerrada"
+
+#. module: sale_cash_register
+#: field:sale.register.session,stop_at:0
+msgid "Closing Date"
+msgstr "Fecha de Cierre"
+
+#. module: sale_cash_register
+#: field:sale.register.session,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: sale_cash_register
+#: field:sale.register.session,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: sale_cash_register
+#: field:sale.register.session,id:0
+msgid "ID"
+msgstr ""
+
+#. module: sale_cash_register
+#: selection:sale.register.session,state:0
+msgid "In Progress"
+msgstr "En Progreso"
+
+#. module: sale_cash_register
+#: model:ir.model,name:sale_cash_register.model_account_invoice
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+#: field:sale.register.session,invoice_ids:0
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: sale_cash_register
+#: field:sale.register.session,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_cash_register
+#: field:sale.register.session,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+msgid "Open Session"
+msgstr "Abrir Sesión"
+
+#. module: sale_cash_register
+#: selection:sale.register.session,state:0
+msgid "Opening"
+msgstr "Abriendo"
+
+#. module: sale_cash_register
+#: field:sale.register.session,start_at:0
+msgid "Opening Date"
+msgstr "Fecha de Apertura"
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+#: field:sale.register.session,payment_ids:0
+msgid "Payment"
+msgstr "Pago"
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+msgid "Picking"
+msgstr "Albaran"
+
+#. module: sale_cash_register
+#: model:ir.model,name:sale_cash_register.model_stock_picking
+msgid "Picking List"
+msgstr "Lista de Albaranes"
+
+#. module: sale_cash_register
+#: field:sale.register.session,user_id:0
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: sale_cash_register
+#: field:sale.register.session,sale_ids:0
+msgid "Sale Order"
+msgstr "Orden de Venta"
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_tree
+msgid "Sale Register Session"
+msgstr "Registro de Sesión de Venta"
+
+#. module: sale_cash_register
+#: field:account.bank.statement,session_id:0
+#: field:account.invoice,session_id:0
+#: field:sale.order,session_id:0
+#: field:sale.register.session,name:0
+#: field:stock.picking,session_id:0
+msgid "Sale Session"
+msgstr "Sesión de Venta"
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+msgid "Sales"
+msgstr "Ventas"
+
+#. module: sale_cash_register
+#: model:ir.model,name:sale_cash_register.model_sale_order
+msgid "Sales Order"
+msgstr "Ordenes de Venta"
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+msgid "Sales Register Session"
+msgstr "Sesión de Venta"
+
+#. module: sale_cash_register
+#: model:ir.actions.act_window,name:sale_cash_register.action_sessions
+#: model:ir.ui.menu,name:sale_cash_register.menu_sale_register_session
+msgid "Sales Sessions"
+msgstr "Sesiones de Ventas"
+
+#. module: sale_cash_register
+#: view:sale.register.session:sale_cash_register.view_sale_register_session_form
+msgid "Session:"
+msgstr "Sesión:"
+
+#. module: sale_cash_register
+#: field:sale.register.session,state:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: sale_cash_register
+#: field:sale.register.session,picking_ids:0
+msgid "picking"
+msgstr "Albaran"
+
