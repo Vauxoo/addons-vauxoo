@@ -13,7 +13,7 @@
                           <li t-if="a.value_ids and len(a.value_ids) > 1">
                             <div class="panel panel-default">
                               <div class="panel-heading"><strong t-field="a.name"/></div>
-                              <div class="panel-body">
+                              <div class="panel-body attr-list">
                               <t t-if="a.type == 'select'">
                                 <select class="form-control" name="attrib">
                                   <option value=""/>
@@ -28,16 +28,16 @@
                                     <t t-foreach="a.value_ids" t-as="v">
                                       <t t-if="counter &lt; 6">
 
-                                        <li t-att-class="'active' if v.id in attrib_set else ''">
-                                            <label style="margin: 0 20px;">
+                                        <li t-att-class="'active attribute' if v.id in attrib_set else 'attribute'">
+                                            <label style="margin: 0 5px;">
                                                 <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
                                                 <span t-att-id="v.id" class="att-value" style="font-weight: normal" t-field="v.name"/>
                                             </label>
                                         </li>
                                       </t>
                                       <t t-if="counter >= 6">
-                                        <li t-att-class="'hidden active' if v.id in attrib_set else 'hidden'">
-                                            <label style="margin: 0 20px;">
+                                        <li t-att-class="'hidden active attribute' if v.id in attrib_set else 'hidden attribute'">
+                                            <label style="margin: 0 5px;">
                                                 <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
                                                 <span t-att-id="v.id" class="att-value" style="font-weight: normal" t-field="v.name"/>
                                             </label>
@@ -75,12 +75,12 @@
             <t t-if="price_ranges">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Price Range</strong></div>
-                    <div class="panel-body">
+                    <div class="panel-body range-list">
                       <ul class="nav nav-pills nav-stacked">
                         <t t-set="counter" t-value="1"/>
                           <t t-foreach="price_ranges" t-as="r">
                             <t t-if="counter &lt; 6">
-                            <li t-att-class="'active' if r.id in ranges_set else ''">
+                            <li t-att-class="'range active' if r.id in ranges_set else 'range'">
                                 <label style="margin: 0 5px;" t-att-class="'upper upper'+str(r.id)" t-att-id="r.id">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
                                     <span style="font-weight: normal" t-field="r.lower" t-field-options='{
@@ -97,7 +97,7 @@
                             </li>
                            </t>
                            <t t-if="counter >= 6">
-                            <li t-att-class="'hidden active' if r.id in ranges_set else 'hidden'">
+                            <li t-att-class="'hidden range active' if r.id in ranges_set else 'range hidden'">
                                 <label style="margin: 0 5px;" t-att-class="'upper upper'+str(r.id)" t-att-id="r.id">
                                     <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
                                     <span style="font-weight: normal" t-field="r.lower" t-field-options='{
@@ -129,7 +129,7 @@
                       <ul class="nav nav-pills nav-stacked">
                           <t t-foreach="brands" t-as="b">
                           <li t-att-class="'brand active' if b.id in brand_set else ''">
-                          <label style="margin: 0 20px;">
+                          <label style="margin: 0 5px;">
                                   <input type="checkbox" name="brand" t-att-value="'%s' % b.id" t-att-checked="'checked' if b.id in brand_set else ''"/>
                             <span style="font-weight: normal" t-field="b.name"/>
                             </label>
@@ -286,8 +286,14 @@
         </template>
         <template id="remove_search_on_product"
           name="Remove Search On Product" inherit_id="website_sale.product" active="True">
-          <xpath expr="//t[@t-call='website_sale.search']" position="replace">
+          <xpath expr="//div[@class='col-sm-3']" position="replace">
 
+          </xpath>
+          <xpath expr="//div[@class='col-sm-4']" position="attributes">
+              <attribute name="class">hidden-xs col-md-10</attribute>
+          </xpath>
+          <xpath expr="//div[@groups='base.group_sale_manager']" position="attributes">
+              <attribute name="class">col-sm-4 col-md-2 col-lg-2</attribute>
           </xpath>
         </template>
     </data>
