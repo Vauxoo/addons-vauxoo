@@ -13,7 +13,14 @@
               $.each(JSON.parse(data), function(i, obj) {
                 $('.upper'+obj.id).next().replaceWith('<span class="badge">'+obj.qty+'</span>');
               });
+            $("span.badge:contains(0)").parents('li.range').remove();
+          $('div.range-list').each(function(){
+            var $div_list = $(this);
+            if ($div_list.find('li.range').length <= 5) {
+                $div_list.find('a.show-more').remove();
+              }
             });
+        });
     });
 
 }());
