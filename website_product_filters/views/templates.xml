@@ -13,7 +13,7 @@
                           <li t-if="a.value_ids and len(a.value_ids) > 1">
                             <div class="panel panel-default">
                               <div class="panel-heading"><strong t-field="a.name"/></div>
-                              <div class="panel-body">
+                              <div class="panel-body attr-list">
                               <t t-if="a.type == 'select'">
                                 <select class="form-control" name="attrib">
                                   <option value=""/>
@@ -75,7 +75,7 @@
             <t t-if="price_ranges">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Price Range</strong></div>
-                    <div class="panel-body">
+                    <div class="panel-body range-list">
                       <ul class="nav nav-pills nav-stacked">
                         <t t-set="counter" t-value="1"/>
                           <t t-foreach="price_ranges" t-as="r">

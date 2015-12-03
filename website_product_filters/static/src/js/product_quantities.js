@@ -13,9 +13,15 @@
               $.each(JSON.parse(data), function(i, obj) {
                 $('span.att-value#'+obj.id).next().replaceWith('<span class="badge">'+obj.qty+'</span>');
                 $('span.att-value').next('.fa-spinner').replaceWith(' <span class="badge">0</span>');
-                // $(".js_attributes li.attribute:contains(0)").remove();
               });
           $(".js_attributes li.attribute").has("span.badge:contains('0')").remove();
+          $('div.attr-list').each(function(){
+            var $div_list = $(this);
+            if ($div_list.find('li.attribute').length <= 5) {
+                $div_list.find('a.show-more').remove();
+              }
+            });
+
           });
     });
 
