@@ -286,8 +286,14 @@
         </template>
         <template id="remove_search_on_product"
           name="Remove Search On Product" inherit_id="website_sale.product" active="True">
-          <xpath expr="//t[@t-call='website_sale.search']" position="replace">
+          <xpath expr="//div[@class='col-sm-3']" position="replace">
 
+          </xpath>
+          <xpath expr="//div[@class='col-sm-4']" position="attributes">
+              <attribute name="class">hidden-xs col-md-10</attribute>
+          </xpath>
+          <xpath expr="//div[@groups='base.group_sale_manager']" position="attributes">
+              <attribute name="class">col-sm-4 col-md-2 col-lg-2</attribute>
           </xpath>
         </template>
     </data>
