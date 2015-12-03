@@ -289,8 +289,15 @@
           <xpath expr="//div[@class='col-sm-3']" position="replace">
 
           </xpath>
-          <xpath expr="//div[@class='col-sm-4']" position="attributes">
-              <attribute name="class">hidden-xs col-md-10</attribute>
+          <xpath expr="//div[@class='col-sm-4']" position="replace">
+            <div class="hidden-xs col-md-10">
+              <t t-if="category">
+                <ul class="breadcrumb pull-left panel-no-borders">
+                    <t t-set="current_category" t-value="category"/>
+                    <t t-call="website_product_filters.breadcrumbs"/>
+                </ul>
+              </t>
+            </div>
           </xpath>
           <xpath expr="//div[@groups='base.group_sale_manager']" position="attributes">
               <attribute name="class">col-sm-4 col-md-2 col-lg-2</attribute>
