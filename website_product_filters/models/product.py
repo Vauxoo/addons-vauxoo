@@ -152,10 +152,6 @@ class ProductCategory(models.Model):
             rec.total_tree_products = len(prod_ids)
             if rec.product_ids:
                 rec.has_products_ok = True
-            if record.product_ids:
-                ids_with_products.append(record.id)
-        ids = self.browse(ids_with_products)
-        ids.write({'has_products_ok': True})
 
     product_ids = fields.Many2many(
         "product.template", "product_public_category_product_template_rel",
