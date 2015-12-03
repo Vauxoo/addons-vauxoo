@@ -58,6 +58,10 @@ class MrpProduction(models.Model):
         """
         Method that allow to refresh values for quant & segmentation costs
         """
+
+        super(MrpProduction, self).refresh_quant(
+            cr, uid, production, amount, diff)
+
         if diff:
             # NOTE: Add segmentation cost to quants in finished goods
             self.adjust_quant_production_cost(cr, uid, production.id, amount)
