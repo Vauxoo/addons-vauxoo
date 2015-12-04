@@ -80,7 +80,6 @@ class WebsiteSale(website_sale):
         category_ids = category_obj.search(
             cr, uid, [('parent_id', '=', False)], context=context)
         categs = category_obj.browse(cr, uid, category_ids, context=context)
-        has_products = lambda categ: self._child_has_products(categ)    # noqa
 
         res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['brands'] = brands
@@ -89,17 +88,7 @@ class WebsiteSale(website_sale):
         res.qcontext['price_ranges'] = ranges
         res.qcontext['brand_set'] = brand_selected_ids
         res.qcontext['ranges_set'] = ranges_selected_ids
-        res.qcontext['_has_products'] = has_products
         return res
-
-    def _child_has_products(self, category):
-        if category.child_id:
-            return any(self._child_has_products(child)
-                       for child in category.child_id)
-        elif category.has_products_ok:
-            return True
-        else:
-            return False
 
     def _normalize_category(self, category):
         """

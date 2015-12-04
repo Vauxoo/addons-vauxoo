@@ -82,16 +82,22 @@ class ProductCategory(models.Model):
                                          compute="_get_product_count",
                                          store=True,)
     has_products_ok = fields.Boolean(compute="_get_has_products_ok",
-                                     store=True, readonly=True)
+                                     readonly=True)
 
-    @api.depends('product_ids')
     @api.multi
     def _get_has_products_ok(self):
         for record in self:
-            prod_publish = record.product_ids.filtered(
-                lambda r: r.website_published is True)
-            if prod_publish:
-                record.has_products_ok = True
+            record.has_products_ok = self._child_has_products(record)
+
+    def _child_has_products(self, category):
+        if category.child_id:
+            return any(self._child_has_products(child)
+                       for child in category.child_id)
+        elif category.product_ids.filtered(
+                lambda r: r.website_published is True):
+            return True
+        else:
+            return False
 
     @api.model
     def _get_async_ranges(self, category):

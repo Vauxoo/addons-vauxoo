@@ -33,9 +33,11 @@ class TestCategoryHasProducts(TransactionCase):
         # Test No categories
         self.assertEqual(len(product.product_tmpl_id.public_categ_ids), 0)
         # Tes Category has not products
-        self.assertFalse(self.category_graphics.total_tree_products)
+        self.assertFalse(self.category_graphics.has_products_ok)
 
         product.product_tmpl_id.write(
-            {'public_categ_ids': [(6, 0, [self.category_graphics.id])]})
+            {'public_categ_ids': [(6, 0, [self.category_graphics.id])],
+             'website_published': True})
 
-        print product.product_tmpl_id.public_categ_ids
+        self.assertEqual(len(product.product_tmpl_id.public_categ_ids), 1)
+        # self.assertTrue(self.category_graphics.has_products_ok)
