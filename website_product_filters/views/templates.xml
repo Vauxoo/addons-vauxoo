@@ -241,7 +241,7 @@
         <!-- TEMPLATE TO SHOW RATING ON PRODUCT LIST -->
         <template id="product_list_rating" inherit_id="website_sale.products_item" active="True">
           <xpath expr="//div[@class='product_price']" position="inside">
-                <div id="stars_global" class="starrr pull-right" t-att-data-rating="product.rating"></div>
+                <div groups="website_mail.group_comment" id="stars_global" class="starrr pull-right" t-att-data-rating="product.rating"></div>
           </xpath>
         </template>
         <template id="categ_class_nav_pills" inherit_id="website_sale.categories_recursive" active="True">
