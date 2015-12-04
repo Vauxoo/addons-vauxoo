@@ -36,7 +36,7 @@ class MrpProduction(models.Model):
             values = {}.fromkeys(SEGMENTATION_COST, 0.0)
             for fn in SEGMENTATION_COST:
                 values[fn] = getattr(fg_quant, fn) + sgmnt_dict[fn] / qty
-            quant.write(values)
+            fg_quant.write(values)
         return True
 
     @api.multi
