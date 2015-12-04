@@ -74,31 +74,24 @@ class ProductPriceRanges(models.Model):
 class ProductCategory(models.Model):
     _inherit = 'product.public.category'
 
-    # @api.depends('product_ids')
-    # def _get_has_products_ok(self, cr , uid, ids, context):
-    #     import pdb; pdb.set_trace()
-    #     ids_with_products = self.search(
-    #         cr, uid, [('product_ids', '!=', False)], context=context)
-    #     ids_with_products.write({'has_products_ok': True})
+    product_ids = fields.Many2many(
+        "product.template", "product_public_category_product_template_rel",
+        "product_public_category_id",
+        "product_template_id", readonly=True)
+    total_tree_products = fields.Integer("Total Subcategory Prods",
+                                         compute="_get_product_count",
+                                         store=True,)
+    has_products_ok = fields.Boolean(compute="_get_has_products_ok",
+                                     store=True, readonly=True)
 
     @api.depends('product_ids')
     @api.multi
     def _get_has_products_ok(self):
-        ids_with_products = []
         for record in self:
-            product_obj = self.env["product.template"]
-            product_ids = []
-            product_published = product_obj.search(
-                [("website_published", "=", True)])
-            for product in product_published:
-                if record in product.public_categ_ids:
-                    product_ids.append(product.id)
-            record.product_ids = product_ids
-
-    product_ids = fields.Many2many('product.template', compute="_get_products")
-    total_tree_products = fields.Integer("Total Subcategory Prods",
-                                         compute="_get_product_count",
-                                         store=True,)
+            prod_publish = record.product_ids.filtered(
+                lambda r: r.website_published is True)
+            if prod_publish:
+                record.has_products_ok = True
 
     @api.model
     def _get_async_ranges(self, category):
@@ -150,27 +143,3 @@ class ProductCategory(models.Model):
                 [('public_categ_ids', 'child_of', rec.id),
                  ('website_published', '=', True)])
             rec.total_tree_products = len(prod_ids)
-            if rec.product_ids:
-                rec.has_products_ok = True
-
-    product_ids = fields.Many2many(
-        "product.template", "product_public_category_product_template_rel",
-        "product_public_category_id",
-        "product_template_id",
-        domain="[('website_published','=',True)]", readonly=True)
-    has_products_ok = fields.Boolean(compute="_get_has_products_ok",
-                                     store=True, readonly=True)
-    # @api.multi
-    # def _get_default_print_order_ids(self):
-    #     for record in self:
-    #         record.product_ids = self.env['product.template'].search(
-    #             [('website_published', '=', True)]
-    #             )
-
-    # product_ids = fields.Many2many(
-    #     comodel_name="product.template",
-    #     relation="product_public_category_product_template_rel",
-    #     column1="product_public_category_id",
-    #     column2="product_template_id",
-    #     default=_get_default_print_order_ids,
-    #     readonly=Tr

@@ -252,9 +252,10 @@
 
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
           <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
-            <i t-if="categ.child_id and _has_products(categ)"
+            <t t-set="has_product" t-value="_has_products(categ)"/>
+            <i t-if="categ.child_id and has_product"
               t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}" t-att-data-arrowid="categ.id"/>
-            <t t-if="_has_products(categ) or categ.product_ids">
+            <t t-if="has_product">
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
                 <span class="badge">
@@ -262,7 +263,7 @@
                 </span>
               </a>
             </t>
-            <ul t-if="_has_products(categ)" class="nav nav-pills nav-stacked nav-hierarchy"
+            <ul t-if="has_product" class="nav nav-pills nav-stacked nav-hierarchy"
               t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
               <t t-foreach="categ.child_id" t-as="categ">
                 <t t-call="website_product_filters.option_collapse_categories_recursive"/>
