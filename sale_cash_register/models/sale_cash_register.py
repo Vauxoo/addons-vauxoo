@@ -40,6 +40,17 @@ class SaleRegisterSession(models.Model):
         ('closed', 'Closed'),
     ]
 
+    @api.multi
+    @api.depends('name')
+    def _compute_cash_all(self):
+
+        for session in self:
+            for bank_statement in session.payment_ids:
+                if bank_statement.journal_id.cash_control:
+                    session.cash_control = True
+                    session.cash_journal_id = bank_statement.journal_id.id
+                    session.cash_register_id = bank_statement.id
+
     name = fields.Char(
         'Sale Session',
         required=True,
@@ -57,6 +68,21 @@ class SaleRegisterSession(models.Model):
         select=1, copy=False, default='opening')
     start_at = fields.Datetime('Opening Date', readonly=True)
     stop_at = fields.Datetime('Closing Date', readonly=True)
+    cash_control = fields.Boolean(
+        compute='_compute_cash_all',
+        string='Has Cash Control')
+    cash_journal_id = fields.Many2one(
+        'account.journal',
+        compute='_compute_cash_all',
+        string='Cash Journal', store=True)
+    cash_register_id = fields.Many2one(
+        'account.bank.statement',
+        compute='_compute_cash_all',
+        string='Cash Register', store=True)
+    opening_details_ids = fields.One2many(
+        'account.cashbox.line',
+        related='cash_register_id.opening_details_ids',
+        string='Opening Cash Control')
     sale_ids = fields.One2many(
         'sale.order',
         'session_id',
@@ -116,8 +142,22 @@ class SaleRegisterSession(models.Model):
 
     @api.model
     def create(self, values):
+
+        journal_ids = self.env['account.journal'].search([
+            ('type', '=', 'cash')
+        ])
+        bank_statement_ids = []
+        for journal in journal_ids:
+            bank_statement = {
+                'journal_id': journal.id,
+                'uid': self._uid
+            }
+            statement_id = self.env['account.bank.statement'].create(
+                bank_statement)
+            bank_statement_ids.append(statement_id.id)
         values.update({
-            'name': self.env['ir.sequence'].get('sale.register.session')
+            'name': self.env['ir.sequence'].get('sale.register.session'),
+            'payment_ids': [(6, 0, bank_statement_ids)]
         })
         return super(SaleRegisterSession, self).create(values)
 

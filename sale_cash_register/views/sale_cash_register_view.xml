@@ -38,6 +38,17 @@
                             <field name="start_at" attrs="{'invisible' : [('state', '=', 'opening')]}"/>
                             <field name="stop_at" attrs="{'invisible' : [('state', '!=', 'closed')]}"/>
                         </group>
+                        <field name="cash_control" invisible="1"/>
+                    </group>
+                    <group string="Opening Cash Control" attrs="{'invisible' : [('cash_control', '=', False)]}">
+                        <field name="opening_details_ids" nolabel="1" colspan="2" attrs="{'readonly' : [('state', '!=', 'opening_control')]}">
+                            <tree string="Opening Cashbox Lines" editable="bottom">
+                                <field name="pieces" readonly="1" />
+                                <field name="number_opening" on_change="on_change_sub_opening(pieces, number_opening)" />
+                                <field name="subtotal_opening" string="Opening Subtotal" sum="Total"/>
+                            </tree>
+                        </field>
+                        <field name="cash_journal_id"/>
                     </group>
                     <notebook attrs="{'invisible':[('state','=','opening')]}">
                         <page string="Sales">
