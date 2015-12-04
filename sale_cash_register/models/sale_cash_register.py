@@ -27,6 +27,7 @@
 from openerp import models, fields, api
 from openerp.exceptions import ValidationError
 from openerp.models import BaseModel
+import openerp.addons.decimal_precision as dp
 import time
 
 
@@ -83,6 +84,38 @@ class SaleRegisterSession(models.Model):
         'account.cashbox.line',
         related='cash_register_id.opening_details_ids',
         string='Opening Cash Control')
+    details_ids = fields.One2many(
+        'account.cashbox.line',
+        related='cash_register_id.details_ids',
+        string='Cash Control')
+    cash_register_balance_end_real = fields.Float(
+        related='cash_register_id.balance_end_real',
+        digits_compute=dp.get_precision('Account'),
+        string="Ending Balance",
+        help="Total of closing cash control lines.",
+        readonly=True)
+    cash_register_balance_start = fields.Float(
+        related='cash_register_id.balance_start',
+        digits_compute=dp.get_precision('Account'),
+        string="Starting Balance",
+        help="Total of opening cash control lines.",
+        readonly=True)
+    cash_register_total_entry_encoding = fields.Float(
+        related='cash_register_id.total_entry_encoding',
+        string='Total Cash Transaction',
+        readonly=True,
+        help="Total of all paid sale orders")
+    cash_register_balance_end = fields.Float(
+        related='cash_register_id.balance_end',
+        digits_compute=dp.get_precision('Account'),
+        string="Theoretical Closing Balance",
+        help="Sum of opening balance and transactions.",
+        readonly=True)
+    cash_register_difference = fields.Float(
+        related='cash_register_id.difference',
+        string='Difference',
+        help="Difference between the theoretical closing balance and the real closing balance.",
+        readonly=True)
     sale_ids = fields.One2many(
         'sale.order',
         'session_id',
@@ -142,24 +175,25 @@ class SaleRegisterSession(models.Model):
 
     @api.model
     def create(self, values):
+        res = super(SaleRegisterSession, self).create(values)
+        res._update_session()
+        return res
 
-        journal_ids = self.env['account.journal'].search([
-            ('type', '=', 'cash')
-        ])
-        bank_statement_ids = []
-        for journal in journal_ids:
-            bank_statement = {
-                'journal_id': journal.id,
-                'uid': self._uid
-            }
-            statement_id = self.env['account.bank.statement'].create(
-                bank_statement)
-            bank_statement_ids.append(statement_id.id)
-        values.update({
-            'name': self.env['ir.sequence'].get('sale.register.session'),
-            'payment_ids': [(6, 0, bank_statement_ids)]
-        })
-        return super(SaleRegisterSession, self).create(values)
+    @api.multi
+    def _update_session(self):
+        for session in self:
+            journal_ids = self.env['account.journal'].search([
+                ('type', '=', 'cash'), ('cash_control', '=', True)
+            ])
+            for journal in journal_ids:
+                bank_statement = {
+                    'journal_id': journal.id,
+                    'user_id': self._uid,
+                    'session_id': session.id
+                }
+                self.env['account.bank.statement'].create(bank_statement)
+            session.write({
+                'name': self.env['ir.sequence'].get('sale.register.session')})
 
 
 @api.model
