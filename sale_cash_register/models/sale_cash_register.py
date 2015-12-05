@@ -24,9 +24,10 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
-from openerp.exceptions import ValidationError
+from openerp import models, fields, api, _
+from openerp.exceptions import ValidationError, except_orm
 from openerp.models import BaseModel
+from openerp.tools import float_compare
 import openerp.addons.decimal_precision as dp
 import time
 
@@ -114,7 +115,8 @@ class SaleRegisterSession(models.Model):
     cash_register_difference = fields.Float(
         related='cash_register_id.difference',
         string='Difference',
-        help="Difference between the theoretical closing balance and the real closing balance.",
+        help='Difference between the theoretical closing '
+        'balance and the real closing balance.',
         readonly=True)
     sale_ids = fields.One2many(
         'sale.order',
@@ -162,11 +164,38 @@ class SaleRegisterSession(models.Model):
                 'start_at': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'state': 'opened'
                 })
+            for statement_bank in sale_session.payment_ids:
+                statement_bank.button_open()
         return True
 
     @api.multi
     def action_close(self):
+        prec = self.env['decimal.precision'].precision_get('Account')
         for sale_session in self:
+            transaction_total = 0
+            sale_total = 0
+
+            for statement_bank in sale_session.payment_ids:
+                transaction_total += statement_bank.total_entry_encoding
+                if statement_bank.journal_id.cash_control and\
+                        abs(statement_bank.difference):
+                    raise except_orm(
+                        _('Error!'),
+                        _('Your ending balance is too different from '
+                          'the theoretical cash closing (%.2f)') % (
+                              statement_bank.difference,))
+
+            for order in sale_session.sale_ids:
+                sale_total += order.amount_total
+
+            if float_compare(
+                    transaction_total, sale_total, precision_digits=prec):
+
+                raise except_orm(
+                    _('Error!'),
+                    _('Your payment transaction (%.2f) must be '
+                      'the same of the sale order (%.2f)') % (
+                          transaction_total, sale_total))
             sale_session.write({
                 'stop_at': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'state': 'closed'
