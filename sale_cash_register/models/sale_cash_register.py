@@ -266,17 +266,6 @@ class AccountBankStatement(models.Model):
         readonly=True)
 
 
-class StockPicking(models.Model):
-
-    _inherit = 'stock.picking'
-
-    session_id = fields.Many2one(
-        'sale.register.session',
-        string='Sale Session',
-        ondelete='restrict',
-        readonly=True)
-
-
 class AccountInvoice(models.Model):
 
     _inherit = 'account.invoice'

@@ -108,9 +108,6 @@
                         <page string="Invoice">
                             <field name="invoice_ids"/>
                         </page>
-                        <page string="Picking">
-                            <field name="picking_ids"/>
-                        </page>
                 </notebook>
                 </sheet>
                 </form>
@@ -145,7 +142,7 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="session_id" required="1"/>
+                    <field name="session_id"/>
                 </xpath>
             </field>
         </record>
