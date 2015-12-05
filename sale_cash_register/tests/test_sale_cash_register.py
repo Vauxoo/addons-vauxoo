@@ -54,4 +54,3 @@ class TestSaleCashRegister(common.TransactionCase):
         so_id.action_button_confirm()
 
         self.assertEquals(len(self.session_2_id.sale_ids), 1)
-        self.assertEquals(len(self.session_2_id.picking_ids), 1)

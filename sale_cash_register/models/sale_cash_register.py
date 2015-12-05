@@ -128,11 +128,6 @@ class SaleRegisterSession(models.Model):
         'session_id',
         'Invoice',
         readonly=True)
-    picking_ids = fields.One2many(
-        'stock.picking',
-        'session_id',
-        'picking',
-        readonly=True)
     payment_ids = fields.One2many(
         'account.bank.statement',
         'session_id',
