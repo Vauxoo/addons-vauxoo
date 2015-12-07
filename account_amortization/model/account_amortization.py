@@ -33,9 +33,9 @@ class AccountAssetAsset(osv.Model):
     _description = 'Account Amortization'
 
     _columns = {
-        'doc_type': fields.selection([('deprecation', 'Deprecation'),
-                                      ('amortization', 'Amortization'), ], 'Type',
-                                     help='''Asset type, deprecation allows you depreciate an asset, the
+        'doc_type': fields.selection([('depreciation', 'Depreciation'),
+                                      ('amortization', 'Amortization'), ], 'Type', default='depreciation',
+                                     help='''Asset type, depreciation allows you depreciate an asset, the
                 amortization allows you amortize an expense.'''),
     }
 
@@ -46,8 +46,8 @@ class AccountAssetCategory(osv.Model):
     _description = 'Account Amortization Category'
 
     _columns = {
-        'doc_type': fields.selection([('deprecation', 'Deprecation'),
-                                      ('amortization', 'Amortization'), ], 'Type',
-                                     help='''Asset category type, deprecation allows you depreciate an asset, the
+        'doc_type': fields.selection([('depreciation', 'Depreciation'),
+                                      ('amortization', 'Amortization'), ], 'Type', default='depreciation',
+                                     help='''Asset category type, depreciation allows you depreciate an asset, the
                 amortization allows you amortize an expense.'''),
     }

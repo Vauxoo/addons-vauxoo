@@ -25,3 +25,4 @@
 ##############################################################################
 
 from . import account_amortization
+from . import account_asset_invoice
