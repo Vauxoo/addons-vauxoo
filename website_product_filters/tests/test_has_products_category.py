@@ -19,7 +19,7 @@ class TestCategoryHasProducts(TransactionCase):
         self.p_category_obj = self.env['product.public.category']
         self.category_graphics = self.env.ref('product.graphics_card')
 
-    def test_get_purchased(self):
+    def test_01_has_products_ok(self):
         """
             This test validate the fiel has_products_ok in
             product.public.category
@@ -40,4 +40,14 @@ class TestCategoryHasProducts(TransactionCase):
              'website_published': True})
 
         self.assertEqual(len(product.product_tmpl_id.public_categ_ids), 1)
-        # self.assertTrue(self.category_graphics.has_products_ok)
+        self.assertTrue(self.category_graphics.has_products_ok)
+
+        # Remove category from product
+        product.product_tmpl_id.write(
+            {'public_categ_ids': [(3, self.category_graphics.id)]
+             })
+        # Test No categories
+        self.assertEqual(len(product.product_tmpl_id.public_categ_ids), 0)
+
+        # Tes Category has not products
+        self.assertFalse(self.category_graphics.has_products_ok)
