@@ -27,7 +27,6 @@ class AccountInvoiceLine(models.Model):
 
     _inherit = 'account.invoice.line'
 
-
     def asset_create(self, cr, uid, lines, context=None):
         context = context or {}
         asset_obj = self.pool.get('account.asset.asset')
