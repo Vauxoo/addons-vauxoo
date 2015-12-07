@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Odoo, Open Source Management Solution
 #
 #    Author: Paulius Stundžia. Copyright: JSC Boolit
@@ -16,11 +16,11 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
-from openerp import fields, models, api
+from openerp import models
 
 
 class AccountInvoiceLine(models.Model):
@@ -42,10 +42,11 @@ class AccountInvoiceLine(models.Model):
                     'partner_id': line.invoice_id.partner_id.id,
                     'company_id': line.invoice_id.company_id.id,
                     'currency_id': line.invoice_id.currency_id.id,
-                    'purchase_date' : line.invoice_id.date_invoice,
-                    'doc_type' : line.asset_category_id.doc_type,
+                    'purchase_date': line.invoice_id.date_invoice,
+                    'doc_type': line.asset_category_id.doc_type,
                 }
-                changed_vals = asset_obj.onchange_category_id(cr, uid, [], vals['category_id'], context=context)
+                changed_vals = asset_obj.onchange_category_id(
+                    cr, uid, [], vals['category_id'], context=context)
                 vals.update(changed_vals['value'])
                 asset_id = asset_obj.create(cr, uid, vals, context=context)
                 if line.asset_category_id.open_asset:
