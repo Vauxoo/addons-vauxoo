@@ -22,7 +22,7 @@ class StockQuant(models.Model):
             src_package_id=src_package_id, dest_package_id=dest_package_id,
             force_location_from=force_location_from,
             force_location_to=force_location_to, context=context)
-        if move.purchase_line_id:
+        if move.purchase_line_id or move.inventory_id:
             self.write(
                 cr, SUPERUSER_ID, quant.id, {'material_cost': quant.cost},
                 context=context)
