@@ -11,7 +11,6 @@
         "base",
         "stock",
         "purchase",
-        "mrp",
     ],
     "demo": [
     ],
