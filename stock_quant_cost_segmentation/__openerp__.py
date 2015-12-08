@@ -13,6 +13,7 @@
         "purchase",
     ],
     "demo": [
+        'demo/stock.xml',
     ],
     "data": [
         'view/view.xml',
