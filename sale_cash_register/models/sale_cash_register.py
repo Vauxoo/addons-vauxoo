@@ -205,10 +205,13 @@ class SaleRegisterSession(models.Model):
 
     @api.multi
     def _update_session(self):
+        journal_obj = self.env['account.journal']
         for session in self:
-            journal_ids = self.env['account.journal'].search([
+            journal_cash_id = journal_obj.search([
                 ('type', '=', 'cash'), ('cash_control', '=', True)
-            ])
+            ], limit=1)
+            journal_ids = journal_obj.search([('type', 'in', ('cash', 'bank'))])
+            journal_ids = list(set(journal_cash_id) | set(journal_ids))
             for journal in journal_ids:
                 bank_statement = {
                     'journal_id': journal.id,
