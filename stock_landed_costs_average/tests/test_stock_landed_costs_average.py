@@ -225,6 +225,7 @@ class TestsLandedCosts(TestStockCommon):
             self.cr, self.uid, [return_id.id], context=ctx)[0]
 
         self.picking_id = self.PickingObj.browse(new_picking_id)
+        self.confirm_picking()
         return True
 
     def create_picking_maquila(self, qty):
