@@ -35,7 +35,22 @@ class StockMove(models.Model):
         return bool(quants)
 
     def action_done(self, cr, uid, ids, context=None):
-        """ Overwrite complete the method to introduce exception on the test.
+        context = context or {}
+        if context.get('allow_past_date_quants', False):
+            res = self.action_done_allow_past_date(cr, uid, ids,
+                                                   context=context)
+        else:
+            res = super(StockMove, self).action_done(cr, uid, ids,
+                                                     context=context)
+        return res
+
+    def action_done_allow_past_date(self, cr, uid, ids, context=None):
+        """NOTE: This method is a copy of the original one in odoo named
+        action_done but we add a new sectiond of conde to introduce exception
+        on the test.
+
+        Look for "# NOTE VX: This section was overwritten." to find the added
+        code.
         """
         context = context or {}
         picking_obj = self.pool.get("stock.picking")
@@ -207,9 +222,33 @@ class StockQuant(models.Model):
             src_package_id=False, dest_package_id=False,
             force_location_from=False, force_location_to=False,
             context=None):
-        """NOTE: This method is a copy of the original one in odoo
-        Here we set in_date taking into account the move date
+        context = context or {}
+        if context.get('allow_past_date_quants', False):
+            res = self._quant_create_allow_past_date(
+                cr, uid, qty, move, lot_id=lot_id, owner_id=owner_id,
+                src_package_id=src_package_id, dest_package_id=dest_package_id,
+                force_location_from=force_location_from,
+                force_location_to=force_location_to, context=context)
+        else:
+            res = super(StockQuant, self)._quant_create(
+                cr, uid, qty, move, lot_id=lot_id, owner_id=owner_id,
+                src_package_id=src_package_id, dest_package_id=dest_package_id,
+                force_location_from=force_location_from,
+                force_location_to=force_location_to, context=context)
+        return res
+
+    def _quant_create_allow_past_date(
+            self, cr, uid, qty, move, lot_id=False, owner_id=False,
+            src_package_id=False, dest_package_id=False,
+            force_location_from=False, force_location_to=False,
+            context=None):
+        """ NOTE: This method is a copy of the original one in odoo named
+        _quant_create Here we set in_date taking into account the move date
+
         This method is call from the quant_move after action_done.
+
+        Look for "# NOTE VX: This section was overwritten." to find the added
+        code.
         """
         if context is None:
             context = {}
