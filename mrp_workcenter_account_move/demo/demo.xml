@@ -107,7 +107,7 @@
     </record>
 
     <record id="stock_inventory" model="stock.inventory">
-        <field name="name">Stock Quant Cost Segmentation - Inventory</field>
+        <field name="name">Initial Inventory - RAW_MATERIAL_STD_REALTIME</field>
     </record>
 
     <record id="stock_inventory_line_1" model="stock.inventory.line">
