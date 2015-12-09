@@ -60,7 +60,7 @@
         <field name="resource_type">material</field>
         <field name="time_efficency">1</field>
         <field name="time_cycle">1</field>
-        <field name="cost_per_hour">15</field>
+        <field name="costs_hour">15</field>
         <field name="costs_hour_account_id" ref="rev_production_analytic_account"/>
         <field name="costs_general_account_id" ref="rev_production_cost_account"/>
         <field name="costs_journal_id" ref="rev_analytic_production_journal"/>
@@ -102,12 +102,20 @@
         <field name="routing_id" ref="rev_routing"/>
     </record>
 
+    <record id="product_real_periodic_01" model="product.product">
+        <field name="name">Segmentation Cost Product: Cost Method - Real, Valuation - Periodic</field>
+        <field name="cost_method">real</field>
+        <field name="valuation">manual_periodic</field>
+        <field name="type">product</field>
+        <field name="standard_price">100.0</field>
+    </record>
+
     <record id="stock_inventory" model="stock.inventory">
         <field name="name">Initial Inventory - RAW_MATERIAL_STD_REALTIME</field>
     </record>
 
     <record id="stock_inventory_line_1" model="stock.inventory.line">
-        <field name="product_id" ref="stock_quant_cost_segmentation.product_real_periodic"/>
+        <field name="product_id" ref="product_real_periodic_01"/>
         <field name="product_uom_id" ref="product.product_uom_unit"/>
         <field name="inventory_id" ref="mrp_workcenter_account_move.stock_inventory"/>
         <field name="product_qty">1.0</field>
