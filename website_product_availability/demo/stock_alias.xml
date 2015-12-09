@@ -14,5 +14,9 @@
             <field name="website_published" eval='True'/>
         </record>
 
+        <record id="stock.stock_warehouse_shop0" model="stock.warehouse">
+            <field name="stock_alias">Chicago Store</field>
+            <field name="website_published" eval='True'/>
+        </record>
     </data>
 </openerp>
