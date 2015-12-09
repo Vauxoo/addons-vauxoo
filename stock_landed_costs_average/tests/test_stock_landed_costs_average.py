@@ -281,7 +281,7 @@ class TestsLandedCosts(TestStockCommon):
         self.create_picking_avg_importation(10, 120)
         self.assert_average_product_avg(135.0)
         self.assert_average_product_cost(120.0)
-        # No landed costs have been applies because that is no longer the case
+        # No landed costs have been applied because that is no longer the case
 
         # Return Produts from Maquila
         self.picking_id = picking_maquila_id
