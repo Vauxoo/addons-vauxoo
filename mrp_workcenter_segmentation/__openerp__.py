@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "depends": [
         "mrp_workcenter_account_move",
+        "stock_quant_cost_segmentation",
     ],
     "demo": [
         'demo/demo.xml',

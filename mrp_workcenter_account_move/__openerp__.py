@@ -12,7 +12,6 @@
         "mrp",
         "account_move_line_production",
         "stock_card",
-        "stock_quant_cost_segmentation",
         "mrp_routing_account_journal",
     ],
     "demo": [
