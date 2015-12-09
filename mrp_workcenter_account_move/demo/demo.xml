@@ -17,11 +17,9 @@
         <field name="user_type" ref="account.data_account_type_income"/>
     </record>
 
-    <record id="rev_production_analytic_account" model="analytic.account">
+    <record id="rev_production_analytic_account" model="account.analytic.account">
         <field name="name">PRODUCTION_ANALYTIC_ACCOUNT</field>
         <field ref="account.income_view" name="parent_id"/>
-        <field name="type">other</field>
-        <field name="user_type" ref="account.data_account_type_income"/>
     </record>
 
     <record id="rev_analytic_production_journal" model="account.analytic.journal">
@@ -39,7 +37,7 @@
 
     <record id="rev_raw_material_std_realtime" model="product.product">
         <field name="name">RAW_MATERIAL_STD_REALTIME</field>
-        <field name="type">stockable</field>
+        <field name="type">product</field>
         <field name="cost_method">standard</field>
         <field name="valuation">real_time</field>
         <field name="standard_price">80</field>
@@ -49,7 +47,7 @@
 
     <record id="rev_prod_std_realtime" model="product.product">
         <field name="name">PROD_STD_REALTIME</field>
-        <field name="type">stockable</field>
+        <field name="type">product</field>
         <field name="cost_method">standard</field>
         <field name="valuation">real_time</field>
         <field name="standard_price">100</field>
@@ -83,12 +81,9 @@
 
     <record id="rev_bom_std_realtime" model="mrp.bom">
         <field name="name">BOM_STD_REALTIME</field>
-        <field name="product_tmpl_id" ref="rev_prod_std_realtime.product_tmpl_id"/>
+        <field model="product.template" name="product_tmpl_id" search="[('name', '=', u'PROD_STD_REALTIME')]"/>
         <field name="product_id" eval="False"/>
         <field name="product_qty">1</field>
-        <field name="sequence" eval="Default"/>
-        <field name="type" eval="Default"/>
-        <field name="other_fields" eval="Default"/>
         <field name="routing_id" ref="rev_routing"/>
     </record>
 
@@ -100,6 +95,7 @@
 
     <record id="rev_mrp_production" model="mrp.production">
         <field name="name">MRP_PRODUCTION</field>
+        <field name="product_uom" ref="product.product_uom_unit"/>
         <field name="product_qty">1</field>
         <field name="product_id" ref="rev_prod_std_realtime"/>
         <field name="bom_id" ref="rev_bom_std_realtime"/>
