@@ -103,10 +103,10 @@ class TestPickingDate(common.TransactionCase):
         self.assertEqual(picking.move_lines, move)
 
         # Confirm Picking
-        picking.action_confirm()
+        picking.with_context({'allow_past_date_quants': True}).action_confirm()
 
         # Validate Picking
-        picking.do_transfer()
+        picking.with_context({'allow_past_date_quants': True}).do_transfer()
         self.assertEqual(picking.state, 'done')
 
         # Check move dates
