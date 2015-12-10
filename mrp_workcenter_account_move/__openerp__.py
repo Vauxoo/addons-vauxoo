@@ -13,6 +13,7 @@
         "account_move_line_production",
         "stock_card",
         "mrp_routing_account_journal",
+        "stock_deviation_account",
     ],
     "demo": [
         'demo/demo.xml',
