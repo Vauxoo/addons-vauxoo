@@ -84,9 +84,8 @@ class ProductProduct(models.Model):
         compute=_get_availability,
         selection=get_states,
         string="Website Stock State",
-        default=0, store=True)
+        default=0)
 
-    @api.depends('qty_available')
     @api.multi
     def _get_locations_quants(self):
         for record in self:
@@ -129,7 +128,6 @@ class ProductProduct(models.Model):
                     new_quants.append(new_id.id)
             record.product_stock_quants_ids = new_quants
 
-    @api.depends('incoming_qty')
     @api.multi
     def _get_planned_dates(self):
         for record in self:
@@ -143,14 +141,12 @@ class ProductProduct(models.Model):
         compute=_get_locations_quants,
         comodel_name='location.quants',
         inverse_name='product_id',
-        string='Locations Quants',
-        store=True)
+        string='Locations Quants',)
     product_planned_dates_ids = fields.One2many(
         compute=_get_planned_dates,
         comodel_name='purchase.order.line',
         inverse_name='product_id',
-        string='Locations Quants',
-        store=True)
+        string='Locations Quants')
 
     @api.multi
     def _product_availability_warehouse(self, warehouse_id):
