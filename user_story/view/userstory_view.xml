@@ -355,7 +355,7 @@
       <field name="res_model">user.story</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
-      <field name="domain">[('user_id','=',uid),('state','not in',('cancel','done'))]</field>
+      <field name="domain">[('user_execute_id','=',uid),('state','not in',('cancel','done'))]</field>
       <field name="view_id" ref="view_userstory_tree"/>
     </record>
 
