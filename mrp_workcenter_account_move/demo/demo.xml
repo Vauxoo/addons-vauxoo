@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+    <record id="rev_work_in_process" model="account.account">
+        <field name="code">X200-vx-WIP</field>
+        <field name="name">WORK_IN_PROCESS</field>
+        <field ref="account.income_view" name="parent_id"/>
+        <field name="type">other</field>
+        <field name="user_type" ref="account.data_account_type_income"/>
+    </record>
     <record id="rev_production_cost_account" model="account.account">
         <field name="code">X200-vx-production</field>
         <field name="name">PRODUCTION_COST_ACCOUNT</field>
