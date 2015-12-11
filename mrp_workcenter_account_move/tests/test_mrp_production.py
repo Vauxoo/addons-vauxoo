@@ -22,7 +22,6 @@ class TestMrpProduction(TransactionCase):
                     rev_inventory_deviation_account,credit ==5
     '''
 
-
     # Pseudo-constructor method of the setUp test.
     def setUp(self):
         super(TestMrpProduction, self).setUp()
@@ -75,4 +74,6 @@ class TestMrpProduction(TransactionCase):
             val['produce_id'] = self.wzd_id.id
             self.wzd_line_obj.create(val)
         self.wzd_id.do_produce()
+        import pdb
+        pdb.set_trace()
         return True
