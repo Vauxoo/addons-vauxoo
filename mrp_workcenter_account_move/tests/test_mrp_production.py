@@ -31,6 +31,8 @@ class TestMrpProduction(TransactionCase):
              'mrp_workcenter_account_move.rev_mrp_production'))
         self.wip_account = self.env.ref(
             'mrp_workcenter_account_move.rev_work_in_process')
+        self.wzd_obj = self.env['mrp.product.produce']
+        self.wzd_line_obj = self.env['mrp.product.produce.line']
 
     # Test methods.
     def test_10_approve_begin_consumpt_finish_mrp_production(self):
@@ -56,7 +58,21 @@ class TestMrpProduction(TransactionCase):
                          'in_production',
                          "The mrp is not in production.")
         # Consumption and finish production.
-        mrp_product.signal_workflow('button_produce_done')
+        self.create_wizard()
         self.assertEqual(mrp_product.state,
                          'done',
                          "The mrp production doesn't done.")
+
+    def create_wizard(self, values=None):
+        self.wzd_id = self.wzd_obj.with_context(
+            {'active_id': self.mrp_production.id}).create({})
+        values = self.wzd_obj.with_context(
+            {'active_id': self.mrp_production.id}).on_change_qty(
+                self.wzd_id.id, 1)
+        values = values['value']['consume_lines']
+        for val in values:
+            val = val[2]
+            val['produce_id'] = self.wzd_id.id
+            self.wzd_line_obj.create(val)
+        self.wzd_id.do_produce()
+        return True
