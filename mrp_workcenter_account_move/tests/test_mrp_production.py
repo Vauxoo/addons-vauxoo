@@ -29,16 +29,22 @@ class TestMrpProduction(TransactionCase):
         # Define required global variables.
         self.mrp_production = self.env['mrp.production'].browse(self.ref(
              'mrp_workcenter_account_move.rev_mrp_production'))
+        self.wip_account = self.env.ref(
+            'mrp_workcenter_account_move.rev_work_in_process')
 
     # Test methods.
     def test_10_approve_begin_consumpt_finish_mrp_production(self):
         # This method approve a mrp production.
+        location_obj = self.env['stock.location']
+        location_brw = location_obj.search([('name', '=', 'Production')])
+        location_brw.write({'valuation_in_account_id': self.wip_account.id,
+                            'valuation_out_account_id': self.wip_account.id})
         mrp_product = self.mrp_production
         # Confirm the mrp production.
         mrp_product.signal_workflow('button_confirm')
         self.assertEqual(mrp_product.state,
                          'confirmed',
-                         "The mrp production doesn't confirmed.")
+                         "The mrp production didn't confirm.")
         # Create the moves needed by mrp production.
         mrp_product.signal_workflow('moves_ready')
         self.assertEqual(mrp_product.state,
