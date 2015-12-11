@@ -58,7 +58,7 @@
     <record id="rev_workcenter" model="mrp.workcenter">
         <field name="name">WORKCENTER</field>
         <field name="resource_type">material</field>
-        <field name="time_efficency">1</field>
+        <field name="time_efficiency" eval="1.0"/>
         <field name="time_cycle">1</field>
         <field name="costs_hour">15</field>
         <field name="costs_hour_account_id" ref="rev_production_analytic_account"/>
