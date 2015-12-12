@@ -20,7 +20,7 @@ var __slice = [].slice;
       _ref = this.defaults;
       for (i in _ref) {
         _ = _ref[i];
-        if (this.$el.data(i) != null) {
+        if (this.$el.data(i) !== null) {
           this.options[i] = this.$el.data(i);
         }
       }
