@@ -77,12 +77,12 @@
             <function eval="[[('id', '=', ref('mrp_workcenter_segmentation.stock_inventory'))]]" model="stock.inventory" name="search"/>
         </function>
 
-        <record id="routing_segmentation_c_product" model="mrp.routing">
-            <field name="name">ROUTING_SEGMENTATION_C_PRODUCT</field>
+        <record id="routing_segmentation_d_product" model="mrp.routing">
+            <field name="name">ROUTING_SEGMENTATION_D_PRODUCT</field>
             <field name="journal_id" ref="mrp_workcenter_account_move.rev_production_journal"/>
         </record>
         <record id="routing_workcenter_segmentation_c_product" model="mrp.routing.workcenter">
-            <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_c_product"/>
+            <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_d_product"/>
             <field name="workcenter_id" ref="mrp_workcenter_account_move.rev_workcenter"/>
             <field name="name">ROUTING_WORKCENTER_SEGMENTATION_C_PRODUCT</field>
             <field name="hour_nbr">1</field>
@@ -108,7 +108,7 @@
             <field model="product.template" name="product_tmpl_id" search="[('name', '=', u'PROD_D_STD_REALTIME')]"/>
             <field name="product_id" eval="False"/>
             <field name="product_qty">1</field>
-            <field name="routing_id" ref="rev_routing"/>
+            <field name="routing_id" ref="routing_segmentation_d_product"/>
         </record>
         <record id="bom_line_segmentation_a_product" model="mrp.bom.line">
             <field name="product_id" ref="prod_a_avg_realtime"/>
@@ -126,7 +126,7 @@
             <field model="product.template" name="product_tmpl_id" search="[('name', '=', u'PROD_E_STD_REALTIME')]"/>
             <field name="product_id" eval="False"/>
             <field name="product_qty">1</field>
-            <field name="routing_id" ref="rev_routing"/>
+            <field name="routing_id" ref="routing_segmentation_e_product"/>
         </record>
         <record id="bom_line_segmentation_a_product" model="mrp.bom.line">
             <field name="product_id" ref="prod_c_avg_realtime"/>
