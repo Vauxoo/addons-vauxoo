@@ -1,5 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+        <record id="prod_a_avg_realtime" model="product.product">
+            <field name="name">PROD_A_AVG_REALTIME</field>
+            <field name="type">product</field>
+            <field name="cost_method">average</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">60</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="prod_b_avg_realtime" model="product.product">
+            <field name="name">PROD_B_AVG_REALTIME</field>
+            <field name="type">product</field>
+            <field name="cost_method">average</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">20</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="prod_c_avg_realtime" model="product.product">
+            <field name="name">PROD_C_AVG_REALTIME</field>
+            <field name="type">product</field>
+            <field name="cost_method">average</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">40</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="prod_d_std_realtime" model="product.product">
+            <field name="name">PROD_D_STD_REALTIME</field>
+            <field name="type">product</field>
+            <field name="cost_method">standard</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">100</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="prod_e_std_realtime" model="product.product">
+            <field name="name">PROD_E_STD_REALTIME</field>
+            <field name="type">product</field>
+            <field name="cost_method">standard</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">150</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <!-- INITIALIZING INVENTORY FOR RAW MATERIAL -->
+        <record id="stock_inventory" model="stock.inventory">
+            <field name="name">INITIAL INVENTORY - MRP WORKCENTER SEGMENTATION</field>
+        </record>
+        <record id="stock_inventory_line_1" model="stock.inventory.line">
+            <field name="product_id" ref="prod_a_avg_realtime"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="mrp_workcenter_segmentation.stock_inventory"/>
+            <field name="product_qty">5.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+        <record id="stock_inventory_line_2" model="stock.inventory.line">
+            <field name="product_id" ref="prod_b_avg_realtime"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="mrp_workcenter_segmentation.stock_inventory"/>
+            <field name="product_qty">3.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+        <record id="stock_inventory_line_3" model="stock.inventory.line">
+            <field name="product_id" ref="prod_c_avg_realtime"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="mrp_workcenter_segmentation.stock_inventory"/>
+            <field name="product_qty">2.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('mrp_workcenter_segmentation.stock_inventory'))]]" model="stock.inventory" name="search"/>
+        </function>
     </data>
 </openerp>
