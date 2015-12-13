@@ -40,25 +40,24 @@ class TestMrpProduction(TransactionCase):
         location_brw = location_obj.search([('name', '=', 'Production')])
         location_brw.write({'valuation_in_account_id': self.wip_account.id,
                             'valuation_out_account_id': self.wip_account.id})
-        mrp_product = self.mrp_production
         # Confirm the mrp production.
-        mrp_product.signal_workflow('button_confirm')
-        self.assertEqual(mrp_product.state,
+        self.mrp_production.signal_workflow('button_confirm')
+        self.assertEqual(self.mrp_production.state,
                          'confirmed',
                          "The mrp production didn't confirm.")
         # Create the moves needed by mrp production.
-        mrp_product.signal_workflow('moves_ready')
-        self.assertEqual(mrp_product.state,
+        self.mrp_production.signal_workflow('moves_ready')
+        self.assertEqual(self.mrp_production.state,
                          'ready',
                          "The moves aren't ready.")
         # Begin mrp production.
-        mrp_product.signal_workflow('button_produce')
-        self.assertEqual(mrp_product.state,
+        self.mrp_production.signal_workflow('button_produce')
+        self.assertEqual(self.mrp_production.state,
                          'in_production',
                          "The mrp is not in production.")
         # Consumption and finish production.
         self.create_wizard()
-        self.assertEqual(mrp_product.state,
+        self.assertEqual(self.mrp_production.state,
                          'done',
                          "The mrp production doesn't done.")
 
