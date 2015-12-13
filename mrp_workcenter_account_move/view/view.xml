@@ -19,6 +19,11 @@
                 <xpath expr="//field[@name='move_prod_id']" position="after">
                     <field name="account_move_id"/>
                 </xpath>
+                <xpath expr="//page[@string='Extra Information']" position="inside">
+                    <group string='Production Journal Items'>
+                        <field name="aml_production_ids" nolabel='1'/>
+                    </group>
+                </xpath>
             </field>
         </record>
     </data>
