@@ -77,12 +77,12 @@ class TestMrpProduction(TransactionCase):
         # Raw material assertion
         raw_material = sum([x.credit for x in aml_raw_and_fg])
         self.assertEqual(raw_material,
-                         80, "Raw Material Consumption is wrong")
+                         85, "Raw Material Consumption is wrong")
 
         # Finished Good assertion
         finished_goods = sum([y.debit for y in aml_raw_and_fg])
         self.assertEqual(finished_goods,
-                         100, "Finished Good Production is wrong")
+                         80, "Finished Good Production is wrong")
 
         # Production Cost assertion
         production_cost = sum([
@@ -93,10 +93,10 @@ class TestMrpProduction(TransactionCase):
 
         # Standard Deviation assertion
         standard_deviation = sum([
-            w.credit for w in aml_ids
+            w.debit for w in aml_ids
             if w.account_id.id == self.account_deviation])
         self.assertEqual(standard_deviation,
-                         5, "Standard Deviation is wrong")
+                         20, "Standard Deviation is wrong")
 
         # WIP assertion
         wip_ids = [
