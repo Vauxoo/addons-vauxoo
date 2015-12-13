@@ -26,6 +26,13 @@ class TestMrpProduction(TransactionCase):
     def setUp(self):
         super(TestMrpProduction, self).setUp()
         # Define required global variables.
+        self.account_stock_valuation = self.ref('account.stk')
+        self.account_wip = self.ref(
+            'mrp_workcenter_account_move.rev_work_in_process')
+        self.account_cost = self.ref(
+            'mrp_workcenter_account_move.rev_production_cost_account')
+        self.account_deviation = self.ref(
+            'mrp_workcenter_account_move.rev_inventory_deviation_account')
         self.mrp_production = self.env['mrp.production'].browse(self.ref(
              'mrp_workcenter_account_move.rev_mrp_production'))
         self.wip_account = self.env.ref(
@@ -60,6 +67,46 @@ class TestMrpProduction(TransactionCase):
         self.assertEqual(self.mrp_production.state,
                          'done',
                          "The mrp production doesn't done.")
+
+        aml_ids = self.mrp_production.aml_production_ids
+
+        aml_raw_and_fg = [
+            u for u in aml_ids
+            if u.account_id.id == self.account_stock_valuation]
+
+        # Raw material assertion
+        raw_material = sum([x.credit for x in aml_raw_and_fg])
+        self.assertEqual(raw_material,
+                         80, "Raw Material Consumption is wrong")
+
+        # Finished Good assertion
+        finished_goods = sum([y.debit for y in aml_raw_and_fg])
+        self.assertEqual(finished_goods,
+                         100, "Finished Good Production is wrong")
+
+        # Production Cost assertion
+        production_cost = sum([
+            v.credit for v in aml_ids
+            if v.account_id.id == self.account_cost])
+        self.assertEqual(production_cost,
+                         15, "Production Cost is wrong")
+
+        # Standard Deviation assertion
+        standard_deviation = sum([
+            w.credit for w in aml_ids
+            if w.account_id.id == self.account_deviation])
+        self.assertEqual(standard_deviation,
+                         5, "Standard Deviation is wrong")
+
+        # WIP assertion
+        wip_ids = [
+            o for o in aml_ids
+            if o.account_id.id == self.account_wip]
+
+        wip_debit = sum([p.debit for p in wip_ids])
+        wip_credit = sum([q.credit for q in wip_ids])
+        self.assertEqual((wip_debit, wip_credit),
+                         (100, 100), "Work in Process is wrong")
 
     def create_wizard(self, values=None):
         self.wzd_id = self.wzd_obj.with_context(
