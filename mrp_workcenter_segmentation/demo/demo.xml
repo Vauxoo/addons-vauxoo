@@ -76,5 +76,31 @@
         <function model="stock.inventory" name="action_done">
             <function eval="[[('id', '=', ref('mrp_workcenter_segmentation.stock_inventory'))]]" model="stock.inventory" name="search"/>
         </function>
+
+        <record id="routing_segmentation_c_product" model="mrp.routing">
+            <field name="name">ROUTING_SEGMENTATION_C_PRODUCT</field>
+            <field name="journal_id" ref="mrp_workcenter_account_move.rev_production_journal"/>
+        </record>
+        <record id="routing_workcenter_segmentation_c_product" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_c_product"/>
+            <field name="workcenter_id" ref="mrp_workcenter_account_move.rev_workcenter"/>
+            <field name="name">ROUTING_WORKCENTER_SEGMENTATION_C_PRODUCT</field>
+            <field name="hour_nbr">1</field>
+            <field name="cycle_nbr">0</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="routing_segmentation_e_product" model="mrp.routing">
+            <field name="name">ROUTING_SEGMENTATION_E_PRODUCT</field>
+            <field name="journal_id" ref="mrp_workcenter_account_move.rev_production_journal"/>
+        </record>
+        <record id="routing_workcenter_segmentation_e_product" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_e_product"/>
+            <field name="workcenter_id" ref="mrp_workcenter_account_move.rev_workcenter"/>
+            <field name="name">ROUTING_WORKCENTER_SEGMENTATION_E_PRODUCT</field>
+            <field name="hour_nbr">2</field>
+            <field name="cycle_nbr">0</field>
+            <field name="sequence">5</field>
+        </record>
     </data>
 </openerp>
