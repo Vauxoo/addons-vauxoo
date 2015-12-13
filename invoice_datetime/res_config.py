@@ -38,6 +38,10 @@ class AccountConfigSettings(osv.osv_memory):
                   invoice for the selected company."),
     }
 
+    def _default_company(self, cr, uid, context=None):
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        return user.company_id.id
+
     def get_default_select_date(self, cr, uid, fields_name, context=None):
         key_by_company_id = "acc_invoice.date_invoice_type_" + str(
             self._default_company(cr, uid))
