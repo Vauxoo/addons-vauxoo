@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    openerp.website.if_dom_contains('.js_attributes', function(){
+    openerp.website.if_dom_contains('.js_attributes .nav-pills', function(){
         $.ajax({
             url: "/get_ranges",
             method: "POST",

@@ -7,6 +7,15 @@
             <t t-if="attributes">
               <form class="js_attributes" method="get">
                   <input type="hidden" name="search" t-att-value="search"/>
+                  <select style="display:none;" t-att-value="sortby" class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
+                    <option value="0" selected="selected">Sort By...</option>
+                    <option value="name" t-attf-selected="#{'selected' if sortby == 'name' else ''}">Product Name</option>
+                    <option value="pasc" t-attf-selected="#{'selected' if sortby == 'pasc' else ''}">Price Lowest</option>
+                    <option value="pdesc" t-attf-selected="#{'selected' if sortby == 'pdesc' else ''}">Price Highest</option>
+                    <option value="hottest" t-attf-selected="#{'selected' if sortby == 'hottest' else ''}">Hottest</option>
+                    <option value="rating" t-attf-selected="#{'selected' if sortby == 'rating' else ''}">Customer Rating</option>
+                    <option value="popularity" t-attf-selected="#{'selected' if sortby == 'popularity' else ''}">Popularity</option>
+                  </select>
                   <ul class="nav nav-pills nav-stacked mt16">
                       <t t-foreach="attributes" t-as="a">
                         <t t-if="a.type != 'hidden'">
@@ -212,15 +221,18 @@
                 </div>
             </div>
               <div class="col-md-3 pull-right">
-                <select class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
-                  <option value="0" selected="selected">Sort By...</option>
-                  <option value="name">Product Name</option>
-                  <option value="pasc">Price Lowest</option>
-                  <option value="pdesc">Price Highest</option>
-                  <option value="hottest">Hottest</option>
-                  <option value="rating">Customer Rating</option>
-                  <option value="popularity">Popularity</option>
-                </select>
+                <form class="js_attributes" method="get">
+                  <select t-att-value="sortby" class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
+                    <option value="0" selected="selected">Sort By...</option>
+                    <option value="name" t-attf-selected="#{'selected' if sortby == 'name' else ''}">Product Name</option>
+                    <option value="pasc" t-attf-selected="#{'selected' if sortby == 'pasc' else ''}">Price Lowest</option>
+                    <option value="pdesc" t-attf-selected="#{'selected' if sortby == 'pdesc' else ''}">Price Highest</option>
+                    <option value="hottest" t-attf-selected="#{'selected' if sortby == 'hottest' else ''}">Hottest</option>
+                    <option value="rating" t-attf-selected="#{'selected' if sortby == 'rating' else ''}">Customer Rating</option>
+                    <option value="popularity" t-attf-selected="#{'selected' if sortby == 'popularity' else ''}">Popularity</option>
+                  </select>
+
+                </form>
               </div>
 
               <form t-att-action="keep('/shop'+ ('/category/'+slug(category)) if category else '', search=0)" method="get" t-att-class="search_class">

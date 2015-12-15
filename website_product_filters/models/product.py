@@ -105,9 +105,11 @@ class ProductCategory(models.Model):
         prod_obj = self.env['product.template']
         ranges_obj = self.env['product.price.ranges'].search([])
         count_dict = {}
-        prod_ids = prod_obj.search(
-            [('public_categ_ids', 'child_of', int(category)),
-             ('website_published', '=', True)])
+        prod_ids = []
+        if category:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', int(category)),
+                 ('website_published', '=', True)])
         if prod_ids:
             for prod in prod_ids:
                 for ran in ranges_obj:
@@ -125,9 +127,11 @@ class ProductCategory(models.Model):
     def _get_async_values(self, category):
         prod_obj = self.env['product.template']
         count_dict = {}
-        prod_ids = prod_obj.search(
-            [('public_categ_ids', 'child_of', int(category)),
-             ('website_published', '=', True)])
+        prod_ids = []
+        if category:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', int(category)),
+                 ('website_published', '=', True)])
         if prod_ids:
             for prod in prod_ids:
                 for line in prod.attribute_line_ids:
