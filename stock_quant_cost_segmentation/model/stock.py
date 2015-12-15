@@ -3,14 +3,34 @@
 from openerp import models, fields, api
 from openerp import SUPERUSER_ID
 
+SEGMENTATION_COST = [
+    'landed_cost',
+    'subcontracting_cost',
+    'material_cost',
+    'production_cost',
+]
+
 
 class StockQuant(models.Model):
     _inherit = "stock.quant"
+
+    @api.depends('material_cost', 'production_cost', 'landed_cost',
+                 'subcontracting_cost')
+    def _compute_segmentation(self):
+        for record in self:
+            record.segmentation_cost = sum([
+                getattr(record, fn) for fn in SEGMENTATION_COST])
 
     material_cost = fields.Float(string='Material Cost')
     production_cost = fields.Float(string='Production Cost')
     subcontracting_cost = fields.Float(string='Subcontracting Cost')
     landed_cost = fields.Float(string='Landed Cost')
+    segmentation_cost = fields.Float(
+        string='Quant Segmentation Cost', store=True, readonly=True,
+        compute='_compute_segmentation',
+        help=("Provides the actual cost of cost that is not reflected by Cost"
+              "which in case of Standard Costing Method does not actually "
+              "reflect the cost that a quant must have"))
 
     @api.v7
     def _quant_create(

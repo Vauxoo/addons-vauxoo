@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='inventory_value']" position="after">
                     <field name="cost"/>
+                    <field name="segmentation_cost"/>
                     <field name="material_cost"/>
                     <field name="production_cost"/>
                     <field name="landed_cost"/>
@@ -25,6 +26,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='inventory_value']" position="after">
                     <field name="cost"/>
+                    <field name="segmentation_cost"/>
                     <field name="material_cost"/>
                     <field name="production_cost"/>
                     <field name="landed_cost"/>
