@@ -26,11 +26,12 @@ class StockQuant(models.Model):
     subcontracting_cost = fields.Float(string='Subcontracting Cost')
     landed_cost = fields.Float(string='Landed Cost')
     segmentation_cost = fields.Float(
-        string='Quant Segmentation Cost', store=True, readonly=True,
+        string='Actual Cost', store=True, readonly=True,
         compute='_compute_segmentation',
-        help=("Provides the actual cost of cost that is not reflected by Cost"
-              "which in case of Standard Costing Method does not actually "
-              "reflect the cost that a quant must have"))
+        help=("Provides the actual cost for this transaction. "
+              "It is computed from the sum of the segmentation costs: "
+              "`material cost`, `subcontracting cost`, `landed cost` "
+              "& `production cost`"))
 
     @api.v7
     def _quant_create(
