@@ -34,7 +34,7 @@ class TestMrpProduction(TransactionCase):
         self.account_deviation = self.ref(
             'mrp_workcenter_account_move.rev_inventory_deviation_account')
         self.mrp_production = self.env['mrp.production'].browse(self.ref(
-             'mrp_workcenter_account_move.rev_mrp_production'))
+            'mrp_workcenter_account_move.rev_mrp_production'))
         self.wip_account = self.env.ref(
             'mrp_workcenter_account_move.rev_work_in_process')
         self.wzd_obj = self.env['mrp.product.produce']
