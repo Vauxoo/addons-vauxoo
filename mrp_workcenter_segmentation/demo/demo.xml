@@ -146,6 +146,8 @@
             <field name="product_id" ref="prod_d_std_realtime"/>
             <field name="bom_id" ref="bom_segmentation_d_product"/>
             <field name="routing_id" ref="routing_segmentation_d_product"/>
+            <field name="location_src_id" ref="stock.stock_location_14"/>
+            <field name="location_dest_id" ref="stock.stock_location_14"/>
         </record>
 
         <record id="mrp_production_segmentation_e_product" model="mrp.production">
@@ -155,6 +157,8 @@
             <field name="product_id" ref="prod_e_std_realtime"/>
             <field name="bom_id" ref="bom_segmentation_e_product"/>
             <field name="routing_id" ref="routing_segmentation_e_product"/>
+            <field name="location_src_id" ref="stock.stock_location_14"/>
+            <field name="location_dest_id" ref="stock.stock_location_14"/>
         </record>
     </data>
 </openerp>
