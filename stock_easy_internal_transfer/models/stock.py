@@ -58,6 +58,26 @@ class StockPicking(models.Model):
     force_location_dest_id = fields.Many2one(
         'stock.location', string="Destination Location")
 
+    @api.onchange('force_location_id', 'force_location_dest_id')
+    def onchange_force_locations(self):
+        for pick in self:
+            if pick.force_location_id and \
+                    not pick.force_location_dest_id:
+                pick.move_lines.update({
+                    'location_id': pick.force_location_id,
+                })
+            elif not pick.force_location_id and \
+                    pick.force_location_dest_id:
+                pick.move_lines.update({
+                    'location_dest_id': pick.force_location_dest_id,
+                })
+            elif pick.force_location_id and \
+                    not pick.force_location_dest_id:
+                pick.move_lines.update({
+                    'location_id': pick.force_location_id,
+                    'location_dest_id': pick.force_location_dest_id
+                })
+
     @api.multi
     def action_assign(self):
         for pick in self:
@@ -72,24 +92,24 @@ class StockPicking(models.Model):
                 moves._check_quants_availability()
         return super(StockPicking, self).action_assign()
 
-    @api.multi
-    def write(self, vals):
-        for pick in self:
-            if pick.picking_type_id.quick_view and \
-                    ('force_location_id' in vals or
-                     'force_location_dest_id' in vals):
-                move_vals = {
-                    'picking_type_id': pick.picking_type_id.id,
-                }
-                if 'force_location_id' in vals:
-                    move_vals.update({
-                        'location_id': vals['force_location_id']})
-                if 'force_location_dest_id' in vals:
-                    move_vals.update({
-                        'location_dest_id': vals['force_location_dest_id']
-                    })
-                pick.move_lines.write(move_vals)
-        return super(StockPicking, self).write(vals)
+    # @api.multi
+    # def write(self, vals):
+    #     for pick in self:
+    #         if pick.picking_type_id.quick_view and \
+    #                 ('force_location_id' in vals or
+    #                  'force_location_dest_id' in vals):
+    #             move_vals = {
+    #                 'picking_type_id': pick.picking_type_id.id,
+    #             }
+    #             if 'force_location_id' in vals:
+    #                 move_vals.update({
+    #                     'location_id': vals['force_location_id']})
+    #             if 'force_location_dest_id' in vals:
+    #                 move_vals.update({
+    #                     'location_dest_id': vals['force_location_dest_id']
+    #                 })
+    #             pick.move_lines.write(move_vals)
+    #     return super(StockPicking, self).write(vals)
 
 
 class StockPickingType(models.Model):
