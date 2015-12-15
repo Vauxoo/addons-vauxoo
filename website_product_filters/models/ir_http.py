@@ -36,7 +36,8 @@ class IrHttp(models.AbstractModel):
             request.cr, request.uid, context=request.context)
         post_sort = request.params.get('product_sorter', False)
         if not cookie_sort and request.website_enabled and not post_sort:
-            resp.set_cookie('default_sort', current_website.default_sort)
+            resp.set_cookie('default_sort',
+                            bytes(current_website.default_sort))
         elif post_sort:
             resp.set_cookie('default_sort', post_sort)
         return resp
