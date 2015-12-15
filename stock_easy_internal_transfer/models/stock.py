@@ -109,6 +109,16 @@ class StockWarehouse(models.Model):
     )
 
     @api.model
+    def create_sequence(self, warehouse_id, name, prefix, padding):
+        return self.env['ir.sequence'].sudo().\
+            create(values={
+                'name': warehouse_id.name + name,
+                'prefix': warehouse_id.code + prefix,
+                'padding': padding,
+                'company_id': warehouse_id.company_id.id
+            })
+
+    @api.model
     def compute_next_color(self):
         """
         Choose the next available color for
