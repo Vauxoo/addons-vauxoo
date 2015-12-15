@@ -46,6 +46,7 @@ class WebsiteSale(website_sale):
         filtered_products = res.qcontext['products']
         args = res.qcontext['keep'].args
         keys = {
+            '0': filtered_products,
             'name': filtered_products.sorted(key=lambda r: r.name),
             'pasc': filtered_products.sorted(key=lambda r: r.lst_price),
             'pdesc': filtered_products.sorted(key=lambda r: r.lst_price,
