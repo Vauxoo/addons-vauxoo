@@ -20,6 +20,13 @@ class WebsiteSale(website_sale):
         instead of showing all that exist on the instance, it will allow
         to show attribute filters based on the selected category.
         """
+        # cookie_sort = request.httprequest.cookies.get('default_sort')
+        # current_website = request.registry['website'].get_current_website(
+        #     request.cr, request.uid, context=request.context)
+        # if :
+        #     sort = cookie_sort
+
+
         cr, uid, context, pool = (request.cr,
                                   request.uid,
                                   request.context,
@@ -31,27 +38,10 @@ class WebsiteSale(website_sale):
         attributes_obj = pool['product.attribute']
         ranges_obj = pool['product.price.ranges']
         brand_obj = pool['product.brand']
-        template_obj = pool['product.template']
         ranges_list = request.httprequest.args.getlist('range')
         brand_list = request.httprequest.args.getlist('brand')
         brand_selected_ids = [int(b) for b in brand_list if b]
         ranges_selected_ids = [int(v) for v in ranges_list if v]
-        ranges_selected = ranges_obj.browse(cr, uid, ranges_selected_ids,
-                                            context=context)
-        filtered_products = res.qcontext['products']
-        range_product_ids = []
-        for rang in ranges_selected:
-            for fproduct in filtered_products:
-                if rang.lower <= fproduct.lst_price <= rang.upper:
-                    range_product_ids.append(fproduct.id)
-        if range_product_ids:
-            new_products = template_obj.browse(
-                cr,
-                uid,
-                range_product_ids,
-                context=context)
-        else:
-            new_products = filtered_products
         ranges_ids = ranges_obj.search(cr, uid, [], context=context)
         ranges = ranges_obj.browse(cr, uid, ranges_ids, context=context)
         attribute_ids = self._get_used_attrs(category)
@@ -60,6 +50,8 @@ class WebsiteSale(website_sale):
                                            context=context)
         res.qcontext['attributes'] = attributes
         args = res.qcontext['keep'].args
+        if post.get('product_sorter', False):
+            res.qcontext['sortby'] = post['product_sorter']
         for arg in args.get('attrib', []):
             attr_id = arg.split('-')
             if int(attr_id[0]) not in attribute_ids:
@@ -84,7 +76,6 @@ class WebsiteSale(website_sale):
         res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['brands'] = brands
         res.qcontext['categories'] = categs
-        res.qcontext['products'] = new_products
         res.qcontext['price_ranges'] = ranges
         res.qcontext['brand_set'] = brand_selected_ids
         res.qcontext['ranges_set'] = ranges_selected_ids
