@@ -20,13 +20,6 @@ class WebsiteSale(website_sale):
         instead of showing all that exist on the instance, it will allow
         to show attribute filters based on the selected category.
         """
-        # cookie_sort = request.httprequest.cookies.get('default_sort')
-        # current_website = request.registry['website'].get_current_website(
-        #     request.cr, request.uid, context=request.context)
-        # if :
-        #     sort = cookie_sort
-
-
         cr, uid, context, pool = (request.cr,
                                   request.uid,
                                   request.context,
@@ -35,6 +28,7 @@ class WebsiteSale(website_sale):
                                             category=category,
                                             search=search, ppg=ppg,
                                             **post)
+
         attributes_obj = pool['product.attribute']
         ranges_obj = pool['product.price.ranges']
         brand_obj = pool['product.brand']
@@ -49,9 +43,26 @@ class WebsiteSale(website_sale):
         attributes = attributes_obj.browse(cr, uid, attribute_ids,
                                            context=context)
         res.qcontext['attributes'] = attributes
+        filtered_products = res.qcontext['products']
         args = res.qcontext['keep'].args
-        if post.get('product_sorter', False):
-            res.qcontext['sortby'] = post['product_sorter']
+        keys = {
+            'name': filtered_products.sorted(key=lambda r: r.name),
+            'pasc': filtered_products.sorted(key=lambda r: r.lst_price),
+            'pdesc': filtered_products.sorted(key=lambda r: r.lst_price,
+                                              reverse=True),
+            'hottest': filtered_products.sorted(key=lambda r: r.create_date),
+            'rating': filtered_products.sorted(key=lambda r: r.rating),
+            'popularity': filtered_products.sorted(key=lambda r: r.views)}
+        if post.get('product_sorter', '0') != '0':
+            sortby = post['product_sorter']
+            res.qcontext['sortby'] = sortby
+            ordered_products = keys.get(sortby)
+        elif request.httprequest.cookies.get('default_sort'):
+            sortby = request.httprequest.cookies.get('default_sort')
+            ordered_products = keys.get(sortby)
+        else:
+            ordered_products = filtered_products
+
         for arg in args.get('attrib', []):
             attr_id = arg.split('-')
             if int(attr_id[0]) not in attribute_ids:
@@ -79,6 +90,7 @@ class WebsiteSale(website_sale):
         res.qcontext['price_ranges'] = ranges
         res.qcontext['brand_set'] = brand_selected_ids
         res.qcontext['ranges_set'] = ranges_selected_ids
+        res.qcontext['products'] = ordered_products
         return res
 
     def _normalize_category(self, category):

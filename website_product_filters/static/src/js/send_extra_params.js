@@ -1,5 +1,4 @@
 $(document).ready(function () {
-console.log("VAINA NUEVA PARA SORT");
 $('.oe_website_sale').each(function () {
     var oe_website_sale = this;
 

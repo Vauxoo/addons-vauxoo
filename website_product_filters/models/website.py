@@ -35,7 +35,7 @@ class Website(models.Model):
          ('p_highest', 'Price Highest'),
          ('hottest', 'Hottest'),
          ('rating', 'Customer Rating'),
-         ('popularity', 'Popularity')])
+         ('popularity', 'Popularity')], defult="popularity")
 
     @api.model
     def sale_product_domain(self):
