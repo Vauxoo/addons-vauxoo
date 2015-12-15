@@ -57,8 +57,11 @@ class WebsiteSale(website_sale):
             sortby = post['product_sorter']
             res.qcontext['sortby'] = sortby
             ordered_products = keys.get(sortby)
-        elif request.httprequest.cookies.get('default_sort'):
+        elif request.httprequest.cookies.get('default_sort', 'False') != 'False':  # noqa
             sortby = request.httprequest.cookies.get('default_sort')
+            ordered_products = keys.get(sortby)
+        elif request.httprequest.cookies.get('default_sort') == 'False':
+            sortby = request.website.default_sort
             ordered_products = keys.get(sortby)
         else:
             ordered_products = filtered_products
