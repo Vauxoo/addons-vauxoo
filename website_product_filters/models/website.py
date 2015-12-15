@@ -31,8 +31,8 @@ class Website(models.Model):
 
     default_sort = fields.Selection(
         [('name', 'Name'),
-         ('p_lowest', 'Price Lowest'),
-         ('p_highest', 'Price Highest'),
+         ('pasc', 'Price Lowest'),
+         ('pdesc', 'Price Highest'),
          ('hottest', 'Hottest'),
          ('rating', 'Customer Rating'),
          ('popularity', 'Popularity')], defult="popularity")
