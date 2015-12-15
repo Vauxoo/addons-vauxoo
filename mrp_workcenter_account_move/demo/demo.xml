@@ -108,6 +108,8 @@
         <field name="product_id" ref="rev_prod_std_realtime"/>
         <field name="bom_id" ref="rev_bom_std_realtime"/>
         <field name="routing_id" ref="rev_routing"/>
+        <field name="location_src_id" ref="stock.stock_location_14"/>
+        <field name="location_dest_id" ref="stock.stock_location_14"/>
     </record>
 
     <record id="stock_inventory" model="stock.inventory">
