@@ -27,12 +27,12 @@
                         <button name="open_barcode_interface" groups="stock.group_stock_user" type="object" class="oe_stock_scan_button" attrs="{'invisible': ['|',('pack_operation_exist', '=', False),('state','not in',('assigned', 'partially_available'))]}"><img src="/stock/static/src/img/scan.png" class="oe_stock_scan_image oe_stock_scan_image_btn"/></button>
                     </div>
                     <h1>
-                        <field name="name" class="oe_inline" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+                        <field name="name" class="oe_inline" attrs="{'invisible': [('name','=','/')]}" readonly="1" />
                     </h1>
                     <group>
                         <group>
                             <field name="force_location_id" />
-                            <field name="force_location_dest_id" />
+                            <field name="force_location_dest_id" attrs="{'required': [('state', '=', 'assigned')]}" />
                             <field name="partner_id" invisible="1"/>
                             <field name="backorder_id" readonly="1" attrs="{'invisible': [('backorder_id','=',False)]}"/>
                         </group>

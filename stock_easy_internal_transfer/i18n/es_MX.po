@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-14 22:22+0000\n"
-"PO-Revision-Date: 2015-12-14 22:22+0000\n"
+"POT-Creation-Date: 2015-12-16 05:19+0000\n"
+"PO-Revision-Date: 2015-12-16 05:19+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_easy_internal_transfer
-#: code:addons/stock_easy_internal_transfer/models/stock.py:148
+#: code:addons/stock_easy_internal_transfer/models/stock.py:160
 #, python-format
 msgid " Sequence Quick internal transfers"
-msgstr " Sequence Quick internal transfers"
+msgstr " Sequencia Transferencias internas simple"
 
 #. module: stock_easy_internal_transfer
 #: model:ir.actions.act_window,help:stock_easy_internal_transfer.action_picking_tree_all_inherit_easy_internal
@@ -61,6 +61,12 @@ msgid "Assign Owner"
 msgstr "Asignar propietario"
 
 #. module: stock_easy_internal_transfer
+#: model:ir.actions.act_window,name:stock_easy_internal_transfer.action_picking_tree_backorder_inherit_easy_internal
+#: view:stock.picking.type:stock_easy_internal_transfer.stock_picking_type_kanban_inherit_easy_internal
+msgid "Backorders"
+msgstr "Entregas parciales"
+
+#. module: stock_easy_internal_transfer
 #: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
 msgid "Cancel Transfer"
 msgstr "Cancelar transferencia"
@@ -81,16 +87,6 @@ msgid "Done Transfers"
 msgstr "Transferencias realizadas"
 
 #. module: stock_easy_internal_transfer
-#: field:stock.warehouse,easy_internal_type_id:0
-msgid "Easy Internal Type"
-msgstr "Tipo interno simple"
-
-#. module: stock_easy_internal_transfer
-#: field:stock.warehouse,use_easy_internal:0
-msgid "Easy internal transfers in this warehouse"
-msgstr "Transferencias internas simples in this warehouse"
-
-#. module: stock_easy_internal_transfer
 #: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
 msgid "Force Availability"
 msgstr "Forzar disponibilidad"
@@ -106,14 +102,24 @@ msgid "If there is no product but a source package, this means the source packag
 msgstr "Si en lugar de producto hay un paquete origen, significa que el paquete se movió completo. Si hay un producto y un paquete origen, el producto se cogió del paquete origen."
 
 #. module: stock_easy_internal_transfer
-#: model:ir.model,name:stock_easy_internal_transfer.model_account_move_line
-msgid "Journal Items"
-msgstr "Elementos diario"
+#: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
+msgid "Internal Moves"
+msgstr "Movimientos internos"
 
 #. module: stock_easy_internal_transfer
 #: view:stock.picking.type:stock_easy_internal_transfer.stock_picking_type_kanban_inherit_easy_internal
 msgid "Last 10 Done Operations"
 msgstr "Últimas 10 operaciones realizadas"
+
+#. module: stock_easy_internal_transfer
+#: view:stock.picking.type:stock_easy_internal_transfer.stock_picking_type_kanban_inherit_easy_internal
+msgid "Late"
+msgstr "Retrasada"
+
+#. module: stock_easy_internal_transfer
+#: model:ir.actions.act_window,name:stock_easy_internal_transfer.action_picking_tree_late_inherit_easy_internal
+msgid "Late Transfers"
+msgstr "Transferencias retrasadas"
 
 #. module: stock_easy_internal_transfer
 #: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
@@ -138,28 +144,28 @@ msgstr "Imprimir albarán"
 #. module: stock_easy_internal_transfer
 #: code:addons/stock_easy_internal_transfer/models/stock.py:48
 #, python-format
-msgid "Product %s not have availability in %s (%s). \n"
+msgid "Product %s not have availability in %s. \n"
 "\n"
 "Please check your inventory, receipts or deliveries"
-msgstr "Producto %s no esta disponible en %s (%s). \n"
+msgstr "Producto %s no tiene disponibilidad en %s. \n"
 "\n"
-"Por favor verifique su inventario, recepciones o entregas"
+"Por favor verifique su inventario."
 
 #. module: stock_easy_internal_transfer
-#: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
-msgid "Products"
-msgstr "Productos"
-
-#. module: stock_easy_internal_transfer
-#: model:ir.model,name:stock_easy_internal_transfer.model_stock_quant
-msgid "Quants"
-msgstr "Quants"
-
-#. module: stock_easy_internal_transfer
-#: code:addons/stock_easy_internal_transfer/models/stock.py:162
+#: code:addons/stock_easy_internal_transfer/models/stock.py:174
 #, python-format
 msgid "Quick Internal Transfers"
 msgstr "Transferencias internas simple"
+
+#. module: stock_easy_internal_transfer
+#: field:stock.warehouse,easy_internal_type_id:0
+msgid "Quick Internal Type"
+msgstr "Tipo interno simple"
+
+#. module: stock_easy_internal_transfer
+#: field:stock.warehouse,use_easy_internal:0
+msgid "Quick Internal transfers in this warehouse"
+msgstr "Transferencias internas simple en este almacén"
 
 #. module: stock_easy_internal_transfer
 #: view:stock.picking.type:stock_easy_internal_transfer.stock_picking_type_kanban_inherit_easy_internal
@@ -189,7 +195,7 @@ msgstr "Ubicación origen"
 #. module: stock_easy_internal_transfer
 #: model:ir.model,name:stock_easy_internal_transfer.model_stock_move
 msgid "Stock Move"
-msgstr "Moviemiento de stock"
+msgstr "Movimiento de stock"
 
 #. module: stock_easy_internal_transfer
 #: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
@@ -242,10 +248,15 @@ msgid "Warehouse"
 msgstr "Almacén"
 
 #. module: stock_easy_internal_transfer
-#: code:addons/stock_easy_internal_transfer/models/stock.py:68
+#: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
+msgid "You need select first a source location to enable product selection."
+msgstr "You need select first a source location to enable product selection."
+
+#. module: stock_easy_internal_transfer
+#: code:addons/stock_easy_internal_transfer/models/stock.py:99
 #, python-format
-msgid "You should set locations before check availability"
-msgstr "Debe asignar las ubicaciones antes de comprobar disponibilidad"
+msgid "You should set source location before check availability"
+msgstr "Debes seleccionar una ubicación de origen antes de comprobar disponibilidad"
 
 #. module: stock_easy_internal_transfer
 #: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
@@ -256,3 +267,5 @@ msgstr "Por ejemplo, PO0032"
 #: view:stock.picking.type:stock_easy_internal_transfer.stock_picking_type_kanban_inherit_easy_internal
 msgid "record.quick_view.raw_value == 0"
 msgstr "record.quick_view.raw_value == 0"
+
+
