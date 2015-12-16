@@ -37,79 +37,71 @@ class StockMove(models.Model):
         for record in self:
             domain_quants = [
                 ('product_id', '=', record.product_id.id),
-                ('location_id', '=', record.location_id.id),
+                ('location_id', 'child_of', record.location_id.id),
                 ('qty', '>=', record.product_uom_qty),
                 ('reservation_id', '=', False)
             ]
             if not self.env['stock.quant'].search(domain_quants):
                 raise UserError(
-                    _("Product %s not have availability in %s (%s). \n\n"
+                    _("Product %s not have availability in %s. \n\n"
                       "Please check your inventory, receipts or deliveries"
-                      % (record.product_id.name, record.location_id.name,
-                         record.picking_type_id.warehouse_id.name)))
+                      % (record.product_id.name, record.location_id.name)))
         return True
+
+    @api.multi
+    def location_id_change(self, location_id):
+        quant = self.env['stock.quant'].search([
+            ('location_id', 'child_of', location_id),
+            ('qty', '>=', 1.0),
+            ('reservation_id', '=', False)])
+
+        product = quant.mapped("product_id")
+        return {'domain': {'product_id': [('id', 'in', product.ids)]}}
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     force_location_id = fields.Many2one(
-        'stock.location', string="Source Location")
+        'stock.location', string="Source Location",
+        readonly=True, states={'draft': [('readonly', False)]})
     force_location_dest_id = fields.Many2one(
-        'stock.location', string="Destination Location")
+        'stock.location', string="Destination Location",
+        readonly=False, states={'done': [('readonly', True)]})
 
     @api.onchange('force_location_id', 'force_location_dest_id')
     def onchange_force_locations(self):
         for pick in self:
+            move_vals = {}
             if pick.force_location_id and \
                     not pick.force_location_dest_id:
-                pick.move_lines.update({
-                    'location_id': pick.force_location_id,
-                })
+                move_vals = {
+                    'location_id': pick.force_location_id.id}
             elif not pick.force_location_id and \
                     pick.force_location_dest_id:
-                pick.move_lines.update({
-                    'location_dest_id': pick.force_location_dest_id,
-                })
+                move_vals = {
+                    'location_dest_id': pick.force_location_dest_id.id}
             elif pick.force_location_id and \
-                    not pick.force_location_dest_id:
-                pick.move_lines.update({
-                    'location_id': pick.force_location_id,
-                    'location_dest_id': pick.force_location_dest_id
-                })
+                    pick.force_location_dest_id:
+                move_vals = {
+                    'location_id': pick.force_location_id.id,
+                    'location_dest_id': pick.force_location_dest_id.id}
+            if move_vals:
+                for move in pick.move_lines:
+                    move.update(move_vals)
 
     @api.multi
     def action_assign(self):
         for pick in self:
             if pick.picking_type_id.quick_view and \
-                    (not pick.force_location_id or
-                     not pick.force_location_dest_id):
+                    not pick.force_location_id:
                 raise UserError(
-                    _("You should set locations before check availability"))
+                    _("You should set source location before check availability"))
             elif pick.picking_type_id.quick_view:
                 moves = pick.move_lines.filtered(
                     lambda m: m.state not in ('draft', 'cancel', 'done'))
                 moves._check_quants_availability()
         return super(StockPicking, self).action_assign()
-
-    # @api.multi
-    # def write(self, vals):
-    #     for pick in self:
-    #         if pick.picking_type_id.quick_view and \
-    #                 ('force_location_id' in vals or
-    #                  'force_location_dest_id' in vals):
-    #             move_vals = {
-    #                 'picking_type_id': pick.picking_type_id.id,
-    #             }
-    #             if 'force_location_id' in vals:
-    #                 move_vals.update({
-    #                     'location_id': vals['force_location_id']})
-    #             if 'force_location_dest_id' in vals:
-    #                 move_vals.update({
-    #                     'location_dest_id': vals['force_location_dest_id']
-    #                 })
-    #             pick.move_lines.write(move_vals)
-    #     return super(StockPicking, self).write(vals)
 
 
 class StockPickingType(models.Model):
@@ -122,10 +114,10 @@ class StockWarehouse(models.Model):
     _inherit = 'stock.warehouse'
 
     easy_internal_type_id = fields.Many2one(
-        'stock.picking.type', string="Easy Internal Type"
+        'stock.picking.type', string="Quick Internal Type"
     )
     use_easy_internal = fields.Boolean(
-        string="Easy internal transfers in this warehouse", default=False
+        string="Quick Internal transfers in this warehouse", default=False
     )
 
     @api.model
