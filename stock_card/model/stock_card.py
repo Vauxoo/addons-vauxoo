@@ -92,23 +92,24 @@ class StockCardProduct(models.TransientModel):
         cost_unit = move_valuation / qty if qty else 0.0
         vals['inventory_valuation'] += direction * move_valuation
         average = (
-            vals['product_qty'] and vals['inventory_valuation']
-            / vals['product_qty'] or average)
+            vals['product_qty'] and
+            vals['inventory_valuation'] / vals['product_qty'] or average)
         vals['cost_unit'] = cost_unit
 
         if return_values:
-            continue
-        vals['lines'].append(dict(
-            date=row['date'],
-            move_id=move_id,
-            stock_card_product_id=self.id,
-            product_qty=vals['product_qty'],
-            qty=direction * qty,
-            move_valuation=direction * move_valuation,
-            inventory_valuation=vals['inventory_valuation'],
-            average=average,
-            cost_unit=cost_unit,
-            ))
+            pass
+        else:
+            vals['lines'].append(dict(
+                date=row['date'],
+                move_id=move_id,
+                stock_card_product_id=self.id,
+                product_qty=vals['product_qty'],
+                qty=direction * qty,
+                move_valuation=direction * move_valuation,
+                inventory_valuation=vals['inventory_valuation'],
+                average=average,
+                cost_unit=cost_unit,
+                ))
         return True
 
     def _stock_card_move_get_avg(self, product_id, vals, return_values=False):
