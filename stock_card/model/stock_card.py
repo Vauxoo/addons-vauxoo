@@ -28,100 +28,110 @@ class StockCardProduct(models.TransientModel):
 
         return True
 
-    def _stock_card_move_get_avg(self, product_id, return_values=False):
+    def _get_average_by_move(self, product_id, row, vals, return_values=False):
         sm_obj = self.env['stock.move']
-        product_qty = 0.0
-        average = 0.0
-        inventory_valuation = 0.0
-        lines = []
-        avg_move_dict = {}
-        for row in self._stock_card_move_history_get(product_id):
-            dst = row['dst_usage']
-            src = row['src_usage']
-            move_id = row['move_id']
-            move_brw = sm_obj.browse(move_id)
-            if dst == 'internal':
-                direction = 1
-            else:
-                direction = -1
-            qty = row['product_qty']
-            product_qty += (direction * qty)
+        dst = row['dst_usage']
+        src = row['src_usage']
+        move_id = row['move_id']
+        move_brw = sm_obj.browse(move_id)
+        if dst == 'internal':
+            direction = 1
+        else:
+            direction = -1
+        qty = row['product_qty']
+        vals['product_qty'] += (direction * qty)
+        average = vals['average']
 
-            self._cr.execute(
-                '''
-                SELECT cost, qty
-                FROM stock_quant_move_rel AS sqm_rel
-                INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
-                WHERE sqm_rel.move_id = %s
-                ''', (move_id,)
-                )
-            values = self._cr.fetchall()
-
-            # TODO: What is to be done with `procurement` & `view`
-
-            if dst in ('customer', 'production', 'inventory', 'transit'):
-                # TODO: move to `transit` could be a return
-                # average is kept unchanged products are taken at average price
-                avg_move_dict[move_id] = average
-                move_valuation = sum([average * val[1] for val in values])
-                # NOTE: For production
-                # a) it could be a consumption: if so average is kept unchanged
-                # products are taken at average price
-                # TODO: Consider the case that
-                # b) it could be a return: defective good, reworking, etc.
-
-            if dst in ('supplier',):
-                # Cost is the one record in the stock_move, cost in the
-                # quant record includes other segmentation cost: landed_cost,
-                # material_cost, production_cost, subcontracting_cost
-                # Inventory Value has to be decreased by the amount of purchase
-                # TODO: BEWARE price_unit needs to be normalised
-                move_valuation = sum([move_brw.price_unit * val[1]
-                                     for val in values])
-
-            if src in ('supplier', 'production', 'inventory', 'transit'):
-                # TODO: transit could be a return that shall be recorded at
-                # average cost of transaction
-                # average is to be computed considering all the segmentation
-                # costs inside quant
-                move_valuation = sum([val[0] * val[1] for val in values])
-
-            if src in ('customer',):
-                # NOTE: Identify the originating move_id of returning move
-                origin_id = move_brw.origin_returned_move_id.id
-                # NOTE: Falling back to average in case customer return is
-                # orphan, i.e., return was created from scratch
-                old_average = avg_move_dict.get(origin_id, 0.0) or average
-                move_valuation = sum([old_average * val[1] for val in values])
-
-            cost_unit = move_valuation / qty if qty else 0.0
-            inventory_valuation += direction * move_valuation
-            average = (product_qty and inventory_valuation / product_qty or
-                       average)
-            if return_values:
-                continue
-            lines.append(dict(
-                date=row['date'],
-                move_id=move_id,
-                stock_card_product_id=self.id,
-                product_qty=product_qty,
-                qty=direction * qty,
-                move_valuation=direction * move_valuation,
-                inventory_valuation=inventory_valuation,
-                average=average,
-                cost_unit=cost_unit,
-                ))
-        return dict(
-            lines=lines,
-            average=average,
-            product_qty=product_qty,
+        self._cr.execute(
+            '''
+            SELECT cost, qty
+            FROM stock_quant_move_rel AS sqm_rel
+            INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
+            WHERE sqm_rel.move_id = %s
+            ''', (move_id,)
             )
+        values = self._cr.fetchall()
+
+        # TODO: What is to be done with `procurement` & `view`
+
+        if dst in ('customer', 'production', 'inventory', 'transit'):
+            # TODO: move to `transit` could be a return
+            # average is kept unchanged products are taken at average price
+            vals['avg_move_dict'][move_id] = average
+            move_valuation = sum([average * val[1] for val in values])
+            # NOTE: For production
+            # a) it could be a consumption: if so average is kept unchanged
+            # products are taken at average price
+            # TODO: Consider the case that
+            # b) it could be a return: defective good, reworking, etc.
+
+        if dst in ('supplier',):
+            # Cost is the one record in the stock_move, cost in the
+            # quant record includes other segmentation cost: landed_cost,
+            # material_cost, production_cost, subcontracting_cost
+            # Inventory Value has to be decreased by the amount of purchase
+            # TODO: BEWARE price_unit needs to be normalised
+            move_valuation = sum([move_brw.price_unit * val[1]
+                                  for val in values])
+
+        if src in ('supplier', 'production', 'inventory', 'transit'):
+            # TODO: transit could be a return that shall be recorded at
+            # average cost of transaction
+            # average is to be computed considering all the segmentation
+            # costs inside quant
+            move_valuation = sum([val[0] * val[1] for val in values])
+
+        if src in ('customer',):
+            # NOTE: Identify the originating move_id of returning move
+            origin_id = move_brw.origin_returned_move_id.id
+            # NOTE: Falling back to average in case customer return is
+            # orphan, i.e., return was created from scratch
+            old_average = vals['avg_move_dict'].get(origin_id, 0.0) or average
+            move_valuation = sum([old_average * val[1] for val in values])
+
+        cost_unit = move_valuation / qty if qty else 0.0
+        vals['inventory_valuation'] += direction * move_valuation
+        average = (
+            vals['product_qty'] and vals['inventory_valuation']
+            / vals['product_qty'] or average)
+        vals['cost_unit'] = cost_unit
+
+        if return_values:
+            continue
+        vals['lines'].append(dict(
+            date=row['date'],
+            move_id=move_id,
+            stock_card_product_id=self.id,
+            product_qty=vals['product_qty'],
+            qty=direction * qty,
+            move_valuation=direction * move_valuation,
+            inventory_valuation=vals['inventory_valuation'],
+            average=average,
+            cost_unit=cost_unit,
+            ))
+        return True
+
+    def _stock_card_move_get_avg(self, product_id, vals, return_values=False):
+        for row in self._stock_card_move_history_get(product_id):
+            self._get_average_by_move(
+                product_id, row, vals, return_values=return_values)
+
+        return vals
 
     def _stock_card_move_get(self, product_id, return_values=False):
         scm_obj = self.env['stock.card.move']
         self.stock_card_move_ids.unlink()
+
+        vals = dict(
+            product_qty=0.0,
+            average=0.0,
+            inventory_valuation=0.0,
+            lines=[],
+            avg_move_dict={},
+        )
+
         res = self._stock_card_move_get_avg(
-            product_id, return_values=return_values)
+            product_id, vals, return_values=return_values)
         if return_values:
             return res
         for line in res.get('lines'):
