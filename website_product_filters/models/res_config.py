@@ -25,7 +25,7 @@
 from openerp import models, fields
 
 
-class Website(models.Model):
+class Website(models.TransientModel):
     _inherit = 'website.config.settings'
 
     default_sort = fields.Selection(string='Default Sort',
