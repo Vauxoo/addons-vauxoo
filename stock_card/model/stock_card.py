@@ -90,11 +90,14 @@ class StockCardProduct(models.TransientModel):
             move_valuation = sum([old_average * val[1] for val in values])
 
         cost_unit = move_valuation / qty if qty else 0.0
+        vals['cost_unit'] = cost_unit
+
         vals['inventory_valuation'] += direction * move_valuation
+
         average = (
             vals['product_qty'] and
             vals['inventory_valuation'] / vals['product_qty'] or average)
-        vals['cost_unit'] = cost_unit
+        vals['average'] = average
 
         if return_values:
             pass
