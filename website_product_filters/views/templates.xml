@@ -211,7 +211,8 @@
                             <span class="label label-warning">
                               <t t-esc="v.name"></t>
                                 <a t-att-data-attrvalue="v.id" class="removable-badge">
-                                  <i class="fa fa-times"></i>
+                                  <i class="fa"></i>
+                                  <sup><i class="fa fa-times"></i></sup>
                                 </a>
                             </span>
                           </h4>
@@ -308,6 +309,9 @@
                 <ul class="breadcrumb pull-left panel-no-borders">
                     <t t-set="current_category" t-value="category"/>
                     <t t-call="website_product_filters.breadcrumbs"/>
+                    <t t-if="product.id">
+                      <li class="active"><span t-field="product.name"/></li>
+                    </t>
                 </ul>
               </t>
             </div>
