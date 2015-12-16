@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from openerp import models, fields
+from openerp.addons.product import _common
 SEGMENTATION_COST = [
     'landed_cost',
     'subcontracting_cost',
@@ -47,6 +48,15 @@ class ProductTemplate(models.Model):
             return quant_obj.search(
                 cr, uid, ARGS, order='in_date DESC', limit=1)
 
+        def _factor(factor, product_efficiency, product_rounding):
+            factor = factor / (product_efficiency or 1.0)
+            factor = _common.ceiling(factor, product_rounding)
+            if factor < product_rounding:
+                factor = product_rounding
+            return factor
+
+        factor = _factor(1.0, bom.product_efficiency, bom.product_rounding)
+
         sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
         for sbom in bom.bom_line_ids:
             my_qty = sbom.product_qty / sbom.product_efficiency
@@ -79,9 +89,13 @@ class ProductTemplate(models.Model):
             for wline in bom.routing_id.workcenter_lines:
                 wc = wline.workcenter_id
                 cycle = wline.cycle_nbr
-                hour = \
-                    (wc.time_start + wc.time_stop + cycle * wc.time_cycle) * \
-                    (wc.time_efficiency or 1.0)
+                d, m = divmod(factor, wc.capacity_per_cycle)
+                mult = (d + (m and 1.0 or 0.0))
+                hour = float(
+                    wline.hour_nbr * mult + (
+                        (wc.time_start or 0.0) + (wc.time_stop or 0.0) +
+                        cycle * (wc.time_cycle or 0.0)) * (
+                            wc.time_efficiency or 1.0))
                 routing_price = wc.costs_cycle * cycle + wc.costs_hour * hour
                 routing_price = uom_obj._compute_price(
                     cr, uid, bom.product_uom.id, routing_price,
