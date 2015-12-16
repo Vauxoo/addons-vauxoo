@@ -123,7 +123,7 @@ class StockCardProduct(models.TransientModel):
         res = self._stock_card_move_get_avg(
             product_id, return_values=return_values)
         if return_values:
-            return dict(average=res['average'], product_qty=res['product_qty'])
+            return res
         for line in res.get('lines'):
             scm_obj.create(line)
 
