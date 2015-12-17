@@ -45,7 +45,8 @@ class StockCardProduct(models.TransientModel):
         move_id = row['move_id']
         # TODO: move to `transit` could be a return
         # average is kept unchanged products are taken at average price
-        vals['move_dict'][move_id] = {}
+        if not vals['move_dict'].get(move_id):
+            vals['move_dict'][move_id] = {}
         vals['move_dict'][move_id]['average'] = vals['average']
         vals['move_valuation'] = sum(
             [vals['average'] * val['qty'] for val in values])
