@@ -37,7 +37,7 @@ class StockCardProduct(models.TransientModel):
             {inner}
             WHERE sqm_rel.move_id = {move_id}
             {where}
-            '''.format(move_id=move_id, col='', inner='', where='')
+            '''.format(move_id=move_id, col=col, inner=inner, where=where)
             )
         return self._cr.dictfetchall()
 
