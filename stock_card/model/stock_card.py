@@ -93,6 +93,18 @@ class StockCardProduct(models.TransientModel):
             [old_average * val['qty'] for val in values])
         return True
 
+    def _get_move_average(self, row, vals):
+        qty = row['product_qty']
+        vals['cost_unit'] = vals['move_valuation'] / qty if qty else 0.0
+
+        vals['inventory_valuation'] += (
+            vals['direction'] * vals['move_valuation'])
+
+        vals['average'] = (
+            vals['product_qty'] and
+            vals['inventory_valuation'] / vals['product_qty'] or
+            vals['average'])
+
     def _get_average_by_move(self, product_id, row, vals, return_values=False):
         dst = row['dst_usage']
         src = row['src_usage']
@@ -101,6 +113,7 @@ class StockCardProduct(models.TransientModel):
             direction = 1
         else:
             direction = -1
+        vals['direction'] = direction
         qty = row['product_qty']
         vals['product_qty'] += (direction * qty)
 
@@ -120,14 +133,7 @@ class StockCardProduct(models.TransientModel):
         if src in ('customer',):
             self._get_price_on_customer_return(row, vals, values)
 
-        vals['cost_unit'] = vals['move_valuation'] / qty if qty else 0.0
-
-        vals['inventory_valuation'] += direction * vals['move_valuation']
-
-        vals['average'] = (
-            vals['product_qty'] and
-            vals['inventory_valuation'] / vals['product_qty'] or
-            vals['average'])
+        self._get_move_average(row, vals)
 
         if not return_values:
             vals['lines'].append(dict(
