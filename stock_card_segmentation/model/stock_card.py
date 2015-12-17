@@ -33,7 +33,7 @@ class StockCardProduct(models.TransientModel):
         for sgmnt in SEGMENTATION:
             vals['move_dict'][move_id][sgmnt] = vals[sgmnt]
             vals['%s_valuation' % sgmnt] = sum(
-                [vals['%s' % sgmnt] * val['qty'] for val in qntval])
+                [vals['%s' % sgmnt] * qnt['qty'] for qnt in qntval])
         return True
 
     def _get_price_on_supplier_return(self, row, vals, qntval):
@@ -42,7 +42,7 @@ class StockCardProduct(models.TransientModel):
 
         for sgmnt in SEGMENTATION:
             vals['%s_valuation' % sgmnt] = sum(
-                [val['%s_cost' % sgmnt] * val['qty'] for val in qntval])
+                [qnt['%s_cost' % sgmnt] * qnt['qty'] for qnt in qntval])
 
         return True
 
@@ -52,7 +52,7 @@ class StockCardProduct(models.TransientModel):
 
         for sgmnt in SEGMENTATION:
             vals['%s_valuation' % sgmnt] = sum(
-                [val['%s_cost' % sgmnt] * val['qty'] for val in qntval])
+                [qnt['%s_cost' % sgmnt] * qnt['qty'] for qnt in qntval])
 
         return True
 
@@ -72,7 +72,7 @@ class StockCardProduct(models.TransientModel):
                 vals[sgmnt])
 
             vals['%s_valuation' % sgmnt] = sum(
-                [old_average * val['qty'] for val in qntval])
+                [old_average * qnt['qty'] for qnt in qntval])
 
         return True
 
