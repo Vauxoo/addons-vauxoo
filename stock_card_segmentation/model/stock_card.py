@@ -30,6 +30,16 @@ class StockCardProduct(models.TransientModel):
                 [vals[sgmnt] * val['qty'] for val in values])
         return True
 
+    def _get_price_on_supplier_return(self, row, vals, values):
+        super(StockCardProduct, self)._get_price_on_supplier_return(
+            row, vals, values)
+
+        for sgmnt in SEGMENTATION:
+            vals['%s_valuation' % sgmnt] = sum(
+                [vals[sgmnt] * val['qty'] for val in values])
+
+        return True
+
 
 class StockCardMove(models.TransientModel):
     _inherit = 'stock.card.move'
