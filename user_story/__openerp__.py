@@ -1,11 +1,12 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+"""
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 # ##############Credits######################################################
-#    Coded by: Vauxoo C.A. (Yanina Aular & Miguel Delgado)
+#    Coded by: Vauxoo C.A. (Francisco Palm)
 #    Planified by: Rafael Silva
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -23,9 +24,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
+
 {
     "name": "User Story",
-    "version": "2.6",
+    "version": "2.7",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
