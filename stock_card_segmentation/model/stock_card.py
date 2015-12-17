@@ -18,6 +18,18 @@ class StockCardProduct(models.TransientModel):
         res = super(StockCardProduct, self)._get_default_params()
         return res.update({}.from_keys(SEGMENTATION, 0.0))
 
+    def _get_price_on_consumed(self, row, vals, values):
+        super(StockCardProduct, self)._get_price_on_consumed(
+            row, vals, values)
+
+        move_id = row['move_id']
+
+        for sgmnt in SEGMENTATION:
+            vals['move_dict'][move_id][sgmnt] = vals[sgmnt]
+            vals['%s_valuation' % sgmnt] = sum(
+                [vals[sgmnt] * val['qty'] for val in values])
+        return True
+
 
 class StockCardMove(models.TransientModel):
     _inherit = 'stock.card.move'
