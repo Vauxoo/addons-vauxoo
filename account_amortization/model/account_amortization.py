@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -24,30 +24,32 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from openerp import models, fields
 
 
-class AccountAssetAsset(osv.Model):
+class AccountAssetAsset(models.Model):
 
     _inherit = 'account.asset.asset'
     _description = 'Account Amortization'
 
-    _columns = {
-        'doc_type': fields.selection([('deprecation', 'Deprecation'),
-                                      ('amortization', 'Amortization'), ], 'Type',
-                                     help='''Asset type, deprecation allows you depreciate an asset, the
-                amortization allows you amortize an expense.'''),
-    }
+    doc_type = fields.Selection(
+        selection=[
+            ('depreciation', 'Depreciation'),
+            ('amortization', 'Amortization')], string='Type',
+        default='depreciation', help='''Asset type,
+        depreciation allows you depreciate an asset, the amortization
+        allows you amortize an expense.''')
 
 
-class AccountAssetCategory(osv.Model):
+class AccountAssetCategory(models.Model):
 
     _inherit = 'account.asset.category'
     _description = 'Account Amortization Category'
 
-    _columns = {
-        'doc_type': fields.selection([('deprecation', 'Deprecation'),
-                                      ('amortization', 'Amortization'), ], 'Type',
-                                     help='''Asset category type, deprecation allows you depreciate an asset, the
-                amortization allows you amortize an expense.'''),
-    }
+    doc_type = fields.Selection([('depreciation', 'Depreciation'),
+                                ('amortization', 'Amortization'), ], 'Type',
+                                default='depreciation',
+                                help='''Asset category type, depreciation
+                                allows you depreciate an asset, the
+                                amortization allows you amortize
+                                an expense.''')

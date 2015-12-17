@@ -14,11 +14,13 @@
     "demo": [],
     "data": [
         'data/price_ranges_data.xml',
+        'data/website_settings_data.xml',
         'security/price_ranges_security.xml',
         'security/ir.model.access.csv',
         'views/product_price_ranges_view.xml',
         'views/assets.xml',
         'views/templates.xml',
+        'views/res_config.xml',
     ],
     "test": [],
     "qweb": [

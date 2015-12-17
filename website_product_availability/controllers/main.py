@@ -44,48 +44,45 @@ class WebsiteSaleInh(website_sale):
         cr, uid, context, pool = request.cr, SUPERUSER_ID, request.context,\
             request.registry
         product_obj = pool['product.product']
-        lct_ids = pool['stock.location'].search(
+        warehouse_obj = pool['stock.warehouse']
+        warehouse_ids = warehouse_obj.search(
             cr, uid, [('website_published', '=', True)], context=context)
-        lct_published_brw = pool['stock.location'].browse(
-            cr, uid, lct_ids, context=context)
+        warehouses = warehouse_obj.browse(
+            cr, uid, warehouse_ids, context=context)
+
         res = super(WebsiteSaleInh, self).get_attribute_value_ids(product)
         new_res = []
         for ret in res:
             product_cache = product_obj.browse(cr, uid, [ret[0]], context)[0]
             location_list = [
-                (self.get_stock_quants(product_cache, location))
-                for location in lct_published_brw]
+                (self.get_stock_quants(product_cache, warehouse))
+                for warehouse in warehouses]
             ret.append(location_list)
             new_res.append(ret)
         return new_res
 
-    def get_stock_quants(self, product, location):
+    def get_stock_quants(self, product, warehouse):
         cr, uid, context, pool = request.cr, SUPERUSER_ID, request.context,\
             request.registry
-        qty = product.with_context(
-            location=location.id)._product_available(None, False)
-        new_qty = qty.get(product.id).get('qty_available')
+        purchase_l_obj = pool['purchase.order.line']
+        new_qty = product._product_availability_warehouse(warehouse)
         stock_state = '2'
         for route in product.route_ids:
             if route.consider_on_request:
                 stock_state = '4'
                 break
         if stock_state != '4':
-            if new_qty > product.low_stock:
-                stock_state = '1'
-            elif 0 < new_qty <= product.low_stock:
-                stock_state = '3'
-            elif new_qty <= 0:
-                stock_state = '2'
-        porl_ids = pool['purchase.order.line'].search(
+            stock_state = product._get_availability_by_qty(
+                new_qty, product.low_stock)
+        p_lines_ids = purchase_l_obj.search(
             cr, uid,
             [('product_id', '=', product.id),
              ('state', 'in', ('draft', 'confirmed')),
-             ('order_id.picking_type_id.default_location_dest_id',
-                '=', location.id)
+             ('order_id.picking_type_id.warehouse_id',
+                '=', warehouse.id)
              ], context=context)
-        purchase_lines = pool['purchase.order.line'].browse(
-            cr, uid, porl_ids, context=context)
+        purchase_lines = purchase_l_obj.browse(
+            cr, uid, p_lines_ids, context=context)
         dates_planed = [
             datetime.datetime.strptime(line.date_planned, '%Y-%m-%d').date()
             for line in purchase_lines]
@@ -93,7 +90,7 @@ class WebsiteSaleInh(website_sale):
             date = min(dates_planed)
         else:
             date = 'unknown'
-        return [location.stock_alias, stock_state, str(date)]
+        return [warehouse.stock_alias, stock_state, str(date)]
 
     @http.route(
         ['/shop/product/<model("product.template"):product>'],

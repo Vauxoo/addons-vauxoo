@@ -29,13 +29,14 @@
     'website': 'http://www.vauxoo.com/',
     'license': 'AGPL-3',
     'category': '',
-    'license': 'AGPL-3',
     'depends': ['account_accountant'],
     'data': [
         'data/data.xml',
         'view/refund_early_payment.xml',
     ],
-    'demo': [],
+    'demo': [
+        'demo/account_invoice_demo.xml',
+    ],
     'test': [],
     'qweb': [],
     'js': [],

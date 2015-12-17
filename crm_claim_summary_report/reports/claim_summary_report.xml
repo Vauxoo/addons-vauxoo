@@ -212,7 +212,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <p class="list-group-item-text"><strong>Customer description<span>: </span></strong>
-                                <span t-field="line.claim_diagnosis"/>This is a very long long description for what customer was doing at this time, I don't know what else to say for this, please help me to say something useful and funny, this is not anymore
+                                <span t-field="line.claim_diagnosis"/>
                             </p>
                         </div>
                     </div>

@@ -28,30 +28,14 @@ class WebsiteSale(website_sale):
                                             category=category,
                                             search=search, ppg=ppg,
                                             **post)
+
         attributes_obj = pool['product.attribute']
         ranges_obj = pool['product.price.ranges']
         brand_obj = pool['product.brand']
-        template_obj = pool['product.template']
         ranges_list = request.httprequest.args.getlist('range')
         brand_list = request.httprequest.args.getlist('brand')
         brand_selected_ids = [int(b) for b in brand_list if b]
         ranges_selected_ids = [int(v) for v in ranges_list if v]
-        ranges_selected = ranges_obj.browse(cr, uid, ranges_selected_ids,
-                                            context=context)
-        filtered_products = res.qcontext['products']
-        range_product_ids = []
-        for rang in ranges_selected:
-            for fproduct in filtered_products:
-                if rang.lower <= fproduct.lst_price <= rang.upper:
-                    range_product_ids.append(fproduct.id)
-        if range_product_ids:
-            new_products = template_obj.browse(
-                cr,
-                uid,
-                range_product_ids,
-                context=context)
-        else:
-            new_products = filtered_products
         ranges_ids = ranges_obj.search(cr, uid, [], context=context)
         ranges = ranges_obj.browse(cr, uid, ranges_ids, context=context)
         attribute_ids = self._get_used_attrs(category)
@@ -59,7 +43,30 @@ class WebsiteSale(website_sale):
         attributes = attributes_obj.browse(cr, uid, attribute_ids,
                                            context=context)
         res.qcontext['attributes'] = attributes
+        filtered_products = res.qcontext['products']
         args = res.qcontext['keep'].args
+        keys = {
+            '0': filtered_products,
+            'name': filtered_products.sorted(key=lambda r: r.name),
+            'pasc': filtered_products.sorted(key=lambda r: r.lst_price),
+            'pdesc': filtered_products.sorted(key=lambda r: r.lst_price,
+                                              reverse=True),
+            'hottest': filtered_products.sorted(key=lambda r: r.create_date),
+            'rating': filtered_products.sorted(key=lambda r: r.rating),
+            'popularity': filtered_products.sorted(key=lambda r: r.views)}
+        if post.get('product_sorter', '0') != '0':
+            sortby = post['product_sorter']
+            res.qcontext['sortby'] = sortby
+            ordered_products = keys.get(sortby)
+        elif request.httprequest.cookies.get('default_sort', 'False') != 'False':  # noqa
+            sortby = request.httprequest.cookies.get('default_sort')
+            ordered_products = keys.get(sortby)
+        elif request.httprequest.cookies.get('default_sort') == 'False':
+            sortby = request.website.default_sort
+            ordered_products = keys.get(sortby)
+        else:
+            ordered_products = filtered_products
+
         for arg in args.get('attrib', []):
             attr_id = arg.split('-')
             if int(attr_id[0]) not in attribute_ids:
@@ -80,26 +87,15 @@ class WebsiteSale(website_sale):
         category_ids = category_obj.search(
             cr, uid, [('parent_id', '=', False)], context=context)
         categs = category_obj.browse(cr, uid, category_ids, context=context)
-        has_products = lambda categ: self._child_has_products(categ)    # noqa
 
         res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['brands'] = brands
         res.qcontext['categories'] = categs
-        res.qcontext['products'] = new_products
         res.qcontext['price_ranges'] = ranges
         res.qcontext['brand_set'] = brand_selected_ids
         res.qcontext['ranges_set'] = ranges_selected_ids
-        res.qcontext['_has_products'] = has_products
+        res.qcontext['products'] = ordered_products
         return res
-
-    def _child_has_products(self, category):
-        if category.child_id:
-            return any(self._child_has_products(child)
-                       for child in category.child_id)
-        elif category.product_ids:
-            return True
-        else:
-            return False
 
     def _normalize_category(self, category):
         """
