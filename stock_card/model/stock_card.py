@@ -109,6 +109,25 @@ class StockCardProduct(models.TransientModel):
             vals['inventory_valuation'] / vals['product_qty'] or
             vals['average'])
 
+    def _get_stock_card_move_line_dict(self, row, vals):
+        res = dict(
+            date=row['date'],
+            move_id=row['move_id'],
+            stock_card_product_id=self.id,
+            product_qty=vals['product_qty'],
+            qty=vals['direction'] * row['product_qty'],
+            move_valuation=vals['direction'] * vals['move_valuation'],
+            inventory_valuation=vals['inventory_valuation'],
+            average=vals['average'],
+            cost_unit=vals['cost_unit'],
+            )
+        return res
+
+    def _get_stock_card_move_line(self, row, vals):
+        res = self._get_stock_card_move_line_dict(row, vals)
+        vals['lines'].append(res)
+        return True
+
     def _get_average_by_move(self, product_id, row, vals, return_values=False):
         dst = row['dst_usage']
         src = row['src_usage']
@@ -138,17 +157,7 @@ class StockCardProduct(models.TransientModel):
         self._get_move_average(row, vals)
 
         if not return_values:
-            vals['lines'].append(dict(
-                date=row['date'],
-                move_id=move_id,
-                stock_card_product_id=self.id,
-                product_qty=vals['product_qty'],
-                qty=direction * row['product_qty'],
-                move_valuation=direction * vals['move_valuation'],
-                inventory_valuation=vals['inventory_valuation'],
-                average=vals['average'],
-                cost_unit=vals['cost_unit'],
-                ))
+            self._get_stock_card_move_line(row, vals)
         return True
 
     def _stock_card_move_get_avg(self, product_id, vals, return_values=False):
