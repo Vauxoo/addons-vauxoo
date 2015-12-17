@@ -50,6 +50,26 @@ class StockCardProduct(models.TransientModel):
 
         return True
 
+    def _get_price_on_customer_return(self, row, vals, values):
+        super(StockCardProduct, self)._get_price_on_customer_return(
+            row, vals, values)
+
+        sm_obj = self.env['stock.move']
+        move_id = row['move_id']
+        move_brw = sm_obj.browse(move_id)
+        origin_id = move_brw.origin_returned_move_id.id
+
+        for sgmnt in SEGMENTATION:
+            old_average = (
+                vals['move_dict'].get(origin_id, 0.0) and
+                vals['move_dict'][move_id][sgmnt] or
+                vals['sgmnt'])
+
+            vals['%s_valuation' % sgmnt] = sum(
+                [old_average * val['qty'] for val in values])
+
+        return True
+
 
 class StockCardMove(models.TransientModel):
     _inherit = 'stock.card.move'
