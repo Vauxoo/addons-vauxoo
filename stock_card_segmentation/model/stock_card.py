@@ -24,41 +24,41 @@ class StockCardProduct(models.TransientModel):
             ['%s_total' % sgmnt for sgmnt in SEGMENTATION], 0.0))
         return res
 
-    def _get_price_on_consumed(self, row, vals, values):
+    def _get_price_on_consumed(self, row, vals, qntval):
         super(StockCardProduct, self)._get_price_on_consumed(
-            row, vals, values)
+            row, vals, qntval)
 
         move_id = row['move_id']
 
         for sgmnt in SEGMENTATION:
             vals['move_dict'][move_id][sgmnt] = vals[sgmnt]
             vals['%s_valuation' % sgmnt] = sum(
-                [vals['%s' % sgmnt] * val['qty'] for val in values])
+                [vals['%s' % sgmnt] * val['qty'] for val in qntval])
         return True
 
-    def _get_price_on_supplier_return(self, row, vals, values):
+    def _get_price_on_supplier_return(self, row, vals, qntval):
         super(StockCardProduct, self)._get_price_on_supplier_return(
-            row, vals, values)
+            row, vals, qntval)
 
         for sgmnt in SEGMENTATION:
             vals['%s_valuation' % sgmnt] = sum(
-                [val['%s_cost' % sgmnt] * val['qty'] for val in values])
+                [val['%s_cost' % sgmnt] * val['qty'] for val in qntval])
 
         return True
 
-    def _get_price_on_supplied(self, row, vals, values):
+    def _get_price_on_supplied(self, row, vals, qntval):
         super(StockCardProduct, self)._get_price_on_supplied(
-            row, vals, values)
+            row, vals, qntval)
 
         for sgmnt in SEGMENTATION:
             vals['%s_valuation' % sgmnt] = sum(
-                [val['%s_cost' % sgmnt] * val['qty'] for val in values])
+                [val['%s_cost' % sgmnt] * val['qty'] for val in qntval])
 
         return True
 
-    def _get_price_on_customer_return(self, row, vals, values):
+    def _get_price_on_customer_return(self, row, vals, qntval):
         super(StockCardProduct, self)._get_price_on_customer_return(
-            row, vals, values)
+            row, vals, qntval)
 
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
@@ -72,7 +72,7 @@ class StockCardProduct(models.TransientModel):
                 vals[sgmnt])
 
             vals['%s_valuation' % sgmnt] = sum(
-                [old_average * val['qty'] for val in values])
+                [old_average * val['qty'] for val in qntval])
 
         return True
 
