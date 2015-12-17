@@ -39,7 +39,7 @@ class StockCardProduct(models.TransientModel):
             {where}
             '''.format(move_id=move_id, col='', inner='', where='')
             )
-        return self._cr.fetchall()
+        return self._cr.dictfetchall()
 
     def _get_average_by_move(self, product_id, row, vals, return_values=False):
         sm_obj = self.env['stock.move']
@@ -63,7 +63,7 @@ class StockCardProduct(models.TransientModel):
             # TODO: move to `transit` could be a return
             # average is kept unchanged products are taken at average price
             vals['avg_move_dict'][move_id] = average
-            move_valuation = sum([average * val[1] for val in values])
+            move_valuation = sum([average * val['qty'] for val in values])
             # NOTE: For production
             # a) it could be a consumption: if so average is kept unchanged
             # products are taken at average price
@@ -76,7 +76,7 @@ class StockCardProduct(models.TransientModel):
             # material_cost, production_cost, subcontracting_cost
             # Inventory Value has to be decreased by the amount of purchase
             # TODO: BEWARE price_unit needs to be normalised
-            move_valuation = sum([move_brw.price_unit * val[1]
+            move_valuation = sum([move_brw.price_unit * val['qty']
                                   for val in values])
 
         if src in ('supplier', 'production', 'inventory', 'transit'):
@@ -84,7 +84,7 @@ class StockCardProduct(models.TransientModel):
             # average cost of transaction
             # average is to be computed considering all the segmentation
             # costs inside quant
-            move_valuation = sum([val[0] * val[1] for val in values])
+            move_valuation = sum([val['cost'] * val['qty'] for val in values])
 
         if src in ('customer',):
             # NOTE: Identify the originating move_id of returning move
@@ -92,7 +92,7 @@ class StockCardProduct(models.TransientModel):
             # NOTE: Falling back to average in case customer return is
             # orphan, i.e., return was created from scratch
             old_average = vals['avg_move_dict'].get(origin_id, 0.0) or average
-            move_valuation = sum([old_average * val[1] for val in values])
+            move_valuation = sum([old_average * val['qty'] for val in values])
 
         cost_unit = move_valuation / qty if qty else 0.0
         vals['cost_unit'] = cost_unit
