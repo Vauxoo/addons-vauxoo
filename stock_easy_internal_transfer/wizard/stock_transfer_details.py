@@ -27,20 +27,3 @@ class StockTransferDetails(models.TransientModel):
 
     quick_view = fields.Boolean(
         related='picking_id.picking_type_id.quick_view', readonly=True)
-
-    @api.model
-    def default_get(self, fields):
-        res = super(StockTransferDetails, self).default_get(fields)
-        picking_ids = self._context.get('active_ids')
-        picking_id, = picking_ids
-        picking = self.env['stock.picking'].browse(picking_id)
-        if picking.picking_type_id.quick_view and res.get('item_ids', []):
-            new_items = []
-            for item in res.get('item_ids'):
-                sourceloc_id = picking.force_location_id.id
-                destinationloc_id = picking.force_location_dest_id.id
-                item.update({'sourceloc_id': sourceloc_id,
-                             'destinationloc_id': destinationloc_id})
-                new_items.append(item)
-            res['item_ids'] = new_items
-        return res

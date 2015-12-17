@@ -91,6 +91,19 @@ class StockPicking(models.Model):
         'stock.location', string="Destination Location", readonly=False,
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]})
 
+    @api.model
+    def _prepare_pack_ops(self, picking, quants, force_qties):
+        res = super(StockPicking, self)._prepare_pack_ops(
+            picking, quants, force_qties)
+        for item in res:
+            if 'picking_id' in item:
+                picking = self.env['stock.picking'].browse(item['picking_id'])
+                if picking.picking_type_id.quick_view:
+                    item.update({
+                        'location_id': picking.force_location_id.id,
+                        'location_dest_id': picking.force_location_dest_id.id})
+        return res
+
     @api.onchange('force_location_id', 'force_location_dest_id')
     def onchange_force_locations(self):
         for pick in self:
