@@ -18,6 +18,18 @@ class StockCardProduct(models.TransientModel):
         return super(StockCardProduct, self)._get_quant_values(
             move_id=move_id, col=col, inner=inner, where=where)
 
+    def _get_stock_card_move_line_dict(self, row, vals):
+        res = super(StockCardProduct, self)._get_stock_card_move_line_dict(
+            row, vals)
+        res = dict(
+            res,
+            material=vals['material'],
+            landed=vals['landed'],
+            production=vals['production'],
+            subcontracting=vals['subcontracting'],
+            )
+        return res
+
     def _get_default_params(self):
         res = super(StockCardProduct, self)._get_default_params()
         res.update({}.fromkeys(SEGMENTATION, 0.0))
