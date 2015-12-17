@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from openerp import models
+SEGMENTATION = ['material', 'landed', 'production', 'subcontracting']
 
 # TODO: multi-company awareness to be developed
 
@@ -16,13 +17,7 @@ class StockCardProduct(models.TransientModel):
 
     def _get_default_params(self):
         res = super(StockCardProduct, self)._get_default_params()
-        return dict(
-            res,
-            material=0.0,
-            landed=0.0,
-            production=0.0,
-            subcontracting=0.0,
-        )
+        return res.update({}.from_keys(SEGMENTATION, 0.0))
 
 
 class StockCardMove(models.TransientModel):
