@@ -52,7 +52,7 @@ class StockCardProduct(models.TransientModel):
             vals['move_dict'][move_id] = {}
         vals['move_dict'][move_id]['average'] = vals['average']
         vals['move_valuation'] = sum(
-            [vals['average'] * val['qty'] for val in values])
+            [vals['average'] * qnt['qty'] for qnt in values])
         # NOTE: For production
         # a) it could be a consumption: if so average is kept unchanged
         # products are taken at average price
@@ -69,8 +69,8 @@ class StockCardProduct(models.TransientModel):
         # material_cost, production_cost, subcontracting_cost
         # Inventory Value has to be decreased by the amount of purchase
         # TODO: BEWARE price_unit needs to be normalised
-        vals['move_valuation'] = sum([move_brw.price_unit * val['qty']
-                                      for val in values])
+        vals['move_valuation'] = sum([move_brw.price_unit * qnt['qty']
+                                      for qnt in values])
         return True
 
     def _get_price_on_supplied(self, row, vals, values):
@@ -79,7 +79,7 @@ class StockCardProduct(models.TransientModel):
         # average is to be computed considering all the segmentation
         # costs inside quant
         vals['move_valuation'] = sum(
-            [val['cost'] * val['qty'] for val in values])
+            [qnt['cost'] * qnt['qty'] for qnt in values])
         return True
 
     def _get_price_on_customer_return(self, row, vals, values):
@@ -94,7 +94,7 @@ class StockCardProduct(models.TransientModel):
             vals['move_dict'].get(origin_id, 0.0) and
             vals['move_dict'][move_id]['average'] or vals['average'])
         vals['move_valuation'] = sum(
-            [old_average * val['qty'] for val in values])
+            [old_average * qnt['qty'] for qnt in values])
         return True
 
     def _get_move_average(self, row, vals):
