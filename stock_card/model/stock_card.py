@@ -41,12 +41,60 @@ class StockCardProduct(models.TransientModel):
             )
         return self._cr.dictfetchall()
 
-    def _get_average_by_move(self, product_id, row, vals, return_values=False):
+    def _get_price_on_consumed(self, row, vals, values):
+        move_id = row['move_id']
+        # TODO: move to `transit` could be a return
+        # average is kept unchanged products are taken at average price
+        vals['avg_move_dict'][move_id] = vals['average']
+        vals['move_valuation'] = sum(
+            [vals['average'] * val['qty'] for val in values])
+        # NOTE: For production
+        # a) it could be a consumption: if so average is kept unchanged
+        # products are taken at average price
+        # TODO: Consider the case that
+        # b) it could be a return: defective good, reworking, etc.
+        return True
+
+    def _get_price_on_supplier_return(self, row, vals, values):
         sm_obj = self.env['stock.move']
+        move_id = row['move_id']
+        move_brw = sm_obj.browse(move_id)
+        # Cost is the one record in the stock_move, cost in the
+        # quant record includes other segmentation cost: landed_cost,
+        # material_cost, production_cost, subcontracting_cost
+        # Inventory Value has to be decreased by the amount of purchase
+        # TODO: BEWARE price_unit needs to be normalised
+        vals['move_valuation'] = sum([move_brw.price_unit * val['qty']
+                                      for val in values])
+        return True
+
+    def _get_price_on_supplied(self, row, vals, values):
+        # TODO: transit could be a return that shall be recorded at
+        # average cost of transaction
+        # average is to be computed considering all the segmentation
+        # costs inside quant
+        vals['move_valuation'] = sum(
+            [val['cost'] * val['qty'] for val in values])
+        return True
+
+    def _get_price_on_customer_return(self, row, vals, values):
+        sm_obj = self.env['stock.move']
+        move_id = row['move_id']
+        move_brw = sm_obj.browse(move_id)
+        # NOTE: Identify the originating move_id of returning move
+        origin_id = move_brw.origin_returned_move_id.id
+        # NOTE: Falling back to average in case customer return is
+        # orphan, i.e., return was created from scratch
+        old_average = (
+            vals['avg_move_dict'].get(origin_id, 0.0) or vals['average'])
+        vals['move_valuation'] = sum(
+            [old_average * val['qty'] for val in values])
+        return True
+
+    def _get_average_by_move(self, product_id, row, vals, return_values=False):
         dst = row['dst_usage']
         src = row['src_usage']
         move_id = row['move_id']
-        move_brw = sm_obj.browse(move_id)
         if dst == 'internal':
             direction = 1
         else:
@@ -59,43 +107,16 @@ class StockCardProduct(models.TransientModel):
         # TODO: What is to be done with `procurement` & `view`
 
         if dst in ('customer', 'production', 'inventory', 'transit'):
-            # TODO: move to `transit` could be a return
-            # average is kept unchanged products are taken at average price
-            vals['avg_move_dict'][move_id] = vals['average']
-            vals['move_valuation'] = sum(
-                [vals['average'] * val['qty'] for val in values])
-            # NOTE: For production
-            # a) it could be a consumption: if so average is kept unchanged
-            # products are taken at average price
-            # TODO: Consider the case that
-            # b) it could be a return: defective good, reworking, etc.
+            self._get_price_on_consumed(row, vals, values)
 
         if dst in ('supplier',):
-            # Cost is the one record in the stock_move, cost in the
-            # quant record includes other segmentation cost: landed_cost,
-            # material_cost, production_cost, subcontracting_cost
-            # Inventory Value has to be decreased by the amount of purchase
-            # TODO: BEWARE price_unit needs to be normalised
-            vals['move_valuation'] = sum([move_brw.price_unit * val['qty']
-                                          for val in values])
+            self._get_price_on_supplier_return(row, vals, values)
 
         if src in ('supplier', 'production', 'inventory', 'transit'):
-            # TODO: transit could be a return that shall be recorded at
-            # average cost of transaction
-            # average is to be computed considering all the segmentation
-            # costs inside quant
-            vals['move_valuation'] = sum(
-                [val['cost'] * val['qty'] for val in values])
+            self._get_price_on_supplied(row, vals, values)
 
         if src in ('customer',):
-            # NOTE: Identify the originating move_id of returning move
-            origin_id = move_brw.origin_returned_move_id.id
-            # NOTE: Falling back to average in case customer return is
-            # orphan, i.e., return was created from scratch
-            old_average = (
-                vals['avg_move_dict'].get(origin_id, 0.0) or vals['average'])
-            vals['move_valuation'] = sum(
-                [old_average * val['qty'] for val in values])
+            self._get_price_on_customer_return(row, vals, values)
 
         cost_unit = vals['move_valuation'] / qty if qty else 0.0
         vals['cost_unit'] = cost_unit
