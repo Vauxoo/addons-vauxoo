@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-16 05:19+0000\n"
-"PO-Revision-Date: 2015-12-16 05:19+0000\n"
+"POT-Creation-Date: 2015-12-17 00:19+0000\n"
+"PO-Revision-Date: 2015-12-17 00:19+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_easy_internal_transfer
-#: code:addons/stock_easy_internal_transfer/models/stock.py:160
+#: code:addons/stock_easy_internal_transfer/models/stock.py:187
 #, python-format
 msgid " Sequence Quick internal transfers"
 msgstr " Sequencia Transferencias internas simple"
@@ -137,12 +137,17 @@ msgid "Picking List"
 msgstr "Lista de albaranes"
 
 #. module: stock_easy_internal_transfer
+#: model:ir.model,name:stock_easy_internal_transfer.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr "Asistente de albarán"
+
+#. module: stock_easy_internal_transfer
 #: view:stock.picking:stock_easy_internal_transfer.view_picking_form_inherit_easy_internal
 msgid "Print Picking List"
 msgstr "Imprimir albarán"
 
 #. module: stock_easy_internal_transfer
-#: code:addons/stock_easy_internal_transfer/models/stock.py:48
+#: code:addons/stock_easy_internal_transfer/models/stock.py:51
 #, python-format
 msgid "Product %s not have availability in %s. \n"
 "\n"
@@ -152,7 +157,13 @@ msgstr "Producto %s no tiene disponibilidad en %s. \n"
 "Por favor verifique su inventario."
 
 #. module: stock_easy_internal_transfer
-#: code:addons/stock_easy_internal_transfer/models/stock.py:174
+#: code:addons/stock_easy_internal_transfer/models/stock.py:55
+#, python-format
+msgid "Product %s only has %s %s available in %s."
+msgstr "Producto %s solo tiene disponible %s %s en %s."
+
+#. module: stock_easy_internal_transfer
+#: code:addons/stock_easy_internal_transfer/models/stock.py:201
 #, python-format
 msgid "Quick Internal Transfers"
 msgstr "Transferencias internas simple"
@@ -253,7 +264,7 @@ msgid "You need select first a source location to enable product selection."
 msgstr "You need select first a source location to enable product selection."
 
 #. module: stock_easy_internal_transfer
-#: code:addons/stock_easy_internal_transfer/models/stock.py:99
+#: code:addons/stock_easy_internal_transfer/models/stock.py:121
 #, python-format
 msgid "You should set source location before check availability"
 msgstr "Debes seleccionar una ubicación de origen antes de comprobar disponibilidad"
@@ -268,4 +279,7 @@ msgstr "Por ejemplo, PO0032"
 msgid "record.quick_view.raw_value == 0"
 msgstr "record.quick_view.raw_value == 0"
 
-
+#. module: stock_easy_internal_transfer
+#: view:stock.transfer_details:stock_easy_internal_transfer.view_stock_enter_transfer_details_inherit_easy_internal
+msgid "{'invisible': [('quick_view','=',True)]}"
+msgstr "{'invisible': [('quick_view','=',True)]}"

@@ -38,14 +38,22 @@ class StockMove(models.Model):
             domain_quants = [
                 ('product_id', '=', record.product_id.id),
                 ('location_id', 'child_of', record.location_id.id),
-                ('qty', '>=', record.product_uom_qty),
                 ('reservation_id', '=', False)
             ]
-            if not self.env['stock.quant'].search(domain_quants):
+            quants = self.env['stock.quant'].read_group(
+                domain_quants, ['product_id', 'location_id', 'qty'],
+                ['location_id', 'product_id'], orderby='qty ASC')
+            total_qty = quants and quants[0].get('qty') or 0.0
+            if total_qty == 0.0:
                 raise UserError(
                     _("Product %s not have availability in %s. \n\n"
                       "Please check your inventory, receipts or deliveries"
                       % (record.product_id.name, record.location_id.name)))
+            elif record.product_uom_qty > total_qty:
+                raise UserError(
+                    _("Product %s only has %s %s available in %s."
+                      % (record.product_id.name, total_qty,
+                         record.product_uom.name, record.location_id.name)))
         return True
 
     @api.multi
@@ -58,16 +66,30 @@ class StockMove(models.Model):
         product = quant.mapped("product_id")
         return {'domain': {'product_id': [('id', 'in', product.ids)]}}
 
+    @api.multi
+    def unlink(self):
+        context = self._context
+        if context.get('active_model') == 'stock.picking.type' and \
+                context.get('active_id'):
+            picking_id = context.get('active_id')
+            picking_type = self.env['stock.picking.type'].browse(picking_id)
+            if picking_type.quick_view:
+                for move in self:
+                    if move.state == 'confirmed':
+                        move.action_cancel()
+                        # move.unlink()
+        return super(StockMove, self).unlink()
+
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     force_location_id = fields.Many2one(
-        'stock.location', string="Source Location",
-        readonly=True, states={'draft': [('readonly', False)]})
+        'stock.location', string="Source Location", readonly=True,
+        states={'draft': [('readonly', False)]})
     force_location_dest_id = fields.Many2one(
-        'stock.location', string="Destination Location",
-        readonly=False, states={'done': [('readonly', True)]})
+        'stock.location', string="Destination Location", readonly=False,
+        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]})
 
     @api.onchange('force_location_id', 'force_location_dest_id')
     def onchange_force_locations(self):
@@ -96,11 +118,16 @@ class StockPicking(models.Model):
             if pick.picking_type_id.quick_view and \
                     not pick.force_location_id:
                 raise UserError(
-                    _("You should set source location before check availability"))
+                    _("You should set source location before check"
+                      " availability"))
             elif pick.picking_type_id.quick_view:
                 moves = pick.move_lines.filtered(
                     lambda m: m.state not in ('draft', 'cancel', 'done'))
                 moves._check_quants_availability()
+                if pick.force_location_dest_id:
+                    location_dest_id = pick.force_location_dest_id.id
+                    for move in moves:
+                        move.write({'location_dest_id': location_dest_id})
         return super(StockPicking, self).action_assign()
 
 

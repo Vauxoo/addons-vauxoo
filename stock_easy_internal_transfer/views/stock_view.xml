@@ -31,8 +31,8 @@
                     </h1>
                     <group>
                         <group>
-                            <field name="force_location_id" />
-                            <field name="force_location_dest_id" attrs="{'required': [('state', '=', 'assigned')]}" />
+                            <field name="force_location_id" required="1" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
+                            <field name="force_location_dest_id" attrs="{'required': [('state', '=', 'assigned')]}" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
                             <field name="partner_id" invisible="1"/>
                             <field name="backorder_id" readonly="1" attrs="{'invisible': [('backorder_id','=',False)]}"/>
                         </group>
@@ -50,9 +50,10 @@
                     </group>
                     <notebook>
                         <page string="Internal Moves">
-                            <field name="move_lines" context="{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id,'default_picking_id': active_id, 'default_location_id': force_location_id}" attrs="{'invisible': [('force_location_id', '=', False)]}">
+                            <field name="move_lines" attrs="{'invisible': [('force_location_id', '=', False)], 'readonly': [('state', 'in', ('assigned', 'cancel', 'done'))]}"
+                                context="{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id,'default_picking_id': active_id, 'default_location_id': force_location_id}" >
                                 <tree colors="grey:scrapped == True" string="Stock Moves" editable="top">
-                                    <field name="product_id" on_change="onchange_product_id(product_id)" />
+                                    <field name="product_id" on_change="onchange_product_id(product_id)" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
                                     <field name="name" invisible="1"/>
                                     <field name="product_uom_qty" on_change="onchange_quantity(product_id, product_uom_qty, product_uom, product_uos)"/>
                                     <field name="product_uom" string="Unit of Measure" groups="product.group_uom" invisible="1"/>

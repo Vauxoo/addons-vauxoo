@@ -3,11 +3,11 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ############ Credits ########################################################
 #    Coded by: Jose Suniaga <josemiguel@vauxoo.com>
 #    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
 #    Audited by: Jose Morales <jose@vauxoo.com>
-###############################################################################
+# #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
 #    by the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-###############################################################################
+# ##############################################################################
 {
     "name": "Stock Easy Internal Transfer",
     "version": "1.6",
@@ -34,6 +34,7 @@
     "demo": [],
     "data": [
         'views/stock_view.xml',
+        'wizard/stock_transfer_details.xml',
     ],
     "test": [],
     "js": [],
