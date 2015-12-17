@@ -53,7 +53,6 @@ class StockCardProduct(models.TransientModel):
             direction = -1
         qty = row['product_qty']
         vals['product_qty'] += (direction * qty)
-        average = vals['average']
 
         values = self._get_quant_values(move_id, col='', inner='', where='')
 
@@ -62,8 +61,9 @@ class StockCardProduct(models.TransientModel):
         if dst in ('customer', 'production', 'inventory', 'transit'):
             # TODO: move to `transit` could be a return
             # average is kept unchanged products are taken at average price
-            vals['avg_move_dict'][move_id] = average
-            move_valuation = sum([average * val['qty'] for val in values])
+            vals['avg_move_dict'][move_id] = vals['average']
+            vals['move_valuation'] = sum(
+                [vals['average'] * val['qty'] for val in values])
             # NOTE: For production
             # a) it could be a consumption: if so average is kept unchanged
             # products are taken at average price
@@ -76,46 +76,47 @@ class StockCardProduct(models.TransientModel):
             # material_cost, production_cost, subcontracting_cost
             # Inventory Value has to be decreased by the amount of purchase
             # TODO: BEWARE price_unit needs to be normalised
-            move_valuation = sum([move_brw.price_unit * val['qty']
-                                  for val in values])
+            vals['move_valuation'] = sum([move_brw.price_unit * val['qty']
+                                          for val in values])
 
         if src in ('supplier', 'production', 'inventory', 'transit'):
             # TODO: transit could be a return that shall be recorded at
             # average cost of transaction
             # average is to be computed considering all the segmentation
             # costs inside quant
-            move_valuation = sum([val['cost'] * val['qty'] for val in values])
+            vals['move_valuation'] = sum(
+                [val['cost'] * val['qty'] for val in values])
 
         if src in ('customer',):
             # NOTE: Identify the originating move_id of returning move
             origin_id = move_brw.origin_returned_move_id.id
             # NOTE: Falling back to average in case customer return is
             # orphan, i.e., return was created from scratch
-            old_average = vals['avg_move_dict'].get(origin_id, 0.0) or average
-            move_valuation = sum([old_average * val['qty'] for val in values])
+            old_average = (
+                vals['avg_move_dict'].get(origin_id, 0.0) or vals['average'])
+            vals['move_valuation'] = sum(
+                [old_average * val['qty'] for val in values])
 
-        cost_unit = move_valuation / qty if qty else 0.0
+        cost_unit = vals['move_valuation'] / qty if qty else 0.0
         vals['cost_unit'] = cost_unit
 
-        vals['inventory_valuation'] += direction * move_valuation
+        vals['inventory_valuation'] += direction * vals['move_valuation']
 
-        average = (
+        vals['average'] = (
             vals['product_qty'] and
-            vals['inventory_valuation'] / vals['product_qty'] or average)
-        vals['average'] = average
+            vals['inventory_valuation'] / vals['product_qty'] or
+            vals['average'])
 
-        if return_values:
-            pass
-        else:
+        if not return_values:
             vals['lines'].append(dict(
                 date=row['date'],
                 move_id=move_id,
                 stock_card_product_id=self.id,
                 product_qty=vals['product_qty'],
                 qty=direction * qty,
-                move_valuation=direction * move_valuation,
+                move_valuation=direction * vals['move_valuation'],
                 inventory_valuation=vals['inventory_valuation'],
-                average=average,
+                average=vals['average'],
                 cost_unit=cost_unit,
                 ))
         return True
