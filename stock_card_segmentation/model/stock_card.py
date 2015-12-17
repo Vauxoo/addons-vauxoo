@@ -1,6 +1,7 @@
 # coding: utf-8
 
-from openerp import models
+from openerp import models, fields
+import openerp.addons.decimal_precision as dp
 SEGMENTATION = ['material', 'landed', 'production', 'subcontracting']
 
 # TODO: multi-company awareness to be developed
@@ -95,3 +96,19 @@ class StockCardProduct(models.TransientModel):
 
 class StockCardMove(models.TransientModel):
     _inherit = 'stock.card.move'
+    material = fields.Float(
+        string='Material Cost',
+        digits=dp.get_precision('Account'),
+        readonly=True)
+    landed = fields.Float(
+        string='Landed Cost',
+        digits=dp.get_precision('Account'),
+        readonly=True)
+    production = fields.Float(
+        string='Production Cost',
+        digits=dp.get_precision('Account'),
+        readonly=True)
+    subcontracting = fields.Float(
+        string='Subcontracting Cost',
+        digits=dp.get_precision('Account'),
+        readonly=True)
