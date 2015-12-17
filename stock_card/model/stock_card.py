@@ -31,7 +31,10 @@ class StockCardProduct(models.TransientModel):
     def _get_quant_values(self, move_id, col='', inner='', where=''):
         self._cr.execute(
             '''
-            SELECT cost, qty {col}
+            SELECT
+                COALESCE(cost, 0.0) AS cost,
+                COALESCE(qty, 0.0) AS qty
+                {col}
             FROM stock_quant_move_rel AS sqm_rel
             INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
             {inner}
