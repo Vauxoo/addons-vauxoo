@@ -23,7 +23,7 @@
 
 import time
 
-from openerp import SUPERUSER_ID, api
+from openerp import SUPERUSER_ID, models, fields, api
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
@@ -31,12 +31,13 @@ _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
     'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
 
 
-class UserStory(osv.Model):
+class UserStory(models.Model):
     _name = 'user.story'
     _description = 'User Story'
     _order = 'id desc'
     _inherit = ['mail.thread']
 
+    @
     def write(self, cr, uid, ids, vals, context=None):
         context = dict(context or {})
         task_obj = self.pool.get('project.task')
