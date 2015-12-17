@@ -119,7 +119,7 @@ class StockCardProduct(models.TransientModel):
 
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
 
-        qntval = self._get_quant_values(move_id, col='', inner='', where='')
+        qntval = self._get_quant_values(row['move_id'])
 
         # TODO: What is to be done with `procurement` & `view`
 
