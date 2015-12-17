@@ -45,7 +45,8 @@ class StockCardProduct(models.TransientModel):
         move_id = row['move_id']
         # TODO: move to `transit` could be a return
         # average is kept unchanged products are taken at average price
-        vals['move_dict'][move_id] = vals['average']
+        vals['move_dict'][move_id] = {}
+        vals['move_dict'][move_id]['average'] = vals['average']
         vals['move_valuation'] = sum(
             [vals['average'] * val['qty'] for val in values])
         # NOTE: For production
@@ -86,7 +87,8 @@ class StockCardProduct(models.TransientModel):
         # NOTE: Falling back to average in case customer return is
         # orphan, i.e., return was created from scratch
         old_average = (
-            vals['move_dict'].get(origin_id, 0.0) or vals['average'])
+            vals['move_dict'].get(origin_id, 0.0) and
+            vals['move_dict'][move_id]['average'] or vals['average'])
         vals['move_valuation'] = sum(
             [old_average * val['qty'] for val in values])
         return True
