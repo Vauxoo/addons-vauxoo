@@ -73,6 +73,22 @@ class StockCardProduct(models.TransientModel):
 
         return True
 
+    def _get_move_average(self, row, vals):
+        super(StockCardProduct, self)._get_move_average(row, vals)
+        qty = row['product_qty']
+        vals['cost_unit'] = vals['move_valuation'] / qty if qty else 0.0
+
+        for sgmnt in SEGMENTATION:
+            vals['%s_total' % sgmnt] += (
+                vals['direction'] * vals['%s_valuation' % sgmnt])
+
+            vals[sgmnt] = (
+                vals['product_qty'] and
+                vals['%s_total' % sgmnt] / vals['product_qty'] or
+                vals[sgmnt])
+
+        return True
+
 
 class StockCardMove(models.TransientModel):
     _inherit = 'stock.card.move'
