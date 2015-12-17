@@ -28,6 +28,19 @@ class StockCardProduct(models.TransientModel):
 
         return True
 
+    def _get_quant_values(self, move_id, col='', inner='', where=''):
+        self._cr.execute(
+            '''
+            SELECT cost, qty {col}
+            FROM stock_quant_move_rel AS sqm_rel
+            INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
+            {inner}
+            WHERE sqm_rel.move_id = {move_id}
+            {where}
+            '''.format(move_id=move_id, col='', inner='', where='')
+            )
+        return self._cr.fetchall()
+
     def _get_average_by_move(self, product_id, row, vals, return_values=False):
         sm_obj = self.env['stock.move']
         dst = row['dst_usage']
@@ -42,15 +55,7 @@ class StockCardProduct(models.TransientModel):
         vals['product_qty'] += (direction * qty)
         average = vals['average']
 
-        self._cr.execute(
-            '''
-            SELECT cost, qty
-            FROM stock_quant_move_rel AS sqm_rel
-            INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
-            WHERE sqm_rel.move_id = %s
-            ''', (move_id,)
-            )
-        values = self._cr.fetchall()
+        values = self._get_quant_values(move_id, col='', inner='', where='')
 
         # TODO: What is to be done with `procurement` & `view`
 
