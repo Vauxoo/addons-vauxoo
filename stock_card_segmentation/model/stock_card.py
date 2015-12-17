@@ -10,7 +10,10 @@ class StockCardProduct(models.TransientModel):
     _inherit = ['stock.card.product']
 
     def _get_quant_values(self, move_id, col='', inner='', where=''):
-        col = ', ' + ', '.join(['%s_cost' % sgmnt for sgmnt in SEGMENTATION])
+
+        col = ['%s_cost' % sgmnt for sgmnt in SEGMENTATION]
+        col = ['COALESCE(%s, 0.0) AS %s' % (cl, cl) for cl in col]
+        col = ', ' + ', '.join(col)
         return super(StockCardProduct, self)._get_quant_values(
             move_id=move_id, col=col, inner=inner, where=where)
 
