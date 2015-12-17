@@ -44,7 +44,7 @@ class StockCardProduct(models.TransientModel):
             )
         return self._cr.dictfetchall()
 
-    def _get_price_on_consumed(self, row, vals, values):
+    def _get_price_on_consumed(self, row, vals, qntval):
         move_id = row['move_id']
         # TODO: move to `transit` could be a return
         # average is kept unchanged products are taken at average price
@@ -52,7 +52,7 @@ class StockCardProduct(models.TransientModel):
             vals['move_dict'][move_id] = {}
         vals['move_dict'][move_id]['average'] = vals['average']
         vals['move_valuation'] = sum(
-            [vals['average'] * qnt['qty'] for qnt in values])
+            [vals['average'] * qnt['qty'] for qnt in qntval])
         # NOTE: For production
         # a) it could be a consumption: if so average is kept unchanged
         # products are taken at average price
@@ -60,7 +60,7 @@ class StockCardProduct(models.TransientModel):
         # b) it could be a return: defective good, reworking, etc.
         return True
 
-    def _get_price_on_supplier_return(self, row, vals, values):
+    def _get_price_on_supplier_return(self, row, vals, qntval):
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
         move_brw = sm_obj.browse(move_id)
@@ -70,19 +70,19 @@ class StockCardProduct(models.TransientModel):
         # Inventory Value has to be decreased by the amount of purchase
         # TODO: BEWARE price_unit needs to be normalised
         vals['move_valuation'] = sum([move_brw.price_unit * qnt['qty']
-                                      for qnt in values])
+                                      for qnt in qntval])
         return True
 
-    def _get_price_on_supplied(self, row, vals, values):
+    def _get_price_on_supplied(self, row, vals, qntval):
         # TODO: transit could be a return that shall be recorded at
         # average cost of transaction
         # average is to be computed considering all the segmentation
         # costs inside quant
         vals['move_valuation'] = sum(
-            [qnt['cost'] * qnt['qty'] for qnt in values])
+            [qnt['cost'] * qnt['qty'] for qnt in qntval])
         return True
 
-    def _get_price_on_customer_return(self, row, vals, values):
+    def _get_price_on_customer_return(self, row, vals, qntval):
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
         move_brw = sm_obj.browse(move_id)
@@ -94,7 +94,7 @@ class StockCardProduct(models.TransientModel):
             vals['move_dict'].get(origin_id, 0.0) and
             vals['move_dict'][move_id]['average'] or vals['average'])
         vals['move_valuation'] = sum(
-            [old_average * qnt['qty'] for qnt in values])
+            [old_average * qnt['qty'] for qnt in qntval])
         return True
 
     def _get_move_average(self, row, vals):
@@ -120,21 +120,21 @@ class StockCardProduct(models.TransientModel):
         vals['direction'] = direction
         vals['product_qty'] += (direction * row['product_qty'])
 
-        values = self._get_quant_values(move_id, col='', inner='', where='')
+        qntval = self._get_quant_values(move_id, col='', inner='', where='')
 
         # TODO: What is to be done with `procurement` & `view`
 
         if dst in ('customer', 'production', 'inventory', 'transit'):
-            self._get_price_on_consumed(row, vals, values)
+            self._get_price_on_consumed(row, vals, qntval)
 
         if dst in ('supplier',):
-            self._get_price_on_supplier_return(row, vals, values)
+            self._get_price_on_supplier_return(row, vals, qntval)
 
         if src in ('supplier', 'production', 'inventory', 'transit'):
-            self._get_price_on_supplied(row, vals, values)
+            self._get_price_on_supplied(row, vals, qntval)
 
         if src in ('customer',):
-            self._get_price_on_customer_return(row, vals, values)
+            self._get_price_on_customer_return(row, vals, qntval)
 
         self._get_move_average(row, vals)
 
