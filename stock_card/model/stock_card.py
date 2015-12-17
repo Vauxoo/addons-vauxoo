@@ -184,12 +184,12 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def get_average(self, product_id):
-        values = self._stock_card_move_get(product_id, return_values=True)
-        return values.get('average')
+        res = self._stock_card_move_get(product_id, return_values=True)
+        return res.get('average')
 
     def get_qty(self, product_id):
-        values = self._stock_card_move_get(product_id, return_values=True)
-        return values.get('product_qty')
+        res = self._stock_card_move_get(product_id, return_values=True)
+        return res.get('product_qty')
 
     @api.multi
     def action_view_moves(self):
