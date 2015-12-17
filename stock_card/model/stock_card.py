@@ -112,13 +112,12 @@ class StockCardProduct(models.TransientModel):
     def _get_average_by_move(self, product_id, row, vals, return_values=False):
         dst = row['dst_usage']
         src = row['src_usage']
-        move_id = row['move_id']
         if dst == 'internal':
-            direction = 1
+            vals['direction'] = 1
         else:
-            direction = -1
-        vals['direction'] = direction
-        vals['product_qty'] += (direction * row['product_qty'])
+            vals['direction'] = -1
+
+        vals['product_qty'] += (vals['direction'] * row['product_qty'])
 
         qntval = self._get_quant_values(move_id, col='', inner='', where='')
 
