@@ -118,8 +118,7 @@ class StockCardProduct(models.TransientModel):
         if src in ('customer',):
             self._get_price_on_customer_return(row, vals, values)
 
-        cost_unit = vals['move_valuation'] / qty if qty else 0.0
-        vals['cost_unit'] = cost_unit
+        vals['cost_unit'] = vals['move_valuation'] / qty if qty else 0.0
 
         vals['inventory_valuation'] += direction * vals['move_valuation']
 
@@ -138,7 +137,7 @@ class StockCardProduct(models.TransientModel):
                 move_valuation=direction * vals['move_valuation'],
                 inventory_valuation=vals['inventory_valuation'],
                 average=vals['average'],
-                cost_unit=cost_unit,
+                cost_unit=vals['cost_unit'],
                 ))
         return True
 
