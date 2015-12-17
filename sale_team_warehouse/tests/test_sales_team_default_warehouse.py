@@ -12,7 +12,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         self.sale_obj = self.registry('sale.order')
         self.res_user_obj = self.env['res.users']
 
-    def TestsDefaultWarehouseSaleOrder(self):
+    def test_sale_team_warehoue(self):
         '''
         1.- Testing that the Demo User has not sales team set.
         2.-Testing that the sales order created by Demo User has

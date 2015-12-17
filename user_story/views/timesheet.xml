@@ -35,6 +35,7 @@
                     <field name="user_id"/>
                     <field name="userstory_id"/>
                     <field name="us_id"/>
+                    <field name="display_name"/>
                     <field name="name"/>
                     <group expand="0" string="Group By...">
                         <filter string="Users" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>

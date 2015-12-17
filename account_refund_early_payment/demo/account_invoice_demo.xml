@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="invoice_1" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
+        </record>
+        <record id="invoice_1_line_1" model="account.invoice.line">
+            <field name="name">Vauxoo Specialties</field>
+            <field name="invoice_id" ref="invoice_1"/>
+            <field name="price_unit">100.12</field>
+            <field name="quantity">1</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+        <record id="invoice_2" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
+        </record>
+        <record id="invoice_2_line_1" model="account.invoice.line">
+            <field name="name">Vauxoo Specialties</field>
+            <field name="invoice_id" ref="invoice_2"/>
+            <field name="price_unit">320.01</field>
+            <field name="quantity">1</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+        <record id="invoice_3" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
+        </record>
+        <record id="invoice_3_line_1" model="account.invoice.line">
+            <field name="name">Vauxoo Specialties</field>
+            <field name="invoice_id" ref="invoice_3"/>
+            <field name="price_unit">400.00</field>
+            <field name="quantity">1</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+        <record id="invoice_4" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
+        </record>
+        <record id="invoice_4_line_1" model="account.invoice.line">
+            <field name="name">Vauxoo Specialties</field>
+            <field name="invoice_id" ref="invoice_4"/>
+            <field name="price_unit">1.05</field>
+            <field name="quantity">1</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+        <record id="invoice_5" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
+        </record>
+        <record id="invoice_5_line_1" model="account.invoice.line">
+            <field name="name">Vauxoo Specialties</field>
+            <field name="invoice_id" ref="invoice_5"/>
+            <field name="price_unit">30.45</field>
+            <field name="quantity">1</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+        <record id="invoice_6" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
+        </record>
+        <record id="invoice_6_line_1" model="account.invoice.line">
+            <field name="name">Vauxoo Specialties</field>
+            <field name="invoice_id" ref="invoice_6"/>
+            <field name="price_unit">200.56</field>
+            <field name="quantity">1</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+    </data>
+</openerp>

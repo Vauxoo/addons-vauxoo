@@ -57,6 +57,12 @@ class WebsiteProductMetadata(models.Model):
     _inherit = ["product.template", "website.seo.metadata"]
     _name = "product.template"
 
+    public_categ_ids = fields.Many2many(
+        "product.public.category",
+        "product_public_category_product_template_rel",
+        "product_template_id",
+        "product_public_category_id")
+
 
 class ProductPriceRanges(models.Model):
     _name = "product.price.ranges"
@@ -68,31 +74,42 @@ class ProductPriceRanges(models.Model):
 class ProductCategory(models.Model):
     _inherit = 'product.public.category'
 
-    @api.multi
-    def _get_products(self):
-        product_obj = self.env["product.template"]
-        for record in self:
-            product_ids = []
-            product_published = product_obj.search(
-                [("website_published", "=", True)])
-            for product in product_published:
-                if record in product.public_categ_ids:
-                    product_ids.append(product.id)
-            record.product_ids = product_ids
-
-    product_ids = fields.Many2many('product.template', compute="_get_products")
+    product_ids = fields.Many2many(
+        "product.template", "product_public_category_product_template_rel",
+        "product_public_category_id",
+        "product_template_id", readonly=True)
     total_tree_products = fields.Integer("Total Subcategory Prods",
                                          compute="_get_product_count",
                                          store=True,)
+    has_products_ok = fields.Boolean(compute="_get_has_products_ok",
+                                     store=True, readonly=True)
+
+    @api.depends('product_ids')
+    @api.multi
+    def _get_has_products_ok(self):
+        for record in self:
+            record.has_products_ok = self._child_has_products(record)
+
+    def _child_has_products(self, category):
+        if category.child_id:
+            return any(self._child_has_products(child)
+                       for child in category.child_id)
+        elif category.product_ids.filtered(
+                lambda r: r.website_published is True):
+            return True
+        else:
+            return False
 
     @api.model
     def _get_async_ranges(self, category):
         prod_obj = self.env['product.template']
         ranges_obj = self.env['product.price.ranges'].search([])
         count_dict = {}
-        prod_ids = prod_obj.search(
-            [('public_categ_ids', 'child_of', int(category)),
-             ('website_published', '=', True)])
+        prod_ids = []
+        if category:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', int(category)),
+                 ('website_published', '=', True)])
         if prod_ids:
             for prod in prod_ids:
                 for ran in ranges_obj:
@@ -110,9 +127,11 @@ class ProductCategory(models.Model):
     def _get_async_values(self, category):
         prod_obj = self.env['product.template']
         count_dict = {}
-        prod_ids = prod_obj.search(
-            [('public_categ_ids', 'child_of', int(category)),
-             ('website_published', '=', True)])
+        prod_ids = []
+        if category:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', int(category)),
+                 ('website_published', '=', True)])
         if prod_ids:
             for prod in prod_ids:
                 for line in prod.attribute_line_ids:

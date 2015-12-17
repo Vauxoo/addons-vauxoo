@@ -27,9 +27,6 @@ from openerp.osv import osv, fields
 
 class MailMessage(osv.Model):
     _inherit = 'mail.message'
-    _defaults = {
-        'rating': 0,
-    }
     _columns = {
         'rating': fields.integer('Rating'),
     }
@@ -46,10 +43,6 @@ class MailMessage(osv.Model):
 
 class ProductTemplate(osv.Model):
     _inherit = 'product.template'
-    _defaults = {
-        'rating': 3,
-    }
-
     def _get_rating(self, cr, uid, ids, field_name, arg, context):
         res = {}
         total = 0
