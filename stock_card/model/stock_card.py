@@ -114,8 +114,7 @@ class StockCardProduct(models.TransientModel):
         else:
             direction = -1
         vals['direction'] = direction
-        qty = row['product_qty']
-        vals['product_qty'] += (direction * qty)
+        vals['product_qty'] += (direction * row['product_qty'])
 
         values = self._get_quant_values(move_id, col='', inner='', where='')
 
@@ -141,7 +140,7 @@ class StockCardProduct(models.TransientModel):
                 move_id=move_id,
                 stock_card_product_id=self.id,
                 product_qty=vals['product_qty'],
-                qty=direction * qty,
+                qty=direction * row['product_qty'],
                 move_valuation=direction * vals['move_valuation'],
                 inventory_valuation=vals['inventory_valuation'],
                 average=vals['average'],
