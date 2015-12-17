@@ -122,17 +122,20 @@ class StockCardProduct(models.TransientModel):
 
         return vals
 
-    def _stock_card_move_get(self, product_id, return_values=False):
-        scm_obj = self.env['stock.card.move']
-        self.stock_card_move_ids.unlink()
-
-        vals = dict(
+    def _get_default_params(self):
+        return dict(
             product_qty=0.0,
             average=0.0,
             inventory_valuation=0.0,
             lines=[],
             avg_move_dict={},
         )
+
+    def _stock_card_move_get(self, product_id, return_values=False):
+        scm_obj = self.env['stock.card.move']
+        self.stock_card_move_ids.unlink()
+
+        vals = self._get_default_params()
 
         res = self._stock_card_move_get_avg(
             product_id, vals, return_values=return_values)
