@@ -16,7 +16,10 @@ class StockCardProduct(models.TransientModel):
 
     def _get_default_params(self):
         res = super(StockCardProduct, self)._get_default_params()
-        return res.update({}.from_keys(SEGMENTATION, 0.0))
+        res.update({}.from_keys(SEGMENTATION, 0.0))
+        res.update({}.from_keys(
+            ['%s_total' % sgmnt for sgmnt in SEGMENTATION], 0.0))
+        return res
 
     def _get_price_on_consumed(self, row, vals, values):
         super(StockCardProduct, self)._get_price_on_consumed(
