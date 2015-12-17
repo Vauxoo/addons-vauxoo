@@ -16,8 +16,8 @@ class StockCardProduct(models.TransientModel):
 
     def _get_default_params(self):
         res = super(StockCardProduct, self)._get_default_params()
-        res.update({}.from_keys(SEGMENTATION, 0.0))
-        res.update({}.from_keys(
+        res.update({}.fromkeys(SEGMENTATION, 0.0))
+        res.update({}.fromkeys(
             ['%s_total' % sgmnt for sgmnt in SEGMENTATION], 0.0))
         return res
 
