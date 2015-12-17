@@ -48,7 +48,7 @@
     "data": [
         # "data/data_us_report.xml",
         # "report/user_story_report_view.xml",
-        "security/userstory_security.xml",
+        "security/user_story_security.xml",
         "security/ir.model.access.csv",
         "views/user_story.xml",
         "views/project.xml",
