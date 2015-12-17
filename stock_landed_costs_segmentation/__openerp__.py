@@ -14,6 +14,7 @@
         "mrp",
         "stock_landed_costs_average",
         "stock_quant_cost_segmentation",
+        "stock_card_segmentation",
     ],
     "demo": [
     ],
