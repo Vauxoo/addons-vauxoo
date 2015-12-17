@@ -1,30 +1,34 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+"""
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#    GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
+#    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
 
-from openerp.osv import fields, osv
+from openerp import models, fields, api
+from openerp.osv import fields
 
 
-class AccountAnalyticAccount(osv.Model):
+class AccountAnalyticAccount(models.Model):
     _inherit = "account.analytic.account"
 
+    @api.v7
     def _remaining_hours_calc(self, cr, uid, ids, name, arg, context=None):
         res = {}
         for account in self.browse(cr, uid, ids, context=context):
@@ -36,6 +40,7 @@ class AccountAnalyticAccount(osv.Model):
             res[account.id] = round(res.get(account.id, 0.0), 2)
         return res
 
+    @api.v7
     def _get_invoiceables_hours(self, cr, uid, ids, args,
                                 _fields, context=None):
         if context is None:

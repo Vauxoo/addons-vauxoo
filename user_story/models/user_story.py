@@ -24,7 +24,7 @@
 import time
 
 from openerp import SUPERUSER_ID, models, fields, api
-from openerp.osv import fields, osv
+from openerp.osv import fields
 from openerp.tools.translate import _
 
 _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (

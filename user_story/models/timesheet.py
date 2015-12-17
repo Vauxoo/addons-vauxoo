@@ -1,31 +1,35 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+"""
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#    GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
+#    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
 
-from openerp.osv import fields, osv
+from openerp import models, fields, api
+from openerp.osv import fields
 from openerp.tools.sql import drop_view_if_exists
 
 
-class HrTimesheet(osv.Model):
+class HrTimesheet(models.Model):
     _inherit = "hr.analytic.timesheet"
 
+    @api.v7
     def _get_invoiceables_hours(
             self, cr, uid,
             ids, args, fields, context=None):  # pylint: disable=W0621
@@ -40,6 +44,7 @@ class HrTimesheet(osv.Model):
             res.update({time_brw.id: hours})
         return res
 
+    @api.v7
     def _get_user_story(
             self, cr, uid,
             ids, args, fields, context=None):  # pylint: disable=W0621
@@ -60,6 +65,7 @@ class HrTimesheet(osv.Model):
             res.update({time_brw.id: us_id})
         return res
 
+    @api.v7
     def _get_analytic_from_task(self, cr, uid, ids, context=None):
         context = context or {}
         cr.execute('''
@@ -106,11 +112,12 @@ class HrTimesheet(osv.Model):
     }
 
 
-class CustomTimesheet(osv.Model):
+class CustomTimesheet(models.Model):
     _name = "custom.timesheet"
     _order = "date desc"
     _auto = False
 
+    @api.v7
     def _get_invoiceables_hours(
             self, cr, uid,
             ids, args, fields, context=None):  # pylint: disable=W0621
@@ -155,6 +162,7 @@ class CustomTimesheet(osv.Model):
                                               help='Total hours to charge')
     }
 
+    @api.v7
     def init(self, cr):
         drop_view_if_exists(cr, 'custom_timesheet')
         cr.execute('''
