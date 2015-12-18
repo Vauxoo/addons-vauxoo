@@ -41,7 +41,7 @@ class StockCardProduct(models.TransientModel):
             WHERE sqm_rel.move_id = {move_id}
             {where}
             '''.format(move_id=move_id, col=col, inner=inner, where=where)
-            )
+        )
         return self._cr.dictfetchall()
 
     def _get_price_on_consumed(self, row, vals, qntval):
@@ -120,7 +120,7 @@ class StockCardProduct(models.TransientModel):
             inventory_valuation=vals['inventory_valuation'],
             average=vals['average'],
             cost_unit=vals['cost_unit'],
-            )
+        )
         return res
 
     def _get_stock_card_move_line(self, row, vals):
