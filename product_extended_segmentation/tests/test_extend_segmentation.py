@@ -21,7 +21,6 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-from datetime import date
 
 
 class TestExtendSegmentation(TransactionCase):
@@ -182,13 +181,11 @@ class TestExtendSegmentation(TransactionCase):
         set_starting_cost(self.product_b_id, 30)
         set_starting_cost(self.product_c_id, 35)
 
-        prod_d_before = self.get_product_segmentation_costs(self.product_d_id)
         prod_e_before = self.get_product_segmentation_costs(self.product_e_id)
 
         self.compute_price_from_wizard(self.product_e_id, True, True)
 
         # Get product costs segmentation after recompute cost have been done
-        prod_d_after = self.get_product_segmentation_costs(self.product_d_id)
         prod_e_after = self.get_product_segmentation_costs(self.product_e_id)
 
         # The cost for product (D) have increased in 10pts
