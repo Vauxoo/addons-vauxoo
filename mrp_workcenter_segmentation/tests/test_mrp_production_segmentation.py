@@ -26,7 +26,7 @@ class TestMrpProduction(TransactionCase):
         self.account_cost = self.ref(
             'mrp_workcenter_account_move.rev_production_cost_account')
         self.account_deviation = self.ref(
-            'mrp_workcenter_account_move.rev_inventory_deviation_account')
+            'stock_deviation_account.rev_inventory_deviation_account')
         self.mrp_production_d = self.env['mrp.production'].browse(
             self.ref(
                 'mrp_workcenter_segmentation.'
