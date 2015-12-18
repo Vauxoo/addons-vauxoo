@@ -17,7 +17,6 @@
     ],
     "demo": [
         'demo/demo.xml',
-        'demo/res_company.xml',
     ],
     "data": [
         'view/view.xml',
