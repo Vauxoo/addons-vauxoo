@@ -1,5 +1,24 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    Copyright 2015 Vauxoo
+#    Author : Humberto Arocha <hbto@vauxoo.com>
+#             Osval Reyes <osval@vauxoo.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 {
     "name": "Product Extension to track Segmentation Cost",
     "version": "1.6",
@@ -10,11 +29,14 @@
         'product',
         'product_extended',
         'stock_quant_cost_segmentation',
-        ],
+    ],
     "category": "Generic Modules/Inventory Control",
+    "demo": [
+        "demo/demo.xml",
+    ],
     "data": [
         'view/view.xml',
         'data/data.xml',
-        ],
+    ],
     "installable": True
 }
