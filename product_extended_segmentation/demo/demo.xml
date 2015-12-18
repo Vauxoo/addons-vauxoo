@@ -9,28 +9,16 @@
             <field name="user_type" ref="account.data_account_type_income"/>
         </record>
 
-        <record id="analytic_landed_cost_journal_1" model="account.analytic.journal">
-            <field name="code">vxprod</field>
-            <field name="name">Analitic Cost Journal (Demo)</field>
-            <field name="type">general</field>
-        </record>
+         <record id="analytic_landed_cost_journal_1" model="account.analytic.journal">
+             <field name="code">vxprod</field>
+             <field name="name">Analitic Cost Journal (Demo)</field>
+             <field name="type">general</field>
+         </record>
         <record id="landed_cost_journal_1" model="account.journal">
             <field name="code">vxprod</field>
             <field name="name">Landed Cost Journal (Demo)</field>
             <field name="type">general</field>
             <field name="analytic_journal_id" ref="analytic_landed_cost_journal_1"/>
-        </record>
-        <record id="rev_production_cost_account" model="account.account">
-            <field name="code">X201-vx-production</field>
-            <field name="name">PRODUCTION_COST_ACCOUNT</field>
-            <field ref="account.income_view" name="parent_id"/>
-            <field name="type">other</field>
-            <field name="user_type" ref="account.data_account_type_income"/>
-        </record>
-
-        <record id="rev_production_analytic_account" model="account.analytic.account">
-            <field name="name">PRODUCTION_ANALYTIC_ACCOUNT</field>
-            <field ref="account.income_view" name="parent_id"/>
         </record>
 
         <record id="producto_a" model="product.product">
@@ -120,8 +108,7 @@
             <field name="time_efficiency" eval="1.0"/>
             <field name="time_cycle">1</field>
             <field name="costs_hour">5</field>
-            <field name="costs_hour_account_id" ref="rev_production_analytic_account"/>
-            <field name="costs_general_account_id" ref="rev_production_cost_account"/>
+
             <field name="costs_journal_id" ref="analytic_landed_cost_journal_1"/>
         </record>
 
