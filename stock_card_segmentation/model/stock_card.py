@@ -46,7 +46,8 @@ class StockCardProduct(models.TransientModel):
         for sgmnt in SEGMENTATION:
             vals['move_dict'][move_id][sgmnt] = vals[sgmnt]
             vals['%s_valuation' % sgmnt] = sum(
-                [vals['%s' % sgmnt] * qnt['qty'] for qnt in qntval])
+                [vals['%s' % sgmnt] * qnt['qty'] for qnt in qntval
+                 if qnt['qty'] > 0])
         return True
 
     def _get_price_on_supplier_return(self, row, vals, qntval):
