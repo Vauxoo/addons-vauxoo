@@ -52,7 +52,8 @@ class StockCardProduct(models.TransientModel):
             vals['move_dict'][move_id] = {}
         vals['move_dict'][move_id]['average'] = vals['average']
         vals['move_valuation'] = sum(
-            [vals['average'] * qnt['qty'] for qnt in qntval])
+            [vals['average'] * qnt['qty'] for qnt in qntval
+             if qnt['qty'] > 0])
         # NOTE: For production
         # a) it could be a consumption: if so average is kept unchanged
         # products are taken at average price
