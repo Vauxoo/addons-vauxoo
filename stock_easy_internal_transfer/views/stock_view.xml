@@ -55,6 +55,8 @@
                                 <tree colors="grey:scrapped == True" string="Stock Moves" editable="top">
                                     <field name="product_id" on_change="onchange_product_id(product_id)" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
                                     <field name="name" invisible="1"/>
+                                    <field name="qty_location" />
+                                    <field name="qty_reserved" />
                                     <field name="product_uom_qty" on_change="onchange_quantity(product_id, product_uom_qty, product_uom, product_uos)"/>
                                     <field name="product_uom" string="Unit of Measure" groups="product.group_uom" invisible="1"/>
                                     <field name="product_uos_qty" groups="product.group_uos" invisible="1"/>

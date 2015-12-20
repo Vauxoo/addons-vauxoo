@@ -28,9 +28,43 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
 
+import time
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+
 
 class StockMove(models.Model):
     _inherit = "stock.move"
+
+    qty_location = fields.Float(
+        string='Quantity Available', compute='_compute_qty', readonly=True,
+        help="Quantity in source location that can still be used for this "
+        "move")
+
+    qty_reserved = fields.Float(
+        string='Quantity Reserved', compute='_compute_qty', readonly=True,
+        help='Quantity that has already been reserved by others moves')
+
+    @api.multi
+    @api.depends('product_id', 'location_id')
+    def _compute_qty(self):
+        for record in self:
+            domain_available = [
+                ('product_id', '=', record.product_id.id),
+                ('location_id', 'child_of', record.location_id.id),
+                ('reservation_id', '=', False)
+            ]
+            domain_reserved = [
+                ('product_id', '=', record.product_id.id),
+                ('location_id', 'child_of', record.location_id.id),
+                ('reservation_id', '!=', False)
+            ]
+            quants = self.env['stock.quant']
+            available = quants.search(domain_available)
+            reserved = quants.search(domain_reserved)
+            qty_location = available and sum(available.mapped('qty')) or 0.0
+            qty_reserved = reserved and sum(reserved.mapped('qty')) or 0.0
+            record.qty_location = qty_location
+            record.qty_reserved = qty_reserved
 
     @api.multi
     def _check_quants_availability(self):
@@ -72,7 +106,8 @@ class StockMove(models.Model):
         if context.get('active_model') == 'stock.picking.type' and \
                 context.get('active_id'):
             picking_id = context.get('active_id')
-            picking_type = self.env['stock.picking.type'].browse(picking_id)
+            picking = self.env['stock.picking'].browse(picking_id)
+            picking_type = picking.picking_type_id
             if picking_type.quick_view:
                 for move in self:
                     if move.state == 'confirmed':
@@ -95,13 +130,11 @@ class StockPicking(models.Model):
     def _prepare_pack_ops(self, picking, quants, force_qties):
         res = super(StockPicking, self)._prepare_pack_ops(
             picking, quants, force_qties)
-        for item in res:
-            if 'picking_id' in item:
-                picking = self.env['stock.picking'].browse(item['picking_id'])
-                if picking.picking_type_id.quick_view:
-                    item.update({
-                        'location_id': picking.force_location_id.id,
-                        'location_dest_id': picking.force_location_dest_id.id})
+        if picking.picking_type_id.quick_view:
+            for item in res:
+                item.update({
+                    'location_id': picking.force_location_id.id,
+                    'location_dest_id': picking.force_location_dest_id.id})
         return res
 
     @api.onchange('force_location_id', 'force_location_dest_id')
@@ -124,6 +157,29 @@ class StockPicking(models.Model):
             if move_vals:
                 for move in pick.move_lines:
                     move.update(move_vals)
+            if not pick.move_lines and pick.force_location_id:
+                quant = self.env['stock.quant'].search([
+                    ('location_id', 'child_of', pick.force_location_id.id),
+                    ('qty', '>=', 1.0),
+                    ('reservation_id', '=', False)])
+                products = quant.mapped("product_id")
+                location_dest_id = pick.force_location_dest_id and \
+                    pick.force_location_dest_id.id or \
+                    pick.picking_type_id.default_location_dest_id
+                move_lines = []
+                for product in products:
+                    move_lines.append([0, False, {
+                        'name': product.name,
+                        'product_id': product.id,
+                        'product_uom_qty': 0.0,
+                        'product_uom': product.uom_id.id,
+                        'location_id': pick.force_location_id.id,
+                        'location_dest_id': location_dest_id.id,
+                        'date_expected': time.strftime(
+                            DEFAULT_SERVER_DATETIME_FORMAT),
+                    }])
+                if move_lines:
+                    pick.update({'move_lines': move_lines})
 
     @api.multi
     def action_assign(self):
