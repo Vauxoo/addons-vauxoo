@@ -13,8 +13,9 @@
                     <button name="action_confirm" states="draft" string="Mark as Todo" type="object" class="oe_highlight" groups="base.group_user"/>
                     <button name="action_assign" states="confirmed" string="Check Availability" type="object" class="oe_highlight" groups="base.group_user"/>
                     <button name="rereserve_pick" string="Recheck Availability" type="object" class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'partially_available')), ('pack_operation_exist','=',True)]}"/>
-                    <button name="force_assign" states="confirmed,waiting,partially_available" string="Force Availability" type="object" groups="base.group_user"/>
-                    <button name="do_enter_transfer_details" states="assigned,partially_available" string="Transfer" groups="stock.group_stock_user" type="object" class="oe_highlight"/>
+                    <!-- <button name="force_assign" states="confirmed,waiting,partially_available" string="Force Availability" type="object" groups="base.group_user"/>
+                    <button name="do_enter_transfer_details" states="assigned,partially_available" string="Transfer" groups="stock.group_stock_user" type="object" class="oe_highlight"/>-->
+                    <button name="do_detailed_transfer" states="assigned,partially_available" string="Transfer" groups="stock.group_stock_user" type="object" class="oe_highlight"/>
                     <button name="do_print_picking" string="Print Picking List" groups="stock.group_stock_user" type="object" attrs="{'invisible': ['|', ('picking_type_code', '=', 'outgoing'), ('state', '!=', 'assigned')]}"/>
                     <button name="%(stock.act_stock_return_picking)d" string="Reverse Transfer" states="done" type="action" groups="base.group_user"/>
                     <button name="action_cancel" states="assigned,confirmed,partially_available,draft,waiting" string="Cancel Transfer" groups="base.group_user" type="object"/>
@@ -52,7 +53,7 @@
                         <page string="Internal Moves">
                             <field name="move_lines" attrs="{'invisible': [('force_location_id', '=', False)], 'readonly': [('state', 'in', ('assigned', 'cancel', 'done'))]}"
                                 context="{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id,'default_picking_id': active_id, 'default_location_id': force_location_id}" >
-                                <tree colors="grey:scrapped == True" string="Stock Moves" editable="top">
+                                <tree colors="grey:state == 'cancel';grey:scrapped == True" string="Stock Moves" editable="top">
                                     <field name="product_id" on_change="onchange_product_id(product_id)" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
                                     <field name="name" invisible="1"/>
                                     <field name="qty_location" />

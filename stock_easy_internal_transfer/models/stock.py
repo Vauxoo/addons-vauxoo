@@ -27,6 +27,7 @@
 ##############################################################################
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
+from datetime import datetime
 
 import time
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -100,21 +101,6 @@ class StockMove(models.Model):
         product = quant.mapped("product_id")
         return {'domain': {'product_id': [('id', 'in', product.ids)]}}
 
-    @api.multi
-    def unlink(self):
-        context = self._context
-        if context.get('active_model') == 'stock.picking.type' and \
-                context.get('active_id'):
-            picking_id = context.get('active_id')
-            picking = self.env['stock.picking'].browse(picking_id)
-            picking_type = picking.picking_type_id
-            if picking_type.quick_view:
-                for move in self:
-                    if move.state == 'confirmed':
-                        move.action_cancel()
-                        # move.unlink()
-        return super(StockMove, self).unlink()
-
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
@@ -157,29 +143,30 @@ class StockPicking(models.Model):
             if move_vals:
                 for move in pick.move_lines:
                     move.update(move_vals)
-            if not pick.move_lines and pick.force_location_id:
-                quant = self.env['stock.quant'].search([
-                    ('location_id', 'child_of', pick.force_location_id.id),
-                    ('qty', '>=', 1.0),
-                    ('reservation_id', '=', False)])
-                products = quant.mapped("product_id")
-                location_dest_id = pick.force_location_dest_id and \
-                    pick.force_location_dest_id.id or \
-                    pick.picking_type_id.default_location_dest_id
-                move_lines = []
-                for product in products:
-                    move_lines.append([0, False, {
-                        'name': product.name,
-                        'product_id': product.id,
-                        'product_uom_qty': 0.0,
-                        'product_uom': product.uom_id.id,
-                        'location_id': pick.force_location_id.id,
-                        'location_dest_id': location_dest_id.id,
-                        'date_expected': time.strftime(
-                            DEFAULT_SERVER_DATETIME_FORMAT),
-                    }])
-                if move_lines:
-                    pick.update({'move_lines': move_lines})
+            # TODO: uncomment when require this functionality
+            # if not pick.move_lines and pick.force_location_id:
+            #     quant = self.env['stock.quant'].search([
+            #         ('location_id', 'child_of', pick.force_location_id.id),
+            #         ('qty', '>=', 1.0),
+            #         ('reservation_id', '=', False)])
+            #     products = quant.mapped("product_id")
+            #     location_dest_id = pick.force_location_dest_id and \
+            #         pick.force_location_dest_id.id or \
+            #         pick.picking_type_id.default_location_dest_id
+            #     move_lines = []
+            #     for product in products:
+            #         move_lines.append([0, False, {
+            #             'name': product.name,
+            #             'product_id': product.id,
+            #             'product_uom_qty': 0.0,
+            #             'product_uom': product.uom_id.id,
+            #             'location_id': pick.force_location_id.id,
+            #             'location_dest_id': location_dest_id.id,
+            #             'date_expected': time.strftime(
+            #                 DEFAULT_SERVER_DATETIME_FORMAT),
+            #         }])
+            #     if move_lines:
+            #         pick.update({'move_lines': move_lines})
 
     @api.multi
     def action_assign(self):
@@ -190,6 +177,10 @@ class StockPicking(models.Model):
                     _("You should set source location before check"
                       " availability"))
             elif pick.picking_type_id.quick_view:
+                for move in pick.move_lines:
+                    if move.product_qty == 0.0:
+                        move.action_cancel()
+                        move.unlink()
                 moves = pick.move_lines.filtered(
                     lambda m: m.state not in ('draft', 'cancel', 'done'))
                 moves._check_quants_availability()
@@ -198,6 +189,71 @@ class StockPicking(models.Model):
                     for move in moves:
                         move.write({'location_dest_id': location_dest_id})
         return super(StockPicking, self).action_assign()
+
+    @api.multi
+    def do_detailed_transfer(self):
+        assert len(self) == 1, _('This option should only be used for a '
+                                 'single id at a time.')
+        picking = self
+        items = []
+        packs = []
+        if not picking.pack_operation_ids:
+            picking.do_prepare_partial()
+        for op in picking.pack_operation_ids:
+            item = {
+                'packop_id': op.id,
+                'product_id': op.product_id.id,
+                'product_uom_id': op.product_uom_id.id,
+                'quantity': op.product_qty,
+                'package_id': op.package_id.id,
+                'lot_id': op.lot_id.id,
+                'sourceloc_id': op.location_id.id,
+                'destinationloc_id': op.location_dest_id.id,
+                'result_package_id': op.result_package_id.id,
+                'owner_id': op.owner_id.id,
+            }
+            if op.date:
+                item.update({'date': op.date})
+            if op.product_id:
+                items.append(item)
+            elif op.package_id:
+                packs.append(item)
+
+        packop = self.env['stock.pack.operation']
+        processed_ids = []
+        # Create new and update existing pack operations
+        for lstits in [items, packs]:
+            for prod in lstits:
+                pack = {
+                    'product_id': prod['product_id'],
+                    'product_uom_id': prod['product_uom_id'],
+                    'product_qty': prod['quantity'],
+                    'package_id': prod['package_id'],
+                    'lot_id': prod['lot_id'],
+                    'location_id': prod['sourceloc_id'],
+                    'location_dest_id': prod['destinationloc_id'],
+                    'result_package_id': prod['result_package_id'],
+                    'date': 'date' in prod and prod['date'] or datetime.now(),
+                    'owner_id': prod['owner_id'],
+                }
+                if prod['packop_id']:
+                    packop_id = packop.browse(prod['packop_id'])
+                    packop_id.with_context(no_recompute=True).write(pack)
+                else:
+                    pack['picking_id'] = picking.id
+                    packop_id = packop.create(pack)
+
+                processed_ids.append(packop_id.id)
+
+        # Delete the others
+        packops = packop.search(['&', ('picking_id', '=', picking.id),
+                                 '!', ('id', 'in', processed_ids)])
+        packops.unlink()
+
+        # Execute the transfer of the picking
+        picking.do_transfer()
+
+        return True
 
 
 class StockPickingType(models.Model):
