@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
         <record id="product_targus_a" model="product.product">
             <field name="name">Targus Laptop 16" Bag</field>
             <field name="type">product</field>
@@ -11,19 +11,88 @@
             <field name="property_stock_account_output" ref="account.o_income"/>
         </record>
 
-        <record id="targus_stock_inventory" model="stock.inventory">
-            <field name="name">Inventory Adjustment: Targus Laptop 16" Bag</field>
+        <record id="targus_stock_inventory1" model="stock.inventory">
+            <field name="name">Inventory Adjustment: Targus Laptop 16" Bag #1</field>
         </record>
-        <record id="targus_stock_inventory_product_a" model="stock.inventory.line">
+        <record id="targus_stock_inventory_product_a1" model="stock.inventory.line">
             <field name="product_id" ref="product_targus_a"/>
             <field name="product_uom_id" ref="product.product_uom_unit"/>
-            <field name="inventory_id" ref="stock_card.targus_stock_inventory"/>
+            <field name="inventory_id" ref="stock_card.targus_stock_inventory1"/>
+            <field name="product_qty">200.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('stock_card.targus_stock_inventory1'))]]"
+                model="stock.inventory"
+                name="search"/>
+        </function>
+
+
+        <record id="targus_stock_inventory2" model="stock.inventory">
+            <field name="name">Inventory Adjustment: Targus Laptop 16" Bag #2</field>
+        </record>
+        <record id="targus_stock_inventory_product_a2" model="stock.inventory.line">
+            <field name="product_id" ref="product_targus_a"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="stock_card.targus_stock_inventory2"/>
             <field name="product_qty">500.0</field>
             <field name="location_id" ref="stock.stock_location_14"/>
         </record>
 
         <function model="stock.inventory" name="action_done">
-            <function eval="[[('id', '=', ref('stock_card.targus_stock_inventory'))]]"
+            <function eval="[[('id', '=', ref('stock_card.targus_stock_inventory2'))]]"
+                model="stock.inventory"
+                name="search"/>
+        </function>
+
+        <record id="targus_stock_inventory3" model="stock.inventory">
+            <field name="name">Inventory Adjustment: Targus Laptop 16" Bag #3</field>
+        </record>
+        <record id="targus_stock_inventory_product_a3" model="stock.inventory.line">
+            <field name="product_id" ref="product_targus_a"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="stock_card.targus_stock_inventory3"/>
+            <field name="product_qty">400.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('stock_card.targus_stock_inventory3'))]]"
+                model="stock.inventory"
+                name="search"/>
+        </function>
+
+        <record id="targus_stock_inventory4" model="stock.inventory">
+            <field name="name">Inventory Adjustment: Targus Laptop 16" Bag #4</field>
+        </record>
+        <record id="targus_stock_inventory_product_a4" model="stock.inventory.line">
+            <field name="product_id" ref="product_targus_a"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="stock_card.targus_stock_inventory4"/>
+            <field name="product_qty">800.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('stock_card.targus_stock_inventory4'))]]"
+                model="stock.inventory"
+                name="search"/>
+        </function>
+
+        <record id="targus_stock_inventory5" model="stock.inventory">
+            <field name="name">Inventory Adjustment: Targus Laptop 16" Bag #5</field>
+        </record>
+        <record id="targus_stock_inventory_product_a5" model="stock.inventory.line">
+            <field name="product_id" ref="product_targus_a"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="stock_card.targus_stock_inventory5"/>
+            <field name="product_qty">400.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('stock_card.targus_stock_inventory5'))]]"
                 model="stock.inventory"
                 name="search"/>
         </function>

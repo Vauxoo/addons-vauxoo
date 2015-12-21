@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
+import pdb
 
 
 class TestStockCard(TransactionCase):
@@ -55,3 +56,24 @@ class TestStockCard(TransactionCase):
         # assert average cost
         self.assertEqual(self.sc_move_id.average,
                          sc_product_id.product_id.standard_price)
+
+    def test_02_check_inventory_initializations(self):
+        cost = self.product_targus_id.standard_price
+
+        sc_product_id = self.sc_product.create({
+            'product_id': self.product_targus_id.id
+        })
+
+        sc_product_id.stock_card_move_get()
+        moves = sc_product_id.action_view_moves()
+
+        search_domain = eval(moves['domain'])
+
+        averages = self.sc_move.search(search_domain).mapped('average')
+        costs = self.sc_move.search(search_domain).mapped('cost_unit')
+
+        self.assertTrue(all(averages))
+        self.assertTrue(all(costs))
+
+        self.assertEqual(sum(averages), len(averages)*cost)
+        self.assertEqual(sum(costs), len(costs)*cost)
