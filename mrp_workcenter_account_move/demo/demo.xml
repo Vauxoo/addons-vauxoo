@@ -21,19 +21,6 @@
         <field ref="account.income_view" name="parent_id"/>
     </record>
 
-    <record id="rev_analytic_production_journal" model="account.analytic.journal">
-        <field name="code">vxprod</field>
-        <field name="name">ANALYTIC_PRODUCTION_JOURNAL</field>
-        <field name="type">general</field>
-    </record>
-
-    <record id="rev_production_journal" model="account.journal">
-        <field name="code">vxprod</field>
-        <field name="name">PRODUCTION_JOURNAL</field>
-        <field name="type">general</field>
-        <field name="analytic_journal_id" ref="rev_analytic_production_journal"/>
-    </record>
-
     <record id="rev_raw_material_std_realtime" model="product.product">
         <field name="name">RAW_MATERIAL_STD_REALTIME</field>
         <field name="type">product</field>
