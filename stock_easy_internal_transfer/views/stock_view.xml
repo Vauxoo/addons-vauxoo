@@ -69,7 +69,7 @@
                                     <field name="scrapped" invisible="1" />
                                     <field name="availability" invisible="1"/>
                                     <field name="reserved_availability" invisible="1"/>
-                                    <field name="location_dest_id" />
+                                    <field name="location_dest_id" invisible="1" />
                                     <field name="remaining_qty" invisible="1"/>
                                     <field name="string_availability_info" invisible="1"/>
                                     <field name="state" invisible="1"/>
