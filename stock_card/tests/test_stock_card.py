@@ -19,7 +19,6 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-import pdb
 
 
 class TestStockCard(TransactionCase):
@@ -165,7 +164,7 @@ class TestStockCard(TransactionCase):
             retrieved_avg = sc_product_id.get_average(self.product_id.id)
             self.assertEqual(val['expected_avg'], retrieved_avg,
                              "Average Cost isn't right")
-            pdb.set_trace()
+
             self.assertEqual(val['theoretical_qty'],
                              inv_id.line_ids[0].theoretical_qty,
                              "Theoretical Quantities doesn't match")
