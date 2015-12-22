@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+        <record id="product_std_01" model="product.product">
+            <field name="name">VX Laptop Battery (std)</field>
+            <field name="cost_method">standard</field>
+            <field name="valuation">real_time</field>
+            <field name="landed_cost_ok">0</field>
+            <field name="type">product</field>
+            <field name="weight">1</field>
+            <field name="volume">1</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="product_avg_01" model="product.product">
+            <field name="name">VX Wireless Mouse (avg)</field>
+            <field name="cost_method">average</field>
+            <field name="valuation">real_time</field>
+            <field name="landed_cost_ok">0</field>
+            <field name="type">product</field>
+            <field name="weight">1</field>
+            <field name="volume">1</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="product_real_01" model="product.product">
+            <field name="name">VX Keyboard (real)</field>
+            <field name="cost_method">real</field>
+            <field name="valuation">real_time</field>
+            <field name="landed_cost_ok">0</field>
+            <field name="type">product</field>
+            <field name="weight">1</field>
+            <field name="volume">1</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="picking_01" model="stock.picking">
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="picking_type_id" ref="stock.picking_type_in"/>
+        </record>
+        <record id="move_product_std_01" model="stock.move">
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
+            <field name="product_uom_qty">100</field>
+            <field name="product_uom">1</field>
+            <field name="name">Standard Product Move</field>
+            <field name="location_id" ref="stock.stock_location_suppliers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_01"/>
+            <field name="invoice_state">none</field>
+        </record>
+        <record id="move_product_avg_01" model="stock.move">
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
+            <field name="product_uom_qty">100</field>
+            <field name="product_uom">1</field>
+            <field name="name">Average Product Move</field>
+            <field name="location_id" ref="stock.stock_location_suppliers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_01"/>
+            <field name="invoice_state">none</field>
+        </record>
+        <record id="move_product_real_01" model="stock.move">
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
+            <field name="product_uom_qty">100</field>
+            <field name="product_uom">1</field>
+            <field name="name">Real time Product Move</field>
+            <field name="location_id" ref="stock.stock_location_suppliers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_01"/>
+            <field name="invoice_state">none</field>
+        </record>
+        <record id="picking_02" model="stock.picking">
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="picking_type_id" ref="stock.picking_type_in"/>
+        </record>
+        <record id="move_product_std_02" model="stock.move">
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
+            <field name="product_uom_qty">150</field>
+            <field name="product_uom">1</field>
+            <field name="name">Standard Product Move</field>
+            <field name="location_id" ref="stock.stock_location_suppliers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_02"/>
+            <field name="invoice_state">none</field>
+        </record>
+        <record id="move_product_avg_02" model="stock.move">
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
+            <field name="product_uom_qty">150</field>
+            <field name="product_uom">1</field>
+            <field name="name">Average Product Move</field>
+            <field name="location_id" ref="stock.stock_location_suppliers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_02"/>
+            <field name="invoice_state">none</field>
+        </record>
+        <record id="move_product_real_02" model="stock.move">
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
+            <field name="product_uom_qty">150</field>
+            <field name="product_uom">1</field>
+            <field name="name">Real time Product Move</field>
+            <field name="location_id" ref="stock.stock_location_suppliers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_02"/>
+            <field name="invoice_state">none</field>
+        </record>
     </data>
 </openerp>

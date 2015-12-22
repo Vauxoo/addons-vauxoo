@@ -17,6 +17,7 @@
         "stock_card_segmentation",
     ],
     "demo": [
+        "demo/stock.xml",
     ],
     "data": [
         'view/view.xml',
