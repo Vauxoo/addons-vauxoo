@@ -51,12 +51,12 @@ class StockMove(models.Model):
         for record in self:
             domain_available = [
                 ('product_id', '=', record.product_id.id),
-                ('location_id', 'child_of', record.location_id.id),
+                ('location_id', '=', record.location_id.id),
                 ('reservation_id', '=', False)
             ]
             domain_reserved = [
                 ('product_id', '=', record.product_id.id),
-                ('location_id', 'child_of', record.location_id.id),
+                ('location_id', '=', record.location_id.id),
                 ('reservation_id', '!=', False)
             ]
             quants = self.env['stock.quant']
@@ -72,7 +72,7 @@ class StockMove(models.Model):
         for record in self:
             domain_quants = [
                 ('product_id', '=', record.product_id.id),
-                ('location_id', 'child_of', record.location_id.id),
+                ('location_id', '=', record.location_id.id),
                 ('reservation_id', '=', False)
             ]
             quants = self.env['stock.quant'].read_group(
@@ -94,7 +94,7 @@ class StockMove(models.Model):
     @api.multi
     def location_id_change(self, location_id):
         quant = self.env['stock.quant'].search([
-            ('location_id', 'child_of', location_id),
+            ('location_id', '=', location_id),
             ('qty', '>=', 1.0),
             ('reservation_id', '=', False)])
 
@@ -146,7 +146,7 @@ class StockPicking(models.Model):
             # TODO: uncomment when require this functionality
             # if not pick.move_lines and pick.force_location_id:
             #     quant = self.env['stock.quant'].search([
-            #         ('location_id', 'child_of', pick.force_location_id.id),
+            #         ('location_id', '=', pick.force_location_id.id),
             #         ('qty', '>=', 1.0),
             #         ('reservation_id', '=', False)])
             #     products = quant.mapped("product_id")
