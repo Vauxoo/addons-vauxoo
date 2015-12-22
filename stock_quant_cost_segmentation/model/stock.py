@@ -5,6 +5,7 @@ from openerp import SUPERUSER_ID
 from openerp.tools.float_utils import float_round
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
+import openerp.addons.decimal_precision as dp
 
 SEGMENTATION_COST = [
     'landed_cost',
@@ -24,13 +25,22 @@ class StockQuant(models.Model):
             record.segmentation_cost = sum([
                 getattr(record, fn) for fn in SEGMENTATION_COST])
 
-    material_cost = fields.Float(string='Material Cost')
-    production_cost = fields.Float(string='Production Cost')
-    subcontracting_cost = fields.Float(string='Subcontracting Cost')
-    landed_cost = fields.Float(string='Landed Cost')
+    material_cost = fields.Float(
+        string='Material Cost',
+        digits=dp.get_precision('Account')),
+    production_cost = fields.Float(
+        string='Production Cost',
+        digits=dp.get_precision('Account')),
+    subcontracting_cost = fields.Float(
+        string='Subcontracting Cost',
+        digits=dp.get_precision('Account')),
+    landed_cost = fields.Float(
+        string='Landed Cost',
+        digits=dp.get_precision('Account')),
     segmentation_cost = fields.Float(
         string='Actual Cost', store=True, readonly=True,
         compute='_compute_segmentation',
+        digits=dp.get_precision('Account'),
         help=("Provides the actual cost for this transaction. "
               "It is computed from the sum of the segmentation costs: "
               "`material cost`, `subcontracting cost`, `landed cost` "
