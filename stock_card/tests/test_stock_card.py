@@ -29,12 +29,54 @@ class TestStockCard(TransactionCase):
         self.stock_card = self.env['stock.card']
         self.sc_product = self.env['stock.card.product']
         self.sc_move = self.env['stock.card.move']
-        self.product_targus_id = self.env.ref('stock_card.product_targus_a')
-        pass
+        self.move = self.env['stock.move']
+        self.product_id = self.env.ref('stock_card.product01')
+
+        self.inv_ids = [
+            {
+                'cost': 20,
+                'qty': 2,
+                'write': True,
+                'expected_avg': 20,
+                'theoretical_qty': 0,
+            },
+            {
+                'cost': 40,
+                'qty': 5,
+                'write': True,
+                'expected_avg': 32,
+                'theoretical_qty': 2,
+            },
+            {
+                'cost': 32,
+                'qty': 4,
+                'write': False,
+                'expected_avg': 32,
+                'theoretical_qty': 5,
+            },
+            {
+                'cost': 64,
+                'qty': 8,
+                'write': True,
+                'expected_avg': 48,
+                'theoretical_qty': 4,
+            },
+            {
+                'cost': 48,
+                'qty': 4,
+                'write': False,
+                'expected_avg': 48,
+                'theoretical_qty': 8,
+            },
+        ]
 
     def test_01_stock_card(self):
+        for val in self.inv_ids:
+            inv_id = self.create_inventory(self.product_id, val['qty'])
+            inv_id.action_done()
+
         sc_product_id = self.sc_product.create({
-            'product_id': self.product_targus_id.id
+            'product_id': self.product_id.id
         })
         self.assertTrue(sc_product_id.id)
         res = sc_product_id.stock_card_move_get()
@@ -51,17 +93,22 @@ class TestStockCard(TransactionCase):
         self.sc_move_id = self.sc_move.browse([sc_move_domain_id])
         self.assertTrue(len(self.sc_move_id) > 0)
         self.assertTrue(self.sc_move_id.stock_card_product_id.product_id.id,
-                        self.product_targus_id.id)
+                        self.product_id.id)
 
         # assert average cost
         self.assertEqual(self.sc_move_id.average,
                          sc_product_id.product_id.standard_price)
 
     def test_02_check_inventory_initializations(self):
-        cost = self.product_targus_id.standard_price
+        cost = self.product_id.standard_price
+        moves = self.move.search([('product_id', '=', self.product_id.id)])
+
+        for val in self.inv_ids:
+            inv_id = self.create_inventory(self.product_id, val['qty'])
+            inv_id.action_done()
 
         sc_product_id = self.sc_product.create({
-            'product_id': self.product_targus_id.id
+            'product_id': self.product_id.id
         })
 
         sc_product_id.stock_card_move_get()
@@ -74,6 +121,51 @@ class TestStockCard(TransactionCase):
 
         self.assertTrue(all(averages))
         self.assertTrue(all(costs))
+        self.assertEqual(sum(averages), 100)
+        self.assertEqual(sum(costs), 100)
 
-        self.assertEqual(sum(averages), len(averages)*cost)
-        self.assertEqual(sum(costs), len(costs)*cost)
+    def create_inventory(self, product_id=False, product_qty=False):
+        inv = self.env['stock.inventory']
+        invline = self.env['stock.inventory.line']
+        location_id = self.env.ref('stock.stock_location_stock')
+
+        inventory_id = inv.create({
+            'name': 'Inventory Adjustment',
+            'filter': product_id and 'product' or 'none',
+            'product_id': product_id.id,
+        })
+
+        inventory_line_id = invline.create({
+            'inventory_id': inventory_id.id,
+            'product_id': product_id.id,
+            'product_qty': product_qty,
+            'location_id': location_id.id,
+        })
+
+        inventory_id.prepare_inventory()
+
+        return inventory_id
+
+    def test_03_simulate_inouts(self):
+
+        for val in self.inv_ids:
+            inv_id = self.create_inventory(self.product_id, val['qty'])
+            if val['write']:
+                self.product_id.write({
+                    'standard_price': val['cost']
+                })
+
+            inv_id.action_done()
+
+            sc_product_id = self.sc_product.create({
+                'product_id': self.product_id.id
+            })
+
+            sc_product_id.stock_card_move_get()
+            retrieved_avg = sc_product_id.get_average(self.product_id.id)
+            self.assertEqual(val['expected_avg'], retrieved_avg,
+                             "Average Cost isn't right")
+            pdb.set_trace()
+            self.assertEqual(val['theoretical_qty'],
+                             inv_id.line_ids[0].theoretical_qty,
+                             "Theoretical Quantities doesn't match")
