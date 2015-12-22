@@ -90,8 +90,6 @@ class StockQuant(models.Model):
             else:
                 exclude_ids = ''
 
-            # TODO: This query must be modularized so it can be modified by
-            # stock_card_segmentation
             query2 = """
                 SELECT
                     sq.id,
