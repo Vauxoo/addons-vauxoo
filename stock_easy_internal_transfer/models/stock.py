@@ -95,8 +95,7 @@ class StockMove(models.Model):
     def location_id_change(self, location_id):
         quant = self.env['stock.quant'].search([
             ('location_id', '=', location_id),
-            ('qty', '>=', 1.0),
-            ('reservation_id', '=', False)])
+            ('qty', '>=', 1.0)])
 
         product = quant.mapped("product_id")
         return {'domain': {'product_id': [('id', 'in', product.ids)]}}

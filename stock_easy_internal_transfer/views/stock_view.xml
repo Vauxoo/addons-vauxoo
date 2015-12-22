@@ -30,16 +30,16 @@
                     <h1>
                         <field name="name" class="oe_inline" attrs="{'invisible': [('name','=','/')]}" readonly="1" />
                     </h1>
+                    <label for="force_location_id" class="oe_edit_only"/>
+                    <h2><field name="force_location_id" required="1" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}" /></h2>
+                    <label for="force_location_dest_id" class="oe_edit_only"/>
+                    <h2><field name="force_location_dest_id" attrs="{'required': [('state', '=', 'assigned')]}" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/></h2>
                     <group>
                         <group>
-                            <field name="force_location_id" required="1" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
-                            <field name="force_location_dest_id" attrs="{'required': [('state', '=', 'assigned')]}" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
                             <field name="partner_id" invisible="1"/>
                             <field name="backorder_id" readonly="1" attrs="{'invisible': [('backorder_id','=',False)]}"/>
                         </group>
                         <group>
-                            <field name="date"/>
-                            <field name="min_date"/>
                             <field name="origin" placeholder="e.g. PO0032" class="oe_inline" invisible="1"/>
                             <label for="owner_id" groups="stock.group_tracking_owner" invisible="1"/>
                             <div groups="stock.group_tracking_owner" invisible="1">
@@ -51,6 +51,9 @@
                     </group>
                     <notebook>
                         <page string="Internal Moves">
+                            <p class="oe_grey" attrs="{'invisible': [('force_location_id', '!=', False)]}">
+                            You need select first a source location to enable product selection.
+                            </p>
                             <field name="move_lines" attrs="{'invisible': [('force_location_id', '=', False)], 'readonly': [('state', 'in', ('assigned', 'cancel', 'done'))]}"
                                 context="{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id,'default_picking_id': active_id, 'default_location_id': force_location_id}" >
                                 <tree colors="grey:state == 'cancel';grey:scrapped == True" string="Stock Moves" editable="top">
@@ -75,17 +78,16 @@
                                     <field name="state" invisible="1"/>
                                 </tree>
                             </field>
-                            <p class="oe_grey" attrs="{'invisible': [('force_location_id', '!=', False)]}">
-                            You need select first a source location to enable product selection.
-                            </p>
                             <field name="pack_operation_exist" invisible="1"/>
                             <field name="note" placeholder="Add an internal note..." class="oe_inline"/>
+                            <field name="date" readonly="1" />
+                            <field name="min_date" invisible="1"/>
                         </page>
                         <page string="Operations" attrs="{'invisible': ['|', ('state','!=','done'), ('pack_operation_ids','=',[])]}" invisible="1">
                             <field name="pack_operation_ids" context="{'default_picking_id': active_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}">
                                 <tree editable="top">
                                     <field name="package_id" groups="stock.group_tracking_lot" invisible="1"/>
-                                    <field name="product_id" on_change="product_id_change(product_id, product_uom_id, product_qty)"/>
+                                    <field name="product_id" on_change="product_id_change(product_id, product_uom_id, product_qty)" />
                                     <field name="product_uom_id" groups="product.group_uom"/>
                                     <field name="lot_id" domain="[('product_id','=?', product_id)]" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
                                     <field name="picking_id" invisible="1"/>
