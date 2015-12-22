@@ -27,16 +27,16 @@ class StockQuant(models.Model):
 
     material_cost = fields.Float(
         string='Material Cost',
-        digits=dp.get_precision('Account')),
+        digits=dp.get_precision('Account'))
     production_cost = fields.Float(
         string='Production Cost',
-        digits=dp.get_precision('Account')),
+        digits=dp.get_precision('Account'))
     subcontracting_cost = fields.Float(
         string='Subcontracting Cost',
-        digits=dp.get_precision('Account')),
+        digits=dp.get_precision('Account'))
     landed_cost = fields.Float(
         string='Landed Cost',
-        digits=dp.get_precision('Account')),
+        digits=dp.get_precision('Account'))
     segmentation_cost = fields.Float(
         string='Actual Cost', store=True, readonly=True,
         compute='_compute_segmentation',
