@@ -83,6 +83,13 @@ class StockQuant(models.Model):
             for val in cr.fetchall():
                 exclude_ids += list(val)
 
+            if exclude_ids:
+                exclude_ids = ', '.join(str(ex_ids) for ex_ids in exclude_ids)
+                exclude_ids = ' AND sq.id NOT IN ({exclude_ids})'.format(
+                    exclude_ids=exclude_ids)
+            else:
+                exclude_ids = ''
+
             # TODO: This query must be modularized so it can be modified by
             # stock_card_segmentation
             query2 = """
@@ -96,9 +103,12 @@ class StockQuant(models.Model):
                 WHERE
                     product_id = {product_id}
                     AND qty > 0.0
+                    {exclude_ids}
                 ORDER BY sq.in_date DESC
                 LIMIT 1
-            """.format(product_id=move.product_id.id)
+            """.format(
+                product_id=move.product_id.id,
+                exclude_ids=exclude_ids)
             cr.execute(query2)
 
             res = cr.dictfetchone()
