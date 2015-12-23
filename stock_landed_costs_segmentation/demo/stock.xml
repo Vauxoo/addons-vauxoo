@@ -6,6 +6,7 @@
             <field name="cost_method">standard</field>
             <field name="valuation">real_time</field>
             <field name="landed_cost_ok">0</field>
+            <field name="standard_price">100</field>
             <field name="type">product</field>
             <field name="weight">1</field>
             <field name="volume">1</field>
@@ -17,6 +18,7 @@
             <field name="cost_method">average</field>
             <field name="valuation">real_time</field>
             <field name="landed_cost_ok">0</field>
+            <field name="standard_price">100</field>
             <field name="type">product</field>
             <field name="weight">1</field>
             <field name="volume">1</field>
@@ -28,6 +30,7 @@
             <field name="cost_method">real</field>
             <field name="valuation">real_time</field>
             <field name="landed_cost_ok">0</field>
+            <field name="standard_price">100</field>
             <field name="type">product</field>
             <field name="weight">1</field>
             <field name="volume">1</field>
