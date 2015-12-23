@@ -2,6 +2,20 @@
 <openerp>
     <data>
 
+        <record id="product_tree_view_easy_internal" model="ir.ui.view">
+            <field name="name">product.product.tree.easy.internal</field>
+            <field name="model">product.product</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+            <tree string="Products">
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="uom_id"/>
+                <field name="lst_price"/>
+            </tree>
+            </field>
+        </record>
+
         <!-- Stock Picking -->
         <record id="view_picking_form_inherit_easy_internal" model="ir.ui.view">
             <field name="name">stock.picking.form</field>
@@ -57,7 +71,7 @@
                             <field name="move_lines" attrs="{'invisible': [('force_location_id', '=', False)], 'readonly': [('state', 'in', ('assigned', 'cancel', 'done'))]}"
                                 context="{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id,'default_picking_id': active_id, 'default_location_id': force_location_id}" >
                                 <tree colors="grey:state == 'cancel';grey:scrapped == True" string="Stock Moves" editable="top">
-                                    <field name="product_id" on_change="onchange_product_id(product_id)" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
+                                    <field name="product_id" on_change="onchange_product_id(product_id)" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}" context="{'tree_view_ref': 'stock_easy_internal_transfer.product_tree_view_easy_internal'}"/>
                                     <field name="name" invisible="1"/>
                                     <field name="qty_location" />
                                     <field name="qty_reserved" />
