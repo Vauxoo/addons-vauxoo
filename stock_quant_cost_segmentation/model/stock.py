@@ -150,7 +150,6 @@ class StockQuant(models.Model):
         sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
         for fn in SEGMENTATION_COST:
             sgmnt_dict[fn] = getattr(solving_quant, fn)
-        import pdb; pdb.set_trace()
         self.write(cr, SUPERUSER_ID, ids, sgmnt_dict, context=context)
         return True
 
