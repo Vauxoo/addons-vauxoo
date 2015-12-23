@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.actions.act_window" id="act_attach_invoice_to_landed_costs_wizard">
+            <field name="name">Attach to Landed Costs</field>
+            <field name="res_model">attach.invoice.to.landed.costs.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!--
+        <record model="ir.values" id="action_batch_attach_invoices_to_landed_costs">
+            <field name="model_id" ref="account.model_account_invoice" />
+            <field name="name">Attach to Landed Costs</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('act_attach_invoice_to_landed_costs_wizard'))" />
+            <field name="key">action</field>
+            <field name="model">account.invoice</field>
+        </record>
+        -->
+
+        <record id="attach_invoice_to_landed_costs_view" model="ir.ui.view">
+            <field name="name">attach.invoice.to.landed.costs.view</field>
+            <field name="model">attach.invoice.to.landed.costs.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Attach invoice to an Landed Costs" version="7.0">
+                    <group colspan="4" col="4">
+                        <separator string="Landed Costs"/>
+                        <newline/>
+                        <field
+                            name="stock_landed_cost_id"
+                            nolabel="1"
+                            domain="[('state','=','draft')]"/>
+                        <footer>
+                            <p class="oe_view_nocontent">
+Note: It you already have an Landed Costs asociated to the Invoice, this wizard
+will replace the previews Landed Costs link and add a new relationship to the
+Landed Costs specified below. If you want to unlink an already related Landed
+Costs only needs to run this wizard with Landed Costs field no filled.
+                            </p>
+                            <button string="Add" type="object" name="add_landed_costs" class="oe_highlight"/>
+                            or
+                            <button string="Cancel" type="special" special="cancel" class="oe_link" icon="terp-gtk-stop"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="landed_costs_extended_invoice_form" model="ir.ui.view">
+            <field name="name">landed.costs.extended.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <div class="oe_right oe_button_box" name="button_box">
+                        <!-- Put buttons here -->
+                        <button
+                            string="Attach Invoice to Landed Costs"
+                            name="%(act_attach_invoice_to_landed_costs_wizard)d"
+                            type="action"
+                            attrs="{'invisible': [('state','not in', ('draft','open','paid'))]}"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="stock_landed_cost_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_add_invoice_to_landed_costs" model="ir.actions.act_window">
+            <field name="name">Landed Costs Invoice</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','in_invoice'),('stock_landed_cost_id','=',context.get('active_id',False))]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False), 'domain_exp_parent':[['landed_costs_ok', '=', 1]]}</field>
+            <field name="target">current</field>
+        </record>
+    </data>
+</openerp>
