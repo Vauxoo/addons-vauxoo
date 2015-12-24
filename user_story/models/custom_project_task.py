@@ -22,8 +22,7 @@
 
 This file loads the necessary information for the custom task view.
 """
-from openerp import models, fields, api
-from openerp.osv import fields
+from openerp import models, fields
 from openerp.tools.sql import drop_view_if_exists
 
 
@@ -31,43 +30,42 @@ class CustomProjectTask(models.Model):
     '''
     Class that contains the methods needed to return the data to the view.
     '''
+
     _name = "custom.project.task"
     _auto = False
 
-    _columns = {
-        'analytic_id': fields.many2one('account.analytic.account', 'Project',
-                                       readonly=True, select=True),
-        'counter': fields.integer('Num', readonly=True),
-        'userstory': fields.integer('User Story', readonly=True,
-                                    help='User history id of user history\
-                                     assigned on task.'),
-        'task_user_id': fields.many2one('res.users', 'Task user',
-                                        readonly=True, select=True, help='User\
-                                         of project task.'),
-        'project_leader_id': fields.many2one('res.users', 'Leader user',
-                                             readonly=True, select=True,
-                                             help='Leader user of project\
-                                                 task.'),
-        'task_id': fields.many2one('project.task', 'Task',
-                                   readonly=True, select=True, help='Project\
-                                    task title.'),
-        'deadline': fields.date('Deadline', readonly=True,
-                                help='Project task deadline.'),
-        'date_end': fields.date('Date End', readonly=True,
-                                help='Project task Date End.'),
-        'period_end': fields.char('Period End', 128,
-                                  help='Period for the end date of summary\
-                                   work.'),
-        'state': fields.char('State', 128, help='Project task state.'),
-    }
+    analytic_id = fields.Many2one('account.analytic.account', 'Project',
+                                   readonly=True, select=True),
+    counter = fields.Integer('Num', readonly=True),
+    userstory = fields.Integer('User Story', readonly=True,
+                               help='User history id of user history\
+                               assigned on task.'),
+    task_user_id = fields.Many2one('res.users', 'Task user',
+                                   readonly=True, select=True, help='User\
+                                   of project task.'),
+    project_leader_id = fields.Many2one('res.users', 'Leader user',
+                                         readonly=True, select=True,
+                                         help='Leader user of project\
+                                             task.'),
+    task_id = fields.Many2one('project.task', 'Task',
+                               readonly=True, select=True, help='Project\
+                                task title.'),
+    deadline = fields.Date('Deadline', readonly=True,
+                            help='Project task deadline.'),
+    date_end = fields.Date('Date End', readonly=True,
+                            help='Project task Date End.'),
+    period_end = fields.Char('Period End', 128,
+                              help='Period for the end date of summary\
+                               work.'),
+    state = fields.Char('State', 128, help='Project task state.'),
 
-    @api.v7
-    def init(self, cr):
+    def init(self):
         '''
         Search method that executes query.
         '''
-        drop_view_if_exists(cr, 'custom_project_task')
-        cr.execute('''
+
+        drop_view_if_exists(self.env.cr, 'custom_project_task')
+        self.env.cr.execute('''
             create or replace view custom_project_task as (
                 SELECT
                     1 AS counter,
