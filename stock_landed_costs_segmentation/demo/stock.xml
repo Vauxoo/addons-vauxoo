@@ -37,73 +37,66 @@
             <field name="property_stock_account_input" ref="account.o_expense"/>
             <field name="property_stock_account_output" ref="account.o_income"/>
         </record>
-        <record id="picking_01" model="stock.picking">
+        <record id="po_01" model="purchase.order">
             <field name="partner_id" ref="base.res_partner_23"/>
-            <field name="picking_type_id" ref="stock.picking_type_in"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
         </record>
-        <record id="move_product_std_01" model="stock.move">
+        <record id="po_01_line_01" model="purchase.order.line">
+            <field name="name">Standard Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
-            <field name="product_uom_qty">100</field>
-            <field name="product_uom">1</field>
-            <field name="name">Standard Product Move</field>
-            <field name="location_id" ref="stock.stock_location_suppliers"/>
-            <field name="location_dest_id" ref="stock.stock_location_stock"/>
-            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_01"/>
-            <field name="invoice_state">none</field>
+            <field name="product_qty">100</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
         </record>
-        <record id="move_product_avg_01" model="stock.move">
+        <record id="po_01_line_02" model="purchase.order.line">
+            <field name="name">Average Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
-            <field name="product_uom_qty">100</field>
-            <field name="product_uom">1</field>
-            <field name="name">Average Product Move</field>
-            <field name="location_id" ref="stock.stock_location_suppliers"/>
-            <field name="location_dest_id" ref="stock.stock_location_stock"/>
-            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_01"/>
-            <field name="invoice_state">none</field>
+            <field name="product_qty">100</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
         </record>
-        <record id="move_product_real_01" model="stock.move">
+        <record id="po_01_line_03" model="purchase.order.line">
+            <field name="name">Real time Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
-            <field name="product_uom_qty">100</field>
-            <field name="product_uom">1</field>
-            <field name="name">Real time Product Move</field>
-            <field name="location_id" ref="stock.stock_location_suppliers"/>
-            <field name="location_dest_id" ref="stock.stock_location_stock"/>
-            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_01"/>
-            <field name="invoice_state">none</field>
+            <field name="product_qty">100</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
         </record>
-        <record id="picking_02" model="stock.picking">
+        <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_01"/>
+
+        <record id="po_02" model="purchase.order">
             <field name="partner_id" ref="base.res_partner_23"/>
-            <field name="picking_type_id" ref="stock.picking_type_in"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
         </record>
-        <record id="move_product_std_02" model="stock.move">
+        <record id="po_02_line_01" model="purchase.order.line">
+            <field name="name">Standard Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
-            <field name="product_uom_qty">150</field>
-            <field name="product_uom">1</field>
-            <field name="name">Standard Product Move</field>
-            <field name="location_id" ref="stock.stock_location_suppliers"/>
-            <field name="location_dest_id" ref="stock.stock_location_stock"/>
-            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_02"/>
-            <field name="invoice_state">none</field>
+            <field name="product_qty">150</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
         </record>
-        <record id="move_product_avg_02" model="stock.move">
+        <record id="po_02_line_02" model="purchase.order.line">
+            <field name="name">Average Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
-            <field name="product_uom_qty">150</field>
-            <field name="product_uom">1</field>
-            <field name="name">Average Product Move</field>
-            <field name="location_id" ref="stock.stock_location_suppliers"/>
-            <field name="location_dest_id" ref="stock.stock_location_stock"/>
-            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_02"/>
-            <field name="invoice_state">none</field>
+            <field name="product_qty">150</field>
+            <field name="price_unit">210</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
         </record>
-        <record id="move_product_real_02" model="stock.move">
+        <record id="po_02_line_03" model="purchase.order.line">
+            <field name="name">Real time Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
-            <field name="product_uom_qty">150</field>
-            <field name="product_uom">1</field>
-            <field name="name">Real time Product Move</field>
-            <field name="location_id" ref="stock.stock_location_suppliers"/>
-            <field name="location_dest_id" ref="stock.stock_location_stock"/>
-            <field name="picking_id" ref="stock_landed_costs_segmentation.picking_02"/>
-            <field name="invoice_state">none</field>
+            <field name="product_qty">150</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
         </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/>
     </data>
 </openerp>
