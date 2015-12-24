@@ -191,14 +191,18 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.assertEqual(product_avg_quant_id.segmentation_cost, 300)
         self.assertEqual(product_real_quant_id.segmentation_cost, 190)
 
-        # check splitted costs
-        for quant in self.picking_02_id.mapped('move_lines.quant_ids'):
-            self.assertEqual(quant.landed_cost, 20,
-                             'Landed Cost should be 20')
-            self.assertEqual(quant.subcontracting_cost, 70,
-                             'Subcontrating Cost should be 70')
-            self.assertEqual(quant.material_cost, 100,
-                             'Subcontrating Cost should be 100')
+        self.assertEqual(product_std_quant_id.material_cost, 100)
+        self.assertEqual(product_avg_quant_id.material_cost, 210)
+        self.assertEqual(product_real_quant_id.material_cost, 100)
+
+        self.assertEqual(product_std_quant_id.landed_cost, 20)
+        self.assertEqual(product_avg_quant_id.landed_cost, 20)
+        self.assertEqual(product_real_quant_id.landed_cost, 20)
+
+        self.assertEqual(product_std_quant_id.subcontracting_cost, 70)
+        self.assertEqual(product_avg_quant_id.subcontracting_cost, 70)
+        self.assertEqual(product_real_quant_id.subcontracting_cost, 70)
+
         # check product costs
         self.assertEqual(self.product_01.standard_price, 100)
         self.assertEqual(self.product_02.standard_price, 264)
