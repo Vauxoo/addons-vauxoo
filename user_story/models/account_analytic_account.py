@@ -22,51 +22,36 @@
 """
 
 from openerp import models, fields, api
-from openerp.osv import fields
 
 
 class AccountAnalyticAccount(models.Model):
     _inherit = "account.analytic.account"
 
-    @api.v7
-    def _remaining_hours_calc(self, cr, uid, ids, name, arg, context=None):
+    invoiceables_hours = fields.Float(compute='_get_invoiceables_hours', string='Units Invoiceable',
+                                      help='Total units of hours to charge.')
+    remaining_hours = fields.Float(compute='_remaining_hours_calc', string='Remaining Time',
+                                   help="Computed using the formula: Maximum Time - Total Worked Time")
+
+    def _remaining_hours_calc(self):
+
         res = {}
-        for account in self.browse(cr, uid, ids, context=context):
+        for account in self:
             if account.quantity_max != 0:
-                res[account.id] = account.quantity_max - \
-                    account.invoiceables_hours
+                res[account.id] = account.quantity_max - account.invoiceables_hours
             else:
                 res[account.id] = 0.0
             res[account.id] = round(res.get(account.id, 0.0), 2)
         return res
 
-    @api.v7
-    def _get_invoiceables_hours(self, cr, uid, ids, args,
-                                _fields, context=None):
-        if context is None:
-            context = {}
+    def _get_invoiceables_hours(self):
+
         res = {}
         total = 0
-        for _id in ids:
-            acl_obj = self.pool.get('account.analytic.line')
-            acl_srch = acl_obj.search(cr, uid, [('account_id', '=', _id)])
-            acl_brw = acl_obj.browse(cr, uid, acl_srch)
-            for acl in acl_brw:
+        for _id in self.ids:
+            acl_obj = self.env['account.analytic.line']
+            acl_recs = acl_obj.search([('account_id', '=', _id)])
+            for acl in acl_recs:
                 if acl.to_invoice:
-                    total = total + (acl.unit_amount -
-                                     (acl.unit_amount *
-                                      (acl.to_invoice.factor / 100)))
+                    total = total + (acl.unit_amount - (acl.unit_amount * (acl.to_invoice.factor / 100)))
             res[_id] = total
         return res
-
-    _columns = {
-        'invoiceables_hours': fields.function(_get_invoiceables_hours,
-                                              type='float',
-                                              string='Units Invoiceable',
-                                              help='Total units of hours to \
-                                              charge.'),
-        'remaining_hours': fields.function(_remaining_hours_calc, type='float',
-                                           string='Remaining Time',
-                                           help="Computed using the formula: \
-                                           Maximum Time - Total Worked Time"),
-    }
