@@ -33,7 +33,8 @@ class StockCardProduct(models.TransientModel):
             '''
             SELECT
                 COALESCE(cost, 0.0) AS cost,
-                COALESCE(qty, 0.0) AS qty
+                COALESCE(qty, 0.0) AS qty,
+                propagated_from_id AS antiquant
                 {col}
             FROM stock_quant_move_rel AS sqm_rel
             INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
@@ -46,14 +47,36 @@ class StockCardProduct(models.TransientModel):
 
     def _get_price_on_consumed(self, row, vals, qntval):
         move_id = row['move_id']
+        product_qty = vals['product_qty']
+        delta_qty = vals['direction'] * row['product_qty']
+        final_qty = product_qty + delta_qty
+        vals['previous_qty'] = vals['product_qty']
+        vals['product_qty'] += (vals['direction'] * row['product_qty'])
+
         # TODO: move to `transit` could be a return
         # average is kept unchanged products are taken at average price
         if not vals['move_dict'].get(move_id):
             vals['move_dict'][move_id] = {}
         vals['move_dict'][move_id]['average'] = vals['average']
-        vals['move_valuation'] = sum(
-            [vals['average'] * qnt['qty'] for qnt in qntval
-             if qnt['qty'] > 0])
+
+        antiquant = any([qnt['antiquant'] for qnt in qntval])
+        if final_qty < 0 and antiquant:
+            vals['move_dict'][move_id]['average'] = vals['average']
+            vals['move_valuation'] = sum(
+                [vals['average'] * qnt['qty'] for qnt in qntval
+                 if qnt['qty'] > 0])
+            return True
+
+        vals['move_valuation'] = 0.0
+        for qnt in qntval:
+            if qnt['qty'] < 0:
+                continue
+            product_qty += vals['direction'] * qnt['qty']
+            if product_qty >= 0:
+                vals['move_valuation'] += vals['average'] * qnt['qty']
+            else:
+                vals['move_valuation'] += qnt['cost'] * qnt['qty']
+
         # NOTE: For production
         # a) it could be a consumption: if so average is kept unchanged
         # products are taken at average price
@@ -62,6 +85,8 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _get_price_on_supplier_return(self, row, vals, qntval):
+        vals['previous_qty'] = vals['product_qty']
+        vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
         move_brw = sm_obj.browse(move_id)
@@ -75,6 +100,8 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _get_price_on_supplied(self, row, vals, qntval):
+        vals['previous_qty'] = vals['product_qty']
+        vals['product_qty'] += (vals['direction'] * row['product_qty'])
         # TODO: transit could be a return that shall be recorded at
         # average cost of transaction
         # average is to be computed considering all the segmentation
@@ -84,6 +111,8 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _get_price_on_customer_return(self, row, vals, qntval):
+        vals['previous_qty'] = vals['product_qty']
+        vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
         move_brw = sm_obj.browse(move_id)
@@ -104,11 +133,33 @@ class StockCardProduct(models.TransientModel):
 
         vals['inventory_valuation'] += (
             vals['direction'] * vals['move_valuation'])
+        # NOTE: there was Negative Quantity, therefore average and
+        # valuation shall only consider new values
+        if vals['previous_qty'] < 0 and vals['direction'] > 0:
+            if vals['product_qty'] >= 0:
+                vals['accumulated_variation'] = 0.0
+                vals['accumulated_qty'] = 0.0
+
+                vals['average'] = (
+                    row['product_qty'] and
+                    vals['move_valuation'] / row['product_qty'] or
+                    vals['average'])
+            else:
+                vals['accumulated_variation'] += vals['move_valuation']
+                vals['accumulated_qty'] += row['product_qty']
+
+                vals['average'] = (
+                    vals['accumulated_qty'] and
+                    vals['accumulated_variation'] / vals['accumulated_qty'] or
+                    vals['average'])
+
+            return True
 
         vals['average'] = (
             vals['product_qty'] and
             vals['inventory_valuation'] / vals['product_qty'] or
             vals['average'])
+        return True
 
     def _get_stock_card_move_line_dict(self, row, vals):
         res = dict(
@@ -136,8 +187,6 @@ class StockCardProduct(models.TransientModel):
             vals['direction'] = 1
         else:
             vals['direction'] = -1
-
-        vals['product_qty'] += (vals['direction'] * row['product_qty'])
 
         qntval = self._get_quant_values(row['move_id'])
 
@@ -175,6 +224,8 @@ class StockCardProduct(models.TransientModel):
             inventory_valuation=0.0,
             lines=[],
             move_dict={},
+            accumulated_variation=0.0,
+            accumulated_qty=0.0,
         )
 
     def _stock_card_move_get(self, product_id, return_values=False):
