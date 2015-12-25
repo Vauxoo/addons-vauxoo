@@ -22,20 +22,39 @@
 """
 
 from openerp import models, fields, api
-from openerp.osv import fields
 from openerp.tools.sql import drop_view_if_exists
 
 
 class HrTimesheet(models.Model):
     _inherit = "hr.analytic.timesheet"
 
-    @api.v7
-    def _get_invoiceables_hours(
-            self, cr, uid,
-            ids, args, fields, context=None):  # pylint: disable=W0621
-        context = context or {}
+    invoiceables_hours = fields.Float(compute='_get_invoiceables_hours',
+                                      store={_inherit: (lambda s: self.ids,
+                                                        ['unit_amount',
+                                                         'to_invoice'],
+                                                         10)},
+                                          string='Invoiceable Hours',
+                                          help='Total hours to charge'),
+
+    userstory_id = fields.Many2one(compute='_get_user_story',
+                                    relation='user.story',
+                                    string='User Story',
+                                    store={
+                                        'project.task':
+                                        (_get_analytic_from_task,
+                                         ['userstory_id'],
+                                         10)
+                                    },
+                                    help="User Story set in the "
+                                    "task of this TimeSheet"),
+    us_id = fields.Integer(related='userstory_id',
+                           store=True,
+                           string='User Story Code')
+
+    def _get_invoiceables_hours(self):  # pylint: disable=W0621
+
         res = {}
-        for time_brw in self.browse(cr, uid, ids, context=context):
+        for time_brw in self.browse():
             hours = time_brw.unit_amount
             if time_brw.to_invoice:
                 hours = time_brw.unit_amount - \
@@ -44,20 +63,15 @@ class HrTimesheet(models.Model):
             res.update({time_brw.id: hours})
         return res
 
-    @api.v7
-    def _get_user_story(
-            self, cr, uid,
-            ids, args, fields, context=None):  # pylint: disable=W0621
-        context = context or {}
+    def _get_user_story(self):  # pylint: disable=W0621
+
         res = {}
-        task_obj = self.pool.get('project.task')
-        for time_brw in self.browse(cr, uid, ids, context=context):
+        task_obj = self.env['project.task']
+        for time_brw in self:
             us_id = False
-            task_ids = task_obj.\
-                search(cr, uid,
-                       [('work_ids.hr_analytic_timesheet_id', '=',
-                         time_brw.id)])
-            if task_ids:
+            task_recs = task_obj.search([('work_ids.hr_analytic_timesheet_id', '=',
+                                         time_brw.id)])
+            if task_recs:
                 task_read = task_obj.read(cr, uid, task_ids[0],
                                           ['userstory_id'],
                                           load='_classic_write')
@@ -65,51 +79,19 @@ class HrTimesheet(models.Model):
             res.update({time_brw.id: us_id})
         return res
 
-    @api.v7
-    def _get_analytic_from_task(self, cr, uid, ids, context=None):
-        context = context or {}
-        cr.execute('''
+    def _get_analytic_from_task(self):
+
+        self.env.cr.execute('''
                    SELECT array_agg(work.hr_analytic_timesheet_id) as a_id
                    FROM project_task AS task
                    INNER JOIN project_task_work AS work ON work.task_id=task.id
                    WHERE task.id {op} {tids}
-                   '''.format(op=(len(ids) == 1) and '=' or 'in',
-                              tids=(len(ids) == 1) and ids[0] or tuple(ids)))
-        res = cr.dictfetchall()
+                   '''.format(op=(len(self.ids) == 1) and '=' or 'in',
+                              tids=(len(self.ids) == 1) and self.ids[0] or tuple(self.ids)))
+        res = self.env.cr.dictfetchall()
         if res:
             res = res[0].get('a_id', []) or []
         return res
-
-    _columns = {
-        'invoiceables_hours': fields.function(_get_invoiceables_hours,
-                                              type='float',
-                                              store={
-                                                  _inherit: (lambda s, c, u,
-                                                             ids, cx={}: ids,
-                                                             ['unit_amount',
-                                                              'to_invoice'],
-                                                             10)},
-                                              string='Invoiceable Hours',
-                                              help='Total hours to charge'),
-
-        'userstory_id': fields.function(_get_user_story,
-                                        type='many2one',
-                                        relation='user.story',
-                                        string='User Story',
-                                        store={
-                                            'project.task':
-                                            (_get_analytic_from_task,
-                                             ['userstory_id'],
-                                             10)
-                                        },
-                                        help="User Story set in the "
-                                        "task of this TimeSheet"),
-        'us_id': fields.related('userstory_id',
-                                'id',
-                                type='integer',
-                                store=True,
-                                string='User Story Code')
-    }
 
 
 class CustomTimesheet(models.Model):
@@ -117,13 +99,28 @@ class CustomTimesheet(models.Model):
     _order = "date desc"
     _auto = False
 
-    @api.v7
-    def _get_invoiceables_hours(
-            self, cr, uid,
-            ids, args, fields, context=None):  # pylint: disable=W0621
-        context = context or {}
+    date = fields.Date('Date', readonly=True),
+    user_id = fields.Many2one('res.users', 'User', readonly=True, select=True),
+    userstory = fields.Integer('User Story', readonly=True),
+    analytic_id = fields.Many2one('account.analytic.account', 'Project', readonly=True, select=True),
+    task_title = fields.Char('Task Tittle', 128, help='Name of task related'),
+    userstory_id = fields.Many2one('user.story', 'User Story',
+                                   help='Code of User Story related to this analytic'),
+    name = fields.Char('Description', 264, help='Description of the work'),
+    unit_amount = fields.Float('Duration', readonly=True),
+    timesheet_id = fields.Many2one('hr.analytic.timesheet', 'TimeSheet', readonly=True, select=True),
+    to_invoice = fields.related('timesheet_id', 'to_invoice',
+                                 relation='hr_timesheet_invoice.factor',
+                                 type='many2one',
+                                 string='Invoiceable'),
+    invoiceables_hours = fields.Float(compute='_get_invoiceables_hours',
+                                      string='Invoiceable Hours',
+                                      help='Total hours to charge')
+
+    def _get_invoiceables_hours(self):  # pylint: disable=W0621
+
         res = {}
-        for time_brw in self.browse(cr, uid, ids, context=context):
+        for time_brw in self.search():
             hours = time_brw.unit_amount
             if time_brw.to_invoice:
                 hours = time_brw.unit_amount - \
@@ -132,40 +129,10 @@ class CustomTimesheet(models.Model):
             res.update({time_brw.id: hours})
         return res
 
-    _columns = {
-        'date': fields.date('Date', readonly=True),
-        'user_id': fields.many2one('res.users', 'User', readonly=True,
-                                   select=True),
-        'userstory': fields.integer('User Story', readonly=True),
-        'analytic_id': fields.many2one('account.analytic.account', 'Project',
-                                       readonly=True, select=True),
-        'task_title': fields.char('Task Tittle', 128,
-                                  help='Name of task related'),
-        'userstory_id': fields.many2one('user.story', 'User Story',
-                                        help='Code of User Story related '
-                                        'to this analytic'),
-        'name': fields.char(
-            'Description', 264, help='Description of the work'),
+    def init(self):
 
-        'unit_amount': fields.float('Duration', readonly=True),
-        'timesheet_id': fields.many2one('hr.analytic.timesheet',
-                                        'TimeSheet', readonly=True,
-                                        select=True),
-        'to_invoice': fields.related('timesheet_id',
-                                     'to_invoice',
-                                     relation='hr_timesheet_invoice.factor',
-                                     type='many2one',
-                                     string='Invoiceable'),
-        'invoiceables_hours': fields.function(_get_invoiceables_hours,
-                                              type='float',
-                                              string='Invoiceable Hours',
-                                              help='Total hours to charge')
-    }
-
-    @api.v7
-    def init(self, cr):
-        drop_view_if_exists(cr, 'custom_timesheet')
-        cr.execute('''
+        drop_view_if_exists(self.env.cr, 'custom_timesheet')
+        self.env.cr.execute('''
             create or replace view custom_timesheet as (
                 SELECT
                       work.id AS id,
