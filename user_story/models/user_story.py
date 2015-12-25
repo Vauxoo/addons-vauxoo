@@ -1,4 +1,5 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+"""
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -18,23 +19,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
 
 import time
 
-from openerp import SUPERUSER_ID, api
-from openerp.osv import fields, osv
+from openerp import SUPERUSER_ID, models, fields, api
+from openerp.osv import fields
 from openerp.tools.translate import _
 
 _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
     'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
 
 
-class UserStory(osv.Model):
+class UserStory(models.Model):
     _name = 'user.story'
     _description = 'User Story'
     _order = 'id desc'
     _inherit = ['mail.thread']
 
+    @api.v7
     def write(self, cr, uid, ids, vals, context=None):
         context = dict(context or {})
         task_obj = self.pool.get('project.task')
@@ -88,6 +91,7 @@ class UserStory(osv.Model):
         return super(UserStory, self).write(cr, uid, ids,
                                             vals, context=context)
 
+    @api.v7
     def body_progress(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
@@ -102,6 +106,7 @@ class UserStory(osv.Model):
         else:
             return False
 
+    @api.v7
     def body_criteria(self, cr, uid, ids, template, criteria, context=None):
         '''
         TODO: This method is incorrect, change for the original method which
@@ -141,6 +146,7 @@ class UserStory(osv.Model):
         else:
             return False
 
+    @api.v7
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
         res = {}
         cr.execute('''
@@ -156,6 +162,7 @@ class UserStory(osv.Model):
             res[us_brw.id] = hours.get(us_brw.id, 0.0)
         return res
 
+    @api.v7
     def _expended_hours_get(self, cr, uid, ids, field_names, args,
                             context=None):
         res = {}
@@ -177,6 +184,7 @@ class UserStory(osv.Model):
             res[us_brw.id] = hours_t
         return res
 
+    @api.v7
     def _get_user_story_from_ptw(self, cr, uid, ids, context=None):
         result = {}
         task_ids = {}
@@ -191,6 +199,7 @@ class UserStory(osv.Model):
                 result[task.userstory_id.id] = True
         return result.keys()
 
+    @api.v7
     def _get_user_story_from_ts(self, cr, uid, ids, context=None):
         task_ids = {}
         task_obj = self.pool.get('project.task')
@@ -204,6 +213,7 @@ class UserStory(osv.Model):
                                [('task_ids', 'in', task_ids)])
         return us_ids
 
+    @api.v7
     def _get_user_story_from_pt(self, cr, uid, ids, context=None):
         result = {}
         for task in self.pool.get('project.task').browse(cr, uid, ids,
@@ -212,6 +222,7 @@ class UserStory(osv.Model):
                 result[task.userstory_id.id] = True
         return result.keys()
 
+    @api.v7
     def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields,
                                            auto_follow_fields=None,
                                            context=None):
@@ -224,6 +235,131 @@ class UserStory(osv.Model):
             cr, uid, updated_fields, auto_follow_fields=auto_follow_fields,
             context=context)
         return res
+
+    @api.multi
+    @api.v7
+    def onchange_project_followers(self, project_id, owner_id, user_id,
+                                   user_execute_id):
+        followers = []
+        res = {}
+        user_obj = self.env['res.users']
+        if project_id:
+            project_brw = self.env['project.project'].browse(project_id)
+            followers += project_brw.message_follower_ids.ids
+        if owner_id:
+            followers.append(user_obj.browse(owner_id).partner_id.id)
+        if user_id:
+            followers.append(user_obj.browse(user_id).partner_id.id)
+        if user_execute_id:
+            followers.append(user_obj.browse(user_execute_id).partner_id.id)
+
+        res['value'] = {'message_follower_ids': followers}
+        return res
+
+    @api.v7
+    def do_draft(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
+
+    @api.v7
+    def do_progress(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'open'}, context=context)
+
+    @api.v7
+    def get_body_disapproval(self, cr, uid, ids, context=None):
+        '''
+        TODO: This body must be verified to give the information regarding the
+        answers in the do_disaproval method.
+        '''
+        usname = self.browse(cr, uid, ids).name
+        username = self.pool.get('res.users').browse(cr, uid, uid).name
+        link = '#id={i}&view_type=form&model=user.story'.format(i=ids)
+        return _(u'''<html><div>
+                 <h2>{usname}</h2>
+                 <p>The user {user} has approved the user Story
+                 <a href="{link}">See what we are talking about here</a>
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
+
+    @api.v7
+    def do_disapproval(self, cr, uid, ids, context=None):
+        '''
+        TODO: Think about this project this is the reverse.
+        Questions:
+            Can be done IF?
+            What are the actions if We desapprove, (Cancel it too)?
+            What Happen with tasks already done?
+            What is the actions that must be take by, Project Manager, Product
+            Owner and the rest of the team?
+        '''
+        return self.write(cr, uid, ids, {'approved': False}, context=context)
+
+    @api.v7
+    def get_body_approval(self, cr, uid, i, context=None):
+        usname = self.browse(cr, uid, i).name
+        username = self.pool.get('res.users').browse(cr, uid, uid).name
+        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
+        return _(u'''<html><div>
+                 <h2>{usname}</h2>
+                 <p>The user {user} has approved the user Story
+                 <a href="{link}">See what we are talking about here</a>
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
+
+    @api.v7
+    def do_approval(self, cr, uid, ids, context=None):
+        context = context or {}
+        mail_mail = self.pool.get('mail.mail')
+        user_obj = self.pool.get('res.users')
+        user = user_obj.pool['res.users'].browse(cr, uid, uid, context)
+        followers = self.read(cr, uid, ids[0], [
+            'message_follower_ids'])['message_follower_ids']
+        # TODO: Re-do when correctly rendered is done using email template
+        for i in ids:
+            body = self.get_body_approval(cr, uid, i, context)
+            context.update({
+                'default_body': body,
+            })
+            mail_id = mail_mail.create(cr, uid, {
+                'model': 'user.story',
+                'res_id': i,
+                'subject':
+                (u'{name} Approved the User Story with id {number}'.format(
+                    number=i, name=user.name)),
+                'body_html': body,
+                'recipient_ids': [(6, 0, followers)],
+                'auto_delete': True,
+                'email_from': user.email,
+            }, context=context)
+            mail_mail.send(cr, uid, [mail_id],
+                           context=context)
+        return self.write(cr, uid, ids,
+                          {'approval_user_id': uid,
+                           'approved': True}, context=context)
+
+    @api.v7
+    def do_pending(self, cr, uid, ids, context=None):
+        body = self.body_criteria(
+            cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
+        hu_model = self.pool.get('user.story')
+        hu = hu_model.browse(cr, uid, ids[0], context=context)
+        subject = (
+            'The User Story with ID %s, "%s...", is now in Pending state' % (
+                hu.id, hu.name[:30]))
+        followers = self.read(cr, uid, ids[0], [
+            'message_follower_ids'])['message_follower_ids']
+        self.message_post(
+            cr, uid, ids, body, subject, type='email', context=context,
+            partner_ids=followers)
+        return self.write(cr, uid, ids, {'state': 'pending'}, context=context)
+
+    @api.v7
+    def do_done(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
+
+    @api.v7
+    def do_cancel(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'cancelled'},
+                          context=context)
 
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False,
@@ -324,134 +460,21 @@ class UserStory(osv.Model):
         'help': True,
     }
 
-    @api.multi
-    def onchange_project_followers(self, project_id, owner_id, user_id,
-                                   user_execute_id):
-        followers = []
-        res = {}
-        user_obj = self.env['res.users']
-        if project_id:
-            project_brw = self.env['project.project'].browse(project_id)
-            followers += project_brw.message_follower_ids.ids
-        if owner_id:
-            followers.append(user_obj.browse(owner_id).partner_id.id)
-        if user_id:
-            followers.append(user_obj.browse(user_id).partner_id.id)
-        if user_execute_id:
-            followers.append(user_obj.browse(user_execute_id).partner_id.id)
 
-        res['value'] = {'message_follower_ids': followers}
-        return res
-
-    def do_draft(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
-
-    def do_progress(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'open'}, context=context)
-
-    def get_body_disapproval(self, cr, uid, ids, context=None):
-        '''
-        TODO: This body must be verified to give the information regarding the
-        answers in the do_disaproval method.
-        '''
-        usname = self.browse(cr, uid, ids).name
-        username = self.pool.get('res.users').browse(cr, uid, uid).name
-        link = '#id={i}&view_type=form&model=user.story'.format(i=ids)
-        return _(u'''<html><div>
-                 <h2>{usname}</h2>
-                 <p>The user {user} has approved the user Story
-                 <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username,
-                                         link=link))
-
-    def do_disapproval(self, cr, uid, ids, context=None):
-        '''
-        TODO: Think about this project this is the reverse.
-        Questions:
-            Can be done IF?
-            What are the actions if We desapprove, (Cancel it too)?
-            What Happen with tasks already done?
-            What is the actions that must be take by, Project Manager, Product
-            Owner and the rest of the team?
-        '''
-        return self.write(cr, uid, ids, {'approved': False}, context=context)
-
-    def get_body_approval(self, cr, uid, i, context=None):
-        usname = self.browse(cr, uid, i).name
-        username = self.pool.get('res.users').browse(cr, uid, uid).name
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
-        return _(u'''<html><div>
-                 <h2>{usname}</h2>
-                 <p>The user {user} has approved the user Story
-                 <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username,
-                                         link=link))
-
-    def do_approval(self, cr, uid, ids, context=None):
-        context = context or {}
-        mail_mail = self.pool.get('mail.mail')
-        user_obj = self.pool.get('res.users')
-        user = user_obj.pool['res.users'].browse(cr, uid, uid, context)
-        followers = self.read(cr, uid, ids[0], [
-            'message_follower_ids'])['message_follower_ids']
-        # TODO: Re-do when correctly rendered is done using email template
-        for i in ids:
-            body = self.get_body_approval(cr, uid, i, context)
-            context.update({
-                'default_body': body,
-            })
-            mail_id = mail_mail.create(cr, uid, {
-                'model': 'user.story',
-                'res_id': i,
-                'subject':
-                (u'{name} Approved the User Story with id {number}'.format(
-                    number=i, name=user.name)),
-                'body_html': body,
-                'recipient_ids': [(6, 0, followers)],
-                'auto_delete': True,
-                'email_from': user.email,
-            }, context=context)
-            mail_mail.send(cr, uid, [mail_id],
-                           context=context)
-        return self.write(cr, uid, ids,
-                          {'approval_user_id': uid,
-                           'approved': True}, context=context)
-
-    def do_pending(self, cr, uid, ids, context=None):
-        body = self.body_criteria(
-            cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
-        hu_model = self.pool.get('user.story')
-        hu = hu_model.browse(cr, uid, ids[0], context=context)
-        subject = (
-            'The User Story with ID %s, "%s...", is now in Pending state' % (
-                hu.id, hu.name[:30]))
-        followers = self.read(cr, uid, ids[0], [
-            'message_follower_ids'])['message_follower_ids']
-        self.message_post(
-            cr, uid, ids, body, subject, type='email', context=context,
-            partner_ids=followers)
-        return self.write(cr, uid, ids, {'state': 'pending'}, context=context)
-
-    def do_done(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
-
-    def do_cancel(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'cancelled'},
-                          context=context)
-
-
-class UserStoryPriority(osv.Model):
+class UserStoryPriority(models.Model):
     _name = 'user.story.priority'
     _description = "User Story Priority Level"
+
     _columns = {
         'name': fields.char('Name', size=255, required=True),
     }
 
 
-class UserStoryDifficulty(osv.Model):
+class UserStoryDifficulty(models.Model):
     _name = 'user.story.difficulty'
     _description = "User Story Difficulty Level"
     _order = "points asc"
+
     _columns = {
         'name': fields.char('Name', size=32, required=True,
                             help="Set a Name for this Estimation."),
@@ -470,10 +493,11 @@ class UserStoryDifficulty(osv.Model):
     }
 
 
-class AcceptabilityCriteria(osv.Model):
+class AcceptabilityCriteria(models.Model):
     _name = 'acceptability.criteria'
     _description = 'Acceptability Criteria'
 
+    @api.v7
     def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
         """
         This method is as the method of the sensitive store tuple for the
@@ -488,6 +512,7 @@ class AcceptabilityCriteria(osv.Model):
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
 
+    @api.v7
     def get_body_disapproval(self, cr, uid, ids, context=None):
         '''
         TODO: This body must be verified to give the information regarding the
@@ -498,6 +523,7 @@ class AcceptabilityCriteria(osv.Model):
             format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
         return link
 
+    @api.v7
     def approve(self, cr, uid, ids, context=None):
         """
         Approve a acceptabilty criteria and send an email.
@@ -531,6 +557,7 @@ class AcceptabilityCriteria(osv.Model):
             context=context, partner_ids=partner_ids)
         return True
 
+    @api.v7
     def disapprove(self, cr, uid, ids, context=None):
         context = context or {}
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
@@ -571,6 +598,7 @@ class AcceptabilityCriteria(osv.Model):
         }
         return ction
 
+    @api.v7
     def ask_review(self, cr, uid, ids, context=None):
         context = context or {}
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
@@ -599,6 +627,7 @@ class AcceptabilityCriteria(osv.Model):
         compose_obj.send_mail(cr, uid, [compose_id])
         return True
 
+    @api.v7
     def _get_user_story_field(self, cr, uid, ids, fieldname, arg,
                               context=None):
         """
@@ -703,9 +732,10 @@ class AcceptabilityCriteria(osv.Model):
     }
 
 
-class ProjectTask(osv.Model):
+class ProjectTask(models.Model):
     _inherit = 'project.task'
 
+    @api.v7
     def default_get(self, cr, uid, field, context=None):
         '''Owerwrite default get to add project in new task automatically'''
         if context is None:
@@ -719,6 +749,7 @@ class ProjectTask(osv.Model):
                         'userstory_id': context.get('userstory_task')})
         return res
 
+    @api.v7
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
         v = {}
         us_obj = self.pool.get('user.story')
@@ -731,6 +762,7 @@ class ProjectTask(osv.Model):
                 v['categ_ids'] = [cat.id for cat in categs.categ_ids]
         return {'value': v}
 
+    @api.v7
     def case_close(self, cr, uid, ids, context=None):
         """ Closes Task inherit for write date now"""
         res = super(ProjectTask, self).case_close(
@@ -755,11 +787,13 @@ class ProjectTask(osv.Model):
     }
 
 
-class InheritProject(osv.Model):
-
-    '''Inheirt project model to a new Descripcion field'''
+class InheritProject(models.Model):
+    '''
+    Inherit project model to a new Descripcion field
+    '''
 
     _inherit = 'project.project'
+
     _columns = {
         'descriptions': fields.text(
             'Description', help="Reference on what the project is about"),

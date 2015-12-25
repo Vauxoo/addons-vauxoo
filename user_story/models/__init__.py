@@ -1,4 +1,5 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+
 from . import user_story
 from . import timesheet
 from . import timesheet_all

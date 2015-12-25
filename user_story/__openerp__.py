@@ -1,11 +1,12 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+"""
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 # ##############Credits######################################################
-#    Coded by: Vauxoo C.A. (Yanina Aular & Miguel Delgado)
+#    Coded by: Vauxoo C.A. (Francisco Palm)
 #    Planified by: Rafael Silva
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -23,9 +24,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
+
 {
     "name": "User Story",
-    "version": "2.6",
+    "version": "2.7",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
@@ -45,14 +48,14 @@
     "data": [
         # "data/data_us_report.xml",
         # "report/user_story_report_view.xml",
-        "security/userstory_security.xml",
+        "security/user_story_security.xml",
         "security/ir.model.access.csv",
-        "view/userstory_view.xml",
-        "view/project_view.xml",
-        "view/hr_timesheet_view.xml",
-        "view/hr_timesheet_all_view.xml",
-        "view/custom_project_task_view.xml",
-        "view/account_analytic_account.xml",
+        "views/user_story.xml",
+        "views/project.xml",
+        "views/timesheet.xml",
+        "views/timesheet_all.xml",
+        "views/custom_project_task.xml",
+        "views/account_analytic_account.xml",
         "data/data.xml",
         "data/user_story_template.xml",
         "report/user_story_report.xml"
