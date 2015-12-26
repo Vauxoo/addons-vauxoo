@@ -16,10 +16,22 @@
                 </div>
             </xpath>
         </template>
+
         <template id="rating_product" inherit_id="website_sale.product" active="False" customize_show="True" name="Show Product Rating">
             <xpath expr="//h1[@itemprop='name']" position="after">
-                <div id="stars_global" class="starrr" t-att-data-rating="product.rating"></div>
+<!--                 <div id="stars_global" class="starrr" t-att-data-rating="product.rating"></div>
+ -->        <t t-call="website_rate_product.show_product_rating"/>
             </xpath>
+        </template>
+
+        <template id="show_product_rating" name="No Edit Product Rating" active="True">
+            <div id="stars_no_edit" t-att-data-rating="product.rating">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
         </template>
     </data>
 </openerp>
