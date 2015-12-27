@@ -136,22 +136,16 @@ class StockCardProduct(models.TransientModel):
         # NOTE: there was Negative Quantity, therefore average and
         # valuation shall only consider new values
         if vals['previous_qty'] < 0 and vals['direction'] > 0:
+            vals['accumulated_variation'] += vals['move_valuation']
+            vals['accumulated_qty'] += row['product_qty']
+            vals['average'] = (
+                vals['accumulated_qty'] and
+                vals['accumulated_variation'] / vals['accumulated_qty'] or
+                vals['average'])
+
             if vals['product_qty'] >= 0:
                 vals['accumulated_variation'] = 0.0
                 vals['accumulated_qty'] = 0.0
-
-                vals['average'] = (
-                    row['product_qty'] and
-                    vals['move_valuation'] / row['product_qty'] or
-                    vals['average'])
-            else:
-                vals['accumulated_variation'] += vals['move_valuation']
-                vals['accumulated_qty'] += row['product_qty']
-
-                vals['average'] = (
-                    vals['accumulated_qty'] and
-                    vals['accumulated_variation'] / vals['accumulated_qty'] or
-                    vals['average'])
 
             return True
 
