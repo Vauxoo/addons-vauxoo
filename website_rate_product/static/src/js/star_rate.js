@@ -40,9 +40,8 @@ var __slice = [].slice;
 
     Starrr.prototype.createStars = function() {
       var _i, _ref, _results;
-
       _results = [];
-      for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+      for (_i = 1, _ref = 5; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
         _results.push(this.$el.append("<span class='fa fa-star-o'></span>"));
       }
       return _results;
@@ -59,8 +58,9 @@ var __slice = [].slice;
 
     Starrr.prototype.syncRating = function(rating) {
       var i, _i, _j, _ref;
-
+/* jshint ignore:start */
       rating || (rating = this.options.rating);
+/* jshint ignore:end */
       if (rating) {
         for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
           this.$el.find('span').eq(i).removeClass('fa-star-o').addClass('fa-star');
@@ -83,7 +83,9 @@ var __slice = [].slice;
     starrr: function() {
       var args, option;
 
+/* jshint ignore:start */
       option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+/* jshint ignore:end */
       return this.each(function() {
         var data;
 
