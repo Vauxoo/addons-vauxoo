@@ -146,13 +146,11 @@ class StockCardProduct(models.TransientModel):
             if vals['product_qty'] >= 0:
                 vals['accumulated_variation'] = 0.0
                 vals['accumulated_qty'] = 0.0
-
-            return True
-
-        vals['average'] = (
-            vals['product_qty'] and
-            vals['inventory_valuation'] / vals['product_qty'] or
-            vals['average'])
+        else:
+            vals['average'] = (
+                vals['product_qty'] and
+                vals['inventory_valuation'] / vals['product_qty'] or
+                vals['average'])
         return True
 
     def _get_stock_card_move_line_dict(self, row, vals):
