@@ -203,9 +203,32 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _stock_card_move_get_avg(self, product_id, vals, return_values=False):
-        for row in self._stock_card_move_history_get(product_id):
+        vals['move_ids'] = self._stock_card_move_history_get(product_id)
+        vals['queue'] = vals['move_ids']
+        while vals['queue']:
+            row = vals['queue'].pop(0)
             self._get_average_by_move(
                 product_id, row, vals, return_values=return_values)
+
+            if not vals['rewind']:
+                if vals['previous_qty'] > 0 and vals['product_qty'] < 0:
+                    vals['prior_qty'] = vals['previous_qty']
+                if vals['product_qty'] < 0 and vals['direction'] < 0:
+                    vals['accumulated_move'].append(row)
+                elif vals['previous_qty'] < 0 and vals['direction'] > 0:
+                    vals['accumulated_move'].append(row)
+                    vals['rewind'] = True
+                    vals['old_queue'] = vals['queue'][:]
+                    vals['queue'] = vals['accumulated_move'][:]
+
+                    vals['product_qty'] = vals['prior_qty']
+            else:
+                if not vals['queue']:
+                    vals['rewind'] = False
+                    vals['queue'] = vals['old_queue'][:]
+
+                if vals['product_qty'] > 0:
+                    vals['accumulated_move'] = []
 
         return vals
 
@@ -218,6 +241,9 @@ class StockCardProduct(models.TransientModel):
             move_dict={},
             accumulated_variation=0.0,
             accumulated_qty=0.0,
+            accumulated_move=[],
+            rewind=False,
+            prior_qty=0.0,
         )
 
     def _stock_card_move_get(self, product_id, return_values=False):
