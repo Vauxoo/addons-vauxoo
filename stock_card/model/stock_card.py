@@ -169,7 +169,7 @@ class StockCardProduct(models.TransientModel):
 
     def _get_stock_card_move_line(self, row, vals):
         res = self._get_stock_card_move_line_dict(row, vals)
-        vals['lines'].append(res)
+        vals['lines'][row['move_id']] = res
         return True
 
     def _get_average_by_move(self, product_id, row, vals, return_values=False):
@@ -204,7 +204,7 @@ class StockCardProduct(models.TransientModel):
 
     def _stock_card_move_get_avg(self, product_id, vals, return_values=False):
         vals['move_ids'] = self._stock_card_move_history_get(product_id)
-        vals['queue'] = vals['move_ids']
+        vals['queue'] = vals['move_ids'][:]
         while vals['queue']:
             row = vals['queue'].pop(0)
             self._get_average_by_move(
@@ -230,14 +230,14 @@ class StockCardProduct(models.TransientModel):
                 if vals['product_qty'] > 0:
                     vals['accumulated_move'] = []
 
-        return vals
+        return True
 
     def _get_default_params(self):
         return dict(
             product_qty=0.0,
             average=0.0,
             inventory_valuation=0.0,
-            lines=[],
+            lines={},
             move_dict={},
             accumulated_variation=0.0,
             accumulated_qty=0.0,
@@ -252,12 +252,13 @@ class StockCardProduct(models.TransientModel):
 
         vals = self._get_default_params()
 
-        res = self._stock_card_move_get_avg(
+        self._stock_card_move_get_avg(
             product_id, vals, return_values=return_values)
         if return_values:
-            return res
-        for line in res.get('lines'):
-            scm_obj.create(line)
+            return vals
+
+        for row in vals['move_ids']:
+            scm_obj.create(vals['lines'][row['move_id']])
 
         return True
 
