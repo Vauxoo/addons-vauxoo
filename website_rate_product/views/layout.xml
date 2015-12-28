@@ -4,6 +4,7 @@
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/website_rate_product/static/src/js/star_rate.js"></script>
                 <script type="text/javascript" src="/website_rate_product/static/src/js/set_current_rating.js"></script>
+                <script type="text/javascript" src="/website_rate_product/static/src/js/test_comments.js"></script>
             </xpath>
         </template>
 
