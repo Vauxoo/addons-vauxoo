@@ -7,6 +7,7 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
+        "account",
         "base",
         "stock",
     ],
