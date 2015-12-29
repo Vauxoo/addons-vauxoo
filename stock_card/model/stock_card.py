@@ -274,6 +274,12 @@ class StockCardProduct(models.TransientModel):
 
         self._stock_card_move_get_avg(
             product_id, vals, return_values=return_values)
+
+        res = []
+        for row in vals['move_ids']:
+            res.append(vals['lines'][row['move_id']])
+        vals['res'] = res
+
         if return_values:
             return vals
 
