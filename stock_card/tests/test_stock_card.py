@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
+from openerp.tools.safe_eval import safe_eval
 
 
 class TestStockCard(TransactionCase):
@@ -85,7 +86,7 @@ class TestStockCard(TransactionCase):
         moves = sc_product_id.action_view_moves()
 
         # assert domains exists into moves
-        sc_move_domain_id = eval(moves['domain'])[0][2][0]
+        sc_move_domain_id = safe_eval(moves['domain'])[0][2][0]
         self.assertTrue(sc_move_domain_id)
 
         # assert that stock.card.move exists
@@ -113,7 +114,7 @@ class TestStockCard(TransactionCase):
         sc_product_id.stock_card_move_get()
         moves = sc_product_id.action_view_moves()
 
-        search_domain = eval(moves['domain'])
+        search_domain = safe_eval(moves['domain'])
 
         averages = self.sc_move.search(search_domain).mapped('average')
         costs = self.sc_move.search(search_domain).mapped('cost_unit')
