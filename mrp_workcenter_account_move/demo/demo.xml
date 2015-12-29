@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+
+    <record id="base.main_company" model="res.company">
+        <field name="require_workcenter_analytic" eval="True"/>
+    </record>
+
     <record id="rev_work_in_process" model="account.account">
         <field name="code">X200-vx-WIP</field>
         <field name="name">WORK_IN_PROCESS</field>
