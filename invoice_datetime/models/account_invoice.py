@@ -26,74 +26,60 @@
 #
 # #############################################################################
 
-from openerp.osv import fields, osv
+from openerp import fields, models, api
+from openerp.exceptions import UserError
 from openerp.tools.translate import _
 from openerp import tools, api
 import datetime
 from datetime import timedelta
 from pytz import timezone
 import pytz
-import time
 
 
-# class AccountPaymentTerm(osv.Model):
-#     _inherit = "account.payment.term"
-
-#     # pylint: disable=W0622
-#     def compute(self, cr, uid, id, value,
-#                 date_ref=False, context=None):
-#         if context is None:
-#             context = {}
-#         if date_ref:
-#             try:
-#                 date_ref = time.strftime('%Y-%m-%d', time.strptime(
-#                     date_ref, '%Y-%m-%d %H:%M:%S'))
-#             except BaseException:
-#                 pass
-#         return super(AccountPaymentTerm, self).compute(
-#             cr, uid, id, value, date_ref, context=context)
-
-
-class AccountInvoice(osv.Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
     # _order = 'invoice_datetime asc'
 
-    def _get_field_params(self, cr, uid, ids, name, unknow_none, context=None):
-        if context is None:
-            context = {}
-        account_setting_obj = self.pool.get("account.config.settings")
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        res = {}
+    @api.multi
+    def _get_field_params(self):
+        for record in self:
+            key_by_company_id = "acc_invoice.date_invoice_type_" + \
+                                str(self.company_id.id)
+            record.date_type = self.env["ir.config_parameter"].get_param(
+                key_by_company_id, default='date')
+
+    @api.multi
+    def _get_default_type(self):
+        account_setting_obj = self.env["account.config.settings"]
         key_by_company_id = "acc_invoice.date_invoice_type_" + \
-                            str(account_setting_obj._default_company(cr, uid))
-        res[ids[0]] = self.pool.get("ir.config_parameter").get_param(
-            cr, uid, key_by_company_id, default='date', context=context)
-        return res
+            str(account_setting_obj._default_company())
+        type_show_date = self.env["ir.config_parameter"].get_param(
+            key_by_company_id, default='date')
+        return type_show_date
 
-    _columns = {
-        # Extract date_invoice from original, but add datetime
-        # 'date_invoice': fields.datetime('Date Invoiced', states={'open':[
-        # ('readonly',True)],'close':[('readonly',True)]},
-        # help="Keep empty to use the current date"),
-        'invoice_datetime': fields.datetime(
-            'Date time of invoice',
-            states={
-                'open': [('readonly', True)],
-                'close': [('readonly', True)]},
-            help="Keep empty to use the current date"),
-        'date_invoice_tz': fields.datetime(
-            string='Date Invoiced with TZ',
-            help='Date of Invoice with Time Zone'),
-        'date_type': fields.function(_get_field_params, storage=False,
-                                     type='char', string="Date type")
-    }
+    # Extract date_invoice from original, but add datetime
+    # 'date_invoice': fields.datetime('Date Invoiced', states={'open':[
+    # ('readonly',True)],'close':[('readonly',True)]},
+    # help="Keep empty to use the current date"),
+    invoice_datetime = fields.Datetime(
+        string='Date time of invoice',
+        states={
+            'open': [('readonly', True)],
+            'close': [('readonly', True)]},
+        help="Keep empty to use the current date")
+    date_invoice_tz = fields.Datetime(
+        string='Date Invoiced with TZ',
+        help='Date of Invoice with Time Zone')
+    date_type = fields.Char(
+        compute=_get_field_params,
+        string="Date type",
+        default=_get_default_type)
 
-    def _get_datetime_with_user_tz(self, cr, uid, datetime_invoice=False,
-                                   context=None):
+    @api.multi
+    def _get_datetime_with_user_tz(self, datetime_invoice=False):
         datetime_inv_tz = False
         if datetime_invoice:
-            time_tz = self.pool.get("res.users").read(
-                cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
+            time_tz = self.env.user.tz_offset
             hours_tz = int(time_tz[:-2])
             minut_tz = int(time_tz[-2:])
             if time_tz[0] == '-':
@@ -104,7 +90,8 @@ class AccountInvoice(osv.Model):
                     minutes=minut_tz)).strftime('%Y-%m-%d %H:%M:%S')
         return datetime_inv_tz
 
-    def create(self, cr, uid, vals, context=None):
+    @api.model
+    def create(self, vals):
         if 'invoice_datetime' in vals.keys():
             datetime_inv = vals.get("invoice_datetime") and \
                 datetime.datetime.strptime(
@@ -112,36 +99,27 @@ class AccountInvoice(osv.Model):
             if datetime_inv:
                 vals.update(
                     {'date_invoice_tz': self._get_datetime_with_user_tz(
-                        cr, uid, datetime_inv)})
-        return super(AccountInvoice, self).create(
-            cr, uid, vals, context=context)
+                        datetime_inv)})
+        return super(AccountInvoice, self).create(vals)
 
-    def write(self, cr, uid, ids, vals, context=None):
-        for invoice in self.browse(cr, uid, ids, context=context):
+    @api.multi
+    def write(self, vals):
+        for invoice in self:
             datetime_inv = invoice.invoice_datetime and \
                 datetime.datetime.strptime(invoice.invoice_datetime,
                                            "%Y-%m-%d %H:%M:%S") or False
             if datetime_inv and not invoice.date_invoice_tz:
                 vals.update(
                     {'date_invoice_tz': self._get_datetime_with_user_tz(
-                        cr, uid, datetime_inv)})
-        return super(AccountInvoice, self).write(
-            cr, uid, ids, vals, context=context)
+                        datetime_inv)})
+        return super(AccountInvoice, self).write(vals)
 
-    def _get_default_type(self, cr, uid, ids):
-        account_setting_obj = self.pool.get("account.config.settings")
-        key_by_company_id = "acc_invoice.date_invoice_type_" + \
-            str(account_setting_obj._default_company(cr, uid))
-        type_show_date = self.pool.get("ir.config_parameter").get_param(
-            cr, uid, key_by_company_id, default='date')
-        return type_show_date
+    # _defaults = {
+    #     # 'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+    #     "date_type": _get_default_type
+    # }
 
-    _defaults = {
-        # 'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        "date_type": _get_default_type
-    }
-
-    @api.one
+    @api.multi
     def copy(self, default=None):
         if default is None:
             default = {}
@@ -151,11 +129,9 @@ class AccountInvoice(osv.Model):
             'date_invoice_tz': False})
         return super(AccountInvoice, self).copy(default)
 
-    def _get_time_zone(self, cr, uid, invoice_id, context=None):
-        if context is None:
-            context = {}
-        res_users_obj = self.pool.get('res.users')
-        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+    @api.multi
+    def _get_time_zone(self, invoice_id):
+        userstz = self.env.user.partner_id.tz
         result = 0
         if userstz:
             hours = timezone(userstz)
@@ -174,13 +150,12 @@ class AccountInvoice(osv.Model):
                 timezone_present + timezone_original) * -1)
         return result
 
-    def assigned_datetime(self, cr, uid, ids, values, context=None):
-        if context is None:
-            context = {}
+    @api.multi
+    def assigned_datetime(self, values):
         res = {}
         if values.get('date_invoice', False) and\
                 not values.get('invoice_datetime', False):
-            user_hour = self._get_time_zone(cr, uid, [], context=context)
+            user_hour = self._get_time_zone([])
             time_invoice = datetime.datetime.utcnow().time()
 
             date_invoice = datetime.datetime.strptime(
@@ -194,10 +169,10 @@ class AccountInvoice(osv.Model):
 
         if values.get('invoice_datetime', False) and not\
                 values.get('date_invoice', False):
-            date_invoice = fields.datetime.context_timestamp(
-                cr, uid, datetime.datetime.strptime(
+            date_invoice = fields.Datetime.context_timestamp(
+                datetime.datetime.strptime(
                     values['invoice_datetime'],
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+                    tools.DEFAULT_SERVER_DATETIME_FORMAT))
             res['date_invoice'] = date_invoice
             res['invoice_datetime'] = values['invoice_datetime']
 
@@ -207,17 +182,15 @@ class AccountInvoice(osv.Model):
                     values['invoice_datetime'],
                     '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 if date_invoice != values['date_invoice']:
-                    if self.browse(cr, uid, ids)[0].date_type == 'datetime':
-                        date_invoice = fields.datetime.context_timestamp(
-                            cr, uid, datetime.datetime.strptime(
+                    if self.date_type == 'datetime':
+                        date_invoice = fields.Datetime.context_timestamp(
+                            datetime.datetime.strptime(
                                 values['invoice_datetime'],
-                                tools.DEFAULT_SERVER_DATETIME_FORMAT),
-                            context=context)
+                                tools.DEFAULT_SERVER_DATETIME_FORMAT))
                         res['date_invoice'] = date_invoice
                         res['invoice_datetime'] = values['invoice_datetime']
-                    elif self.browse(cr, uid, ids)[0].date_type == 'date':
-                        user_hour = self._get_time_zone(
-                            cr, uid, [], context=context)
+                    elif self.date_type == 'date':
+                        user_hour = self._get_time_zone([])
                         time_invoice = datetime.time(abs(user_hour), 0, 0)
 
                         date_invoice = datetime.datetime.strptime(
@@ -230,7 +203,7 @@ class AccountInvoice(osv.Model):
                         res['invoice_datetime'] = dt_invoice
                         res['date_invoice'] = values['date_invoice']
                     else:
-                        raise osv.except_osv(
+                        raise UserError(
                             _('Warning!'),
                             _('Invoice dates should be equal'))
                     # ~ else:
@@ -239,19 +212,17 @@ class AccountInvoice(osv.Model):
 
         if not values.get('invoice_datetime', False) and\
                 not values.get('date_invoice', False):
-            res['date_invoice'] = fields.date.context_today(
-                self, cr, uid, context=context)
-            res['invoice_datetime'] = fields.datetime.now()
+            res['date_invoice'] = fields.Date.context_today(self)
+            res['invoice_datetime'] = fields.Datetime.now()
 
         return res
 
-    def action_move_create(self, cr, uid, ids, context=None):
-        for inv in self.browse(cr, uid, ids, context=context):
+    @api.multi
+    def action_move_create(self):
+        for inv in self:
             if inv.type in ('out_invoice', 'out_refund'):
                 vals_date = self.assigned_datetime(
-                    cr, uid, ids, {'invoice_datetime': inv.invoice_datetime,
-                                   'date_invoice': inv.date_invoice},
-                    context=context)
-                self.write(cr, uid, ids, vals_date, context=context)
-        return super(AccountInvoice,
-                     self).action_move_create(cr, uid, ids, context=context)
+                    {'invoice_datetime': inv.invoice_datetime,
+                     'date_invoice': inv.date_invoice})
+                self.write(vals_date)
+        return super(AccountInvoice, self).action_move_create()
