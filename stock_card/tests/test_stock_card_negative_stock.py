@@ -60,20 +60,20 @@ class TestStockCardNegativeStock(TransactionCase):
                 'avg': 60, 'move_value': -420, 'inv_value': 60,
             },
             {  # 6
-                'do_purchase': False, 'cost': 60, 'qty': 2,
-                'avg': 60, 'move_value': -124, 'inv_value': -64,
+                'do_purchase': False, 'cost': 62, 'qty': 2,
+                'avg': 64, 'move_value': -124, 'inv_value': -64,
             },
             {  # 7
                 'do_purchase': True, 'cost': 64, 'qty': 4,
                 'avg': 64, 'move_value': 256, 'inv_value': 192,
             },
             {  # 8
-                'do_purchase': False, 'cost': 64, 'qty': 6,
-                'avg': 64, 'move_value': 306, 'inv_value': -114,
+                'do_purchase': False, 'cost': 51, 'qty': 6,
+                'avg': 38, 'move_value': -306, 'inv_value': -114,
             },
             {  # 9
-                'do_purchase': False, 'cost': 64, 'qty': 2,
-                'avg': 64, 'move_value': 76, 'inv_value': -190,
+                'do_purchase': False, 'cost': 38, 'qty': 2,
+                'avg': 38, 'move_value': -76, 'inv_value': -190,
             },
             {  # 10
                 'do_purchase': True, 'cost': 48, 'qty': 2,
@@ -145,15 +145,10 @@ class TestStockCardNegativeStock(TransactionCase):
         self.do_picking(sale_order_id.picking_ids[0])
         return sale_order_id
 
-    def get_last_stock_valuation(self):
-        sc_product_id = self.sc_product.create({
-            'product_id': self.product_id.id
-        })
-
-        sc_product_id.stock_card_move_get()
-        sc_move_id = self.env['stock.card.move'].browse(
-            max(eval(sc_product_id.action_view_moves()['domain'])[0][2]))
-        return sc_move_id.move_valuation, sc_move_id.inventory_valuation
+    def get_stock_valuations(self):
+        sc_moves = self.sc_product._stock_card_move_get(
+            self.product_id.id, return_values=True)
+        return sc_moves['res']
 
     def test_01_do_inouts(self):
 
@@ -169,20 +164,28 @@ class TestStockCardNegativeStock(TransactionCase):
             else:
                 self.create_sale_order(qty=qty, price=costprice)
 
-            sc_product_id = self.sc_product.create({
-                'product_id': self.product_id.id
-            })
+        card_lines = self.get_stock_valuations()
 
-            sc_product_id.stock_card_move_get()
-            retrieved_avg = sc_product_id.get_average(self.product_id.id)
-            self.assertEqual(expected['avg'], retrieved_avg,
-                             "AVG Cost is not the expected")
-            move_value, inv_value = self.get_last_stock_valuation()
+        self.assertEqual(len(self.inv_ids), len(card_lines),
+                         "Both lists should have the same length(=12)")
+        for expected, succeded in zip(self.inv_ids, card_lines):
 
-            index = self.inv_ids.index(expected)+1
-            self.assertEqual(inv_value, expected['inv_value'],
-                             "Inventory Value #{0} does not match".
-                             format(index))
-            self.assertEqual(move_value, expected['move_value'],
-                             "Movement Value #{0} does not match".
-                             format(index))
+            self.assertEqual(expected['avg'],
+                             succeded['average'],
+                             "Average Cost {0} is not the expected".
+                             format(expected))
+
+            self.assertEqual(expected['cost'],
+                             succeded['cost_unit'],
+                             "Unit Cost {0} is not the expected".
+                             format(expected))
+
+            self.assertEqual(expected['inv_value'],
+                             succeded['inventory_valuation'],
+                             "Inventory Value {0} does not match".
+                             format(expected))
+
+            self.assertEqual(expected['move_value'],
+                             succeded['move_valuation'],
+                             "Movement Value {0} does not match".
+                             format(expected))
