@@ -50,7 +50,6 @@ class StockCardProduct(models.TransientModel):
         product_qty = vals['product_qty']
         delta_qty = vals['direction'] * row['product_qty']
         final_qty = product_qty + delta_qty
-        vals['previous_qty'] = vals['product_qty']
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
 
         # TODO: move to `transit` could be a return
@@ -68,14 +67,23 @@ class StockCardProduct(models.TransientModel):
             return True
 
         vals['move_valuation'] = 0.0
+
         for qnt in qntval:
             if qnt['qty'] < 0:
                 continue
             product_qty += vals['direction'] * qnt['qty']
             if product_qty >= 0:
-                vals['move_valuation'] += vals['average'] * qnt['qty']
+                if not vals['rewind']:
+                    vals['move_valuation'] += vals['average'] * qnt['qty']
+                else:
+                    vals['move_valuation'] += \
+                        vals['prior_average'] * qnt['qty']
             else:
-                vals['move_valuation'] += qnt['cost'] * qnt['qty']
+                if not vals['rewind']:
+                    vals['move_valuation'] += vals['average'] * qnt['qty']
+                else:
+                    vals['move_valuation'] += \
+                        vals['future_average'] * qnt['qty']
 
         # NOTE: For production
         # a) it could be a consumption: if so average is kept unchanged
@@ -85,7 +93,6 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _get_price_on_supplier_return(self, row, vals, qntval):
-        vals['previous_qty'] = vals['product_qty']
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
@@ -100,7 +107,6 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _get_price_on_supplied(self, row, vals, qntval):
-        vals['previous_qty'] = vals['product_qty']
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         # TODO: transit could be a return that shall be recorded at
         # average cost of transaction
@@ -111,7 +117,6 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _get_price_on_customer_return(self, row, vals, qntval):
-        vals['previous_qty'] = vals['product_qty']
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
@@ -206,13 +211,21 @@ class StockCardProduct(models.TransientModel):
         vals['move_ids'] = self._stock_card_move_history_get(product_id)
         vals['queue'] = vals['move_ids'][:]
         while vals['queue']:
+
             row = vals['queue'].pop(0)
+
+            vals['previous_qty'] = vals['product_qty']
+            vals['previous_valuation'] = vals['inventory_valuation']
+            vals['previous_average'] = vals['average']
+
             self._get_average_by_move(
                 product_id, row, vals, return_values=return_values)
 
             if not vals['rewind']:
                 if vals['previous_qty'] > 0 and vals['product_qty'] < 0:
                     vals['prior_qty'] = vals['previous_qty']
+                    vals['prior_valuation'] = vals['previous_valuation']
+                    vals['prior_average'] = vals['previous_average']
                 if vals['product_qty'] < 0 and vals['direction'] < 0:
                     vals['accumulated_move'].append(row)
                 elif vals['previous_qty'] < 0 and vals['direction'] > 0:
@@ -222,6 +235,12 @@ class StockCardProduct(models.TransientModel):
                     vals['queue'] = vals['accumulated_move'][:]
 
                     vals['product_qty'] = vals['prior_qty']
+                    vals['inventory_valuation'] = vals['prior_valuation']
+                    vals['future_average'] = vals['average']
+
+                    vals['accumulated_variation'] = 0.0
+                    vals['accumulated_qty'] = 0.0
+
             else:
                 if not vals['queue']:
                     vals['rewind'] = False
@@ -244,6 +263,7 @@ class StockCardProduct(models.TransientModel):
             accumulated_move=[],
             rewind=False,
             prior_qty=0.0,
+            prior_valuation=0.0,
         )
 
     def _stock_card_move_get(self, product_id, return_values=False):
