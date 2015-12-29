@@ -100,7 +100,6 @@ class TestStockCard(TransactionCase):
                          sc_product_id.product_id.standard_price)
 
     def test_02_check_inventory_initializations(self):
-        cost = self.product_id.standard_price
         moves = self.move.search([('product_id', '=', self.product_id.id)])
 
         for val in self.inv_ids:
@@ -135,7 +134,7 @@ class TestStockCard(TransactionCase):
             'product_id': product_id.id,
         })
 
-        inventory_line_id = invline.create({
+        invline.create({
             'inventory_id': inventory_id.id,
             'product_id': product_id.id,
             'product_qty': product_qty,
