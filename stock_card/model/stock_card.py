@@ -203,8 +203,7 @@ class StockCardProduct(models.TransientModel):
 
         self._get_move_average(row, vals)
 
-        if not return_values:
-            self._get_stock_card_move_line(row, vals)
+        self._get_stock_card_move_line(row, vals)
         return True
 
     def _stock_card_move_get_avg(self, product_id, vals, return_values=False):
