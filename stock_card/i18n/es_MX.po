@@ -21,7 +21,7 @@ msgstr ""
 #. module: stock_card
 #: field:stock.card.move,average:0
 msgid "Average"
-msgstr ""
+msgstr "Promedio"
 
 #. module: stock_card
 #: field:stock.card,create_uid:0
@@ -45,7 +45,7 @@ msgstr "Fecha"
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
 msgid "Get Moves"
-msgstr ""
+msgstr "Obtener Movimiento"
 
 #. module: stock_card
 #: field:stock.card,id:0
@@ -57,36 +57,36 @@ msgstr "ID"
 #. module: stock_card
 #: field:stock.card.move,product_qty:0
 msgid "Inventory Quantity"
-msgstr ""
+msgstr "Cantidad en Inventario"
 
 #. module: stock_card
 #: field:stock.card.move,inventory_valuation:0
 msgid "Inventory Valuation"
-msgstr ""
+msgstr "Valoración de Inventario"
 
 #. module: stock_card
 #: field:stock.card,write_uid:0
 #: field:stock.card.move,write_uid:0
 #: field:stock.card.product,write_uid:0
 msgid "Last Updated by"
-msgstr "Última Actualización por"
+msgstr "Actualizado por"
 
 #. module: stock_card
 #: field:stock.card,write_date:0
 #: field:stock.card.move,write_date:0
 #: field:stock.card.product,write_date:0
 msgid "Last Updated on"
-msgstr "Última Actualización el"
+msgstr "Actualizado el"
 
 #. module: stock_card
 #: field:stock.card.move,qty:0
 msgid "Move Quantity"
-msgstr ""
+msgstr "Cantidad Movida"
 
 #. module: stock_card
 #: field:stock.card.move,move_valuation:0
 msgid "Move Valuation"
-msgstr ""
+msgstr "Valoración de Movimiento"
 
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
@@ -97,52 +97,52 @@ msgstr "Producto"
 #. module: stock_card
 #: field:stock.card.product,stock_card_move_ids:0
 msgid "Product Moves"
-msgstr ""
+msgstr "Movimientos de Producto"
 
 #. module: stock_card
 #: field:stock.card,product_ids:0
 msgid "Products"
-msgstr ""
+msgstr "Productos"
 
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
 msgid "Show Moves"
-msgstr ""
+msgstr "Mostrar Movimientos"
 
 #. module: stock_card
 #: model:ir.ui.menu,name:stock_card.menu_stock_card_main
 msgid "Stock Card"
-msgstr ""
+msgstr "Tarjeta de Inventario"
 
 #. module: stock_card
 #: model:ir.actions.act_window,name:stock_card.stock_card_move_action
 #: view:stock.card.move:stock_card.stock_card_move_tree
 msgid "Stock Card Move"
-msgstr ""
+msgstr "Movimiento en Tarjeta de Inventario"
 
 #. module: stock_card
 #: field:stock.card.move,stock_card_product_id:0
 #: view:stock.card.product:stock_card.stock_card_product_form
 msgid "Stock Card Product"
-msgstr ""
+msgstr "Tarjeta de Inventario de Producto"
 
 #. module: stock_card
 #: model:ir.actions.act_window,name:stock_card.stock_card_product_action
 #: model:ir.ui.menu,name:stock_card.menu_stock_card_wizard
 msgid "Stock Card Wizard"
-msgstr ""
+msgstr "Asistente de Tarjetas de Inventario"
 
 #. module: stock_card
 #: field:stock.card.move,move_id:0
 msgid "Stock Moves"
-msgstr ""
+msgstr "Movimientos de Inventario"
 
 #. module: stock_card
 #: model:product.template,name:stock_card.product01_product_template
 msgid "Targus Laptop 16\" Bag"
-msgstr ""
+msgstr "Bolso Targus Laptop 16''"
 
 #. module: stock_card
 #: field:stock.card.move,cost_unit:0
 msgid "Unit Cost"
-msgstr ""
+msgstr "Costo Unitario"
