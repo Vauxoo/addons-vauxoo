@@ -29,8 +29,8 @@ from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
 from datetime import datetime
 
-import time
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+# import time
+# from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class StockMove(models.Model):
@@ -120,7 +120,7 @@ class StockPicking(models.Model):
     #             item.update({
     #                 'location_id': picking.force_location_id.id,
     #                 'location_dest_id': picking.force_location_dest_id.id})
-        # return res
+    #     return res
 
     @api.onchange('force_location_id', 'force_location_dest_id')
     def onchange_force_locations(self):
