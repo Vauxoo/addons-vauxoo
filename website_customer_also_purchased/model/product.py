@@ -25,6 +25,7 @@
 
 from openerp.osv import osv
 from openerp.osv import fields
+from openerp import SUPERUSER_ID
 
 
 class ProductTemplate(osv.osv):
@@ -51,7 +52,7 @@ class ProductTemplate(osv.osv):
         pids = '(%s)' % ', '.join(map  # pylint: disable=W0141,W0110
                                   (repr,
                                    tuple(pids_t)))
-        if pids:
+        if pids and pids != '()':
             cr.execute("\
                 SELECT product_tmpl_id\
                 FROM product_product\
@@ -67,7 +68,9 @@ class ProductTemplate(osv.osv):
             ".format(pids))
             res = cr.fetchall()
             for ret in res:
-                result[ids[0]].append(ret[0])
+                if self.browse(cr, SUPERUSER_ID, [ret[0]],
+                               context)[0].website_published:
+                    result[ids[0]].append(ret[0])
         return result
 
     _columns = {

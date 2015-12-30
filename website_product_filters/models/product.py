@@ -25,6 +25,7 @@
 from openerp import models, fields, api
 from datetime import datetime
 import time
+from openerp import SUPERUSER_ID
 
 
 class WebsiteSeoMetadata(models.Model):
@@ -38,23 +39,118 @@ class WebsiteSeoMetadata(models.Model):
         help='This field shows the decimal time when a product is published'
         'on the website.')
 
-    @api.multi
-    def write(self, values):
-        for record in self:
+    @api.cr_uid_ids_context
+    def write(self, cr, uid, ids, values, context=None):
+        for record in ids:
+            if values.get('views', False):
+                return super(WebsiteSeoMetadata, self).write(
+                    cr, SUPERUSER_ID, [record], values)
             if values.get('website_published', False):
                 now = datetime.now()
-                self.decimal_time = time.mktime(now.timetuple())
-                values['decimal_time'] = self.decimal_time
-        return super(WebsiteSeoMetadata, self).write(values)
+                decimal_time = time.mktime(now.timetuple())
+                values['decimal_time'] = decimal_time
+        return super(WebsiteSeoMetadata, self).write(
+            cr, uid, ids, values)
 
 
 class WebsiteProductMetadata(models.Model):
     _inherit = ["product.template", "website.seo.metadata"]
     _name = "product.template"
 
+    public_categ_ids = fields.Many2many(
+        "product.public.category",
+        "product_public_category_product_template_rel",
+        "product_template_id",
+        "product_public_category_id")
+
 
 class ProductPriceRanges(models.Model):
     _name = "product.price.ranges"
 
-    lower = fields.Float("Lower")
-    upper = fields.Float("Upper")
+    lower = fields.Integer("Lower")
+    upper = fields.Integer("Upper")
+
+
+class ProductCategory(models.Model):
+    _inherit = 'product.public.category'
+
+    product_ids = fields.Many2many(
+        "product.template", "product_public_category_product_template_rel",
+        "product_public_category_id",
+        "product_template_id", readonly=True)
+    total_tree_products = fields.Integer("Total Subcategory Prods",
+                                         compute="_get_product_count",
+                                         store=True,)
+    has_products_ok = fields.Boolean(compute="_get_has_products_ok",
+                                     store=True, readonly=True)
+
+    @api.depends('product_ids')
+    @api.multi
+    def _get_has_products_ok(self):
+        for record in self:
+            record.has_products_ok = self._child_has_products(record)
+
+    def _child_has_products(self, category):
+        if category.child_id:
+            return any(self._child_has_products(child)
+                       for child in category.child_id)
+        elif category.product_ids.filtered(
+                lambda r: r.website_published is True):
+            return True
+        else:
+            return False
+
+    @api.model
+    def _get_async_ranges(self, category):
+        prod_obj = self.env['product.template']
+        ranges_obj = self.env['product.price.ranges'].search([])
+        count_dict = {}
+        prod_ids = []
+        if category:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', int(category)),
+                 ('website_published', '=', True)])
+        if prod_ids:
+            for prod in prod_ids:
+                for ran in ranges_obj:
+                    if ran.upper > prod.list_price > ran.lower:
+                        if ran.id in count_dict.keys():
+                            count_dict[ran.id] += 1
+                        else:
+                            count_dict[ran.id] = 1
+                    if ran.id not in count_dict.keys():
+                        count_dict[ran.id] = 0
+            to_jsonfy = [{'id': k, 'qty': count_dict[k]} for k in count_dict]
+            return to_jsonfy
+
+    @api.model
+    def _get_async_values(self, category):
+        prod_obj = self.env['product.template']
+        count_dict = {}
+        prod_ids = []
+        if category:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', int(category)),
+                 ('website_published', '=', True)])
+        if prod_ids:
+            for prod in prod_ids:
+                for line in prod.attribute_line_ids:
+                    for value in line.value_ids:
+                        if value.id in count_dict.keys():
+                            count_dict[value.id] += 1
+                        else:
+                            count_dict[value.id] = 1
+                        if value.id not in count_dict.keys():
+                            count_dict[value.id] = 0
+            to_jsonfy = [{'id': k, 'qty': count_dict[k]} for k in count_dict]
+            return to_jsonfy
+
+    @api.multi
+    @api.depends('product_ids')
+    def _get_product_count(self):
+        prod_obj = self.env["product.template"]
+        for rec in self:
+            prod_ids = prod_obj.search(
+                [('public_categ_ids', 'child_of', rec.id),
+                 ('website_published', '=', True)])
+            rec.total_tree_products = len(prod_ids)

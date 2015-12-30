@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -25,3 +25,4 @@
 ##############################################################################
 
 from . import account_amortization
+from . import account_asset_invoice

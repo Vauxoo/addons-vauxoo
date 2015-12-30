@@ -20,6 +20,7 @@
         "views/layout.xml",
         "views/templates.xml",
         "views/product_view.xml",
+        "security/stock_quant.xml",
         "security/ir.model.access.csv",
     ],
     "test": [],

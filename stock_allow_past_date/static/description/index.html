@@ -13,18 +13,54 @@
     <p class="oe_mt32">
      This module add the functionality to let to validate a picking with a past
 date and generate the move/quant with the past date instead the current date.
+It is considered as an stock module's bugfix. This module by it self do not
+change the way that picking is created, just add a workaround that can be
+manage with a key in context to let to create the picking in a past date.
     </p>
     <p class="oe_mt32">
-     It is considered as an stock module's bugfix.
+     This module is not for final user use, is more like a tool to be use for
+another modules (that take this module as dependency) to let then create
+picking and quants in past date. This is mostly used when creating historical
+data demo. And is not needed for regular creating picking purpose.
     </p>
     <p class="oe_mt32">
-     The field
-     <code class="docutils literal">
-      date
-     </code>
-     need to be set in the picking and also in the move to
-re-used and set it to the quant.
+     What do you need to create picking/quant in a past date:
     </p>
+    <ol class="arabic simple">
+     <li>
+      Create the demo data of the picking and move. You need to set the
+      <code class="docutils literal">
+       date
+      </code>
+      field in both records. This field is the one re-used to set it in the
+quant.
+     </li>
+     <li>
+      You need to call the picking methods with a prefix context activating the
+"Allow Past Date" mode. For this just add the
+      <code class="docutils literal">
+       <span class="pre">
+        with_context({'allow_past_date_quants':
+       </span>
+       True})
+      </code>
+      . This is required to be
+use in the call of the
+      <code class="docutils literal">
+       action_confirm()
+      </code>
+      ,
+      <code class="docutils literal">
+       do_transfer()
+      </code>
+      ,
+      <code class="docutils literal">
+       action_done()
+      </code>
+      picking methods and whatever other method that influence
+in the quant creation and validation.
+     </li>
+    </ol>
    </div>
    <div class="section oe_span12" id="todo">
     <h1>
@@ -42,10 +78,6 @@ please review again and then report.
      </li>
      <li>
       Check via unit test that the quant in_date/write date is the same.
-     </li>
-     <li>
-      Want to get better the way that overwrite the methods that write the
-move/quant date. Maybe using context instead.
      </li>
     </ul>
    </div>

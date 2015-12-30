@@ -166,7 +166,7 @@
             <page string="Tasks">
               <separator string="Tasks" colspan='4' />
               <field name="task_ids" context="{'project_task':project_id,'categ_task':categ_ids,'sprint_task':sk_id,'userstory_task':active_id}" colspan="4" nolabel="1" widget="many2many">
-                <tree string="Tasks">
+                <tree string="Tasks" editable="top">
                   <field name="id"/>
                   <field name="name" />
                   <field name="project_id" />
@@ -355,7 +355,7 @@
       <field name="res_model">user.story</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
-      <field name="domain">[('user_id','=',uid),('state','not in',('cancel','done'))]</field>
+      <field name="domain">[('user_execute_id','=',uid),('state','not in',('cancel','done'))]</field>
       <field name="view_id" ref="view_userstory_tree"/>
     </record>
 

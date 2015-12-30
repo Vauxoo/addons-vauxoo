@@ -29,7 +29,7 @@
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",
-    "license": "",
+    "license": "AGPL-3",
     "depends": [
         "stock"
     ],

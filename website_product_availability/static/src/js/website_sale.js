@@ -144,37 +144,32 @@ $('.oe_website_sale').each(function () {
 
                 switch(variant_ids[k][4]){
                     case 1:
-                        new_class = 'label-success'
-                        text = 'Available'
-                        $("#add_to_cart").removeClass('disabled')
-                        $("#similar_products_vx").addClass('hidden')
-                        // $stock_delay.addClass('hidden')
+                        new_class = 'label-success';
+                        text = 'Available';
+                        $("#add_to_cart").removeClass('hidden');
+                        $("#similar_products_vx").addClass('hidden');
                         break;
                     case 2:
-                        new_class = 'label-danger'
-                        text = 'Not Available'
-                        $("#add_to_cart").addClass('disabled')
-                        $("#similar_products_vx").removeClass('hidden')
-                        // $stock_delay.removeClass('hidden')
+                        new_class = 'label-danger';
+                        text = 'Not Available';
+                        $("#add_to_cart").addClass('hidden');
+                        $("#similar_products_vx").removeClass('hidden');
                         break;
                     case 3:
-                        new_class = 'label-warning'
-                        text = 'Low Availability'
-                        $("#add_to_cart").removeClass('disabled')
-                        $("#similar_products_vx").addClass('hidden')
-                        // $stock_delay.addClass('hidden')
+                        new_class = 'label-warning';
+                        text = 'Low Availability';
+                        $("#add_to_cart").removeClass('hidden');
+                        $("#similar_products_vx").addClass('hidden');
                         break;
                     case 4:
-                        new_class = 'label-primary'
-                        text = 'On Request'
-                        $("#add_to_cart").removeClass('disabled')
-                        $("#similar_products_vx").addClass('hidden')
-                        // $stock_delay.removeClass('hidden')
+                        new_class = 'label-primary';
+                        text = 'On Request';
+                        $("#add_to_cart").removeClass('hidden');
+                        $("#similar_products_vx").addClass('hidden');
                         break;
                 }
                 if (variant_ids[k][5]) {
                     days = variant_ids[k][5];
-                   // $stock_delay.text("Product Available in "+days[0]+'/'+days[1]+'/'+days[2]+"");
                 }
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);

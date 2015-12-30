@@ -47,7 +47,7 @@ class ProductPriceList(osv.osv_memory):
         To get the date and print the report
         @return : return report
         """
-        context = context or {}
+        context = context and dict(context) or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         datas = {'ids': context.get('active_ids', [])}
 

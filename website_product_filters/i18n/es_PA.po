@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-21 23:34+0000\n"
-"PO-Revision-Date: 2015-10-21 18:38-0600\n"
+"POT-Creation-Date: 2015-12-05 00:35+0000\n"
+"PO-Revision-Date: 2015-12-04 18:44-0600\n"
 "Last-Translator: OscarAlca <oszckar@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,13 +36,71 @@ msgstr ""
 
 #. module: website_product_filters
 #: view:website:website_sale.products
-msgid "All Brands"
-msgstr "Todas las marcas"
-
-#. module: website_product_filters
-#: view:website:website_sale.products
 msgid "All Products"
 msgstr "Todos los productos"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:54
+#, python-format
+msgid "Change the price"
+msgstr "Cambia el precio"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:34
+#, python-format
+msgid "Choose name"
+msgstr "Escoge un nombre"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:42
+#, python-format
+msgid "Click <em>Continue</em> to create the product."
+msgstr "Haga click en <em>Continuar</em> para crear el nuevo producto."
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:20
+#, python-format
+msgid "Click here to add a new product."
+msgstr "Haz click aquí para agregar un nuevo producto."
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:48
+#, python-format
+msgid "Continue"
+msgstr "Continuar"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:41
+#, python-format
+msgid "Create Product"
+msgstr "Crear producto"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:26
+#, python-format
+msgid "Create a new product"
+msgstr "Crea un nuevo producto"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:9
+#, python-format
+msgid "Create a product"
+msgstr "Crea un producto"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:19
+#, python-format
+msgid "Create your first product"
+msgstr "Crea tu primer producto"
 
 #. module: website_product_filters
 #: field:product.price.ranges,create_uid:0
@@ -66,9 +124,18 @@ msgid "Decimal Time"
 msgstr "Tiempo decimal"
 
 #. module: website_product_filters
-#: view:website:website_sale.products
-msgid "Home"
-msgstr "Inicio"
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:55
+#, python-format
+msgid "Edit the price of this product by clicking on the amount."
+msgstr "Edite el precio de este producto haciendo click en el monto."
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:35
+#, python-format
+msgid "Enter a name for your new product then click 'Continue'."
+msgstr "Teclee un nombre para su nuevo producto y haga click en 'Continuar'."
 
 #. module: website_product_filters
 #: view:website:website_sale.products
@@ -96,6 +163,13 @@ msgid "Lower"
 msgstr "Mas bajo"
 
 #. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:46
+#, python-format
+msgid "New product created"
+msgstr "Nuevo producto creado"
+
+#. module: website_product_filters
 #: view:website:website_sale.products
 msgid "Popularity"
 msgstr "Popularidad"
@@ -111,6 +185,11 @@ msgid "Price Lowest"
 msgstr "Precio mas bajo"
 
 #. module: website_product_filters
+#: model:res.groups,name:website_product_filters.group_product_price_ranges_manager
+msgid "Price Ranges Manager"
+msgstr "Administrador de rangos de precios"
+
+#. module: website_product_filters
 #: view:website:website_sale.products
 msgid "Product Name"
 msgstr "Nombre del producto"
@@ -124,12 +203,7 @@ msgstr "Rangos de precios"
 #. module: website_product_filters
 #: model:ir.model,name:website_product_filters.model_product_template
 msgid "Product Template"
-msgstr "Plantilla del producto"
-
-#. module: website_product_filters
-#: view:website:website_sale.products
-msgid "Products"
-msgstr "Productos"
+msgstr "Plantilla de producto"
 
 #. module: website_product_filters
 #: model:ir.model,name:website_product_filters.model_product_public_category
@@ -142,19 +216,35 @@ msgid "SEO metadata"
 msgstr "Metadatos para SEO (optimización para motores de búsqueda)"
 
 #. module: website_product_filters
-#: view:website:website_sale.products
-msgid "Select a Brand"
-msgstr "Selecciona una marca"
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:27
+#, python-format
+msgid "Select 'New Product' to create it and manage its properties to boost your sales."
+msgstr "Seleccione 'Nuevo Producto' para crear un producto nuevo y editar sus propiedades para incrementar tus ventas. "
+
+#. module: website_product_filters
+#: view:website:website_product_filters.breadcrumbs
+msgid "Shop"
+msgstr "Tienda"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:14
+#, python-format
+msgid "Skip It"
+msgstr "Omitir"
 
 #. module: website_product_filters
 #: view:website:website_sale.products
-msgid "Select..."
-msgstr "Seleccione..."
+msgid "Sort By..."
+msgstr "Ordenar por..."
 
 #. module: website_product_filters
-#: view:website:website_sale.products
-msgid "Sort by :"
-msgstr "Ordenar por:"
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:14
+#, python-format
+msgid "Start Tutorial"
+msgstr "Iniciar Tutorial"
 
 #. module: website_product_filters
 #: help:product.template,decimal_time:0
@@ -168,6 +258,18 @@ msgid "This field shows the number of times a product has beenviewed on the webs
 msgstr "Este campo muestra la cantidad de veces que un producto ha sido visto en el sitio web para poder obtener su popularidad."
 
 #. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:47
+#, python-format
+msgid "This page contains all the information related to the new product."
+msgstr "Esta página contiene toda la información relacionada al nuevo producto."
+
+#. module: website_product_filters
+#: field:product.public.category,total_tree_products:0
+msgid "Total Subcategory Prods"
+msgstr "Total de productos en subcategorias"
+
+#. module: website_product_filters
 #: field:product.price.ranges,upper:0
 msgid "Upper"
 msgstr "Mas arriba"
@@ -178,24 +280,28 @@ msgid "Views"
 msgstr "Vistas"
 
 #. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:12
+#, python-format
+msgid "Welcome to your shop"
+msgstr "Bienvenido a tu tienda"
+
+#. module: website_product_filters
+#. openerp-web
+#: code:addons/website_product_filters/static/src/js/website_sale_tour_shop.js:13
+#, python-format
+msgid "You successfully installed the e-commerce. This guide will help you to create your product and promote your sales."
+msgstr "Has instalado correctamente el modulo de e-commerce. Esta guía te ayudará a crear un producto y promover tus ventas."
+
+#. module: website_product_filters
 #: view:website:website_sale.categories_recursive
 msgid "category-pills"
 msgstr "category-pills"
 
 #. module: website_product_filters
-#: view:website:website_sale.products
-msgid "col-md-3"
-msgstr "col-md-3"
-
-#. module: website_product_filters
-#: view:website:website_sale.products
-msgid "col-md-3 hidden-xs"
-msgstr "col-md-3 hidden-xs"
-
-#. module: website_product_filters
-#: view:website:website_sale.products
-msgid "col-md-9"
-msgstr "col-md-9"
+#: view:website:website_sale.product
+msgid "col-sm-4 col-md-2 col-lg-2"
+msgstr "col-sm-4 col-md-2 col-lg-2"
 
 #. module: website_product_filters
 #: view:website:website_sale.products

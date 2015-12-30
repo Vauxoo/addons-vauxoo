@@ -64,5 +64,17 @@
                 </xpath>
             </field>
         </record>
+        <record id="stock_warehouse_alias_form_view" model="ir.ui.view">
+            <field name="name">stock.warehouse.alias.form</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                     <label for="stock_alias" class="oe_edit_only"/>
+                    <h2><field name="stock_alias"/></h2>
+                    <field name="website_published" widget="website_button"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
