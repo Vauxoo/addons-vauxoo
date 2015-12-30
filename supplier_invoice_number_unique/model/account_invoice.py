@@ -46,10 +46,12 @@ class AccountInvoice(models.Model):
                     AND ai.id != %s
                     AND rp.commercial_partner_id = %s
                     AND state not in ('draft', 'cancel')
+                    AND ai.company_id = %s
                     """, (
                         invoice.supplier_invoice_number,
                         invoice.id,
-                        invoice.partner_id.commercial_partner_id.id)
+                        invoice.partner_id.commercial_partner_id.id,
+                        invoice.company_id.id)
                 )
                 invoice_duplicate_ids = self._cr.fetchall()
                 if invoice_duplicate_ids:
