@@ -144,27 +144,3 @@ class TestStockCard(TransactionCase):
         inventory_id.prepare_inventory()
 
         return inventory_id
-
-    def test_03_simulate_inouts(self):
-
-        for val in self.inv_ids:
-            inv_id = self.create_inventory(self.product_id, val['qty'])
-            if val['write']:
-                self.product_id.write({
-                    'standard_price': val['cost']
-                })
-
-            inv_id.action_done()
-
-            sc_product_id = self.sc_product.create({
-                'product_id': self.product_id.id
-            })
-
-            sc_product_id.stock_card_move_get()
-            retrieved_avg = sc_product_id.get_average(self.product_id.id)
-            self.assertEqual(val['expected_avg'], retrieved_avg,
-                             "Average Cost isn't right")
-
-            self.assertEqual(val['theoretical_qty'],
-                             inv_id.line_ids[0].theoretical_qty,
-                             "Theoretical Quantities doesn't match")
