@@ -10,6 +10,8 @@
         "account",
         "base",
         "stock",
+        "purchase",
+        "sale",
     ],
     "demo": [
         'demo/demo.xml',
