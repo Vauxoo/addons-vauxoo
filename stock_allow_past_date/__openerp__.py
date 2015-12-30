@@ -11,7 +11,7 @@
 
 {
     "name": "Stock Allow Past Date",
-    "version": "8.0.1.0",
+    "version": "8.0.2.0.0",
     "license": "LGPL-3",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",

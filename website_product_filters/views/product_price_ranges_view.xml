@@ -27,5 +27,37 @@
         </field>
     </record>
     <menuitem action="product_price_ranges_action" id="menu_product_price_ranges" parent="product.prod_config_main" sequence="10" />
+
+    <record id="prioduct_category_product_inh_form_view" model="ir.ui.view">
+            <field name="name">product.category.product.form</field>
+            <field name="model">product.public.category</field>
+            <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="replace">
+                    <sheet>
+                    <field name="image_medium" widget='image' class="oe_avatar"/>
+                    <div>
+                        <group>
+                            <field name="name"/>
+                            <field name="parent_id"/>
+                            <field name="sequence"/>
+                            <field name="total_tree_products"/>
+                            <field name="has_products_ok"/>
+                        </group>
+
+                        <group>
+                            <field name="product_ids"
+                                nolabel="1" colspan="2">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="name"/>
+                                    <field name="website_published"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </div>
+                    </sheet>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
