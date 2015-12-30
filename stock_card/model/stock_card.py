@@ -206,6 +206,43 @@ class StockCardProduct(models.TransientModel):
         self._get_stock_card_move_line(row, vals)
         return True
 
+    def _pre_get_average_by_move(self, row, vals):
+        vals['previous_qty'] = vals['product_qty']
+        vals['previous_valuation'] = vals['inventory_valuation']
+        vals['previous_average'] = vals['average']
+        return True
+
+    def _post_get_average_by_move(self, row, vals):
+        if not vals['rewind']:
+            if vals['previous_qty'] > 0 and vals['product_qty'] < 0:
+                vals['prior_qty'] = vals['previous_qty']
+                vals['prior_valuation'] = vals['previous_valuation']
+                vals['prior_average'] = vals['previous_average']
+            if vals['product_qty'] < 0 and vals['direction'] < 0:
+                vals['accumulated_move'].append(row)
+            elif vals['previous_qty'] < 0 and vals['direction'] > 0:
+                vals['accumulated_move'].append(row)
+                vals['rewind'] = True
+                vals['old_queue'] = vals['queue'][:]
+                vals['queue'] = vals['accumulated_move'][:]
+
+                vals['product_qty'] = vals['prior_qty']
+                vals['inventory_valuation'] = vals['prior_valuation']
+                vals['future_average'] = vals['average']
+
+                vals['accumulated_variation'] = 0.0
+                vals['accumulated_qty'] = 0.0
+
+        else:
+            if not vals['queue']:
+                vals['rewind'] = False
+                vals['queue'] = vals['old_queue'][:]
+
+            if vals['product_qty'] > 0:
+                vals['accumulated_move'] = []
+
+        return True
+
     def _stock_card_move_get_avg(self, product_id, vals, return_values=False):
         vals['move_ids'] = self._stock_card_move_history_get(product_id)
         vals['queue'] = vals['move_ids'][:]
@@ -213,40 +250,12 @@ class StockCardProduct(models.TransientModel):
 
             row = vals['queue'].pop(0)
 
-            vals['previous_qty'] = vals['product_qty']
-            vals['previous_valuation'] = vals['inventory_valuation']
-            vals['previous_average'] = vals['average']
+            self._pre_get_average_by_move(row, vals)
 
             self._get_average_by_move(
                 product_id, row, vals, return_values=return_values)
 
-            if not vals['rewind']:
-                if vals['previous_qty'] > 0 and vals['product_qty'] < 0:
-                    vals['prior_qty'] = vals['previous_qty']
-                    vals['prior_valuation'] = vals['previous_valuation']
-                    vals['prior_average'] = vals['previous_average']
-                if vals['product_qty'] < 0 and vals['direction'] < 0:
-                    vals['accumulated_move'].append(row)
-                elif vals['previous_qty'] < 0 and vals['direction'] > 0:
-                    vals['accumulated_move'].append(row)
-                    vals['rewind'] = True
-                    vals['old_queue'] = vals['queue'][:]
-                    vals['queue'] = vals['accumulated_move'][:]
-
-                    vals['product_qty'] = vals['prior_qty']
-                    vals['inventory_valuation'] = vals['prior_valuation']
-                    vals['future_average'] = vals['average']
-
-                    vals['accumulated_variation'] = 0.0
-                    vals['accumulated_qty'] = 0.0
-
-            else:
-                if not vals['queue']:
-                    vals['rewind'] = False
-                    vals['queue'] = vals['old_queue'][:]
-
-                if vals['product_qty'] > 0:
-                    vals['accumulated_move'] = []
+            self._post_get_average_by_move(row, vals)
 
         return True
 
