@@ -49,10 +49,8 @@ class TestLandedCostsSegmentation(TransactionCase):
 
         self.product_03 = self.env.ref(
             'stock_landed_costs_segmentation.product_real_01')
-        pass
 
     def do_picking(self, picking_id=False):
-        transfer_details = self.env['stock.transfer_details']
         picking_id.action_confirm()
         wizard_id = self.wizard.create({
             'picking_id': picking_id.id,
