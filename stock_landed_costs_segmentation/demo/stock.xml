@@ -67,6 +67,7 @@
             <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
         </record>
         <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_01"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="stock_landed_costs_segmentation.po_01"/>
 
         <record id="po_02" model="purchase.order">
             <field name="partner_id" ref="base.res_partner_23"/>
@@ -98,5 +99,6 @@
             <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
         </record>
         <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/>
     </data>
 </openerp>
