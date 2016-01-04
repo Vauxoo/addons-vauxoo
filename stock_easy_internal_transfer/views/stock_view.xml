@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="product_tree_view_easy_internal" model="ir.ui.view">
+            <field name="name">product.product.tree.easy.internal</field>
+            <field name="model">product.product</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+            <tree string="Products">
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="uom_id"/>
+                <field name="lst_price"/>
+            </tree>
+            </field>
+        </record>
+
+        <!-- Stock Picking -->
+        <record id="view_picking_form_inherit_easy_internal" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field eval="15" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Transfer">
+                <header>
+                    <button name="action_confirm" states="draft" string="Mark as Todo" type="object" class="oe_highlight" groups="base.group_user"/>
+                    <button name="action_assign" states="confirmed" string="Check Availability" type="object" class="oe_highlight" groups="base.group_user"/>
+                    <button name="rereserve_pick" string="Recheck Availability" type="object" class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'partially_available')), ('pack_operation_exist','=',True)]}"/>
+                    <!-- <button name="force_assign" states="confirmed,waiting,partially_available" string="Force Availability" type="object" groups="base.group_user"/>
+                    <button name="do_enter_transfer_details" states="assigned,partially_available" string="Transfer" groups="stock.group_stock_user" type="object" class="oe_highlight"/>-->
+                    <button name="do_detailed_transfer" states="assigned,partially_available" string="Transfer" groups="stock.group_stock_user" type="object" class="oe_highlight"/>
+                    <button name="do_print_picking" string="Print Picking List" groups="stock.group_stock_user" type="object" attrs="{'invisible': ['|', ('picking_type_code', '=', 'outgoing'), ('state', '!=', 'assigned')]}"/>
+                    <button name="%(stock.act_stock_return_picking)d" string="Reverse Transfer" states="done" type="action" groups="base.group_user"/>
+                    <button name="action_cancel" states="assigned,confirmed,partially_available,draft,waiting" string="Cancel Transfer" groups="base.group_user" type="object"/>
+                    <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object" attrs="{'invisible': [('quant_reserved_exist', '=', False)]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,done" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
+                </header>
+                <sheet>
+                    <div class="oe_right oe_button_box">
+                        <button name="do_partial_open_barcode" groups="stock.group_stock_user" type="object" class="oe_stock_scan_button" attrs="{'invisible': ['|',('pack_operation_exist', '=', True),('state','not in',('assigned', 'partially_available'))]}"><img src="/stock/static/src/img/scan.png" class="oe_stock_scan_image oe_stock_scan_image_btn"/></button>
+                        <button name="open_barcode_interface" groups="stock.group_stock_user" type="object" class="oe_stock_scan_button" attrs="{'invisible': ['|',('pack_operation_exist', '=', False),('state','not in',('assigned', 'partially_available'))]}"><img src="/stock/static/src/img/scan.png" class="oe_stock_scan_image oe_stock_scan_image_btn"/></button>
+                    </div>
+                    <h1>
+                        <field name="name" class="oe_inline" attrs="{'invisible': [('name','=','/')]}" readonly="1" />
+                    </h1>
+                    <label for="force_location_id" class="oe_edit_only"/>
+                    <h2><field name="force_location_id" required="1" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}" /></h2>
+                    <label for="force_location_dest_id" class="oe_edit_only"/>
+                    <h2><field name="force_location_dest_id" attrs="{'required': [('state', '=', 'assigned')]}" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/></h2>
+                    <group>
+                        <group>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="backorder_id" readonly="1" attrs="{'invisible': [('backorder_id','=',False)]}"/>
+                        </group>
+                        <group>
+                            <field name="origin" placeholder="e.g. PO0032" class="oe_inline" invisible="1"/>
+                            <label for="owner_id" groups="stock.group_tracking_owner" invisible="1"/>
+                            <div groups="stock.group_tracking_owner" invisible="1">
+                                <field name="owner_id"/>
+                                <button name="action_assign_owner" string="Assign Owner" type="object" attrs="{'invisible': ['|',('pack_operation_exist', '=', False),('state', 'not in', ('draft','assigned','confirmed'))]}"
+                                    class="oe_link oe_edit_only"/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Internal Moves">
+                            <p class="oe_grey" attrs="{'invisible': [('force_location_id', '!=', False)]}">
+                            You need select first a source location to enable product selection.
+                            </p>
+                            <field name="move_lines" attrs="{'invisible': [('force_location_id', '=', False)], 'readonly': [('state', 'in', ('assigned', 'cancel', 'done'))]}"
+                                context="{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id,'default_picking_id': active_id, 'default_location_id': force_location_id}" >
+                                <tree colors="grey:state == 'cancel';grey:scrapped == True" string="Stock Moves" editable="top">
+                                    <field name="product_id" on_change="onchange_product_id(product_id)" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True}" context="{'tree_view_ref': 'stock_easy_internal_transfer.product_tree_view_easy_internal'}"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="qty_location" />
+                                    <field name="qty_reserved" />
+                                    <field name="product_uom_qty" on_change="onchange_quantity(product_id, product_uom_qty, product_uom, product_uos)"/>
+                                    <field name="product_uom" string="Unit of Measure" groups="product.group_uom" invisible="1"/>
+                                    <field name="product_uos_qty" groups="product.group_uos" invisible="1"/>
+                                    <field name="product_uos" groups="product.group_uos" invisible="1"/>
+                                    <field name="location_id" on_change="location_id_change(location_id)" invisible="1"/>
+                                    <field name="picking_id" invisible="1" />
+                                    <field name="create_date" invisible="1" />
+                                    <field name="date_expected" invisible="1" />
+                                    <field name="scrapped" invisible="1" />
+                                    <field name="availability" invisible="1"/>
+                                    <field name="reserved_availability" invisible="1"/>
+                                    <field name="location_dest_id" invisible="1" />
+                                    <field name="remaining_qty" invisible="1"/>
+                                    <field name="string_availability_info" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field>
+                            <field name="pack_operation_exist" invisible="1"/>
+                            <field name="note" placeholder="Add an internal note..." class="oe_inline"/>
+                            <field name="date" readonly="1" />
+                            <field name="min_date" invisible="1"/>
+                        </page>
+                        <page string="Operations" attrs="{'invisible': ['|', ('state','!=','done'), ('pack_operation_ids','=',[])]}" invisible="1">
+                            <field name="pack_operation_ids" context="{'default_picking_id': active_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}">
+                                <tree editable="top">
+                                    <field name="package_id" groups="stock.group_tracking_lot" invisible="1"/>
+                                    <field name="product_id" on_change="product_id_change(product_id, product_uom_id, product_qty)" />
+                                    <field name="product_uom_id" groups="product.group_uom"/>
+                                    <field name="lot_id" domain="[('product_id','=?', product_id)]" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
+                                    <field name="picking_id" invisible="1"/>
+                                    <field name="owner_id" groups="stock.group_tracking_owner" invisible="1"/>
+                                    <field name="product_qty" attrs="{'required': [('product_id', '!=', False)]}"/>
+                                    <field name="location_id" domain="[('id', 'child_of', parent.location_id)]"/>
+                                    <field name="location_dest_id" domain="[('id', 'child_of', parent.location_dest_id)]"/>
+                                    <field name="result_package_id" groups="stock.group_tracking_lot" context="{'location_id': location_dest_id}" invisible="1"/>
+                                </tree>
+                            </field>
+                            <p class="oe_grey" groups="stock.group_tracking_lot">
+                            If there is no product but a source package, this means the source package was moved entirely.  If there is a product and a source package, the product was taken from the source package.
+                            </p>
+                        </page>
+                        <page string="Additional Info" invisible="1">
+                            <group string="General Informations">
+                                <group>
+                                    <field name="move_type"/>
+                                    <field name="picking_type_id"/>
+                                    <field name="picking_type_code" invisible="1"/>
+                                    <field name="quant_reserved_exist" invisible="1"/>
+                                    <field name="location_id" invisible="1"/>
+                                    <field name="location_dest_id" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                    <field name="date_done" groups="base.group_no_one"/>
+                                    <field name="group_id"/>
+                                    <field name="priority"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Stock Picking Actions -->
+        <!-- Done -->
+        <record id="action_picking_tree_done_inherit_easy_internal" model="ir.actions.act_window">
+            <field name="name">Done Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_done': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_tree_done">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_tree_done_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_move_form_done">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_picking_form_inherit_easy_internal"/>
+            <field name="act_window_id" ref="action_picking_tree_done_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_pincking_calendar_ready">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="stock.stock_picking_calendar"/>
+            <field name="act_window_id" ref="action_picking_tree_done_inherit_easy_internal"/>
+        </record>
+
+        <!-- Ready -->
+        <record id="action_picking_tree_ready_inherit_easy_internal" model="ir.actions.act_window">
+            <field name="name">Ready Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_available': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_tree_ready">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_tree_ready_inherit_easy_internal"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_form_ready">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_picking_form_inherit_easy_internal"/>
+            <field name="act_window_id" ref="action_picking_tree_ready_inherit_easy_internal"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_calendar_ready">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="stock.stock_picking_calendar"/>
+            <field name="act_window_id" ref="action_picking_tree_ready_inherit_easy_internal"/>
+        </record>
+
+        <!-- Waiting -->
+        <record id="action_picking_tree_waiting_inherit_easy_internal" model="ir.actions.act_window">
+            <field name="name">Waiting Availability Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_waiting': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_tree_waiting">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_tree_waiting_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_form_waiting">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_picking_form_inherit_easy_internal"/>
+            <field name="act_window_id" ref="action_picking_tree_waiting_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_calendar_waiting">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="stock.stock_picking_calendar"/>
+            <field name="act_window_id" ref="action_picking_tree_waiting_inherit_easy_internal"/>
+        </record>
+
+        <!-- All -->
+        <record id="action_picking_tree_all_inherit_easy_internal" model="ir.actions.act_window">
+            <field name="name">Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="view_id" ref="view_picking_form_inherit_easy_internal"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a stock operation.
+              </p><p>
+                Most operations are prepared automatically by Odoo according
+                to your preconfigured logistics rules, but you can also record
+                manual stock movements.
+              </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_tree_all">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_tree_all_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_form_all">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_picking_form_inherit_easy_internal"/>
+            <field name="act_window_id" ref="action_picking_tree_all_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_calendar_all">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="stock.stock_picking_calendar"/>
+            <field name="act_window_id" ref="action_picking_tree_all_inherit_easy_internal"/>
+        </record>
+
+        <!-- Late -->
+        <record id="action_picking_tree_late_inherit_easy_internal" model="ir.actions.act_window">
+            <field name="name">Late Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_confirmed': 1,
+                    'search_default_late': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_tree_late">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_tree_late_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_form_late">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_picking_form_inherit_easy_internal"/>
+            <field name="act_window_id" ref="action_picking_tree_late_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_calendar_late">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="stock.stock_picking_calendar"/>
+            <field name="act_window_id" ref="action_picking_tree_late_inherit_easy_internal"/>
+        </record>
+
+        <!-- Backorders -->
+        <record id="action_picking_tree_backorder_inherit_easy_internal" model="ir.actions.act_window">
+            <field name="name">Backorders</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_confirmed': 1,
+                    'search_default_backorder': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_tree_backorder">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_tree_backorder_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_form_backorder">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_picking_form_inherit_easy_internal"/>
+            <field name="act_window_id" ref="action_picking_tree_backorder_inherit_easy_internal"/>
+       </record>
+
+        <record model="ir.actions.act_window.view" id="action_stock_picking_calendar_backorder">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="stock.stock_picking_calendar"/>
+            <field name="act_window_id" ref="action_picking_tree_backorder_inherit_easy_internal"/>
+        </record>
+
+        <!-- Stock Picking Type Views -->
+        <record id="stock_picking_type_kanban_inherit_easy_internal" model="ir.ui.view">
+            <field name="name">stock.picking.type.kanban.inherit.easy.internal</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//templates" position="before">
+                    <field name="quick_view" />
+                </xpath>
+                <xpath expr="//div[@class='oe_items_list oe_kanban_ellipsis']" position="attributes">
+                    <attribute name="t-if">record.quick_view.raw_value == 0</attribute>
+                </xpath>
+                <xpath expr="//div[@class='oe_items_list oe_kanban_ellipsis']" position="after">
+                    <div class="oe_items_list oe_kanban_ellipsis" t-if="record.quick_view.raw_value == 1">
+                        <div>
+                            <a name="%(action_picking_tree_ready_inherit_easy_internal)d" type="action">
+                                <field name="count_picking_ready"/> Ready
+                            </a>
+                            <a name="%(action_picking_tree_done_inherit_easy_internal)d" type="action" class="oe_sparkline_bar_link">
+                                <field name="last_done_picking" widget="sparkline_bar" options="{'type': 'tristate', 'colorMap': {'0': 'orange', '-1': 'red', '1': 'green'}}">Last 10 Done Operations</field>
+                            </a>
+                        </div>
+                        <div t-if="record.count_picking_waiting.raw_value &gt; 0">
+                            <a name="%(action_picking_tree_waiting_inherit_easy_internal)d" type="action">
+                                <field name="count_picking_waiting"/> Waiting Availability
+                            </a>
+                        </div>
+                        <div>
+                            <a name="%(action_picking_tree_all_inherit_easy_internal)d" type="action">All Operations</a>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@class='oe_gauge_labels']" position="attributes">
+                     <attribute name="t-if">record.quick_view.raw_value == 0</attribute>
+                </xpath>
+                <xpath expr="//div[@class='oe_gauge_labels']" position="after">
+                    <div class="oe_gauge_labels" t-if="record.quick_view.raw_value == 1">
+                        <div class="oe_gauge_label_column">
+                            <a name="%(action_picking_tree_late_inherit_easy_internal)d" type="action">
+                                <field name="count_picking_late"/> Late
+                            </a>
+                        </div>
+                        <div class="oe_gauge_label_column">
+                            <a name="%(action_picking_tree_backorder_inherit_easy_internal)d" type="action">
+                                <field name="count_picking_backorders"/> Backorders
+                            </a>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Stock Warehouse -->
+        <record id="view_warehouse_inherit_easy_internal" model="ir.ui.view">
+            <field name="name">stock.warehouse</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='delivery_steps']" position="after">
+                    <field name="use_easy_internal" />
+                </xpath>
+                 <xpath expr="//field[@name='int_type_id']" position="after">
+                    <field name="easy_internal_type_id" readonly="1" attrs="{'invisible': [('use_easy_internal', '=', False)]}" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

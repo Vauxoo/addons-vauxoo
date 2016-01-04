@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_stock_enter_transfer_details_inherit_easy_internal" model="ir.ui.view">
+            <field name="name">Enter transfer details</field>
+            <field name="model">stock.transfer_details</field>
+            <field name="inherit_id" ref="stock.view_stock_enter_transfer_details" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='picking_destination_location_id']" position="after">
+                    <field name="quick_view" invisible="1"/>
+                </xpath>
+                <xpath expr="//group[@string='Packages To Move']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('quick_view','=',True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='packop_ids']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('quick_view','=',True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
