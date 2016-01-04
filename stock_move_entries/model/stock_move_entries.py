@@ -49,7 +49,7 @@ class StockMove(osv.Model):
             'account.move.line', 'sm_id', 'Account move Lines',
             domain=[('account_id.reconcile', '=', True)]),
         'aml_all_ids': fields.one2many(
-            'account.move.line', 'sm_id', 'Account move Lines'),
+            'account.move.line', 'sm_id', 'All Account move Lines'),
     }
 
 
