@@ -5,7 +5,6 @@
             <field name="name">Segmentation Cost Product: Cost Method - Real, Valuation - Periodic</field>
             <field name="cost_method">real</field>
             <field name="valuation">manual_periodic</field>
-            <field name="landed_cost_ok">0</field>
             <field name="type">product</field>
             <field name="standard_price">100.0</field>
         </record>
