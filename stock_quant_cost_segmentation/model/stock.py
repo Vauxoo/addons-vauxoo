@@ -141,6 +141,8 @@ class StockQuant(models.Model):
         # creation of quant manually: we should always use this method to
         # create quants
         quant_id = self.create(cr, SUPERUSER_ID, vals, context=context)
+        if move.product_id.valuation == 'real_time':
+            self._account_entry_move(cr, uid, [quant_id], move, context)
         return self.browse(cr, uid, quant_id, context=context)
 
     @api.v7
