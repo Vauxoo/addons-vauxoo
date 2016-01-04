@@ -141,7 +141,10 @@ class StockQuant(models.Model):
         # creation of quant manually: we should always use this method to
         # create quants
         quant_id = self.create(cr, SUPERUSER_ID, vals, context=context)
-        return self.browse(cr, uid, quant_id, context=context)
+        quant_brw = self.browse(cr, uid, quant_id, context=context)
+        if move.product_id.valuation == 'real_time':
+            self._account_entry_move(cr, uid, [quant_brw], move, context)
+        return quant_brw
 
     @api.v7
     def _price_update_segmentation(

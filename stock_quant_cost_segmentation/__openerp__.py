@@ -10,6 +10,8 @@
     "depends": [
         "base",
         "stock",
+        "stock_account",
+        "stock_move_entries",
         "purchase",
     ],
     "demo": [
