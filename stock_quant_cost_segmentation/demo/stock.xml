@@ -24,5 +24,31 @@
         <function model="stock.inventory" name="action_done">
             <function eval="[[('id', '=', ref('stock_quant_cost_segmentation.stock_inventory_01'))]]" model="stock.inventory" name="search"/>
         </function>
+
+        <record id="product_real_realtime" model="product.product">
+            <field name="name">Segmentation Cost Product: Cost Method - Real, Valuation - RealTime</field>
+            <field name="cost_method">real</field>
+            <field name="valuation">real_time</field>
+            <field name="type">product</field>
+            <field name="standard_price">100.0</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <record id="stock_inventory_02" model="stock.inventory">
+            <field name="name">Stock Quant Cost Segmentation - Inventory (RealTime)</field>
+        </record>
+
+        <record id="stock_inventory_line_2" model="stock.inventory.line">
+            <field name="product_id" ref="product_real_realtime"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="stock_quant_cost_segmentation.stock_inventory_02"/>
+            <field name="product_qty">1.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('stock_quant_cost_segmentation.stock_inventory_02'))]]" model="stock.inventory" name="search"/>
+        </function>
     </data>
 </openerp>
