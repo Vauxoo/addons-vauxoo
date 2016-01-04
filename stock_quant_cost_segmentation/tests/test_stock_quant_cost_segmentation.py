@@ -20,7 +20,7 @@ class TestsStockQuantCostSegmentation(TestStockCommon):
         self.product_id = self.ref(
             'stock_quant_cost_segmentation.product_real_realtime')
         self.inventory_id = self.stock_inv_obj.browse(self.ref(
-            'stock_quant_cost_segmentation.stock_inventory_01'))
+            'stock_quant_cost_segmentation.stock_inventory_02'))
 
     def asserting_cost_segmentation(self):
         quant = self.quant.search(
