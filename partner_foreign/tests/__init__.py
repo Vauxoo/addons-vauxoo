@@ -23,3 +23,4 @@
 ###############################################################################
 
 from . import test_partner_foreign
+from . import test_partner_foreign_multicompany
