@@ -79,7 +79,7 @@
 
         <record id="routing_segmentation_d_product" model="mrp.routing">
             <field name="name">ROUTING_SEGMENTATION_D_PRODUCT</field>
-            <field name="journal_id" ref="mrp_workcenter_account_move.rev_production_journal"/>
+            <field name="journal_id" ref="mrp_routing_account_journal.landed_cost_journal_1"/>
         </record>
         <record id="routing_workcenter_segmentation_d_product" model="mrp.routing.workcenter">
             <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_d_product"/>
@@ -92,7 +92,7 @@
 
         <record id="routing_segmentation_e_product" model="mrp.routing">
             <field name="name">ROUTING_SEGMENTATION_E_PRODUCT</field>
-            <field name="journal_id" ref="mrp_workcenter_account_move.rev_production_journal"/>
+            <field name="journal_id" ref="mrp_routing_account_journal.landed_cost_journal_1"/>
         </record>
         <record id="routing_workcenter_segmentation_e_product" model="mrp.routing.workcenter">
             <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_e_product"/>
