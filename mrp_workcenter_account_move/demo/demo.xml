@@ -54,7 +54,7 @@
         <field name="costs_hour">15</field>
         <field name="costs_hour_account_id" ref="rev_production_analytic_account"/>
         <field name="costs_general_account_id" ref="rev_production_cost_account"/>
-        <field name="costs_journal_id" ref="rev_analytic_production_journal"/>
+        <field name="costs_journal_id" ref="mrp_routing_account_journal.analytic_landed_cost_journal_1"/>
     </record>
 
     <record id="rev_routing" model="mrp.routing">
