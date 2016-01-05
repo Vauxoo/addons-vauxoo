@@ -59,7 +59,7 @@
 
     <record id="rev_routing" model="mrp.routing">
         <field name="name">PROD_STD-REALTIME_ROUTING</field>
-        <field name="journal_id" ref="rev_production_journal"/>
+        <field name="journal_id" ref="mrp_routing_account_journal.landed_cost_journal_1"/>
     </record>
 
     <record id="rev_routing_workcenter" model="mrp.routing.workcenter">
