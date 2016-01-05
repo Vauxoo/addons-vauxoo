@@ -101,6 +101,23 @@ class StockMove(models.Model):
         return {'domain': {'product_id': [('id', 'in', product.ids)]}}
 
 
+class StockQuant(models.Model):
+    _inherit = "stock.quant"
+
+    @api.model
+    def quants_reserve(self, quants, move, link=False):
+        if move.picking_id and move.picking_id.picking_type_id.quick_view:
+            domain = [
+                ('location_id', '=', move.location_id.id),
+                ('reservation_id', '=', False),
+                ('qty', '>', 0)]
+
+            quants = self.quants_get(move.location_id, move.product_id,
+                                 move.product_uom_qty, domain)
+
+        return super(StockQuant, self).quants_reserve(quants, move, link=link)
+
+
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
