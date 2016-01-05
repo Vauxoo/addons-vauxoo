@@ -113,7 +113,7 @@ class StockQuant(models.Model):
                 ('qty', '>', 0)]
 
             quants = self.quants_get(move.location_id, move.product_id,
-                                 move.product_uom_qty, domain)
+                                     move.product_uom_qty, domain)
 
         return super(StockQuant, self).quants_reserve(quants, move, link=link)
 
