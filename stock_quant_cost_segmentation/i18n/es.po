@@ -21,7 +21,7 @@ msgstr ""
 #. module: stock_quant_cost_segmentation
 #: field:stock.quant,segmentation_cost:0
 msgid "Actual Cost"
-msgstr "Costo Actual"
+msgstr "Costo Real"
 
 #. module: stock_quant_cost_segmentation
 #: field:stock.quant,landed_cost:0
@@ -42,7 +42,7 @@ msgstr "Costo de Producción"
 #: help:stock.quant,segmentation_cost:0
 msgid "Provides the actual cost for this transaction. It is computed from the sum of the segmentation costs: `material cost`, `subcontracting cost`, `landed cost` & `production cost`"
 msgstr ""
-"Provee el costo actual para esta transacción. Es calculado mediante la suma "
+"Provee el costo real para esta transacción. Es calculado mediante la suma "
 "de los costos segmentados: Material + Subcontratado + Costos en Destino + "
 "Producción"
 
