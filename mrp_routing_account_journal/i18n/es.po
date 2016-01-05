@@ -18,10 +18,10 @@ msgstr ""
 #. module: mrp_routing_account_journal
 #: field:mrp.routing,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "Diario"
 
 #. module: mrp_routing_account_journal
 #: model:ir.model,name:mrp_routing_account_journal.model_mrp_routing
 msgid "Routing"
-msgstr ""
+msgstr "Ruta"
 

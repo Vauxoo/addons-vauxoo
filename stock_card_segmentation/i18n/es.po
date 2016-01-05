@@ -18,20 +18,19 @@ msgstr ""
 #. module: stock_card_segmentation
 #: field:stock.card.move,landed:0
 msgid "Landed Cost"
-msgstr ""
+msgstr "Costo en Destino"
 
 #. module: stock_card_segmentation
 #: field:stock.card.move,material:0
 msgid "Material Cost"
-msgstr ""
+msgstr "Costo de Material"
 
 #. module: stock_card_segmentation
 #: field:stock.card.move,production:0
 msgid "Production Cost"
-msgstr ""
+msgstr "Costo de Producción"
 
 #. module: stock_card_segmentation
 #: field:stock.card.move,subcontracting:0
 msgid "Subcontracting Cost"
-msgstr ""
-
+msgstr "Costo de Subcontratación"
