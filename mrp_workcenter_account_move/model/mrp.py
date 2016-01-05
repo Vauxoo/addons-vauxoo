@@ -278,6 +278,10 @@ class MrpProduction(models.Model):
     # TODO: Should this be moved to a new module?
     @api.v7
     def costs_generate(self, cr, uid, ids):
+        '''
+        Method to be used by a Web Service
+        It returns id of Journal Entry that was created for Cost Generated
+        '''
         ids = isinstance(ids, (int, long)) and ids or ids[0]
         production = self.browse(cr, uid, ids)
         if not production.workcenter_lines:
@@ -285,12 +289,15 @@ class MrpProduction(models.Model):
         if production.state != 'done':
             return False
         if production.account_move_id:
-            return True
+            return False
         if not production.routing_id:
             if not production.bom_id.routing_id:
                 return False
             production.write({'routing_id': production.bom_id.routing_id.id})
-        return self._costs_generate(cr, uid, production)
+        self._costs_generate(cr, uid, production)
+        res = production.account_move_id and \
+            production.account_move_id.id or False
+        return res
 
     @api.v7
     def _costs_generate(self, cr, uid, production):
