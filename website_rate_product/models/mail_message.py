@@ -5,7 +5,7 @@
 #    Copyright (C)2010-  OpenERP SA (<http://openerp.com>). All Rights Reserved
 #    App Author: Vauxoo
 #
-#    Developed by Oscar Alcala <oszckar@gmail.com>
+#    Developed by Oscar Alcala <oscar@vauxoo.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Lesser General Public License as
@@ -43,6 +43,7 @@ class MailMessage(osv.Model):
 
 class ProductTemplate(osv.Model):
     _inherit = 'product.template'
+
     def _get_rating(self, cr, uid, ids, field_name, arg, context):
         res = {}
         total = 0
