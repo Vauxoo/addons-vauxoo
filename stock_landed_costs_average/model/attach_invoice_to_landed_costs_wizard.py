@@ -9,12 +9,14 @@ class AttachInvoiceToLandedCostsWizard(models.TransientModel):
     stock_landed_cost_id = fields.Many2one(
         'stock.landed.cost',
         string='Landed Costs',
-        )
+    )
 
     @api.multi
     def add_landed_costs(self):
-        """ Attach an invoice to a Landed Costs object.
-        Note: Only applies to one invoice at time """
+        """
+        Attach an invoice to a Landed Costs object.
+        Note: Only applies to one invoice at time
+        """
         ai_obj = self.env['account.invoice']
 
         ctx = dict(self._context)
