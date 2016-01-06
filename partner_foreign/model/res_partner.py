@@ -60,7 +60,7 @@ class ResPartner(models.Model):
                 company_country = rp_brw.\
                     company_id.country_id.id or False
 
-            if company_country:
+            if company_country and rp_brw.country_id.id:
                 rp_brw.international = rp_brw.country_id.id != \
                     company_country and \
                     'international' or 'national'
