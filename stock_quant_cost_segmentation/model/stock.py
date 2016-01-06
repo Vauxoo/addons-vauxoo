@@ -161,7 +161,7 @@ class StockQuant(models.Model):
         """
             When new quant arrive in a location, try to reconcile it with
             negative quants. If it's possible, apply the cost of the new
-            quant to the conter-part of the negative quant.
+            quant to the counter-part of the negative quant.
         """
         solving_quant = quant
         dom = [('qty', '<', 0)]

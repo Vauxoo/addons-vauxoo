@@ -4,8 +4,6 @@ from openerp import models, fields
 import openerp.addons.decimal_precision as dp
 SEGMENTATION = ['material', 'landed', 'production', 'subcontracting']
 
-# TODO: multi-company awareness to be developed
-
 
 class StockCardProduct(models.TransientModel):
     _inherit = ['stock.card.product']
@@ -27,7 +25,7 @@ class StockCardProduct(models.TransientModel):
             landed=vals['landed'],
             production=vals['production'],
             subcontracting=vals['subcontracting'],
-            )
+        )
         return res
 
     def _get_default_params(self):
@@ -151,7 +149,6 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _get_move_average(self, row, vals):
-        # import pdb; pdb.set_trace()
         qty = row['product_qty']
         vals['cost_unit'] = vals['move_valuation'] / qty if qty else 0.0
 
@@ -192,7 +189,6 @@ class StockCardProduct(models.TransientModel):
                     vals['product_qty'] and
                     vals['%s_total' % sgmnt] / vals['product_qty'] or
                     vals[sgmnt])
-        # import pdb; pdb.set_trace()
         pass
 
         return True

@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "MRP Routing Account Journal",
-    "version": "1.0",
+    "version": "8.0.1.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
@@ -17,12 +17,6 @@
         'view/view.xml',
         'view/wizard.xml',
     ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
     "installable": True,
     "auto_install": False,
-    "external_dependencies": {
-    }
 }

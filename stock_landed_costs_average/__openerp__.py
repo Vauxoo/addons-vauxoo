@@ -2,11 +2,11 @@
 
 {
     "name": "Landed Costs for Avarage Costing Method",
-    "version": "1.1",
+    "version": "8.0.1.1.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",
-    "license": "",
+    "license": "AGPL-3",
     "depends": [
         "account",
         "stock_landed_costs",
@@ -22,10 +22,6 @@
         "view/stock_landed_costs.xml",
         "view/account_invoice.xml",
     ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
     "installable": True,
     "auto_install": False,
 }

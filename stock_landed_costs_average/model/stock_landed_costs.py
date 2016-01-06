@@ -71,6 +71,9 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def get_valuation_lines(self, picking_ids=None):
+        """
+        It returns product valuations based on picking's moves
+        """
         picking_obj = self.env['stock.picking']
         lines = []
         if not picking_ids and not self.move_ids:
@@ -82,13 +85,13 @@ class StockLandedCost(models.Model):
             for picking in picking_obj.browse(picking_ids)
             for move_id in picking.move_lines
             if move_id.product_id.valuation == 'real_time'
-            ]
+        ]
 
         move_ids += [
             move_id
             for move_id in self.move_ids
             if move_id.product_id.valuation == 'real_time'
-            ]
+        ]
 
         for move in move_ids:
             total_cost = 0.0
@@ -120,11 +123,8 @@ class StockLandedCost(models.Model):
     def _create_deviation_account_move_line(
             self, move_id, gain_account_id, loss_account_id,
             valuation_account_id, diff, product_brw):
-        # TODO: Change DocString
         """
-        Generate the account.move.line values to track the landed cost.
-        Afterwards, for the goods that are already out of stock, we should
-        create the out moves
+        It generates journal items to track landed costs
         """
         ctx = dict(self._context)
         aml_obj = self.pool.get('account.move.line')
@@ -234,11 +234,9 @@ class StockLandedCost(models.Model):
     def _create_standard_deviation_entry_lines(
             self, line, move_id, valuation_account_id, gain_account_id,
             loss_account_id):
-        # FIXME: Docstring
         """
-        Generate the account.move.line values to track the landed cost.
-        Afterwards, for the goods that are already out of stock, we should
-        create the out moves
+        It generates journal items to track landed costs, using arbitrary
+        accounts for valuation, gain and loss
         """
         aml_obj = self.env['account.move.line']
         base_line = {
@@ -267,7 +265,10 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def _create_standard_deviation_entries(self, line, move_id):
-
+        """
+        Create standard deviation journal items based on predefined product
+        account valuation, gain and loss company's accounts
+        """
         valuation_account_id, gain_account_id, loss_account_id = \
             self._get_deviation_accounts(line.product_id.id)
 
@@ -313,11 +314,9 @@ class StockLandedCost(models.Model):
     def _create_cogs_account_move_line(
             self, line, move_id, credit_account_id, debit_account_id,
             cogs_account_id, old_avg, new_avg, qty):
-        # TODO: Change DocString
         """
-        Generate the account.move.line values to track the landed cost.
-        Afterwards, for the goods that are already out of stock, we should
-        create the out moves
+        Create journal items for COGS for those products sold
+        before landed costs were applied
         """
 
         ctx = dict(self._context)
@@ -470,6 +469,10 @@ class StockLandedCost(models.Model):
 
     @api.v7
     def compute_landed_cost(self, cr, uid, ids, context=None):
+        """
+        It compute valuation lines for landed costs based on
+        splitting method used
+        """
         line_obj = self.pool.get('stock.valuation.adjustment.lines')
         unlink_ids = line_obj.search(
             cr, uid, [('cost_id', 'in', ids)], context=context)

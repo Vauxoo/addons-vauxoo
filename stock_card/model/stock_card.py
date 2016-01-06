@@ -3,8 +3,6 @@
 from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
-# TODO: multi-company awareness to be developed
-
 
 class StockCard(models.TransientModel):
     _name = 'stock.card'
