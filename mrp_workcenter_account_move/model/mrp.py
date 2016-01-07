@@ -82,15 +82,18 @@ class MrpProduction(models.Model):
         for raw_mat in self.move_lines2:
             if raw_mat.state != 'done':
                 continue
-            for quant in raw_mat.quant_ids:
-                amount_consumed += quant.cost * abs(quant.qty)
+            amount_consumed += raw_mat.cost_price * raw_mat.product_qty
+
+            # for quant in raw_mat.quant_ids:
+            #     amount_consumed += quant.cost * abs(quant.qty)
 
         amount_produced = 0.0
         for created in self.move_created_ids2:
             if created.state != 'done':
                 continue
-            for quant2 in created.quant_ids:
-                amount_produced += quant2.cost * abs(quant2.qty)
+            amount_produced += created.cost_price * created.product_qty
+            # for quant2 in created.quant_ids:
+            #     amount_produced += quant2.cost * abs(quant2.qty)
 
         return amount + amount_consumed - amount_produced
 
