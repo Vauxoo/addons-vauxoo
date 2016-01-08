@@ -1,4 +1,4 @@
-odoo.define('mass_mailing.website_integration', function (require) {
+(function() {
 "use strict";
 
 var ajax = require('web.ajax');
@@ -6,8 +6,9 @@ var utils = require('web.utils');
 var animation = require('web_editor.snippets.animation');
 var website = require('website.website');
 
+var website = openerp.website;
 
-animation.registry.subscribe = animation.Class.extend({
+website.snippet.animationRegistry.subscribe = website.snippet.Animation.extend({
     selector: ".js_subscribe",
     start: function (editable_mode) {
         var self = this;
@@ -60,7 +61,8 @@ animation.registry.subscribe = animation.Class.extend({
     },
 });
 
-animation.registry.newsletter_popup = animation.Class.extend({
+website.snippet.animationRegistry.newsletter_popup = website.snippet.Animation.extend({
+
     selector: ".o_newsletter_popup",
     start: function (editable_mode) {
         var self = this;
@@ -120,10 +122,10 @@ animation.registry.newsletter_popup = animation.Class.extend({
     }
 });
 
-});
+})();
 
 
-odoo.define('mass_mailing.unsubscribe', function (require) {
+(function(){
 var ajax = require('web.ajax');
 require('web_editor.base');  // wait for implicit dependencies to load
 
@@ -156,4 +158,4 @@ if(!$('.o_unsubscribe_form').length) {
             });
     });
 
-});
+})();
