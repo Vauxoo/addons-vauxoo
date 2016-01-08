@@ -5,6 +5,7 @@ from openerp.exceptions import except_orm, Warning as UserError
 
 
 class MrpProduction(models.Model):
+
     """
     Production Orders / Manufacturing Orders
     """
@@ -14,7 +15,8 @@ class MrpProduction(models.Model):
         'account.move',
         string='Cost Journal Entry',
         readonly=True,
-        )
+        copy=False,
+    )
 
     @api.multi
     def test_accounting_setting(self):
@@ -195,7 +197,7 @@ class MrpProduction(models.Model):
                     credit=cycle_cost,
                     account_id=wc.costs_general_account_id.id,
                     analytic_account_id=wc.costs_cycle_account_id.id,
-                    )
+                )
                 aml_obj.create(debit_cycle)
                 aml_obj.create(credit_cycle)
 
@@ -208,13 +210,13 @@ class MrpProduction(models.Model):
                     base_hour,
                     debit=hour_cost,
                     account_id=production_account_id,
-                    )
+                )
                 credit_hour = dict(
                     base_hour,
                     credit=hour_cost,
                     account_id=wc.costs_general_account_id.id,
                     analytic_account_id=wc.costs_hour_account_id.id,
-                    )
+                )
                 aml_obj.create(debit_hour)
                 aml_obj.create(credit_hour)
         return True
