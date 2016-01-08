@@ -9,6 +9,7 @@ from openerp.tests.common import TransactionCase
 
 
 class TestMrpProduction(TransactionCase):
+
     '''
         This test do the following:
             1.- Create a mrp.production.
@@ -68,6 +69,8 @@ class TestMrpProduction(TransactionCase):
                          'done',
                          "The mrp production doesn't done.")
 
+        self.production_copy_test(self.mrp_production)
+
         aml_ids = self.mrp_production.aml_production_ids
 
         aml_raw_and_fg = [
@@ -107,6 +110,12 @@ class TestMrpProduction(TransactionCase):
         wip_credit = sum([q.credit for q in wip_ids])
         self.assertEqual((wip_debit, wip_credit),
                          (100, 100), "Work in Process is wrong")
+
+    def production_copy_test(self, production_id=False):
+        self.assertTrue(production_id.account_move_id)
+        new_production_id = production_id.copy()
+        self.assertTrue(new_production_id != production_id)
+        self.assertEqual(new_production_id.account_move_id.id, False)
 
     def create_wizard(self, values=None):
         self.wzd_id = self.wzd_obj.with_context(
