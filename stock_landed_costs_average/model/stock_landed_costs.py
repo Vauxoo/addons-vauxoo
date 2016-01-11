@@ -297,7 +297,9 @@ class StockLandedCost(models.Model):
         # TODO: Do we have to set another account for cogs_account_id?
         cogs_account_id = accounts['stock_account_output']
         credit_account_id = line.cost_line_id.account_id.id or \
+            cost_product.property_account_expense and \
             cost_product.property_account_expense.id or \
+            cost_product.categ_id.property_account_expense_categ and \
             cost_product.categ_id.property_account_expense_categ.id
 
         if not credit_account_id:
