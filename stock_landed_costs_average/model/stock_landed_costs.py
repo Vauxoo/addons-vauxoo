@@ -295,7 +295,12 @@ class StockLandedCost(models.Model):
         debit_account_id = accounts['property_stock_valuation_account_id']
         # NOTE: BEWARE of accounts when account_anglo_saxon applies
         # TODO: Do we have to set another account for cogs_account_id?
-        cogs_account_id = accounts['stock_account_output']
+        cogs_account_id = \
+            line.product_id.property_account_expense and \
+            line.product_id.property_account_expense.id or \
+            line.product_id.categ_id.property_account_expense_categ and \
+            line.product_id.categ_id.property_account_expense_categ.id
+
         credit_account_id = line.cost_line_id.account_id.id or \
             cost_product.property_account_expense and \
             cost_product.property_account_expense.id or \
@@ -307,6 +312,12 @@ class StockLandedCost(models.Model):
                 _('Error!'),
                 _('Please configure Stock Expense Account for product: %s.') %
                 (cost_product.name))
+
+        if not cogs_account_id:
+            raise except_orm(
+                _('Error!'),
+                _('Please configure Stock Expense Account for product: %s.') %
+                (line.product_id.name))
 
         return self._create_cogs_account_move_line(
             line, move_id, credit_account_id, debit_account_id,
