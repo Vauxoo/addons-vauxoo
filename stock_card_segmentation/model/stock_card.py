@@ -125,31 +125,6 @@ class StockCardProduct(models.TransientModel):
                             vals['future_%s' % sgmnt] * qnt['qty']
 
             product_qty += vals['direction'] * qnt['qty']
-            # product_qty += vals['direction'] * qnt['qty']
-            # if product_qty >= 0:
-            #     if not vals['rewind']:
-            #         vals['move_valuation'] += vals['average'] * qnt['qty']
-            #         for sgmnt in SEGMENTATION:
-            #             vals['%s_valuation' % sgmnt] += \
-            #                 vals[sgmnt] * qnt['qty']
-            #     else:
-            #         vals['move_valuation'] += \
-            #             vals['prior_average'] * qnt['qty']
-            #         for sgmnt in SEGMENTATION:
-            #             vals['%s_valuation' % sgmnt] += \
-            #                 vals['prior_avg_%s' % sgmnt] * qnt['qty']
-            # else:
-            #     if not vals['rewind']:
-            #         vals['move_valuation'] += vals['average'] * qnt['qty']
-            #         for sgmnt in SEGMENTATION:
-            #             vals['%s_valuation' % sgmnt] += \
-            #                 vals[sgmnt] * qnt['qty']
-            #     else:
-            #         vals['move_valuation'] += \
-            #             vals['future_average'] * qnt['qty']
-            #         for sgmnt in SEGMENTATION:
-            #             vals['%s_valuation' % sgmnt] += \
-            #                 vals['future_%s' % sgmnt] * qnt['qty']
 
         return True
 
