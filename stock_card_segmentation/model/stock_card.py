@@ -220,14 +220,21 @@ class StockCardProduct(models.TransientModel):
                 vals['%s_accum_var' % sgmnt] += vals['%s_valuation' % sgmnt]
 
             vals['average'] = (
-                vals['accumulated_qty'] and
-                vals['accumulated_variation'] / vals['accumulated_qty'] or
-                vals['average'])
+                vals['accumulated_variation'] / vals['accumulated_qty'] if
+                vals['accumulated_qty'] else vals['average'])
+
+            # vals['average'] = (
+            #     vals['accumulated_qty'] and
+            #     vals['accumulated_variation'] / vals['accumulated_qty'] or
+            #     vals['average'])
             for sgmnt in SEGMENTATION:
                 vals[sgmnt] = (
-                    vals['accumulated_qty'] and
-                    vals['%s_accum_var' % sgmnt] / vals['accumulated_qty'] or
-                    vals[sgmnt])
+                    vals['%s_accum_var' % sgmnt] / vals['accumulated_qty'] if
+                    vals['accumulated_qty'] else vals[sgmnt])
+            # vals[sgmnt]=(
+            #     vals['accumulated_qty'] and
+            #     vals['%s_accum_var' % sgmnt] / vals['accumulated_qty'] or
+            #     vals[sgmnt])
 
             if vals['product_qty'] >= 0:
                 vals['accumulated_variation'] = 0.0
