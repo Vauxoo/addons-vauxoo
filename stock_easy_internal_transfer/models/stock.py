@@ -29,8 +29,8 @@ from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
 from datetime import datetime
 
-# import time
-# from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+import time
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class StockMove(models.Model):
@@ -128,17 +128,6 @@ class StockPicking(models.Model):
         'stock.location', string="Destination Location", readonly=False,
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]})
 
-    # @api.model
-    # def _prepare_pack_ops(self, picking, quants, force_qties):
-    #     res = super(StockPicking, self)._prepare_pack_ops(
-    #         picking, quants, force_qties)
-    #     if picking.picking_type_id.quick_view:
-    #         for item in res:
-    #             item.update({
-    #                 'location_id': picking.force_location_id.id,
-    #                 'location_dest_id': picking.force_location_dest_id.id})
-    #     return res
-
     @api.onchange('force_location_id', 'force_location_dest_id')
     def onchange_force_locations(self):
         for pick in self:
@@ -159,30 +148,31 @@ class StockPicking(models.Model):
             if move_vals:
                 for move in pick.move_lines:
                     move.update(move_vals)
-            # TODO: uncomment when require this functionality
-            # if not pick.move_lines and pick.force_location_id:
-            #     quant = self.env['stock.quant'].search([
-            #         ('location_id', '=', pick.force_location_id.id),
-            #         ('qty', '>=', 1.0),
-            #         ('reservation_id', '=', False)])
-            #     products = quant.mapped("product_id")
-            #     location_dest_id = pick.force_location_dest_id and \
-            #         pick.force_location_dest_id.id or \
-            #         pick.picking_type_id.default_location_dest_id
-            #     move_lines = []
-            #     for product in products:
-            #         move_lines.append([0, False, {
-            #             'name': product.name,
-            #             'product_id': product.id,
-            #             'product_uom_qty': 0.0,
-            #             'product_uom': product.uom_id.id,
-            #             'location_id': pick.force_location_id.id,
-            #             'location_dest_id': location_dest_id.id,
-            #             'date_expected': time.strftime(
-            #                 DEFAULT_SERVER_DATETIME_FORMAT),
-            #         }])
-            #     if move_lines:
-            #         pick.update({'move_lines': move_lines})
+
+            # Upload all products ins this location
+            if not pick.move_lines and pick.force_location_id:
+                quant = self.env['stock.quant'].search([
+                    ('location_id', '=', pick.force_location_id.id),
+                    ('qty', '>=', 1.0),
+                    ('reservation_id', '=', False)])
+                products = quant.mapped("product_id")
+                location_dest_id = pick.force_location_dest_id and \
+                    pick.force_location_dest_id.id or \
+                    pick.picking_type_id.default_location_dest_id
+                move_lines = []
+                for product in products:
+                    move_lines.append([0, False, {
+                        'name': product.name,
+                        'product_id': product.id,
+                        'product_uom_qty': 0.0,
+                        'product_uom': product.uom_id.id,
+                        'location_id': pick.force_location_id.id,
+                        'location_dest_id': location_dest_id.id,
+                        'date_expected': time.strftime(
+                            DEFAULT_SERVER_DATETIME_FORMAT),
+                    }])
+                if move_lines:
+                    pick.update({'move_lines': move_lines})
 
     @api.multi
     def action_assign(self):
