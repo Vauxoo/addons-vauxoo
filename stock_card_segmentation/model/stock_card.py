@@ -203,6 +203,9 @@ class StockCardProduct(models.TransientModel):
     def _get_move_average(self, row, vals):
         qty = row['product_qty']
         vals['cost_unit'] = vals['move_valuation'] / qty if qty else 0.0
+        for sgmnt in SEGMENTATION:
+            vals['%s_unit' % sgmnt] = vals['%s_valuation' %
+                                           sgmnt] / qty if qty else 0.0
 
         vals['inventory_valuation'] += (
             vals['direction'] * vals['move_valuation'])
