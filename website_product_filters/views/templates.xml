@@ -254,26 +254,34 @@
             <attribute name="data-id">category-pills</attribute>
           </xpath>
         </template>
-
+        <!-- Categories Recursive: this template iterates on the categories tree
+            :param obj categ: the categories retrieved by the controller shop.
+        -->
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
           <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
             <t t-set="has_product" t-value="categ.has_products_ok"/>
             <i t-if="categ.child_id and has_product"
-              t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}" t-att-data-arrowid="categ.id"/>
+              t-attf-class="text-primary" t-att-data-arrowid="categ.id"/>
+            <!-- Link itself of category with the qty of products -->
             <t t-if="has_product">
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
-                <span class="badge">
-                  <t t-esc="'%s' %(categ.total_tree_products)"/>
+                <span>
+                  <t t-esc="'(%s)' %(categ.total_tree_products)"/>
                 </span>
               </a>
             </t>
-            <ul t-if="has_product" class="nav nav-pills nav-stacked nav-hierarchy"
-              t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
-              <t t-foreach="categ.child_id" t-as="categ">
-                <t t-call="website_product_filters.option_collapse_categories_recursive"/>
-              </t>
-            </ul>
+            <!-- New sublist of child categories, rendered by this same template
+                 (recursive).-->
+            <t t-if="category">
+              <ul t-if="has_product" class="nav nav-pills nav-stacked nav-hierarchy">
+                <t t-foreach="categ.child_id" t-as="categ">
+                  <t t-if="categ.parent_id == category">
+                    <t t-call="website_product_filters.option_collapse_categories_recursive"/>
+                  </t>
+                </t>
+              </ul>
+            </t>
           </li>
         </template>
 

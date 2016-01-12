@@ -32,6 +32,7 @@ class WebsiteSale(website_sale):
         attributes_obj = pool['product.attribute']
         ranges_obj = pool['product.price.ranges']
         brand_obj = pool['product.brand']
+        category_obj = pool['product.public.category']
         ranges_list = request.httprequest.args.getlist('range')
         brand_list = request.httprequest.args.getlist('brand')
         brand_selected_ids = [int(b) for b in brand_list if b]
@@ -78,15 +79,13 @@ class WebsiteSale(website_sale):
 
         parent_category_ids = []
         if category:
-            parent_category_ids = [category.id]
-            current_category = category
-            while current_category.parent_id:
-                parent_category_ids.append(current_category.parent_id.id)
-                current_category = current_category.parent_id
-        category_obj = pool['product.public.category']
-        category_ids = category_obj.search(
-            cr, uid, [('parent_id', '=', False)], context=context)
-        categs = category_obj.browse(cr, uid, category_ids, context=context)
+            categs = category
+        else:
+            domain = [('website_published', '=', True),
+                      ('parent_id', '=', False),
+                      ('total_tree_products', '>', 0)]
+            categ_ids = category_obj.search(cr, uid, domain, context=context)
+            categs = category_obj.browse(cr, uid, categ_ids, context=context)
 
         res.qcontext['parent_category_ids'] = parent_category_ids
         res.qcontext['brands'] = brands

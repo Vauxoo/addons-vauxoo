@@ -36,6 +36,7 @@
                 <xpath expr="//sheet" position="replace">
                     <sheet>
                     <field name="image_medium" widget='image' class="oe_avatar"/>
+                    <field name="website_published" widget="website_button"/>
                     <div>
                         <group>
                             <field name="name"/>
