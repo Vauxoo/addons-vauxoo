@@ -3,7 +3,7 @@
     <data>
         <record id="stock.menu_quants" model="ir.ui.menu">
           <field name="groups_id"
-            eval="[(6,0,[ref('stock.group_stock_manager') ])]"/>
+            eval="[(6, 0, [ref('stock.group_stock_manager'), ref('base.group_no_one')])]"/>
         </record>
     </data>
 </openerp>
