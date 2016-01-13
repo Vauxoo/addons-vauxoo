@@ -295,8 +295,10 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def get_average(self, product_id):
+        dct = {}
         res = self._stock_card_move_get(product_id, return_values=True)
-        return res.get('average')
+        dct['average'] = res.get('average')
+        return dct
 
     def get_qty(self, product_id):
         res = self._stock_card_move_get(product_id, return_values=True)
