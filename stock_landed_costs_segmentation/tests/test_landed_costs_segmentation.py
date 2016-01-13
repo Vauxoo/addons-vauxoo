@@ -123,6 +123,12 @@ class TestLandedCostsSegmentation(TransactionCase):
                                               insurance_cost=15000,
                                               freight_cost=18000)
 
+        self.assertEqual(self.product_02.material_cost, 100)
+        self.assertEqual(self.product_02.landed_cost, 60)
+        self.assertEqual(self.product_02.production_cost, 0)
+        self.assertEqual(self.product_02.subcontracting_cost, 50)
+        self.assertEqual(self.product_02.standard_price, 210)
+
         # check inventory valuations
         self.assertEqual(sorted(self.picking_01_id.mapped(
             'move_lines.quant_ids.inventory_value')),
@@ -200,6 +206,12 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.assertEqual(product_std_quant_id.subcontracting_cost, 70)
         self.assertEqual(product_avg_quant_id.subcontracting_cost, 70)
         self.assertEqual(product_real_quant_id.subcontracting_cost, 70)
+
+        self.assertEqual(self.product_02.material_cost, 166)
+        self.assertEqual(self.product_02.landed_cost, 36)
+        self.assertEqual(self.product_02.production_cost, 0)
+        self.assertEqual(self.product_02.subcontracting_cost, 64)
+        self.assertEqual(self.product_02.standard_price, 264)
 
         # check product costs
         self.assertEqual(self.product_01.standard_price, 100)
