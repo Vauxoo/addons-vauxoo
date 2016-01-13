@@ -73,20 +73,45 @@ class StockCardProduct(models.TransientModel):
         for qnt in qntval:
             if qnt['qty'] < 0:
                 continue
-            product_qty += vals['direction'] * qnt['qty']
-            if product_qty >= 0:
-                if not vals['rewind']:
-                    vals['move_valuation'] += vals['average'] * qnt['qty']
-                    for sgmnt in SEGMENTATION:
-                        vals['%s_valuation' % sgmnt] += \
-                            vals[sgmnt] * qnt['qty']
-                else:
-                    vals['move_valuation'] += \
-                        vals['prior_average'] * qnt['qty']
-                    for sgmnt in SEGMENTATION:
-                        vals['%s_valuation' % sgmnt] += \
-                            vals['prior_avg_%s' % sgmnt] * qnt['qty']
-            else:
+
+            residual = 0
+            prior_qty = product_qty
+
+            if product_qty > 0:
+                if product_qty + vals['direction'] * qnt['qty'] >= 0:
+                    if not vals['rewind']:
+                        vals['move_valuation'] += vals['average'] * qnt['qty']
+                        for sgmnt in SEGMENTATION:
+                            vals['%s_valuation' % sgmnt] += \
+                                vals[sgmnt] * qnt['qty']
+                    else:
+                        vals['move_valuation'] += \
+                            vals['prior_average'] * qnt['qty']
+                        for sgmnt in SEGMENTATION:
+                            vals['%s_valuation' % sgmnt] += \
+                                vals['prior_avg_%s' % sgmnt] * qnt['qty']
+                else:  # product_qty + qnt < 0
+                    if not vals['rewind']:
+                        vals['move_valuation'] += vals['average'] * qnt['qty']
+                        for sgmnt in SEGMENTATION:
+                            vals['%s_valuation' % sgmnt] += \
+                                vals[sgmnt] * qnt['qty']
+                    else:  # rewind
+                        residual = qnt['qty'] - product_qty
+
+                        vals['move_valuation'] += \
+                            vals['prior_average'] * prior_qty
+                        for sgmnt in SEGMENTATION:
+                            vals['%s_valuation' % sgmnt] += \
+                                vals['prior_avg_%s' % sgmnt] * prior_qty
+
+                        vals['move_valuation'] += \
+                            vals['future_average'] * residual
+                        for sgmnt in SEGMENTATION:
+                            vals['%s_valuation' % sgmnt] += \
+                                vals['future_%s' % sgmnt] * residual
+
+            else:  # product_qty < 0
                 if not vals['rewind']:
                     vals['move_valuation'] += vals['average'] * qnt['qty']
                     for sgmnt in SEGMENTATION:
@@ -98,6 +123,8 @@ class StockCardProduct(models.TransientModel):
                     for sgmnt in SEGMENTATION:
                         vals['%s_valuation' % sgmnt] += \
                             vals['future_%s' % sgmnt] * qnt['qty']
+
+            product_qty += vals['direction'] * qnt['qty']
 
         return True
 
@@ -151,6 +178,9 @@ class StockCardProduct(models.TransientModel):
     def _get_move_average(self, row, vals):
         qty = row['product_qty']
         vals['cost_unit'] = vals['move_valuation'] / qty if qty else 0.0
+        for sgmnt in SEGMENTATION:
+            vals['%s_unit' % sgmnt] = vals['%s_valuation' %
+                                           sgmnt] / qty if qty else 0.0
 
         vals['inventory_valuation'] += (
             vals['direction'] * vals['move_valuation'])
@@ -165,14 +195,13 @@ class StockCardProduct(models.TransientModel):
                 vals['%s_accum_var' % sgmnt] += vals['%s_valuation' % sgmnt]
 
             vals['average'] = (
-                vals['accumulated_qty'] and
-                vals['accumulated_variation'] / vals['accumulated_qty'] or
-                vals['average'])
+                vals['accumulated_variation'] / vals['accumulated_qty'] if
+                vals['accumulated_qty'] else vals['average'])
+
             for sgmnt in SEGMENTATION:
                 vals[sgmnt] = (
-                    vals['accumulated_qty'] and
-                    vals['%s_accum_var' % sgmnt] / vals['accumulated_qty'] or
-                    vals[sgmnt])
+                    vals['%s_accum_var' % sgmnt] / vals['accumulated_qty'] if
+                    vals['accumulated_qty'] else vals[sgmnt])
 
             if vals['product_qty'] >= 0:
                 vals['accumulated_variation'] = 0.0
