@@ -46,27 +46,32 @@ class WebsiteSale(website_sale):
         res.qcontext['attributes'] = attributes
         filtered_products = res.qcontext['products']
         args = res.qcontext['keep'].args
-        keys = {
-            '0': filtered_products,
-            'name': filtered_products.sorted(key=lambda r: r.name),
-            'pasc': filtered_products.sorted(key=lambda r: r.lst_price),
-            'pdesc': filtered_products.sorted(key=lambda r: r.lst_price,
-                                              reverse=True),
-            'hottest': filtered_products.sorted(key=lambda r: r.create_date),
-            'rating': filtered_products.sorted(key=lambda r: r.rating),
-            'popularity': filtered_products.sorted(key=lambda r: r.views)}
-        if post.get('product_sorter', '0') != '0':
-            sortby = post['product_sorter']
-            res.qcontext['sortby'] = sortby
-            ordered_products = keys.get(sortby)
-        elif request.httprequest.cookies.get('default_sort', 'False') != 'False':  # noqa
-            sortby = request.httprequest.cookies.get('default_sort')
-            ordered_products = keys.get(sortby)
-        elif request.httprequest.cookies.get('default_sort') == 'False':
-            sortby = request.website.default_sort
-            ordered_products = keys.get(sortby)
+        if category and category.child_id or not category:
+            ordered_products = []
+            res.qcontext['pager']['page_count'] = 0
         else:
-            ordered_products = filtered_products
+            keys = {
+                '0': filtered_products,
+                'name': filtered_products.sorted(key=lambda r: r.name),
+                'pasc': filtered_products.sorted(key=lambda r: r.lst_price),
+                'pdesc': filtered_products.sorted(key=lambda r: r.lst_price,
+                                                  reverse=True),
+                'hottest':
+                    filtered_products.sorted(key=lambda r: r.create_date),
+                'rating': filtered_products.sorted(key=lambda r: r.rating),
+                'popularity': filtered_products.sorted(key=lambda r: r.views)}
+            if post.get('product_sorter', '0') != '0':
+                sortby = post['product_sorter']
+                res.qcontext['sortby'] = sortby
+                ordered_products = keys.get(sortby)
+            elif request.httprequest.cookies.get('default_sort', 'False') != 'False':  # noqa
+                sortby = request.httprequest.cookies.get('default_sort')
+                ordered_products = keys.get(sortby)
+            elif request.httprequest.cookies.get('default_sort') == 'False':
+                sortby = request.website.default_sort
+                ordered_products = keys.get(sortby)
+            else:
+                ordered_products = filtered_products
 
         for arg in args.get('attrib', []):
             attr_id = arg.split('-')
