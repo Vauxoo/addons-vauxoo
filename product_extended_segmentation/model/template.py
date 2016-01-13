@@ -32,11 +32,6 @@ SEGMENTATION_COST = [
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    material_cost = fields.Float(string='Material Cost')
-    production_cost = fields.Float(string='Production Cost')
-    subcontracting_cost = fields.Float(string='Subcontracting Cost')
-    landed_cost = fields.Float(string='Landed Cost')
-
     def _calc_price(
             self, cr, uid, bom, test=False, real_time_accounting=False,
             context=None):
