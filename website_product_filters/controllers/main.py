@@ -46,8 +46,30 @@ class WebsiteSale(website_sale):
         res.qcontext['attributes'] = attributes
         filtered_products = res.qcontext['products']
         args = res.qcontext['keep'].args
-        if category and category.child_id or not category:
+        if category and category.child_id:
             ordered_products = []
+            res.qcontext['pager']['page_count'] = 0
+            product_obj = pool['product.template']
+            popular_ids = product_obj.search(
+                cr, uid,
+                [('website_published', '=', True),
+                 ('rating', '>', 0),
+                 ('public_categ_ids', 'child_of', int(category.id or 0))],
+                order='rating DESC',
+                limit=3)
+            newest_ids = product_obj.search(
+                cr, uid,
+                [('website_published', '=', True),
+                 ('public_categ_ids', 'child_of', int(category.id or 0))],
+                order='create_date DESC',
+                limit=3)
+            popular = product_obj.browse(cr, uid, popular_ids, context=context)
+            newest = product_obj.browse(cr, uid, newest_ids, context=context)
+            res.qcontext['populars'] = popular
+            res.qcontext['newest'] = newest
+            res.qcontext['products'] = ordered_products
+        elif not category:
+            res.qcontext['products'] = []
             res.qcontext['pager']['page_count'] = 0
         else:
             keys = {
@@ -72,6 +94,7 @@ class WebsiteSale(website_sale):
                 ordered_products = keys.get(sortby)
             else:
                 ordered_products = filtered_products
+            res.qcontext['products'] = ordered_products
 
         for arg in args.get('attrib', []):
             attr_id = arg.split('-')
@@ -86,9 +109,7 @@ class WebsiteSale(website_sale):
         if category:
             categs = category
         else:
-            domain = [('website_published', '=', True),
-                      ('parent_id', '=', False),
-                      ('total_tree_products', '>', 0)]
+            domain = [('parent_id', '=', False)]
             categ_ids = category_obj.search(cr, uid, domain, context=context)
             categs = category_obj.browse(cr, uid, categ_ids, context=context)
 
@@ -98,7 +119,6 @@ class WebsiteSale(website_sale):
         res.qcontext['price_ranges'] = ranges
         res.qcontext['brand_set'] = brand_selected_ids
         res.qcontext['ranges_set'] = ranges_selected_ids
-        res.qcontext['products'] = ordered_products
         return res
 
     def _normalize_category(self, category):

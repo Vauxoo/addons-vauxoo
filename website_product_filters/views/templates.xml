@@ -144,7 +144,7 @@
             </t>
           </xpath>
           <xpath expr="//div[@id='products_grid_before']" position="attributes">
-              <attribute name="class">col-md-2 hidden-xs</attribute>
+              <attribute name="class">col-md-3 hidden-xs</attribute>
           </xpath>
           <xpath expr="//div[@id='products_grid']" position="attributes">
               <attribute name="class">col-md-9</attribute>
@@ -168,8 +168,10 @@
         <template id="show_thumbnail_subcategories" inherit_id="website_sale.products" active="True">
           <xpath expr="//div[@id='products_grid_before']" position="after">
             <t t-if="not products">
+            <div class="subcategories">
               <t t-foreach="categories" t-as="parent_categs">
-                <div class="col-md-10 pull-right mt16 subcategories" >
+                <t t-if="parent_categs.child_id">
+                <div class="col-md-9 pull-right mt16" >
                   <div class="panel panel-default panel-heading gray-bg"><b><span>Categories of </span><t t-esc="parent_categs.name"/></b></div>
                   <t t-foreach="parent_categs.child_id" t-as="child_categ">
                    <t t-if="child_categ.has_products_ok">
@@ -187,6 +189,44 @@
                   </t>
                 </div>
               </t>
+              </t>
+             </div>
+            </t>
+            <t t-if="populars">
+                <div class="col-md-9 pull-right mt16" >
+                  <div class="panel panel-default panel-heading gray-bg"><b><span>Popular products in </span><t t-esc="category.name"/></b></div>
+                    <t t-foreach="populars" t-as="popular">
+                      <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
+                          <div class='mt16 text-center'>
+                              <span t-field="popular.image_medium" t-field-options='{"widget": "image"}'/>
+                              <t t-set="product" t-value="popular"/>
+                              <t t-call="website_rate_product.show_product_rating"/>
+                              <h4>
+                                  <a t-attf-href="/shop/product/#{ slug(popular) }" style="display: block">
+                                      <span t-field='popular.name' style="display: block"/>
+                                  </a>
+                              </h4>
+                          </div>
+                      </div>
+                    </t>
+                </div>
+            </t>
+            <t t-if="newest">
+                <div class="col-md-9 pull-right mt16" >
+                  <div class="panel panel-default panel-heading gray-bg"><b><span>Newest products in </span><t t-esc="category.name"/></b></div>
+                    <t t-foreach="newest" t-as="new_p">
+                      <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
+                          <div class='mt16 text-center'>
+                              <span t-field="new_p.image_medium" t-field-options='{"widget": "image"}'/>
+                              <h4>
+                                  <a t-attf-href="/shop/product/#{ slug(new_p) }" style="display: block">
+                                      <span t-field='new_p.name' style="display: block"/>
+                                  </a>
+                              </h4>
+                          </div>
+                      </div>
+                    </t>
+                </div>
             </t>
           </xpath>
         </template>
