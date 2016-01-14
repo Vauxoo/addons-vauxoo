@@ -23,17 +23,6 @@ class StockLandedCostLines(models.Model):
 class StockLandedCost(models.Model):
     _inherit = 'stock.landed.cost'
 
-    def _get_fieldnames(self):
-        res = super(StockLandedCost, self)._get_fieldnames()
-        res.update({
-            'material': 'material_cost',
-            'landed': 'landed_cost',
-            'production': 'production_cost',
-            'subcontracting': 'subcontracting_cost',
-        })
-
-        return res
-
     @api.multi
     def button_validate(self):
         self.ensure_one()
