@@ -210,7 +210,7 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.assertEqual(self.product_02.material_cost, 166)
         self.assertEqual(self.product_02.landed_cost, 36)
         self.assertEqual(self.product_02.production_cost, 0)
-        self.assertEqual(self.product_02.subcontracting_cost, 64)
+        self.assertEqual(self.product_02.subcontracting_cost, 62)
         self.assertEqual(self.product_02.standard_price, 264)
 
         # check product costs
