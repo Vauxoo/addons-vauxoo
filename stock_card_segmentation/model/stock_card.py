@@ -16,13 +16,6 @@ class StockCardProduct(models.TransientModel):
         return super(StockCardProduct, self)._get_quant_values(
             move_id=move_id, col=col, inner=inner, where=where)
 
-    def get_average(self, product_id):
-        dct = super(StockCardProduct, self).get_average(product_id)
-        res = self._stock_card_move_get(product_id, return_values=True)
-        for sgmnt in SEGMENTATION:
-            dct['%s' % sgmnt] = res.get('%s' % sgmnt)
-        return dct
-
     def _get_stock_card_move_line_dict(self, row, vals):
         res = super(StockCardProduct, self)._get_stock_card_move_line_dict(
             row, vals)
