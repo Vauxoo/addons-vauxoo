@@ -79,16 +79,20 @@ class ProductTemplate(models.Model):
             # No attribute_value_ids means the bom line is not variant
             # specific
 
-            # NOTE: find for this product last quant
-            quant = quant_search(sbom.product_id.id)
             # NOTE: find for this product if any bom available
             bom_id = _bom_find(sbom.product_id.id)
 
-            if bom_id or not quant:
-                # NOTE: if any bom them use segmentation on product
-                obj_brw = sbom.product_id
-            else:
-                obj_brw = quant_obj.browse(cr, uid, quant[0], context=context)
+            if not bom_id:
+                if sbom.product_id.cost_method == 'average':
+                    avg_sgmnt_dict = self.pool.get('stock.card.product').\
+                        get_average(cr, uid, sbom.product_id.id)
+                    avg_sgmnt_dict = self.pool.get('stock.card.product').\
+                        map_field2write(avg_sgmnt_dict)
+                    tmpl_obj.write(
+                        cr, uid, [sbom.product_id.product_tmpl_id.id],
+                        avg_sgmnt_dict, context=context)
+
+            obj_brw = sbom.product_id
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized

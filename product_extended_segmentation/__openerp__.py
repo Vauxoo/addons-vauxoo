@@ -28,7 +28,7 @@
     "depends": [
         'product',
         'product_extended',
-        'stock_quant_cost_segmentation',
+        'stock_card_segmentation',
     ],
     "category": "Generic Modules/Inventory Control",
     "demo": [
