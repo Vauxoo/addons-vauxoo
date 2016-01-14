@@ -1,0 +1,10 @@
+-
+    website_product_filters enable Product Attributes filters
+-
+  !python {model: ir.ui.view}: |
+    self.write(cr, uid, [ref('website_sale.products_attributes')], {'active': True}, context={'active_test': True})
+-
+    website_product_filters enable Products List View
+-
+  !python {model: ir.ui.view}: |
+    self.write(cr, uid, [ref('website_sale.products_list_view')], {'active': True}, context={'active_test': True})
