@@ -2,7 +2,6 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
-from openerp.addons.stock_landed_costs_average.model.stock_landed_costs import FIELDS_NAMES as FIELDS_NAMES
 
 SEGMENTATION_COST = [
     ('landed_cost', 'Landed Cost'),
@@ -10,13 +9,6 @@ SEGMENTATION_COST = [
     ('material_cost', 'Material Cost'),
     ('production_cost', 'Production Cost'),
 ]
-
-FIELDS_NAMES.update({
-    'material': 'material_cost',
-    'landed': 'landed_cost',
-    'production': 'production_cost',
-    'subcontracting': 'subcontracting_cost',
-})
 
 
 class StockLandedCostLines(models.Model):
@@ -30,6 +22,17 @@ class StockLandedCostLines(models.Model):
 
 class StockLandedCost(models.Model):
     _inherit = 'stock.landed.cost'
+
+    def _get_fieldnames(self):
+        res = super(StockLandedCost, self)._get_fieldnames()
+        res.update({
+            'material': 'material_cost',
+            'landed': 'landed_cost',
+            'production': 'production_cost',
+            'subcontracting': 'subcontracting_cost',
+        })
+
+        return res
 
     @api.multi
     def button_validate(self):
