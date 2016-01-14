@@ -389,15 +389,31 @@ class StockLandedCost(models.Model):
         dct = dict(dct or {})
         if not dct:
             return True
-
-        product_obj = self.env['product.product']
-
-        for product_id, avg in dct.iteritems():
-            # Write the standard price, as SUDO because a warehouse
-            # manager may not have the right to write on products
-            product_obj.sudo().browse(product_id).write(
-                {'standard_price': avg})
+        for product_id in dct.keys():
+            field2write = dct[product_id]
+            self.write_standard_price(product_id, field2write)
         return True
+
+    def write_standard_price(self, product_id, field2write):
+        # Write the standard price, as SUDO because a warehouse
+        # manager may not have the right to write on products
+        product_obj = self.env['product.product']
+        field2write = self.map_field2write(field2write)
+        product_obj.sudo().browse(product_id).write(field2write)
+
+    def _get_fieldnames(self):
+        return {
+            'average': 'standard_price'
+        }
+
+    def map_field2write(self, field2write):
+        res = {}
+        FIELD_NAMES = self._get_fieldnames()
+        for fn in field2write.keys():
+            if fn not in FIELD_NAMES:
+                continue
+            res[FIELD_NAMES[fn]] = field2write[fn]
+        return res
 
     @api.multi
     def button_validate(self):
@@ -435,8 +451,9 @@ class StockLandedCost(models.Model):
 
                 if product_id.cost_method == 'average':
                     if product_id.id not in prod_dict:
-                        avg = get_average(product_id.id)
-                        prod_dict[product_id.id] = avg
+                        avg_dict = get_average(product_id.id)
+                        avg = avg_dict['average']
+                        prod_dict[product_id.id] = avg_dict.copy()
                         first_avg[product_id.id] = avg
                     if product_id.id not in prod_qty:
                         prod_qty[product_id.id] = get_qty(product_id.id)
@@ -463,11 +480,12 @@ class StockLandedCost(models.Model):
                     # needs to be recomputed in order to find out the change in
                     # COGS in case of sales were performed prior to landing
                     # costs
-                    new_avg = get_average(product_id.id)
+                    new_avg_dict = get_average(product_id.id)
+                    new_avg = new_avg_dict['average']
                     self._create_cogs_accounting_entries(
-                        line, move_id, prod_dict[product_id.id], new_avg,
-                        prod_qty[product_id.id])
-                    prod_dict[product_id.id] = new_avg
+                        line, move_id, prod_dict[product_id.id]['average'],
+                        new_avg, prod_qty[product_id.id])
+                    prod_dict[product_id.id] = new_avg_dict.copy()
 
                 if product_id.cost_method == 'real':
                     self._create_accounting_entries(line, move_id, qty_out)

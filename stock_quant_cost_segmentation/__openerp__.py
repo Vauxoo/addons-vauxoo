@@ -9,6 +9,7 @@
     "license": "AGPL-3",
     "depends": [
         "base",
+        "product",
         "stock",
         "stock_account",
         "stock_move_entries",
