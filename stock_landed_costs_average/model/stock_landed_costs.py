@@ -387,33 +387,13 @@ class StockLandedCost(models.Model):
         method equal to average
         '''
         dct = dict(dct or {})
+        scp_obj = self.env['stock.card.product']
         if not dct:
             return True
         for product_id in dct.keys():
             field2write = dct[product_id]
-            self.write_standard_price(product_id, field2write)
+            scp_obj.write_standard_price(product_id, field2write)
         return True
-
-    def write_standard_price(self, product_id, field2write):
-        # Write the standard price, as SUDO because a warehouse
-        # manager may not have the right to write on products
-        product_obj = self.env['product.product']
-        field2write = self.map_field2write(field2write)
-        product_obj.sudo().browse(product_id).write(field2write)
-
-    def _get_fieldnames(self):
-        return {
-            'average': 'standard_price'
-        }
-
-    def map_field2write(self, field2write):
-        res = {}
-        FIELD_NAMES = self._get_fieldnames()
-        for fn in field2write.keys():
-            if fn not in FIELD_NAMES:
-                continue
-            res[FIELD_NAMES[fn]] = field2write[fn]
-        return res
 
     @api.multi
     def button_validate(self):

@@ -15,6 +15,27 @@ class StockCardProduct(models.TransientModel):
     stock_card_move_ids = fields.One2many(
         'stock.card.move', 'stock_card_product_id', 'Product Moves')
 
+    def _get_fieldnames(self):
+        return {
+            'average': 'standard_price'
+        }
+
+    def map_field2write(self, field2write):
+        res = {}
+        FIELD_NAMES = self._get_fieldnames()
+        for fn in field2write.keys():
+            if fn not in FIELD_NAMES:
+                continue
+            res[FIELD_NAMES[fn]] = field2write[fn]
+        return res
+
+    def write_standard_price(self, product_id, field2write):
+        # Write the standard price, as SUDO because a warehouse
+        # manager may not have the right to write on products
+        product_obj = self.env['product.product']
+        field2write = self.map_field2write(field2write)
+        product_obj.sudo().browse(product_id).write(field2write)
+
     @api.multi
     def stock_card_move_get(self):
         self.ensure_one()
@@ -297,6 +318,7 @@ class StockCardProduct(models.TransientModel):
     def _get_avg_fields(self):
         return ['average']
 
+    @api.model
     def get_average(self, product_id):
         dct = {}
         res = self._stock_card_move_get(product_id, return_values=True)
