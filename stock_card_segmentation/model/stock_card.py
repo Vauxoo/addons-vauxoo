@@ -8,6 +8,10 @@ SEGMENTATION = ['material', 'landed', 'production', 'subcontracting']
 class StockCardProduct(models.TransientModel):
     _inherit = ['stock.card.product']
 
+    def _get_avg_fields(self):
+        res = super(StockCardProduct, self)._get_avg_fields()
+        return res + SEGMENTATION
+
     def _get_quant_values(self, move_id, col='', inner='', where=''):
 
         col = ['%s_cost' % sgmnt for sgmnt in SEGMENTATION]
