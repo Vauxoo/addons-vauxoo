@@ -5,10 +5,6 @@ from openerp.exceptions import except_orm, Warning as UserError
 import openerp.addons.decimal_precision as dp
 from openerp.tools import float_round
 
-FIELDS_NAMES = {
-    'average': 'standard_price'
-}
-
 
 class StockLandedCost(models.Model):
     _inherit = 'stock.landed.cost'
@@ -405,10 +401,18 @@ class StockLandedCost(models.Model):
         field2write = self.map_field2write(field2write)
         product_obj.sudo().browse(product_id).write(field2write)
 
+    def _get_fieldnames(self):
+        return {
+            'average': 'standard_price'
+        }
+
     def map_field2write(self, field2write):
         res = {}
-        for field in field2write.keys():
-            res[FIELDS_NAMES[field]] = field2write[field]
+        FIELD_NAMES = self._get_fieldnames()
+        for fn in field2write.keys():
+            if fn not in FIELD_NAMES:
+                continue
+            res[FIELD_NAMES[fn]] = field2write[fn]
         return res
 
     @api.multi
