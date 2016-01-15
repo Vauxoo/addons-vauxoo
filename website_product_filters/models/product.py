@@ -84,6 +84,7 @@ class ProductCategory(models.Model):
     has_products_ok = fields.Boolean(compute="_get_has_products_ok",
                                      store=False, readonly=True)
 
+    @api.depends("product_ids")
     @api.multi
     def _get_has_products_ok(self):
         for record in self:
