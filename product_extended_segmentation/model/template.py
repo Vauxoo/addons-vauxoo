@@ -40,6 +40,7 @@ class ProductTemplate(models.Model):
         uom_obj = self.pool.get("product.uom")
         quant_obj = self.pool.get("stock.quant")
         tmpl_obj = self.pool.get('product.template')
+        wizard_obj = self.pool.get("stock.change.standard.price")
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
 
@@ -127,24 +128,27 @@ class ProductTemplate(models.Model):
                 cr, uid, bom.product_uom.id, price / bom.product_qty,
                 bom.product_id.uom_id.id)
 
+        # NOTE: /!\ Is it really needed, it not a repetition???
         product = tmpl_obj.browse(
             cr, uid, bom.product_tmpl_id.id, context=context)
-        if not test:
-            if (product.valuation != "real_time" or not real_time_accounting):
-                tmpl_obj.write(
-                    cr, uid, [product.id], {'standard_price': price},
-                    context=context)
-            else:
-                # Call wizard function here
-                wizard_obj = self.pool.get("stock.change.standard.price")
-                ctx = context.copy()
-                ctx.update(
-                    {'active_id': product.id,
-                     'active_model': 'product.template'})
-                wiz_id = wizard_obj.create(
-                    cr, uid, {'new_price': price}, context=ctx)
-                wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
-            tmpl_obj.write(cr, uid, [product.id], sgmnt_dict, context=context)
+        if test:
+            return price
+
+        if product.valuation != "real_time" or not real_time_accounting:
+            tmpl_obj.write(
+                cr, uid, [product.id], {'standard_price': price},
+                context=context)
+        else:
+            # Call wizard function here
+            ctx = context.copy()
+            ctx.update(
+                {'active_id': product.id,
+                 'active_model': 'product.template'})
+            wiz_id = wizard_obj.create(
+                cr, uid, {'new_price': price}, context=ctx)
+            wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
+        tmpl_obj.write(cr, uid, [product.id], sgmnt_dict, context=context)
+
         return price
 
     def compute_price(self, cr, uid, product_ids, template_ids=False,
