@@ -3,7 +3,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning as UserError
 import openerp.addons.decimal_precision as dp
-from openerp.tools import float_round
+from openerp.tools import float_round, float_is_zero
 
 
 class StockLandedCost(models.Model):
@@ -194,13 +194,16 @@ class StockLandedCost(models.Model):
         This method takes the variation in value for average and books it as
         Inventory Valuation Deviation
         '''
-        if not abs(old_avg - new_avg) or not qty:
+        amount = (old_avg - new_avg) * qty
+        if float_is_zero(
+                amount,
+                self.pool.get('decimal.precision').precision_get(
+                    self._cr, self._uid, 'Account')):
             return False
 
         valuation_account_id, gain_account_id, loss_account_id = \
             self._get_deviation_accounts(product_id)
 
-        amount = (old_avg - new_avg) * qty
         product_brw = self.env['product.product'].browse(product_id)
 
         return self._create_deviation_account_move_line(
@@ -269,6 +272,12 @@ class StockLandedCost(models.Model):
         Create standard deviation journal items based on predefined product
         account valuation, gain and loss company's accounts
         """
+        if float_is_zero(
+                line.additional_landed_cost,
+                self.pool.get('decimal.precision').precision_get(
+                    self._cr, self._uid, 'Account')):
+            return False
+
         valuation_account_id, gain_account_id, loss_account_id = \
             self._get_deviation_accounts(line.product_id.id)
 
