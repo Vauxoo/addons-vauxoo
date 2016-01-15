@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields
+from openerp import models
 from openerp.addons.product import _common
 SEGMENTATION_COST = [
     'landed_cost',
@@ -38,7 +38,6 @@ class ProductTemplate(models.Model):
         context = dict(context or {})
         price = 0
         uom_obj = self.pool.get("product.uom")
-        quant_obj = self.pool.get("stock.quant")
         tmpl_obj = self.pool.get('product.template')
         wizard_obj = self.pool.get("stock.change.standard.price")
         bom_obj = self.pool.get('mrp.bom')
@@ -57,11 +56,6 @@ class ProductTemplate(models.Model):
                     cr, uid, prod_id, context=context).product_tmpl_id.id
             return bom_obj._bom_find(
                 cr, uid, product_tmpl_id=prod_id, context=context)
-
-        def quant_search(product_id):
-            ARGS = [('product_id', '=', product_id)]
-            return quant_obj.search(
-                cr, uid, ARGS, order='in_date DESC', limit=1)
 
         def _factor(factor, product_efficiency, product_rounding):
             factor = factor / (product_efficiency or 1.0)
