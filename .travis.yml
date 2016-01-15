@@ -19,6 +19,7 @@ env:
   matrix:
   - LINT_CHECK=1
   - ODOO_LINT=1
+  - TESTS="1" UNIT_TEST="1"
 
 addons:
   apt:
@@ -39,8 +40,9 @@ install:
 script:
   # get modules changed and set environment variable INCLUDE_LINT
   - PYTHONPATH=${PATH} python -c "import getaddons;print 'export INCLUDE_LINT=\"' + ' '.join(getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}')) + '\"'" >${TRAVIS_BUILD_DIR}/modules_changed.profile
+  - PYTHONPATH=${PATH} python -c "import os, getaddons;print 'export INCLUDE=\"' + ','.join(map(os.path.basename, getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}'))) + '\"'" >>${TRAVIS_BUILD_DIR}/modules_changed.profile
   - source ${TRAVIS_BUILD_DIR}/modules_changed.profile
-  - if [ "x${INCLUDE_LINT}" == "x" ]; then exit 0; fi
+  - if [[ "x${INCLUDE_LINT}" == "x" && "${TESTS}" == "0" ]]; then exit 0; fi
   - travis_wait travis_run_tests
 
 after_success:
