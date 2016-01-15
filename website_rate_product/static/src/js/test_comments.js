@@ -22,7 +22,7 @@
             },
             {
                 title:     "Click on 'Show Product Rating' to view the current rating of the product if any",
-                element:   "#customize-menu a:contains(Show Product Rating)",
+                element:   "#customize-menu a:contains(Allow Rate Product)",
             },
             {
                 title:     "Put a commentary on the product",
