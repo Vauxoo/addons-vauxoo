@@ -76,7 +76,7 @@ class ProductTemplate(models.Model):
 
             # NOTE: find for this product if any bom available
             bom_id = _bom_find(sbom.product_id.id)
-
+            prod_costs_dict = {}
             if not bom_id:
                 if sbom.product_id.cost_method == 'average':
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
@@ -85,9 +85,12 @@ class ProductTemplate(models.Model):
                         map_field2write(avg_sgmnt_dict)
                     if (sbom.product_id.valuation != "real_time" or
                             not real_time_accounting):
-                        tmpl_obj.write(
-                            cr, uid, [sbom.product_id.product_tmpl_id.id],
-                            avg_sgmnt_dict, context=context)
+                        if test:
+                            prod_costs_dict = avg_sgmnt_dict
+                        else:
+                            tmpl_obj.write(
+                                cr, uid, [sbom.product_id.product_tmpl_id.id],
+                                avg_sgmnt_dict, context=context)
                     else:
                         # Call wizard function here
                         ctx = context.copy()
@@ -105,12 +108,15 @@ class ProductTemplate(models.Model):
                             avg_sgmnt_dict, context=context)
 
             obj_brw = sbom.product_id
+            if not test:
+                for fieldname in SEGMENTATION_COST:
+                    prod_costs_dict[field_name] = getattr(obj_brw, fieldname)
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
                 price_sgmnt = uom_obj._compute_price(
                     cr, uid, sbom.product_id.uom_id.id,
-                    getattr(obj_brw, fieldname),
+                    prod_costs_dict[fieldname],
                     sbom.product_uom.id) * my_qty
                 price += price_sgmnt
                 sgmnt_dict[fieldname] += price_sgmnt
@@ -139,7 +145,7 @@ class ProductTemplate(models.Model):
                 cr, uid, bom.product_uom.id, price / bom.product_qty,
                 bom.product_id.uom_id.id)
 
-        # NOTE: /!\ Is it really needed, it not a repetition???
+        # NOTE: Instanciating BOM related product
         product = tmpl_obj.browse(
             cr, uid, bom.product_tmpl_id.id, context=context)
         if test:
