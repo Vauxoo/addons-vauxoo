@@ -352,6 +352,11 @@ class StockLandedCost(models.Model):
         debit_line = dict(base_line, account_id=debit_account_id)
         credit_line = dict(base_line, account_id=credit_account_id)
         diff = line.additional_landed_cost
+        if float_is_zero(
+                diff,
+                self.pool.get('decimal.precision').precision_get(
+                    self._cr, self._uid, 'Account')):
+            return False
         if diff > 0:
             debit_line['debit'] = diff
             credit_line['credit'] = diff
@@ -366,8 +371,11 @@ class StockLandedCost(models.Model):
         # applying landing costs
         # TODO: Rounding problems could arise here, this needs to be checked
         diff -= (new_avg - old_avg) * qty
-        if not abs(diff):
-            return True
+        if float_is_zero(
+                diff,
+                self.pool.get('decimal.precision').precision_get(
+                    self._cr, self._uid, 'Account')):
+            return False
 
         # NOTE: knowing how many products that were affected, COGS was to
         # change, by this landed cost is not really necessary
@@ -381,11 +389,15 @@ class StockLandedCost(models.Model):
             account_id=debit_account_id)
         if diff > 0:
             debit_line['debit'] = diff
+            debit_line['credit'] = 0.0
+            credit_line['debit'] = 0.0
             credit_line['credit'] = diff
         else:
             # negative cost, reverse the entry
             debit_line['credit'] = -diff
             credit_line['debit'] = -diff
+            debit_line['debit'] = 0.0
+            credit_line['credit'] = 0.0
         aml_obj.create(self._cr, self._uid, debit_line, context=ctx)
         aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
         return True
