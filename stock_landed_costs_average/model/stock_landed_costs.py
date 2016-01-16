@@ -254,11 +254,11 @@ class StockLandedCost(models.Model):
         if diff > 0:
             debit_line['account_id'] = loss_account_id
             debit_line['debit'] = diff
-            credit_line['account_id'] = valuation_account_id
+            credit_line['account_id'] = line.cost_line_id.account_id.id
             credit_line['credit'] = diff
         else:
             # negative cost, reverse the entry
-            debit_line['account_id'] = valuation_account_id
+            debit_line['account_id'] = line.cost_line_id.account_id.id
             debit_line['debit'] = -diff
             credit_line['account_id'] = gain_account_id
             credit_line['credit'] = -diff
