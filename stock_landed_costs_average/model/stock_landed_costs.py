@@ -159,8 +159,10 @@ class StockLandedCost(models.Model):
                 account_id=valuation_account_id,
                 debit=-diff,)
             # negative cost, reverse the entry
-        aml_obj.create(self._cr, self._uid, debit_line, context=ctx)
-        aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
+        aml_obj.create(
+            self._cr, self._uid, debit_line, context=ctx, check=False)
+        aml_obj.create(
+            self._cr, self._uid, credit_line, context=ctx, check=False)
         return True
 
     def _get_deviation_accounts(self, product_id, acc_prod):
@@ -258,8 +260,8 @@ class StockLandedCost(models.Model):
             debit_line['debit'] = -diff
             credit_line['account_id'] = gain_account_id
             credit_line['credit'] = -diff
-        aml_obj.create(debit_line)
-        aml_obj.create(credit_line)
+        aml_obj.create(debit_line, check=False)
+        aml_obj.create(credit_line, check=False)
         return True
 
     @api.multi
@@ -356,8 +358,10 @@ class StockLandedCost(models.Model):
             # negative cost, reverse the entry
             debit_line['credit'] = -diff
             credit_line['debit'] = -diff
-        aml_obj.create(self._cr, self._uid, debit_line, context=ctx)
-        aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
+        aml_obj.create(
+            self._cr, self._uid, debit_line, context=ctx, check=False)
+        aml_obj.create(
+            self._cr, self._uid, credit_line, context=ctx, check=False)
 
         # Create COGS account move lines for products that were sold prior to
         # applying landing costs
@@ -390,8 +394,10 @@ class StockLandedCost(models.Model):
             credit_line['debit'] = -diff
             debit_line['debit'] = 0.0
             credit_line['credit'] = 0.0
-        aml_obj.create(self._cr, self._uid, debit_line, context=ctx)
-        aml_obj.create(self._cr, self._uid, credit_line, context=ctx)
+        aml_obj.create(
+            self._cr, self._uid, debit_line, context=ctx, check=False)
+        aml_obj.create(
+            self._cr, self._uid, credit_line, context=ctx, check=False)
         return True
 
     def compute_average_cost(self, dct=None):
