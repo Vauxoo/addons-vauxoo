@@ -51,6 +51,12 @@ class StockCardProduct(models.TransientModel):
             ['%s_valuation' % sgmnt for sgmnt in SEGMENTATION], 0.0))
         res.update({}.fromkeys(
             ['%s_accum_var' % sgmnt for sgmnt in SEGMENTATION], 0.0))
+        res.update({}.fromkeys(
+            ['prior_val_%s' % sgmnt for sgmnt in SEGMENTATION], 0.0))
+        res.update({}.fromkeys(
+            ['previous_val_%s' % sgmnt for sgmnt in SEGMENTATION], 0.0))
+        res.update({}.fromkeys(
+            ['prior_avg_%s' % sgmnt for sgmnt in SEGMENTATION], 0.0))
         return res
 
     def _get_price_on_consumed(self, row, vals, qntval):
