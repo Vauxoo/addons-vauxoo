@@ -135,12 +135,13 @@ class MergeProductAutomatic(osv.TransientModel):
             flag = []
             uos_table = {}
             for table, column in cr.fetchall():
-                if table in uos_table:
-                    record = uos_table.get(table, [])
-                    record.append(column)
-                    uos_table.update({table: record})
-                else:
-                    uos_table.update({table: [column]})
+                if table != 'stock_move' and column != 'weight_uom_id':
+                    if table in uos_table:
+                        record = uos_table.get(table, [])
+                        record.append(column)
+                        uos_table.update({table: record})
+                    else:
+                        uos_table.update({table: [column]})
             self.get_fk_on(cr, 'product_product')
 
             for table, column in cr.fetchall():
