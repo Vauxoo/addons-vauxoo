@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-    
+
     <!-- add Valuta Date and Globalisation id to bank statement line -->
         <record model="ir.ui.view" id="view_bsl_form">
             <field name="name">bank.statement.imported.lines.form</field>
@@ -80,7 +80,7 @@
                 </tree>
             </field>
         </record>
-        
+
          <record id="view_bank_statement_lines_search" model="ir.ui.view">
           <field name="name">view.bank.statement.line.search</field>
           <field name="model">bank.statement.imported.lines</field>
@@ -98,14 +98,14 @@
                    <field name="office" string="Office"/>
                    <field name="numdocument" string="N Document"/>
                    <field name="name" string="Name"/>
-                  
+
                 </search>
           </field>
         </record>
-        
-        
-        
-        
+
+
+
+
         <record id="view_bank_statement_form_add_fields" model="ir.ui.view">
           <field name="name">view.bank.statement.form.add.fields</field>
           <field name="model">account.bank.statement</field>
@@ -133,7 +133,7 @@
                     <newline/>
                     <field name="bs_line_ids" nolabel="1" colspan="6">
                     </field>
-                </page> 
+                </page>
               </xpath>
             </data>
           </field>
@@ -164,7 +164,7 @@
         </record>
 
 <record id="bank_statement_imported_lines_action" model="ir.actions.act_window">
-
+            <field name="name">bank.statement.imported.lines.action</field>
             <field name="res_model">bank.statement.imported.lines</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,search</field>
