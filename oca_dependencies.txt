@@ -1,0 +1,10 @@
+rma https://github.com/Vauxoo/rma.git
+odoo-ifrs https://github.com/Vauxoo/odoo-ifrs.git
+product-attribute https://github.com/Vauxoo/product-attribute.git
+odoo-venezuela https://github.com/Vauxoo/odoo-venezuela.git
+knowledge https://github.com/Vauxoo/knowledge.git
+product-attribute https://github.com/Vauxoo/product-attribute.git
+SerpentCS_Contributions-v8 https://github.com/Vauxoo/SerpentCS_Contributions-v8.git
+web https://github.com/Vauxoo/web.git
+odoo-mexico-v2 git@github.com:Vauxoo/odoo-mexico-v2.git
+crm https://github.com/Vauxoo/crm.git
