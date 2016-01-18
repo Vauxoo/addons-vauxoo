@@ -76,7 +76,7 @@ class ProductTemplate(models.Model):
 
             # NOTE: find for this product if any bom available
             bom_id = _bom_find(sbom.product_id.id)
-            prod_costs_dict = {}
+            prod_costs_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
             if not bom_id:
                 if sbom.product_id.cost_method == 'average':
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
@@ -110,7 +110,7 @@ class ProductTemplate(models.Model):
             obj_brw = sbom.product_id
             if not test:
                 for fieldname in SEGMENTATION_COST:
-                    prod_costs_dict[field_name] = getattr(obj_brw, fieldname)
+                    prod_costs_dict[fieldname] = getattr(obj_brw, fieldname)
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
