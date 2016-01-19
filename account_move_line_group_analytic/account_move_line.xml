@@ -6,7 +6,7 @@
             <field name="model">account.move.line</field>
             <field name="inherit_id" ref="account.view_account_move_line_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@string='Group By...']/filter[@string='Period']" position="after">
+                <xpath expr="//group[@string='Group By']/filter[@string='Period']" position="after">
                     <filter string="Analytic" icon="terp-folder-green" domain="[]" context="{'group_by':'analytic_account_id'}"/>
                     <filter string="Product" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'product_id'}"/>
                     <filter string="Poliza" icon="terp-folder-blue" domain="[]" context="{'group_by':'move_id'}"/>
