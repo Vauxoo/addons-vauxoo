@@ -7,8 +7,8 @@
             <field name="model">account.entries.report</field>
             <field name="inherit_id" ref="account.view_account_entries_report_search"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@string='Group By']/filter[@string='Company']" position="after">
-                   <filter string="Origin" icon="terp-stock_symbol-selection" context="{'group_by':'ref'}"/>
+                <xpath expr="//group[@string='Group By']/filter[@string='Entries Month']" position="after">
+                   <filter string="Origin" context="{'group_by':'ref'}"/>
                 </xpath>
             </field>
         </record>
