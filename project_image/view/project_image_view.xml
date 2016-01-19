@@ -9,31 +9,31 @@
 			<xpath expr='//field[@name="name"]' position="before">
 				<field name="logo" widget="image" class="oe_left oe_avatar"/>
             </xpath>
-            	
+
 		</field>
 	  </record>
-	  
+
 	  <record model="ir.ui.view" id="inherit_project_image_kanban2_view">
 		<field name="inherit_id" ref="project.view_project_kanban"/>
 		<field name="model">project.project</field>
 		<field name="name">project.project.image.kanban</field>
 		<field name="arch" type="xml">
-			<xpath expr='//div[@class="oe_kanban_content"]/h4/field[@name="name"]' position="before">
-				<img t-att-src="kanban_image('project.project', 'logo', record.id.value)" width="24" height="24" class="oe_kanban_avatar"/>				
+            <xpath expr='//div[@class="oe_kanban_content"]/h4/strong/field[@name="name"]' position="before">
+				<img t-att-src="kanban_image('project.project', 'logo', record.id.value)" width="24" height="24" class="oe_kanban_avatar"/>
 			</xpath>
-            	
+
 		</field>
 	  </record>
-	  
+
 	  <record model="ir.ui.view" id="inherit_project_image_kanban_view">
 		<field name="inherit_id" ref="project.view_task_kanban"/>
 		<field name="model">project.task</field>
 		<field name="name">project.task.image.kanban</field>
 		<field name="arch" type="xml">
 			<xpath expr='//div[@class="oe_kanban_content"]/div/b/field[@name="name"]' position="before">
-				<img t-att-src="kanban_image('project.task', 'logo', record.id.value)" width="24" height="24" class="oe_kanban_avatar"/>				
+				<img t-att-src="kanban_image('project.task', 'logo', record.id.value)" width="24" height="24" class="oe_kanban_avatar"/>
 			</xpath>
-            	
+
 		</field>
 	  </record>
 
