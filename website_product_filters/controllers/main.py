@@ -46,7 +46,7 @@ class WebsiteSale(website_sale):
         res.qcontext['attributes'] = attributes
         filtered_products = res.qcontext['products']
         args = res.qcontext['keep'].args
-        if category and category.child_id:
+        if category and category.child_id and not search:
             ordered_products = []
             res.qcontext['pager']['page_count'] = 0
             product_obj = pool['product.template']
@@ -68,7 +68,7 @@ class WebsiteSale(website_sale):
             res.qcontext['populars'] = popular
             res.qcontext['newest'] = newest
             res.qcontext['products'] = ordered_products
-        elif not category:
+        elif not category and not search:
             res.qcontext['products'] = []
             res.qcontext['pager']['page_count'] = 0
         else:

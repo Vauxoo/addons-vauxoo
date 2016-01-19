@@ -254,7 +254,7 @@
         </template>
 
         <template id="product_sort_bar" inherit_id="website_sale.products" active="True">
-          <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="replace">
+          <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="before">
 
             <div class="container sort_bar">
             <div class="col-md-9 panel-no-margins">
