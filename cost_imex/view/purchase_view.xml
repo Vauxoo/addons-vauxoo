@@ -9,11 +9,11 @@
         <xpath expr="//field[@name='company_id']" position="after">
             <field name="import_purchase"/>
         </xpath>
-        <xpath expr="//page[@string='Purchase Order']" position="after">
+        <xpath expr="//page[@string='Products']" position="after">
           <page string="Importation " attrs="{'invisible':[('import_purchase','=',False)]}" groups="cost_imex.group_percent_imex_manager">
             <group col="4" colspan="9">
               <group col="9" colspan="9">
-              
+
                 <field name="flete"/>
               <group col="9" colspan="9">
                 <field name="percent_apply" nolabel="1"/>
@@ -27,7 +27,7 @@
            </group>
             </group>
           </page>
-       
+
           <page string="Special Info" groups="cost_imex.group_percent_special_tax_manager" attrs="{'invisible':[('import_purchase','=',False)]}">
             <group col="9" colspan="9">
             <group col="9" colspan="9">
@@ -35,21 +35,21 @@
 </group>
                 <group col="9" colspan="9">
                 <field name="percent_imex_s_ids" domain="[('percent_lines','=',False)]" nolabel="1">
-                <tree string="Compute Percent" editable="bottom"> 
+                <tree string="Compute Percent" editable="bottom">
                 <field name="line_purchase_id"/>
                 <field name="cost_unit_total" groups="cost_imex.group_percent_special_tax_manager"/>
                 <field name="cost_qty" groups="cost_imex.group_percent_special_tax_manager"/>
-                
-                
+
+
                 </tree>
-                
-                
+
+
                 </field>
                 </group>
-            </group>          
+            </group>
           </page>
-       
-       
+
+
         </xpath>
       </field>
     </record>
