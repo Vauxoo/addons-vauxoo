@@ -21,6 +21,8 @@
 ##############################################################################
 from openerp import models
 from openerp.addons.product import _common
+import pdb
+
 SEGMENTATION_COST = [
     'landed_cost',
     'subcontracting_cost',
@@ -83,13 +85,10 @@ class ProductTemplate(models.Model):
                         get_average(cr, uid, sbom.product_id.id)
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
                         map_field2write(avg_sgmnt_dict)
-                    if (sbom.product_id.valuation != "real_time" or
-                            not real_time_accounting):
-                        tmpl_obj.write(
-                            cr, uid, [sbom.product_id.product_tmpl_id.id],
-                            avg_sgmnt_dict, context=context)
-                    else:
-                        # Call wizard function here
+                    pdb.set_trace()
+                    if sbom.product_id.valuation == "real_time" or \
+                            real_time_accounting:
+                            # Call wizard function here
                         ctx = context.copy()
                         ctx.update(
                             {'active_id': sbom.product_id.product_tmpl_id.id,
@@ -100,6 +99,7 @@ class ProductTemplate(models.Model):
                         wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
 
                         # NOTE: Write remaining fields, segmentation costs
+                    if context.get('update_avg_costs'):
                         tmpl_obj.write(
                             cr, uid, [sbom.product_id.product_tmpl_id.id],
                             avg_sgmnt_dict, context=context)
