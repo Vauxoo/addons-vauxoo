@@ -453,7 +453,8 @@ class StockLandedCost(models.Model):
                         context=ctx)
 
                 if product_id.cost_method == 'standard':
-                    self._create_standard_deviation_entries(line, move_id, acc_prod)
+                    self._create_standard_deviation_entries(
+                        line, move_id, acc_prod)
                     continue
 
                 if product_id.cost_method == 'average':
