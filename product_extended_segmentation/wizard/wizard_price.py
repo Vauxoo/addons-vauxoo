@@ -1,4 +1,5 @@
-from openerp import fields, models
+# -*- coding: utf-8 -*-
+from openerp import models
 
 
 class WizardPrice(models.TransientModel):
