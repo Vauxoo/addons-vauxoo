@@ -21,3 +21,4 @@
 ##############################################################################
 
 from . import test_extend_segmentation
+from . import test_wizard
