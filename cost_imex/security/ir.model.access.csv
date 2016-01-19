@@ -1,7 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"percer_imex_user","percent.imex","model_percent_imex","cost_imex.group_percent_imex_user",1,0,0,0
-"percer_imex_manager","percent.imex","model_percent_imex","cost_imex.group_percent_imex_manager",1,1,1,1
-"percer_imex_line_user","percent.imex.line","model_percent_imex_line","cost_imex.group_percent_imex_line_user",1,0,0,0
-"percer_imex_line_manager","percent.imex.line","model_percent_imex_line","cost_imex.group_percent_imex_line_manager",1,1,1,1
-"special_tax_manager","national.special.tax","model_national_special_tax","cost_imex.group_percent_special_tax_manager",1,1,1,1
-
