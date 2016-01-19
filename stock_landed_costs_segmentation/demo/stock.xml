@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+        <record id="insurance_landed_cost_account" model="account.account">
+            <field name="code">X200-vx-insurance-landed</field>
+            <field name="name">INSURANCE COST</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+        </record>
+        <record id="freight_landed_cost_account" model="account.account">
+            <field name="code">X200-vx-frieght-landed</field>
+            <field name="name">FREIGHT COST</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+        </record>
         <record id="product_std_01" model="product.product">
             <field name="name">VX Laptop Battery (std)</field>
             <field name="cost_method">standard</field>

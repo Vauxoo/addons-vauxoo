@@ -40,6 +40,12 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.product_insurance_id = self.env.ref(
             'stock_landed_costs_average'
             '.service_standard_periodic_landed_cost_2')
+        self.account_insurance_id = self.env.ref(
+            'stock_landed_costs_segmentation'
+            '.insurance_landed_cost_account')
+        self.account_freight_id = self.env.ref(
+            'stock_landed_costs_segmentation'
+            '.freight_landed_cost_account')
 
         self.product_01 = self.env.ref(
             'stock_landed_costs_segmentation.product_std_01')
@@ -80,6 +86,7 @@ class TestLandedCostsSegmentation(TransactionCase):
                 (0, 0, {
                     'name': 'insurance',
                     'product_id': self.product_insurance_id.id,
+                    'account_id': self.account_insurance_id.id,
                     'split_method': 'by_quantity',
                     'price_unit': insurance_cost,
                     'segmentation_cost': 'subcontracting_cost',
@@ -87,6 +94,7 @@ class TestLandedCostsSegmentation(TransactionCase):
                 (0, 0, {
                     'name': 'freight',
                     'product_id': self.product_freight_id.id,
+                    'account_id': self.account_freight_id.id,
                     'split_method': 'by_quantity',
                     'price_unit': freight_cost,
                     'segmentation_cost': 'landed_cost',
