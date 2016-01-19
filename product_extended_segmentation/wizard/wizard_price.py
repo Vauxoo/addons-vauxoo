@@ -12,5 +12,5 @@ class WizardPrice(models.TransientModel):
                           recursive=recursive, real_time_accounting=False,
                           context=context)
 
-        res = str((template_id, sum([res[x] for x in res.keys()])))
+        res = str({template_id: sum([res[x] for x in res.keys()])})
         return {'value': {'info_field': res}}
