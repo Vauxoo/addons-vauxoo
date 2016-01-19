@@ -7,7 +7,7 @@
             <field name="model">account.move.line</field>
             <field name="inherit_id" ref="account.view_account_move_line_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@string='Group By...']/filter[@string='Period']" position="after">
+                <xpath expr="//group[@string='Group By']/filter[@string='Period']" position="after">
                     <filter string="Reconcile" icon="terp-folder-blue" domain="[]" context="{'group_by':'reconcile'}"/>
                 </xpath>
             </field>
