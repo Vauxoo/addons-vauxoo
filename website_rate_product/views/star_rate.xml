@@ -9,7 +9,7 @@
             </xpath>
         </template>
 
-        <template id="rating_product" inherit_id="website_sale.product" name="Show Product Rating">
+        <template id="rating_product" inherit_id="website_sale.product" active="False" customize_show="True" name="Show Product Rating">
             <xpath expr="//h1[@itemprop='name']" position="after">
               <t t-call="website_rate_product.show_product_rating"/>
             </xpath>
