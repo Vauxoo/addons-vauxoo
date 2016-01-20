@@ -5,7 +5,7 @@
         <record id="view_stock_move_tree_inherit" model="ir.ui.view">
             <field name="name">view.stock.move.tree.inherit</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock.view_move_tree_reception_picking_board"/>
+            <field name="inherit_id" ref="stock.view_move_tree_receipt_picking_board"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date']" position="after">
                     <field name="date_expected"/>
