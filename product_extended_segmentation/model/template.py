@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields
+from openerp import models
 from openerp.addons.product import _common
 SEGMENTATION_COST = [
     'landed_cost',
@@ -38,8 +38,8 @@ class ProductTemplate(models.Model):
         context = dict(context or {})
         price = 0
         uom_obj = self.pool.get("product.uom")
-        quant_obj = self.pool.get("stock.quant")
         tmpl_obj = self.pool.get('product.template')
+        wizard_obj = self.pool.get("stock.change.standard.price")
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
 
@@ -56,11 +56,6 @@ class ProductTemplate(models.Model):
                     cr, uid, prod_id, context=context).product_tmpl_id.id
             return bom_obj._bom_find(
                 cr, uid, product_tmpl_id=prod_id, context=context)
-
-        def quant_search(product_id):
-            ARGS = [('product_id', '=', product_id)]
-            return quant_obj.search(
-                cr, uid, ARGS, order='in_date DESC', limit=1)
 
         def _factor(factor, product_efficiency, product_rounding):
             factor = factor / (product_efficiency or 1.0)
@@ -79,16 +74,37 @@ class ProductTemplate(models.Model):
             # No attribute_value_ids means the bom line is not variant
             # specific
 
-            # NOTE: find for this product last quant
-            quant = quant_search(sbom.product_id.id)
             # NOTE: find for this product if any bom available
             bom_id = _bom_find(sbom.product_id.id)
 
-            if bom_id or not quant:
-                # NOTE: if any bom them use segmentation on product
-                obj_brw = sbom.product_id
-            else:
-                obj_brw = quant_obj.browse(cr, uid, quant[0], context=context)
+            if not bom_id:
+                if sbom.product_id.cost_method == 'average':
+                    avg_sgmnt_dict = self.pool.get('stock.card.product').\
+                        get_average(cr, uid, sbom.product_id.id)
+                    avg_sgmnt_dict = self.pool.get('stock.card.product').\
+                        map_field2write(avg_sgmnt_dict)
+                    if (sbom.product_id.valuation != "real_time" or
+                            not real_time_accounting):
+                        tmpl_obj.write(
+                            cr, uid, [sbom.product_id.product_tmpl_id.id],
+                            avg_sgmnt_dict, context=context)
+                    else:
+                        # Call wizard function here
+                        ctx = context.copy()
+                        ctx.update(
+                            {'active_id': sbom.product_id.product_tmpl_id.id,
+                             'active_model': 'product.template'})
+                        std_price = avg_sgmnt_dict.pop('standard_price')
+                        wiz_id = wizard_obj.create(
+                            cr, uid, {'new_price': std_price}, context=ctx)
+                        wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
+
+                        # NOTE: Write remaining fields, segmentation costs
+                        tmpl_obj.write(
+                            cr, uid, [sbom.product_id.product_tmpl_id.id],
+                            avg_sgmnt_dict, context=context)
+
+            obj_brw = sbom.product_id
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
@@ -123,24 +139,27 @@ class ProductTemplate(models.Model):
                 cr, uid, bom.product_uom.id, price / bom.product_qty,
                 bom.product_id.uom_id.id)
 
+        # NOTE: /!\ Is it really needed, it not a repetition???
         product = tmpl_obj.browse(
             cr, uid, bom.product_tmpl_id.id, context=context)
-        if not test:
-            if (product.valuation != "real_time" or not real_time_accounting):
-                tmpl_obj.write(
-                    cr, uid, [product.id], {'standard_price': price},
-                    context=context)
-            else:
-                # Call wizard function here
-                wizard_obj = self.pool.get("stock.change.standard.price")
-                ctx = context.copy()
-                ctx.update(
-                    {'active_id': product.id,
-                     'active_model': 'product.template'})
-                wiz_id = wizard_obj.create(
-                    cr, uid, {'new_price': price}, context=ctx)
-                wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
-            tmpl_obj.write(cr, uid, [product.id], sgmnt_dict, context=context)
+        if test:
+            return price
+
+        if product.valuation != "real_time" or not real_time_accounting:
+            tmpl_obj.write(
+                cr, uid, [product.id], {'standard_price': price},
+                context=context)
+        else:
+            # Call wizard function here
+            ctx = context.copy()
+            ctx.update(
+                {'active_id': product.id,
+                 'active_model': 'product.template'})
+            wiz_id = wizard_obj.create(
+                cr, uid, {'new_price': price}, context=ctx)
+            wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
+        tmpl_obj.write(cr, uid, [product.id], sgmnt_dict, context=context)
+
         return price
 
     def compute_price(self, cr, uid, product_ids, template_ids=False,
