@@ -24,9 +24,3 @@ class Document(osv.Model):
             if self.search(cr, uid, domain, context=context):
                 return False
         return True
-    # On Trunk there are a commentary that say with pure SQL it ca not be done.
-    # Delete this constraint whe we migrate to 6.1
-    _constraints = [
-        (_check_duplication, 'File name must be unique!', [
-         'name', 'parent_id', 'res_model', 'res_id'])
-    ]
