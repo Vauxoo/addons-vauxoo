@@ -484,16 +484,9 @@ class StockLandedCost(models.Model):
                         qty_out += quant.qty
 
                 if product_id.cost_method == 'average':
-                    # NOTE: After adding value to product in its quants average
-                    # needs to be recomputed in order to find out the change in
-                    # COGS in case of sales were performed prior to landing
-                    # costs
-                    new_avg_dict = get_average(product_id.id)
-                    new_avg = new_avg_dict['average']
-                    self._create_cogs_accounting_entries(
-                        line, move_id, prod_dict[product_id.id]['average'],
-                        new_avg, prod_qty[product_id.id], acc_prod)
-                    prod_dict[product_id.id] = new_avg_dict.copy()
+                    # /!\ NOTE: Inventory valuation
+                    # TODO:??? Change to a method that can reduce overhead
+                    self._create_accounting_entries(line, move_id, 0.0)
 
                 if product_id.cost_method == 'real':
                     self._create_accounting_entries(line, move_id, qty_out)
