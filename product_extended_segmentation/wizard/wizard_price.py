@@ -2,7 +2,7 @@
 from openerp import models
 
 
-class WizardPrice(models.TransientModel):
+class WizardPrice(models.Model):
     _inherit = "wizard.price"
 
     def onchange_recursive(self, cr, uid, ids, recursive, context=None):
