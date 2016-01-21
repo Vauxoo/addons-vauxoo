@@ -9,9 +9,6 @@
               <xpath expr="//field[@name='recursive']" position="attributes">
                 <attribute name="on_change">onchange_recursive(recursive)</attribute>
               </xpath>
-                <xpath expr="//field[@name='recursive']" position="after">
-                    <field name="update_avg_costs"/>
-                </xpath>
             </field>
         </record>
     </data>
