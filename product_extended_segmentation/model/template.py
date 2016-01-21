@@ -91,9 +91,6 @@ class ProductTemplate(models.Model):
                             tmpl_obj.write(
                                 cr, uid, [sbom.product_id.product_tmpl_id.id],
                                 avg_sgmnt_dict, context=context)
-                    else:
-                        # Call wizard function here
-                        pass
                     # /!\ NOTE: Do we need to report an issue to Odoo because
                     # of this condition
                     if sbom.product_id.valuation == "real_time" or \
