@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <record id="view_compute_price_wizard" model="ir.ui.view" >
+        <record id="view_compute_price_wizard" model="ir.ui.view">
             <field name="name">Compute Price as Sum of BoM Components and Routing</field>
             <field name="model">wizard.price</field>
             <field name="inherit_id" ref="product_extended.view_compute_price_wizard" />
