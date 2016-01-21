@@ -4,8 +4,8 @@
     Create purchase order, picking in and invoice by product
 -
   !python {model: purchase.order}: |
-    import tools
-    import netsvc
+    from openerp import tools
+    from openerp import netsvc
     import os
     import tempfile
     import csv
@@ -82,7 +82,7 @@
             #~ Click button Confirm
             if purchase_order_id:
                 try:
-                    wf_service = netsvc.LocalService("workflow")
+                    wf_service = netsvc.openerp.workflow
                     wf_service.trg_validate(uid, 'purchase.order', purchase_order_id , 'purchase_confirm', cr)
                 except Exception, e:
                     fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Confirm purchase', 'product_id' : repr(product_id)})
@@ -114,7 +114,7 @@
                     cost_invoice = account_invoice_obj.browse(cr, uid, invoice_id.get('res_id'), context=context).amount_total or 0
                     account_invoice_obj.write(cr, uid, [invoice_id.get('res_id')], {'check_total' : cost_invoice}, context=context)
                 try:
-                    wf_service = netsvc.LocalService("workflow")
+                    wf_service = netsvc.openerp.workflow
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
                 except Exception, e:
                     fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Validate Invoice',  'product_id' : repr(product_id)})
