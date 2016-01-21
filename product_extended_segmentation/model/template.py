@@ -101,8 +101,9 @@ class ProductTemplate(models.Model):
                             wizard_obj.change_price(
                                 cr, uid, [wiz_id], context=ctx)
                         else:
-                            tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
-                                           std_price, context=context)
+                            tmpl_obj.write(
+                                cr, uid, [prod_tmpl_id.id],
+                                {'standard_price': std_price}, context=context)
 
                         # Write cost segments
                         if context.get('update_avg_costs'):
