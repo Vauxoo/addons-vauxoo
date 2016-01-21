@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models
+from openerp import fields, models
 
 
 class WizardPrice(models.Model):
@@ -15,3 +15,5 @@ class WizardPrice(models.Model):
 
         res = str({template_id: sum([res[x] for x in res.keys()])})
         return {'value': {'info_field': res}}
+
+    update_avg_costs = fields.Boolean("Update Average Product Costs")
