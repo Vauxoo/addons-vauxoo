@@ -14,7 +14,7 @@ class WizardPrice(models.Model):
             'update_avg_costs': self.browse(cr, uid, ids).update_avg_costs
         })
 
-        res = super(WizardPrice, self).compute_from_bom(cr, uid, ids, context)
+        super(WizardPrice, self).compute_from_bom(cr, uid, ids, context)
 
     def onchange_recursive(self, cr, uid, ids, recursive, context=None):
         product_tmpl = self.pool.get('product.template')
