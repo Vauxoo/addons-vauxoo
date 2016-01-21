@@ -16,14 +16,20 @@ class WizardPrice(models.Model):
 
         res = super(WizardPrice, self).compute_from_bom(cr, uid, ids, context)
 
-    # /!\ NOTE: https://goo.gl/7wfpt1 Needs to use this approach
     def onchange_recursive(self, cr, uid, ids, recursive, context=None):
-        template_id = context.get('active_id')
-        res = self.pool.get('product.template').\
-            compute_price(cr,  uid, product_ids=[],
-                          template_ids=[template_id], test=True,
-                          recursive=recursive, real_time_accounting=False,
-                          context=context)
+        product_tmpl = self.pool.get('product.template')
+        active_id = context.get('active_id')
+        res = {}
+        if context.get('active_model') == 'product.template':
+            res = product_tmpl.compute_price(
+                cr, uid, [], template_ids=[active_id], test=True,
+                recursive=recursive, real_time_accounting=False,
+                context=context)
+        else:
+            res = product_tmpl.compute_price(
+                cr, uid, product_ids=[active_id], template_ids=[], test=True,
+                recursive=recursive, real_time_accounting=False,
+                context=context)
 
-        res = str({template_id: sum([res[x] for x in res.keys()])})
+        res = str({active_id: sum([res[x] for x in res.keys()])})
         return {'value': {'info_field': res}}
