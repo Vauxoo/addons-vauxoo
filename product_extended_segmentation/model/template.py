@@ -21,7 +21,6 @@
 ##############################################################################
 from openerp import models
 from openerp.addons.product import _common
-import pdb
 
 SEGMENTATION_COST = [
     'landed_cost',
@@ -85,7 +84,6 @@ class ProductTemplate(models.Model):
                         get_average(cr, uid, sbom.product_id.id)
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
                         map_field2write(avg_sgmnt_dict)
-                    pdb.set_trace()
                     if sbom.product_id.valuation == "real_time" or \
                             real_time_accounting:
                             # Call wizard function here
