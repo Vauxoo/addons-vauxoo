@@ -5,6 +5,7 @@ from openerp import fields, models
 class WizardPrice(models.Model):
     _inherit = "wizard.price"
 
+    # /!\ NOTE: https://goo.gl/7wfpt1 Needs to use this approach
     def onchange_recursive(self, cr, uid, ids, recursive, context=None):
         template_id = context.get('active_id')
         res = self.pool.get('product.template').\
