@@ -10,6 +10,8 @@ class WizardPrice(models.Model):
     def compute_from_bom(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        else:
+            context = context.copy()
         context.update({
             'update_avg_costs': self.browse(cr, uid, ids).update_avg_costs
         })
