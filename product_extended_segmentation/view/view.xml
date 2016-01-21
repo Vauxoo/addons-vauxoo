@@ -4,7 +4,7 @@
         <record id="view_compute_price_wizard" model="ir.ui.view">
             <field name="name">Compute Price as Sum of BoM Components and Routing</field>
             <field name="model">wizard.price</field>
-            <field name="inherit_id" ref="product_extended.view_compute_price_wizard" />
+            <field name="inherit_id" ref="product_extended.view_compute_price_wizard"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='recursive']" position="after">
                     <field name="update_avg_costs"/>
