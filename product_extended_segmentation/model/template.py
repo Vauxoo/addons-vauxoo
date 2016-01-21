@@ -93,7 +93,7 @@ class ProductTemplate(models.Model):
                                 avg_sgmnt_dict, context=context)
                     # /!\ NOTE: Do we need to report an issue to Odoo because
                     # of this condition
-                    if sbom.product_id.valuation == "real_time" or \
+                    elif sbom.product_id.valuation == "real_time" or \
                             real_time_accounting:
                             # Call wizard function here
                         ctx = context.copy()
