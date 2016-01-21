@@ -19,7 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.tests.common import TransactionCase
 
 
@@ -44,30 +43,40 @@ class TestWizard(TransactionCase):
     def get_product_cost(self, info_field, product_tmpl_id):
         return eval(info_field)[product_tmpl_id]
 
-    def test_01_test_wizard_onchange_recursive(self):
-        wizard_id = self.create_wizard(self.producto_d_id)[0]
+    def check_wizard_values(self, product_id, vals):
+        # check before wizard
+        self.assertEqual(product_id.standard_price, vals['before'],
+                         'Standard Price for {0} should be {1}'.
+                         format(product_id.name, vals['before']))
+        wizard_id = self.create_wizard(product_id)[0]
         self.assertEqual(wizard_id.recursive, False,
                          'WizardPrice recursive check should be unchecked'
                          'by default')
         cost = self.get_product_cost(
-            wizard_id.info_field, self.producto_d_id.id)
-        self.assertEqual(cost, 35, 'Non-recursive cost valuation should be 35')
-
-        wizard_id.recursive = True
-
-        cost = self.get_product_cost(
-            wizard_id.info_field, self.producto_d_id.id)
-        self.assertEqual(cost, 35, 'Recursive cost for D should be keep at 35')
-
-        wizard_id = self.create_wizard(self.producto_e_id)[0]
-        self.assertEqual(wizard_id.recursive, False,
-                         'WizardPrice recursive check should be unchecked'
-                         'by default')
-        cost = self.get_product_cost(
-            wizard_id.info_field, self.producto_e_id.id)
-        self.assertEqual(cost, 40, 'Non-recursive cost for E should be 40')
+            wizard_id.info_field, product_id.id)
+        # check what a wizard returns as default value
+        self.assertEqual(cost, vals['default'],
+                         'Non-recursive cost valuation for {0} should be {1}'.
+                         format(product_id.name, vals['default']))
 
         res = wizard_id.onchange_recursive(True)['value']
+        cost = self.get_product_cost(res['info_field'], product_id.id)
 
-        cost = self.get_product_cost(res['info_field'], self.producto_e_id.id)
-        self.assertEqual(cost, 75, 'Recursive cost for E should be up to 75')
+        # check what recursive returns
+        self.assertEqual(cost, vals['after'],
+                         'Recursive cost for {0} should be keep at {1}'.
+                         format(product_id.name, vals['after']))
+
+    def test_01_test_wizard_onchange_recursive(self):
+        vals = {
+            'before': 50,
+            'default': 35,
+            'after': 35
+        }
+        self.check_wizard_values(self.producto_d_id, vals)
+        vals = {
+            'before': 80,
+            'default': 40,
+            'after': 75
+        }
+        self.check_wizard_values(self.producto_e_id, vals)
