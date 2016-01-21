@@ -94,6 +94,8 @@ class ProductTemplate(models.Model):
                     else:
                         # Call wizard function here
                         pass
+                    # /!\ NOTE: Do we need to report an issue to Odoo because
+                    # of this condition
                     if sbom.product_id.valuation == "real_time" or \
                             real_time_accounting:
                             # Call wizard function here
