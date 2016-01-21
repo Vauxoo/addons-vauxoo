@@ -84,6 +84,8 @@ class ProductTemplate(models.Model):
                         get_average(cr, uid, sbom.product_id.id)
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
                         map_field2write(avg_sgmnt_dict)
+                    # /!\ NOTE: Do we need to report an issue to Odoo because
+                    # of this condition
                     if sbom.product_id.valuation == "real_time" or \
                             real_time_accounting:
                             # Call wizard function here
