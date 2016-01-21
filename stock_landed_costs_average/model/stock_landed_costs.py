@@ -491,6 +491,18 @@ class StockLandedCost(models.Model):
                 if product_id.cost_method == 'real':
                     self._create_accounting_entries(line, move_id, qty_out)
 
+            # /!\ NOTE: COGS computation
+            # NOTE: After adding value to product with landing cost products
+            # with costing method `average` need to be check in order to
+            # find out the change in COGS in case of sales were performed prior
+            # to landing costs
+            # new_avg_dict = get_average(product_id.id)
+            # new_avg = new_avg_dict['average']
+            # self._create_cogs_accounting_entries(
+            #     line, move_id, prod_dict[product_id.id]['average'],
+            #     new_avg, prod_qty[product_id.id], acc_prod)
+            # prod_dict[product_id.id] = new_avg_dict.copy()
+
             if any([first_avg, prod_dict]):
                 cost.create_deviation_accounting_entries(
                     move_id, first_avg, acc_prod)
