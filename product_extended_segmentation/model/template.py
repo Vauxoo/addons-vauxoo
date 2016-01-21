@@ -78,40 +78,40 @@ class ProductTemplate(models.Model):
             bom_id = _bom_find(sbom.product_id.id)
             prod_costs_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
             if not bom_id:
-                if sbom.product_id.cost_method == 'average':
+                product_id = sbom.product_id
+                prod_tmpl_id = product_id.product_tmpl_id
+                if product_id.cost_method == 'average':
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
-                        get_average(cr, uid, sbom.product_id.id)
+                        get_average(cr, uid, product_id.id)
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
                         map_field2write(avg_sgmnt_dict)
-                    if (sbom.product_id.valuation != "real_time" or
-                            not real_time_accounting):
-                        if test:
-                            prod_costs_dict = avg_sgmnt_dict
-                        else:
-                            tmpl_obj.write(
-                                cr, uid, [sbom.product_id.product_tmpl_id.id],
-                                avg_sgmnt_dict, context=context)
-                    # /!\ NOTE: Do we need to report an issue to Odoo because
-                    # of this condition
-                    elif sbom.product_id.valuation == "real_time" or \
-                            real_time_accounting:
-                            # Call wizard function here
-                        ctx = context.copy()
-                        ctx.update(
-                            {'active_id': sbom.product_id.product_tmpl_id.id,
-                             'active_model': 'product.template'})
+                    if not test:
                         std_price = avg_sgmnt_dict.pop('standard_price')
-                        wiz_id = wizard_obj.create(
-                            cr, uid, {'new_price': std_price}, context=ctx)
-                        wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
+                        diff = product_id.standard_price - std_price
+                        # /!\ NOTE: Do we need to report an issue to Odoo
+                        # because of this condition
+                        # Write standard price
+                        if product_id.valuation == "real_time" and \
+                                real_time_accounting and diff:
+                            ctx = context.copy()
+                            ctx.update({'active_id': prod_tmpl_id.id,
+                                        'active_model': 'product.template'})
+                            wiz_id = wizard_obj.create(
+                                cr, uid, {'new_price': std_price}, context=ctx)
+                            wizard_obj.change_price(
+                                cr, uid, [wiz_id], context=ctx)
+                        else:
+                            tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
+                                           std_price, context=context)
 
-                        # NOTE: Write remaining fields, segmentation costs
-                    if context.get('update_avg_costs'):
-                        tmpl_obj.write(
-                            cr, uid, [sbom.product_id.product_tmpl_id.id],
-                            avg_sgmnt_dict, context=context)
+                        # Write cost segments
+                        if context.get('update_avg_costs'):
+                            tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
+                                           avg_sgmnt_dict, context=context)
+                    else:
+                        prod_costs_dict = avg_sgmnt_dict
 
-            obj_brw = sbom.product_id
+            obj_brw = product_id
             if not test:
                 for fieldname in SEGMENTATION_COST:
                     prod_costs_dict[fieldname] = getattr(obj_brw, fieldname)
@@ -119,7 +119,7 @@ class ProductTemplate(models.Model):
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
                 price_sgmnt = uom_obj._compute_price(
-                    cr, uid, sbom.product_id.uom_id.id,
+                    cr, uid, product_id.uom_id.id,
                     prod_costs_dict[fieldname],
                     sbom.product_uom.id) * my_qty
                 price += price_sgmnt
