@@ -493,7 +493,6 @@ class StockLandedCost(models.Model):
 
                 if product_id.cost_method == 'real':
                     self._create_accounting_entries(line, move_id, qty_out)
-                    prod_dict[product_id.id] = new_avg_dict.copy()
 
             # /!\ NOTE: COGS computation
             # NOTE: After adding value to product with landing cost products
