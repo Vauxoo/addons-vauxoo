@@ -20,7 +20,6 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-import pdb
 SEGMENTATION_COST = [
     'landed_cost',
     'subcontracting_cost',
@@ -85,10 +84,8 @@ class TestAvgCosts(TransactionCase):
         # check initial values for avg products
         self.assertEqual(res, {})
 
-        wizard_id = self.create_wizard(
-            self.prod_e_id.product_tmpl_id, True, False, True)
-        res = self.get_store_product_values(
-            self.product_ids)
+        self.create_wizard(self.prod_e_id.product_tmpl_id, True, False, True)
+        res = self.get_store_product_values(self.product_ids)
 
         # check updated segment costs for avg products after wizard execution
         self.assertEqual(res['producto_a']['material_cost'], 10)
