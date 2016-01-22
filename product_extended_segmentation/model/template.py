@@ -109,8 +109,7 @@ class ProductTemplate(models.Model):
                             tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
                                            avg_sgmnt_dict, context=context)
                     else:
-                        prod_costs_dict = avg_sgmnt_dict
-
+                        prod_costs_dict = avg_sgmnt_dict.copy()
             if not test:
                 for fieldname in SEGMENTATION_COST:
                     prod_costs_dict[fieldname] = getattr(product_id, fieldname)
@@ -148,26 +147,30 @@ class ProductTemplate(models.Model):
                 cr, uid, bom.product_uom.id, price / bom.product_qty,
                 bom.product_id.uom_id.id)
 
-        # NOTE: Instanciating BOM related product
-        product = tmpl_obj.browse(
-            cr, uid, bom.product_tmpl_id.id, context=context)
         if test:
             return price
 
-        if product.valuation != "real_time" or not real_time_accounting:
-            tmpl_obj.write(
-                cr, uid, [product.id], {'standard_price': price},
-                context=context)
-        else:
+        # NOTE: Instanciating BOM related product
+        product_tmpl_id = tmpl_obj.browse(
+            cr, uid, bom.product_tmpl_id.id, context=context)
+        diff = product_tmpl_id.standard_price - price
+        # Write standard price
+        if product_tmpl_id.valuation == "real_time" and \
+                real_time_accounting and diff:
             # Call wizard function here
             ctx = context.copy()
             ctx.update(
-                {'active_id': product.id,
+                {'active_id': product_tmpl_id.id,
                  'active_model': 'product.template'})
-            wiz_id = wizard_obj.create(
+            wizard_id = wizard_obj.create(
                 cr, uid, {'new_price': price}, context=ctx)
-            wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
-        tmpl_obj.write(cr, uid, [product.id], sgmnt_dict, context=context)
+            wizard_obj.change_price(cr, uid, [wizard_id], context=ctx)
+        else:
+            tmpl_obj.write(
+                cr, uid, [product_tmpl_id.id], {'standard_price': price},
+                context=context)
+        tmpl_obj.write(
+            cr, uid, [product_tmpl_id.id], sgmnt_dict, context=context)
 
         return price
 
