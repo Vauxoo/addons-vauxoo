@@ -111,8 +111,12 @@ class ProductTemplate(models.Model):
                     else:
                         prod_costs_dict = avg_sgmnt_dict.copy()
             if not test:
-                for fieldname in SEGMENTATION_COST:
-                    prod_costs_dict[fieldname] = getattr(product_id, fieldname)
+                if context.get('update_avg_costs'):
+                    for fieldname in SEGMENTATION_COST:
+                        prod_costs_dict[fieldname] = getattr(
+                            product_id, fieldname)
+                else:
+                    prod_costs_dict = avg_sgmnt_dict.copy()
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
