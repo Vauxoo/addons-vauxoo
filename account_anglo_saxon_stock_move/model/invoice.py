@@ -112,11 +112,11 @@ class AccountInvoice(models.Model):
 
         return True
 
-    def invoice_validate(self, cr, uid, ids, context=None):
-        res = super(AccountInvoice, self).invoice_validate(
-            cr, uid, ids, context=context)
-        self.reconcile_stock_accrual(cr, uid, ids, context=context)
-        return res
+#    def invoice_validate(self, cr, uid, ids, context=None):
+#        res = super(AccountInvoice, self).invoice_validate(
+#            cr, uid, ids, context=context)
+#        self.reconcile_stock_accrual(cr, uid, ids, context=context)
+#        return res
 
 
 class AccountInvoiceLine(osv.osv):
