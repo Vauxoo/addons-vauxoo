@@ -485,14 +485,15 @@ class StockLandedCost(models.Model):
 
                 if product_id.cost_method == 'average':
                     # /!\ NOTE: Inventory valuation
-                    # TODO:??? Change to a method that can reduce overhead
-                    # /!\ This new update can be taken out of for loop
-                    new_avg_dict = get_average(product_id.id)
                     self._create_accounting_entries(line, move_id, 0.0)
-                    prod_dict[product_id.id] = new_avg_dict.copy()
 
                 if product_id.cost_method == 'real':
                     self._create_accounting_entries(line, move_id, qty_out)
+
+            # /!\ NOTE: This new update is taken out of for loop to improve
+            # performance
+            for prod_id in prod_dict:
+                prod_dict[prod_id] = get_average(prod_id)
 
             # /!\ NOTE: COGS computation
             # NOTE: After adding value to product with landing cost products
