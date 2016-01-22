@@ -85,7 +85,7 @@ class ProductTemplate(models.Model):
                         get_average(cr, uid, product_id.id)
                     avg_sgmnt_dict = self.pool.get('stock.card.product').\
                         map_field2write(avg_sgmnt_dict)
-                    if not test:
+                    if not test and context.get('update_avg_costs'):
                         std_price = avg_sgmnt_dict.pop('standard_price')
                         diff = product_id.standard_price - std_price
                         # /!\ NOTE: Do we need to report an issue to Odoo
@@ -106,7 +106,6 @@ class ProductTemplate(models.Model):
                                 {'standard_price': std_price}, context=context)
 
                         # Write cost segments
-                        if context.get('update_avg_costs'):
                             tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
                                            avg_sgmnt_dict, context=context)
                     else:
