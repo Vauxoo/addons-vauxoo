@@ -485,6 +485,8 @@ class StockLandedCost(models.Model):
                     last_line = tpl[1]
                     new_avg = first_line['average']
                     lst_avg = last_line['average']
+                    if first_line['qty'] >= 0:
+                        continue
                     self._create_cogs_accounting_entries(
                         prod_id, move_id, lst_avg, new_avg, first_line['qty'],
                         acc_prod)
