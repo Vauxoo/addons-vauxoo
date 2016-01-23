@@ -285,50 +285,36 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def _create_cogs_accounting_entries(
-            self, line, move_id, old_avg, new_avg, qty, acc_prod=None):
+            self, product_id, move_id, old_avg, new_avg, qty, acc_prod=None):
         '''
         This method takes the amount of cost that needs to be booked as
         inventory value and later takes the amount of COGS that is needed to
         book if any sale was done because of this landing cost been applied
         '''
-        cost_product = line.cost_line_id and line.cost_line_id.product_id
-        if not cost_product:
-            return False
-        accounts = acc_prod[line.product_id.id]
+        product_brw = self.env['product.product'].browse(product_id)
+        accounts = acc_prod[product_id]
         debit_account_id = accounts['property_stock_valuation_account_id']
         # NOTE: BEWARE of accounts when account_anglo_saxon applies
         # TODO: Do we have to set another account for cogs_account_id?
         cogs_account_id = \
-            line.product_id.property_account_expense and \
-            line.product_id.property_account_expense.id or \
-            line.product_id.categ_id.property_account_expense_categ and \
-            line.product_id.categ_id.property_account_expense_categ.id
-
-        credit_account_id = line.cost_line_id.account_id.id or \
-            cost_product.property_account_expense and \
-            cost_product.property_account_expense.id or \
-            cost_product.categ_id.property_account_expense_categ and \
-            cost_product.categ_id.property_account_expense_categ.id
-
-        if not credit_account_id:
-            raise except_orm(
-                _('Error!'),
-                _('Please configure Stock Expense Account for product: %s.') %
-                (cost_product.name))
+            product_brw.property_account_expense and \
+            product_brw.property_account_expense.id or \
+            product_brw.categ_id.property_account_expense_categ and \
+            product_brw.categ_id.property_account_expense_categ.id
 
         if not cogs_account_id:
             raise except_orm(
                 _('Error!'),
                 _('Please configure Stock Expense Account for product: %s.') %
-                (line.product_id.name))
+                (product_brw.name))
 
         return self._create_cogs_account_move_line(
-            line, move_id, credit_account_id, debit_account_id,
+            product_brw, move_id, debit_account_id,
             cogs_account_id, old_avg, new_avg, qty)
 
     @api.multi
     def _create_cogs_account_move_line(
-            self, line, move_id, credit_account_id, debit_account_id,
+            self, product_brw, move_id, debit_account_id,
             cogs_account_id, old_avg, new_avg, qty):
         """
         Create journal items for COGS for those products sold
@@ -338,35 +324,16 @@ class StockLandedCost(models.Model):
         ctx = dict(self._context)
         aml_obj = self.pool.get('account.move.line')
         base_line = {
-            'name': line.name,
             'move_id': move_id,
-            'product_id': line.product_id.id,
-            'quantity': line.quantity,
+            'product_id': product_brw.id,
+            'quantity': qty,
         }
-        debit_line = dict(base_line, account_id=debit_account_id)
-        credit_line = dict(base_line, account_id=credit_account_id)
-        diff = line.additional_landed_cost
-        if float_is_zero(
-                diff,
-                self.pool.get('decimal.precision').precision_get(
-                    self._cr, self._uid, 'Account')):
-            return False
-        if diff > 0:
-            debit_line['debit'] = diff
-            credit_line['credit'] = diff
-        else:
-            # negative cost, reverse the entry
-            debit_line['credit'] = -diff
-            credit_line['debit'] = -diff
-        aml_obj.create(
-            self._cr, self._uid, debit_line, context=ctx, check=False)
-        aml_obj.create(
-            self._cr, self._uid, credit_line, context=ctx, check=False)
-
+        debit_line = dict(base_line)
+        credit_line = dict(base_line)
         # Create COGS account move lines for products that were sold prior to
         # applying landing costs
-        # TODO: Rounding problems could arise here, this needs to be checked
-        diff -= (new_avg - old_avg) * qty
+        # NOTE: Rounding problems could arise here, this needs to be checked
+        diff = (new_avg - old_avg) * qty
         if float_is_zero(
                 diff,
                 self.pool.get('decimal.precision').precision_get(
@@ -377,11 +344,11 @@ class StockLandedCost(models.Model):
         # change, by this landed cost is not really necessary
         debit_line = dict(
             debit_line,
-            name=(line.name + ": " + _(' COGS')),
+            name=(product_brw.name + ": " + _(' COGS')),
             account_id=cogs_account_id)
         credit_line = dict(
             credit_line,
-            name=(line.name + ": " + _(' COGS')),
+            name=(product_brw.name + ": " + _(' COGS')),
             account_id=debit_account_id)
         if diff > 0:
             debit_line['debit'] = diff
@@ -419,8 +386,10 @@ class StockLandedCost(models.Model):
         self.ensure_one()
         quant_obj = self.env['stock.quant']
         template_obj = self.pool.get('product.template')
-        get_average = self.env['stock.card.product'].get_average
-        get_qty = self.env['stock.card.product'].get_qty
+        scp_obj = self.env['stock.card.product']
+        get_average = scp_obj.get_average
+        stock_card_move_get = scp_obj._stock_card_move_get
+        get_qty = scp_obj.get_qty
         ctx = dict(self._context)
 
         for cost in self:
@@ -439,6 +408,8 @@ class StockLandedCost(models.Model):
             quant_dict = {}
             prod_dict = {}
             first_avg = {}
+            first_lines = {}
+            last_lines = {}
             prod_qty = {}
             acc_prod = {}
             for line in cost.valuation_adjustment_lines:
@@ -462,6 +433,8 @@ class StockLandedCost(models.Model):
                         avg_dict = get_average(product_id.id)
                         avg = avg_dict['average']
                         prod_dict[product_id.id] = avg_dict.copy()
+                        first_lines[product_id.id] = stock_card_move_get(
+                            product_id.id, return_values=True)['res']
                         first_avg[product_id.id] = avg
                     if product_id.id not in prod_qty:
                         prod_qty[product_id.id] = get_qty(product_id.id)
@@ -494,12 +467,28 @@ class StockLandedCost(models.Model):
             # performance
             for prod_id in prod_dict:
                 prod_dict[prod_id] = get_average(prod_id)
+                last_lines[prod_id] = stock_card_move_get(
+                    prod_id, return_values=True)['res']
 
             # /!\ NOTE: COGS computation
             # NOTE: After adding value to product with landing cost products
             # with costing method `average` need to be check in order to
             # find out the change in COGS in case of sales were performed prior
             # to landing costs
+            to_cogs = {}
+            for prod_id in prod_dict:
+                to_cogs[prod_id] = zip(
+                    first_lines[prod_id], last_lines[prod_id])
+            for prod_id in to_cogs:
+                for tpl in to_cogs[prod_id]:
+                    first_line = tpl[0]
+                    last_line = tpl[1]
+                    new_avg = first_line['average']
+                    lst_avg = last_line['average']
+                    self._create_cogs_accounting_entries(
+                        prod_id, move_id, lst_avg, new_avg, first_line['qty'],
+                        acc_prod)
+
             # new_avg_dict = get_average(product_id.id)
             # new_avg = new_avg_dict['average']
             # self._create_cogs_accounting_entries(
