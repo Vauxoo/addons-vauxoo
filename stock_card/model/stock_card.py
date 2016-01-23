@@ -306,6 +306,7 @@ class StockCardProduct(models.TransientModel):
         for row in vals['move_ids']:
             res.append(vals['lines'][row['move_id']])
         vals['res'] = res
+        import pdb; pdb.set_trace()
 
         if return_values:
             return vals
