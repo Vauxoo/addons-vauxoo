@@ -489,13 +489,6 @@ class StockLandedCost(models.Model):
                         prod_id, move_id, lst_avg, new_avg, first_line['qty'],
                         acc_prod)
 
-            # new_avg_dict = get_average(product_id.id)
-            # new_avg = new_avg_dict['average']
-            # self._create_cogs_accounting_entries(
-            #     line, move_id, prod_dict[product_id.id]['average'],
-            #     new_avg, prod_qty[product_id.id], acc_prod)
-            # prod_dict[product_id.id] = new_avg_dict.copy()
-
             if any([first_avg, prod_dict]):
                 cost.create_deviation_accounting_entries(
                     move_id, first_avg, acc_prod)
