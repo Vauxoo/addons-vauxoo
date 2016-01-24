@@ -113,6 +113,8 @@ class ProductTemplate(models.Model):
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
+                if not prod_costs_dict[fieldname]:
+                    continue
                 price_sgmnt = uom_obj._compute_price(
                     cr, uid, product_id.uom_id.id,
                     prod_costs_dict[fieldname],
