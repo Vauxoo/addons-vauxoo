@@ -34,17 +34,29 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     @api.multi
-    @api.depends('move_lines.reserved_quant_ids')
     def _compute_qty_to_produce(self):
         for record in self:
             total = record.get_qty_available_to_produce()
             record.qty_available_to_produce = total
+
+    @api.multi
+    @api.depends('move_lines.reserved_quant_ids')
+    def _moves_assigned(self):
+        """ Test whether all the consume lines are assigned """
+        for production in self:
+            if production.qty_available_to_produce > 0:
+                production.ready_production = True
+            else:
+                production.ready_production = False
 
     qty_available_to_produce = fields.Float(
         string='Quantity Available to Produce',
         compute='_compute_qty_to_produce', readonly=True,
         help='Quantity available to produce considering '
         'the quantities reserved by the order')
+
+    ready_production = fields.Boolean(compute='_moves_assigned',
+                                      store=True)
 
     @api.multi
     def get_qty_available_to_produce(self):
