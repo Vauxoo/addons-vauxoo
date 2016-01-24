@@ -28,6 +28,7 @@
     "depends": [
         'product',
         'product_extended',
+        'mrp_routing_account_journal',
         'stock_card_segmentation',
     ],
     "category": "Generic Modules/Inventory Control",
