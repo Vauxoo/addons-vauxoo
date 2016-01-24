@@ -356,11 +356,8 @@ class StockLandedCost(models.Model):
             credit_line['debit'] = 0.0
             credit_line['credit'] = diff
         else:
-            # negative cost, reverse the entry
-            debit_line['credit'] = -diff
-            credit_line['debit'] = -diff
-            debit_line['debit'] = 0.0
-            credit_line['credit'] = 0.0
+            # /!\ NOTE: be carefull when making reversions on landed costs
+            return True
         aml_obj.create(
             self._cr, self._uid, debit_line, context=ctx, check=False)
         aml_obj.create(
