@@ -107,6 +107,10 @@ class ProductTemplate(models.Model):
                         tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
                                        avg_sgmnt_dict, context=context)
             else:
+                #  NOTE: Case when product is REAL or STANDARD
+                if test and context['_calc_price_recursive']:
+                    continue
+
                 for fieldname in SEGMENTATION_COST:
                     prod_costs_dict[fieldname] = getattr(
                         product_id, fieldname)
@@ -181,6 +185,9 @@ class ProductTemplate(models.Model):
         Multiple ids at once?
         testdict is used to inform the user about the changes to be made
         '''
+        context = dict(context or {})
+        if '_calc_price_recursive' not in context:
+            context['_calc_price_recursive'] = recursive
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
         testdict = {}
