@@ -80,6 +80,11 @@ class TestWizard(TransactionCase):
             'after': 35
         }
         self.check_wizard_values(self.producto_d_id, vals)
+        # check production_cost
+        self.assertEqual(self.producto_d_id.production_cost, 5,
+                         'Production Cost for D should be 5')
+
+    def test_02_test_wizard_onchange_recursive(self):
         vals = {
             'before': 80,
             'default': 40,
@@ -88,7 +93,5 @@ class TestWizard(TransactionCase):
         self.check_wizard_values(self.producto_e_id, vals)
 
         # check production_cost
-        self.assertEqual(self.producto_d_id.production_cost, 5,
-                         'Production Cost for D should be 5')
         self.assertEqual(self.producto_e_id.production_cost, 15,
                          'Production Cost for E should be 15')
