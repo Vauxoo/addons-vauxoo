@@ -74,48 +74,53 @@ class ProductTemplate(models.Model):
             # No attribute_value_ids means the bom line is not variant
             # specific
 
-            # NOTE: find for this product if any bom available
-            bom_id = _bom_find(sbom.product_id.id)
             prod_costs_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
-            if not bom_id:
-                if sbom.product_id.cost_method == 'average':
-                    avg_sgmnt_dict = self.pool.get('stock.card.product').\
-                        get_average(cr, uid, sbom.product_id.id)
-                    avg_sgmnt_dict = self.pool.get('stock.card.product').\
-                        map_field2write(avg_sgmnt_dict)
-                    if (sbom.product_id.valuation != "real_time" or
-                            not real_time_accounting):
-                        if test:
-                            prod_costs_dict = avg_sgmnt_dict
-                        else:
-                            tmpl_obj.write(
-                                cr, uid, [sbom.product_id.product_tmpl_id.id],
-                                avg_sgmnt_dict, context=context)
-                    else:
-                        # Call wizard function here
+            product_id = sbom.product_id
+            prod_tmpl_id = product_id.product_tmpl_id
+            if product_id.cost_method == 'average':
+                avg_sgmnt_dict = self.pool.get('stock.card.product').\
+                    get_average(cr, uid, product_id.id)
+                avg_sgmnt_dict = self.pool.get('stock.card.product').\
+                    map_field2write(avg_sgmnt_dict)
+                prod_costs_dict = avg_sgmnt_dict.copy()
+                if not test and context.get('update_avg_costs'):
+                    std_price = avg_sgmnt_dict.pop('standard_price')
+                    diff = product_id.standard_price - std_price
+                    # /!\ NOTE: Do we need to report an issue to Odoo
+                    # because of this condition
+                    # Write standard price
+                    if product_id.valuation == "real_time" and \
+                            real_time_accounting and diff:
                         ctx = context.copy()
-                        ctx.update(
-                            {'active_id': sbom.product_id.product_tmpl_id.id,
-                             'active_model': 'product.template'})
-                        std_price = avg_sgmnt_dict.pop('standard_price')
+                        ctx.update({'active_id': prod_tmpl_id.id,
+                                    'active_model': 'product.template'})
                         wiz_id = wizard_obj.create(
                             cr, uid, {'new_price': std_price}, context=ctx)
-                        wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
-
-                        # NOTE: Write remaining fields, segmentation costs
+                        wizard_obj.change_price(
+                            cr, uid, [wiz_id], context=ctx)
+                    else:
                         tmpl_obj.write(
-                            cr, uid, [sbom.product_id.product_tmpl_id.id],
-                            avg_sgmnt_dict, context=context)
+                            cr, uid, [prod_tmpl_id.id],
+                            {'standard_price': std_price}, context=context)
 
-            obj_brw = sbom.product_id
-            if not test:
+                    # Write cost segments
+                        tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
+                                       avg_sgmnt_dict, context=context)
+            else:
+                #  NOTE: Case when product is REAL or STANDARD
+                if test and context['_calc_price_recursive']:
+                    continue
+
                 for fieldname in SEGMENTATION_COST:
-                    prod_costs_dict[fieldname] = getattr(obj_brw, fieldname)
+                    prod_costs_dict[fieldname] = getattr(
+                        product_id, fieldname)
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
+                if not prod_costs_dict[fieldname]:
+                    continue
                 price_sgmnt = uom_obj._compute_price(
-                    cr, uid, sbom.product_id.uom_id.id,
+                    cr, uid, product_id.uom_id.id,
                     prod_costs_dict[fieldname],
                     sbom.product_uom.id) * my_qty
                 price += price_sgmnt
@@ -145,26 +150,30 @@ class ProductTemplate(models.Model):
                 cr, uid, bom.product_uom.id, price / bom.product_qty,
                 bom.product_id.uom_id.id)
 
-        # NOTE: Instanciating BOM related product
-        product = tmpl_obj.browse(
-            cr, uid, bom.product_tmpl_id.id, context=context)
         if test:
             return price
 
-        if product.valuation != "real_time" or not real_time_accounting:
-            tmpl_obj.write(
-                cr, uid, [product.id], {'standard_price': price},
-                context=context)
-        else:
+        # NOTE: Instanciating BOM related product
+        product_tmpl_id = tmpl_obj.browse(
+            cr, uid, bom.product_tmpl_id.id, context=context)
+        diff = product_tmpl_id.standard_price - price
+        # Write standard price
+        if product_tmpl_id.valuation == "real_time" and \
+                real_time_accounting and diff:
             # Call wizard function here
             ctx = context.copy()
             ctx.update(
-                {'active_id': product.id,
+                {'active_id': product_tmpl_id.id,
                  'active_model': 'product.template'})
-            wiz_id = wizard_obj.create(
+            wizard_id = wizard_obj.create(
                 cr, uid, {'new_price': price}, context=ctx)
-            wizard_obj.change_price(cr, uid, [wiz_id], context=ctx)
-        tmpl_obj.write(cr, uid, [product.id], sgmnt_dict, context=context)
+            wizard_obj.change_price(cr, uid, [wizard_id], context=ctx)
+        else:
+            tmpl_obj.write(
+                cr, uid, [product_tmpl_id.id], {'standard_price': price},
+                context=context)
+        tmpl_obj.write(
+            cr, uid, [product_tmpl_id.id], sgmnt_dict, context=context)
 
         return price
 
@@ -176,6 +185,9 @@ class ProductTemplate(models.Model):
         Multiple ids at once?
         testdict is used to inform the user about the changes to be made
         '''
+        context = dict(context or {})
+        if '_calc_price_recursive' not in context:
+            context['_calc_price_recursive'] = recursive
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
         testdict = {}
@@ -211,7 +223,7 @@ class ProductTemplate(models.Model):
 
                 # Call compute_price on these subproducts
                 prod_set = set([x.product_id.id for x in bom.bom_line_ids])
-                res = self. compute_price(
+                res = self.compute_price(
                     cr, uid, product_ids=list(prod_set), template_ids=[],
                     recursive=recursive, test=test,
                     real_time_accounting=real_time, context=context)

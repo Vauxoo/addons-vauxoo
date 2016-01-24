@@ -25,7 +25,11 @@ from openerp import models, fields
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    material_cost = fields.Float(string='Material Cost')
-    production_cost = fields.Float(string='Production Cost')
-    subcontracting_cost = fields.Float(string='Subcontracting Cost')
-    landed_cost = fields.Float(string='Landed Cost')
+    material_cost = fields.Float(
+        string='Material Cost', readonly=True)
+    production_cost = fields.Float(
+        string='Production Cost', readonly=True)
+    subcontracting_cost = fields.Float(
+        string='Subcontracting Cost', readonly=True)
+    landed_cost = fields.Float(
+        string='Landed Cost', readonly=True)

@@ -19,6 +19,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from . import test_extend_segmentation
 from . import test_wizard
+from . import test_avg_costs
