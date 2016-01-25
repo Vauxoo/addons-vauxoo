@@ -67,6 +67,11 @@ class MrpProduction(models.Model):
         uom_obj = self.env['product.uom']
         for record in self:
             total = 0
+            done = 0.0
+            if record.move_created_ids2:
+                moves = record.move_created_ids2.\
+                    filtered(lambda a: not a.scrapped)
+                done = sum(moves.mapped('product_uom_qty'))
             if not record.move_lines.mapped('reserved_quant_ids'):
                 return total
             self._cr.execute('''
@@ -81,7 +86,7 @@ class MrpProduction(models.Model):
             result = {i.get('product_id'): i.get('total') or 0
                       for i in self._cr.dictfetchall()}
             incomplete = False
-            for total in range(1, int(record.product_qty + 1)):
+            for total in range(1, int((record.product_qty - done) + 1)):
                 product_uom_qty = uom_obj.\
                     _compute_qty(record.product_uom.id,
                                  total,
