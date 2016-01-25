@@ -29,9 +29,13 @@
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
+        "stock",
         "mrp",
     ],
-    "demo": [],
+    "demo": [
+        'demo/product_demo.xml',
+        'demo/mrp_bom_demo.xml',
+    ],
     "data": [
         'views/mrp_view.xml',
     ],
