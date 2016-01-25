@@ -77,6 +77,10 @@ class MrpProductProduct(models.TransientModel):
 
     @api.multi
     def do_produce(self):
+        '''
+        Overwritten to show a message if someone try to produce more than
+        available to produce
+        '''
         production_id = self._context.get('active_id', False)
         assert production_id, "Production Id should be specified "\
             "in context as a Active ID."
