@@ -285,7 +285,7 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def _create_cogs_accounting_entries(
-            self, product_id, move_id, old_avg, new_avg, qty, acc_prod=None):
+            self, product_id, move_id, lst_avg, fst_avg, qty, acc_prod=None):
         '''
         This method takes the amount of cost that needs to be booked as
         inventory value and later takes the amount of COGS that is needed to
@@ -310,12 +310,12 @@ class StockLandedCost(models.Model):
 
         return self._create_cogs_account_move_line(
             product_brw, move_id, debit_account_id,
-            cogs_account_id, old_avg, new_avg, qty)
+            cogs_account_id, lst_avg, fst_avg, qty)
 
     @api.multi
     def _create_cogs_account_move_line(
             self, product_brw, move_id, debit_account_id,
-            cogs_account_id, old_avg, new_avg, qty):
+            cogs_account_id, lst_avg, fst_avg, qty):
         """
         Create journal items for COGS for those products sold
         before landed costs were applied
@@ -333,7 +333,7 @@ class StockLandedCost(models.Model):
         # Create COGS account move lines for products that were sold prior to
         # applying landing costs
         # NOTE: Rounding problems could arise here, this needs to be checked
-        diff = (new_avg - old_avg) * qty
+        diff = (lst_avg - fst_avg) * qty
         if float_is_zero(
                 diff,
                 self.pool.get('decimal.precision').precision_get(
@@ -480,12 +480,12 @@ class StockLandedCost(models.Model):
                 for tpl in to_cogs[prod_id]:
                     first_line = tpl[0]
                     last_line = tpl[1]
-                    new_avg = first_line['average']
+                    fst_avg = first_line['average']
                     lst_avg = last_line['average']
                     if first_line['qty'] >= 0:
                         continue
                     self._create_cogs_accounting_entries(
-                        prod_id, move_id, lst_avg, new_avg, first_line['qty'],
+                        prod_id, move_id, lst_avg, fst_avg, first_line['qty'],
                         acc_prod)
 
             if any([first_avg, prod_dict]):
