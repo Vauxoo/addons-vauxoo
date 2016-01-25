@@ -134,7 +134,7 @@ class StockLandedCost(models.Model):
             'product_id': product_brw.id,
         }
 
-        if diff > 0:
+        if diff < 0:
             name = product_brw.name + ": " + _('Gains on Inventory Deviation')
             debit_line = dict(
                 base_line,
