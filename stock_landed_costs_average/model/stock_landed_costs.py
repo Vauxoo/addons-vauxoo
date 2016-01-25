@@ -483,6 +483,7 @@ class StockLandedCost(models.Model):
                     fst_avg = first_line['average']
                     lst_avg = last_line['average']
                     if first_line['qty'] >= 0:
+                        # /!\ TODO: This is not true for devolutions
                         continue
                     self._create_cogs_accounting_entries(
                         prod_id, move_id, lst_avg, fst_avg, first_line['qty'],
