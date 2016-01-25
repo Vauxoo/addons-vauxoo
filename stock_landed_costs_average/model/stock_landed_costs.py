@@ -134,8 +134,11 @@ class StockLandedCost(models.Model):
             'product_id': product_brw.id,
         }
 
+        name = '{name}: {memo} - AVG'
+
         if diff < 0:
-            name = product_brw.name + ": " + _('Gains on Inventory Deviation')
+            name = name.format(
+                name=name, memo=_('Gains on Inventory Deviation'))
             debit_line = dict(
                 base_line,
                 name=name,
@@ -147,7 +150,8 @@ class StockLandedCost(models.Model):
                 account_id=gain_account_id,
                 credit=diff,)
         else:
-            name = product_brw.name + ": " + _('Losses on Inventory Deviation')
+            name = name.format(
+                name=name, memo=_('Losses on Inventory Deviation'))
             debit_line = dict(
                 base_line,
                 name=name,
@@ -475,8 +479,7 @@ class StockLandedCost(models.Model):
                 # TODO: Compute deviation
                 if fst_avg != ini_avg and lst_avg != ini_avg:
                     self._create_deviation_accounting_entries(
-                        move_id, prod_id,
-                        ini_avg, lst_avg, qty, acc_prod)
+                        move_id, prod_id, ini_avg, lst_avg, qty, acc_prod)
 
             # TODO: Write latest value for average
             cost.compute_average_cost(prod_dict)
