@@ -24,7 +24,7 @@ from openerp.exceptions import Warning as UserError
 import openerp.addons.decimal_precision as dp
 
 
-class MrpProductProduct(models.Model):
+class MrpProductProduct(models.TransientModel):
     _inherit = "mrp.product.produce"
 
     @api.cr_uid_context
