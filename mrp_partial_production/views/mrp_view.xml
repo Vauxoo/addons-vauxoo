@@ -10,6 +10,9 @@
             <xpath expr="//label[@for='product_uos_qty']" position="before">
                 <field name="qty_available_to_produce"/>
             </xpath>
+            <xpath expr="//button[@name='action_assign']" position="replace">
+                <button name="action_assign" states="confirmed,picking_except,in_production" string="Check Availability" type="object" class="oe_highlight"/>
+            </xpath>
         </field>
         </record>
 
