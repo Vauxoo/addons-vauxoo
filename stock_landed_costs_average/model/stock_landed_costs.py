@@ -198,6 +198,8 @@ class StockLandedCost(models.Model):
                     self._cr, self._uid, 'Account')):
             return False
 
+        # TODO: improve code to profit from acc_prod dictionary
+        # and reduce overhead with this repetitive query
         valuation_account_id, gain_account_id, loss_account_id = \
             self._get_deviation_accounts(product_id, acc_prod)
 
@@ -214,6 +216,7 @@ class StockLandedCost(models.Model):
         average in product and the first computed average prior to apply
         landing costs
         '''
+        # TODO: Rewrite or get rid of this method
         dct = dict(dct or {})
         if not dct:
             return True
@@ -408,7 +411,7 @@ class StockLandedCost(models.Model):
                 self._cr, self._uid, cost, context=ctx)
             quant_dict = {}
             prod_dict = {}
-            first_avg = {}
+            init_avg = {}
             first_lines = {}
             last_lines = {}
             prod_qty = {}
@@ -431,13 +434,10 @@ class StockLandedCost(models.Model):
 
                 if product_id.cost_method == 'average':
                     if product_id.id not in prod_dict:
-                        avg_dict = get_average(product_id.id)
-                        avg = avg_dict['average']
-                        prod_dict[product_id.id] = avg_dict.copy()
+                        prod_dict[product_id.id] = get_average(product_id.id)
                         first_lines[product_id.id] = stock_card_move_get(
                             product_id.id, return_values=True)['res']
-                        first_avg[product_id.id] = avg
-                    if product_id.id not in prod_qty:
+                        init_avg[product_id.id] = product_id.standard_price
                         prod_qty[product_id.id] = get_qty(product_id.id)
 
                 per_unit = line.final_cost / line.quantity
@@ -481,11 +481,16 @@ class StockLandedCost(models.Model):
                 to_cogs[prod_id] = zip(
                     first_lines[prod_id], last_lines[prod_id])
             for prod_id in to_cogs:
+                fst_avg = 0.0
+                lst_avg = 0.0
+                ini_avg = init_avg[prod_id]
+                qty = 0
                 for tpl in to_cogs[prod_id]:
                     first_line = tpl[0]
                     last_line = tpl[1]
                     fst_avg = first_line['average']
                     lst_avg = last_line['average']
+                    qty = last_line['product_qty']
                     if first_line['qty'] >= 0:
                         # /!\ TODO: This is not true for devolutions
                         continue
@@ -493,10 +498,14 @@ class StockLandedCost(models.Model):
                         prod_id, move_id, lst_avg, fst_avg, first_line['qty'],
                         acc_prod)
 
-            if any([first_avg, prod_dict]):
-                cost.create_deviation_accounting_entries(
-                    move_id, first_avg, acc_prod)
-                cost.compute_average_cost(prod_dict)
+                # TODO: Compute deviation
+                if fst_avg != ini_avg and lst_avg != ini_avg:
+                    self._create_deviation_accounting_entries(
+                        move_id, prod_id,
+                        ini_avg, lst_avg, qty, acc_prod)
+
+            # TODO: Write latest value for average
+            cost.compute_average_cost(prod_dict)
 
             cost.write(
                 {'state': 'done', 'account_move_id': move_id})
