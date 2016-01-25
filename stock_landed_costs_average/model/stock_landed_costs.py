@@ -209,32 +209,6 @@ class StockLandedCost(models.Model):
             move_id, gain_account_id, loss_account_id,
             valuation_account_id, amount, product_brw)
 
-    def create_deviation_accounting_entries(
-            self, move_id, dct=None, acc_prod=None):
-        '''
-        This method books the losses or gains due to difference between old
-        average in product and the first computed average prior to apply
-        landing costs
-        '''
-        # TODO: Rewrite or get rid of this method
-        dct = dict(dct or {})
-        if not dct:
-            return True
-
-        product_obj = self.env['product.product']
-        get_qty = self.env['stock.card.product'].get_qty
-
-        for product_id, avg in dct.iteritems():
-            product_brw = product_obj.sudo().browse(product_id)
-
-            # NOTE: if there is a variation among avg and standard_price set on
-            # product new Journal Entry Lines shall be created
-            qty = get_qty(product_id)
-            self._create_deviation_accounting_entries(
-                move_id, product_id,
-                product_brw.standard_price, avg, qty, acc_prod)
-        return True
-
     def _create_standard_deviation_entry_lines(
             self, line, move_id, valuation_account_id, gain_account_id,
             loss_account_id):
