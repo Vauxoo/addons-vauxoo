@@ -25,8 +25,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields, api
-# from openerp.exceptions import Warning as UserError
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
 
 
 class MrpProduction(models.Model):
@@ -66,7 +66,6 @@ class MrpProduction(models.Model):
         '''
         uom_obj = self.env['product.uom']
         for record in self:
-            comp = True
             total = 0
             if not record.move_lines.mapped('reserved_quant_ids'):
                 return total
@@ -81,8 +80,8 @@ class MrpProduction(models.Model):
                              '''.format(prod_id=record.id))
             result = {i.get('product_id'): i.get('total') or 0
                       for i in self._cr.dictfetchall()}
-            while comp:
-                total += 1
+            incomplete = False
+            for total in range(1, int(record.product_qty + 1)):
                 product_uom_qty = uom_obj.\
                     _compute_qty(record.product_uom.id,
                                  total,
@@ -93,7 +92,24 @@ class MrpProduction(models.Model):
                 for line in consume_lines:
                     product_id = line.get('product_id')
                     if not line.get('product_qty') <= result.get(product_id):
-                        comp = False
-                if not comp:
-                    total -= 1
+                        total -= 1
+                        incomplete = True
+                        break
+                if incomplete:
+                    break
         return total
+
+    @api.cr_uid_id_context
+    def action_produce(self, cr, uid, production_id, production_qty,
+                       production_mode,
+                       wiz=False, context=None):
+        record = self.browse(cr, uid, production_id)
+        if production_qty > record.qty_available_to_produce:
+            raise UserError(_('''You cannot produce more than available to
+                                produce for this order '''))
+        return super(MrpProduction, self).action_produce(cr, uid,
+                                                         production_id,
+                                                         production_qty,
+                                                         production_mode,
+                                                         wiz=wiz,
+                                                         context=context)
