@@ -18,6 +18,11 @@
         <script type="text/javascript" src="/website_product_filters/static/src/js/test_attributes.js"></script>
       </xpath>
     </template>
+    <template id="assets_frontend_shop_tour_shop_tests" inherit_id="website_sale.assets_editor" name="Shop">
+        <xpath expr="//script[@src='/website_sale/static/src/js/website_sale_tour_shop.js']" position="replace">
+        <script type="text/javascript" src="/website_product_filters/static/src/js/website_sale_tour_shop.js"></script>
+      </xpath>
+    </template>
     <!-- HERE ARE ALL THE STYLING NEEDED -->
     <template id="assets_frontend_filters_less" name="Product filters frontend assets" inherit_id="website.theme">
         <xpath expr='//link[@href="/website/static/src/css/website.css"]' position="after">
