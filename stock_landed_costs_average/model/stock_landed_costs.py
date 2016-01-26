@@ -138,7 +138,7 @@ class StockLandedCost(models.Model):
 
         if diff < 0:
             name = name.format(
-                name=product_brw.name, memo=_('Gains on Inventory Deviation'))
+                name=product_brw.name, memo=_('Losses on Inventory Deviation'))
             debit_line = dict(
                 base_line,
                 name=name,
@@ -151,7 +151,7 @@ class StockLandedCost(models.Model):
                 credit=-diff,)
         else:
             name = name.format(
-                name=product_brw.name, memo=_('Losses on Inventory Deviation'))
+                name=product_brw.name, memo=_('Gains on Inventory Deviation'))
             debit_line = dict(
                 base_line,
                 name=name,
