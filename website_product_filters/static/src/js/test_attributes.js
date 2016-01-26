@@ -39,8 +39,8 @@
             });
         }
     }
-    var steps = openerp.Tour.tours.shop_buy_product.steps;
-    for (var k=0; k<steps.length; k++) {
+    steps = openerp.Tour.tours.shop_buy_product.steps;
+    for (k=0; k<steps.length; k++) {
         // Inserting extra steps for the pertinent DOM changes made by this module
         if (steps[k].title === "finish") {
             steps.splice(k, 1);
