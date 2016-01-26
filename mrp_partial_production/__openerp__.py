@@ -35,6 +35,7 @@
     ],
     "demo": [
         'demo/product_demo.xml',
+        'demo/stock_demo.xml',
         'demo/mrp_bom_demo.xml',
         'demo/sale_demo.xml',
     ],
