@@ -568,3 +568,68 @@ class StockLandedCost(models.Model):
     @api.v8
     def compute_landed_cost(self):
         return self._model.compute_landed_cost(self._cr, self._uid, self.ids)
+
+    @api.v7
+    def _create_account_move_line(
+            self, cr, uid, line, move_id, credit_account_id, debit_account_id,
+            qty_out, already_out_account_id, context=None):
+        """
+        Generate the account.move.line values to track the landed cost.
+        Afterwards, for the goods that are already out of stock, we should
+        create the out moves
+        """
+        aml_obj = self.pool.get('account.move.line')
+        base_line = {
+            'name': line.name,
+            'move_id': move_id,
+            'product_id': line.product_id.id,
+            'quantity': line.quantity,
+        }
+        debit_line = dict(base_line, account_id=debit_account_id)
+        credit_line = dict(base_line, account_id=credit_account_id)
+        diff = line.additional_landed_cost
+        if diff > 0:
+            debit_line['debit'] = diff
+            credit_line['credit'] = diff
+        elif diff < 0:
+            # negative cost, reverse the entry
+            debit_line['credit'] = -diff
+            credit_line['debit'] = -diff
+        if diff != 0:
+            aml_obj.create(cr, uid, debit_line, context=context, check=False)
+            aml_obj.create(cr, uid, credit_line, context=context, check=False)
+
+        # Create account move lines for quants already out of stock
+        if qty_out > 0:
+            debit_line = dict(
+                debit_line,
+                name=(line.name + ": " + str(qty_out) + _(' already out')),
+                quantity=qty_out,
+                account_id=already_out_account_id)
+            credit_line = dict(
+                credit_line,
+                name=(line.name + ": " + str(qty_out) + _(' already out')),
+                quantity=qty_out,
+                account_id=debit_account_id)
+            diff = diff * qty_out / line.quantity
+            if diff > 0:
+                debit_line['debit'] = diff
+                credit_line['credit'] = diff
+            elif diff < 0:
+                # negative cost, reverse the entry
+                debit_line['credit'] = -diff
+                credit_line['debit'] = -diff
+            if diff != 0:
+                aml_obj.create(
+                    cr, uid, debit_line, context=context, check=False)
+                aml_obj.create(
+                    cr, uid, credit_line, context=context, check=False)
+        return True
+
+    @api.v8
+    def _create_account_move_line(
+            self, line, move_id, credit_account_id, debit_account_id, qty_out,
+            already_out_account_id):
+        ctx = dict(self._context)
+        return self._model.with_context(ctx).compute_landed_cost(
+            self._cr, self._uid, self.ids)
