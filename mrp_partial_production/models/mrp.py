@@ -34,6 +34,7 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     @api.multi
+    @api.depends('move_lines.reserved_quant_ids')
     def _compute_qty_to_produce(self):
         '''
         Used to shown the quantity available to produce considering the
@@ -43,25 +44,22 @@ class MrpProduction(models.Model):
             total = record.get_qty_available_to_produce()
             record.qty_available_to_produce = total
 
-    @api.multi
-    @api.depends('move_lines.reserved_quant_ids')
-    def _moves_assigned(self):
-        """ Test whether we have enough quantity to produce at least one
-        product """
-        for production in self:
-            if production.qty_available_to_produce > 0:
-                production.ready_production = True
-            else:
-                production.ready_production = False
-
     qty_available_to_produce = fields.Float(
         string='Quantity Available to Produce',
+        store=True,
         compute='_compute_qty_to_produce', readonly=True,
         help='Quantity available to produce considering '
         'the quantities reserved by the order')
 
-    ready_production = fields.Boolean(compute='_moves_assigned',
-                                      store=True)
+    @api.multi
+    def test_ready(self):
+        res = super(MrpProduction, self).test_ready()
+        for record in self:
+            if record.qty_available_to_produce > 0:
+                res = True
+            else:
+                res = False
+        return res
 
     @api.multi
     def get_qty_available_to_produce(self):
