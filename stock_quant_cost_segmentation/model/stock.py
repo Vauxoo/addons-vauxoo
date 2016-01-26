@@ -174,6 +174,9 @@ class StockQuant(models.Model):
             cr, uid, quant.location_id, quant.product_id, quant.qty, dom,
             context=context)
         product_uom_rounding = quant.product_id.uom_id.rounding
+        if context is None:
+            context = {}
+        context.update({'force_unlink': True})
         for quant_neg, qty in quants:
             if not quant_neg or not solving_quant:
                 continue
