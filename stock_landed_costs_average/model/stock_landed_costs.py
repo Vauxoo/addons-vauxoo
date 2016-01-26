@@ -386,7 +386,6 @@ class StockLandedCost(models.Model):
 
             move_id = self._model._create_account_move(
                 self._cr, self._uid, cost, context=ctx)
-            quant_dict = {}
             prod_dict = {}
             init_avg = {}
             first_lines = {}
@@ -420,6 +419,7 @@ class StockLandedCost(models.Model):
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
                 quants = [quant for quant in line.move_id.quant_ids]
+                quant_dict = {}
                 for quant in quants:
                     if quant.id not in quant_dict:
                         quant_dict[quant.id] = quant.cost + diff
