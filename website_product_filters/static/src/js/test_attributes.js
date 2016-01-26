@@ -12,7 +12,7 @@
             {
                 title: 'Click On Subcategory "Computers"',
                 content: "Here we check if the products on the tree are the right ones to render on popular products",
-                waitFor: 'a:contains(iPad Retina Display)',
+                waitFor: 'b:contains(Computers)',
                 element: 'li[data-categid="21"] a',
             },
             {
