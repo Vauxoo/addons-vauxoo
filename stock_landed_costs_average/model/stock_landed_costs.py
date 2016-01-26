@@ -143,12 +143,12 @@ class StockLandedCost(models.Model):
                 base_line,
                 name=name,
                 account_id=valuation_account_id,
-                debit=diff,)
+                debit=-diff,)
             credit_line = dict(
                 base_line,
                 name=name,
                 account_id=gain_account_id,
-                credit=diff,)
+                credit=-diff,)
         else:
             name = name.format(
                 name=name, memo=_('Losses on Inventory Deviation'))
@@ -156,13 +156,12 @@ class StockLandedCost(models.Model):
                 base_line,
                 name=name,
                 account_id=loss_account_id,
-                credit=-diff,)
+                credit=diff,)
             credit_line = dict(
                 base_line,
                 name=name,
                 account_id=valuation_account_id,
-                debit=-diff,)
-            # negative cost, reverse the entry
+                debit=diff,)
         aml_obj.create(
             self._cr, self._uid, debit_line, context=ctx, check=False)
         aml_obj.create(
