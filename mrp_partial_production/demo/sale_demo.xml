@@ -24,5 +24,6 @@
         </record>
 
         <workflow action="order_confirm" model="sale.order" ref="sale_order_1"/>
+        <function model="procurement.order" name="run_scheduler"/>
     </data>
 </openerp>
