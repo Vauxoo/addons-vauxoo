@@ -36,7 +36,7 @@
             },
             {
                 title:     "Post the comment with the rating",
-                element:   "div a:contains(Post)",
+                element:   "form a:contains(Post)",
             },
             {
                 title:     "Review if the comment has been posted to the product",

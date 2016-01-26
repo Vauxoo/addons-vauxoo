@@ -36,7 +36,7 @@
             {
                 title: 'Click on category Computers',
                 waitFor: 'a:contains(Computers)',
-                element: 'a:contains("Computers")',
+                element: 'ul.breadcrumb li:contains(Computers) a',
             },
             {
                 title: 'Click on subcategory Computers',
