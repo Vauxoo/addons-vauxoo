@@ -91,5 +91,3 @@ class MrpProductProduct(models.TransientModel):
                                     produce for this order '''))
 
         return super(MrpProductProduct, self).do_produce()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

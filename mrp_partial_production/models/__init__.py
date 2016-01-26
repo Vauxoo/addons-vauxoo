@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: Jose Suniaga (josemiguel@vauxoo.com)
+#    Coded by: Jose Morales (jose@vauxoo.com)
 #    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
 #    Audited by: Jose Morales <jose@vauxoo.com>
 ############################################################################
