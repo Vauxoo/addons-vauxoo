@@ -467,7 +467,6 @@ class StockLandedCost(models.Model):
                     last_line = tpl[1]
                     fst_avg = first_line['average']
                     lst_avg = last_line['average']
-                    qty = last_line['product_qty']
                     if first_line['qty'] >= 0:
                         # /!\ TODO: This is not true for devolutions
                         continue
@@ -476,9 +475,11 @@ class StockLandedCost(models.Model):
                         acc_prod)
 
                 # TODO: Compute deviation
-                if fst_avg != ini_avg and lst_avg != ini_avg:
+                if prod_qty[prod_id] and fst_avg != ini_avg and \
+                        lst_avg != ini_avg:
                     self._create_deviation_accounting_entries(
-                        move_id, prod_id, ini_avg, lst_avg, qty, acc_prod)
+                        move_id, prod_id, ini_avg, lst_avg, prod_qty[prod_id],
+                        acc_prod)
 
             # TODO: Write latest value for average
             cost.compute_average_cost(prod_dict)
