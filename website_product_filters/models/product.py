@@ -80,11 +80,11 @@ class ProductCategory(models.Model):
         "product_template_id", readonly=True)
     total_tree_products = fields.Integer("Total Subcategory Prods",
                                          compute="_get_product_count",
-                                         store=True,)
+                                         store=False,)
     has_products_ok = fields.Boolean(compute="_get_has_products_ok",
-                                     store=True, readonly=True)
+                                     store=False, readonly=True)
 
-    @api.depends('product_ids')
+    @api.depends("product_ids")
     @api.multi
     def _get_has_products_ok(self):
         for record in self:
@@ -146,7 +146,6 @@ class ProductCategory(models.Model):
             return to_jsonfy
 
     @api.multi
-    @api.depends('product_ids')
     def _get_product_count(self):
         prod_obj = self.env["product.template"]
         for rec in self:
