@@ -145,8 +145,8 @@ class StockCardProduct(models.TransientModel):
         # NOTE: Falling back to average in case customer return is
         # orphan, i.e., return was created from scratch
         old_average = (
-            vals['move_dict'].get(origin_id, 0.0) and
-            vals['move_dict'][move_id]['average'] or vals['average'])
+            vals['move_dict'].get(origin_id) and
+            vals['move_dict'][origin_id]['average'] or vals['average'])
         vals['move_valuation'] = sum(
             [old_average * qnt['qty'] for qnt in qntval])
         return True
