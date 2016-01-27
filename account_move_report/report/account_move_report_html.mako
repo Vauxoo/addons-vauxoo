@@ -102,9 +102,6 @@
                     <div>${_("Tax Amount")}</div>
                 </td>
                 <td width='6%'>
-                    <div>${_("Tax Secondary")}</div>
-                </td>
-                <td width='6%'>
                     <div>${_("Status")}</div>
                 </td>
                 <td width='6%'>
@@ -151,9 +148,6 @@
                 </td>
                 <td width='6%' style="text-align:right;">
                     <div>${formatLang(line.tax_amount or 0.0) |entity}</div>
-                </td>
-                <td width='6%' style="text-align:center;">
-                    <div>${line.tax_id_secondary.name or '' |entity}</div>
                 </td>
                 <td width='6%' style="text-align:center;">
                     %if line.state == "valid":
