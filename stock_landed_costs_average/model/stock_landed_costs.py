@@ -142,12 +142,12 @@ class StockLandedCost(models.Model):
             debit_line = dict(
                 base_line,
                 name=name,
-                account_id=valuation_account_id,
+                account_id=loss_account_id,
                 debit=-diff,)
             credit_line = dict(
                 base_line,
                 name=name,
-                account_id=gain_account_id,
+                account_id=valuation_account_id,
                 credit=-diff,)
         else:
             name = name.format(
@@ -155,12 +155,12 @@ class StockLandedCost(models.Model):
             debit_line = dict(
                 base_line,
                 name=name,
-                account_id=loss_account_id,
+                account_id=valuation_account_id,
                 credit=diff,)
             credit_line = dict(
                 base_line,
                 name=name,
-                account_id=valuation_account_id,
+                account_id=gain_account_id,
                 debit=diff,)
         aml_obj.create(
             self._cr, self._uid, debit_line, context=ctx, check=False)
