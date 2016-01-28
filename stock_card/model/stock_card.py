@@ -1,7 +1,8 @@
 # coding: utf-8
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
+from openerp.exceptions import Warning as UserError
 
 
 class StockCard(models.TransientModel):
@@ -11,6 +12,7 @@ class StockCard(models.TransientModel):
 
 class StockCardProduct(models.TransientModel):
     _name = 'stock.card.product'
+    _rec_name = 'product_id'
     product_id = fields.Many2one('product.product', string='Product')
     stock_card_move_ids = fields.One2many(
         'stock.card.move', 'stock_card_product_id', 'Product Moves')
@@ -44,8 +46,7 @@ class StockCardProduct(models.TransientModel):
             return True
         self.stock_card_move_ids.unlink()
         self._stock_card_move_get(self.product_id.id)
-
-        return True
+        return self.action_view_moves()
 
     def _get_quant_values(self, move_id, col='', inner='', where=''):
         self._cr.execute(
@@ -145,8 +146,8 @@ class StockCardProduct(models.TransientModel):
         # NOTE: Falling back to average in case customer return is
         # orphan, i.e., return was created from scratch
         old_average = (
-            vals['move_dict'].get(origin_id, 0.0) and
-            vals['move_dict'][move_id]['average'] or vals['average'])
+            vals['move_dict'].get(origin_id) and
+            vals['move_dict'][origin_id]['average'] or vals['average'])
         vals['move_valuation'] = sum(
             [old_average * qnt['qty'] for qnt in qntval])
         return True
@@ -354,7 +355,8 @@ class StockCardProduct(models.TransientModel):
                 [str(scm_id) for scm_id in scm_ids]
             ) + "])]"
         else:
-            action['domain'] = "[('id','in',[])]"
+            raise UserError(
+                _('Asked Product has not Moves to show'))
         return action
 
     def _stock_card_move_history_get(self, product_id):

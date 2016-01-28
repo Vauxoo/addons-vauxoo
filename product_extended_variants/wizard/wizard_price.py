@@ -22,24 +22,81 @@
 ##############################################################################
 
 from openerp import models,  _
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class WizardPrice(models.Model):
     _inherit = "wizard.price"
 
+    def _post_message(self, cr, uid, ids=None, context=None):
+        product_obj = self.pool.get('product.product')
+        return product_obj.message_post(
+            cr, uid, context.get('active_id'), body=context.get('message'),
+            subject='Automatically Computed Standard Price')
+
+    def _get_products(self, cr, uid, ids=None, context=None):
+        '''
+        Return all products which represent top parent in bom
+        [x]---+   [y]
+         |    |    |
+         |    |    |
+        [a]  [b]  [c]
+         |    |
+         |    |
+        [t]  [u]
+        That is x and y
+        '''
+        cr.execute('''
+            SELECT
+                DISTINCT mb.product_id AS pp1,
+                mbl.product_id AS pp2
+            FROM mrp_bom AS mb
+            INNER JOIN mrp_bom_line as mbl ON mbl.bom_id = mb.id;
+                ''')
+        result = cr.fetchall()
+        parents = set([r[0] for r in result])
+        children = set([r[1] for r in result])
+        root = list(parents - children)
+        return root
+
     def execute_cron(self, cr, uid, ids=None, context=None):
         ids = ids or []
         context = context or {}
         product_obj = self.pool.get('product.product')
-        product_ids = product_obj.search(cr, uid, [('bom_ids', '!=', False)])
+        product_ids = self._get_products(cr, uid, ids, context=context)
+        message = 'Old price {old}, New price {new}'
+        context['message'] = ''
+        count = 0
+        total = len(product_ids)
+        _logger.info(
+            'Cron Job will compute {length} products'.format(length=total))
+        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
         for product in product_ids:
+            prod_brw = product_obj.browse(cr, uid, product)
+            count += 1
+            _logger.info(
+                msglog.format(prod_id=product, total=total, count=count))
             context.update({'active_model': 'product.product',
                             'active_id': product})
             price_id = self.create(cr, uid,
                                    {'real_time_accounting': True,
                                     'recursive': True},
                                    context=context)
-            self.compute_from_bom(cr, uid, [price_id], context=context)
+            old = prod_brw.standard_price
+            try:
+                if not prod_brw.cost_method == 'standard':
+                    new = 'Ignored Because product is not set as Standard'
+                else:
+                    self.compute_from_bom(cr, uid, [price_id], context=context)
+                    new = prod_brw.standard_price
+            except Exception as msg:  # pylint: disable=W0703
+                new = msg
+
+            context['message'] = message.format(old=old, new=new)
+            self._post_message(cr, uid, ids, context=context)
+        # /!\ TODO: Write log for products that were ignored
         return True
 
     def default_get(self, cr, uid, field, context=None):
