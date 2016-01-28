@@ -19,7 +19,6 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-from datetime import datetime
 
 
 class TestStockCardNegativeStock(TransactionCase):
