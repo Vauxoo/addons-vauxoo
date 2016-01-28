@@ -74,6 +74,7 @@ class WizardPrice(models.Model):
             'Cron Job will compute {length} products'.format(length=total))
         msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
         for product in product_ids:
+            prod_brw = product_obj.browse(cr, uid, product)
             count += 1
             _logger.info(
                 msglog.format(prod_id=product, total=total, count=count))
@@ -83,15 +84,19 @@ class WizardPrice(models.Model):
                                    {'real_time_accounting': True,
                                     'recursive': True},
                                    context=context)
-            old = product_obj.browse(cr, uid, product).standard_price
+            old = prod_brw.standard_price
             try:
-                self.compute_from_bom(cr, uid, [price_id], context=context)
-                new = product_obj.browse(cr, uid, product).standard_price
+                if not prod_brw.cost_method == 'standard':
+                    new = 'Ignored Because product is not set as Standard'
+                else:
+                    self.compute_from_bom(cr, uid, [price_id], context=context)
+                    new = prod_brw.standard_price
             except Exception as msg:  # pylint: disable=W0703
                 new = msg
 
             context['message'] = message.format(old=old, new=new)
             self._post_message(cr, uid, ids, context=context)
+        # /!\ TODO: Write log for products that were ignored
         return True
 
     def default_get(self, cr, uid, field, context=None):
