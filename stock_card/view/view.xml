@@ -72,7 +72,7 @@
         <menuitem
             id="menu_stock_card_wizard"
             action="stock_card_product_action"
-            name="Stock Card Wizard"
+            name="Generate Stock Card"
             parent="menu_stock_card_main"/>
     </data>
 </openerp>
