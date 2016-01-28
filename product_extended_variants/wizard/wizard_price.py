@@ -69,7 +69,7 @@ class WizardPrice(models.Model):
         message = 'Old price {old}, New price {new}'
         context['message'] = ''
         for product in product_ids:
-            _logger.debug('Computing cost for product.....  %s', str(product))
+            _logger.info('Computing cost for product.....  %s', str(product))
             context.update({'active_model': 'product.product',
                             'active_id': product})
             price_id = self.create(cr, uid,
