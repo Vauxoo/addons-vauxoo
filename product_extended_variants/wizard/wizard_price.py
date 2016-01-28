@@ -27,11 +27,19 @@ from openerp import models,  _
 class WizardPrice(models.Model):
     _inherit = "wizard.price"
 
+    def _post_message(self, cr, uid, ids=None, context=None):
+        product_obj = self.pool.get('product.product')
+        return product_obj.message_post(
+            cr, uid, context.get('active_id'), body=context.get('message'),
+            subject='Automatically Computed Standard Price')
+
     def execute_cron(self, cr, uid, ids=None, context=None):
         ids = ids or []
         context = context or {}
         product_obj = self.pool.get('product.product')
         product_ids = product_obj.search(cr, uid, [('bom_ids', '!=', False)])
+        message = _('Old price {old}, New price {new}')
+        context['message'] = ''
         for product in product_ids:
             context.update({'active_model': 'product.product',
                             'active_id': product})
@@ -39,7 +47,15 @@ class WizardPrice(models.Model):
                                    {'real_time_accounting': True,
                                     'recursive': True},
                                    context=context)
-            self.compute_from_bom(cr, uid, [price_id], context=context)
+            old = product_obj.browse(cr, uid, product).standard_price,
+            try:
+                self.compute_from_bom(cr, uid, [price_id], context=context)
+                new = product_obj.browse(cr, uid, product).standard_price,
+            except Exception as msg:
+                new = msg
+
+            context['message'] = message.format(old=old, new=new)
+            self._post_message(cr, uid, ids, context=context)
         return True
 
     def default_get(self, cr, uid, field, context=None):
