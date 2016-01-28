@@ -1,7 +1,8 @@
 # coding: utf-8
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
+from openerp.exceptions import Warning as UserError
 
 
 class StockCard(models.TransientModel):
@@ -45,8 +46,7 @@ class StockCardProduct(models.TransientModel):
             return True
         self.stock_card_move_ids.unlink()
         self._stock_card_move_get(self.product_id.id)
-
-        return True
+        return self.action_view_moves()
 
     def _get_quant_values(self, move_id, col='', inner='', where=''):
         self._cr.execute(
@@ -355,7 +355,8 @@ class StockCardProduct(models.TransientModel):
                 [str(scm_id) for scm_id in scm_ids]
             ) + "])]"
         else:
-            action['domain'] = "[('id','in',[])]"
+            raise UserError(
+                _('Asked Product has not Moves to show'))
         return action
 
     def _stock_card_move_history_get(self, product_id):
