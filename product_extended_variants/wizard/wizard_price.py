@@ -36,13 +36,13 @@ class WizardPrice(models.Model):
     def _get_products(self, cr, uid, ids=None, context=None):
         '''
         Return all products which represent top parent in bom
-        [x]       [y]
-         | \       |
-         |  \      |
-        [a] [b]   [c]
-         | \
-         |  \
-        [t] [u]
+        [x]---+   [y]
+         |    |    |
+         |    |    |
+        [a]  [b]  [c]
+         |    |
+         |    |
+        [t]  [u]
         That is x and y
         '''
         cr.execute('''
