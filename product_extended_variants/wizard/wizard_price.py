@@ -76,7 +76,7 @@ class WizardPrice(models.Model):
             try:
                 self.compute_from_bom(cr, uid, [price_id], context=context)
                 new = product_obj.browse(cr, uid, product).standard_price,
-            except Exception as msg:
+            except Exception as msg:  # pylint: disable=W0703
                 new = msg
 
             context['message'] = message.format(old=old, new=new)
