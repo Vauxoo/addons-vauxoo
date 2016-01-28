@@ -68,18 +68,25 @@ class WizardPrice(models.Model):
         product_ids = self._get_products(cr, uid, ids, context=context)
         message = 'Old price {old}, New price {new}'
         context['message'] = ''
+        count = 0
+        total = len(product_ids)
+        _logger.info(
+            'Cron Job will compute {length} products'.format(length=total))
+        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
         for product in product_ids:
-            _logger.info('Computing cost for product.....  %s', str(product))
+            count += 1
+            _logger.info(
+                msglog.format(prod_id=product, total=total, count=count))
             context.update({'active_model': 'product.product',
                             'active_id': product})
             price_id = self.create(cr, uid,
                                    {'real_time_accounting': True,
                                     'recursive': True},
                                    context=context)
-            old = product_obj.browse(cr, uid, product).standard_price,
+            old = product_obj.browse(cr, uid, product).standard_price
             try:
                 self.compute_from_bom(cr, uid, [price_id], context=context)
-                new = product_obj.browse(cr, uid, product).standard_price,
+                new = product_obj.browse(cr, uid, product).standard_price
             except Exception as msg:  # pylint: disable=W0703
                 new = msg
 
