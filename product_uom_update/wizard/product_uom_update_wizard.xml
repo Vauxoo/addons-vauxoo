@@ -18,7 +18,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record id="base_product_uom_merge_wizard" model="ir.ui.view">
             <field name="name">base.product.uom.merge.wizard</field>
             <field name="model">base.product.merge.uom.wizard</field>
@@ -34,7 +34,7 @@
                             <field name="uom_id_to" required="True"/>
                         </group>
                     <footer>
-                        <button type="object" string="Apply" 
+                        <button type="object" string="Apply"
                      class="oe_highlight" name="unit_measure_update"
                      confirm="Are you sure change unit of measure?"
                      context="{'uom_id_to_id': [uom_id_to] }"/>
@@ -44,7 +44,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record model="ir.actions.act_window" id="base_product_uom_merge_wizard_act">
             <field name="name">Product uom update</field>
             <field name="type">ir.actions.act_window</field>
@@ -54,28 +54,28 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-        
+
         <record id="action_base_product_uom_merge_wizard" model="ir.actions.act_window.view">
             <field name="view_mode">form</field>
             <field eval="104" name="sequence"/>
             <field name="view_id" ref="base_product_uom_merge_wizard"/>
             <field name="act_window_id" ref="base_product_uom_merge_wizard_act"/>
         </record>
-        
+
         <menuitem id='base_product_uom_merge_wizard_menu'
             action='base_product_uom_merge_wizard_act'
             groups='base.group_system,product_do_merge.res_group_product_do_merge'
             parent='product_do_merge.root_menu_product' />
 
-        <act_window 
+        <act_window
             name="Product Uom Update"
-            multi="True" 
+            multi="True"
             res_model="base.product.merge.uom.wizard"
             src_model="product.product"
             view_mode="form"
             target="new"
             key2="client_action_multi"
             id="base_product_uom_merge_wizard_act" groups='product_do_merge.res_group_product_do_merge'/>
-        
+
     </data>
 </openerp>
