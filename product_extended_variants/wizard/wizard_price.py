@@ -33,11 +33,36 @@ class WizardPrice(models.Model):
             cr, uid, context.get('active_id'), body=context.get('message'),
             subject='Automatically Computed Standard Price')
 
+    def _get_products(self, cr, uid, ids=None, context=None):
+        '''
+        Return all products which represent top parent in bom
+        [x]       [y]
+         | \       |
+         |  \      |
+        [a] [b]   [c]
+         | \
+         |  \
+        [t] [u]
+        That is x and y
+        '''
+        cr.execute('''
+            SELECT
+                DISTINCT mb.product_id AS pp1,
+                mbl.product_id AS pp2
+            FROM mrp_bom AS mb
+            INNER JOIN mrp_bom_line as mbl ON mbl.bom_id = mb.id;
+                ''')
+        result = cr.fetchall()
+        parents = set([r[0] for r in result])
+        children = set([r[1] for r in result])
+        root = list(parents - children)
+        return root
+
     def execute_cron(self, cr, uid, ids=None, context=None):
         ids = ids or []
         context = context or {}
         product_obj = self.pool.get('product.product')
-        product_ids = product_obj.search(cr, uid, [('bom_ids', '!=', False)])
+        product_ids = self._get_products(cr, uid, ids, context=context)
         message = 'Old price {old}, New price {new}'
         context['message'] = ''
         for product in product_ids:
