@@ -431,10 +431,12 @@ class StockLandedCost(models.Model):
 
                 if product_id.cost_method == 'average':
                     # /!\ NOTE: Inventory valuation
-                    self._create_accounting_entries(line, move_id, 0.0)
+                    self._create_landed_accounting_entries(
+                        line, move_id, 0.0, acc_prod)
 
                 if product_id.cost_method == 'real':
-                    self._create_accounting_entries(line, move_id, qty_out)
+                    self._create_landed_accounting_entries(
+                        line, move_id, qty_out, acc_prod)
 
             # /!\ NOTE: This new update is taken out of for loop to improve
             # performance
@@ -569,15 +571,16 @@ class StockLandedCost(models.Model):
     def compute_landed_cost(self):
         return self._model.compute_landed_cost(self._cr, self._uid, self.ids)
 
-    @api.v7
-    def _create_account_move_line(
-            self, cr, uid, line, move_id, credit_account_id, debit_account_id,
-            qty_out, already_out_account_id, context=None):
+    def _create_landed_account_move_line(
+            self, line, move_id, credit_account_id, debit_account_id, qty_out,
+            already_out_account_id):
         """
         Generate the account.move.line values to track the landed cost.
         Afterwards, for the goods that are already out of stock, we should
         create the out moves
         """
+        ctx = dict(self._context)
+        cr, uid = self._cr, self._uid
         aml_obj = self.pool.get('account.move.line')
         base_line = {
             'name': line.name,
@@ -596,8 +599,8 @@ class StockLandedCost(models.Model):
             debit_line['credit'] = -diff
             credit_line['debit'] = -diff
         if diff != 0:
-            aml_obj.create(cr, uid, debit_line, context=context, check=False)
-            aml_obj.create(cr, uid, credit_line, context=context, check=False)
+            aml_obj.create(cr, uid, debit_line, context=ctx, check=False)
+            aml_obj.create(cr, uid, credit_line, context=ctx, check=False)
 
         # Create account move lines for quants already out of stock
         if qty_out > 0:
@@ -621,15 +624,33 @@ class StockLandedCost(models.Model):
                 credit_line['debit'] = -diff
             if diff != 0:
                 aml_obj.create(
-                    cr, uid, debit_line, context=context, check=False)
+                    cr, uid, debit_line, context=ctx, check=False)
                 aml_obj.create(
-                    cr, uid, credit_line, context=context, check=False)
+                    cr, uid, credit_line, context=ctx, check=False)
         return True
 
-    @api.v8
-    def _create_account_move_line(
-            self, line, move_id, credit_account_id, debit_account_id, qty_out,
-            already_out_account_id):
-        ctx = dict(self._context)
-        return self._model.with_context(ctx).compute_landed_cost(
-            self._cr, self._uid, self.ids)
+    def _create_landed_accounting_entries(
+            self, line, move_id, qty_out, acc_prod=None):
+        cost_product = line.cost_line_id and line.cost_line_id.product_id
+        if not cost_product:
+            return False
+
+        accounts = acc_prod[line.product_id.id]
+
+        debit_account_id = accounts['property_stock_valuation_account_id']
+        already_out_account_id = accounts['stock_account_output']
+
+        # /!\ NOTE: This can be optimized by providing the accounts in a dict
+        credit_account_id = line.cost_line_id.account_id.id or \
+            cost_product.property_account_expense.id or \
+            cost_product.categ_id.property_account_expense_categ.id
+
+        if not credit_account_id:
+            raise except_orm(
+                _('Error!'),
+                _('Please configure Stock Expense Account for product: %s.') %
+                (cost_product.name))
+
+        return self._create_landed_account_move_line(
+               line, move_id, credit_account_id, debit_account_id, qty_out,
+               already_out_account_id)
