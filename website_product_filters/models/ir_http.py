@@ -32,12 +32,13 @@ class IrHttp(models.AbstractModel):
     def _dispatch(self):
         cookie_sort = request.httprequest.cookies.get('default_sort', False)
         resp = super(IrHttp, self)._dispatch()
-        current_website = request.registry['website'].get_current_website(
-            request.cr, request.uid, context=request.context)
-        post_sort = request.params.get('product_sorter', False)
-        if not cookie_sort and request.website_enabled and not post_sort:
-            resp.set_cookie('default_sort',
-                            bytes(current_website.default_sort))
-        elif post_sort:
-            resp.set_cookie('default_sort', post_sort)
+        if request.registry:
+            current_website = request.registry['website'].get_current_website(
+                request.cr, request.uid, context=request.context)
+            post_sort = request.params.get('product_sorter', False)
+            if not cookie_sort and request.website_enabled and not post_sort:
+                resp.set_cookie('default_sort',
+                                bytes(current_website.default_sort))
+            elif post_sort:
+                resp.set_cookie('default_sort', post_sort)
         return resp
