@@ -38,7 +38,7 @@ class WizardPrice(models.Model):
         context = context or {}
         product_obj = self.pool.get('product.product')
         product_ids = product_obj.search(cr, uid, [('bom_ids', '!=', False)])
-        message = _('Old price {old}, New price {new}')
+        message = 'Old price {old}, New price {new}'
         context['message'] = ''
         for product in product_ids:
             context.update({'active_model': 'product.product',
