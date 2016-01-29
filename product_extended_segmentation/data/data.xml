@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
-    <!-- TODO: CHANGE WHEN DONE -->
-    <data noupdate="0">
+    <data noupdate="1">
 
            <record model="ir.actions.server" id="update_material_cost_on_zero_segmentation">
             <field name="name">Update Material Cost on Zero Segmentation</field>
-            <field name="model_id" eval="ref('product.model_product_template')"/>
+            <field name="model_id" eval="ref('product.model_product_product')"/>
             <field name="state">code</field>
             <field name="condition"></field>
             <field name="sequence">5</field>
@@ -22,16 +21,6 @@
 self.update_material_cost_on_zero_segmentation(cr, uid, [])
             </field>
         </record>
-
-        <!-- <record model="base.action.rule" id="action_rule_update_material_cost_on_zero_segmentation"> -->
-        <!--     <field name="name">Update Material Cost on Zero Segmentation</field> -->
-        <!--     <field name="model_id" eval="ref('product.model_product_template')"/> -->
-        <!--     <field name="sequence">0</field> -->
-        <!--     <field name="active">True</field> -->
-        <!--     <field name="kind">on_create_or_write</field> -->
-        <!--     <field name="server_action_ids" eval="[(6, 0, [ref('product_extended_segmentation.update_material_cost_on_zero_segmentation')])]"/> -->
-        <!-- </record> -->
-
 
     </data>
 </openerp>
