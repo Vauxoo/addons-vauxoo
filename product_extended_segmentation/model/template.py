@@ -21,6 +21,9 @@
 ##############################################################################
 from openerp import models
 from openerp.addons.product import _common
+import logging
+
+_logger = logging.getLogger(__name__)
 SEGMENTATION_COST = [
     'landed_cost',
     'subcontracting_cost',
@@ -34,22 +37,31 @@ class ProductTemplate(models.Model):
 
     def update_material_cost_on_zero_segmentation(
             self, cr, uid, ids=None, context=None):
-        from pprint import pprint
         prod_obj = self.pool.get('product.template')
         prod_ids = prod_obj.search(cr, uid, [])
         counter = 0
         total = len(prod_ids)
+        _logger.info(
+            'Cron Job will compute {length} products'.format(length=total))
+        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
         for prod_id in prod_ids:
-            pprint('{counter} / {total}'.format(counter=counter, total=total))
             counter += 1
-            prod_brw = prod_obj.browse(cr, uid, prod_id)
-            sum_sgmnt = sum(
-                [getattr(prod_brw, fieldname)
-                 for fieldname in SEGMENTATION_COST])
-            if not sum_sgmnt:
-                prod_obj.write(
-                    cr, uid, prod_id,
-                    {'material_cost': prod_brw.standard_price})
+            _logger.info(
+                msglog.format(prod_id=prod_id, total=total, count=counter))
+            self._update_material_cost_on_zero_segmentation(
+                cr, uid, prod_id, context=context)
+        return True
+
+    def _update_material_cost_on_zero_segmentation(
+            self, cr, uid, ids, context=None):
+        prod_brw = self.browse(cr, uid, ids)
+        sum_sgmnt = sum(
+            [getattr(prod_brw, fieldname)
+             for fieldname in SEGMENTATION_COST])
+        if not sum_sgmnt:
+            self.write(
+                cr, uid, ids,
+                {'material_cost': prod_brw.standard_price})
         return True
 
     def _calc_price(
