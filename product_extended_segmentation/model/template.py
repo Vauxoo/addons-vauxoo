@@ -32,6 +32,26 @@ SEGMENTATION_COST = [
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
+    def update_material_cost_on_zero_segmentation(
+            self, cr, uid, ids=None, context=None):
+        from pprint import pprint
+        prod_obj = self.pool.get('product.template')
+        prod_ids = prod_obj.search(cr, uid, [])
+        counter = 0
+        total = len(prod_ids)
+        for prod_id in prod_ids:
+            pprint('{counter} / {total}'.format(counter=counter, total=total))
+            counter += 1
+            prod_brw = prod_obj.browse(cr, uid, prod_id)
+            sum_sgmnt = sum(
+                [getattr(prod_brw, fieldname)
+                 for fieldname in SEGMENTATION_COST])
+            if not sum_sgmnt:
+                prod_obj.write(
+                    cr, uid, prod_id,
+                    {'material_cost': prod_brw.standard_price})
+        return True
+
     def _calc_price(
             self, cr, uid, bom, test=False, real_time_accounting=False,
             context=None):
