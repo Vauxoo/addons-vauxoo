@@ -32,24 +32,41 @@ SEGMENTATION_COST = [
 ]
 
 
-class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
 
     def update_material_cost_on_zero_segmentation(
             self, cr, uid, ids=None, context=None):
-        prod_obj = self.pool.get('product.template')
-        prod_ids = prod_obj.search(cr, uid, [])
+        prod_ids = self.search(cr, uid, [])
         counter = 0
         total = len(prod_ids)
         _logger.info(
             'Cron Job will compute {length} products'.format(length=total))
         msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
+        res = []
         for prod_id in prod_ids:
             counter += 1
             _logger.info(
                 msglog.format(prod_id=prod_id, total=total, count=counter))
-            self._update_material_cost_on_zero_segmentation(
+            rex = self._update_material_cost_on_zero_segmentation(
                 cr, uid, prod_id, context=context)
+            if rex:
+                res.append(rex)
+        total = len(res)
+        counter = 0
+        msglog = 'Computing cost for template: [{tmpl_id}]. {count}/{total}'
+        for tmpl_id, std_price in res:
+            counter += 1
+            _logger.info(
+                msglog.format(tmpl_id=tmpl_id, total=total, count=counter))
+            cr.execute('''
+                UPDATE product_template
+                SET material_cost = {material_cost}
+                WHERE id = {id}
+                    '''.format(
+                material_cost=std_price,
+                id=tmpl_id,
+                ))
         return True
 
     def _update_material_cost_on_zero_segmentation(
@@ -59,10 +76,12 @@ class ProductTemplate(models.Model):
             [getattr(prod_brw, fieldname)
              for fieldname in SEGMENTATION_COST])
         if not sum_sgmnt:
-            self.write(
-                cr, uid, ids,
-                {'material_cost': prod_brw.standard_price})
-        return True
+            return prod_brw.product_tmpl_id.id, prod_brw.standard_price
+        return False
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
 
     def _calc_price(
             self, cr, uid, bom, test=False, real_time_accounting=False,
