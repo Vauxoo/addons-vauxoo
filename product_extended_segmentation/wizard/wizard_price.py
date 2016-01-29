@@ -33,5 +33,5 @@ class WizardPrice(models.Model):
                 recursive=recursive, real_time_accounting=False,
                 context=context)
 
-        res = str({active_id: sum([res[x] for x in res.keys()])})
+        res = str({active_id: res.get(active_id)})
         return {'value': {'info_field': res}}
