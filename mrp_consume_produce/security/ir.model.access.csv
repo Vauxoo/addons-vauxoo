@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mrp_consume_manager,mrp.consume.manager,model_mrp_consume,group_mrp_consume_manager,1,1,1,1
-access_mrp_consume_user,mrp.consume.user,model_mrp_consume,group_mrp_consume_user,1,0,0,0
-access_mrp_produce_manager,mrp.produce.manager,model_mrp_produce,group_mrp_consume_manager,1,1,1,1
-access_mrp_produce_user,mrp.produce.user,model_mrp_produce,group_mrp_consume_user,1,0,0,0
-access_mrp_consume_line_manager,mrp.consume.line.manager,model_mrp_consume_line,group_mrp_consume_manager,1,1,1,1
-access_mrp_consume_line_user,mrp.consume.line.user,model_mrp_consume_line,group_mrp_consume_user,1,0,0,0
