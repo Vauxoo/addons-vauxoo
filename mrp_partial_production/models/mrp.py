@@ -34,7 +34,6 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     @api.multi
-    @api.depends('move_lines.reserved_quant_ids')
     def _compute_qty_to_produce(self):
         '''
         Used to shown the quantity available to produce considering the
@@ -46,7 +45,6 @@ class MrpProduction(models.Model):
 
     qty_available_to_produce = fields.Float(
         string='Quantity Available to Produce',
-        store=True,
         compute='_compute_qty_to_produce', readonly=True,
         help='Quantity available to produce considering '
         'the quantities reserved by the order')
@@ -70,11 +68,7 @@ class MrpProduction(models.Model):
         uom_obj = self.env['product.uom']
         for record in self:
             total = 0
-            done = 0.0
-            if record.move_created_ids2:
-                moves = record.move_created_ids2.\
-                    filtered(lambda a: not a.scrapped)
-                done = sum(moves.mapped('product_uom_qty'))
+            done = record._get_produced_qty(record)
             if not record.move_lines.mapped('reserved_quant_ids'):
                 return total
             self._cr.execute('''
