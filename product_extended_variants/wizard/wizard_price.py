@@ -83,6 +83,10 @@ class WizardPrice(models.Model):
             count += 1
             _logger.info(
                 msglog.format(prod_id=product, total=total, count=count))
+            # /!\ NOTE: Is it enough to call the qty like that?
+            if prod_brw.qty_available == 0:
+                prod_brw.write({'state': 'obsolete'})
+                continue
             context.update(
                 {'active_model': 'product.product',
                  'active_id': product})
