@@ -11,10 +11,10 @@ class ProductExtendedSegmentationSettings(osv.osv_memory):
                   'allowed to lower')),
     }
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, fieldnames, context=None):
         res = super(
             ProductExtendedSegmentationSettings, self).default_get(
-                cr, uid, fields, context)
+                cr, uid, fieldnames, context)
         user = self.pool.get('res.users').browse(cr, uid, uid, context)
         res['std_price_neg_threshold'] =\
             user.company_id.std_price_neg_threshold
