@@ -50,14 +50,10 @@ class TestAvgCosts(TransactionCase):
 
     def get_store_product_values(self, product_ids):
         vals = {}
-        for product_id in product_ids:
-            sgmnts = {}
+        for brw in product_ids:
+            vals[brw.name] = {}
             for fieldname in SEGMENTATION_COST:
-                val = getattr(product_id, fieldname)
-                if val:
-                    sgmnts[fieldname] = val
-            if len(sgmnts):
-                vals[product_id.name] = sgmnts.copy()
+                vals[brw.name][fieldname] = getattr(brw, fieldname)
         return vals
 
     def create_wizard(self, product_tmpl_id, recursive,
