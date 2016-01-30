@@ -96,6 +96,17 @@ class ProductTemplate(models.Model):
 
         model = 'product.product'
 
+        def _get_sgmnt(prod_id):
+            res = {}
+            sum_sgmnt = 0.0
+            for fieldname in SEGMENTATION_COST:
+                fn_cost = getattr(prod_id, fieldname)
+                sum_sgmnt += fn_cost
+                res[fieldname] = fn_cost
+            if not sum_sgmnt:
+                res['material_cost'] = prod_id.standard_price
+            return res
+
         def _bom_find(prod_id):
             if model == 'product.product':
                 # if not look for template
@@ -160,11 +171,18 @@ class ProductTemplate(models.Model):
             else:
                 #  NOTE: Case when product is REAL or STANDARD
                 if test and context['_calc_price_recursive']:
-                    continue
-
-                for fieldname in SEGMENTATION_COST:
-                    prod_costs_dict[fieldname] = getattr(
-                        product_id, fieldname)
+                    init_bom_id = _bom_find(product_id.id)
+                    if init_bom_id:
+                        prod_costs_dict['material_cost'] = self._calc_price(
+                            cr, uid, bom_obj.browse(
+                                cr, uid, init_bom_id, context=context),
+                            test=test,
+                            real_time_accounting=real_time_accounting,
+                            context=context)
+                    else:
+                        prod_costs_dict = _get_sgmnt(product_id)
+                else:
+                    prod_costs_dict = _get_sgmnt(product_id)
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
@@ -267,7 +285,7 @@ class ProductTemplate(models.Model):
                 continue
             # In recursive mode, it will first compute the prices of child
             # boms
-            if recursive:
+            if recursive and not test:
                 # Search the products that are components of this bom of
                 # prod_id
                 bom = bom_obj.browse(cr, uid, bom_id, context=context)
@@ -278,6 +296,7 @@ class ProductTemplate(models.Model):
                     cr, uid, product_ids=list(prod_set), template_ids=[],
                     recursive=recursive, test=test,
                     real_time_accounting=real_time, context=context)
+                # /!\ NOTE: This is not logical
                 if test:
                     testdict.update(res)
 
