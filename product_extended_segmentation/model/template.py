@@ -40,25 +40,22 @@ class ProductProduct(models.Model):
         prod_ids = self.search(cr, uid, [])
         counter = 0
         total = len(prod_ids)
-        _logger.info(
-            'Cron Job will compute {length} products'.format(length=total))
-        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
+        _logger.info('Cron Job will compute %s products', total)
+        msglog = 'Computing cost for product: [%s]. %s/%s'
         res = []
         for prod_id in prod_ids:
             counter += 1
-            _logger.info(
-                msglog.format(prod_id=prod_id, total=total, count=counter))
+            _logger.info(msglog, str(prod_id), str(total), str(counter))
             rex = self._update_material_cost_on_zero_segmentation(
                 cr, uid, prod_id, context=context)
             if rex:
                 res.append(rex)
         total = len(res)
         counter = 0
-        msglog = 'Computing cost for template: [{tmpl_id}]. {count}/{total}'
+        msglog = 'Computing cost for template: [%s]. %s/%s'
         for tmpl_id, std_price in res:
             counter += 1
-            _logger.info(
-                msglog.format(tmpl_id=tmpl_id, total=total, count=counter))
+            _logger.info(msglog, str(tmpl_id), str(total), str(counter))
             cr.execute('''
                 UPDATE product_template
                 SET material_cost = {material_cost}
@@ -171,8 +168,8 @@ class ProductTemplate(models.Model):
             for wline in bom.routing_id.workcenter_lines:
                 wc = wline.workcenter_id
                 cycle = wline.cycle_nbr
-                d, m = divmod(factor, wc.capacity_per_cycle)
-                mult = (d + (m and 1.0 or 0.0))
+                dd, mm = divmod(factor, wc.capacity_per_cycle)
+                mult = (dd + (mm and 1.0 or 0.0))
                 hour = float(
                     wline.hour_nbr * mult + (
                         (wc.time_start or 0.0) + (wc.time_stop or 0.0) +
