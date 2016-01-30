@@ -99,10 +99,10 @@ class WizardPrice(models.Model):
 
             if old and diff / old < std_bottom_threshold and \
                     prod_brw.qty_available > 0 and \
-                    prod_brw.state != 'obsolete':
+                    prod_brw.state != 'end':
                 # Write product as obsolete
                 # /!\ NOTE: Will not this cause more concurrence
-                prod_brw.write({'state': 'obsolete'})
+                prod_brw.write({'state': 'end'})
 
             price_id = self.create(
                 cr, uid, {'real_time_accounting': True, 'recursive': True},
