@@ -67,10 +67,9 @@ class MrpProduction(models.Model):
         '''
         uom_obj = self.env['product.uom']
         for record in self:
-            total = 0
-            done = record._get_produced_qty(record)
+            bom_obj = self.env['mrp.bom']
             if not record.move_lines.mapped('reserved_quant_ids'):
-                return total
+                return 0.0
             self._cr.execute('''
                              SELECT m.product_id,
                                     sum(q.qty) AS total
@@ -82,24 +81,21 @@ class MrpProduction(models.Model):
                              '''.format(prod_id=record.id))
             result = {i.get('product_id'): i.get('total') or 0
                       for i in self._cr.dictfetchall()}
-            incomplete = False
-            for total in range(1, int((record.product_qty - done) + 1)):
-                product_uom_qty = uom_obj.\
-                    _compute_qty(record.product_uom.id,
-                                 total,
-                                 record.product_id.uom_id.id)
-                consume_lines = record.\
-                    _calculate_qty(record,
-                                   product_qty=product_uom_qty)
-                for line in consume_lines:
-                    product_id = line.get('product_id')
-                    if not line.get('product_qty') <= result.get(product_id):
-                        total -= 1
-                        incomplete = True
-                        break
-                if incomplete:
-                    break
-        return total
+            product_uom_qty = uom_obj._compute_qty(record.product_uom.id,
+                                                   1,
+                                                   record.product_id.uom_id.id)
+            consume_lines = bom_obj._bom_explode(record.bom_id,
+                                                 record.product_id,
+                                                 product_uom_qty)
+
+            qty = []
+            for line in consume_lines and consume_lines[0] or ():
+                product_id = line.get('product_id')
+                val = line.get('product_qty') and \
+                    int(result.get(product_id) / line.get('product_qty')) or 0
+                qty.append(val)
+
+        return min(qty)
 
     @api.cr_uid_id_context
     def action_produce(self, cr, uid, production_id, production_qty,
