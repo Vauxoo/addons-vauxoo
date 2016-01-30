@@ -138,36 +138,8 @@ class ProductTemplate(models.Model):
 
             prod_costs_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
             product_id = sbom.product_id
-            prod_tmpl_id = product_id.product_tmpl_id
             if product_id.cost_method == 'average':
-                avg_sgmnt_dict = self.pool.get('stock.card.product').\
-                    get_average(cr, uid, product_id.id)
-                avg_sgmnt_dict = self.pool.get('stock.card.product').\
-                    map_field2write(avg_sgmnt_dict)
-                prod_costs_dict = avg_sgmnt_dict.copy()
-                if not test and context.get('update_avg_costs'):
-                    std_price = avg_sgmnt_dict.pop('standard_price')
-                    diff = product_id.standard_price - std_price
-                    # /!\ NOTE: Do we need to report an issue to Odoo
-                    # because of this condition
-                    # Write standard price
-                    if product_id.valuation == "real_time" and \
-                            real_time_accounting and diff:
-                        ctx = context.copy()
-                        ctx.update({'active_id': prod_tmpl_id.id,
-                                    'active_model': 'product.template'})
-                        wiz_id = wizard_obj.create(
-                            cr, uid, {'new_price': std_price}, context=ctx)
-                        wizard_obj.change_price(
-                            cr, uid, [wiz_id], context=ctx)
-                    else:
-                        tmpl_obj.write(
-                            cr, uid, [prod_tmpl_id.id],
-                            {'standard_price': std_price}, context=context)
-
-                    # Write cost segments
-                        tmpl_obj.write(cr, uid, [prod_tmpl_id.id],
-                                       avg_sgmnt_dict, context=context)
+                prod_costs_dict = _get_sgmnt(product_id)
             else:
                 #  NOTE: Case when product is REAL or STANDARD
                 if test and context['_calc_price_recursive']:
