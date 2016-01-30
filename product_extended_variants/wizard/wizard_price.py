@@ -83,6 +83,13 @@ class WizardPrice(models.Model):
             count += 1
             _logger.info(
                 msglog.format(prod_id=product, total=total, count=count))
+
+            if product_obj.fetch_product_bom_states(
+                    cr, uid, product, state='obsolete', context=context):
+                _logger.warning(
+                    'product [%s] has obsolete children', product)
+                continue
+
             # /!\ NOTE: Is it enough to call the qty like that?
             if prod_brw.qty_available == 0:
                 prod_brw.write({'state': 'obsolete'})
