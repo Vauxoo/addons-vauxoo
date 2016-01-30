@@ -32,9 +32,7 @@ class TestStockCardNegativeStock(TransactionCase):
         self.product_id = self.env.ref('stock_card.product01')
 
     def get_stock_valuations(self):
-        sc_moves = self.sc_product._stock_card_move_get(
-            self.product_id.id, return_values=True)
-        return sc_moves['res']
+        return self.sc_product._stock_card_move_get(self.product_id.id)['res']
 
     def test_01_stock_card(self):
         card_lines = self.get_stock_valuations()

@@ -407,7 +407,7 @@ class StockLandedCost(models.Model):
                     if product_id.id not in prod_dict:
                         prod_dict[product_id.id] = get_average(product_id.id)
                         first_lines[product_id.id] = stock_card_move_get(
-                            product_id.id, return_values=True)['res']
+                            product_id.id)['res']
                         init_avg[product_id.id] = product_id.standard_price
                         prod_qty[product_id.id] = get_qty(product_id.id)
 
@@ -443,7 +443,7 @@ class StockLandedCost(models.Model):
             for prod_id in prod_dict:
                 prod_dict[prod_id] = get_average(prod_id)
                 last_lines[prod_id] = stock_card_move_get(
-                    prod_id, return_values=True)['res']
+                    prod_id)['res']
 
             # /!\ NOTE: COGS computation
             # NOTE: After adding value to product with landing cost products
