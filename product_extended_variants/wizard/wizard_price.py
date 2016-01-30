@@ -23,6 +23,7 @@
 
 from openerp import models,  _
 import logging
+from openerp.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -65,6 +66,10 @@ class WizardPrice(models.Model):
         ids = ids or []
         context = context or {}
         product_obj = self.pool.get('product.product')
+        precision_obj = self.pool.get('decimal.precision').precision_get(
+            cr, uid, 'Account')
+        user = self.pool.get('res.users').browse(cr, uid, uid, context)
+        std_bottom_threshold = user.company_id.std_price_neg_threshold
         product_ids = self._get_products(cr, uid, ids, context=context)
         message = 'Old price {old}, New price {new}'
         context['message'] = ''
@@ -78,13 +83,30 @@ class WizardPrice(models.Model):
             count += 1
             _logger.info(
                 msglog.format(prod_id=product, total=total, count=count))
-            context.update({'active_model': 'product.product',
-                            'active_id': product})
-            price_id = self.create(cr, uid,
-                                   {'real_time_accounting': True,
-                                    'recursive': True},
-                                   context=context)
+            context.update(
+                {'active_model': 'product.product',
+                 'active_id': product})
+            std_preview = self._onchange_recursive(
+                cr, uid, ids, recursive=True,
+                context=context).get(product, 0.0)
             old = prod_brw.standard_price
+            diff = std_preview - old
+
+            # /!\ NOTE: Is it the right precision
+            if float_is_zero(diff, precision_obj):
+                # Do not update it is worthless
+                continue
+
+            if old and diff / old < std_bottom_threshold and \
+                    prod_brw.qty_available > 0 and \
+                    prod_brw.state != 'obsolete':
+                # Write product as obsolete
+                # /!\ NOTE: Will not this cause more concurrence
+                prod_brw.write({'state': 'obsolete'})
+
+            price_id = self.create(
+                cr, uid, {'real_time_accounting': True, 'recursive': True},
+                context=context)
             try:
                 if not prod_brw.cost_method == 'standard':
                     new = 'Ignored Because product is not set as Standard'
