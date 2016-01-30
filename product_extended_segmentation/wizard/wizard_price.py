@@ -13,7 +13,8 @@ class WizardPrice(models.Model):
             'update_avg_costs': self.browse(cr, uid, ids).update_avg_costs})
         super(WizardPrice, self).compute_from_bom(cr, uid, ids, context)
 
-    def onchange_recursive(self, cr, uid, ids, recursive, context=None):
+    def _onchange_recursive(self, cr, uid, ids, recursive, context=None):
+        context = dict(context or {})
         product_tmpl = self.pool.get('product.template')
         active_id = context.get('active_id')
         res = {}
@@ -28,5 +29,10 @@ class WizardPrice(models.Model):
                 recursive=recursive, real_time_accounting=False,
                 context=context)
 
-        res = str({active_id: res.get(active_id)})
-        return {'value': {'info_field': res}}
+        res = {active_id: res.get(active_id)}
+        return res
+
+    def onchange_recursive(self, cr, uid, ids, recursive, context=None):
+        ctx = dict(context or {})
+        res = self._onchange_recursive(cr, uid, ids, recursive, context=ctx)
+        return {'value': {'info_field': str(res)}}
