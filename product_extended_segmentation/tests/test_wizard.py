@@ -87,7 +87,7 @@ class TestWizard(TransactionCase):
     def test_02_test_wizard_onchange_recursive(self):
         vals = {
             'before': 80,
-            'default': 40,
+            'default': 90,
             'after': 75
         }
         self.check_wizard_values(self.producto_e_id, vals)

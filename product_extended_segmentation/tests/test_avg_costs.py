@@ -50,14 +50,10 @@ class TestAvgCosts(TransactionCase):
 
     def get_store_product_values(self, product_ids):
         vals = {}
-        for product_id in product_ids:
-            sgmnts = {}
+        for brw in product_ids:
+            vals[brw.name] = {}
             for fieldname in SEGMENTATION_COST:
-                val = getattr(product_id, fieldname)
-                if val:
-                    sgmnts[fieldname] = val
-            if len(sgmnts):
-                vals[product_id.name] = sgmnts.copy()
+                vals[brw.name][fieldname] = getattr(brw, fieldname)
         return vals
 
     def create_wizard(self, product_tmpl_id, recursive,
@@ -82,12 +78,14 @@ class TestAvgCosts(TransactionCase):
             self.product_ids)
 
         # check initial values for avg products
-        self.assertEqual(res, {})
+        self.assertNotEqual(res, {})
 
         self.create_wizard(self.prod_e_id.product_tmpl_id, True, False, True)
         res = self.get_store_product_values(self.product_ids)
 
         # check updated segment costs for avg products after wizard execution
-        self.assertEqual(res['producto_a']['material_cost'], 10)
-        self.assertEqual(res['producto_b']['material_cost'], 20)
-        self.assertEqual(res['producto_c']['material_cost'], 30)
+        # /!\ NOTE: At this moment Business logic has changed and AVG products
+        # are no longer updated from Wizard that updates STD product costs
+        self.assertEqual(res['producto_a']['material_cost'], 0)
+        self.assertEqual(res['producto_b']['material_cost'], 0)
+        self.assertEqual(res['producto_c']['material_cost'], 0)

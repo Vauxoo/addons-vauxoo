@@ -23,6 +23,73 @@
 from openerp import models,  _
 
 
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    def fetch_product_bom_states(
+            self, cr, uid, ids, vals=None, state=None, bom_id=None,
+            context=None):
+        vals = dict(vals or {})
+        context = dict(context or {})
+        ids = isinstance(ids, (int, long)) and ids or ids[0]
+
+        def _bom_find(prod_id):
+            if model == 'product.product':
+                # if not look for template
+                bom_id = bom_obj._bom_find(
+                    cr, uid, product_id=prod_id, context=context)
+                if bom_id:
+                    return bom_id
+                prod_id = prod_obj.browse(
+                    cr, uid, prod_id, context=context).product_tmpl_id.id
+            return bom_obj._bom_find(
+                cr, uid, product_tmpl_id=prod_id, context=context)
+
+        bom_obj = self.pool.get('mrp.bom')
+        model = 'product.product'
+        prod_obj = self.pool.get('product.product')
+
+        if ids not in vals:
+            vals[ids] = prod_obj.browse(cr, uid, ids, context=context).state
+        if state is not None and vals[ids] == state:
+            return True
+
+        bom_id = bom_id or _bom_find(ids)
+        if not bom_id:
+            return False
+        bom = bom_obj.browse(cr, uid, bom_id, context=context)
+
+        # Call compute_price on these subproducts
+        prod_set = set([x.product_id.id for x in bom.bom_line_ids])
+        res = False
+        for prod_id in prod_set:
+            if self.fetch_product_bom_states(
+                    cr, uid, prod_id, vals=vals, state=state, context=context):
+                res = True
+                break
+
+        return res
+
+    def get_product_bom_state(
+            self, cr, uid, ids, has_state=None, context=None):
+        context = dict(context or {})
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = {}
+        vals = {}
+
+        for prod_id in ids:
+            res[prod_id] = self.fetch_product_bom_states(
+                cr, uid, prod_id, vals=vals, state=has_state, context=context)
+
+        if has_state is not None:
+            return res
+
+        rex = {}
+        for prod_id in ids:
+            rex[prod_id] = vals[prod_id]
+        return res
+
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
