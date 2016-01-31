@@ -179,15 +179,15 @@ class StockCardProduct(models.TransientModel):
         move_brw = sm_obj.browse(move_id)
         origin_id = move_brw.origin_returned_move_id.id
         old_average = (
-            vals['move_dict'].get(origin_id, 0.0) and
-            vals['move_dict'][move_id]['average'] or vals['average'])
+            vals['move_dict'].get(origin_id) and
+            vals['move_dict'][origin_id]['average'] or vals['average'])
         vals['move_valuation'] = sum(
             [old_average * qnt['qty'] for qnt in qntval])
 
         for sgmnt in SEGMENTATION:
             old_average = (
-                vals['move_dict'].get(origin_id, 0.0) and
-                vals['move_dict'][move_id][sgmnt] or
+                vals['move_dict'].get(origin_id) and
+                vals['move_dict'][origin_id][sgmnt] or
                 vals[sgmnt])
 
             vals['%s_valuation' % sgmnt] = sum(

@@ -37,6 +37,8 @@
     ],
     "data": [
         'view/view.xml',
+        'view/installer.xml',
+        'view/company.xml',
         'data/data.xml',
     ],
     "installable": True

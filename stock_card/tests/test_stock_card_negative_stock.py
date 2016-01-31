@@ -146,9 +146,7 @@ class TestStockCardNegativeStock(TransactionCase):
         return sale_order_id
 
     def get_stock_valuations(self):
-        sc_moves = self.sc_product._stock_card_move_get(
-            self.product_id.id, return_values=True)
-        return sc_moves['res']
+        return self.sc_product._stock_card_move_get(self.product_id.id)['res']
 
     def test_01_do_inouts(self):
 
