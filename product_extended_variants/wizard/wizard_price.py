@@ -66,6 +66,80 @@ class WizardPrice(models.Model):
         ids = ids or []
         context = context or {}
         product_obj = self.pool.get('product.product')
+        product_ids = self._get_products(cr, uid, ids, context=context)
+        message = 'Old price {old}, New price {new}'
+        context['message'] = ''
+        count = 0
+        total = len(product_ids)
+        _logger.info(
+            'Cron Job will compute {length} products'.format(length=total))
+        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
+        msglog2 = 'Just computed correctly: [{prod_id}]. {count}/{total}'
+        import time
+        IDENTIFIER = str(time.time())
+        ##
+        ##
+        for product_id in product_ids:
+            count += 1
+            try:
+                # Due to this is a huge batch process it is better use a nw
+                # curso to avoid blocking process.
+                product = product_obj.browse(cr, uid, [product_id])[0]
+                _logger.info(msglog.format(prod_id=product.id,
+                                           total=total,
+                                           count=count))
+                if not product.cost_method == 'standard':
+                    new = 'Ignored Because product is not set as Standard'
+                else:
+                    context.update({'active_model': 'product.product',
+                                    'active_id': product.id})
+
+                    price_id = self.create(cr, uid,
+                                           {'real_time_accounting': True,
+                                            'recursive': True},
+                                           context=context)
+
+                    old = product.standard_price
+                    self.compute_from_bom(cr, uid, [price_id], context=context)
+                    _logger.info(msglog2.format(prod_id=product.id,
+                                                total=total,
+                                                count=count))
+                    new = product.standard_price
+                    if old > new:
+                        # TODO: show qty_on_hand
+                        msg_err = 'name: - {name} - ID: [{prod}] - Old: - {old} - New: - {new}\n'
+                        msg_err_save = msg_err.format(prod=product.id,
+                                                      name=product.name,
+                                                      new=new,
+                                                      old=old)
+                        _logger.error(msg_err_save)
+                        logfname = '/home/odoo/costs_log/errored_forms'
+                        with open(logfname.format(identifier=IDENTIFIER),
+                                  'a') as errored_log:
+                            errored_log.write(msg_err_save)
+            except Exception as msg:  # pylint: disable=W0703
+                new = msg
+                _logger.error(msg)
+
+            context['message'] = message.format(old=str(old), new=str(new))
+            # TODO: create a global message live with logger instead.
+            # self._post_message(cr, uid, ids, context=context)
+            _logger.warning(context.get('message'))
+        # /!\ TODO: Write log for products that were ignored
+        return True
+
+    def ___execute_cron(self, cr, uid, ids=None, context=None):
+        '''
+         This method is incorrectly designed due to the write on the product as
+         obsolete should be a core feature not a cron feature.
+
+         I do not delete it because I need review afterwards such feature.
+
+         Dear Future me I am really sorry
+        '''
+        ids = ids or []
+        context = context or {}
+        product_obj = self.pool.get('product.product')
         precision_obj = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
         user = self.pool.get('res.users').browse(cr, uid, uid, context)
