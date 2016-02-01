@@ -70,18 +70,17 @@ class WizardPrice(models.Model):
         context = context or {}
         product_obj = self.pool.get('product.product')
         product_ids = self._get_products(cr, uid, ids, context=context)
-        message = 'Old price {old}, New price {new}'
         context['message'] = ''
         count = 0
         total = len(product_ids)
         _logger.info(
             'Cron Job will compute {length} products'.format(length=total))
         msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
-        msglog2 = 'Updated correctly: [{prod_id}] from {old} to {new} {count}/{total}'
+        msglog2 = 'Updated correctly: [{prod_id}]  from {old} to {new} {count}/{total}'  # noqa
         IDENTIFIER = str(time.time())
         WHEN = time.ctime()
-        logfname = '/tmp/update_cost_err{identifier}.log'.format(identifier=IDENTIFIER)
-        logfull = '/tmp/update_cost_fine{identifier}.log'.format(identifier=IDENTIFIER)
+        logfname = '/tmp/update_cost_err{identifier}.log'.format(identifier=IDENTIFIER)  # noqa
+        logfull = '/tmp/update_cost_fine{identifier}.log'.format(identifier=IDENTIFIER)  # noqa
         products = product_obj.browse(cr, uid, product_ids, context=context)
         for product in products:
             count += 1
@@ -114,7 +113,7 @@ class WizardPrice(models.Model):
                     _logger.info(msg_ok)
                     if old > new:
                         # TODO: show qty_on_hand
-                        msg_err = 'name: - {name} - There is onhand:- ID: [{prod}] - Old: - {old} - New: - {new}\n'
+                        msg_err = 'name: - {name} - There is onhand:- ID: [{prod}] - Old: - {old} - New: - {new}\n'  # noqa
                         msg_err_save = msg_err.format(prod=product.id,
                                                       name=product.name,
                                                       new=new,
@@ -132,16 +131,18 @@ class WizardPrice(models.Model):
                 context['message'] = msg
             _logger.warning(context.get('message'))
             product_obj.message_post(cr, uid, [product.id],
-                                     subject='Updated at %s at %s' % (IDENTIFIER, WHEN),
+                                     subject='Updated at %s at %s' % (IDENTIFIER, WHEN),  # noqa
                                      body=context.get('message'))
-        admin_partner = self.pool.get('res.users').browse(cr, uid, uid).partner_id.id
+        admin_partner = self.pool.get('res.users').browse(cr,
+                                                          uid,
+                                                          uid).partner_id.id
         self.pool.get('res.partner').message_post(cr, uid, admin_partner,
-                                                  subject="Successfully updated at %s " % WHEN,
-                                                  body="File is on %s for errors and in %s for Ok Products." % (logfname, logfull))
+                                                  subject="Successfully updated at %s " % WHEN,  # noqa
+                                                  body="File is on %s for errors and in %s for Ok Products." % (logfname, logfull))  # noqa
         # /!\ TODO: Write log for products that were ignored
         return True
 
-    def ___execute_cron(self, cr, uid, ids=None, context=None):
+    def __execute_cron(self, cr, uid, ids=None, context=None):  # noqa
         '''
          This method is incorrectly designed due to the write on the product as
          obsolete should be a core feature not a cron feature.
