@@ -60,7 +60,6 @@ class WizardPrice(models.Model):
             WHERE mb.product_id IS NOT NULL;
                 ''')
         result = cr.fetchall()
-        print result
         parents = set([r[0] for r in result if r[0] is not None])
         children = set([r[1] for r in result if r[1] is not None])
         root = list(parents - children)
