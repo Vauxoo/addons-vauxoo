@@ -22,8 +22,10 @@
 ##############################################################################
 
 from openerp import models,  _
-import logging
 from openerp.tools import float_is_zero
+
+import logging
+import time
 
 _logger = logging.getLogger(__name__)
 
@@ -51,14 +53,16 @@ class WizardPrice(models.Model):
         '''
         cr.execute('''
             SELECT
-                DISTINCT mb.product_id AS pp1,
-                mbl.product_id AS pp2
+            DISTINCT mb.product_id AS pp1,
+                     mbl.product_id AS pp2
             FROM mrp_bom AS mb
-            INNER JOIN mrp_bom_line as mbl ON mbl.bom_id = mb.id;
+            INNER JOIN mrp_bom_line as mbl ON mbl.bom_id = mb.id
+            WHERE mb.product_id IS NOT NULL;
                 ''')
         result = cr.fetchall()
-        parents = set([r[0] for r in result])
-        children = set([r[1] for r in result])
+        print result
+        parents = set([r[0] for r in result if r[0] is not None])
+        children = set([r[1] for r in result if r[1] is not None])
         root = list(parents - children)
         return root
 
@@ -74,20 +78,21 @@ class WizardPrice(models.Model):
         _logger.info(
             'Cron Job will compute {length} products'.format(length=total))
         msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
-        msglog2 = 'Just computed correctly: [{prod_id}]. {count}/{total}'
-        import time
+        msglog2 = 'Updated correctly: [{prod_id}] from {old} to {new} {count}/{total}'
         IDENTIFIER = str(time.time())
-        ##
-        ##
-        for product_id in product_ids:
+        WHEN = time.ctime()
+        logfname = '/tmp/update_cost_err{identifier}.log'.format(identifier=IDENTIFIER)
+        logfull = '/tmp/update_cost_fine{identifier}.log'.format(identifier=IDENTIFIER)
+        products = product_obj.browse(cr, uid, product_ids, context=context)
+        for product in products:
             count += 1
             try:
                 # Due to this is a huge batch process it is better use a nw
                 # curso to avoid blocking process.
-                product = product_obj.browse(cr, uid, [product_id])[0]
                 _logger.info(msglog.format(prod_id=product.id,
                                            total=total,
                                            count=count))
+                new = 'Never Setted'
                 if not product.cost_method == 'standard':
                     new = 'Ignored Because product is not set as Standard'
                 else:
@@ -101,30 +106,39 @@ class WizardPrice(models.Model):
 
                     old = product.standard_price
                     self.compute_from_bom(cr, uid, [price_id], context=context)
-                    _logger.info(msglog2.format(prod_id=product.id,
-                                                total=total,
-                                                count=count))
                     new = product.standard_price
+                    msg_ok = msglog2.format(prod_id=product.id,
+                                            total=total,
+                                            old=old,
+                                            new=new,
+                                            count=count)
+                    _logger.info(msg_ok)
                     if old > new:
                         # TODO: show qty_on_hand
-                        msg_err = 'name: - {name} - ID: [{prod}] - Old: - {old} - New: - {new}\n'
+                        msg_err = 'name: - {name} - There is onhand:- ID: [{prod}] - Old: - {old} - New: - {new}\n'
                         msg_err_save = msg_err.format(prod=product.id,
                                                       name=product.name,
                                                       new=new,
                                                       old=old)
                         _logger.error(msg_err_save)
-                        logfname = '/home/odoo/costs_log/errored_forms'
-                        with open(logfname.format(identifier=IDENTIFIER),
-                                  'a') as errored_log:
+                        with open(logfname, 'a') as errored_log:
                             errored_log.write(msg_err_save)
+                        context['message'] = msg_err_save
+                    with open(logfname, 'a') as errored_log:
+                        errored_log.write(msg_err_save)
+                    context['message'] = msg_err_save
             except Exception as msg:  # pylint: disable=W0703
                 new = msg
                 _logger.error(msg)
-
-            context['message'] = message.format(old=str(old), new=str(new))
-            # TODO: create a global message live with logger instead.
-            # self._post_message(cr, uid, ids, context=context)
+                context['message'] = msg
             _logger.warning(context.get('message'))
+            product_obj.message_post(cr, uid, [product.id],
+                                     subject='Updated at %s at %s' % (IDENTIFIER, WHEN),
+                                     body=context.get('message'))
+        admin_partner = self.pool.get('res.users').browse(cr, uid, uid).partner_id.id
+        self.pool.get('res.partner').message_post(cr, uid, admin_partner,
+                                                  subject="Successfully updated at %s " % WHEN,
+                                                  body="File is on %s for errors and in %s for Ok Products." % (logfname, logfull))
         # /!\ TODO: Write log for products that were ignored
         return True
 
