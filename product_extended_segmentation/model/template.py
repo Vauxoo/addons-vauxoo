@@ -194,6 +194,24 @@ class ProductTemplate(models.Model):
         # NOTE: Instanciating BOM related product
         product_tmpl_id = tmpl_obj.browse(
             cr, uid, bom.product_tmpl_id.id, context=context)
+        # Use threshold in the next iteration just comparing less than in this
+        # case
+        if price < product_tmpl_id.standard_price:
+            tmpl_obj.message_post(cr, uid, [product_tmpl_id.id],
+                                  'Not Updated Cost, But Segments only.',
+                                  'I cowardly did not update Standard new \n'
+                                  'price less than old price \n'
+                                  'new {new} old {old} \n'
+                                  'Segments where written CHECK AFTERWARDS.'
+                                  '{segments}'.
+                                  format(old=product_tmpl_id.standard_price,
+                                         new=price, segments=str(sgmnt_dict)))
+            # Just writting segments to be consistent with segmentation
+            # feature. TODO: A report should show differences.
+            tmpl_obj.write(cr, uid, [product_tmpl_id.id], sgmnt_dict,
+                           context=context)
+            return price
+        # NHOMAR OUT.
         diff = product_tmpl_id.standard_price - price
         # Write standard price
         if product_tmpl_id.valuation == "real_time" and \
