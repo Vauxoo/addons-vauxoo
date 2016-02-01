@@ -75,8 +75,8 @@ class WizardPrice(models.Model):
         total = len(product_ids)
         _logger.info(
             'Cron Job will compute {length} products'.format(length=total))
-        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
-        msglog2 = 'Updated correctly: [{prod_id}]  from {old} to {new} {count}/{total}'  # noqa
+        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}  \n'
+        msglog2 = 'Updated correctly: [{prod_id}]  from {old} to {new} {count}/{total}  \n'  # noqa
         IDENTIFIER = str(time.time())
         WHEN = time.ctime()
         logfname = '/tmp/update_cost_err{identifier}.log'.format(identifier=IDENTIFIER)  # noqa
@@ -122,9 +122,10 @@ class WizardPrice(models.Model):
                         with open(logfname, 'a') as errored_log:
                             errored_log.write(msg_err_save)
                         context['message'] = msg_err_save
-                    with open(logfname, 'a') as errored_log:
-                        errored_log.write(msg_ok)
-                    context['message'] = msg_ok
+                    else:
+                        with open(logfull, 'a') as errored_log:
+                            errored_log.write(msg_ok)
+                        context['message'] = msg_ok
             except Exception as msg:  # pylint: disable=W0703
                 new = msg
                 _logger.error(msg)
