@@ -20,7 +20,7 @@
 ##############################################################################
 
 
-from openerp import models,  _
+from openerp import models, _
 
 
 class ProductProduct(models.Model):
@@ -99,6 +99,7 @@ class ProductTemplate(models.Model):
             .get_product_accounts(cr, uid, product_id,
                                   context=context)
         product_brw = self.browse(cr, uid, product_id)
+        # noqa
         diff_acc_id = product_brw.property_account_creditor_price_difference and \
             product_brw.property_account_creditor_price_difference.id or \
             product_brw.categ_id.property_account_creditor_price_difference_categ and \
