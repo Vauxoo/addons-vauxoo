@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 from datetime import datetime
+from openerp.tools.float_utils import float_compare
 
 
 class TestStockCardProductReturns(TransactionCase):
@@ -29,71 +30,88 @@ class TestStockCardProductReturns(TransactionCase):
         self.stock_card = self.env['stock.card']
         self.sc_product = self.env['stock.card.product']
         self.move = self.env['stock.move']
-        self.product_id = self.env.ref('stock_card.product01')
+        self.product_id = self.env.ref('stock_card.product02')
 
-        self.values = [
-            {
-                'name': 'po_01', 'cost': 32, 'qty': 2,
-                'avg': 20, 'mov_val': 40, 'inv_val': 40
+        self.values = {
+            'po_01': {
+                'cost': 100, 'qty': 10,
+                'avg': 100, 'mov_val': 1000, 'inv_val': 1000
             },
-            {
-                'name': 'so_01', 'cost': 32, 'qty': 3,
-                'avg': 32, 'mov_val': 120, 'inv_val': 160
+            'so_01': {
+                'cost': 100, 'qty': 6,
+                'avg': 100, 'mov_val': -400, 'inv_val': 600
             },
-            {
-                'name': 'so_02', 'cost': 32, 'qty': 1,
-                'avg': 32, 'mov_val': -32, 'inv_val': 128
+            'so_02': {
+                'cost': 100, 'qty': 1,
+                'avg': 100, 'mov_val': -500, 'inv_val': 100
             },
-            {
-                'name': 'po_02', 'cost': 88, 'qty': 4,
-                'avg': 60, 'mov_val': 352, 'inv_val': 480
+            'po_02': {
+                'cost': 300, 'qty': 4,
+                'avg': 250, 'mov_val': 900, 'inv_val': 1000
             },
-            {
-                'name': 'so_03', 'cost': 60, 'qty': 7,
-                'avg': 60, 'mov_val': -420, 'inv_val': 60
+            'so_03': {
+                'cost': 250, 'qty': 1,
+                'avg': 250, 'mov_val': -750, 'inv_val': 250
             },
-            {
-                'name': 'pick_01_so_01', 'cost': 62, 'qty': 2,
-                'avg': 64, 'mov_val': -124, 'inv_val': -64
+            'pick_01_so_01': {
+                'cost': 100, 'qty': 2,
+                'avg': 175, 'mov_val': 100, 'inv_val': 350
             },
-            {
-                'name': 'po_03', 'cost': 64, 'qty': 4,
-                'avg': 64, 'mov_val': 256, 'inv_val': 192
+            'po_03': {
+                'cost': 220, 'qty': 7,
+                'avg': 207.14, 'mov_val': 1100, 'inv_val': 1450
             },
-            {
-                'name': 'pick_02_po_01', 'cost': 51, 'qty': 6,
-                'avg': 38, 'mov_val': -306, 'inv_val': -114
+            'po_04': {
+                'cost': 400, 'qty': 10,
+                'avg': 265, 'mov_val': 1200, 'inv_val': 2650
             },
-        ]
+            'pick_02_po_03': {
+                'cost': 220, 'qty': 8,
+                'avg': 276.25, 'mov_val': -440, 'inv_val': 2210
+            },
+        }
 
     def get_stock_valuations(self, product_id):
         sc_moves = self.sc_product._stock_card_move_get(
-            product_id.id, return_values=True)
+            product_id)
         return sc_moves['res']
 
     def test_01_do_inouts(self):
         card_lines = self.get_stock_valuations(self.product_id.id)
-
         self.assertEqual(len(self.values), len(card_lines),
-                         "Both lists should have the same length(=8)")
-        for expected, succeded in zip(self.values, card_lines):
+                         "Both lists should have the same length(=9)")
+        for succeded in card_lines:
 
-            self.assertEqual(expected['avg'],
-                             succeded['average'],
-                             "Average Cost {0} is not the expected".
-                             format(expected))
+            origin = self.env['stock.move'].browse(succeded['move_id']).origin
+
+            expected = self.values[origin]
+            self.assertEqual(0, float_compare(expected['avg'],
+                                              succeded['average'],
+                                              precision_rounding=1),
+                             "Average Cost current={0} expected={1} is not "
+                             "the expected: {2}".
+                             format(expected['avg'],
+                                    succeded['average'], expected))
 
             self.assertEqual(expected['cost'],
                              succeded['cost_unit'],
-                             "Unit Cost {0} is not the expected".
-                             format(expected))
+                             "Unit Cost current={0} expected={1} is not "
+                             "the expected: {2}".
+                             format(expected['cost'],
+                                    succeded['cost_unit'], expected))
 
-            self.assertEqual(expected['inv_val'],
-                             succeded['inventory_valuation'],
-                             "Inventory Value {0} does not match".
-                             format(expected))
+            self.assertEqual(0, float_compare(expected['inv_val'],
+                                              succeded['inventory_valuation'],
+                                              precision_rounding=1),
+                             "Inventory Value current={0} expected={1} is not "
+                             "match: {2}".
+                             format(expected['inv_val'],
+                                    succeded['inventory_valuation'], expected))
 
-            self.assertEqual(expected['move_val'],
-                             succeded['move_valuation'],
-                             "Movement Value {0} does not match".
-                             format(expected))
+            self.assertEqual(0, float_compare(expected['mov_val'],
+                                              succeded['move_valuation'],
+                                              precision_rounding=1),
+                             "Movement Value current={0} expected={1} is not "
+                             "match: {2}".
+                             format(expected['mov_val'],
+                                    succeded['move_valuation'], expected))
