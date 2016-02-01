@@ -242,6 +242,25 @@
         </record>
         <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_08')]]"/>
 
+        <record id="pick_junk" model="stock.picking">
+            <field name="name">www</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="pickline_junk" model="stock.move">
+            <field name="origin">pickline_junk</field>
+            <field name="picking_id" ref="pick_junk"/>
+            <field name="name">pickline_junk</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">22</field>
+            <field name="product_uom_qty">22</field>
+            <field name="product_id" ref="product02"/>
+        </record>
+
         <record id="pick_02_po_03" model="stock.picking">
             <field name="name">pick_02_po_03</field>
             <field name="partner_id" ref="base.res_partner_23"/>
