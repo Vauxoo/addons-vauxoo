@@ -123,8 +123,8 @@ class WizardPrice(models.Model):
                             errored_log.write(msg_err_save)
                         context['message'] = msg_err_save
                     with open(logfname, 'a') as errored_log:
-                        errored_log.write(msg_err_save)
-                    context['message'] = msg_err_save
+                        errored_log.write(msg_ok)
+                    context['message'] = msg_ok
             except Exception as msg:  # pylint: disable=W0703
                 new = msg
                 _logger.error(msg)
