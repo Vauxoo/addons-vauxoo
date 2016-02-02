@@ -1,0 +1,28 @@
+# coding: utf-8
+############################################################################
+#    Module Writen For Odoo, Open Source Management Solution
+#
+#    Copyright (c) 2016 Vauxoo - http://www.vauxoo.com
+#    All Rights Reserved.
+#    info Vauxoo (info@vauxoo.com)
+#    coded by: Luis Torres <luis_t@vauxoo.com>
+############################################################################
+from openerp import models, fields, api
+from datetime import date, timedelta
+
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    @api.multi
+    def _get_date_due(self):
+        date_due = date.today()
+        if self.company_id:
+            date_due = date_due + timedelta(
+                days=self.company_id.days_date_due_sale or 0.0)
+        return date
+
+    date_due = fields.Date(
+        'Date Due', default=_get_date_due,
+        help='Date due to finish this sale order, your value calculated with '
+        'the date sale order + days configured in Settings/Sales')

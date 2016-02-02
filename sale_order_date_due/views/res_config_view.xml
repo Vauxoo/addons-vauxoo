@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="view_sale_conf_inherit_date_due" model="ir.ui.view">
+            <field name="name">view.sale.conf.inherit.date.due</field>
+            <field name="model">sale.config.settings</field>
+            <field name="inherit_id" ref="sale.view_sales_config"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='customer feature']" position="after">
+                    <div name='Date Due'>
+                        <label for="days_date_due_sale" string="Days date due in sales"/>
+                        <field name="days_date_due_sale" class="oe_inline"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

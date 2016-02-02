@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data noupdate="1">
+        <record model="ir.config_parameter" id="record_id">
+            <field name="key">sale.days_due_date</field>
+            <field name="value">0</field>
+        </record>
+    </data>
+</openerp>
