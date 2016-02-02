@@ -75,5 +75,21 @@
             <field name="account_journal_id" ref="account.expenses_journal"/>
             <field name="invoice_ids" eval='[(6, 0, [ref("invoice_landing_costs_average_1")])]'/>
         </record>
+
+        <record id="slc_02" model="stock.landed.cost">
+            <field name="account_journal_id" ref="account.expenses_journal"/>
+            <field name="picking_ids"
+                model="purchase.order"
+                eval="[(6, 0, [obj(ref('stock_card.sc_po_01')).picking_ids[0].id])]"/>
+        </record>
+
+        <record id="slc_02_line_01" model="stock.landed.cost.lines">
+            <field name="cost_id" ref="slc_02"/>
+            <field name="product_id" ref="service_standard_periodic_landed_cost_2"/>
+            <field name="name">slc_02_line_01</field>
+            <field name="account_id" ref="account.rsa"/>
+            <field name="split_method">by_quantity</field>
+            <field name="price_unit">100</field>
+        </record>
     </data>
 </openerp>
