@@ -24,6 +24,6 @@ class SaleOrder(models.Model):
         return date_due.strftime('%Y-%m-%d')
 
     date_due = fields.Date(
-        'Date Due', default=_get_date_due,
+        'Date Due', default=_get_date_due, copy=False,
         help='Date due to finish this sale order, the value is calculated '
         'with the today date + days configured in Settings/Sales')
