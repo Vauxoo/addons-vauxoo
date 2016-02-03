@@ -7,4 +7,4 @@
 #    info Vauxoo (info@vauxoo.com)
 #    coded by: Luis Torres <luis_t@vauxoo.com>
 ############################################################################
-from . import test_sale_date_due
+from . import test_sale_due_date

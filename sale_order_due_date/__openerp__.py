@@ -8,10 +8,10 @@
 #    coded by: Luis Torres <luis_t@vauxoo.com>
 ############################################################################
 {
-    "name": "Sale Order Date Due",
+    "name": "Sale Order Due Date",
     "version": "1.0",
     "author": "Vauxoo",
-    "category": "Customization",
+    "category": "Sale",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [

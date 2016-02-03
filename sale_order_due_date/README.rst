@@ -1,10 +1,10 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Sale Order Date Due
+Sale Order Due Date
 ===================
 
-This module added the field of date due in sale order, it is fill by default
+This module added the field of due date in sale order, it is fill by default
 with the value configurated in sale order, but the user can change this value.
 
 You can set the default value in Settings/Sales.
@@ -14,7 +14,7 @@ You can set the default value in Settings/Sales.
 
 Requirements:
 -------------
-- Go to https://github.com/Vauxoo/addons-vauxoo and download repo in order to install sale_order_date_due module.
+- Go to https://github.com/Vauxoo/addons-vauxoo and download repo in order to install sale_order_due_date module.
 
 Contributors
 ------------

@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * sale_order_date_due
+#   * sale_order_due_date
 #
 msgid ""
 msgstr ""
