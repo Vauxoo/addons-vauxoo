@@ -24,7 +24,7 @@ class TestSaleDueDate(common.TransactionCase):
             'days_due_date_sale': 5}).execute()
         self.assertEquals(5, int(self.conf.value), 'The value was not updated')
 
-  def test_check_due_date_by_default(self):
+    def test_check_due_date_by_default(self):
         'Test to check that date due is fill by default and is correct'
         self.test_update_days()
         sale = self.sale.copy()
