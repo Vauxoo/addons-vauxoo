@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, api, _
+from openerp import models, api
 
 
 class ProductProduct(models.Model):
