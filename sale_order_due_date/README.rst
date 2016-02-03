@@ -9,7 +9,7 @@ with the value configurated in sale order, but the user can change this value.
 
 You can set the default value in Settings/Sales.
 
-.. image:: sale_order_date_due/static/src/img/settings.png
+.. image:: sale_order_due_date/static/src/img/settings.png
     :width: 300pt
 
 Requirements:
