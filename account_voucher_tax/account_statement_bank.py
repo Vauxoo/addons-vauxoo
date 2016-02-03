@@ -174,9 +174,9 @@ class AccountBankStatementLine(osv.osv):
 
         update_ok = st_line.journal_id.update_posted
         if not update_ok:
-            st_line.journal_id.write({'update_posted': True})
+            st_line.journal_id.sudo().write({'update_posted': True})
         move_obj.button_cancel(cr, uid, [move_id_old])
-        st_line.journal_id.write({'update_posted': update_ok})
+        st_line.journal_id.sudo().write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
         return res
 
