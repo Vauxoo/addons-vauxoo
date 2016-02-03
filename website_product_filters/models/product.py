@@ -74,6 +74,12 @@ class ProductPriceRanges(models.Model):
 class ProductCategory(models.Model):
     _inherit = 'product.public.category'
 
+    _parent_store = True
+    _order = 'parent_left'
+
+    parent_left = fields.Integer('Left Parent', select=1)
+    parent_right = fields.Integer('Right Parent', select=1)
+
     product_ids = fields.Many2many(
         "product.template", "product_public_category_product_template_rel",
         "product_public_category_id",
