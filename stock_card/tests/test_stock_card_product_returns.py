@@ -19,7 +19,6 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-from datetime import datetime
 from openerp.tools.float_utils import float_compare
 
 
@@ -45,8 +44,8 @@ class TestStockCardProductReturns(TransactionCase):
                           'inv_val': 250}),
             ('pick_01_sc_so_01', {'cost': 100, 'qty': 2, 'avg': 175,
                                   'mov_val': 100, 'inv_val': 350}),
-            ('sc_po_03', {'cost': 220, 'qty': 7, 'avg': 207.14, 'mov_val': 1100,
-                          'inv_val': 1450}),
+            ('sc_po_03', {'cost': 220, 'qty': 7, 'avg': 207.14,
+                          'mov_val': 1100, 'inv_val': 1450}),
             ('sc_po_04', {'cost': 400, 'qty': 10, 'avg': 265, 'mov_val': 1200,
                           'inv_val': 2650}),
             ('pick_02_sc_po_03', {'cost': 220, 'qty': 8, 'avg': 276.25,
