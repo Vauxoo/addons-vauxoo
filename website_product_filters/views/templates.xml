@@ -358,7 +358,7 @@
         </template>
 
         <template id="option_collapse_products_categories"
-          name="Collapsible Category List" inherit_id="website_sale.products_categories" active="True">
+          name="Collapsible Category List" inherit_id="website_sale.products_categories" customize_show="True" active="True">
           <xpath expr="//div[@id='products_grid_before']/ul" position="replace">
             <ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
               <t t-foreach="categories" t-as="categ">
