@@ -20,6 +20,8 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 from openerp.tools.float_utils import float_compare
+from datetime import datetime, timedelta
+from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class TestStockCardProductReturns(TransactionCase):
@@ -51,6 +53,21 @@ class TestStockCardProductReturns(TransactionCase):
             ('pick_02_sc_po_03', {'cost': 220, 'qty': 8, 'avg': 276.25,
                                   'mov_val': -440, 'inv_val': 2210}),
         ]
+
+        # separate in time all transactions
+        move_ids = {}
+        delta = 1
+        for k, v in self.values:
+            obj = self.env.ref('stock_card.'+k)
+            if k.startswith('sc_'):
+                move_id = obj.picking_ids[0].move_lines[0]
+            elif k.startswith('pick_'):
+                move_id = obj.move_lines[0]
+            next_hour = datetime.strptime(
+                '2016-01-01 01:00:00',
+                '%Y-%m-%d %H:%M:%S') + timedelta(hours=delta)
+            delta += 1
+            move_id.write({'date': next_hour})
 
     def get_stock_valuations(self, product_id):
         sc_moves = self.sc_product._stock_card_move_get(
