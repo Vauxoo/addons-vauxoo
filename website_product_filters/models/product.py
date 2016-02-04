@@ -79,6 +79,7 @@ class ProductCategory(models.Model):
 
     parent_left = fields.Integer('Left Parent', select=1)
     parent_right = fields.Integer('Right Parent', select=1)
+    parent_id = fields.Many2one(ondelete='restrict')
 
     product_ids = fields.Many2many(
         "product.template", "product_public_category_product_template_rel",
