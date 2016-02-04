@@ -1,3 +1,39 @@
+Reporting Issues
+----------------
+
+1. Make sure you've actually read the error message if there is one, it may really help
+2. No need to create an issue if you're [making a PR](#making-pull-requests) to fix it. Describe the issue in the PR, it's the same as an issue, but with higher priority!
+2. Double-check that the issue still occurs with the latest version of Odoo (you can easily test this on [Runbot](http://runbot.vauxoo.com))
+3. [Search](https://github.com/vauxoo/addons-vauxoo/issues) for similar issues before reporting anything
+4. If you're a programmer, try investigating/fixing yourself, and consider making a Pull Request instead
+5. If you really think a new issue is useful, keep in mind that it will be treated with a much lower priority than a Pull Request or an Vauxoo Enterprise support ticket
+
+If later on you create a pull request solving an opened issue, do not forget to reference it in your pull request (e.g.: "This patch fixes issue #42").
+
+When reporting an issue or creating a pull request, please **use the following template**:
+
+```
+**Quantity field is ignored in a sale order**
+
+Impacted versions:
+
+ - 8.0
+
+Steps to reproduce:
+
+ 1. create a new sale order
+ 2. add a line with product 'Service', quantity 2, unit price 10.0
+ 3. validate the sale order
+
+Current behavior:
+
+ - Total price of 10.0
+
+Expected behavior:
+
+ - Total price of 20.0 (2 * 10 = 20)
+```
+
 Hacking this set of modules.
 ---
 
