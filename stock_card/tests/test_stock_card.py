@@ -72,6 +72,10 @@ class TestStockCard(TransactionCase):
         ]
 
     def test_00_stock_card_from_product(self):
+        self.assertEqual(
+            self.stock_card._get_fieldnames(), {'average': 'standard_price'},
+            "It's required to stock.card have defined 'average' field mapping")
+
         res = {}
         msg_error = 'Asked Product has not Moves to show'
         with self.assertRaisesRegexp(UserError, msg_error):
