@@ -86,25 +86,9 @@ class ProductCategory(models.Model):
         "product_template_id", readonly=True)
     total_tree_products = fields.Integer("Total Subcategory Prods",
                                          compute="_get_product_count",
-                                         store=True,)
-    has_products_ok = fields.Boolean(compute="_get_has_products_ok",
+                                         store=True)
+    has_products_ok = fields.Boolean(compute="_get_product_count",
                                      store=True, readonly=True)
-
-    @api.depends("product_ids")
-    @api.multi
-    def _get_has_products_ok(self):
-        for record in self:
-            record.has_products_ok = self._child_has_products(record)
-
-    def _child_has_products(self, category):
-        if category.child_id:
-            return any(self._child_has_products(child)
-                       for child in category.child_id)
-        elif category.product_ids.filtered(
-                lambda r: r.website_published is True):
-            return True
-        else:
-            return False
 
     @api.model
     def _get_async_ranges(self, category):
@@ -151,8 +135,7 @@ class ProductCategory(models.Model):
             to_jsonfy = [{'id': k, 'qty': count_dict[k]} for k in count_dict]
             return to_jsonfy
 
-    @api.depends("product_ids")
-    @api.multi
+    @api.depends("product_ids", "product_ids.website_published")
     def _get_product_count(self):
         prod_obj = self.env["product.template"]
         for rec in self:
@@ -160,3 +143,4 @@ class ProductCategory(models.Model):
                 [('public_categ_ids', 'child_of', rec.id),
                  ('website_published', '=', True)])
             rec.total_tree_products = len(prod_ids)
+            rec.has_products_ok = True and len(prod_ids) > 0 or False
