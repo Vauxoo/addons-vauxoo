@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 from openerp.tools.safe_eval import safe_eval
+from openerp.exceptions import Warning as UserError
 
 
 class TestStockCard(TransactionCase):
@@ -69,6 +70,17 @@ class TestStockCard(TransactionCase):
                 'theoretical_qty': 8,
             },
         ]
+
+    def test_00_stock_card_from_product(self):
+        res = {}
+        msg_error = 'Asked Product has not Moves to show'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            res = self.product_id.stock_card_move_get()
+
+        self.test_01_stock_card()
+        res = self.product_id.stock_card_move_get()
+        res = safe_eval(res['domain'])[0][2]
+        self.assertEqual(len(res), 6, 'Stock Card in this case have to be =5')
 
     def test_01_stock_card(self):
         for val in self.inv_ids:
