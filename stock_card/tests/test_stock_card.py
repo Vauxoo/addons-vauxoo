@@ -87,7 +87,6 @@ class TestStockCard(TransactionCase):
         self.assertEqual(len(res), 5, 'Stock Card in this case have to be =5')
 
         dct2write = {'average': 1661}
-        current_std_price = self.product_id.standard_price
         self.scp.write_standard_price(self.product_id.id, dct2write)
         self.assertEqual(self.product_id.standard_price, 1661,
                          "Couln't set new standard price for the product")
