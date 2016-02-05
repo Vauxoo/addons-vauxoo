@@ -9,4 +9,4 @@ class ResCompany(models.Model):
     std_price_neg_threshold = fields.Float(
         string="Standard Price Bottom Threshold (%)",
         help=('Maximum percentage threshold that Standard Price is '
-              'allowed to lower'))
+              'allowed to lower'), default=1.0)
