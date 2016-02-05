@@ -1,35 +1,28 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import fields, osv
+from openerp.osv import osv
+from openerp import api, fields
 
 
 class ProductExtendedSegmentationSettings(osv.osv_memory):
     _inherit = 'purchase.config.settings'
-    _columns = {
-        'std_price_neg_threshold': fields.float(
-            string="Standard Price Negative Threshold (%)",
-            help=('Maximum percentage threshold that Standard Price is '
-                  'allowed to lower')),
-    }
+    std_price_neg_threshold = fields.Float(
+        string="Standard Price Bottom Threshold (%)",
+        help=('Maximum percentage threshold that Standard Price is '
+              'allowed to lower')
+    )
 
-    def default_get(self, cr, uid, fieldnames, context=None):
-        res = super(
-            ProductExtendedSegmentationSettings, self).default_get(
-                cr, uid, fieldnames, context)
-        user = self.pool.get('res.users').browse(cr, uid, uid, context)
-        res['std_price_neg_threshold'] =\
-            user.company_id.std_price_neg_threshold
+    @api.model
+    def default_get(self, fieldnames):
+        res = super(ProductExtendedSegmentationSettings, self).\
+            default_get(fieldnames)
+        res['std_price_neg_threshold'] = \
+            self.env.user.company_id.std_price_neg_threshold
         return res
 
-    _defaults = {
-        'std_price_neg_threshold': 1.0,
-    }
-
-    def set_purchase_defaults(self, cr, uid, ids, context=None):
-        # super(
-        #     ProductExtendedSegmentationSettings, self).set_purchase_defaults(
-        #         cr, uid, context)
-        wizard = self.browse(cr, uid, ids)[0]
-        user = self.pool.get('res.users').browse(cr, uid, uid, context)
-        user.company_id.write(
-            {'std_price_neg_threshold': wizard.std_price_neg_threshold})
+    @api.multi
+    def set_purchase_defaults(self):
+        self.ensure_one()
+        self.env.user.company_id.write({
+            'std_price_neg_threshold': self.std_price_neg_threshold
+        })
         return {}
