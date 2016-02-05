@@ -91,7 +91,6 @@ class ProductTemplate(models.Model):
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
         user = self.pool.get('res.users').browse(cr, uid, uid, context)
-        bottom_price_threshold = user.company_id.std_price_neg_threshold
         precision_id = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
         model = 'product.product'
@@ -197,6 +196,11 @@ class ProductTemplate(models.Model):
         # NOTE: Instanciating BOM related product
         product_tmpl_id = tmpl_obj.browse(
             cr, uid, bom.product_tmpl_id.id, context=context)
+
+        bottom_price_threshold = product_tmpl_id.company_id.\
+            std_price_neg_threshold
+        if not bottom_price_threshold:
+            bottom_price_threshold = user.company_id.std_price_neg_threshold
 
         current_price = product_tmpl_id.standard_price
         diff = price - current_price
