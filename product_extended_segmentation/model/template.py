@@ -207,13 +207,15 @@ class ProductTemplate(models.Model):
 
         if float_is_zero(diff, precision_id) or \
                 (current_price and computed_th < bottom_price_threshold):
-            tmpl_obj.message_post(
-                cr, uid, [product_tmpl_id.id],
-                'Cost not updated but segments. Bottom threshold reached:\n',
-                '- Current price {new}\n- Old price {old}\n'
-                '- Threshold {th}\n{segments}'.
-                format(old=current_price, new=price, segments=str(sgmnt_dict),
-                       th=computed_th))
+            tmpl_obj.message_post(cr, uid, [product_tmpl_id.id],
+                                  'Not Updated Cost, But Segments only.',
+                                  'I cowardly did not update Standard new \n'
+                                  'price less than old price \n'
+                                  'new {new} old {old} \n'
+                                  'Segments where written CHECK AFTERWARDS.'
+                                  '{segments}'.
+                                  format(old=current_price, new=price,
+                                         segments=str(sgmnt_dict)))
             # Just writting segments to be consistent with segmentation
             # feature. TODO: A report should show differences.
             tmpl_obj.write(cr, uid, [product_tmpl_id.id], sgmnt_dict,
