@@ -51,10 +51,18 @@ class TestWizard(TransactionCase):
     def get_product_cost(self, info_field, product_tmpl_id):
         return safe_eval(info_field)[product_tmpl_id]
 
+    def check_default_cost(self, product_id, value):
+        wizard_id = self.create_wizard(product_id)[0]
+        cost = self.get_product_cost(wizard_id.info_field, product_id.id)
+        self.assertEqual(cost, value, 'Default wizard value for {0} '
+                         'should be {1}'.format(product_id.name, value))
+
     def test_00_test_wizard_defaults(self):
         wizard_id = self.create_wizard(self.producto_d_id)[0]
         self.assertEqual(wizard_id.recursive, False,
                          'Recursive check should be unchecked by default')
+        self.check_default_cost(self.producto_d_id, 35)
+        self.check_default_cost(self.producto_e_id, 90)
 
     def test_01_test_threshold_no_update(self):
         self.company_id.write({'std_price_neg_threshold': 0})
