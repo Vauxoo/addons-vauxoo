@@ -19,7 +19,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class TestStockCardNegativeStock(TransactionCase):
@@ -38,6 +38,10 @@ class TestStockCardNegativeStock(TransactionCase):
         self.wizard_item = self.env['stock.transfer_details_items']
         self.transfer_details = self.env['stock.transfer_details']
         self.sale_order = self.env['sale.order']
+        self.delta = 0
+        self.next_hour = datetime.strptime('2016-01-01 01:00:00',
+                                           '%Y-%m-%d %H:%M:%S')
+
         self.inv_ids = [
             {  # 1
                 'do_purchase': True, 'cost': 20, 'qty': 2,
@@ -89,24 +93,32 @@ class TestStockCardNegativeStock(TransactionCase):
             },
         ]
 
-    def do_picking(self, picking_id=False):
-        picking_id.action_confirm()
-        wizard_id = self.wizard.create({
-            'picking_id': picking_id.id,
-        })
-
-        for move_id in picking_id.move_lines:
-            self.wizard_item.create({
-                'transfer_id': wizard_id.id,
-                'product_id': move_id.product_id.id,
-                'quantity': move_id.product_qty,
-                'sourceloc_id': move_id.location_id.id,
-                'destinationloc_id': move_id.location_dest_id.id,
-                'product_uom_id': move_id.product_uom.id,
+    def do_picking(self, picking_ids=False):
+        for picking_id in picking_ids:
+            picking_id.action_confirm()
+            wizard_id = self.wizard.create({
+                'picking_id': picking_id.id,
             })
 
-        wizard_id.do_detailed_transfer()
-        self.assertEqual(picking_id.state, 'done')
+            for move_id in picking_id.move_lines:
+                self.wizard_item.create({
+                    'transfer_id': wizard_id.id,
+                    'product_id': move_id.product_id.id,
+                    'quantity': move_id.product_qty,
+                    'sourceloc_id': move_id.location_id.id,
+                    'destinationloc_id': move_id.location_dest_id.id,
+                    'product_uom_id': move_id.product_uom.id,
+                })
+
+            wizard_id.do_detailed_transfer()
+            self.assertEqual(picking_id.state, 'done')
+
+            for move_id in picking_id.move_lines:
+                self.delta += 1
+                self.next_hour = datetime.strptime(
+                    '2016-01-01 01:00:00',
+                    '%Y-%m-%d %H:%M:%S') + timedelta(hours=self.delta)
+                move_id.write({'date': self.next_hour})
 
     def create_purchase_order(self, qty=False, cost=False):
         purchase_order_id = self.purchase_order.create({
@@ -126,7 +138,7 @@ class TestStockCardNegativeStock(TransactionCase):
         purchase_order_id.wkf_confirm_order()
         purchase_order_id.action_invoice_create()
         purchase_order_id.action_picking_create()
-        self.do_picking(purchase_order_id.picking_ids[0])
+        self.do_picking(purchase_order_id.picking_ids)
 
     def create_sale_order(self, qty=False, price=False):
         sale_order_id = self.sale_order.create({
@@ -142,7 +154,7 @@ class TestStockCardNegativeStock(TransactionCase):
         })
 
         sale_order_id.action_button_confirm()
-        self.do_picking(sale_order_id.picking_ids[0])
+        self.do_picking(sale_order_id.picking_ids)
         return sale_order_id
 
     def get_stock_valuations(self):
@@ -163,11 +175,9 @@ class TestStockCardNegativeStock(TransactionCase):
                 self.create_sale_order(qty=qty, price=costprice)
 
         card_lines = self.get_stock_valuations()
-
         self.assertEqual(len(self.inv_ids), len(card_lines),
                          "Both lists should have the same length(=12)")
         for expected, succeded in zip(self.inv_ids, card_lines):
-
             self.assertEqual(expected['avg'],
                              succeded['average'],
                              "Average Cost {0} is not the expected".

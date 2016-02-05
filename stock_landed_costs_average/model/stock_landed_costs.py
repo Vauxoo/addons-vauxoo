@@ -652,5 +652,5 @@ class StockLandedCost(models.Model):
                 (cost_product.name))
 
         return self._create_landed_account_move_line(
-               line, move_id, credit_account_id, debit_account_id, qty_out,
-               already_out_account_id)
+            line, move_id, credit_account_id, debit_account_id, qty_out,
+            already_out_account_id)
