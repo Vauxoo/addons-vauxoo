@@ -13,7 +13,7 @@
                     <filter string="Analytic Partner" icon="terp-partner" domain="[]" context="{'group_by':'verify_partner'}"/>
                     <filter string="Same Analytic" icon="terp-partner" domain="[]" context="{'group_by':'same_analytic'}"/>
                </xpath>
-               <xpath expr='//filter[@name="message_unread"]' position="before">
+               <xpath expr='//filter[@name="message_needaction"]' position="before">
                     <filter string="With Task" icon="terp-partner" domain="[('has_task', '=', True)]"/>
                     <filter string="Analytic Partner" icon="terp-partner" domain="[('verify_partner', '=', True)]"/>
                     <filter string="Same Analytic" icon="terp-partner" domain="[('same_analytic', '=', True)]"/>
@@ -61,18 +61,11 @@
         <record model="ir.ui.view" id="project_issue_form_view2">
             <field name="name">Project Issue Tracker Form</field>
             <field name="model">project.issue</field>
-            <field name="inherit_id" ref="project_issue_sheet.project_issue_form_view"/>
+            <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr='//group[@string="Statistics"]' position="replace">
+                <xpath expr='//notebook/page[@name="extra_info"]' position="before">
+                    <page string="Audit Info">
                     <group col="4" >
-                        <group string="Statistics" col="2" colspan="2">
-                            <field name="day_open"/>
-                            <field name="day_close"/>
-                            <field name="working_hours_open" widget="float_time"/>
-                            <field name="working_hours_close" widget="float_time"/>
-                            <field name="inactivity_days"/>
-                            <field name="days_since_creation"/>
-                        </group>
                         <group string='Audit Information' groups="project_issue_management.project_auditor" col="2" colspan="2">
                             <field name="same_analytic"/>
                             <field name="has_task"/>
@@ -86,6 +79,7 @@
                         </group>
                         </group>
                     </group>
+                    </page>
                 </xpath>
             </field>
         </record>
@@ -133,8 +127,8 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_search_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//filter[@string=&quot;Stage&quot;]" position="after">
-                    <filter string="Issue" domain="[]" context="{'group_by':'issue_id'}"/>
+                <xpath expr="//filter[@name='unassigned']" position="after">
+                    <filter string="Issue" domain="[]" name="issue" context="{'group_by':'issue_id'}"/>
                 </xpath>
                 <xpath expr='//field[@name="name"]' position="after">
                     <field string="Issue" name="issue_id"/>
