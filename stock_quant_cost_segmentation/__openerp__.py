@@ -20,6 +20,7 @@
     ],
     "data": [
         'view/view.xml',
+        'data/data.xml',
     ],
     "installable": True,
     "auto_install": False,
