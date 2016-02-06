@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * sale_order_due_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-02 19:58+0000\n"
+"PO-Revision-Date: 2016-02-02 19:58+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_due_date
+#: view:sale.config.settings:sale_order_due_date.view_sale_conf_inherit_due_date
+msgid "Days due date in sales"
+msgstr "Días para fecha de vencimiento en venta"
+
+#. module: sale_order_due_date
+#: field:sale.config.settings,days_due_date_sale:0
+msgid "Days to due date"
+msgstr "Días para fecha de vencimiento"
+
+#. module: sale_order_due_date
+#: field:sale.order,due_date:0
+msgid "Due Date"
+msgstr "Fecha de Vencimiento"
+
+#. module: sale_order_due_date
+#: help:sale.order,due_date:0
+msgid "Due date to finish this sale order, the value is calculated with the today date + days configured in Settings/Sales"
+msgstr "Fecha de vencimiento para finalizar esta orden de venta, el valor es calculado con el día de hoy + los días configirados en Configuración/Ventas"
+
+#. module: sale_order_due_date
+#: help:sale.config.settings,days_due_date_sale:0
+msgid "Number of days that will add to the date when is created the sale order as due date."
+msgstr "Número de días que se agregarán a la fecha de vencimiento en la orden de venta cuando esta se cree."
+
+#. module: sale_order_due_date
+#: model:ir.model,name:sale_order_due_date.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"

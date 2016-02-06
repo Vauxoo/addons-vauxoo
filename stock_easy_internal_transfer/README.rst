@@ -11,7 +11,9 @@ transfer.
 
 In addition, was added a inventory validation based
 in source location, and a new section 'quick internal
-transfers' it was added in All operations
+transfers' it was added in All operations. To enable
+this feature you must check 'user quick internal transfer
+in this warehouse' in warehouse form.
 
 
 Contributors

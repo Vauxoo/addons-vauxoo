@@ -1,0 +1,85 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_landed_costs_segmentation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-04 18:06+0000\n"
+"PO-Revision-Date: 2016-01-04 18:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_landed_costs_segmentation
+#: selection:stock.landed.cost.lines,segmentation_cost:0
+msgid "Landed Cost"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: selection:stock.landed.cost.lines,segmentation_cost:0
+msgid "Material Cost"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: code:addons/stock_landed_costs_segmentation/model/stock_landed_costs.py:35
+#, python-format
+msgid "Only draft landed costs can be validated"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: code:addons/stock_landed_costs_segmentation/model/stock_landed_costs.py:45
+#, python-format
+msgid "Please fill the segmentation field in Cost Lines"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: selection:stock.landed.cost.lines,segmentation_cost:0
+msgid "Production Cost"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: field:stock.landed.cost.lines,segmentation_cost:0
+msgid "Segmentation"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: model:ir.model,name:stock_landed_costs_segmentation.model_stock_landed_cost
+msgid "Stock Landed Cost"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: model:ir.model,name:stock_landed_costs_segmentation.model_stock_landed_cost_lines
+msgid "Stock Landed Cost Lines"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: selection:stock.landed.cost.lines,segmentation_cost:0
+msgid "Subcontracting Cost"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: model:product.template,name:stock_landed_costs_segmentation.product_real_01_product_template
+msgid "VX Keyboard (real)"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: model:product.template,name:stock_landed_costs_segmentation.product_std_01_product_template
+msgid "VX Laptop Battery (std)"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: model:product.template,name:stock_landed_costs_segmentation.product_avg_01_product_template
+msgid "VX Wireless Mouse (avg)"
+msgstr ""
+
+#. module: stock_landed_costs_segmentation
+#: code:addons/stock_landed_costs_segmentation/model/stock_landed_costs.py:39
+#, python-format
+msgid "You cannot validate a landed cost which has no valid valuation adjustments lines. Did you click on Compute?"
+msgstr ""
+

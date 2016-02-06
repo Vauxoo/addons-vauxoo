@@ -19,3 +19,5 @@
 #
 ##############################################################################
 from . import test_stock_card
+from . import test_stock_card_negative_stock
+from . import test_stock_card_product_returns

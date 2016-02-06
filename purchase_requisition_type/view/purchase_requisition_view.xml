@@ -38,7 +38,7 @@
                     <field name="type"/>
                 </xpath>
 
-                <xpath expr="//filter[@string='Purchase Done']" position="after">
+                <xpath expr="//filter[@string='Closed Bids']" position="after">
                     <separator/>
                     <filter icon="terp-dialog-close" string="Materials Requisition" domain="[('type','=','materials')]"/>
                     <filter icon="terp-dialog-close" string="Service Requisition" domain="[('type','=','service')]"/>

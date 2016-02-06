@@ -161,6 +161,75 @@
             <attribute name="t-att-data-price">product.lst_price and product.lst_price or '0'</attribute>
           </xpath>
         </template>
+        <!-- Show Thumbnail Subcategories : This template shows all the
+             subcategories of the main categories shown on /shop, if there is
+             any selected category it will show the subcategories of such.
+        -->
+        <template id="show_thumbnail_subcategories" inherit_id="website_sale.products" active="True">
+          <xpath expr="//div[@id='products_grid_before']" position="after">
+            <t t-if="not products">
+            <div class="subcategories">
+              <t t-foreach="categories" t-as="parent_categs">
+                <t t-if="parent_categs.child_id">
+                <div class="col-md-9 pull-right mt16" >
+                  <div class="panel panel-default panel-heading gray-bg"><b><span>Categories of </span><t t-esc="parent_categs.name"/></b></div>
+                  <t t-foreach="parent_categs.child_id" t-as="child_categ">
+                   <t t-if="child_categ.has_products_ok">
+                    <div id="categories_grid" class='col-md-4 col-xs-6 col-sm-4'>
+                        <div class='mt16 text-center'>
+                            <span t-field="child_categ.image_medium" t-field-options='{"widget": "image"}'/>
+                            <h4>
+                                <a t-att-href="'/shop/category/' + slug(child_categ)" style="display: block">
+                                    <span t-field='child_categ.name' style="display: block"/>
+                                </a>
+                            </h4>
+                        </div>
+                    </div>
+                  </t>
+                  </t>
+                </div>
+              </t>
+              </t>
+             </div>
+            </t>
+            <t t-if="populars">
+                <div class="col-md-9 pull-right mt16" >
+                  <div class="panel panel-default panel-heading gray-bg"><b><span>Popular products in </span><t t-esc="category.name"/></b></div>
+                    <t t-foreach="populars" t-as="popular">
+                      <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
+                          <div class='mt16 text-center'>
+                              <span t-field="popular.image_medium" t-field-options='{"widget": "image"}'/>
+                              <t t-set="product" t-value="popular"/>
+                              <t t-call="website_rate_product.show_product_rating"/>
+                              <h4>
+                                  <a t-attf-href="/shop/product/#{ slug(popular) }" style="display: block">
+                                      <span t-field='popular.name' style="display: block"/>
+                                  </a>
+                              </h4>
+                          </div>
+                      </div>
+                    </t>
+                </div>
+            </t>
+            <t t-if="newest">
+                <div class="col-md-9 pull-right mt16" >
+                  <div class="panel panel-default panel-heading gray-bg"><b><span>Newest products in </span><t t-esc="category.name"/></b></div>
+                    <t t-foreach="newest" t-as="new_p">
+                      <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
+                          <div class='mt16 text-center'>
+                              <span t-field="new_p.image_medium" t-field-options='{"widget": "image"}'/>
+                              <h4>
+                                  <a t-attf-href="/shop/product/#{ slug(new_p) }" style="display: block">
+                                      <span t-field='new_p.name' style="display: block"/>
+                                  </a>
+                              </h4>
+                          </div>
+                      </div>
+                    </t>
+                </div>
+            </t>
+          </xpath>
+        </template>
         <template id="breadcrumbs" name="Recursive breadcrumbs">
             <t t-if="current_category.parent_id">
                 <t t-set="old_category" t-value="current_category"/>
@@ -185,7 +254,7 @@
         </template>
 
         <template id="product_sort_bar" inherit_id="website_sale.products" active="True">
-          <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="replace">
+          <xpath expr="//div[@class='products_pager']/div[@class='row']/t[@t-call='website_sale.search']" position="before">
 
             <div class="container sort_bar">
             <div class="col-md-9 panel-no-margins">
@@ -213,21 +282,22 @@
                   </t>
                 </div>
             </div>
-              <div class="col-md-3 pull-right">
-                <form class="js_attributes" method="get">
-                  <select t-att-value="sortby" class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
-                    <option value="0" selected="selected">Sort By...</option>
-                    <option value="name" t-attf-selected="#{'selected' if sortby == 'name' else ''}">Product Name</option>
-                    <option value="pasc" t-attf-selected="#{'selected' if sortby == 'pasc' else ''}">Price Lowest</option>
-                    <option value="pdesc" t-attf-selected="#{'selected' if sortby == 'pdesc' else ''}">Price Highest</option>
-                    <option value="hottest" t-attf-selected="#{'selected' if sortby == 'hottest' else ''}">Hottest</option>
-                    <option value="rating" t-attf-selected="#{'selected' if sortby == 'rating' else ''}">Customer Rating</option>
-                    <option value="popularity" t-attf-selected="#{'selected' if sortby == 'popularity' else ''}">Popularity</option>
-                  </select>
+              <t t-if="products">
+                <div class="col-md-3 pull-right">
+                  <form class="js_attributes" method="get">
+                    <select t-att-value="sortby" class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
+                      <option value="0" selected="selected">Sort By...</option>
+                      <option value="name" t-attf-selected="#{'selected' if sortby == 'name' else ''}">Product Name</option>
+                      <option value="pasc" t-attf-selected="#{'selected' if sortby == 'pasc' else ''}">Price Lowest</option>
+                      <option value="pdesc" t-attf-selected="#{'selected' if sortby == 'pdesc' else ''}">Price Highest</option>
+                      <option value="hottest" t-attf-selected="#{'selected' if sortby == 'hottest' else ''}">Hottest</option>
+                      <option value="rating" t-attf-selected="#{'selected' if sortby == 'rating' else ''}">Customer Rating</option>
+                      <option value="popularity" t-attf-selected="#{'selected' if sortby == 'popularity' else ''}">Popularity</option>
+                    </select>
 
-                </form>
-              </div>
-
+                  </form>
+                </div>
+              </t>
               <form t-att-action="keep('/shop'+ ('/category/'+slug(category)) if category else '', search=0)" method="get" t-att-class="search_class">
                 <t t-if="attrib_values">
                   <t t-foreach="attrib_values" t-as="a">
@@ -254,36 +324,43 @@
             <attribute name="data-id">category-pills</attribute>
           </xpath>
         </template>
-
+        <!-- Categories Recursive: this template iterates on the categories tree
+            :param obj categ: the categories retrieved by the controller shop.
+        -->
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
           <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
             <t t-set="has_product" t-value="categ.has_products_ok"/>
             <i t-if="categ.child_id and has_product"
-              t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}" t-att-data-arrowid="categ.id"/>
+              t-attf-class="text-primary" t-att-data-arrowid="categ.id"/>
+            <!-- Link itself of category with the qty of products -->
             <t t-if="has_product">
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
-                <span class="badge">
-                  <t t-esc="'%s' %(categ.total_tree_products)"/>
-                </span>
+                <t t-if="categ.id != int(category or 0)">
+                  <span class="black-text">
+                    <t t-esc="'(%s)' %(categ.total_tree_products)"/>
+                  </span>
+                </t>
               </a>
             </t>
-            <ul t-if="has_product" class="nav nav-pills nav-stacked nav-hierarchy"
-              t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
-              <t t-foreach="categ.child_id" t-as="categ">
-                <t t-call="website_product_filters.option_collapse_categories_recursive"/>
-              </t>
-            </ul>
+            <!-- New sublist of child categories, rendered by this same template
+                 (recursive).-->
+            <t t-if="category">
+              <ul t-if="has_product" class="nav nav-pills nav-stacked">
+                <t t-foreach="categ.child_id" t-as="categ">
+                  <t t-if="categ.parent_id == category">
+                    <t t-call="website_product_filters.option_collapse_categories_recursive"/>
+                  </t>
+                </t>
+              </ul>
+            </t>
           </li>
         </template>
 
         <template id="option_collapse_products_categories"
-          name="Collapsible Category List" inherit_id="website_sale.products_categories" active="True">
+          name="Collapsible Category List" inherit_id="website_sale.products_categories" customize_show="True" active="True">
           <xpath expr="//div[@id='products_grid_before']/ul" position="replace">
             <ul class="nav nav-pills nav-stacked mt16" id="o_shop_collapse_category">
-              <li t-att-class=" '' if category else 'active' ">
-                <a t-att-href="keep('/shop',category=0)">All Products</a>
-              </li>
               <t t-foreach="categories" t-as="categ">
                 <t t-call="website_product_filters.option_collapse_categories_recursive"/>
               </t>

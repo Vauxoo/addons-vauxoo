@@ -8,16 +8,18 @@
         steps: [
             {
                 title: 'Click on category Computers',
-                element: 'i[data-arrowid="2"]',
+                element: 'li[data-categid="2"] a',
             },
             {
                 title: 'Click on category Devices',
-                waitFor: 'a:contains(Devices)',
-                element: 'i[data-arrowid="11"]',
+                content: "Here we check if the products on the tree are the right ones to render on popular products",
+                waitFor: 'a:contains(Bose Mini Bluetooth Speaker), a:contains(Apple Wireless Keyboard), a:contains(Apple In-Ear Headphones)',
+                element: 'li[data-categid="11"] a',
             },
             {
                 title: 'Click on category Keyboard / Mouse',
-                waitFor: 'a:contains("Keyboard / Mouse")',
+                content: "This step will wait to see if it finds the subcagtegories on the main div of subcategories",
+                waitFor: '.subcategories:contains("Keyboard / Mouse"), .subcategories:contains("Screen"), .subcategories:contains("Speakers")',
                 element: 'li[data-categid="15"] a:contains("Keyboard / Mouse")',
             },
             {
@@ -29,13 +31,17 @@
             {
                 title: 'Select price range of 0 to 100 USD',
                 waitFor: '.sort_bar h4:contains(16 GB)',
-                // waitNot: '(#products_grid div.oe_product_cart").not(":contains(iPod)"',
                 element: '.js_attributes input[name=range]input[value=1]',
             },
             {
                 title: 'Click on category Computers',
                 waitFor: 'a:contains(Computers)',
-                element: 'li[data-categid="21"] a:contains("Computers")',
+                element: 'ul.breadcrumb li:contains(Computers) a',
+            },
+            {
+                title: 'Click on subcategory Computers',
+                waitFor: 'a:contains(Computers)',
+                element: '.nav-pills ul a:contains(Computers)',
             },
             {
                 title: 'Click on category Computer all-in-one',

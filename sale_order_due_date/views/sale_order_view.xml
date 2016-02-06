@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="view_sale_order_inherit_due_date" model="ir.ui.view">
+            <field name="name">view.sale.order.inherit.due.date</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="due_date"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

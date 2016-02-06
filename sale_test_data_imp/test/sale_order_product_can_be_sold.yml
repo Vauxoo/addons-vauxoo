@@ -4,8 +4,8 @@
     Create sale order, picking in and invoice by product
 -
   !python {model: sale.order}: |
-    import tools
-    import netsvc
+    from openerp import tools
+    from openerp import netsvc
     import os
     import tempfile
     import csv
@@ -109,7 +109,7 @@
             #~ Validate invoice for this sale order 
             if invoice_id:
                 try:
-                    wf_service = netsvc.LocalService("workflow")
+                    wf_service = netsvc.openerp.workflow
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
                 except Exception, e:
                     fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Validate Invoice',  'product_id' : repr(product_id)})

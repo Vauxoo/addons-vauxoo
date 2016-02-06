@@ -1,11 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+        <record id="product_sgmnt" model="product.product">
+           <field name="name">VX Headphones (SQCS)</field>
+           <field name="type">product</field>
+           <field name="cost_method">average</field>
+           <field name="valuation">real_time</field>
+           <field name="standard_price">20</field>
+           <field name="property_stock_account_input" ref="account.o_expense"/>
+           <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <record id="po_sgmnt_01" model="purchase.order">
+            <field name="name">Purchase Order 01 for SQCS</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="po_sgmnt_01_line_01" model="purchase.order.line">
+            <field name="name">po_sgmnt_01_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_sgmnt"/>
+            <field name="product_qty">10</field>
+            <field name="price_unit">32</field>
+            <field name="order_id" ref="po_sgmnt_01"/>
+        </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="po_sgmnt_01"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="po_sgmnt_01"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('po_sgmnt_01')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('po_sgmnt_01')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_01">
+            <field name="picking_id" model="purchase.order" eval="obj(ref('po_sgmnt_01')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_01')]]"/>
+
         <record id="product_real_periodic" model="product.product">
             <field name="name">Segmentation Cost Product: Cost Method - Real, Valuation - Periodic</field>
             <field name="cost_method">real</field>
             <field name="valuation">manual_periodic</field>
-            <field name="landed_cost_ok">0</field>
             <field name="type">product</field>
             <field name="standard_price">100.0</field>
         </record>
@@ -24,6 +60,32 @@
 
         <function model="stock.inventory" name="action_done">
             <function eval="[[('id', '=', ref('stock_quant_cost_segmentation.stock_inventory_01'))]]" model="stock.inventory" name="search"/>
+        </function>
+
+        <record id="product_real_realtime" model="product.product">
+            <field name="name">Segmentation Cost Product: Cost Method - Real, Valuation - RealTime</field>
+            <field name="cost_method">real</field>
+            <field name="valuation">real_time</field>
+            <field name="type">product</field>
+            <field name="standard_price">100.0</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <record id="stock_inventory_02" model="stock.inventory">
+            <field name="name">Stock Quant Cost Segmentation - Inventory (RealTime)</field>
+        </record>
+
+        <record id="stock_inventory_line_2" model="stock.inventory.line">
+            <field name="product_id" ref="product_real_realtime"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="stock_quant_cost_segmentation.stock_inventory_02"/>
+            <field name="product_qty">1.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('stock_quant_cost_segmentation.stock_inventory_02'))]]" model="stock.inventory" name="search"/>
         </function>
     </data>
 </openerp>

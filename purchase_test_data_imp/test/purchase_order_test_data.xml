@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
-        
+
         <record id="res_partner_purchase_test" model="res.partner">
             <field name="name">PURCHASE TEST</field>
             <field name="supplier">1</field>
@@ -9,22 +9,22 @@
             <field name="is_company">1</field>
             <field name="type">default</field>
         </record>
-        
+
         <record id="account_payment_term_purchase_test_data_imp" model="account.payment.term">
             <field name="name">30 Days End of Month</field>
             <field name="note">30 Days End of Month</field>
         </record>
-        
+
         <record id="price_list_type_test_purchase_order_imp" model="product.pricelist.type">
             <field name="name">Purchase Pricelist (Test)</field>
             <field name="key">purchase</field>
         </record>
-        
+
         <record id="list_price0_test_purchase_order_imp" model="product.price.type">
             <field name="name">Public Price (test)</field>
             <field name="field">list_price</field>
         </record>
-        
+
         <record id="list_test_purchase_order_imp" model="product.pricelist">
             <field name="name">Public Pricelist (Test)</field>
             <field name="type">purchase</field>
@@ -46,27 +46,26 @@
             <field name="fields_id" search="[('model','=','res.partner'),('name','=','property_product_pricelist')]"/>
             <field eval="'product.pricelist,'+str(ref('list_test_purchase_order_imp'))" name="value"/>
         </record>
-        
+
 <!--
     Stock location
 -->
         <record id="stock_location_locations_purchase_test_data" model="stock.location">
             <field name="name">Physical Locations (PURCHASE TEST DATA)</field>
             <field name="usage">view</field>
-            <field name="icon">terp-stock</field>
             <field name="company_id"></field>
         </record>
-        
+
         <record id="stock_location_company_purchase_test_data" model="stock.location">
             <field name="name" model="res.company" search="[]" use="name"/>
             <field name="usage">view</field>
             <field name="location_id" ref="stock_location_locations_purchase_test_data"/>
         </record>
-        
+
         <record id="stock_location_stock_purchase_test_data" model="stock.location">
             <field name="name">Stock (PURCHASE TEST DATA)</field>
             <field name="location_id" ref="stock_location_company_purchase_test_data"/>
         </record>
-        
+
     </data>
 </openerp>

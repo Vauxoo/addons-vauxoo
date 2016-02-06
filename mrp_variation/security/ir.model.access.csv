@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mrp_variation_manager,mrp.variation.manager,model_mrp_variation,group_mrp_variation_manager,1,1,1,1
-access_mrp_variation_user,mrp.variation.user,model_mrp_variation,group_mrp_variation_user,1,0,0,0
-access_mrp_variation_finished_product_manager,mrp.variation.finished.product.manager,model_mrp_variation_finished_product,group_mrp_variation_manager,1,1,1,1
-access_mrp_variation_finished_product_user,mrp.variation.finished.product.user,model_mrp_variation_finished_product,group_mrp_variation_user,1,0,0,0

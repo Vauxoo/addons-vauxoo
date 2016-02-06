@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="insurance_landed_cost_account" model="account.account">
+            <field name="code">X200-vx-insurance-landed</field>
+            <field name="name">INSURANCE COST</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+        </record>
+        <record id="freight_landed_cost_account" model="account.account">
+            <field name="code">X200-vx-frieght-landed</field>
+            <field name="name">FREIGHT COST</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+        </record>
+        <record id="product_std_01" model="product.product">
+            <field name="name">VX Laptop Battery (std)</field>
+            <field name="cost_method">standard</field>
+            <field name="valuation">real_time</field>
+            <field name="landed_cost_ok">0</field>
+            <field name="standard_price">100</field>
+            <field name="type">product</field>
+            <field name="weight">1</field>
+            <field name="volume">1</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="product_avg_01" model="product.product">
+            <field name="name">VX Wireless Mouse (avg)</field>
+            <field name="cost_method">average</field>
+            <field name="valuation">real_time</field>
+            <field name="landed_cost_ok">0</field>
+            <field name="standard_price">100</field>
+            <field name="type">product</field>
+            <field name="weight">1</field>
+            <field name="volume">1</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="product_real_01" model="product.product">
+            <field name="name">VX Keyboard (real)</field>
+            <field name="cost_method">real</field>
+            <field name="valuation">real_time</field>
+            <field name="landed_cost_ok">0</field>
+            <field name="standard_price">100</field>
+            <field name="type">product</field>
+            <field name="weight">1</field>
+            <field name="volume">1</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="po_01" model="purchase.order">
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="po_01_line_01" model="purchase.order.line">
+            <field name="name">Standard Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
+            <field name="product_qty">100</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
+        </record>
+        <record id="po_01_line_02" model="purchase.order.line">
+            <field name="name">Average Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
+            <field name="product_qty">100</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
+        </record>
+        <record id="po_01_line_03" model="purchase.order.line">
+            <field name="name">Real time Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
+            <field name="product_qty">100</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
+        </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_01"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="stock_landed_costs_segmentation.po_01"/>
+
+        <record id="po_02" model="purchase.order">
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="po_02_line_01" model="purchase.order.line">
+            <field name="name">Standard Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
+            <field name="product_qty">150</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
+        </record>
+        <record id="po_02_line_02" model="purchase.order.line">
+            <field name="name">Average Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
+            <field name="product_qty">150</field>
+            <field name="price_unit">210</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
+        </record>
+        <record id="po_02_line_03" model="purchase.order.line">
+            <field name="name">Real time Product</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
+            <field name="product_qty">150</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
+        </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/>
+    </data>
+</openerp>

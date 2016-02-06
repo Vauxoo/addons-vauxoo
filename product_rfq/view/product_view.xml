@@ -11,10 +11,10 @@
                 </xpath>
             </field>
         </record>
-    <record model="ir.ui.view" id="inherited_product_product_form_rfq">
-            <field name="name">product.product.form.inherit</field>
+    <record model="ir.ui.view" id="inherited_product_template_form_rfq">
+            <field name="name">product.template.form.inherit</field>
             <field name="model">product.product</field>
-            <field name="inherit_id" ref="purchase_requisition.product_normal_form_view_inherit"/>
+            <field name="inherit_id" ref="purchase_requisition.product_template_form_view_inherit"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='purchase_requisition']" position="after">
                         <field name="product_rfq"/>
@@ -27,9 +27,9 @@
             <field name="model">purchase.requisition</field>
             <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
             <field name="arch" type="xml">
-                <xpath expr='//field[@name="product_id"]' position='attributes'>                                                                 
-                    <attribute name="context">{'search_default_product_rfq':True,'product_rfq':True}</attribute>         
-                </xpath>   
+                <xpath expr='//field[@name="product_id"]' position='attributes'>
+                    <attribute name="context">{'search_default_product_rfq':True,'product_rfq':True}</attribute>
+                </xpath>
             </field>
         </record>
     </data>

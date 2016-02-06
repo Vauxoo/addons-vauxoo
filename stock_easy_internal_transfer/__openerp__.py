@@ -34,7 +34,6 @@
     "demo": [],
     "data": [
         'views/stock_view.xml',
-        'wizard/stock_transfer_details.xml',
     ],
     "test": [],
     "js": [],

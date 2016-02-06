@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Stock Card",
-    "version": "2.0",
+    "version": "8.0.2.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
@@ -10,6 +10,8 @@
         "account",
         "base",
         "stock",
+        "purchase",
+        "sale",
     ],
     "demo": [
         'demo/demo.xml',
@@ -18,12 +20,6 @@
         'view/view.xml',
         'view/wizard.xml',
     ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
     "installable": True,
     "auto_install": False,
-    "external_dependencies": {
-    }
 }

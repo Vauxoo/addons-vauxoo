@@ -65,7 +65,7 @@ class ProductUomUpdate(osv.TransientModel):
                 factor
             for dst_product_id in dst_product_ids:
                 if dst_product_id.uom_id.factor == uom_factor_dst:
-                    product_ids_validate.append(dst_product_id.id)
+                    product_ids_validate.append(dst_product_id.product_tmpl_id.id)
                     product_ids_validate_name.append(
                         dst_product_id.name.encode('utf8'))
                 else:

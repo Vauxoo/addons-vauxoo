@@ -19,6 +19,7 @@ env:
   matrix:
   - LINT_CHECK=1
   - ODOO_LINT=1
+  - TESTS="1" UNIT_TEST="1"
 
 addons:
   apt:
@@ -31,14 +32,20 @@ addons:
 
 install:
   - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+  - find ${HOME}/maintainer-quality-tools/travis -name test_flake8 -exec sed -i "s/get_modules/get_modules_changed/g" {} \;
+  - find ${HOME}/maintainer-quality-tools/travis -name test_flake8 -exec sed -i "s/get_modules_changed(os.path.abspath('.')/get_modules_changed(os.path.abspath('.'), 'origin\/' \+ os.environ['TRAVIS_BRANCH']/g" {} \;
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 
 script:
   # get modules changed and set environment variable INCLUDE_LINT
   - PYTHONPATH=${PATH} python -c "import getaddons;print 'export INCLUDE_LINT=\"' + ' '.join(getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}')) + '\"'" >${TRAVIS_BUILD_DIR}/modules_changed.profile
+  - PYTHONPATH=${PATH} python -c "import os, getaddons;print 'export INCLUDE=\"' + ','.join(map(os.path.basename, getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}'))) + '\"'" >>${TRAVIS_BUILD_DIR}/modules_changed.profile
   - source ${TRAVIS_BUILD_DIR}/modules_changed.profile
-  - if [ "x${INCLUDE_LINT}" == "x" ]; then exit 0; fi
+  # If there isn't modules changed for lint checks then exit
+  - if [[ "x${INCLUDE_LINT}" == "x" && "${TESTS}" == "0" ]]; then exit 0; fi
+  # Travis tests disabled. Travis can't download private repositories.
+  - if [[ "${TESTS}" == "1" && "${RUNBOT}" != "1" ]]; then exit 0; fi
   - travis_wait travis_run_tests
 
 after_success:

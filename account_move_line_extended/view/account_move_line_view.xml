@@ -34,7 +34,7 @@
                     <field name="amount_currency"/>
                     <field name="currency_id"/>
                     <field name="date_maturity"/>
-                    <field name="reconcile"/>
+                    <field name="reconcile_ref"/>
                     <field name="state"/>
                     <field name="company_id" invisible="1"/>
                 </tree>
@@ -49,7 +49,7 @@
             <field name="view_id" ref="aml_extended_tree"/>
         </record>
 
-        <menuitem 
+        <menuitem
             id="journal_aml_menu"
             name="Journal Items Extended"
             parent="account.menu_finance_entries"
