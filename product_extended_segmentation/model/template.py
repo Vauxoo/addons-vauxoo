@@ -20,7 +20,8 @@
 #
 ##############################################################################
 from openerp import models
-from openerp.addons.product import _common
+# Refactor this on v9.0 _common do not exist.
+# from openerp.addons.product import _common
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -118,7 +119,10 @@ class ProductTemplate(models.Model):
 
         def _factor(factor, product_efficiency, product_rounding):
             factor = factor / (product_efficiency or 1.0)
-            factor = _common.ceiling(factor, product_rounding)
+            # Temporary commented on v9.0 because this methd do not exist TODO: FIXME
+            # but i ask myself why twice a variable defined just one line after another.
+            # just GOD will know when somebody check this
+            # factor = _common.ceiling(factor, product_rounding)
             if factor < product_rounding:
                 factor = product_rounding
             return factor
