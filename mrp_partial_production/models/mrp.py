@@ -92,7 +92,8 @@ class MrpProduction(models.Model):
             for line in consume_lines and consume_lines[0] or ():
                 product_id = line.get('product_id')
                 val = line.get('product_qty') and \
-                    int(result.get(product_id) / line.get('product_qty')) or 0
+                    int(result.get(product_id, 0) /
+                        line.get('product_qty')) or 0
                 qty.append(val)
 
         return min(qty)
