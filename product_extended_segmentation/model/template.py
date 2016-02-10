@@ -23,6 +23,7 @@ from openerp import models
 from openerp.addons.product import _common
 from openerp.tools import float_is_zero
 import logging
+
 _logger = logging.getLogger(__name__)
 SEGMENTATION_COST = [
     'landed_cost',
