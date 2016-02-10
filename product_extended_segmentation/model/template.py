@@ -207,8 +207,8 @@ class ProductTemplate(models.Model):
         diff = price - current_price
         computed_th = abs(diff * 100 / current_price)
         if float_is_zero(diff, precision_id) or \
-                (current_price and diff < 0
-                    and computed_th > bottom_price_threshold):
+                (current_price and diff < 0 and
+                    computed_th > bottom_price_threshold):
             tmpl_obj.message_post(cr, uid, [product_tmpl_id.id],
                                   'Not Updated Cost, But Segments only.',
                                   'I cowardly did not update Standard new \n'
