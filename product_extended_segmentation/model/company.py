@@ -9,8 +9,8 @@ class ResCompany(models.Model):
 
     std_price_neg_threshold = fields.Float(
         string="Standard Price Bottom Threshold (%)",
-        help=_('Maximum percentage threshold that Standard Price is allowed to '
-               'be lower in order to be changed with the update cost wizard'),
+        help='Maximum percentage threshold that Standard Price is allowed to'
+        ' be lower in order to be changed with the update cost wizard',
         default=0.0)
 
     @api.constrains('std_price_neg_threshold')
