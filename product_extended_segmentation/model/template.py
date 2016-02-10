@@ -205,7 +205,11 @@ class ProductTemplate(models.Model):
 
         current_price = product_tmpl_id.standard_price
         diff = price - current_price
-        computed_th = abs(diff * 100 / current_price)
+        computed_th = current_price and abs(diff * 100 / current_price) or 0.0
+
+        if diff < 0 and current_price == 0:
+            return price
+
         if float_is_zero(diff, precision_id) or \
                 (current_price and diff < 0 and
                     computed_th > bottom_price_threshold):
