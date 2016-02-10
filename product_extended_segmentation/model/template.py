@@ -21,6 +21,7 @@
 ##############################################################################
 from openerp import models
 from openerp.addons.product import _common
+from openerp.tools import float_is_zero
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -63,7 +64,7 @@ class ProductProduct(models.Model):
                     '''.format(
                 material_cost=std_price,
                 id=tmpl_id,
-                ))
+            ))
         return True
 
     def _update_material_cost_on_zero_segmentation(
@@ -90,7 +91,9 @@ class ProductTemplate(models.Model):
         wizard_obj = self.pool.get("stock.change.standard.price")
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
-
+        user = self.pool.get('res.users').browse(cr, uid, uid, context)
+        precision_id = self.pool.get('decimal.precision').precision_get(
+            cr, uid, 'Account')
         model = 'product.product'
 
         def _get_sgmnt(prod_id):
@@ -194,9 +197,22 @@ class ProductTemplate(models.Model):
         # NOTE: Instanciating BOM related product
         product_tmpl_id = tmpl_obj.browse(
             cr, uid, bom.product_tmpl_id.id, context=context)
-        # Use threshold in the next iteration just comparing less than in this
-        # case
-        if price < product_tmpl_id.standard_price:
+
+        bottom_price_threshold = product_tmpl_id.company_id.\
+            std_price_neg_threshold
+        if not bottom_price_threshold:
+            bottom_price_threshold = user.company_id.std_price_neg_threshold
+
+        current_price = product_tmpl_id.standard_price
+        diff = price - current_price
+        computed_th = current_price and abs(diff * 100 / current_price) or 0.0
+
+        if diff < 0 and current_price == 0:
+            return price
+
+        if float_is_zero(diff, precision_id) or \
+                (current_price and diff < 0 and
+                    computed_th > bottom_price_threshold):
             tmpl_obj.message_post(cr, uid, [product_tmpl_id.id],
                                   'Not Updated Cost, But Segments only.',
                                   'I cowardly did not update Standard new \n'
@@ -204,14 +220,14 @@ class ProductTemplate(models.Model):
                                   'new {new} old {old} \n'
                                   'Segments where written CHECK AFTERWARDS.'
                                   '{segments}'.
-                                  format(old=product_tmpl_id.standard_price,
-                                         new=price, segments=str(sgmnt_dict)))
+                                  format(old=current_price, new=price,
+                                         segments=str(sgmnt_dict)))
             # Just writting segments to be consistent with segmentation
             # feature. TODO: A report should show differences.
             tmpl_obj.write(cr, uid, [product_tmpl_id.id], sgmnt_dict,
                            context=context)
             return price
-        # NHOMAR OUT.
+
         diff = product_tmpl_id.standard_price - price
         # Write standard price
         if product_tmpl_id.valuation == "real_time" and \

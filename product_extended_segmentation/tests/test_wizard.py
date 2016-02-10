@@ -29,6 +29,7 @@ class TestWizard(TransactionCase):
         super(TestWizard, self).setUp()
         self.prod_template = self.env['product.template']
         self.wizard = self.env['wizard.price']
+        self.company_id = self.env.user.company_id
         self.producto_d_id = self.env.ref(
             'product_extended_segmentation.producto_d').product_tmpl_id
         self.producto_e_id = self.env.ref(
@@ -50,48 +51,85 @@ class TestWizard(TransactionCase):
     def get_product_cost(self, info_field, product_tmpl_id):
         return safe_eval(info_field)[product_tmpl_id]
 
-    def check_wizard_values(self, product_id, vals):
-        # check before wizard
-        self.assertEqual(product_id.standard_price, vals['before'],
-                         'Standard Price for {0} should be {1}'.
-                         format(product_id.name, vals['before']))
+    def check_default_cost(self, product_id, value):
         wizard_id = self.create_wizard(product_id)[0]
-        self.assertEqual(wizard_id.recursive, False,
-                         'WizardPrice recursive check should be unchecked'
-                         'by default')
         cost = self.get_product_cost(wizard_id.info_field, product_id.id)
-        # check what a wizard returns as default value
-        self.assertEqual(cost, vals['default'],
-                         'Non-recursive cost valuation for {0} should be {1}'.
-                         format(product_id.name, vals['default']))
-        wizard_id = self.create_wizard(
-            product_id, recursive=True, update_avg_costs=True)
-        wizard_id.compute_from_bom()
-        cost = product_id.standard_price
-        # check what recursive returns
-        self.assertEqual(cost, vals['after'],
-                         'Recursive cost for {0} should be keep at {1}'.
-                         format(product_id.name, vals['after']))
+        self.assertEqual(cost, value, 'Default wizard value for {0} '
+                         'should be {1}'.format(product_id.name, value))
 
-    def test_01_test_wizard_onchange_recursive(self):
-        vals = {
-            'before': 50,
-            'default': 35,
-            'after': 35
-        }
-        self.check_wizard_values(self.producto_d_id, vals)
+    def test_00_test_wizard_defaults(self):
+        wizard_id = self.create_wizard(self.producto_d_id)[0]
+        self.assertEqual(wizard_id.recursive, False,
+                         'Recursive check should be unchecked by default')
+        self.check_default_cost(self.producto_d_id, 35)
+        self.check_default_cost(self.producto_e_id, 90)
+
+    def test_01_test_threshold_no_update(self):
+        self.company_id.write({'std_price_neg_threshold': 0})
+        # ============================
+        # ==== PRODUCT D
+        # ============================
+        self.assertEqual(self.producto_d_id.standard_price, 50,
+                         'Standard Price for D should be 50')
+        wizard_id = self.create_wizard(
+            self.producto_d_id, recursive=True, update_avg_costs=True)
+        wizard_id.compute_from_bom()
+
+        # check what recursive returns
+        self.assertEqual(self.producto_d_id.standard_price, 50,
+                         'Recursive cost for D should be keep at 50')
         # check production_cost
         self.assertEqual(self.producto_d_id.production_cost, 5,
                          'Production Cost for D should be 5')
 
-    def test_02_test_wizard_onchange_recursive(self):
-        vals = {
-            'before': 80,
-            'default': 90,
-            'after': 75
-        }
-        self.check_wizard_values(self.producto_e_id, vals)
+        # ============================
+        # ==== PRODUCT E
+        # ============================
+        self.assertEqual(self.producto_e_id.standard_price, 80,
+                         'Standard Price for {0} should be {1}'.
+                         format(self.producto_e_id.name, 80))
+        wizard_id = self.create_wizard(
+            self.producto_e_id, recursive=True, update_avg_costs=True)
+        wizard_id.compute_from_bom()
 
+        # check what recursive returns
+        self.assertEqual(self.producto_e_id.standard_price, 80,
+                         'Recursive cost for E should be keep at 80')
+
+        # check production_cost
+        self.assertEqual(self.producto_e_id.production_cost, 15,
+                         'Production Cost for E should be 15')
+
+    def test_01_test_threshold_th_30_update(self):
+        self.company_id.write({'std_price_neg_threshold': 30})
+        # ============================
+        # ==== PRODUCT D
+        # ============================
+        self.assertEqual(self.producto_d_id.standard_price, 50,
+                         'Standard Price for D should be 50')
+        wizard_id = self.create_wizard(
+            self.producto_d_id, recursive=True, update_avg_costs=True)
+        wizard_id.compute_from_bom()
+
+        # check what recursive returns
+        self.assertEqual(self.producto_d_id.standard_price, 35,
+                         'Recursive cost for D should be keep at 35')
+        # check production_cost
+        self.assertEqual(self.producto_d_id.production_cost, 5,
+                         'Production Cost for D should be 5')
+
+        # ============================
+        # ==== PRODUCT E
+        # ============================
+        self.assertEqual(self.producto_e_id.standard_price, 80,
+                         'Standard Price for E should be 80')
+        wizard_id = self.create_wizard(
+            self.producto_e_id, recursive=True, update_avg_costs=True)
+        wizard_id.compute_from_bom()
+
+        # check what recursive returns
+        self.assertEqual(self.producto_e_id.standard_price, 75,
+                         'Recursive cost for E should be keep at 75')
         # check production_cost
         self.assertEqual(self.producto_e_id.production_cost, 15,
                          'Production Cost for E should be 15')
