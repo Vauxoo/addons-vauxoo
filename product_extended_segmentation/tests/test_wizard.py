@@ -101,7 +101,7 @@ class TestWizard(TransactionCase):
                          'Production Cost for E should be 15')
 
     def test_01_test_threshold_th_30_update(self):
-        self.company_id.write({'std_price_neg_threshold': -30})
+        self.company_id.write({'std_price_neg_threshold': 30})
         # ============================
         # ==== PRODUCT D
         # ============================
