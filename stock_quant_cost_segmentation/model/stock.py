@@ -2,7 +2,7 @@
 
 from openerp import models, fields, api
 from openerp import SUPERUSER_ID
-from openerp.tools.float_utils import float_compare, float_round
+from openerp.tools.float_utils import float_compare, float_round, float_is_zero
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
 import openerp.addons.decimal_precision as dp
@@ -13,6 +13,91 @@ SEGMENTATION_COST = [
     'material_cost',
     'production_cost',
 ]
+
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+
+    @api.v7
+    def action_done(self, cr, uid, ids, context=None):
+        sgmnt = self.product_segmentation_fetch_before_done(
+            cr, uid, ids, context=context)
+        res = super(StockMove, self).action_done(cr, uid, ids, context=context)
+        self.product_segmentation_update_after_done(
+            cr, uid, ids, sgmnt, context=context)
+        return res
+
+    @api.v7
+    def product_segmentation_fetch_before_done(
+            self, cr, uid, ids, context=None):
+        '''
+        Fetch standard_price and segmentation cost for every product that was
+        purchased and is average costing method prior to change its values.
+        Returns a dictionary.
+        '''
+        res = {}
+        precision = self.pool.get('decimal.precision').precision_get(
+            cr, uid, 'Account')
+        for move in self.browse(cr, uid, ids, context=context):
+            # adapt standard price on incoming moves if the product
+            # cost_method is 'average'
+            if move.location_id.usage == 'supplier' and \
+                    move.product_id.cost_method == 'average':
+                std = move.product_id.standard_price
+                qty_available = move.product_id.product_tmpl_id.qty_available
+                prod_id = move.product_id.id
+                if prod_id not in res:
+                    # /!\ TODO: Fetch segmentation for product
+                    sgmnt = {}
+                    res[prod_id] = {}
+                    res[prod_id]['qty'] = qty_available
+                    res[prod_id]['standard_price'] = std
+                    sum_sgmnt = 0.0
+                    for fieldname in SEGMENTATION_COST:
+                        fn_cost = getattr(move.product_id, fieldname)
+                        sum_sgmnt += fn_cost
+                        sgmnt[fieldname] = fn_cost
+                    if not sum_sgmnt or \
+                            not float_is_zero(sum_sgmnt - std, precision):
+                        sgmnt = {}.fromkeys(SEGMENTATION_COST, 0.0)
+                        res[prod_id].update(sgmnt)
+                        res[prod_id]['material_cost'] = std
+                    else:
+                        res[prod_id].update(sgmnt)
+        return res
+
+    @api.v7
+    def product_segmentation_update_after_done(
+            self, cr, uid, ids, sgmnt, context=None):
+        '''
+        Computes segmentation values on average product based on previous
+        values stored before action_done method is applied
+        '''
+        context = dict(context or {})
+        product_obj = self.pool.get('product.product')
+        res = {}
+        for prod_id in sgmnt:
+            prod_brw = product_obj.browse(cr, uid, prod_id, context=context)
+            std = prod_brw.standard_price
+            qty = prod_brw.product_tmpl_id.qty_available
+            if qty <= 0:
+                # /!\ NOTE: Do not change anything
+                continue
+
+            res[prod_id] = {}
+            diff = std * qty - \
+                sgmnt[prod_id]['standard_price'] * sgmnt[prod_id]['qty']
+            for fieldname in SEGMENTATION_COST:
+                fn_cost = sgmnt[prod_id][fieldname] * sgmnt[prod_id]['qty']
+                if fieldname == 'material_cost':
+                    fn_cost += diff
+                res[prod_id][fieldname] = fn_cost / qty
+
+        # Write the standard price, as SUPERUSER_ID because a warehouse
+        # manager may not have the right to write on products
+        for prod_id in res:
+            product_obj.write(
+                cr, SUPERUSER_ID, [prod_id], res[prod_id], context=context)
 
 
 class StockQuant(models.Model):
@@ -174,6 +259,8 @@ class StockQuant(models.Model):
             cr, uid, quant.location_id, quant.product_id, quant.qty, dom,
             context=context)
         product_uom_rounding = quant.product_id.uom_id.rounding
+        context = dict(context or {})
+        context.update({'force_unlink': True})
         for quant_neg, qty in quants:
             if not quant_neg or not solving_quant:
                 continue

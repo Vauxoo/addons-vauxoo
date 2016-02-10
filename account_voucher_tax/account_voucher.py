@@ -176,8 +176,8 @@ class AccountVoucher(osv.Model):
                     if current_currency != line.currency_id.id:
                         statement_currency_line = line.currency_id.id
 
-                    if (current_currency != company_currency
-                            or statement_currency_line):
+                    if (current_currency != company_currency or
+                            statement_currency_line):
                         amount_tax_currency += cur_obj.compute(
                             cr, uid,
                             statement_currency_line or current_currency,
@@ -760,7 +760,7 @@ class AccountVoucherLineTax(osv.Model):
             store=True, digits=(12, 6)),
         # 'balance_tax':fields.float('Balance Import Tax'),
         'diff_amount_tax': fields.float(
-            'Difference', digits_compute= dp.get_precision('Account')),
+            'Difference', digits_compute=dp.get_precision('Account')),
         'diff_account_id': fields.many2one('account.account', 'Account Diff'),
         'voucher_line_id': fields.many2one(
             'account.voucher.line', 'Voucher Line'),

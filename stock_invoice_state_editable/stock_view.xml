@@ -4,27 +4,7 @@
         <record model="ir.ui.view" id="view_stock_inherit_state_invoice_form">
             <field name="name">view.stock.inherit.state.invoice.form</field>
             <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='invoice_state']" position="replace">
-                    <field name="invoice_state" groups="base.group_state_invoice"/>
-                </xpath>
-            </field>
-        </record>
-        <record model="ir.ui.view" id="view_stock_inherit_state_invoice_in_form">
-            <field name="name">view.stock.inherit.state.invoice.in.form</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_in_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='invoice_state']" position="replace">
-                    <field name="invoice_state" groups="base.group_state_invoice"/>
-                </xpath>
-            </field>
-        </record>
-        <record model="ir.ui.view" id="view_stock_inherit_state_invoice_out_form">
-            <field name="name">view.stock.inherit.state.invoice.out.form</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="inherit_id" ref="stock_account.view_picking_inherit_form2"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_state']" position="replace">
                     <field name="invoice_state" groups="base.group_state_invoice"/>

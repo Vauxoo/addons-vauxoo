@@ -11,4 +11,3 @@ class TestUi(openerp.tests.HttpCase):
                         "openerp.Tour.run('product_test_comments', 'test')",
                         "openerp.Tour.tours.product_test_comments",
                         login='admin')
-

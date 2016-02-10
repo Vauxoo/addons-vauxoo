@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+    <!-- HERE ARE ALL THE UI/BEHAVIOUR JS FILES  -->
     <template id="assets_frontend_product_filters" name="Product Filters Assets" inherit_id="website.assets_frontend">
       <xpath expr="//script[last()]" position="after">
         <script src="/website_product_filters/static/src/js/collapse_filters.js" type="text/javascript"/>
-        <script src="/website_product_filters/static/src/js/test_attributes.js" type="text/javascript"></script>
         <script src="/website_product_filters/static/src/js/collapsible_categories.js" type="text/javascript"/>
         <script src="/website_product_filters/static/src/js/product_quantities.js" type="text/javascript"/>
         <script src="/website_product_filters/static/src/js/products_per_range.js" type="text/javascript"/>
-        <script src="/website_product_filters/static/src/js/website_sale_tour_filters.js" type="text/javascript"/>
         <script src="/website_product_filters/static/src/js/sort_bar.js" type="text/javascript"/>
       </xpath>
     </template>
-    <template id="assets_frontend_product_filters_tests" name="Product Filters Assets Tests" inherit_id="website_sale_options.assets_frontend">
-      <xpath expr="//script[@src='/website_sale_options/static/src/js/website_sale.test.js']" position="replace">
+    <!-- HERE ARE THE PHANTOM TESTS  -->
+    <template id="assets_frontend_product_filters_tests" name="Product Filters Assets Tests" inherit_id="website.assets_frontend" priority="20">
+      <xpath expr="//script[last()]" position="after">
+        <script type="text/javascript" src="/website_product_filters/static/src/js/website_sale_tour_filters.js"></script>
         <script type="text/javascript" src="/website_product_filters/static/src/js/test_attributes.js"></script>
       </xpath>
     </template>
-
-    <template id="assets_frontend_shop_tour_tests" inherit_id="website_sale.assets_frontend" name="Shop">
-      <xpath expr="//script[@src='/website_sale/static/src/js/website_sale_tour_buy.js']" position="replace">
-          <script type="text/javascript" src="/website_product_filters/static/src/js/website_sale_tour_buy.js"></script>
-      </xpath>
-    </template>
     <template id="assets_frontend_shop_tour_shop_tests" inherit_id="website_sale.assets_editor" name="Shop">
-      <xpath expr="//script[@src='/website_sale/static/src/js/website_sale_tour_shop.js']" position="replace">
-          <script type="text/javascript" src="/website_product_filters/static/src/js/website_sale_tour_shop.js"></script>
+        <xpath expr="//script[@src='/website_sale/static/src/js/website_sale_tour_shop.js']" position="replace">
+        <script type="text/javascript" src="/website_product_filters/static/src/js/website_sale_tour_shop.js"></script>
       </xpath>
     </template>
-
+    <!-- HERE ARE ALL THE STYLING NEEDED -->
     <template id="assets_frontend_filters_less" name="Product filters frontend assets" inherit_id="website.theme">
         <xpath expr='//link[@href="/website/static/src/css/website.css"]' position="after">
             <link href="/website_product_filters/static/src/less/filters.less" rel="stylesheet" type="text/less"/>

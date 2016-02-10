@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 from openerp.tools.safe_eval import safe_eval
+from openerp.exceptions import Warning as UserError
 
 
 class TestStockCard(TransactionCase):
@@ -27,7 +28,7 @@ class TestStockCard(TransactionCase):
     def setUp(self):
         super(TestStockCard, self).setUp()
         self.stock_card = self.env['stock.card']
-        self.sc_product = self.env['stock.card.product']
+        self.scp = self.env['stock.card.product']
         self.sc_move = self.env['stock.card.move']
         self.move = self.env['stock.move']
         self.product_id = self.env.ref('stock_card.product01')
@@ -70,20 +71,40 @@ class TestStockCard(TransactionCase):
             },
         ]
 
+    def test_00_stock_card_from_product(self):
+        self.assertEqual(
+            self.scp._get_fieldnames(), {'average': 'standard_price'},
+            "It's required to stock.card have defined 'average' field mapping")
+
+        res = {}
+        msg_error = 'Asked Product has not Moves to show'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            res = self.product_id.stock_card_move_get()
+
+        self.test_01_stock_card()
+        res = self.product_id.stock_card_move_get()
+        res = safe_eval(res['domain'])[0][2]
+        self.assertEqual(len(res), 5, 'Stock Card in this case have to be =5')
+
+        dct2write = {'average': 1661}
+        self.scp.write_standard_price(self.product_id.id, dct2write)
+        self.assertEqual(self.product_id.standard_price, 1661,
+                         "Couln't set new standard price for the product")
+
     def test_01_stock_card(self):
         for val in self.inv_ids:
             inv_id = self.create_inventory(self.product_id, val['qty'])
             inv_id.action_done()
 
-        sc_product_id = self.sc_product.create({
+        scp_id = self.scp.create({
             'product_id': self.product_id.id
         })
-        self.assertTrue(sc_product_id.id)
-        res = sc_product_id.stock_card_move_get()
+        self.assertTrue(scp_id.id)
+        res = scp_id.stock_card_move_get()
         self.assertTrue(res)
 
-        sc_product_id.stock_card_move_get()
-        moves = sc_product_id.action_view_moves()
+        scp_id.stock_card_move_get()
+        moves = scp_id.action_view_moves()
 
         # assert domains exists into moves
         sc_move_domain_id = safe_eval(moves['domain'])[0][2][0]
@@ -97,7 +118,7 @@ class TestStockCard(TransactionCase):
 
         # assert average cost
         self.assertEqual(self.sc_move_id.average,
-                         sc_product_id.product_id.standard_price)
+                         scp_id.product_id.standard_price)
 
     def test_02_check_inventory_initializations(self):
         moves = self.move.search([('product_id', '=', self.product_id.id)])
@@ -106,12 +127,12 @@ class TestStockCard(TransactionCase):
             inv_id = self.create_inventory(self.product_id, val['qty'])
             inv_id.action_done()
 
-        sc_product_id = self.sc_product.create({
+        scp_id = self.scp.create({
             'product_id': self.product_id.id
         })
 
-        sc_product_id.stock_card_move_get()
-        moves = sc_product_id.action_view_moves()
+        scp_id.stock_card_move_get()
+        moves = scp_id.action_view_moves()
 
         search_domain = safe_eval(moves['domain'])
 

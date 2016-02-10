@@ -10,9 +10,13 @@
         "website_sale",
         "website_product_brand",
         "website_rate_product",
+        "website_sale_options",
     ],
-    "demo": [],
+    "demo": [
+        'demo/filters_demo_data.xml',
+    ],
     "data": [
+        'data/filters_data.yml',
         'data/price_ranges_data.xml',
         'data/website_settings_data.xml',
         'security/price_ranges_security.xml',

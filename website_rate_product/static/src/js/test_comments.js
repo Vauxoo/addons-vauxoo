@@ -22,7 +22,7 @@
             },
             {
                 title:     "Click on 'Show Product Rating' to view the current rating of the product if any",
-                element:   "#customize-menu a:contains(Show Product Rating)",
+                element:   "#customize-menu a:contains(Allow Rate Product)",
             },
             {
                 title:     "Put a commentary on the product",
@@ -36,7 +36,7 @@
             },
             {
                 title:     "Post the comment with the rating",
-                element:   "div a:contains(Post)",
+                element:   "form a:contains(Post)",
             },
             {
                 title:     "Review if the comment has been posted to the product",
