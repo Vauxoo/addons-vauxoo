@@ -20,7 +20,7 @@
                 <field name="model">account.tax</field>
                 <field name="inherit_id" ref="account.view_tax_form"/>
                 <field name="arch" type="xml">
-                    <group string="Tax Computation" position="before">
+                    <field name="refund_account_id" position="after">
                         <field name="account_collected_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
                         <newline/>
                         <field name="account_paid_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
@@ -28,7 +28,7 @@
                         <field name="account_retention_voucher_id"/>
                         <field name="account_expense_voucher_id" invisible="1"/>
                         <field name="account_income_voucher_id" invisible="1"/>
-                    </group>
+                    </field>
                 </field>
         </record>
 
@@ -38,7 +38,7 @@
                 <field name="model">account.journal</field>
                 <field name="inherit_id" ref="account.view_account_journal_form"/>
                 <field name="arch" type="xml">
-                    <xpath expr="//field[@name='allow_date']" position="after">
+                    <xpath expr="//field[@name='type']" position="after">
                         <field name="special_journal"/>
                     </xpath>
                 </field>
