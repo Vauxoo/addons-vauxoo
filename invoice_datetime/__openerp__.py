@@ -38,8 +38,8 @@
     ],
     "demo": [],
     "data": [
-        "account_invoice_view.xml",
-        "res_config_acc_view.xml",
+        "views/account_invoice_view.xml",
+        "views/account_config_settings_view.xml",
         "security/security.xml",
     ],
     "test": [],
