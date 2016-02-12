@@ -1,48 +1,38 @@
-$(document).ready(function () {
-    /**
-    This will be in a web module to be able to use in 100% of odoo.
-    source: https://css-tricks.com/snippets/jquery/smooth-scrolling/
-    */
-    $(function() {
-      $('a[href*=#]:not([href=#])').click(function() {
-        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-          var target = $(this.hash);
-          target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-          if (target.length) {
-            $('html,body').animate({
-              scrollTop: target.offset().top
-            }, 1000);
-            return false;
-          }
-        }
-      });
-    });
-    /**
-    Until here:
-    */
-$('.oe_website_sale').each(function () {
-    var oe_website_sale = this;
-    /**
-    Set on click event to set the descriptions and update the 'Actual Configuration' space.
-    */
-    $(oe_website_sale).on('click', 'input.js_variant_change, select.js_variant_change', function (ev) {
-        var $ul = $(this).parents('ul.js_add_cart_variants:first');
-        var $parent = $ul.closest('.js_product');
-        /**
-        Selected all what is checked.
-        # TODO: IT IS WORKING ONLY IN THE LAST ONE, IT SHOULD WORK OF EVERY COMBINATION
-        */
-        $parent.find('input.js_variant_change:checked, select.js_variant_change').each(function () {
-            var $identifier = +$(this).val();
-            $('.oe_variant_description').addClass('hidden');
-            $('.oe_variant_description_' + $identifier).removeClass('hidden');
+(function() {
+    'use strict';
+
+    openerp.website.if_dom_contains('#product_with_variants', function(){
+        $('.oe_website_sale').on('click', 'input.js_variant_change, select.js_variant_change', function (ev) {
+            var $ul = $(this).parents('ul.js_add_cart_variants:first');
+            var $parent = $ul.closest('.js_product');
+            var variants_str="";
+            $parent.find('input.js_variant_change:checked, select.js_variant_change').each(function () {
+                var attr = $(this).attr('title');
+                if (typeof attr !== typeof undefined && attr !== false){
+                    variants_str += ", " + $(this).attr('title');
+                }
+                else{
+                    variants_str = $(this).next().html();
+                }
+            });
+            var $product_name = $('#product_with_variants').html();
+            var index = $product_name.indexOf(",");
+            if(index > -1){
+                $product_name = $product_name.substring(0,index);
+            }
+            $('#product_with_variants').html($product_name+", "+variants_str);
         });
-    });
-    /**
-    Triggering the click to call the behavior when page is just load
-    */
-    $('ul.js_add_cart_variants', oe_website_sale).each(function () {
         $('input.js_variant_change, select.js_variant_change', this).first().trigger('click');
     });
-});
-});
+    openerp.website.if_dom_contains('#no-reviews', function(){
+        var comments_qty = $('#comments-list').children().length;
+        if (comments_qty > 0){
+            var concept = comments_qty >= 2 ? "reviews" : "review";
+            $('#no-reviews').text(comments_qty+" "+concept);
+        }
+        else{
+            $('#no-reviews').parent().hide();
+        }
+    });
+}());
+
