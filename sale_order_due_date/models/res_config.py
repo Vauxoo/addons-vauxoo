@@ -10,7 +10,7 @@
 from openerp import models, fields, api
 
 
-class SaleConfigSettings(models.Model):
+class SaleConfigSettings(models.TransientModel):
     _inherit = 'sale.config.settings'
 
     days_due_date_sale = fields.Integer(
