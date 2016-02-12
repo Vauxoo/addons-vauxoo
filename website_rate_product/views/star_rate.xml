@@ -29,6 +29,21 @@
           </t>
         </template>
 
+        <template id="show_product_rating_with_reviews_qty" name="No Edit Product Rating" active="True">
+          <t t-if="product.rating > 0">
+            <div id="stars_no_edit" t-attf-data-rating="#{product.rating if product.rating else '0'}" class="stars-no-edit o_rating_star_card">
+              <div class="stars">
+                <span class="fa fa-star-o no-edit"></span>
+                <span class="fa fa-star-o no-edit"></span>
+                <span class="fa fa-star-o no-edit"></span>
+                <span class="fa fa-star-o no-edit"></span>
+                <span class="fa fa-star-o no-edit"></span>
+               </div>
+            <span class="star-text"> <a href="#comments-list">Read <span id="no-reviews"/></a></span>
+            </div>
+          </t>
+        </template>
+
         <template id="hide_comments" inherit_id="website_sale.product_comment" name="Hide comments for not logged users">
             <xpath expr="//div[@class='css_editable_mode_hidden']" position="replace">
                 <div class="css_editable_mode_hidden" t-if="user_id.login != 'public'">
