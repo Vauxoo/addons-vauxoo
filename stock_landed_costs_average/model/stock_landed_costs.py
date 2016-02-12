@@ -387,6 +387,7 @@ class StockLandedCost(models.Model):
             last_lines = {}
             prod_qty = {}
             acc_prod = {}
+            quant_dict = {}
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
                     continue
@@ -414,15 +415,11 @@ class StockLandedCost(models.Model):
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
                 quants = [quant for quant in line.move_id.quant_ids]
-                quant_dict = {}
                 for quant in quants:
                     if quant.id not in quant_dict:
                         quant_dict[quant.id] = quant.cost + diff
                     else:
                         quant_dict[quant.id] += diff
-                for key, value in quant_dict.items():
-                    quant_obj.browse(key).write(
-                        {'cost': value})
 
                 qty_out = 0
                 for quant in line.move_id.quant_ids:
@@ -437,6 +434,10 @@ class StockLandedCost(models.Model):
                 if product_id.cost_method == 'real':
                     self._create_landed_accounting_entries(
                         line, move_id, qty_out, acc_prod)
+
+            for key, value in quant_dict.items():
+                quant_obj.sudo().browse(key).write(
+                    {'cost': value})
 
             # /!\ NOTE: This new update is taken out of for loop to improve
             # performance
