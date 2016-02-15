@@ -105,9 +105,8 @@ class InheritStockMove(osv.Model):
                 cr,
                 uid,
                 move_ids,
-                {'state': 'done', 'date': time.strftime(
-                    DEFAULT_SERVER_DATETIME_FORMAT)
-                },
+                {'state': 'done',
+                 'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)},
                 context=context)
 
         for id in move_ids:
