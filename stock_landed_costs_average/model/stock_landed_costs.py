@@ -365,7 +365,6 @@ class StockLandedCost(models.Model):
         scp_obj = self.env['stock.card.product']
         get_average = scp_obj.get_average
         stock_card_move_get = scp_obj._stock_card_move_get
-        get_qty = scp_obj.get_qty
         ctx = dict(self._context)
 
         for cost in self:
@@ -384,9 +383,11 @@ class StockLandedCost(models.Model):
             prod_dict = {}
             init_avg = {}
             first_lines = {}
+            first_card = {}
             last_lines = {}
             prod_qty = {}
             acc_prod = {}
+            quant_dict = {}
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
                     continue
@@ -405,24 +406,20 @@ class StockLandedCost(models.Model):
 
                 if product_id.cost_method == 'average':
                     if product_id.id not in prod_dict:
-                        prod_dict[product_id.id] = get_average(product_id.id)
-                        first_lines[product_id.id] = stock_card_move_get(
-                            product_id.id)['res']
+                        first_card = stock_card_move_get(product_id.id)
+                        prod_dict[product_id.id] = get_average(first_card)
+                        first_lines[product_id.id] = first_card['res']
                         init_avg[product_id.id] = product_id.standard_price
-                        prod_qty[product_id.id] = get_qty(product_id.id)
+                        prod_qty[product_id.id] = first_card['product_qty']
 
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
                 quants = [quant for quant in line.move_id.quant_ids]
-                quant_dict = {}
                 for quant in quants:
                     if quant.id not in quant_dict:
                         quant_dict[quant.id] = quant.cost + diff
                     else:
                         quant_dict[quant.id] += diff
-                for key, value in quant_dict.items():
-                    quant_obj.browse(key).write(
-                        {'cost': value})
 
                 qty_out = 0
                 for quant in line.move_id.quant_ids:
@@ -438,12 +435,16 @@ class StockLandedCost(models.Model):
                     self._create_landed_accounting_entries(
                         line, move_id, qty_out, acc_prod)
 
+            for key, value in quant_dict.items():
+                quant_obj.sudo().browse(key).write(
+                    {'cost': value})
+
             # /!\ NOTE: This new update is taken out of for loop to improve
             # performance
             for prod_id in prod_dict:
-                prod_dict[prod_id] = get_average(prod_id)
-                last_lines[prod_id] = stock_card_move_get(
-                    prod_id)['res']
+                last_card = stock_card_move_get(prod_id)
+                prod_dict[prod_id] = get_average(last_card)
+                last_lines[prod_id] = last_card['res']
 
             # /!\ NOTE: COGS computation
             # NOTE: After adding value to product with landing cost products
