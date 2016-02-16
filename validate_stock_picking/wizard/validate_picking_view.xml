@@ -28,24 +28,6 @@
             target="new"
             id="validate_stock_picking_action"/>
 
-<act_window name="Validate Picking"
-            key2="client_action_multi"
-            res_model="validate.picking.wz"
-            src_model="stock.picking.in"
-            view_mode="form"
-            view_type="form"
-            target="new"
-            id="validate_stock_picking_action_in"/>
-
-<act_window name="Validate Picking"
-            key2="client_action_multi"
-            res_model="validate.picking.wz"
-            src_model="stock.picking.out"
-            view_mode="form"
-            view_type="form"
-            target="new"
-            id="validate_stock_picking_action_out"/>
-
 <act_window name="Validate Moves"
             key2="client_action_multi"
             res_model="validate.picking.wz"
