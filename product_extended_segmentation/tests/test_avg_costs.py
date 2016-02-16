@@ -60,7 +60,7 @@ class TestAvgCosts(TransactionCase):
         self.prod_e_id.refresh()
         sgmnts['after'] = [getattr(self.prod_e_id, fieldname)
                            for fieldname in SEGMENTATION_COST]
-        self.assertEqual(sum(sgmnts['after']), 75.0, 'Segments should be 75.0')
+        self.assertEqual(sum(sgmnts['after']), 80.0, 'Segments should be 80.0')
 
     def get_store_product_values(self, product_ids):
         vals = {}
