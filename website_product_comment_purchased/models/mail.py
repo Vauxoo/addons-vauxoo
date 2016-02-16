@@ -22,37 +22,38 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp import models, fields
 
 
-class MailMessage(osv.Model):
+class MailMessage(models.Model):
     _inherit = 'mail.message'
 
     def _comment_bought(self, cr, uid, ids, name, arg, context=None):
-        res = {}
+        res = {}.fromkeys(ids, False)
         sale_report_obj = self.pool.get('sale.report')
-        product_obj = self.pool.get('product.product')
-        cr.execute("""
-            {0}
-            FROM ( {1} )
-            {2}
-            """.format(sale_report_obj._select(), sale_report_obj._from(),
-                       sale_report_obj._group_by()))
         mail_cache = self.browse(cr, uid, ids, context)[0]
-        for rep in cr.fetchall():
-            product_id = rep[1]
-            partner_id = rep[8]
-            if product_id:
-                product_tmpl_id = \
-                    product_obj.browse(cr, uid,
-                                       [product_id])[0].product_tmpl_id.id
-            if mail_cache.res_id == product_tmpl_id and \
-               mail_cache.author_id.id == partner_id:
-                res[ids[0]] = 1
+        where = """
+
+        WHERE l.product_id IS NOT NULL AND
+                   t.id={res_id} AND s.partner_id={partner_id}
+
+            """.format(res_id=mail_cache.res_id,
+                       partner_id=mail_cache.author_id.id)
+        execute = """
+            {select}
+            FROM ( {_from} )
+            {where}
+            {group}
+            """.format(
+            select=sale_report_obj._select(),
+            _from=sale_report_obj._from(),
+            where=where,
+            group=sale_report_obj._group_by())
+        cr.execute(execute)
+        if cr.fetchall():
+            res[ids[0]] = True
         return res
 
-    _columns = {
-        'comment_bought': fields.function(_comment_bought, type='boolean',
-                                          string='Comment Bought',
-                                          store=True),
-    }
+    comment_bought = fields.Boolean(compute=_comment_bought,
+                                    string='Comment Bought',
+                                    store=True)
