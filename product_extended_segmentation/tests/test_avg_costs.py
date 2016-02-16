@@ -32,8 +32,10 @@ class TestAvgCosts(TransactionCase):
 
     def setUp(self):
         super(TestAvgCosts, self).setUp()
+        self.product = self.env['product.product']
         self.prod_template = self.env['product.template']
         self.wizard = self.env['wizard.price']
+        self.company_id = self.env.user.company_id
         self.prod_a_id = self.env.ref(
             'product_extended_segmentation.producto_a')
         self.prod_b_id = self.env.ref(
@@ -47,6 +49,18 @@ class TestAvgCosts(TransactionCase):
         self.product_ids = [self.prod_a_id,
                             self.prod_b_id,
                             self.prod_c_id]
+
+    def test_00_cron_methods(self):
+        sgmnts = {}
+        self.company_id.write({'std_price_neg_threshold': 0})
+        sgmnts['before'] = [getattr(self.prod_e_id, fieldname)
+                            for fieldname in SEGMENTATION_COST]
+        self.assertEqual(sum(sgmnts['before']), 0.0, 'sgmnts should be 0.0')
+        self.product.update_material_cost_on_zero_segmentation()
+        self.prod_e_id.refresh()
+        sgmnts['after'] = [getattr(self.prod_e_id, fieldname)
+                           for fieldname in SEGMENTATION_COST]
+        self.assertEqual(sum(sgmnts['after']), 75.0, 'Segments should be 75.0')
 
     def get_store_product_values(self, product_ids):
         vals = {}
