@@ -22,37 +22,41 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp import models, fields, api
 
 
-class MailMessage(osv.Model):
+class MailMessage(models.Model):
     _inherit = 'mail.message'
 
-    def _comment_bought(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        sale_report_obj = self.pool.get('sale.report')
-        product_obj = self.pool.get('product.product')
-        cr.execute("""
-            {0}
-            FROM ( {1} )
-            {2}
-            """.format(sale_report_obj._select(), sale_report_obj._from(),
-                       sale_report_obj._group_by()))
-        mail_cache = self.browse(cr, uid, ids, context)[0]
-        for rep in cr.fetchall():
-            product_id = rep[1]
-            partner_id = rep[8]
-            if product_id:
-                product_tmpl_id = \
-                    product_obj.browse(cr, uid,
-                                       [product_id])[0].product_tmpl_id.id
-            if mail_cache.res_id == product_tmpl_id and \
-               mail_cache.author_id.id == partner_id:
-                res[ids[0]] = 1
-        return res
+    @api.multi
+    def _comment_bought(self):
+        sale_report_obj = self.env['sale.report']
+        sale_select = sale_report_obj._select()
+        sale_from = sale_report_obj._from()
+        sale_group_by = sale_report_obj._group_by()
+        for mail in self:
+            where = """
 
-    _columns = {
-        'comment_bought': fields.function(_comment_bought, type='boolean',
-                                          string='Comment Bought',
-                                          store=True),
-    }
+            WHERE l.product_id IS NOT NULL AND
+                        t.id={res_id} AND s.partner_id={partner_id}
+
+                """.format(res_id=mail.res_id,
+                           partner_id=mail.author_id.id)
+            execute = """
+                {select}
+                FROM ( {_from} )
+                {where}
+                {group}
+                LIMIT 1
+                """.format(
+                select=sale_select,
+                _from=sale_from,
+                where=where,
+                group=sale_group_by)
+            self._cr.execute(execute)
+            if self._cr.fetchone():
+                mail.comment_bought = True
+
+    comment_bought = fields.Boolean(compute=_comment_bought,
+                                    string='Comment Bought',
+                                    store=True)
