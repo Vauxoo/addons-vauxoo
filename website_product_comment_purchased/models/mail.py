@@ -22,37 +22,40 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class MailMessage(models.Model):
     _inherit = 'mail.message'
 
-    def _comment_bought(self, cr, uid, ids, name, arg, context=None):
-        res = {}.fromkeys(ids, False)
-        sale_report_obj = self.pool.get('sale.report')
-        mail_cache = self.browse(cr, uid, ids, context)[0]
-        where = """
+    @api.multi
+    def _comment_bought(self):
+        sale_report_obj = self.env['sale.report']
+        sale_select = sale_report_obj._select()
+        sale_from = sale_report_obj._from()
+        sale_group_by = sale_report_obj._group_by()
+        for mail in self:
+            where = """
 
-        WHERE l.product_id IS NOT NULL AND
-                   t.id={res_id} AND s.partner_id={partner_id}
+            WHERE l.product_id IS NOT NULL AND
+                        t.id={res_id} AND s.partner_id={partner_id}
 
-            """.format(res_id=mail_cache.res_id,
-                       partner_id=mail_cache.author_id.id)
-        execute = """
-            {select}
-            FROM ( {_from} )
-            {where}
-            {group}
-            """.format(
-            select=sale_report_obj._select(),
-            _from=sale_report_obj._from(),
-            where=where,
-            group=sale_report_obj._group_by())
-        cr.execute(execute)
-        if cr.fetchall():
-            res[ids[0]] = True
-        return res
+                """.format(res_id=mail.res_id,
+                           partner_id=mail.author_id.id)
+            execute = """
+                {select}
+                FROM ( {_from} )
+                {where}
+                {group}
+                LIMIT 1
+                """.format(
+                select=sale_select,
+                _from=sale_from,
+                where=where,
+                group=sale_group_by)
+            self._cr.execute(execute)
+            if self._cr.fetchone():
+                mail.comment_bought = True
 
     comment_bought = fields.Boolean(compute=_comment_bought,
                                     string='Comment Bought',
