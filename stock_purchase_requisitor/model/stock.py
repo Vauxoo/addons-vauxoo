@@ -35,17 +35,3 @@ class StockPicking(osv.Model):
     _columns = {
         'responsible_id': fields.many2one('res.users', 'Responsible'),
     }
-
-
-class StockPickingIn(osv.Model):
-    _inherit = 'stock.picking.in'
-    _columns = {
-        'responsible_id': fields.many2one('res.users', 'Responsible'),
-    }
-
-
-class StockPickingOut(osv.Model):
-    _inherit = 'stock.picking.out'
-    _columns = {
-        'responsible_id': fields.many2one('res.users', 'Responsible'),
-    }
