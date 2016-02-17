@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<openerp><data>
-
-    <record id="base.group_production_cancel" model="res.groups">
-        <field name="name">Production / Button Cancel</field>
-    </record>
-
-</data></openerp>
