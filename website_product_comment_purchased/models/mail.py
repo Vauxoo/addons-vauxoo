@@ -42,7 +42,7 @@ class MailMessage(osv.Model):
                         t.id={res_id} AND s.partner_id={partner_id}
 
                 """.format(res_id=mail.res_id,
-                           partner_id=mail.author_id.id)
+                           partner_id=mail.author_id.id or 'null')
             execute = """
                 {select}
                 FROM ( {_from} )
