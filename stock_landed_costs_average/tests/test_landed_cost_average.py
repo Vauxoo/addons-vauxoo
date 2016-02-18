@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import except_orm, Warning as UserError
 from datetime import datetime, timedelta
 from openerp.tools.safe_eval import safe_eval
 

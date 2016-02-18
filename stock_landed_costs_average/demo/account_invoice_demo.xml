@@ -1,6 +1,13 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
+        <record id="freight_account" model="account.account">
+            <field name="code">X2016-FACCT</field>
+            <field name="name">freight cost acct</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+        </record>
         <record id="product_average_realtime_landed_cost_1" model="product.product">
             <field name="name">Average Product to Valuate with Landed Costs</field>
             <field name="cost_method">average</field>
