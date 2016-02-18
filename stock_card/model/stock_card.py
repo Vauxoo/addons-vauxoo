@@ -115,15 +115,18 @@ class StockCardProduct(models.TransientModel):
     def _get_price_on_supplier_return(self, row, vals, qntval):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
-        move_id = row['move_id']
-        move_brw = sm_obj.browse(move_id)
+        move_id = sm_obj.browse(row['move_id'])
+        product_id = self.env['product.product'].browse(row['product_id'])
         # Cost is the one record in the stock_move, cost in the
         # quant record includes other segmentation cost: landed_cost,
         # material_cost, production_cost, subcontracting_cost
         # Inventory Value has to be decreased by the amount of purchase
         # TODO: BEWARE price_unit needs to be normalised
-        vals['move_valuation'] = sum([move_brw.price_unit * qnt['qty']
-                                      for qnt in qntval])
+        price = move_id.price_unit
+        if product_id.cost_method == 'average':
+            price = vals['average']
+
+        vals['move_valuation'] = sum([price * qnt['qty'] for qnt in qntval])
         return True
 
     def _get_price_on_supplied(self, row, vals, qntval):
