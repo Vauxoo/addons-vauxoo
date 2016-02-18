@@ -83,7 +83,7 @@
                         <tr>
                             <td class="celdaLineData" style="text-align:left;font-style:italic;" width="10%"></td>
                             <td class="celdaLineData" style="text-align:left;" colspan="5">${m['partner_name'] or ''}</td>
-                            <td class="celdaLineDataNamePartner" width="10%" style="text-align:right;">${formatLang(m['balanceinit'] and m['balanceinit'] * m.get('change_sign',1.0) or 0.0, digits=2, grouping=True)  or ''}</td>
+                            <td class="celdaLineDataNamePartner" width="10%" style="text-align:right;">${formatLang(m['balanceinit'] and m['balanceinit'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True)  or ''}</td>
                             <td class="celdaLineDataNamePartner" width="10%" style="text-align:right;">${(line['total']==True) and formatLang(m['debit'], digits=2, grouping=True) or ''}</td>
                             <td class="celdaLineDataNamePartner" width="10%" style="text-align:right;">${(line['total']==True) and formatLang(m['credit'], digits=2, grouping=True) or ''}</td>
                             <td class="celdaLineDataNamePartner" width="10%" style="text-align:right;">${(line['total']==True) and formatLang(m['balance'] and m['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
