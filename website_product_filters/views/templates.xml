@@ -328,12 +328,13 @@
             :param obj categ: the categories retrieved by the controller shop.
         -->
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
-          <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
+          <li t-att-class="'active' if categ.id == int(category or 0) else 'inactive'" t-att-data-categid="categ.id">
             <t t-set="has_product" t-value="categ.has_products_ok"/>
             <i t-if="categ.child_id and has_product"
               t-attf-class="text-primary" t-att-data-arrowid="categ.id"/>
             <!-- Link itself of category with the qty of products -->
             <t t-if="has_product">
+              <div t-att-class="'active' if categ.id == int(category or 0) else 'inactive'" t-att-data-categid="categ.id">
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
                 <t t-if="categ.id != int(category or 0)">
@@ -342,6 +343,7 @@
                   </span>
                 </t>
               </a>
+            </div>
             </t>
             <!-- New sublist of child categories, rendered by this same template
                  (recursive).-->
