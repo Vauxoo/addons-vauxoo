@@ -172,17 +172,17 @@
               <t t-foreach="categories" t-as="parent_categs">
                 <t t-if="parent_categs.child_id">
                 <div class="col-md-9 pull-right mt16" >
-                  <div class="panel panel-default panel-heading gray-bg"><b><span>Categories of </span><t t-esc="parent_categs.name"/></b></div>
+                  <div class="panel-heading"><b class="title"><span>Categories of </span><t t-esc="parent_categs.name"/></b></div>
                   <t t-foreach="parent_categs.child_id" t-as="child_categ">
                    <t t-if="child_categ.has_products_ok">
                     <div id="categories_grid" class='col-md-4 col-xs-6 col-sm-4'>
                         <div class='mt16 text-center'>
                             <span t-field="child_categ.image_medium" t-field-options='{"widget": "image"}'/>
-                            <h4>
+                            <h5>
                                 <a t-att-href="'/shop/category/' + slug(child_categ)" style="display: block">
                                     <span t-field='child_categ.name' style="display: block"/>
                                 </a>
-                            </h4>
+                            </h5>
                         </div>
                     </div>
                   </t>
@@ -201,11 +201,31 @@
                               <span t-field="popular.image_medium" t-field-options='{"widget": "image"}'/>
                               <t t-set="product" t-value="popular"/>
                               <t t-call="website_rate_product.show_product_rating"/>
-                              <h4>
+                              <h5>
                                   <a t-attf-href="/shop/product/#{ slug(popular) }" style="display: block">
                                       <span t-field='popular.name' style="display: block"/>
                                   </a>
-                              </h4>
+                              </h5>
+                              <t t-set="p_price" t-value="popular.with_context({'partner': user_id.partner_id.id, 'pricelist': user_id.partner_id.property_product_pricelist.id}).price"/>
+                              <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price" t-if="popular.product_variant_ids">
+                                  <b>
+                                      <t t-if="(compute_currency(popular.lst_price) - p_price) &gt; 0.1">
+                                        <del class="text-danger" style="white-space: nowrap;" t-field="popular.lst_price" t-field-options='{
+                                          "widget": "monetary",
+                                          "from_currency": "popular.company_id.currency_id",
+                                          "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                        }'/>
+                                      </t>
+                                        <span t-esc="p_price" style="white-space: nowrap;"  t-esc-options='{
+                                             "widget": "monetary",
+                                             "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                         }'>
+                                        </span>
+
+                                      <span itemprop="price" style="display:none;" t-esc="p_price"/>
+                                      <span itemprop="priceCurrency" style="display:none;" t-field="user_id.partner_id.property_product_pricelist.currency_id.name"/>
+                                  </b>
+                              </div>
                           </div>
                       </div>
                     </t>
@@ -218,11 +238,31 @@
                       <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
                           <div class='mt16 text-center'>
                               <span t-field="new_p.image_medium" t-field-options='{"widget": "image"}'/>
-                              <h4>
+                              <h5>
                                   <a t-attf-href="/shop/product/#{ slug(new_p) }" style="display: block">
                                       <span t-field='new_p.name' style="display: block"/>
                                   </a>
-                              </h4>
+                              </h5>
+                              <t t-set="p_price" t-value="new_p.with_context({'partner': user_id.partner_id.id, 'pricelist': user_id.partner_id.property_product_pricelist.id}).price"/>
+                              <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price" t-if="new_p.product_variant_ids">
+                                  <b>
+                                      <t t-if="(compute_currency(new_p.lst_price) - p_price) &gt; 0.1">
+                                        <del class="text-danger" style="white-space: nowrap;" t-field="new_p.lst_price" t-field-options='{
+                                          "widget": "monetary",
+                                          "from_currency": "new_p.company_id.currency_id",
+                                          "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                        }'/>
+                                      </t>
+                                        <span t-esc="p_price" style="white-space: nowrap;"  t-esc-options='{
+                                             "widget": "monetary",
+                                             "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                         }'>
+                                        </span>
+
+                                      <span itemprop="price" style="display:none;" t-esc="p_price"/>
+                                      <span itemprop="priceCurrency" style="display:none;" t-field="user_id.partner_id.property_product_pricelist.currency_id.name"/>
+                                  </b>
+                              </div>
                           </div>
                       </div>
                     </t>
