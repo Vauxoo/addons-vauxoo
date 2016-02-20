@@ -49,7 +49,7 @@
                     <t t-if="claim.partner_id.customer">
                         <p class="row" style="font-size:12px"><strong>Customer Name<span>:</span></strong></p>
                     </t>
-                        <p class="row" style="font-size:12px" ><strong>Delivery Address<span>: </span></strong></p>
+                        <p class="row" style="font-size:12px"><strong>Delivery Address<span>:</span></strong></p>
                 </div>
                 <!-- DATA -->
                 <div class="col-xs-2">
@@ -87,63 +87,76 @@
                     </t>
                 </div>
             </div>
+
+
             <div class="row" >
+                <div class="col-xs-2" style="text-align:right;">
+                    <t t-if="claim.partner_phone">
+                        <p class="row" style="font-size:12px"><strong>Phone Number<span>: </span></strong></p>
+                    </t>
+                </div>
+                <div class="col-xs-2">
+                    <t t-if="claim.partner_phone">
+                        <p t-field="claim.partner_phone" style="font-size:12px; white-space: nowrap;"/>
+                    </t>
+                </div>
                 <div class="col-xs-2" style="text-align:right;">
                     <t t-if="claim.email_from">
                         <p class="row" style="font-size:12px"><strong>Email<span>: </span></strong></p>
                     </t>
+                </div>
+                <div class="col-xs-2">
+                    <t t-if="claim.email_from">
+                        <p t-field="claim.email_from" style="font-size:12px; white-space: nowrap;"/>
+                    </t>
+                </div>
+            </div>
+
+            <div class="row" >
+                <div class="col-xs-2" style="text-align:right;">
+                    <t t-if="claim.user_id.name">
+                        <p class="row" style="font-size:12px"><strong>Responsible<span>: </span></strong></p>
+                    </t>
+                </div>
+                <div class="col-xs-2" style="padding-right:5px; text-align:left;">
+                    <t t-if="claim.user_id.name">
+                        <p t-field="claim.user_id.name" style="font-size:12px; white-space: nowrap;"/>
+                    </t>
+                </div>
+                <div class="col-xs-2" style="text-align:right;">
                     <t t-if="claim.date">
                         <p class="row" style="font-size:12px"> <strong>Claim Date<span>: </span></strong> </p>
                     </t>
                 </div>
-                <!-- DATA -->
-                <div class="col-xs-2">
-                    <t t-if="claim.email_from">
-
-                        <p t-field="claim.email_from" style="font-size:12px; white-space: nowrap;"/>
-
-                    </t>
+                <div class="col-xs-2" style="padding-right:5px; text-align:left;">
                     <t t-if="claim.date">
                         <p t-field="claim.date" t-field-options='{"format": "dd/MM/yyyy"}' style="font-size:12px; white-space: nowrap;"/>
                     </t>
                 </div>
+            </div>
+
+            <div class="row" >
                 <div class="col-xs-2" style="text-align:right;">
-                    <t t-if="claim.email_from">
-                        <p class="row" style="font-size:12px"><strong>Phone Number<span>: </span></strong></p>
-                    </t>
                     <t t-if="claim.date">
                         <p class="row" style="font-size:12px"> <strong>Date Deadline<span>: </span></strong> </p>
                     </t>
                 </div>
                 <!-- DATA -->
                 <div class="col-xs-2">
-                    <t t-if="claim.email_from">
-
-                        <p t-field="claim.partner_phone" style="font-size:12px; white-space: nowrap;"/>
-
-                    </t>
                     <t t-if="claim.date">
                         <p t-field="claim.date_deadline" t-field-options='{"format": "dd/MM/yyyy"}' style="font-size:12px; white-space: nowrap;"/>
                     </t>
                 </div>
                 <div class="col-xs-2" style="text-align:right;">
-                    <t t-if="claim.email_from">
-                        <p class="row" style="font-size:12px"><strong>Responsible<span>: </span></strong></p>
-                    </t>
                     <t t-if="claim.date">
                         <p  class="row" style="font-size:12px"> <strong>Print Date<span>: </span></strong> </p>
                     </t>
                 </div>
 
                 <div class="col-xs-2" style="padding-right:5px; text-align:left;">
-                        <t t-if="claim.email_from">
-
-                            <p t-field="claim.user_id.name" style="font-size:12px; white-space: nowrap;"/>
-
-                        </t>
-                        <t t-if="claim.date">
-                            <p t-esc="time.strftime('%d/%m/%Y')" t-field-options='{"format": "dd/MM/yyyy"}' style="font-size:12px; white-space: nowrap;"/>
-                        </t>
+                    <t t-if="claim.date">
+                        <p t-esc="time.strftime('%d/%m/%Y')" t-field-options='{"format": "dd/MM/yyyy"}' style="font-size:12px; white-space: nowrap;"/>
+                    </t>
                 </div>
             </div>
             <div class="row table-product-info">
