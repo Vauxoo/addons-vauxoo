@@ -185,6 +185,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <br/> <br/> <br/> <br/>
+                <p align="center">_______________________________________________</p>
+                <p align="center">Customer's signature</p>
             </div>
         </template>
         <template id="product_on_claim">
