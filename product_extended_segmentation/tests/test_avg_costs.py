@@ -103,3 +103,12 @@ class TestAvgCosts(TransactionCase):
         self.assertEqual(res['producto_a']['material_cost'], 0)
         self.assertEqual(res['producto_b']['material_cost'], 0)
         self.assertEqual(res['producto_c']['material_cost'], 0)
+
+    def test_02_compute_price_with_real_bom(self):
+        template_id = self.prod_e_id.product_tmpl_id
+        self.prod_d_id.write({'cost_method': 'real'})
+        res = self.env['product.template'].compute_price(
+            product_ids=False, recursive=True,  real_time_accounting=False,
+            template_ids=[template_id.id], test=True)
+        self.assertEqual(res,
+                         '{{{0}: 75.0}}'.format(str(template_id.id)))
