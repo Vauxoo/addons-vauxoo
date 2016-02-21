@@ -33,11 +33,16 @@ class StockQuant(models.Model):
                                    credit_account_id, debit_account_id):
         res = super(StockQuant, self)._prepare_account_move_line(
             move, qty, cost, credit_account_id, debit_account_id)
-        if move.purchase_line_id and move.purchase_line_id.analytics_id:
+        purchase_line_id = move.purchase_line_id
+        if not purchase_line_id and move.origin_returned_move_id:
+            purchase_line_id = move.origin_returned_move_id.purchase_line_id
+        if purchase_line_id and purchase_line_id.analytics_id:
             debit_line_vals, credit_line_vals = res[0][2], res[1][2]
-            debit_line_vals[
-                'analytics_id'] = move.purchase_line_id.analytics_id.id
-            credit_line_vals[
-                'analytics_id'] = move.purchase_line_id.analytics_id.id
+            if move.location_dest_id.usage == 'internal':
+                debit_line_vals[
+                    'analytics_id'] = purchase_line_id.analytics_id.id
+            else:
+                credit_line_vals[
+                    'analytics_id'] = purchase_line_id.analytics_id.id
             res = [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
         return res
