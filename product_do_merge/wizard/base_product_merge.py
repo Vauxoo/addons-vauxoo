@@ -28,8 +28,8 @@ import logging
 import operator
 from ast import literal_eval
 import openerp
-from openerp.osv import osv, orm
-from openerp.osv import fields
+from openerp.osv import orm, osv
+from openerp import fields, models
 from openerp.osv.orm import browse_record
 from openerp.tools.translate import _
 
@@ -40,57 +40,49 @@ def is_integer_list(ids):
     return all(isinstance(i, (int, long)) for i in ids)
 
 
-class MergeProductLine(osv.TransientModel):
+class MergeProductLine(models.TransientModel):
     _name = 'base.product.merge.line'
-
-    _columns = {
-        'wizard_id': fields.many2one(
-            'base.product.merge.automatic.wizard',
-            'Wizard'),
-        'min_id': fields.integer('MinID'),
-        'aggr_ids': fields.char('Ids', required=True),
-    }
-
     _order = 'min_id asc'
 
+    wizard_id = fields.Many2one(
+        'base.product.merge.automatic.wizard',
+        'Wizard')
+    min_id = fields.Integer('MinID')
+    aggr_ids = fields.Char('Ids', required=True)
 
-class MergeProductAutomatic(osv.TransientModel):
+
+class MergeProductAutomatic(models.TransientModel):
     _name = 'base.product.merge.automatic.wizard'
 
-    _columns = {
-        'group_by_name_template': fields.boolean('Nombre'),
-        'group_by_default_code': fields.boolean('Referencia'),
-        'group_by_categ_id': fields.boolean('Categoria'),
-        'group_by_uom_id': fields.boolean('Unidad de medida'),
-        'state': fields.selection([('option', 'Option'),
-                                   ('selection', 'Selection'),
-                                   ('finished', 'Finished')],
-                                  'State',
-                                  readonly=True,
-                                  required=True),
-        'number_group': fields.integer("Group of Products",
-                                       readonly=True),
-        'current_product_id': fields.many2one('product.product',
-                                              string='Current product'),
-        'product_from': fields.many2one('product.product',
-                                        string='Product from'),
-        'product_to': fields.many2one('product.product',
-                                      string='Product to'),
-        'current_line_id': fields.many2one('base.product.merge.line',
-                                           'Current Line'),
-        'line_ids': fields.one2many('base.product.merge.line',
-                                    'wizard_id', 'Lines'),
-        'dst_product_id': fields.many2one('product.product',
-                                          string='Destination Contact'),
-        'product_ids': fields.many2many(
-            'product.product', 'product_rel', 'product_merge_id',
-            'product_id', string="Products to merge"),
-        'maximum_group': fields.integer("Maximum of Group of Contacts"),
-    }
-
-    _defaults = {
-        'state': 'option'
-    }
+    group_by_name_template = fields.Boolean('Nombre')
+    group_by_default_code = fields.Boolean('Referencia')
+    group_by_categ_id = fields.Boolean('Categoria')
+    group_by_uom_id = fields.Boolean('Unidad de medida')
+    state = fields.Selection([('option', 'Option'),
+                              ('selection', 'Selection'),
+                              ('finished', 'Finished')],
+                             'State',
+                             readonly=True,
+                             default='option',
+                             required=True)
+    number_group = fields.Integer("Group of Products",
+                                  readonly=True)
+    current_product_id = fields.Many2one('product.product',
+                                         string='Current product')
+    product_from = fields.Many2one('product.product',
+                                   string='Product from')
+    product_to = fields.Many2one('product.product',
+                                 string='Product to')
+    current_line_id = fields.Many2one('base.product.merge.line',
+                                      'Current Line')
+    line_ids = fields.One2many('base.product.merge.line',
+                               'wizard_id', 'Lines')
+    dst_product_id = fields.Many2one('product.product',
+                                     string='Destination Contact')
+    product_ids = fields.Many2many(
+        'product.product', 'product_rel', 'product_merge_id',
+        'product_id', string="Products to merge")
+    maximum_group = fields.Integer("Maximum of Group of Contacts")
 
     def get_fk_on(self, cr, table, tables=None):
         tables = tables and tuple(tables) or []
@@ -147,7 +139,7 @@ class MergeProductAutomatic(osv.TransientModel):
                 if 'base_product_merge_' in table:
                     continue
 
-                product_ids = tuple(map(int, src_products))
+                product_ids = tuple([int(i) for i in src_products])
 
                 query = """SELECT column_name FROM information_schema.columns
                            WHERE table_name LIKE '%s'""" % (
@@ -412,7 +404,7 @@ class MergeProductAutomatic(osv.TransientModel):
                                    context=context):
             proxy_model = self.pool[record.model]
 
-            field_type = proxy_model._columns.get(record.name).__class__._type
+            field_type = proxy_model._fields.get(record.name).type
 
             if field_type == 'function':
                 continue
@@ -434,7 +426,7 @@ class MergeProductAutomatic(osv.TransientModel):
     def _update_values(self, cr, uid, src_products,
                        dst_product, context=None):
         product_bad = []
-        columns = dst_product._columns
+        columns = dst_product._fields
 
         def write_serializer(column, item):
             if isinstance(item, browse_record):
@@ -444,8 +436,8 @@ class MergeProductAutomatic(osv.TransientModel):
 
         values = dict()
         for column, field in columns.iteritems():
-            if field._type not in ('many2many', 'one2many') and not \
-                    isinstance(field, fields.function):
+            if field.type not in ('many2many', 'one2many') and not \
+                    field.compute:
                 for item in itertools.chain(src_products, [dst_product]):
                     if item[column]:
                         values[column] = write_serializer(column, item[column])
@@ -482,8 +474,8 @@ class MergeProductAutomatic(osv.TransientModel):
                 """))
         if dst_product and dst_product.id in product_ids:
             src_products = proxy.browse(cr, uid, [
-                                        id for id in product_ids
-                                        if id != dst_product.id],
+                                        i for i in product_ids
+                                        if i != dst_product.id],
                                         context=context)
         else:
             ordered_products = self._get_ordered_product(
@@ -505,13 +497,15 @@ class MergeProductAutomatic(osv.TransientModel):
                    Journal Items. Please ask the Administrator if you need
                    to merge several products linked to existing Journal
                    Items."""))
-        call_it = lambda function: function(
-            cr, uid, src_products, dst_product, context=context)
         product_bad = []
 
-        product_bad += call_it(self._update_foreign_keys)
-        product_bad += call_it(self._update_reference_fields)
-        product_bad += call_it(self._update_values)
+        product_bad += self._update_foreign_keys(cr, uid, src_products,
+                                                 dst_product, context=context)
+        product_bad += self._update_reference_fields(cr, uid, src_products,
+                                                     dst_product,
+                                                     context=context)
+        product_bad += self._update_values(cr, uid, src_products, dst_product,
+                                           context=context)
         product_bad = set(product_bad)
         for product in src_products:
             if product.id not in product_bad:
@@ -541,10 +535,10 @@ class MergeProductAutomatic(osv.TransientModel):
         context = dict(context or {}, active_test=False)
         this = self.browse(cr, uid, ids[0], context=context)
         p_ids = this.product_ids and this.product_ids.ids
-        p_ids and p_ids.append(this.product_to)
-        product_ids = set(map(int, this.product_from and
-                              [this.product_to, this.product_from] or
-                              p_ids))
+        if p_ids:
+            p_ids.append(this.product_to)
+        product_ids = set([int(i) for i in this.product_from and
+                           [this.product_to, this.product_from] or p_ids])
         if not list(product_ids):
             raise osv.except_osv(_('Error!'), _(
                 """The product from must be selected for
@@ -558,15 +552,15 @@ class MergeProductAutomatic(osv.TransientModel):
         group_by_str = 'group_by_'
         group_by_len = len(group_by_str)
 
-        fields = [
+        lfields = [
             key[group_by_len:]
-            for key in self._columns.keys()
+            for key in self._fields.keys()
             if key.startswith(group_by_str)
         ]
 
         groups = [
             field
-            for field in fields
+            for field in lfields
             if getattr(this, '%s%s' % (group_by_str, field), False)
         ]
 
@@ -576,11 +570,11 @@ class MergeProductAutomatic(osv.TransientModel):
                                       selection."""))
         return groups
 
-    def _generate_query(self, fields, maximum_group=100):
-        group_fields = ', '.join(fields)
+    def _generate_query(self, lfields, maximum_group=100):
+        group_fields = ', '.join(lfields)
 
         filters = []
-        for field in fields:
+        for field in lfields:
             if field in ['name_template', 'default_code', ]:
                 filters.append((field, 'IS NOT', 'NULL'))
 
