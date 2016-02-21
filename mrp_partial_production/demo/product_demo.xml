@@ -23,7 +23,6 @@
             <field name="uom_id" ref="product.product_uom_unit"/>
             <field name="uom_po_id" ref="product.product_uom_unit"/>
             <field name="default_code">testb</field>
-            <field name="client_code">compa</field>
         </record>
 
         <record id="product_product_20" model="product.product">
