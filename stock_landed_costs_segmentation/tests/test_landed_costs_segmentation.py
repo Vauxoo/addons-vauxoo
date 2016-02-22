@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
+from openerp.exceptions import Warning as UserError
 
 
 class TestLandedCostsSegmentation(TransactionCase):
@@ -75,10 +76,9 @@ class TestLandedCostsSegmentation(TransactionCase):
         wizard_id.do_detailed_transfer()
         self.assertEqual(picking_id.state, 'done')
 
-    def create_and_validate_landed_costs(self, picking_id=False,
-                                         insurance_cost=15000,
-                                         freight_cost=18000):
-        slc_id = self.slc.create({
+    def create_landed_cost(self, picking_id,
+                           insurance_cost=15000, freight_cost=18000):
+        return self.slc.create({
             'account_journal_id': self.ref(
                 'stock_landed_costs_average.stock_landed_cost_1'),
             'picking_ids': [(4, picking_id.id), ],
@@ -102,6 +102,12 @@ class TestLandedCostsSegmentation(TransactionCase):
             ]
         })
 
+    def create_and_validate_landed_costs(self, picking_id=False,
+                                         insurance_cost=15000,
+                                         freight_cost=18000):
+        slc_id = self.create_landed_cost(picking_id, insurance_cost,
+                                         freight_cost)
+
         self.assertEqual(len(slc_id.picking_ids), 1)
         self.assertEqual(len(slc_id.cost_lines), 2)
 
@@ -119,6 +125,13 @@ class TestLandedCostsSegmentation(TransactionCase):
             if quant_id.product_id == product_id:
                 return quant_id
 
+    def test_00_user_validations(self):
+        self.do_picking(self.picking_01_id)
+        landed_cost_id = self.create_landed_cost(self.picking_01_id)
+        msg_error = 'You cannot validate a landed cost which has no valid.*'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            landed_cost_id.button_validate()
+
     def test_01_segmentations(self):
         # check initial product costs
         self.assertEqual(self.product_01.standard_price, 100)
@@ -127,10 +140,11 @@ class TestLandedCostsSegmentation(TransactionCase):
 
         # make incoming stock movements
         self.do_picking(self.picking_01_id)
-        self.create_and_validate_landed_costs(self.picking_01_id,
-                                              insurance_cost=15000,
-                                              freight_cost=18000)
-
+        landed_cost_id = self.create_and_validate_landed_costs(
+            self.picking_01_id, insurance_cost=15000, freight_cost=18000)
+        msg_error = 'Only draft landed costs can be validated'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            landed_cost_id.button_validate()
         self.assertEqual(self.product_02.material_cost, 100)
         self.assertEqual(self.product_02.landed_cost, 60)
         self.assertEqual(self.product_02.production_cost, 0)
