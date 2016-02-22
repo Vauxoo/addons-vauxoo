@@ -77,7 +77,8 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.assertEqual(picking_id.state, 'done')
 
     def create_landed_cost(self, picking_id,
-                           insurance_cost=15000, freight_cost=18000):
+                           insurance_cost=15000, freight_cost=18000,
+                           split_method='by_quantity'):
         return self.slc.create({
             'account_journal_id': self.ref(
                 'stock_landed_costs_average.stock_landed_cost_1'),
@@ -87,7 +88,7 @@ class TestLandedCostsSegmentation(TransactionCase):
                     'name': 'insurance',
                     'product_id': self.product_insurance_id.id,
                     'account_id': self.account_insurance_id.id,
-                    'split_method': 'by_quantity',
+                    'split_method': split_method,
                     'price_unit': insurance_cost,
                     'segmentation_cost': 'subcontracting_cost',
                 }),
@@ -95,7 +96,7 @@ class TestLandedCostsSegmentation(TransactionCase):
                     'name': 'freight',
                     'product_id': self.product_freight_id.id,
                     'account_id': self.account_freight_id.id,
-                    'split_method': 'by_quantity',
+                    'split_method': split_method,
                     'price_unit': freight_cost,
                     'segmentation_cost': 'landed_cost',
                 }),
@@ -248,3 +249,28 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.assertEqual(self.product_01.standard_price, 100)
         self.assertEqual(self.product_02.standard_price, 264)
         self.assertEqual(self.product_03.standard_price, 100)
+
+    def test_02_split_methods(self):
+        vals = {
+            'by_quantity': 15000, 'by_weight': 15000,
+            'by_volume': 15000, 'equal': 15000,
+            'by_current_cost_price': 15000,
+        }
+
+        # leave only the avg one
+        move_ids = self.picking_01_id.move_lines
+        self.picking_01_id.write({
+            'move_lines': [(3, mid.id) for mid in move_ids
+                           if mid.product_id != self.product_02]
+        })
+        for split_method in vals.keys():
+            landed_cost_id = self.create_landed_cost(
+                picking_id=self.picking_01_id, split_method=split_method)
+            landed_cost_id.write({
+                'cost_lines': [(3, cid.id) for cid in landed_cost_id.cost_lines
+                               if cid.display_name != 'insurance']
+            })
+            landed_cost_id.compute_landed_cost()
+            for val_id in landed_cost_id.valuation_adjustment_lines:
+                self.assertEqual(
+                    val_id.additional_landed_cost, vals[split_method])
