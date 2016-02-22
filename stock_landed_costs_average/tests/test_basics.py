@@ -76,3 +76,13 @@ class TestBasics(TransactionCase):
         self.assertEquals(
             self.slc_id.valuation_adjustment_lines[0].additional_landed_cost,
             -100)
+
+    def test_06_real_time_valuations(self):
+        self.assertEqual(self.slc_id.get_valuation_lines(), [])
+        for picking_id in self.slc_id.picking_ids:
+            for move_id in picking_id.move_lines:
+                move_id.product_id.write({'valuation': 'manual_periodic'})
+        picking_ids = [pid.id for pid in self.slc_id.picking_ids]
+        msg_error = 'The selected picking does not contain any move that.*'
+        with self.assertRaisesRegexp(except_orm, msg_error):
+            res = self.slc_id.get_valuation_lines(picking_ids)
