@@ -32,7 +32,6 @@
     "license": "AGPL-3",
     "depends": [
         "base",
-        "portal_project",
         "hr"
     ],
     "demo": [

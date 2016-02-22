@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
-        <record id="email_reports_base" model="email.template">
+        <record id="email_reports_base" model="mail.template">
             <field name="name">Project Status Report</field>
             <field name="email_from">${(object.user_id.email or ''|safe)}</field>
             <field name="subject">${(object.title|safe)}</field>

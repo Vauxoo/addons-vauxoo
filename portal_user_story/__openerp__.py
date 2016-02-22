@@ -30,8 +30,8 @@
     "depends": [
         "base",
         "user_story",
+        "project",
         "portal",
-        "portal_project",
     ],
     "author": "Vauxoo",
     "website": "http://vauxoo.com",

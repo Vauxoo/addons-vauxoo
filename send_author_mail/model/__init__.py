@@ -20,5 +20,5 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import mail_notification
+# from . import mail_notification
 from . import res_partner
