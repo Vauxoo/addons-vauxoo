@@ -89,28 +89,28 @@ class TestStockCardProductReturns(TransactionCase):
                                               precision_rounding=1),
                              "Average Cost current={0} expected={1} is not "
                              "the expected: {2}".
-                             format(succeed['avg'],
-                                    expected['average'], expected))
+                             format(succeed['average'],
+                                    expected['avg'], expected))
 
             self.assertEqual(expected['cost'],
                              succeed['cost_unit'],
                              "Unit Cost current={0} expected={1} is not "
                              "the expected: {2}".
-                             format(succeed['cost'],
-                                    expected['cost_unit'], expected))
+                             format(succeed['cost_unit'],
+                                    expected['cost'], expected))
 
             self.assertEqual(0, float_compare(expected['inv_val'],
                                               succeed['inventory_valuation'],
                                               precision_rounding=1),
                              "Inventory Value current={0} expected={1} is not "
                              "match: {2}".
-                             format(succeed['inv_val'],
-                                    expected['inventory_valuation'], expected))
+                             format(succeed['inventory_valuation'],
+                                    expected['inv_val'], expected))
 
             self.assertEqual(0, float_compare(expected['mov_val'],
                                               succeed['move_valuation'],
                                               precision_rounding=1),
                              "Movement Value current={0} expected={1} is not "
                              "match: {2}".
-                             format(succeed['mov_val'],
-                                    expected['move_valuation'], expected))
+                             format(succeed['move_valuation'],
+                                    expected['mov_val'], expected))
