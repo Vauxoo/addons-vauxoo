@@ -128,6 +128,15 @@ class TestLandedCostsSegmentation(TransactionCase):
     def test_00_user_validations(self):
         self.do_picking(self.picking_01_id)
         landed_cost_id = self.create_landed_cost(self.picking_01_id)
+        landed_cost_id.compute_landed_cost()
+        landed_cost_id.cost_lines.write({
+            'segmentation_cost': False,
+        })
+        msg_error = 'Please fill the segmentation field in Cost Lines'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            landed_cost_id.button_validate()
+
+        landed_cost_id = self.create_landed_cost(self.picking_01_id)
         msg_error = 'You cannot validate a landed cost which has no valid.*'
         with self.assertRaisesRegexp(UserError, msg_error):
             landed_cost_id.button_validate()
