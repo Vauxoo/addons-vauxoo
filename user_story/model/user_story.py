@@ -91,12 +91,12 @@ class UserStory(osv.Model):
     def body_progress(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
-            cr, uid, [('model', '=', 'email.template'),
+            cr, uid, [('model', '=', 'mail.template'),
                       ('name', '=', template)])
         if template_ids:
             res_id = imd_obj.read(
                 cr, uid, template_ids, ['res_id'])[0]['res_id']
-            body_html = self.pool.get('email.template').read(
+            body_html = self.pool.get('mail.template').read(
                 cr, uid, res_id, ['body_html']).get('body_html')
             return body_html
         else:
@@ -111,12 +111,12 @@ class UserStory(osv.Model):
             context = {}
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
-            cr, SUPERUSER_ID, [('model', '=', 'email.template'),
+            cr, SUPERUSER_ID, [('model', '=', 'mail.template'),
                                ('name', '=', template)])
         if template_ids:
             res_id = imd_obj.read(
                 cr, SUPERUSER_ID, template_ids, ['res_id'])[0]['res_id']
-            body_html = self.pool.get('email.template').read(
+            body_html = self.pool.get('mail.template').read(
                 cr, uid, res_id, ['body_html']).get('body_html')
             user_id = self.pool.get('res.users').browse(
                 cr, SUPERUSER_ID, [uid], context=context)[0]
@@ -512,9 +512,9 @@ class AcceptabilityCriteria(osv.Model):
         template = data_obj.get_object(
             cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
 
-        # Extract body form the email.template an used as body argument in
+        # Extract body form the mail.template an used as body argument in
         # the message_post call.
-        temp_obj = self.pool.get('email.template')
+        temp_obj = self.pool.get('mail.template')
         story_obj = self.pool.get('user.story')
         body = temp_obj.read(
             cr, SUPERUSER_ID, template.id, ['body_html'],
@@ -588,7 +588,7 @@ class AcceptabilityCriteria(osv.Model):
         partner_ids = list(set(partner_ids))
         template = data_obj.get_object(
             cr, uid, 'user_story', 'template_ask_aceptabilty_criterial')
-        mail = self.pool.get('email.template').generate_email(
+        mail = self.pool.get('mail.template').generate_email(
             cr, SUPERUSER_ID, template.id, ids[0])
         compose_id = compose_obj.create(cr, uid, {
             'model': 'user.story',

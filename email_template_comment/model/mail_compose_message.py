@@ -32,7 +32,7 @@ class MailComposeMessage(osv.TransientModel):
         if context is None:
             context = {}
 
-        email_template_obj = self.pool.get('email.template')
+        email_template_obj = self.pool.get('mail.template')
         result = super(MailComposeMessage, self).default_get(
             cr, uid, fields, context=context)
 
