@@ -250,12 +250,19 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.assertEqual(self.product_02.standard_price, 264)
         self.assertEqual(self.product_03.standard_price, 100)
 
+    def get_lines_by_cost_name(self, landed_cost_id, name):
+        val_ids = landed_cost_id.valuation_adjustment_lines
+        return name and [vid.additional_landed_cost for vid in val_ids
+                         if vid.cost_line_id.display_name == name]
+
     def test_02_split_methods(self):
-        vals = {
-            'by_quantity': 15000, 'by_weight': 15000,
-            'by_volume': 15000, 'equal': 15000,
-            'by_current_cost_price': 15000,
-        }
+        vals = [
+            'by_quantity',
+            'by_weight',
+            'by_volume',
+            'equal',
+            'by_current_cost_price',
+        ]
 
         # leave only the avg one
         move_ids = self.picking_01_id.move_lines
@@ -263,14 +270,14 @@ class TestLandedCostsSegmentation(TransactionCase):
             'move_lines': [(3, mid.id) for mid in move_ids
                            if mid.product_id != self.product_02]
         })
-        for split_method in vals.keys():
+        for split_method in vals:
             landed_cost_id = self.create_landed_cost(
                 picking_id=self.picking_01_id, split_method=split_method)
-            landed_cost_id.write({
-                'cost_lines': [(3, cid.id) for cid in landed_cost_id.cost_lines
-                               if cid.display_name != 'insurance']
-            })
             landed_cost_id.compute_landed_cost()
-            for val_id in landed_cost_id.valuation_adjustment_lines:
-                self.assertEqual(
-                    val_id.additional_landed_cost, vals[split_method])
+
+            insurance = self.get_lines_by_cost_name(
+                landed_cost_id, 'insurance')
+            freight = self.get_lines_by_cost_name(landed_cost_id, 'freight')
+
+            self.assertEqual(insurance[0], 15000)
+            self.assertEqual(freight[0], 18000)
