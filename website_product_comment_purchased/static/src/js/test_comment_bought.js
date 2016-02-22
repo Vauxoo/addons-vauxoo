@@ -3,12 +3,12 @@
     openerp.Tour.register({
         id: 'shop_comment_bought',
         name: 'Shop comment bought',
-        path: '/shop?search=ipod',
+        path: '/shop?search=bose',
         mode: 'test',
         steps: [
             {
-                title:     'select ipod',
-                element:   '.oe_product_cart a:contains("iPod")',
+                title:     'select bose',
+                element:   '.oe_product_cart a:contains("Bose")',
             },
             {
                 title:     "write a comment",
@@ -22,7 +22,6 @@
                 title:     'look for a tag "customer bought the item"',
                 content:   'Waith Not a comment of the current user logged in, that has the tag "Customer bought the item"',
                 waitNot:   'span.label.label-success:contains("Customer bought the item")',
-                element:   'label:contains(32 GB) input',
             },
             {
                 title:     'click on add to cart on ipod details',
@@ -60,15 +59,15 @@
                 element:   'a[href="/shop"]',
             },
             {
-                title:     "search ipod",
+                title:     "search bose",
                 element:   'form:has(input[name="search"]) a.a-submit',
                 onload: function() {
-                    $('input[name="search"]').val("ipod");
+                    $('input[name="search"]').val("bose");
                 }
             },
             {
                 title:     "select ipod",
-                element:   '.oe_product_cart a:contains("iPod")',
+                element:   '.oe_product_cart a:contains("Bose")',
             },
             {
                 title:     "write a comment",
@@ -79,7 +78,7 @@
                 }
             },
             {
-                title:     'Customer bought the intem ipod',
+                title:     'Customer bought the intem bose',
                 content:   'Waith For a comment of the current user logged in, that has the tag "Customer bought the item"',
                 waitFor:   'span.label.label-success:contains("Customer bought the item")',
             },
