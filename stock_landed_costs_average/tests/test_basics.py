@@ -2,6 +2,7 @@
 
 from openerp.tests.common import TransactionCase
 from openerp.exceptions import except_orm, Warning as UserError
+from openerp.osv import osv
 
 
 class TestBasics(TransactionCase):
@@ -11,6 +12,9 @@ class TestBasics(TransactionCase):
         self.company_id = self.env.ref('base.main_company')
         self.slc = self.env['stock.landed.cost']
         self.slc_id = self.env.ref('stock_landed_costs_average.slc_02')
+        self.invoice_id = self.env.ref('stock_landed_costs_average.'
+                                       'invoice_landing_costs_average_1')
+        self.attacher = self.env['attach.invoice.to.landed.costs.wizard']
         self.vals = {
             'gain_acct_id':
             self.company_id.gain_inventory_deviation_account_id.id,
@@ -86,3 +90,20 @@ class TestBasics(TransactionCase):
         msg_error = 'The selected picking does not contain any move that.*'
         with self.assertRaisesRegexp(except_orm, msg_error):
             self.slc_id.get_valuation_lines(picking_ids)
+
+    def test_07_attach_invoice_to_landed_cost(self):
+        self.attach_id = self.attacher.with_context({
+            'active_id': self.invoice_id.id,
+            'active_ids': self.invoice_id.ids,
+            'res_model': self.invoice_id.name
+        }).create({'stock_landed_cost_id': self.slc_id.id})
+        self.attach_id.add_landed_costs()
+        self.assertTrue(self.invoice_id.stock_landed_cost_id.id,
+                        "Invoice doesn't have Landed Cost document related")
+
+        self.slc_id.write({
+            'state': 'done'
+        })
+        msg_error = 'You cannot change to another Landed Costs.*'
+        with self.assertRaisesRegexp(osv.except_osv, msg_error):
+            self.attach_id.add_landed_costs()
