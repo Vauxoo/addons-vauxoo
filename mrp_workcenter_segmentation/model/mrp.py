@@ -8,12 +8,19 @@ SEGMENTATION_COST = [
     'production_cost',
 ]
 
+SEGMENTATION_SELECTION = [
+    ('landed_cost', 'Landed Cost'),
+    ('subcontracting_cost', 'Subcontracting Cost'),
+    ('material_cost', 'Material Cost'),
+    ('production_cost', 'Production Cost'),
+]
+
 
 class MrpWorkcenter(models.Model):
     _inherit = 'mrp.workcenter'
 
     segmentation_cost = fields.Selection(
-        SEGMENTATION_COST,
+        SEGMENTATION_SELECTION,
         string='Segmentation',
     )
 
