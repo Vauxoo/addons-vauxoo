@@ -85,4 +85,4 @@ class TestBasics(TransactionCase):
         picking_ids = [pid.id for pid in self.slc_id.picking_ids]
         msg_error = 'The selected picking does not contain any move that.*'
         with self.assertRaisesRegexp(except_orm, msg_error):
-            res = self.slc_id.get_valuation_lines(picking_ids)
+            self.slc_id.get_valuation_lines(picking_ids)
