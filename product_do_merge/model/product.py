@@ -21,13 +21,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from openerp.osv import osv, fields
+from openerp import models, fields
 
 
-class ProductProduct(osv.Model):
+class ProductProduct(models.Model):
     _description = 'Product'
     _inherit = "product.product"
 
-    _columns = {
-        'create_date': fields.datetime('Create Date', readonly=True),
-    }
+    create_date = fields.Datetime('Create Date', readonly=True)

@@ -28,9 +28,8 @@ class TestsLandedCosts(TestStockCommon):
         self.return_obj = self.env['stock.return.picking']
         self.picking_type_internal = self.ModelDataObj.xmlid_to_res_id(
             'stock.picking_type_internal')
-        self.invoice_id = self.ref(
+        self.invoice_id = self.env.ref(
             'stock_landed_costs_average.invoice_landing_costs_average_1')
-        self.invoice_id = self.invoice_obj.browse(self.invoice_id)
 
     def create_product(self, values):
         default = dict(
@@ -191,7 +190,7 @@ class TestsLandedCosts(TestStockCommon):
 
         return True
 
-    def test_basic_landed(self):
+    def test_01_basic_landed(self):
         self.create_picking_basic()
         self.create_landed_cost()
         self.assign_landing_invoice()
@@ -251,7 +250,7 @@ class TestsLandedCosts(TestStockCommon):
 
         return True
 
-    def test_contractor_landed_cost(self):
+    def test_02_contractor_landed_cost(self):
         # Creating Average Product
         self.create_average_product()
 
@@ -299,3 +298,30 @@ class TestsLandedCosts(TestStockCommon):
         self.assert_average_product_cost(310.0)
 
         return True
+
+    def create_and_validate_landed_cost(self):
+        self.create_picking_basic()
+        self.create_landed_cost()
+        self.assign_landing_invoice()
+        self.validate_landed_cost()
+
+    def validate_acct_entries_values(self, product_id):
+        stock_valuation_acct_id = product_id.categ_id.\
+            property_stock_valuation_account_id
+        acct_move_id = self.landed_cost_id.account_move_id
+        for lid in self.landed_cost_id.cost_lines:
+            for val in self.landed_cost_id.valuation_adjustment_lines:
+                if val.product_id.id != product_id.id or \
+                        val.cost_line_id.id != lid.id:
+                    continue
+                for aml_id in acct_move_id.line_id:
+                    if aml_id.account_id.id == stock_valuation_acct_id.id and \
+                            aml_id.product_id.id == product_id.id and \
+                            aml_id.name == val.name:
+                        amt = aml_id.credit or aml_id.debit
+                        self.assertEquals(amt, val.additional_landed_cost)
+
+    def test_03_account_entries(self):
+        self.create_and_validate_landed_cost()
+        for product_id in [self.product_average, self.product_real]:
+            self.validate_acct_entries_values(product_id)

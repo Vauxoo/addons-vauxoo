@@ -9,9 +9,9 @@ class TestValidatePickings(TransactionCase):
     def setUp(self):
         super(TestValidatePickings, self).setUp()
         self.mrp = self.env['mrp.production']
-        self.wz = self.env['mrp.product.produce']
+        self.wizard = self.env['mrp.product.produce']
         self.w_upd_obj = self.env['stock.change.product.qty']
-        self.so = self.env.ref('mrp_partial_production.sale_order_1')
+        self.sale = self.env.ref('mrp_partial_production.sale_order_1')
         self.product = self.env.ref('mrp_partial_production.'
                                     'product_product_18')
         self.compa = self.env.ref('mrp_partial_production.'
@@ -36,7 +36,7 @@ class TestValidatePickings(TransactionCase):
         self.assertEqual(mrp_brw.state, 'ready',
                          'The state of the order must be ready')
 
-        wz_env = self.wz.\
+        wz_env = self.wizard.\
             with_context({'active_id': mrp_brw.id,
                           'active_ids': [mrp_brw.id]})
 
@@ -56,7 +56,7 @@ class TestValidatePickings(TransactionCase):
 
         wz_brw.product_qty = 4
 
-        picking_brw = self.so.picking_ids.\
+        picking_brw = self.sale.picking_ids.\
             filtered(lambda a: a.state == 'waiting')
 
         moves = picking_brw.move_lines.\
@@ -96,7 +96,7 @@ class TestValidatePickings(TransactionCase):
         self.assertEqual(picking_brw.state, 'done',
                          'Wrong state of outgoing shipment.')
 
-        # Adding new qty availables
+        # Adding new qty available
 
         self.w_upd_obj.create({
             'product_id': self.compa.id,
@@ -124,7 +124,7 @@ class TestValidatePickings(TransactionCase):
         self.assertEqual(wz_brw.product_qty, 6,
                          'The quantity suggested must be 6')
 
-        picking_brw = self.so.picking_ids.\
+        picking_brw = self.sale.picking_ids.\
             filtered(lambda a: a.state == 'waiting')
 
         moves = picking_brw.move_lines.\

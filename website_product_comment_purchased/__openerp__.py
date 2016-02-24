@@ -13,6 +13,7 @@
     "data": [
         "views/layout.xml",
         "views/website_comment_purchased.xml",
+        "data/website_settings.yml",
     ],
     "test": [],
     "js": [],

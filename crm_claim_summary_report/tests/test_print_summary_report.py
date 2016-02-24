@@ -46,8 +46,8 @@ class TestPrintSummaryReport(TransactionCase):
     def test_01_print_report_call(self):
         res = self.call_qweb_report(self.claim_ids)
 
-        self.assertTrue(res and res['context']
-                        and res['context']['active_ids'])
+        self.assertTrue(res and res['context'] and
+                        res['context']['active_ids'])
         self.assertEqual(res['context']['active_ids'], [self.claim_id])
 
     def test_02_get_html(self):
