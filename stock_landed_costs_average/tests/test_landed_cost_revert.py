@@ -19,6 +19,8 @@ class TestLandedCostRevert(TestStockLandedCommon):
             'stock_landed_costs_average.product_mouse')
         self.supplier_id = self.env.ref('base.res_partner_13')
         self.customer_id = self.env.ref('base.res_partner_23')
+        self.loss_acct_id = self.company_id.\
+            loss_inventory_deviation_account_id.id
         self.transactions = [
             {
                 'cost': 20, 'qty': 2,
@@ -79,8 +81,7 @@ class TestLandedCostRevert(TestStockLandedCommon):
 
         return slc_id
 
-    def test_01_landed_cost_revert(self):
-        card_lines = {}
+    def process_transactions(self):
         for trx in self.transactions:
             # purchase
             if trx['is_po']:
@@ -89,6 +90,9 @@ class TestLandedCostRevert(TestStockLandedCommon):
                 trx['id'] = self.create_sale_order(trx)
             trx['picking_ids'] = trx['id'].picking_ids
 
+    def test_01_landed_cost_revert(self):
+        card_lines = {}
+        self.process_transactions()
         card_lines['before_landed'] = self.get_stock_card_lines(
             self.product_id.id)
         picking_id = self.transactions[0]['picking_ids']
@@ -127,3 +131,27 @@ class TestLandedCostRevert(TestStockLandedCommon):
             self.assertTrue(
                 credit and credit in vals[acct_id]['credit'] or
                 debit and debit in vals[acct_id]['debit'])
+
+    def test_02_landed_cost_2_standard(self):
+        card_lines = {}
+        self.product_id.write({'cost_method': 'standard'})
+        self.process_transactions()
+
+        card_lines['before_landed'] = self.get_stock_card_lines(
+            self.product_id.id)
+        picking_id = self.transactions[0]['picking_ids']
+
+        landed_cost_id = self.create_and_validate_landed_costs(picking_id)
+        revert_landed_cost_id = self.revert_landed_cost(landed_cost_id)
+        vals = {
+            self.account_freight_id.id: {
+                'debit': [40],
+                'credit': [0],
+            },
+            self.loss_acct_id: {
+                'credit': [40],
+                'debit': [0],
+            },
+        }
+        self.validate_acct_entries_values(revert_landed_cost_id,
+                                          self.product_id, vals)
