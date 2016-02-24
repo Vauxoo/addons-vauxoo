@@ -21,6 +21,7 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 from openerp.tools.safe_eval import safe_eval
+from openerp.exceptions import ValidationError
 
 
 class TestWizard(TransactionCase):
@@ -79,6 +80,10 @@ class TestWizard(TransactionCase):
                          '{{{0}: 35.0}}'.format(str(self.producto_d_id.id)))
 
     def test_01_test_threshold_no_update(self):
+        msg_error = 'Bottom cost threshold must be positive'
+        with self.assertRaisesRegexp(ValidationError, msg_error):
+            self.company_id.write({'std_price_neg_threshold': -1})
+
         self.company_id.write({'std_price_neg_threshold': 0})
         # ============================
         # ==== PRODUCT D
