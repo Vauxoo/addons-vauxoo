@@ -11,7 +11,9 @@
         "website_rate_product",  # In to add read reviews link
         "website_product_filters",  # In to add share product icons
     ],
-    "demo": [],
+    "demo": [
+        "demo/demo.xml",
+    ],
     "data": [
         "views/layout.xml",
         "views/templates.xml",

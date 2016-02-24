@@ -6,6 +6,7 @@
       			<link rel='stylesheet' href='/website_variants_extra/static/src/less/website.less'/>
                 <script type="text/javascript" src="/website_variants_extra/static/src/js/website_sale.js"></script>
                 <script type="text/javascript" src="/website_variants_extra/static/src/js/product_comments.js"></script>
+                <script type="text/javascript" src="/website_variants_extra/static/src/js/test_product_name_with_variants.js"></script>
             </xpath>
         </template>
     </data>

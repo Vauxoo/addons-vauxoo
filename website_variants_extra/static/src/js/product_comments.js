@@ -2,19 +2,34 @@
     'use strict';
 
     openerp.website.if_dom_contains('#no-reviews', function(){
-        $.post("/get_comments_qty",{
-            product_id: $(".product_id").val(),
-        },
-        function(data){
-            var comments_qty = JSON.parse(data);
-            if (comments_qty > 0){
-                var concept = comments_qty >= 2 ? "reviews" : "review";
-                $('#no-reviews').text(comments_qty+" "+concept);
-            }
-            else{
-                $('#no-reviews').parent().hide();
-            }
-        });
+        var form_url = $('#comment').attr('action');
+        if(form_url){
+            var product_id = form_url.substr(form_url.lastIndexOf('/')+1);
+            $.post("/get_comments_qty",{
+                product_id: product_id,
+            },
+            function(data){
+                var comments_qty = JSON.parse(data);
+                if (comments_qty > 0){
+                    var concept = comments_qty >= 2 ? "reviews" : "review";
+                    $('#no-reviews').text(comments_qty+" "+concept);
+                }
+                else{
+                    $('#no-reviews').parent().hide();
+                }
+            });
+        }
+        else{
+                var comments_qty = $('#comments-list').children().length;
+                if (comments_qty > 0){
+                    var concept = comments_qty >= 2 ? "reviews" : "review";
+                    $('#no-reviews').text(comments_qty+" "+concept);
+                }
+                else{
+                    $('#no-reviews').parent().hide();
+                }
+
+        }
     });
 
 
