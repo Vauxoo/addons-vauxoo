@@ -122,15 +122,24 @@ class TestLandedCostRevert(TestStockLandedCommon):
     def validate_acct_entries_values(self, landed_cost_id, product_id, vals):
         acct_move_id = landed_cost_id.account_move_id
         self.assertEqual(acct_move_id.mapped('line_id.product_id'), product_id)
+        registered_lines = False
         for aml_id in acct_move_id.line_id:
             acct_id = aml_id.account_id.id
+
+            if acct_id not in vals:
+                continue
+
             debit = aml_id.debit
             credit = aml_id.credit
 
             # check values expected for credit and debit
-            self.assertTrue(
-                credit and credit in vals[acct_id]['credit'] or
-                debit and debit in vals[acct_id]['debit'])
+            registered_lines = credit and credit in vals[acct_id]['credit'] or\
+                debit and debit in vals[acct_id]['debit']
+            self.assertTrue(registered_lines)
+
+        # validate at least one journal entry line was checked
+        self.assertTrue(registered_lines,
+                        "There weren't lines to check for {0}".format(vals))
 
     def test_02_landed_cost_2_standard(self):
         card_lines = {}
