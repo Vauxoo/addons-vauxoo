@@ -21,6 +21,22 @@ class TestLandedCostRevert(TestStockLandedCommon):
         self.customer_id = self.env.ref('base.res_partner_23')
         self.loss_acct_id = self.company_id.\
             loss_inventory_deviation_account_id.id
+        self.gain_acct_id = self.company_id.\
+            gain_inventory_deviation_account_id.id
+        self.vals = {
+            'gain': {
+                self.gain_acct_id: {
+                    'credit': [8, 0],
+                    'debit': [8, 0],
+                },
+            },
+            'loss': {
+                self.loss_acct_id: {
+                    'credit': [8, 0],
+                    'debit': [8, 0],
+                },
+            },
+        }
         self.transactions = [
             {
                 'cost': 20, 'qty': 2,
@@ -164,3 +180,19 @@ class TestLandedCostRevert(TestStockLandedCommon):
         }
         self.validate_acct_entries_values(revert_landed_cost_id,
                                           self.product_id, vals)
+
+    def process_with_price_manually(self, prod_price):
+        self.process_transactions()
+        self.product_id.write({'standard_price': prod_price})
+        picking_id = self.transactions[0]['picking_ids']
+        return self.create_and_validate_landed_costs(picking_id)
+
+    def test_031_landed_cost_with_initial_price_set_manually_loss(self):
+        landed_cost_id = self.process_with_price_manually(50)
+        self.validate_acct_entries_values(
+            landed_cost_id, self.product_id, self.vals['loss'])
+
+    def test_032_landed_cost_with_initial_price_set_manually_gain(self):
+        landed_cost_id = self.process_with_price_manually(46)
+        self.validate_acct_entries_values(
+            landed_cost_id, self.product_id, self.vals['gain'])
