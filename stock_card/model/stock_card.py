@@ -122,10 +122,19 @@ class StockCardProduct(models.TransientModel):
         # material_cost, production_cost, subcontracting_cost
         # Inventory Value has to be decreased by the amount of purchase
         # TODO: BEWARE price_unit needs to be normalised
-        price = move_id.price_unit
-        if product_id.cost_method == 'average':
+        origin_id = move_id.origin_returned_move_id
+        current_quants = set(move_id.quant_ids.ids)
+        origin_quants = set(origin_id.quant_ids.ids)
+        quants_exists = current_quants.issubset(origin_quants)
+        price = 0
+        if quants_exists:
+            price = move_id.price_unit
+        elif product_id.cost_method == 'average' and not quants_exists:
             price = vals['average']
-
+        # / ! \ This is missing when current move's quants are partially
+        # located in origin's quants, so it's taking average cost temporarily
+        else:
+            price = vals['average']
         vals['move_valuation'] = sum([price * qnt['qty'] for qnt in qntval])
         return True
 

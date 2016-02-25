@@ -55,12 +55,12 @@ class TestStockCardProductReturns(TransactionCase):
 
         # separate in time all transactions
         delta = 0
-        for k, v in self.values:
-            obj = self.env.ref('stock_card.'+k)
+        for trx in [f[0] for f in self.values]:
+            obj = self.env.ref('stock_card.'+trx)
             move_ids = {}
-            if k.startswith('sc_'):
+            if trx.startswith('sc_'):
                 move_ids = obj.picking_ids.mapped('move_lines')
-            elif k.startswith('pick_'):
+            elif trx.startswith('pick_'):
                 move_ids = obj.move_lines
             for move_id in move_ids:
                 delta += 1
