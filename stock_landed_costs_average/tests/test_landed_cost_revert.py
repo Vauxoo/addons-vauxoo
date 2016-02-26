@@ -158,12 +158,16 @@ class TestLandedCostRevert(TestStockLandedCommon):
         self.assertTrue(registered_lines,
                         "There weren't lines to check for {0}".format(vals))
 
-    def test_02_landed_cost_for_standard(self):
-        self.product_id.write({'cost_method': 'standard'})
+    def validate_landed_cost_acct_entries(self, cost_method, product_id, vals):
+        product_id.write({'cost_method': cost_method})
         self.process_transactions()
         picking_id = self.transactions[0]['picking_ids']
         landed_cost_id = self.create_and_validate_landed_costs(picking_id)
         revert_landed_cost_id = self.revert_landed_cost(landed_cost_id)
+        self.validate_acct_entries_values(revert_landed_cost_id,
+                                          self.product_id, vals)
+
+    def test_02_landed_cost_for_standard_and_real(self):
         vals = {
             self.account_freight_id.id: {
                 'debit': [40],
@@ -174,8 +178,9 @@ class TestLandedCostRevert(TestStockLandedCommon):
                 'debit': [0],
             },
         }
-        self.validate_acct_entries_values(revert_landed_cost_id,
-                                          self.product_id, vals)
+        for cost_method in ['standard', 'real']:
+            self.validate_landed_cost_acct_entries(
+                cost_method, self.product_id, vals)
 
     def process_with_price_manually(self, prod_price):
         self.process_transactions()
@@ -192,22 +197,3 @@ class TestLandedCostRevert(TestStockLandedCommon):
         landed_cost_id = self.process_with_price_manually(46)
         self.validate_acct_entries_values(
             landed_cost_id, self.product_id, self.vals['gain'])
-
-    def test_04_landed_cost_for_real(self):
-        self.product_id.write({'cost_method': 'real'})
-        self.process_transactions()
-        picking_id = self.transactions[0]['picking_ids']
-        landed_cost_id = self.create_and_validate_landed_costs(picking_id)
-        revert_landed_cost_id = self.revert_landed_cost(landed_cost_id)
-        vals = {
-            self.account_freight_id.id: {
-                'debit': [40],
-                'credit': [0],
-            },
-            self.loss_acct_id: {
-                'credit': [40],
-                'debit': [0],
-            },
-        }
-        self.validate_acct_entries_values(revert_landed_cost_id,
-                                          self.product_id, vals)
