@@ -8,7 +8,7 @@
         steps: [
             {
                 title:     'select bose',
-                element:   '.oe_product_cart a:contains("Bose")',
+                element:   '.oe_product_cart a:contains("Bose ® SoundLink Mini ® - Sistema de Altavoces recargable para iPhone, Hasta 20 horas, Sonido alto y claro")',
             },
             {
                 title:     "write a comment",
@@ -66,8 +66,8 @@
                 }
             },
             {
-                title:     "select ipod",
-                element:   '.oe_product_cart a:contains("Bose")',
+                title:     "select bose",
+                element:   '.oe_product_cart a:contains("Bose ® SoundLink Mini ® - Sistema de Altavoces recargable para iPhone, Hasta 20 horas, Sonido alto y claro")',
             },
             {
                 title:     "write a comment",
