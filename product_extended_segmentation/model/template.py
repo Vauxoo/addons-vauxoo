@@ -295,7 +295,7 @@ class ProductTemplate(models.Model):
 
                 # Call compute_price on these subproducts
                 prod_set = set([x.product_id.id for x in bom.bom_line_ids])
-                res = self.compute_price(
+                self.compute_price(
                     cr, uid, product_ids=list(prod_set), template_ids=[],
                     recursive=recursive, test=test,
                     real_time_accounting=real_time, context=context)
