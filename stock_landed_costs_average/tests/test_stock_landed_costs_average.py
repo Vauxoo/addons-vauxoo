@@ -23,8 +23,6 @@ class TestsLandedCosts(TestStockCommon):
         basic method to define some basic data to be re use in all test cases.
         """
         super(TestsLandedCosts, self).setUp()
-        self.quant = self.env['stock.quant']
-        self.invoice_obj = self.env['account.invoice']
         self.return_obj = self.env['stock.return.picking']
         self.picking_type_internal = self.ModelDataObj.xmlid_to_res_id(
             'stock.picking_type_internal')
@@ -173,9 +171,9 @@ class TestsLandedCosts(TestStockCommon):
         self.assertEquals(
             self.product_real.standard_price, 0.0,
             'Something went wrong. Real Product should cost 0.00!!!')
-        quant_real = self.quant.search(
+        quant_real = self.env['stock.quant'].search(
             [('product_id', '=', self.product_real.id)])
-        quant_average = self.quant.search(
+        quant_average = self.env['stock.quant'].search(
             [('product_id', '=', self.product_average.id)])
 
         self.assertEquals(

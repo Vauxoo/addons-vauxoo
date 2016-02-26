@@ -10,11 +10,6 @@ class TestLandedCostsWithStd(TestStockCommon):
         basic method to define some basic data to be re use in all test cases.
         """
         super(TestLandedCostsWithStd, self).setUp()
-        self.quant = self.env['stock.quant']
-        self.invoice_obj = self.env['account.invoice']
-        self.return_obj = self.env['stock.return.picking']
-        self.picking_type_internal = self.ModelDataObj.xmlid_to_res_id(
-            'stock.picking_type_internal')
         self.invoice_id = self.env.ref(
             'stock_landed_costs_average.invoice_landing_costs_average_1')
 
@@ -121,7 +116,7 @@ class TestLandedCostsWithStd(TestStockCommon):
         self.assertEquals(
             self.product_standard.standard_price, 1000.0,
             'Something went wrong. Standard Product should cost 1000.00!!!')
-        quant_std = self.quant.search(
+        quant_std = self.env['stock.quant'].search(
             [('product_id', '=', self.product_standard.id)])
         self.assertEquals(
             (quant_std.inventory_value, quant_std.cost),
@@ -134,7 +129,7 @@ class TestLandedCostsWithStd(TestStockCommon):
         self.assign_landing_invoice()
         self.validate_landed_cost()
 
-    def validate_acct_entries_values(self, product_id):
+    def validate_acct_entries(self, product_id):
         stock_valuation_acct_id = product_id.categ_id.\
             property_stock_valuation_account_id
         acct_move_id = self.landed_cost_id.account_move_id
@@ -159,4 +154,4 @@ class TestLandedCostsWithStd(TestStockCommon):
 
     def test_02_account_entries(self):
         self.create_and_validate_landed_cost()
-        self.validate_acct_entries_values(self.product_standard)
+        self.validate_acct_entries(self.product_standard)

@@ -24,11 +24,11 @@ class StockCardProduct(models.TransientModel):
 
     def map_field2write(self, field2write):
         res = {}
-        FIELD_NAMES = self._get_fieldnames()
+        field_names = self._get_fieldnames()
         for fn in field2write.keys():
-            if fn not in FIELD_NAMES:
+            if fn not in field_names:
                 continue
-            res[FIELD_NAMES[fn]] = field2write[fn]
+            res[field_names[fn]] = field2write[fn]
         return res
 
     def write_standard_price(self, product_id, field2write):
@@ -115,15 +115,27 @@ class StockCardProduct(models.TransientModel):
     def _get_price_on_supplier_return(self, row, vals, qntval):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
-        move_id = row['move_id']
-        move_brw = sm_obj.browse(move_id)
+        move_id = sm_obj.browse(row['move_id'])
+        product_id = self.env['product.product'].browse(row['product_id'])
         # Cost is the one record in the stock_move, cost in the
         # quant record includes other segmentation cost: landed_cost,
         # material_cost, production_cost, subcontracting_cost
         # Inventory Value has to be decreased by the amount of purchase
         # TODO: BEWARE price_unit needs to be normalised
-        vals['move_valuation'] = sum([move_brw.price_unit * qnt['qty']
-                                      for qnt in qntval])
+        origin_id = move_id.origin_returned_move_id
+        current_quants = set(move_id.quant_ids.ids)
+        origin_quants = set(origin_id.quant_ids.ids)
+        quants_exists = current_quants.issubset(origin_quants)
+        price = 0
+        if quants_exists:
+            price = move_id.price_unit
+        elif product_id.cost_method == 'average' and not quants_exists:
+            price = vals['average']
+        # / ! \ This is missing when current move's quants are partially
+        # located in origin's quants, so it's taking average cost temporarily
+        else:
+            price = vals['average']
+        vals['move_valuation'] = sum([price * qnt['qty'] for qnt in qntval])
         return True
 
     def _get_price_on_supplied(self, row, vals, qntval):
