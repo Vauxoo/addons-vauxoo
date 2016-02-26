@@ -192,3 +192,22 @@ class TestLandedCostRevert(TestStockLandedCommon):
         landed_cost_id = self.process_with_price_manually(46)
         self.validate_acct_entries_values(
             landed_cost_id, self.product_id, self.vals['gain'])
+
+    def test_04_landed_cost_for_real(self):
+        self.product_id.write({'cost_method': 'real'})
+        self.process_transactions()
+        picking_id = self.transactions[0]['picking_ids']
+        landed_cost_id = self.create_and_validate_landed_costs(picking_id)
+        revert_landed_cost_id = self.revert_landed_cost(landed_cost_id)
+        vals = {
+            self.account_freight_id.id: {
+                'debit': [40],
+                'credit': [0],
+            },
+            self.loss_acct_id: {
+                'credit': [40],
+                'debit': [0],
+            },
+        }
+        self.validate_acct_entries_values(revert_landed_cost_id,
+                                          self.product_id, vals)
