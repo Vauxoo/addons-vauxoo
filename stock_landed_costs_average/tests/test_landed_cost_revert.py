@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from test_stock_landed_common import TestStockLandedCommon
+from openerp.addons.stock_landed_costs_average.tests.test_stock_landed_common \
+    import TestStockLandedCommon
 
 
 class TestLandedCostRevert(TestStockLandedCommon):
