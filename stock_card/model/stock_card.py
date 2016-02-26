@@ -24,11 +24,11 @@ class StockCardProduct(models.TransientModel):
 
     def map_field2write(self, field2write):
         res = {}
-        FIELD_NAMES = self._get_fieldnames()
+        field_names = self._get_fieldnames()
         for fn in field2write.keys():
-            if fn not in FIELD_NAMES:
+            if fn not in field_names:
                 continue
-            res[FIELD_NAMES[fn]] = field2write[fn]
+            res[field_names[fn]] = field2write[fn]
         return res
 
     def write_standard_price(self, product_id, field2write):
