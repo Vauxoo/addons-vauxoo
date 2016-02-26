@@ -158,15 +158,10 @@ class TestLandedCostRevert(TestStockLandedCommon):
         self.assertTrue(registered_lines,
                         "There weren't lines to check for {0}".format(vals))
 
-    def test_02_landed_cost_2_standard(self):
-        card_lines = {}
+    def test_02_landed_cost_for_standard(self):
         self.product_id.write({'cost_method': 'standard'})
         self.process_transactions()
-
-        card_lines['before_landed'] = self.get_stock_card_lines(
-            self.product_id.id)
         picking_id = self.transactions[0]['picking_ids']
-
         landed_cost_id = self.create_and_validate_landed_costs(picking_id)
         revert_landed_cost_id = self.revert_landed_cost(landed_cost_id)
         vals = {
