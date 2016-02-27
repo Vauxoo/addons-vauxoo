@@ -54,7 +54,7 @@ class TestMrpProduction(TransactionCase):
                          'confirmed',
                          "The mrp production didn't confirm.")
         # Create the moves needed by mrp production.
-        self.mrp_production.signal_workflow('moves_ready')
+        self.mrp_production.action_assign()
         self.assertEqual(self.mrp_production.state,
                          'ready',
                          "The moves aren't ready.")
