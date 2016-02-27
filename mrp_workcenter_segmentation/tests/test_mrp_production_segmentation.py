@@ -102,25 +102,15 @@ class TestMrpProduction(TransactionCase):
 
         quant_brw = quant_obj.search(
             [('product_id', '=', self.mrp_production_d.product_id.id)])
+        self.assertEqual(
+            quant_brw[0].qty, 3,
+            "Quant quantity in Production is wrong")
         self.assertEqual(quant_brw[0].cost, 100, "Cost on Quant is wrong")
         self.assertEqual(
             quant_brw[0].material_cost, 80,
             "Material Cost on Quant is wrong")
         self.assertEqual(
             quant_brw[0].production_cost, 15,
-            "Production Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[0].qty, 1,
-            "Production Cost on Quant is wrong")
-        self.assertEqual(quant_brw[1].cost, 100, "Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[1].material_cost, 80,
-            "Material Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[1].production_cost, 15,
-            "Production Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[1].qty, 2,
             "Production Cost on Quant is wrong")
 
         # Confirm the mrp production e.
