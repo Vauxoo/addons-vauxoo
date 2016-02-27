@@ -27,9 +27,8 @@ import openerp.addons.decimal_precision as dp
 class MrpProductProduct(models.TransientModel):
     _inherit = "mrp.product.produce"
 
-    @api.cr_uid_context
-    def on_change_qty(self, cr, uid, ids, product_qty, consume_lines,
-                      context=None):
+    @api.multi
+    def on_change_qty(self, product_qty, consume_lines):
         """
         When changing the quantity of products to be produced it will
         recalculate the number of raw materials needed according
@@ -37,14 +36,10 @@ class MrpProductProduct(models.TransientModel):
         It will return the consume lines needed for the products to be produced
         which the user can still adapt
         """
-        context = dict(context or {})
-        res = super(MrpProductProduct, self). on_change_qty(cr, uid, ids,
-                                                            product_qty,
-                                                            consume_lines,
-                                                            context=context)
-        prod_obj = self.pool.get("mrp.production")
-        production = prod_obj.browse(cr, uid, context['active_id'],
-                                     context=context)
+        res = super(MrpProductProduct, self).on_change_qty(product_qty,
+                                                           consume_lines)
+        prod_obj = self.env["mrp.production"]
+        production = prod_obj.browse(self._context['active_id'])
         if production.qty_available_to_produce < product_qty:
             raise UserError(_('''You cannot produce more than available to
                               produce for this order '''))
