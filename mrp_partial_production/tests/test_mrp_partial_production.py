@@ -67,7 +67,7 @@ class TestValidatePickings(TransactionCase):
                          'The move has an assigned line')
 
         # Loading Lines
-        values = wz_brw.on_change_qty(wz_brw.id, wz_brw.product_qty, [])
+        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
         values = values.get('value')
         wz_brw.write(values)
         wz_brw.do_produce()
@@ -135,7 +135,7 @@ class TestValidatePickings(TransactionCase):
                          'The move has an assigned line')
 
         # Loading the lines
-        values = wz_brw.on_change_qty(wz_brw.id, wz_brw.product_qty, [])
+        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
         values = values.get('value')
         wz_brw.write(values)
         wz_brw.do_produce()
