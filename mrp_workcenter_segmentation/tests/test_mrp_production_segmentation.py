@@ -51,7 +51,7 @@ class TestMrpProduction(TransactionCase):
 
         # Confirm the mrp production d.
         self.mrp_production_d.signal_workflow('button_confirm')
-        self.mrp_production_d.signal_workflow('moves_ready')
+        self.mrp_production_d.action_assign()
         self.mrp_production_d.signal_workflow('button_produce')
         # Consumption and finish production.
         self.create_wizard(self.mrp_production_d, qty=1)
