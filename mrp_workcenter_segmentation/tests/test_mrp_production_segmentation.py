@@ -103,7 +103,7 @@ class TestMrpProduction(TransactionCase):
         quant_brw = quant_obj.search(
             [('product_id', '=', self.mrp_production_d.product_id.id)])
         self.assertEqual(
-            quant_brw[0].qty, 3,
+            sum([qnt.qty for qnt in quant_brw]), 3,
             "Quant quantity in Production is wrong")
         self.assertEqual(quant_brw[0].cost, 100, "Cost on Quant is wrong")
         self.assertEqual(
