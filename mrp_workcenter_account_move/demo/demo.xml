@@ -95,6 +95,7 @@
         <field name="location_src_id" ref="stock.stock_location_14"/>
         <field name="location_dest_id" ref="stock.stock_location_14"/>
     </record>
+    <workflow action="button_confirm" model="mrp.production" ref="rev_mrp_production"/>
 
     <record id="stock_inventory" model="stock.inventory">
         <field name="name">Initial Inventory - RAW_MATERIAL_STD_REALTIME</field>

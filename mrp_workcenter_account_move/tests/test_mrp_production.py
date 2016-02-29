@@ -54,7 +54,7 @@ class TestMrpProduction(TransactionCase):
                          'confirmed',
                          "The mrp production didn't confirm.")
         # Create the moves needed by mrp production.
-        self.mrp_production.signal_workflow('moves_ready')
+        self.mrp_production.action_assign()
         self.assertEqual(self.mrp_production.state,
                          'ready',
                          "The moves aren't ready.")
@@ -118,15 +118,24 @@ class TestMrpProduction(TransactionCase):
         self.assertEqual(new_production_id.account_move_id.id, False)
 
     def create_wizard(self, values=None):
-        self.wzd_id = self.wzd_obj.with_context(
-            {'active_id': self.mrp_production.id}).create({})
-        values = self.wzd_obj.with_context(
-            {'active_id': self.mrp_production.id}).on_change_qty(
-                self.wzd_id.id, 1)
-        values = values['value']['consume_lines']
-        for val in values:
-            val = val[2]
-            val['produce_id'] = self.wzd_id.id
-            self.wzd_line_obj.create(val)
-        self.wzd_id.do_produce()
+        # Setting Environment
+        wz_env = self.wzd_obj.with_context(
+            {'active_id': self.mrp_production.id,
+             'active_ids': [self.mrp_production.id]})
+
+        # Creating wizard to product
+        wz_values = wz_env.default_get([])
+        wz_brw = wz_env.create(wz_values)
+
+        # Checking the quantity suggested
+        self.assertEqual(wz_brw.product_qty, 1,
+                         'The quantity suggested must be 1')
+
+        # Changing the quantity suggested
+        wz_brw.product_qty = 1
+
+        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
+        values = values.get('value')
+        wz_brw.write(values)
+        wz_brw.do_produce()
         return True
