@@ -178,14 +178,20 @@ class TestMrpProduction(TransactionCase):
             "Production Cost on Quant is wrong")
 
     def create_wizard(self, mrp_production, qty=1):
-        self.wzd_id = self.wzd_obj.with_context(
-            {'active_id': mrp_production.id}).create({'product_qty': qty})
-        values = self.wzd_obj.with_context(
-            {'active_id': mrp_production.id}).on_change_qty(qty, [])
-        values = values['value']['consume_lines']
-        for val in values:
-            val = val[2]
-            val['produce_id'] = self.wzd_id.id
-            self.wzd_line_obj.create(val)
+        # Setting Environment
+        wz_env = self.wzd_obj.with_context(
+            {'active_id': mrp_production.id,
+             'active_ids': [mrp_production.id]})
+
+        # Creating wizard to product
+        wz_values = wz_env.default_get([])
+        wz_brw = wz_env.create(wz_values)
+
+        # Changing the quantity suggested
+        wz_brw.product_qty = qty
+
+        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
+        values = values.get('value')
+        wz_brw.write(values)
         self.wzd_id.do_produce()
         return True
