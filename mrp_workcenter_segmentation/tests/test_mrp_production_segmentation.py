@@ -127,11 +127,23 @@ class TestMrpProduction(TransactionCase):
 
         # Confirm the mrp production e.
         self.mrp_production_e.signal_workflow('button_confirm')
-        self.mrp_production_e.signal_workflow('moves_ready')
+        self.assertEqual(self.mrp_production_e.state,
+                         'confirmed',
+                         "The mrp is not in Confirmed state.")
+
+        self.mrp_production_e.action_assign()
+        self.assertEqual(self.mrp_production_e.state,
+                         'ready',
+                         "The mrp is not in Ready state.")
+
+        # Begin mrp production.
         self.mrp_production_e.signal_workflow('button_produce')
+        self.assertEqual(self.mrp_production_e.state,
+                         'in_production',
+                         "The mrp is not in production.")
+
         # Consumption and finish production.
         self.create_wizard(self.mrp_production_e, qty=1)
-        self.create_wizard(self.mrp_production_e, qty=2)
         self.assertEqual(self.mrp_production_e.state,
                          'done',
                          "The mrp production doesn't done.")
