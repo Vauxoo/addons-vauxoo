@@ -198,7 +198,7 @@ class TestMrpProduction(TransactionCase):
             quant_brw.production_cost, 45,
             "Production Cost on Quant is wrong")
         self.assertEqual(
-            quant_brw.qty, 1,
+            sum([qnt.qty for qnt in quant_brw]), 1,
             "Production Cost on Quant is wrong")
 
     def create_wizard(self, mrp_production, qty=1):
