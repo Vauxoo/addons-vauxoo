@@ -55,8 +55,6 @@ class MrpProduction(models.Model):
         for record in self:
             if record.qty_available_to_produce > 0:
                 res = True
-            else:
-                res = False
         return res
 
     @api.multi
