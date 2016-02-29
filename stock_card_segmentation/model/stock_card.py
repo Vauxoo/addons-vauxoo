@@ -151,10 +151,27 @@ class StockCardProduct(models.TransientModel):
     def _get_price_on_supplier_return(self, row, vals, qntval):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
-        move_id = row['move_id']
-        move_brw = sm_obj.browse(move_id)
-        vals['move_valuation'] = sum([move_brw.price_unit * qnt['qty']
-                                      for qnt in qntval])
+        move_id = sm_obj.browse(row['move_id'])
+        product_id = self.env['product.product'].browse(row['product_id'])
+        # Cost is the one record in the stock_move, cost in the
+        # quant record includes other segmentation cost: landed_cost,
+        # material_cost, production_cost, subcontracting_cost
+        # Inventory Value has to be decreased by the amount of purchase
+        # TODO: BEWARE price_unit needs to be normalised
+        origin_id = move_id.origin_returned_move_id
+        current_quants = set(move_id.quant_ids.ids)
+        origin_quants = set(origin_id.quant_ids.ids)
+        quants_exists = current_quants.issubset(origin_quants)
+        price = 0
+        if quants_exists:
+            price = move_id.price_unit
+        elif product_id.cost_method == 'average' and not quants_exists:
+            price = vals['average']
+        # / ! \ This is missing when current move's quants are partially
+        # located in origin's quants, so it's taking average cost temporarily
+        else:
+            price = vals['average']
+        vals['move_valuation'] = sum([price * qnt['qty'] for qnt in qntval])
         for sgmnt in SEGMENTATION:
             vals['%s_valuation' % sgmnt] = sum(
                 [qnt['%s_cost' % sgmnt] * qnt['qty'] for qnt in qntval])
@@ -238,8 +255,6 @@ class StockCardProduct(models.TransientModel):
                     vals['product_qty'] and
                     vals['%s_total' % sgmnt] / vals['product_qty'] or
                     vals[sgmnt])
-        pass
-
         return True
 
     def _pre_get_average_by_move(self, row, vals):
