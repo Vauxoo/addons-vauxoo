@@ -255,8 +255,6 @@ class StockCardProduct(models.TransientModel):
                     vals['product_qty'] and
                     vals['%s_total' % sgmnt] / vals['product_qty'] or
                     vals[sgmnt])
-        pass
-
         return True
 
     def _pre_get_average_by_move(self, row, vals):
