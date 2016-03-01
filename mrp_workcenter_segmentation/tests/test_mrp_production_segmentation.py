@@ -195,8 +195,11 @@ class TestMrpProduction(TransactionCase):
             quant_brw.material_cost, 120,
             "Material Cost on Quant is wrong")
         self.assertEqual(
-            quant_brw.production_cost, 45,
+            quant_brw.production_cost, 30,
             "Production Cost on Quant is wrong")
+        self.assertEqual(
+            quant_brw.subcontracting_cost, 15,
+            "Subcontracting Cost on Quant is wrong")
         self.assertEqual(
             sum([qnt.qty for qnt in quant_brw]), 1,
             "Production Cost on Quant is wrong")
