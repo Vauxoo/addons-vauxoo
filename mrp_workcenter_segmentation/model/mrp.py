@@ -35,6 +35,7 @@ class MrpProduction(models.Model):
     @api.multi
     def adjust_quant_segmentation_cost(self):
         self.ensure_one()
+        quant_obj = self.env['stock.quant']
 
         sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
         for fn in SEGMENTATION_COST:
@@ -52,7 +53,7 @@ class MrpProduction(models.Model):
             values = {}.fromkeys(SEGMENTATION_COST, 0.0)
             for fn in SEGMENTATION_COST:
                 values[fn] = getattr(fg_quant, fn) + sgmnt_dict[fn] / qty
-            fg_quant.write(values)
+            quant_obj.sudo().browse(fg_quant.id).write(values)
         return True
 
     @api.multi
@@ -72,6 +73,7 @@ class MrpProduction(models.Model):
     @api.multi
     def adjust_quant_production_cost(self, amount):
         self.ensure_one()
+        quant_obj = self.env['stock.quant']
         # NOTE: Updating production_cost in segmentation applies to all
         # products AVG, REAL & STD
         all_quants = [quant for raw_mat in self.move_created_ids2
@@ -86,7 +88,7 @@ class MrpProduction(models.Model):
             values = {}.fromkeys(SEGMENTATION_COST, 0.0)
             for fn in SEGMENTATION_COST:
                 values[fn] = getattr(qnt, fn) + sgmnt_dict[fn] / qty
-            qnt.write(values)
+            quant_obj.sudo().browse(qnt.id).write(values)
         return True
 
     @api.v7
