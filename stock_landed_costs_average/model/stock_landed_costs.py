@@ -30,6 +30,40 @@ class StockLandedCost(models.Model):
         copy=False,
     )
 
+    @api.onchange('invoice_ids')
+    def onchange_invoice_ids(self):
+        for lc_brw in self:
+            lc_brw.update({'cost_lines': [(6, False, {})]})
+            cost_lines = []
+            for inv_brw in lc_brw.invoice_ids:
+                company_currency = inv_brw.company_id.currency_id
+                diff_currency = inv_brw.currency_id != company_currency
+                if diff_currency:
+                    currency = inv_brw.currency_id.with_context(
+                        date=inv_brw.date_invoice)
+                for ail_brw in inv_brw.invoice_line:
+                    if not ail_brw.product_id:
+                        continue
+                    if not ail_brw.product_id.landed_cost_ok:
+                        continue
+                    if diff_currency:
+                        price_subtotal = currency.compute(
+                            ail_brw.price_subtotal, company_currency)
+                    else:
+                        price_subtotal = ail_brw.price_subtotal
+                    cost_lines.append((0, False, {
+                        'name': ail_brw.name,
+                        'account_id': ail_brw.account_id and
+                        ail_brw.account_id.id,
+                        'product_id': ail_brw.product_id and
+                        ail_brw.product_id.id,
+                        'price_unit': price_subtotal,
+                        'split_method': 'by_quantity',
+                    }))
+            lc_brw.update({'cost_lines': [(6, False, {})]})
+            if cost_lines:
+                lc_brw.update({'cost_lines': cost_lines})
+
     @api.multi
     def get_costs_from_invoices(self):
         '''
@@ -569,7 +603,7 @@ class StockLandedCost(models.Model):
         return True
 
     @api.v8
-    def compute_landed_cost(self):
+    def compute_landed_cost(self):  # pylint: disable=E0102
         return self._model.compute_landed_cost(self._cr, self._uid, self.ids)
 
     def _create_landed_account_move_line(
