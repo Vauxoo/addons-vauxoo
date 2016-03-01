@@ -21,13 +21,24 @@ class AttachInvoiceToLandedCostsWizard(models.TransientModel):
 
         ctx = dict(self._context)
         ai_brw = ai_obj.browse(ctx['active_id'])
-        state = ai_brw.stock_landed_cost_id and \
-            ai_brw.stock_landed_cost_id.state or 'draft'
-        if state == 'done':
+        old_slc_brw = ai_brw.stock_landed_cost_id
+        old_state = old_slc_brw and old_slc_brw.state or 'draft'
+        if old_state == 'done':
             raise osv.except_osv(
                 _('Invalid Procedure'),
                 _('You cannot change to another Landed Costs as the one your '
-                  'Invoice is linked is not in Draft State!'))
+                  'Invoice is linked to (Old One) is not in Draft State!'))
+
+        new_state = self.stock_landed_cost_id and \
+            self.stock_landed_cost_id.state or 'draft'
+        if new_state == 'done':
+            raise osv.except_osv(
+                _('Invalid Procedure'),
+                _('You cannot change to another Landed Costs as the one you '
+                  'are try to link to (New One) is not in Draft State!'))
+
         ai_brw.write(
             {'stock_landed_cost_id': self.stock_landed_cost_id.id})
+        self.stock_landed_cost_id.get_costs_from_invoices()
+        old_slc_brw.get_costs_from_invoices()
         return True
