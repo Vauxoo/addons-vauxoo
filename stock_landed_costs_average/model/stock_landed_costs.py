@@ -603,7 +603,7 @@ class StockLandedCost(models.Model):
         return True
 
     @api.v8
-    def compute_landed_cost(self):
+    def compute_landed_cost(self):  # pylint: disable=E0102
         return self._model.compute_landed_cost(self._cr, self._uid, self.ids)
 
     def _create_landed_account_move_line(
