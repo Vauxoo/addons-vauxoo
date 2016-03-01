@@ -183,7 +183,8 @@ class ProductTemplate(models.Model):
                     cr, uid, bom.product_uom.id, routing_price,
                     bom.product_id.uom_id.id)
                 price += routing_price
-                sgmnt_dict['production_cost'] += routing_price
+                fn = wc.segmentation_cost or 'production_cost'
+                sgmnt_dict[fn] += routing_price
 
         # Convert on product UoM quantities
         if price > 0:
