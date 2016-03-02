@@ -338,7 +338,8 @@ class MrpProduction(models.Model):
             # TODO: if product produced is AVG recompute avg value
             # NOTE: Recompute quant cost if not STD
             self.adjust_quant_cost(cr, uid, production.id, diff)
-            self.refresh_quant(cr, uid, production, amount, diff)
+
+        self.refresh_quant(cr, uid, production, amount, diff)
 
         return amount
 
