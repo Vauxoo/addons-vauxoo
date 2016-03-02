@@ -8,7 +8,7 @@
         steps: [
             {
                 title:     'select bose',
-                element:   '.oe_product_cart a:contains("Bose")',
+                element:   '.oe_product_cart a:contains("Bose"):last',
             },
             {
                 title:     "write a comment",
@@ -67,7 +67,7 @@
             },
             {
                 title:     "select ipod",
-                element:   '.oe_product_cart a:contains("Bose")',
+                element:   '.oe_product_cart a:contains("Bose"):last',
             },
             {
                 title:     "write a comment",
