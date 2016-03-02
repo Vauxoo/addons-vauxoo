@@ -318,7 +318,8 @@ class MrpProduction(models.Model):
             cr, uid, production.id, amount)
 
         # /!\ NOTE: If product is not real_time Do Not Create Journal Entries
-        if production.product_id.valuation == 'real_time':
+        if production.product_id.valuation == 'real_time' and \
+                any([amount, diff]):
             move_id = self._create_account_move(cr, uid, production.id)
             production.write({'account_move_id': move_id.id})
 
