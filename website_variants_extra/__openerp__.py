@@ -8,9 +8,12 @@
     "license": "AGPL-3",
     "depends": [
         "website_sale",
-        "product_category_attributes",  # In order to get a description field
+        "website_rate_product",  # In to add read reviews link
+        "website_product_filters",  # In to add share product icons
     ],
-    "demo": [],
+    "demo": [
+        "demo/demo.xml",
+    ],
     "data": [
         "views/layout.xml",
         "views/templates.xml",
