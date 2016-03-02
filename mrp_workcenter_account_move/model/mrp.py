@@ -268,6 +268,8 @@ class MrpProduction(models.Model):
     # TODO: Should this be moved to a new module?
     @api.multi
     def adjust_quant_cost(self, diff):
+        if not diff:
+            return True
         self.ensure_one()
         quant_obj = self.env['stock.quant']
         # NOTE: this apply to AVG, REAL not to STD
@@ -336,11 +338,6 @@ class MrpProduction(models.Model):
                 self._create_adjustment_accounting_entries(
                     cr, uid, production.id, move_id, diff)
 
-        if diff:
-            # TODO: if product produced is AVG recompute avg value
-            # NOTE: Recompute quant cost if not STD
-            self.adjust_quant_cost(cr, uid, production.id, diff)
-
         self.refresh_quant(cr, uid, production, amount, diff)
 
         return amount
@@ -350,4 +347,7 @@ class MrpProduction(models.Model):
         """
         Method that allow to refresh values for quant & segmentation costs
         """
+        # TODO: if product produced is AVG recompute avg value
+        # NOTE: Recompute quant cost if not STD
+        self.adjust_quant_cost(cr, uid, production.id, diff)
         return True
