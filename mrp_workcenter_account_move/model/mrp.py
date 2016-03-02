@@ -269,6 +269,7 @@ class MrpProduction(models.Model):
     @api.multi
     def adjust_quant_cost(self, diff):
         self.ensure_one()
+        quant_obj = self.env['stock.quant']
         # NOTE: this apply to AVG, REAL not to STD
         if self.product_id.cost_method == 'standard':
             return True
@@ -279,7 +280,8 @@ class MrpProduction(models.Model):
         cost = sum([quant2.cost * quant2.qty for quant2 in all_quants])
 
         for quant in all_quants:
-            quant.write({'cost': (cost + diff) / qty})
+            values = {'cost': (cost + diff) / qty}
+            quant_obj.sudo().browse(quant.id).write(values)
         return True
 
     # TODO: Should this be moved to a new module?
