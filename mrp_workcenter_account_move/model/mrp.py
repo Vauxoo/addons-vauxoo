@@ -317,9 +317,6 @@ class MrpProduction(models.Model):
         diff = self.check_create_adjustment_accounting_entry(
             cr, uid, production.id, amount)
 
-        if not any([amount, diff]):
-            return amount
-
         # /!\ NOTE: If product is not real_time Do Not Create Journal Entries
         if production.product_id.valuation == 'real_time':
             move_id = self._create_account_move(cr, uid, production.id)
