@@ -78,17 +78,24 @@ class MrpProduction(models.Model):
     @api.multi
     def check_create_adjustment_accounting_entry(self, amount):
         self.ensure_one()
-        amount_consumed = 0.0
-        for raw_mat in self.move_lines2:
-            if raw_mat.state != 'done':
-                continue
-            amount_consumed += raw_mat.price_unit * raw_mat.product_qty
+        # /!\ NOTE: Using accounting approach instead of logistical approach
+        aml_obj = self.env['account.move.line']
 
+        location_id = self.product_id.property_stock_production
+        account_in_id = location_id.valuation_in_account_id.id
+        account_out_id = location_id.valuation_out_account_id.id
+
+        aml_ids = aml_obj.search(
+            [('production_id', '=', self.id),
+             '|',
+             ('account_id', '=', account_in_id),
+             ('account_id', '=', account_out_id)])
+
+        amount_consumed = 0.0
         amount_produced = 0.0
-        for created in self.move_created_ids2:
-            if created.state != 'done':
-                continue
-            amount_produced += created.price_unit * created.product_qty
+        for aml_brw in aml_ids:
+            amount_consumed += aml_brw.debit
+            amount_produced += aml_brw.credit
 
         return amount + amount_consumed - amount_produced
 
