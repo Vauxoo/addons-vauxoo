@@ -55,6 +55,38 @@
             <field name="attribute_id" ref="product_attribute_watts"/>
             <field name="value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_watts_2')])]"/>
         </record>
+        <record id="product_rate_comment_1" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">Great</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
+        <record id="product_rate_comment_2" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">Good</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
+        <record id="product_rate_comment_3" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">beatiful</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
+        <record id="product_rate_comment_4" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">Too Great!!</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
 
     </data>
 </openerp>
