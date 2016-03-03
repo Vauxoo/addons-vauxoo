@@ -310,7 +310,7 @@ class StockQuant(models.Model):
         if res:
             _logger.warning('Products that have standard_price in zero')
         for prod_id, name, cost_method in res:
-            _logger.warning('%s, %s, %s' % (str(prod_id), name, cost_method))
+            _logger.warning('%s, %s, %s', str(prod_id), name, cost_method)
 
     @api.v7
     def _quant_create(
