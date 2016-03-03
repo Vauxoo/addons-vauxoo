@@ -22,6 +22,11 @@ class TestStockLandedCommon(TransactionCase):
         self.delta = 0
         self.next_hour = datetime.strptime('2016-01-01 01:00:00',
                                            '%Y-%m-%d %H:%M:%S')
+        self.product_freight_id = self.env.ref(
+            'stock_landed_costs_average'
+            '.service_standard_periodic_landed_cost_1')
+        self.account_freight_id = self.env.ref(
+            'stock_landed_costs_average.freight_account')
 
     def dummy_function(self, move_lines):
         for move_id in move_lines:
@@ -143,3 +148,23 @@ class TestStockLandedCommon(TransactionCase):
         reverted_lc_id.compute_landed_cost()
         reverted_lc_id.button_validate()
         return reverted_lc_id
+
+    def create_and_validate_landed_costs(self, picking_ids):
+        slc_id = self.slc.create({
+            'account_journal_id': self.ref(
+                'stock_landed_costs_average.stock_landed_cost_1'),
+            'picking_ids': [(4, picking_ids.id)],
+            'cost_lines': [
+                (0, 0, {
+                    'name': 'freight',
+                    'product_id': self.product_freight_id.id,
+                    'account_id': self.account_freight_id.id,
+                    'split_method': 'by_quantity',
+                    'price_unit': 40,
+                })]
+        })
+
+        slc_id.compute_landed_cost()
+        slc_id.button_validate()
+
+        return slc_id
