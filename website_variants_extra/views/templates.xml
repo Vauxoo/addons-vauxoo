@@ -19,7 +19,7 @@
                                                 <td>
                                                     <t t-call="website_rate_product.show_product_rating"/>
                                                 </td><td>
-                                                    <span class="star-text"> <a href="#comments-list">Read <span id="no-reviews"/></a></span>
+                                                    <span class="star-text"> <a href="#comments-list"> <span id="no-reviews"/></a></span>
                                                 </td>
                                             </tr>
                                         </table>
