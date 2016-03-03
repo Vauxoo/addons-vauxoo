@@ -7,7 +7,7 @@
                     <t t-if="attr_value_ids">
                         <t t-foreach="attr_value_ids" t-as="variant">
                             <t t-if="variant[4]">
-                                    <div class="product_variant_states" t-att-id="'product-variant-%s' % (variant[0])">
+                                    <div class="product_variant_states hidden" t-att-id="'product-variant-%s' % (variant[0])">
                                             <t t-foreach="variant[4]" t-as="location">
                                             <div class="small-text">
                                                 <small><span>
