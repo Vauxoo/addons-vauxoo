@@ -134,11 +134,8 @@ class StockQuant(models.Model):
               "`material cost`, `subcontracting cost`, `landed cost` "
               "& `production cost`"))
 
-    @api.v7
-    def initializing_quant_segmentation(
-            self, cr, uid, ids=None, context=None):
-
-        cr.execute('''
+    def initializing_quant_segmentation(self):
+        self._cr.execute('''
             SELECT
             COUNT(sq.id)
             FROM stock_quant AS sq
@@ -157,29 +154,29 @@ class StockQuant(models.Model):
             AND sq.subcontracting_cost = 0
             -- AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
             ;''')
-        res = cr.fetchone()
+        res = self._cr.fetchone()
         _logger.info('%s quants are to be fixed', str(int(res[0])))
 
         _logger.info('Updating to zero quants with segment in NULL')
-        cr.execute('''
+        self._cr.execute('''
             UPDATE stock_quant
             SET material_cost = 0.0000
             WHERE material_cost IS NULL;
             ;''')
         _logger.info('Material Cost with NULL has been updated')
-        cr.execute('''
+        self._cr.execute('''
             UPDATE stock_quant
             SET landed_cost = 0.0000
             WHERE landed_cost IS NULL;
             ;''')
         _logger.info('Landed Cost with NULL has been updated')
-        cr.execute('''
+        self._cr.execute('''
             UPDATE stock_quant
             SET production_cost = 0.0000
             WHERE production_cost IS NULL;
             ;''')
         _logger.info('Production Cost with NULL has been updated')
-        cr.execute('''
+        self._cr.execute('''
             UPDATE stock_quant
             SET subcontracting_cost = 0.0000
             WHERE subcontracting_cost IS NULL;
@@ -187,7 +184,7 @@ class StockQuant(models.Model):
         _logger.info('Subcontracting Cost with NULL has been updated')
 
         _logger.info('Setting Material Cost equal to Cost on Quant')
-        cr.execute('''
+        self._cr.execute('''
             UPDATE stock_quant
             SET material_cost = cost
             WHERE
@@ -200,7 +197,7 @@ class StockQuant(models.Model):
         _logger.info('Material Cost equal to Cost on Quant has been set')
 
         _logger.info('Updating Segmentation Cost with sum of Segmentation')
-        cr.execute('''
+        self._cr.execute('''
             UPDATE stock_quant
             SET segmentation_cost = (
                 material_cost + landed_cost +
@@ -213,7 +210,7 @@ class StockQuant(models.Model):
             ;''')
         _logger.info('Segmentation Cost has been updated')
 
-        cr.execute('''
+        self._cr.execute('''
             SELECT
             COUNT(sq.id)
             FROM stock_quant AS sq
@@ -232,10 +229,10 @@ class StockQuant(models.Model):
             AND sq.subcontracting_cost = 0
             -- AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
             ;''')
-        res = cr.fetchone()
+        res = self._cr.fetchone()
         _logger.info('%s quants not fixed', str(int(res[0])))
 
-        cr.execute('''
+        self._cr.execute('''
             SELECT COUNT(sq.id)
             FROM stock_quant AS sq
             INNER JOIN product_product AS pp ON pp.id = sq.product_id
@@ -256,14 +253,14 @@ class StockQuant(models.Model):
             AND ip2.value_float != 0
             -- DO NOT LOSE TIME TRYING TO UPDATE WITH ZERO
             ;''')
-        res = cr.fetchone()
+        res = self._cr.fetchone()
         _logger.info(
             '%s quants that can be fixed from Product that are STD',
             str(int(res[0])))
 
         _logger.info(
             'Updating quants that can be fixed from Product that are STD')
-        cr.execute('''
+        self._cr.execute('''
             UPDATE stock_quant
             SET material_cost = ip2.value_float,
                 segmentation_cost = ip2.value_float
@@ -289,7 +286,7 @@ class StockQuant(models.Model):
         _logger.info(
             'Quants that could be fixed from Product and are STD were updated')
 
-        cr.execute('''
+        self._cr.execute('''
             SELECT
             DISTINCT product_id,
             pt.name,
@@ -309,13 +306,11 @@ class StockQuant(models.Model):
             AND sq.subcontracting_cost = 0
             AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
             ;''')
-        res = cr.fetchall()
+        res = self._cr.fetchall()
         if res:
             _logger.warning('Products that have standard_price in zero')
         for prod_id, name, cost_method in res:
-            _logger.warning('%s, %s, %s' % (str(prod_id), name, cost_method))
-
-        return True
+            _logger.warning('%s, %s, %s', str(prod_id), name, cost_method)
 
     @api.v7
     def _quant_create(

@@ -18,7 +18,7 @@
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
 
-self.initializing_quant_segmentation(cr, uid, [])
+env['stock.quant'].initializing_quant_segmentation()
             </field>
         </record>
 
