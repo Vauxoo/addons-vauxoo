@@ -26,13 +26,20 @@
             <field name="arch" type="xml">
                 <search string="Project Task Work">
                    <group col="10" colspan="4">
-                        <filter name="task_draft" icon="terp-gtk-media-pause" string="Uncollected" domain="[('state','=','draft')]" help="Uncollected Task"/>
+                        <filter string="My Work" domain="[('user_id','=',uid)]"/>
+                        <separator orientation="vertical"/>
+                        <filter name="task_draft" icon="terp-gtk-media-pause" string="Uncollected" domain="[('state','=','draft')]" help="Uncollected
+ Task"/>
                         <separator orientation="vertical"/>
                         <filter name="task_done" icon="terp-check" string="Collected" domain="[('state','=','done')]" help="Collected Task"/>
                         <separator orientation="vertical"/>
                         <filter name="task_cancel" icon="terp-dialog-close" string="Cancelled" domain="[('state','=','cancel')]" help="Cancelled Task"/>
+<!--
+                        <filter name="today" string="Today" domain="[('date,'>=','today')]"/>
                         <separator orientation="vertical"/>
+                        <filter name="last_30_days" string="Last 30 days" domain="[('date,'>=','today - 30 days')]"/>
                         <separator orientation="vertical"/>
+-->
                         <field name="name"/>
                         <field name="user_id"/>
                         <field name="date"/>
@@ -57,7 +64,11 @@
                         <separator orientation="vertical"/>
                         <filter string="Company" icon="terp-go-month" domain="[]" context="{'group_by':'company_id'}"/>
                         <separator orientation="vertical"/>
-                        <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Month" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Week" icon="terp-go-month" domain="[]" context="{'group_by':'date:week'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Day" icon="terp-go-month" domain="[]" context="{'group_by':'date:day'}"/>
                         <separator orientation="vertical"/>
                         <filter string="User" icon="terp-go-month" domain="[]" context="{'group_by':'user_id'}"/>
                         <separator orientation="vertical"/>
