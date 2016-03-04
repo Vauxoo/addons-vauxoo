@@ -10,12 +10,6 @@ class TestLandedCostRevert(TestStockLandedCommon):
         super(TestLandedCostRevert, self).setUp()
         self.company_id = self.env.ref('base.main_company')
         self.slc_id = self.env.ref('stock_landed_costs_average.slc_02')
-
-        self.product_freight_id = self.env.ref(
-            'stock_landed_costs_average'
-            '.service_standard_periodic_landed_cost_1')
-        self.account_freight_id = self.env.ref(
-            'stock_landed_costs_average.freight_account')
         self.product_id = self.env.ref(
             'stock_landed_costs_average.product_mouse')
         self.supplier_id = self.env.ref('base.res_partner_13')
@@ -74,29 +68,6 @@ class TestLandedCostRevert(TestStockLandedCommon):
                 'debit': [40],
             },
         }
-
-    def create_and_validate_landed_costs(self, picking_id):
-        slc_id = self.slc.create({
-            'account_journal_id': self.ref(
-                'stock_landed_costs_average.stock_landed_cost_1'),
-            'picking_ids': [(4, picking_id.id), ],
-            'cost_lines': [
-                (0, 0, {
-                    'name': 'freight',
-                    'product_id': self.product_freight_id.id,
-                    'account_id': self.account_freight_id.id,
-                    'split_method': 'by_quantity',
-                    'price_unit': 40,
-                }),
-            ]
-        })
-        self.assertEqual(len(slc_id.picking_ids), 1)
-        self.assertEqual(len(slc_id.cost_lines), 1)
-        slc_id.compute_landed_cost()
-        self.assertEqual(len(slc_id.valuation_adjustment_lines), 1)
-        slc_id.button_validate()
-
-        return slc_id
 
     def process_transactions(self):
         for trx in self.transactions:

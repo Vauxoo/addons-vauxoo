@@ -33,12 +33,6 @@ class TestsStockQuantCostSegmentation(TestStockCommon):
             (quant.cost, quant.material_cost),
             (100.0, 100.0),
             'Something went wrong. Material Cost value is 100.00!!!')
-        return True
-
-    def test_basic_landed(self):
-        self.asserting_cost_segmentation()
-
-        return True
 
     def asserting_real_time_accounting(self):
         aml_ids = []
@@ -54,14 +48,14 @@ class TestsStockQuantCostSegmentation(TestStockCommon):
             len(aml_ids),
             2,
             'Something went wrong. There should be Two Journal Entries!!!')
-        return True
 
-    def test_basic_real_time_accouting(self):
+    def test_01_basic_landed(self):
+        self.asserting_cost_segmentation()
+
+    def test_02_basic_real_time_accouting(self):
         self.asserting_real_time_accounting()
 
-        return True
-
-    def test_segmentation_change_on_average(self):
+    def test_03_segmentation_change_on_average(self):
         self.assertEquals(
             self.product_sgmnt.standard_price, 32,
             'Something went wrong. Standard Price value is 32.00!!!')
@@ -69,4 +63,25 @@ class TestsStockQuantCostSegmentation(TestStockCommon):
             self.product_sgmnt.material_cost, 32,
             'Something went wrong. Material Cost value is 32.00!!!')
 
-        return True
+    def test_04_quants_segmentation_initialization(self):
+        self.quant.initializing_quant_segmentation()
+        self.cr.execute('''
+            SELECT
+            COUNT(sq.id)
+            FROM stock_quant AS sq
+            INNER JOIN product_product AS pp ON sq.product_id = pp.id
+            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+            INNER JOIN ir_property AS ip1 ON (
+            ip1.res_id = 'product.template,' || pt.id::text
+            AND ip1.name = 'cost_method')
+            LEFT JOIN ir_property AS ip2 ON (
+            ip2.res_id = 'product.template,' || pt.id::text
+            AND ip2.name = 'standard_price')
+            WHERE
+            sq.material_cost = 0
+            AND sq.landed_cost = 0
+            AND sq.production_cost = 0
+            AND sq.subcontracting_cost = 0;''')
+        res = self.cr.fetchone()
+        quants_qty = int(res[0])
+        self.assertEquals(quants_qty, 0, "Quant haven't fixed")

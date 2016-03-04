@@ -71,3 +71,26 @@ class TestLandedCostAverage(TestStockLandedCommon):
         last_item = card_lines[-1]
         self.assertEqual(last_item['product_qty'], 0)
         self.assertEqual(last_item['inventory_valuation'], 0)
+
+    def test_02_onchange_invoice_ids(self):
+        po_01_id = self.create_purchase_order(self.transactions[0])
+        invoice_01_id = po_01_id.invoice_ids[0].copy()
+        invoice_01_id.write({
+            'invoice_line': [(0, 0, {
+                'name': '#{0} Cost Product for {1}'.format(
+                    str(self.product_freight_id.id), str(invoice_01_id.id)),
+                'product_id': self.product_freight_id.id
+            })]
+        })
+        invoice_01_id.signal_workflow('invoice_open')
+        self.assertEqual(invoice_01_id.state, 'open')
+        landed_cost_id = self.create_and_validate_landed_costs(
+            po_01_id.picking_ids)
+        landed_cost_id.write({'invoice_ids': [(4, invoice_01_id.id)]})
+        landed_cost_id.onchange_invoice_ids()
+        landed_cost_id.compute_landed_cost()
+        self.assertEqual(landed_cost_id.cost_lines.product_id.ids,
+                         self.product_freight_id.ids)
+        self.assertEqual(
+            landed_cost_id.valuation_adjustment_lines.
+            cost_line_id.product_id.ids, self.product_freight_id.ids)
