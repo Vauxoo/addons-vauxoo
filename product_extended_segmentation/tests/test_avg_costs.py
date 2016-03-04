@@ -115,7 +115,10 @@ class TestAvgCosts(TransactionCase):
 
     def test_03_write_real_cost_product_price_using_wizard(self):
         template_id = self.prod_e_id.product_tmpl_id
-        self.prod_d_id.write({'cost_method': 'real'})
+        self.prod_d_id.write({
+            'cost_method': 'real',
+            'standard_price': 35.0
+        })
         old_price = self.prod_d_id.standard_price
         res = self.env['product.template'].compute_price(
             product_ids=False, recursive=True,  real_time_accounting=True,
