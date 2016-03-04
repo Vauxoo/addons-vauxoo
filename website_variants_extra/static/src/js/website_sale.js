@@ -20,6 +20,9 @@
             $('#product_with_variants').html(variants_str);
         });
         $('input.js_variant_change, select.js_variant_change', this).first().trigger('click');
+        $('.warehouse-availability').addClass('product_price');
+        $('.website-sale-actions').addClass('product_price');
+        $('#add_to_cart').addClass('product_price');
     });
 }());
 

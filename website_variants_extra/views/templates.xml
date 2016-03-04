@@ -78,6 +78,7 @@
                                              </li>
                                         </ul>
                                     </div>
+                                    <strong t-if="len(product.product_variant_ids) > 1" class="css_not_available_msg text-danger">Product not available</strong>
                                     <div class="css_quantity input-group oe_website_spinner" style="margin-top: 20px;">
                                         <span class="input-group-addon">
                                             <a t-attf-href="#" class="mb8 js_add_cart_json">
