@@ -120,7 +120,7 @@ class TestAvgCosts(TransactionCase):
             'standard_price': 35.0
         })
         old_price = self.prod_d_id.standard_price
-        res = self.env['product.template'].compute_price(
+        self.env['product.template'].compute_price(
             product_ids=False, recursive=True,  real_time_accounting=True,
             template_ids=[template_id.id], test=False)
         self.assertNotEqual(old_price, self.prod_d_id.standard_price)
