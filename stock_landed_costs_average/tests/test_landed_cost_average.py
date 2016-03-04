@@ -87,7 +87,7 @@ class TestLandedCostAverage(TestStockLandedCommon):
         landed_cost_id = self.create_and_validate_landed_costs(
             po_01_id.picking_ids)
         landed_cost_id.write({'invoice_ids': [(4, invoice_01_id.id)]})
-        landed_cost_id.onchange_invoice_ids()
+        landed_cost_id.get_costs_from_invoices()
         landed_cost_id.compute_landed_cost()
         self.assertEqual(landed_cost_id.cost_lines.product_id.ids,
                          self.product_freight_id.ids)

@@ -33,7 +33,7 @@ class StockLandedCost(models.Model):
     @api.onchange('invoice_ids')
     def onchange_invoice_ids(self):
         for lc_brw in self:
-            lc_brw.cost_lines.unlink()
+            lc_brw.update({'cost_lines': [(6, False, {})]})
             cost_lines = []
             for inv_brw in lc_brw.invoice_ids:
                 company_currency = inv_brw.company_id.currency_id
