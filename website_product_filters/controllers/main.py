@@ -183,6 +183,8 @@ class WebsiteSale(website_sale):
         cr, uid, context, pool =\
             request.cr, request.uid, request.context, request.registry
         template_obj = pool['product.template']
+        if not category and len(product.public_categ_ids) >= 1:
+            category = product.public_categ_ids[0]
         viewed = product.views + 1
         template_obj.write(cr, uid, [product.id],
                            {'views': viewed}, context=context)
