@@ -183,10 +183,10 @@ class ProductTemplate(models.Model):
                     cr, uid, bom.product_uom.id, routing_price,
                     bom.product_id.uom_id.id)
                 price += routing_price
-                try:
-                    fn = wc.segmentation_cost or 'production_cost'
-                except AttributeError:
-                    fn = 'production_cost'
+                # /!\ NOTE: If not segmentation set on WC fallback to
+                # production_cost segmentation
+                fn = wc.segmentation_cost or 'production_cost'
+                fn = 'production_cost'
                 sgmnt_dict[fn] += routing_price
 
         # Convert on product UoM quantities
