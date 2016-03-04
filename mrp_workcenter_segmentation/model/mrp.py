@@ -100,11 +100,10 @@ class MrpProduction(models.Model):
         super(MrpProduction, self).refresh_quant(
             cr, uid, production, amount, diff)
 
-        if diff:
-            # NOTE: Add segmentation cost to quants in finished goods
-            self.adjust_quant_production_cost(cr, uid, production.id, amount)
-            # NOTE: increase/decrease segmentation cost on quants from raw
-            # material
-            self.adjust_quant_segmentation_cost(cr, uid, production.id)
+        # NOTE: Add segmentation cost to quants in finished goods
+        self.adjust_quant_production_cost(cr, uid, production.id, amount)
+        # NOTE: increase/decrease segmentation cost on quants from raw
+        # material
+        self.adjust_quant_segmentation_cost(cr, uid, production.id)
 
         return amount

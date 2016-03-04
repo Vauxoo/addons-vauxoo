@@ -78,17 +78,24 @@ class MrpProduction(models.Model):
     @api.multi
     def check_create_adjustment_accounting_entry(self, amount):
         self.ensure_one()
-        amount_consumed = 0.0
-        for raw_mat in self.move_lines2:
-            if raw_mat.state != 'done':
-                continue
-            amount_consumed += raw_mat.price_unit * raw_mat.product_qty
+        # /!\ NOTE: Using accounting approach instead of logistical approach
+        aml_obj = self.env['account.move.line']
 
+        location_id = self.product_id.property_stock_production
+        account_in_id = location_id.valuation_in_account_id.id
+        account_out_id = location_id.valuation_out_account_id.id
+
+        aml_ids = aml_obj.search(
+            [('production_id', '=', self.id),
+             '|',
+             ('account_id', '=', account_in_id),
+             ('account_id', '=', account_out_id)])
+
+        amount_consumed = 0.0
         amount_produced = 0.0
-        for created in self.move_created_ids2:
-            if created.state != 'done':
-                continue
-            amount_produced += created.price_unit * created.product_qty
+        for aml_brw in aml_ids:
+            amount_consumed += aml_brw.debit
+            amount_produced += aml_brw.credit
 
         return amount + amount_consumed - amount_produced
 
@@ -261,7 +268,10 @@ class MrpProduction(models.Model):
     # TODO: Should this be moved to a new module?
     @api.multi
     def adjust_quant_cost(self, diff):
+        if not diff:
+            return True
         self.ensure_one()
+        quant_obj = self.env['stock.quant']
         # NOTE: this apply to AVG, REAL not to STD
         if self.product_id.cost_method == 'standard':
             return True
@@ -272,7 +282,8 @@ class MrpProduction(models.Model):
         cost = sum([quant2.cost * quant2.qty for quant2 in all_quants])
 
         for quant in all_quants:
-            quant.write({'cost': (cost + diff) / qty})
+            values = {'cost': (cost + diff) / qty}
+            quant_obj.sudo().browse(quant.id).write(values)
         return True
 
     # TODO: Should this be moved to a new module?
@@ -310,11 +321,9 @@ class MrpProduction(models.Model):
         diff = self.check_create_adjustment_accounting_entry(
             cr, uid, production.id, amount)
 
-        if not any([amount, diff]):
-            return amount
-
         # /!\ NOTE: If product is not real_time Do Not Create Journal Entries
-        if production.product_id.valuation == 'real_time':
+        if production.product_id.valuation == 'real_time' and \
+                any([amount, diff]):
             move_id = self._create_account_move(cr, uid, production.id)
             production.write({'account_move_id': move_id.id})
 
@@ -329,11 +338,7 @@ class MrpProduction(models.Model):
                 self._create_adjustment_accounting_entries(
                     cr, uid, production.id, move_id, diff)
 
-        if diff:
-            # TODO: if product produced is AVG recompute avg value
-            # NOTE: Recompute quant cost if not STD
-            self.adjust_quant_cost(cr, uid, production.id, diff)
-            self.refresh_quant(cr, uid, production, amount, diff)
+        self.refresh_quant(cr, uid, production, amount, diff)
 
         return amount
 
@@ -342,4 +347,7 @@ class MrpProduction(models.Model):
         """
         Method that allow to refresh values for quant & segmentation costs
         """
+        # TODO: if product produced is AVG recompute avg value
+        # NOTE: Recompute quant cost if not STD
+        self.adjust_quant_cost(cr, uid, production.id, diff)
         return True
