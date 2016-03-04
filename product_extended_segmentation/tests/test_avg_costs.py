@@ -117,7 +117,7 @@ class TestAvgCosts(TransactionCase):
         template_id = self.prod_e_id.product_tmpl_id
         self.prod_d_id.write({
             'cost_method': 'real',
-            'standard_price': 35.0
+            'standard_price': 20.0
         })
         old_price = self.prod_d_id.standard_price
         self.env['product.template'].compute_price(
