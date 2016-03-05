@@ -37,13 +37,19 @@ class MrpProduction(models.Model):
     @api.multi
     def test_accounting_setting(self):
         self.ensure_one()
+        msg = ''
         if not self.routing_id:
+            msg_journal = _('Please set a Journal in BoM: {bom} to book '
+                            'Production Cost Journal Entries\n')
+            if not self.bom_id.journal_id:
+                msg += msg_journal.format(bom=self.bom_id.name)
+            if msg:
+                raise UserError(msg)
             return True
 
         company_brw = self.env.user.company_id
         require_workcenter_analytic = company_brw.require_workcenter_analytic
 
-        msg = ''
         msg_financial = _('Add Financial Account on Worcenter: {wc}\n')
         msg_hour = _('Add Hour Analytical Account on Worcenter: {wc}\n')
         msg_cycle = _('Add Cycle Analytical Account on Worcenter: {wc}\n')
