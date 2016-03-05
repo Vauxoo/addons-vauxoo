@@ -18,6 +18,22 @@ class MrpProduction(models.Model):
         copy=False,
     )
 
+    def update_production_journal_items(self):
+        mrp_ids = self.search([('state', '=', 'in_production')])
+        for mrp_brw in mrp_ids:
+            aml_ids = []
+            for raw_brw in mrp_brw.move_lines2:
+                aml_ids += [aml.id for aml in raw_brw.aml_all_ids]
+            for fg_brw in mrp_brw.move_created_ids2:
+                aml_ids += [aml.id for aml in fg_brw.aml_all_ids]
+            if aml_ids:
+                self._cr.execute(
+                    ''' UPDATE account_move_line
+                        SET production_id = %s
+                        WHERE id IN %s;''',
+                    (mrp_brw.id, tuple(aml_ids)))
+        return True
+
     @api.multi
     def test_accounting_setting(self):
         self.ensure_one()
