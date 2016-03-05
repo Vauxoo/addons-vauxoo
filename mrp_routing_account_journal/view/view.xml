@@ -11,5 +11,18 @@
                 </xpath>
             </field>
         </record>
+        <record id="mrp_bom_journal_form_view" model="ir.ui.view">
+            <field name="name">mrp.bom.journal.form.view</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="model">mrp.bom</field>
+            <field name="arch" type="xml">
+                <xpath expr="//for[@name='routing_id']" position="before">
+                    <label for="journal_id" class="oe_inline" groups="account.group_account_manager"/>
+                    <div groups="account.group_account_manager">
+                        <field name="journal_id" class="oe_inline"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
