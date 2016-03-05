@@ -141,8 +141,10 @@ class MrpProduction(models.Model):
         ap_obj = self.env['account.period']
         am_obj = self.env['account.move']
         date = fields.Date.context_today(self)
+        journal_id = self.routing_id and self.routing_id.journal_id or \
+            self.bom_id.journal_id
         vals = {
-            'journal_id': self.routing_id.journal_id.id,
+            'journal_id': journal_id.id,
             'period_id': ap_obj.with_context(ctx).find(date)[:1].id,
             'date': date,
             'ref': self.name,
