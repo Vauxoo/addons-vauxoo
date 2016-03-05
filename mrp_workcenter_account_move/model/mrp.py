@@ -30,8 +30,8 @@ class MrpProduction(models.Model):
                 self._cr.execute(
                     ''' UPDATE account_move_line
                         SET production_id = %s
-                        WHERE id IN (%s);''',
-                    (mrp_brw.id, ', '.join([str(aml) for aml in aml_ids])))
+                        WHERE id IN %s;''',
+                    (mrp_brw.id, tuple(aml_ids)))
         return True
 
     @api.multi
