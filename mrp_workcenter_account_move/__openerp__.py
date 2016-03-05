@@ -21,6 +21,7 @@
     "data": [
         'view/view.xml',
         'view/wizard.xml',
+        'data/data.xml',
     ],
     "installable": True,
     "auto_install": False,
