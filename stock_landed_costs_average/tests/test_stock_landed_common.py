@@ -38,6 +38,7 @@ class TestStockLandedCommon(TransactionCase):
 
     def do_picking_wf(self, picking_id):
         picking_id.action_assign()
+        picking_id.force_assign()
         picking_id.action_confirm()
         wizard_id = self.wizard.create({
             'picking_id': picking_id.id,
