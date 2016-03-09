@@ -137,6 +137,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
                     wiz.do_detailed_transfer()
                 # Try to transfer picking with a the correct invoice
                 wiz.invoice_id = sale.invoice_ids
+                wiz.picking_id.action_assign()
                 wiz.do_detailed_transfer()
 
     def test_01_validate_products_and_qtys(self):
@@ -213,6 +214,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
             else:
                 # Registerd in wizads2 the sale.invoice_ids
                 wiz.invoice_id = sale.invoice_ids
+                wiz.picking_id.action_assign()
                 wiz.do_detailed_transfer()
 
         for wiz in wizards1:
