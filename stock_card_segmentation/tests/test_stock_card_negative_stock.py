@@ -28,7 +28,9 @@ class TestStockCardNegativeStock(TransactionCase):
         self.sc_product = self.env['stock.card.product']
         self.move = self.env['stock.move']
         self.quant = self.env['stock.quant']
-
+        self.sale_order = self.env['sale.order']
+        self.wizard = self.env['stock.transfer_details']
+        self.wizard_item = self.env['stock.transfer_details_items']
         self.product_id = self.env.ref('stock_card.product01')
 
     def get_stock_valuations(self):
@@ -82,3 +84,44 @@ class TestStockCardNegativeStock(TransactionCase):
         self.assertEqual(card_lines[4]['subcontracting'], 4)
         self.assertEqual(card_lines[6]['subcontracting'], 0.0)
         self.assertEqual(card_lines[11]['subcontracting'], 0.0)
+
+    def create_sale_order(self, vals):
+        qty = vals['qty']
+        price = vals['cost']
+        sale_order_id = self.sale_order.create({
+            'partner_id': self.env.ref('base.res_partner_13').id,
+            'client_order_ref': "Sale Order (qty={0}, price={1})".format(
+                str(qty), str(price)),
+            'order_policy': 'manual',
+            'order_line': [(0, 0, {
+                'product_id': self.product_id.id,
+                'product_uom_qty': qty,
+                'price_unit': price,
+            })]
+        })
+
+        sale_order_id.action_button_confirm()
+        for picking_id in sale_order_id.picking_ids:
+            picking_id.action_confirm()
+            wizard_id = self.wizard.create({
+                'picking_id': picking_id.id,
+            })
+
+            for move_id in picking_id.move_lines:
+                self.wizard_item.create({
+                    'transfer_id': wizard_id.id,
+                    'product_id': move_id.product_id.id,
+                    'quantity': move_id.product_qty,
+                    'sourceloc_id': move_id.location_id.id,
+                    'destinationloc_id': move_id.location_dest_id.id,
+                    'product_uom_id': move_id.product_uom.id,
+                })
+
+            wizard_id.do_detailed_transfer()
+            self.assertEqual(picking_id.state, 'done')
+        return sale_order_id
+
+    def test_03_antiquant(self):
+        sale_order_id = self.create_sale_order({'qty': 100, 'cost': 100})
+        card_lines = self.get_stock_valuations()
+
