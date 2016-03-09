@@ -24,6 +24,17 @@
 
         <!-- Make transfer of product -->
 
+        <!-- TODO data demo need to be update to give availability to the product -->
+        <!-- used in the picking. This way we could use action_assign instead -->
+        <!-- force_assign -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value model="stock.picking" search="[('origin', '=', 'Sale Order Log Message')]"/> -->
+        <!-- </function> -->
+
+        <function model="stock.picking" name="force_assign">
+            <value model="stock.picking" search="[('origin', '=', 'Sale Order Log Message')]"/>
+        </function>
+
         <function model="stock.transfer_details"
                   name="do_detailed_transfer"
                   eval="[ref('transfer_sale_wizard_log_message')]"
