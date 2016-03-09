@@ -103,6 +103,7 @@ class TestStockCardNegativeStock(TransactionCase):
         sale_order_id.action_button_confirm()
         for picking_id in sale_order_id.picking_ids:
             picking_id.action_confirm()
+            picking_id.force_assign()
             wizard_id = self.wizard.create({
                 'picking_id': picking_id.id,
             })
@@ -122,6 +123,5 @@ class TestStockCardNegativeStock(TransactionCase):
         return sale_order_id
 
     def test_03_antiquant(self):
-        sale_order_id = self.create_sale_order({'qty': 100, 'cost': 100})
-        card_lines = self.get_stock_valuations()
-
+        self.create_sale_order({'qty': 100, 'cost': 100})
+        self.get_stock_valuations()
