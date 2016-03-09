@@ -3,7 +3,8 @@
     <data>
          <template id="product_stock_available_website" inherit_id="website_variants_extra.product_variants_description_3columns">
              <xpath expr="//div[@class='css_quantity input-group oe_website_spinner']" position="before">
-                <t t-set="attr_value_ids" t-value="get_locations_variant_ids(product)"/>
+                <div class="warehouse-availability">
+                    <t t-set="attr_value_ids" t-value="get_locations_variant_ids(product)"/>
                     <t t-if="attr_value_ids">
                         <t t-foreach="attr_value_ids" t-as="variant">
                             <t t-if="variant[4]">
@@ -68,6 +69,7 @@
                     <t t-if="not product_variants">
                         <h2> No Variants</h2>
                     </t>
+                </div>
              </xpath>
          </template>
          <template id="product_stock_state" inherit_id="website_sale.product">
