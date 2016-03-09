@@ -25,7 +25,6 @@
 
 
 from openerp.tests.common import TransactionCase
-import re
 
 
 class TestMessageLog(TransactionCase):
@@ -39,11 +38,7 @@ class TestMessageLog(TransactionCase):
                                  "_transfer.so_log_message_transfer")
 
     def test_01(self):
-        msg = ".*Picking transfered.*"
         for picking in self.sale.picking_ids:
-            last_message_id = max(picking.message_ids.mapped("id"))
-            last_message = self.env["mail.message"].\
-                search([('id', '=', last_message_id)])
-            regex = re.compile(msg)
-            self.assertTrue(regex.search(last_message.body) is not None,
-                            "The message in log is not correct")
+            picking = picking.message_ids.search([
+                ('body', 'ilike', '%Picking transfered%')])
+            self.assertTrue(picking, "The message in log is not correct")
