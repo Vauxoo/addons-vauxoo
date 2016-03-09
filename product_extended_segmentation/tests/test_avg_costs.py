@@ -32,8 +32,10 @@ class TestAvgCosts(TransactionCase):
 
     def setUp(self):
         super(TestAvgCosts, self).setUp()
+        self.product = self.env['product.product']
         self.prod_template = self.env['product.template']
         self.wizard = self.env['wizard.price']
+        self.company_id = self.env.user.company_id
         self.prod_a_id = self.env.ref(
             'product_extended_segmentation.producto_a')
         self.prod_b_id = self.env.ref(
@@ -47,6 +49,18 @@ class TestAvgCosts(TransactionCase):
         self.product_ids = [self.prod_a_id,
                             self.prod_b_id,
                             self.prod_c_id]
+
+    def test_00_cron_methods(self):
+        sgmnts = {}
+        self.company_id.write({'std_price_neg_threshold': 0})
+        sgmnts['before'] = [getattr(self.prod_e_id, fieldname)
+                            for fieldname in SEGMENTATION_COST]
+        self.assertEqual(sum(sgmnts['before']), 0.0, 'sgmnts should be 0.0')
+        self.product.update_material_cost_on_zero_segmentation()
+        self.prod_e_id.refresh()
+        sgmnts['after'] = [getattr(self.prod_e_id, fieldname)
+                           for fieldname in SEGMENTATION_COST]
+        self.assertEqual(sum(sgmnts['after']), 80.0, 'Segments should be 80.0')
 
     def get_store_product_values(self, product_ids):
         vals = {}
@@ -89,3 +103,24 @@ class TestAvgCosts(TransactionCase):
         self.assertEqual(res['producto_a']['material_cost'], 0)
         self.assertEqual(res['producto_b']['material_cost'], 0)
         self.assertEqual(res['producto_c']['material_cost'], 0)
+
+    def test_02_compute_price_with_real_bom(self):
+        template_id = self.prod_e_id.product_tmpl_id
+        self.prod_d_id.write({'cost_method': 'real'})
+        res = self.env['product.template'].compute_price(
+            product_ids=False, recursive=True,  real_time_accounting=False,
+            template_ids=[template_id.id], test=True)
+        self.assertEqual(str(res),
+                         '{{{0}: 75.0}}'.format(str(template_id.id)))
+
+    def test_03_write_real_cost_product_price_using_wizard(self):
+        template_id = self.prod_e_id.product_tmpl_id
+        self.prod_d_id.write({
+            'cost_method': 'real',
+            'standard_price': 20.0
+        })
+        old_price = self.prod_d_id.standard_price
+        self.env['product.template'].compute_price(
+            product_ids=False, recursive=True,  real_time_accounting=True,
+            template_ids=[template_id.id], test=False)
+        self.assertNotEqual(old_price, self.prod_d_id.standard_price)

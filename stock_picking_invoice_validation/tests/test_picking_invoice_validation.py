@@ -129,14 +129,29 @@ class TestStockPickingInvoiceValidation(TransactionCase):
         wizards = self.create_lot_and_wizards_transfer(sale)
         for wiz in wizards:
             if not wiz.picking_id.picking_type_code == 'outgoing':
+                # TODO data demo need to be update to give availability to the
+                # product used in the picking. This way we could use
+                # action_assign instead force_assign
+                # wiz.picking_id.action_assign()
+                wiz.picking_id.force_assign()
                 wiz.do_detailed_transfer()
             else:
                 wiz.invoice_id = invoice_2
                 # Try to transfer picking with a wrong invoice
                 with self.assertRaises(exceptions.Warning):
+                    # TODO data demo need to be update to give availability to
+                    # the product used in the picking. This way we could use
+                    # action_assign instead force_assign
+                    # wiz.picking_id.action_assign()
+                    wiz.picking_id.force_assign()
                     wiz.do_detailed_transfer()
                 # Try to transfer picking with a the correct invoice
                 wiz.invoice_id = sale.invoice_ids
+                # TODO data demo need to be update to give availability to the
+                # product used in the picking. This way we could use
+                # action_assign instead force_assign
+                # wiz.picking_id.action_assign()
+                wiz.picking_id.force_assign()
                 wiz.do_detailed_transfer()
 
     def test_01_validate_products_and_qtys(self):
@@ -172,14 +187,30 @@ class TestStockPickingInvoiceValidation(TransactionCase):
         wizards = self.create_lot_and_wizards_transfer(sale)
         for wiz in wizards:
             if not wiz.picking_id.picking_type_code == 'outgoing':
+                # TODO data demo need to be update to give availability to the
+                # product used in the picking. This way we could use
+                # action_assign instead force_assign
+                # wiz.picking_id.action_assign()
+                wiz.picking_id.force_assign()
                 wiz.do_detailed_transfer()
             else:
                 wiz.invoice_id = invoice_id2
                 # Try to transfer picking with a wrong invoice
                 with self.assertRaises(exceptions.Warning):
+                    # TODO data demo need to be update to give availability to
+                    # the product used in the picking. This way we could use
+                    # action_assign instead force_assign
+                    # wiz.picking_id.action_assign()
+                    wiz.picking_id.force_assign()
                     wiz.do_detailed_transfer()
                 # Try to transfer picking with a the correct invoice
                 wiz.invoice_id = sale.invoice_ids
+
+                # TODO data demo need to be update to give availability to the
+                # product used in the picking. This way we could use
+                # action_assign instead force_assign
+                # wiz.picking_id.action_assign()
+                wiz.picking_id.force_assign()
                 wiz.do_detailed_transfer()
 
     def test_02_validate_the_registered_invoice(self):
@@ -209,17 +240,36 @@ class TestStockPickingInvoiceValidation(TransactionCase):
         wizards2 = self.create_lot_and_wizards_transfer(sale2)
         for wiz in wizards2:
             if not wiz.picking_id.picking_type_code == 'outgoing':
+                # TODO data demo need to be update to give availability to the
+                # product used in the picking. This way we could use
+                # action_assign instead force_assign
+                # wiz.picking_id.action_assign()
                 wiz.do_detailed_transfer()
             else:
                 # Registerd in wizads2 the sale.invoice_ids
                 wiz.invoice_id = sale.invoice_ids
+                # TODO data demo need to be update to give availability to the
+                # product used in the picking. This way we could use
+                # action_assign instead force_assign
+                # wiz.picking_id.action_assign()
+                wiz.picking_id.force_assign()
                 wiz.do_detailed_transfer()
 
         for wiz in wizards1:
             if not wiz.picking_id.picking_type_code == 'outgoing':
+                # TODO data demo need to be update to give availability to the
+                # product used in the picking. This way we could use
+                # action_assign instead force_assign
+                # wiz.picking_id.action_assign()
+                wiz.picking_id.force_assign()
                 wiz.do_detailed_transfer()
             else:
                 # Registerd for second time the sale.invoice_ids
                 wiz.invoice_id = sale.invoice_ids
                 with self.assertRaises(exceptions.Warning):
+                    # TODO data demo need to be update to give availability to
+                    # the product used in the picking. This way we could use
+                    # action_assign instead force_assign
+                    # wiz.picking_id.action_assign()
+                    wiz.picking_id.force_assign()
                     wiz.do_detailed_transfer()

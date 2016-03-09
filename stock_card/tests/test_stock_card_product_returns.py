@@ -55,12 +55,12 @@ class TestStockCardProductReturns(TransactionCase):
 
         # separate in time all transactions
         delta = 0
-        for k, v in self.values:
-            obj = self.env.ref('stock_card.'+k)
+        for trx in [f[0] for f in self.values]:
+            obj = self.env.ref('stock_card.'+trx)
             move_ids = {}
-            if k.startswith('sc_'):
+            if trx.startswith('sc_'):
                 move_ids = obj.picking_ids.mapped('move_lines')
-            elif k.startswith('pick_'):
+            elif trx.startswith('pick_'):
                 move_ids = obj.move_lines
             for move_id in move_ids:
                 delta += 1
@@ -89,28 +89,28 @@ class TestStockCardProductReturns(TransactionCase):
                                               precision_rounding=1),
                              "Average Cost current={0} expected={1} is not "
                              "the expected: {2}".
-                             format(expected['avg'],
-                                    succeed['average'], expected))
+                             format(succeed['average'],
+                                    expected['avg'], expected))
 
             self.assertEqual(expected['cost'],
                              succeed['cost_unit'],
                              "Unit Cost current={0} expected={1} is not "
                              "the expected: {2}".
-                             format(expected['cost'],
-                                    succeed['cost_unit'], expected))
+                             format(succeed['cost_unit'],
+                                    expected['cost'], expected))
 
             self.assertEqual(0, float_compare(expected['inv_val'],
                                               succeed['inventory_valuation'],
                                               precision_rounding=1),
                              "Inventory Value current={0} expected={1} is not "
                              "match: {2}".
-                             format(expected['inv_val'],
-                                    succeed['inventory_valuation'], expected))
+                             format(succeed['inventory_valuation'],
+                                    expected['inv_val'], expected))
 
             self.assertEqual(0, float_compare(expected['mov_val'],
                                               succeed['move_valuation'],
                                               precision_rounding=1),
                              "Movement Value current={0} expected={1} is not "
                              "match: {2}".
-                             format(expected['mov_val'],
-                                    succeed['move_valuation'], expected))
+                             format(succeed['move_valuation'],
+                                    expected['mov_val'], expected))

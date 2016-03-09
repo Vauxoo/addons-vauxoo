@@ -183,7 +183,11 @@ class ProductTemplate(models.Model):
                     cr, uid, bom.product_uom.id, routing_price,
                     bom.product_id.uom_id.id)
                 price += routing_price
-                sgmnt_dict['production_cost'] += routing_price
+                # /!\ NOTE: If not segmentation set on WC fallback to
+                # production_cost segmentation
+                fn = wc.segmentation_cost or 'production_cost'
+                fn = 'production_cost'
+                sgmnt_dict[fn] += routing_price
 
         # Convert on product UoM quantities
         if price > 0:
@@ -295,13 +299,10 @@ class ProductTemplate(models.Model):
 
                 # Call compute_price on these subproducts
                 prod_set = set([x.product_id.id for x in bom.bom_line_ids])
-                res = self.compute_price(
+                self.compute_price(
                     cr, uid, product_ids=list(prod_set), template_ids=[],
                     recursive=recursive, test=test,
                     real_time_accounting=real_time, context=context)
-                # /!\ NOTE: This is not logical
-                if test:
-                    testdict.update(res)
 
             # Use calc price to calculate and put the price on the product
             # of the BoM if necessary

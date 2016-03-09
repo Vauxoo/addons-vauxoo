@@ -96,6 +96,11 @@ class TestStockCard(TransactionCase):
             inv_id = self.create_inventory(self.product_id, val['qty'])
             inv_id.action_done()
 
+        qty = self.scp.get_qty(self.product_id.id)
+        self.assertEqual(qty, 4,
+                         'Current Stock for {0} MUST BE 4 units'.
+                         format(self.product_id.name))
+
         scp_id = self.scp.create({
             'product_id': self.product_id.id
         })

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="product_attribute_watts" model="product.attribute">
+            <field name="name">Watts</field>
+        </record>
+        <record id="product_attribute_watts_1" model="product.attribute.value">
+            <field name="name">100w</field>
+            <field name="attribute_id" ref="product_attribute_watts"/>
+        </record>
+        <record id="product_attribute_watts_2" model="product.attribute.value">
+            <field name="name">200w</field>
+            <field name="attribute_id" ref="product_attribute_watts"/>
+        </record>
+
+        <record id="product_attribute_cover_color" model="product.attribute">
+            <field name="name">Cover Color</field>
+        </record>
+        <record id="product_attribute_cover_color_1" model="product.attribute.value">
+            <field name="name">Yellow Cover</field>
+            <field name="attribute_id" ref="product_attribute_cover_color"/>
+        </record>
+        <record id="product_attribute_cover_color_2" model="product.attribute.value">
+            <field name="name">Pink Cover</field>
+            <field name="attribute_id" ref="product_attribute_cover_color"/>
+        </record>
+        <record id="product_attribute_cover_color_3" model="product.attribute.value">
+            <field name="name">Blue Cover</field>
+            <field name="attribute_id" ref="product_attribute_cover_color"/>
+        </record>
+        <record id="product_attribute_charger" model="product.attribute">
+            <field name="name">Charger</field>
+        </record>
+        <record id="product_attribute_charger_1" model="product.attribute.value">
+            <field name="name">Wall Charger</field>
+            <field name="attribute_id" ref="product_attribute_charger"/>
+        </record>
+        <record id="product_attribute_charger_2" model="product.attribute.value">
+            <field name="name">Base Charger</field>
+            <field name="attribute_id" ref="product_attribute_charger"/>
+        </record>
+        <record id="product_attribute_cover_color_line" model="product.attribute.line">
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_id" ref="product_attribute_cover_color"/>
+            <field name="value_ids" eval="[(6,0,[ref('product_attribute_cover_color_1'),  ref('product_attribute_cover_color_2'), ref('product_attribute_cover_color_3')])]"/>
+        </record>
+        <record id="product_attribute_charger_line" model="product.attribute.line">
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_id" ref="product_attribute_charger"/>
+            <field name="value_ids" eval="[(6,0,[ref('product_attribute_charger_1'), ref('product_attribute_charger_2')])]"/>
+        </record>
+        <record id="product_attribute_watts_line" model="product.attribute.line">
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_id" ref="product_attribute_watts"/>
+            <field name="value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_watts_2')])]"/>
+        </record>
+        <record id="product_rate_comment_1" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">Great</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
+        <record id="product_rate_comment_2" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">Good</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
+        <record id="product_rate_comment_3" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">beatiful</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
+        <record id="product_rate_comment_4" model="mail.message">
+            <field name="model">product.template</field>
+            <field name="rating">5</field>
+            <field name="body">Too Great!!</field>
+            <field name="res_id" ref="product.product_product_5b_product_template"/>
+            <field name="website_published">1</field>
+            <field name="type">comment</field>
+        </record>
+
+    </data>
+</openerp>
