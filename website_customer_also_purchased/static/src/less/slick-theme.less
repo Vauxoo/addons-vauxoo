@@ -1,15 +1,14 @@
 @charset "UTF-8";
 
-// Default Variables
 
-@slick-font-path: "./fonts/";
-@slick-font-family: "slick";
+@slick-font-family: FontAwesome;
 @slick-loader-path: "./";
 @slick-arrow-color: #FACC2E;
 @slick-dot-color: black;
 @slick-dot-color-active: @slick-dot-color;
-@slick-prev-character: "←";
-@slick-next-character: "→";
+@slick-prev-character: "\f0a8";
+@slick-next-character: "\f0a9";
+@slick-spin-character: "\f110";
 @slick-dot-character: "•";
 @slick-dot-size: 6px;
 @slick-opacity-default: 0.75;
@@ -17,18 +16,7 @@
 @slick-opacity-not-active: 0.25;
 
 /* Slider */
-.slick-loading .slick-list{
-    background: #fff url('./ajax-loader.gif') center center no-repeat;
-}
-
-/* Icons */
-@font-face{
-    font-family: 'slick';
-    font-weight: normal;
-    font-style: normal;
-
-    src: url('./fonts/slick.eot');
-    src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
+.slick-loading:before .slick-list:before:before{
 }
 
 /* Arrows */
