@@ -20,7 +20,6 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 
-
 class TestStockCardNegativeStock(TransactionCase):
 
     def setUp(self):
@@ -125,4 +124,8 @@ class TestStockCardNegativeStock(TransactionCase):
 
     def test_03_antiquant(self):
         self.create_sale_order({'qty': 100, 'cost': 100})
-        self.get_stock_valuations()
+        res = self.get_stock_valuations()
+        last_line = res[-1]
+        self.assertEqual(last_line['average'], 38)
+        self.assertEqual(last_line['material'], 38)
+        self.assertEqual(last_line['product_qty'], -97)
