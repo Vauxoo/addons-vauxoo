@@ -25,8 +25,10 @@ from openerp import SUPERUSER_ID, api
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
-_US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
-    'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
+_US_STATE = [
+    ('draft', _('New')), ('open', _('In Progress')), ('pending', _('Pending')),
+    ('done', _('Done')), ('cancelled', _('Cancelled')),
+]
 
 
 class UserStory(osv.Model):
@@ -293,7 +295,7 @@ class UserStory(osv.Model):
             type='float',
             string='Invoiceable Hours',
             help="Computed using the sum of the task work done.",
-            store = {
+            store={
                 _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
                 'project.task': (_get_user_story_from_pt,
                                  ['work_ids', 'userstory_id'], 10),
@@ -304,7 +306,7 @@ class UserStory(osv.Model):
         'effective_hours': fields.function(
             _hours_get, string='Hours Spent',
             help="Computed using the sum of the task work done.",
-            store = {
+            store={
                 _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
                 'project.task': (_get_user_story_from_pt,
                                  ['work_ids', 'userstory_id'], 10),
@@ -616,6 +618,15 @@ class AcceptabilityCriteria(osv.Model):
             res[ac_brw.id] = copy_field
         return res
 
+    def _get_user_story_state(self, cr, uid, ids, fieldname, arg,
+                              context=None):
+        ''' For acceptability.criteria,
+            returns the state of user.story to which belong '''
+        res = {}.fromkeys(ids)
+        for ac in self.browse(cr, uid, ids, context=context):
+            res[ac.id] = ac.accep_crit_id.state
+        return res
+
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False,
                             translate=True),
@@ -624,6 +635,13 @@ class AcceptabilityCriteria(osv.Model):
                                          'User Story',
                                          ondelete='cascade',
                                          ),
+        'accep_crit_state': fields.function(
+            _get_user_story_state,
+            type='selection',
+            selection=_US_STATE,
+            string='User Story State',
+            store={'user.story': (_get_ac_ids_by_us_ids, ['state'], 10)},
+        ),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
