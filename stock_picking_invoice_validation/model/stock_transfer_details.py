@@ -51,25 +51,27 @@ class StockTansferDetails(models.TransientModel):
                         'picking %s') % (transfer.picking_id.name)
                     raise exceptions.Warning(
                         ('Warning!'), msg)
-                if len(transfer.item_ids) == len(invoice.invoice_line):
-                    lines = [(line.product_id, line.quantity)
-                             for line in invoice.invoice_line]
-                    moves = [(move.product_id, move.quantity)
-                             for move in transfer.item_ids]
-                    if lines != moves:
-                        raise exceptions.Warning(
-                            _('Warning!'),
-                            _('Incorrect Invoice, '
-                              'products and quantities are different '
-                              'between moves and invoice lines.'))
-                    else:
-                        transfer.picking_id.invoice_id = invoice.id
-                        res = super(
-                            StockTansferDetails, self).do_detailed_transfer()
-                        return res
+                tran_dict = {}
+                for item in transfer.item_ids:
+                    qty = tran_dict.get(item.product_id.id, 0) + item.quantity
+                    tran_dict.update({item.product_id.id: qty})
+                inv_dict = {}
+                for item in invoice.invoice_line:
+                    qty = inv_dict.get(item.product_id.id, 0) + item.quantity
+                    inv_dict.update({item.product_id.id: qty})
+                if inv_dict == tran_dict:
+                    transfer.picking_id.invoice_id = invoice.id
+                    res = super(
+                        StockTansferDetails, self).do_detailed_transfer()
+                    return res
                 else:
                     raise exceptions.Warning(
-                        _('Warning!'), _('Incorrect Invoice'))
+                        _('Warning!'),
+                        _('Incorrect Invoice, '
+                          'products and quantities are different '
+                          'between moves and invoice lines.'))
+                    # raise exceptions.Warning(
+                    #     _('Warning!'), _('Incorrect Invoice'))
             else:
                 res = super(StockTansferDetails, self).do_detailed_transfer()
                 return res
