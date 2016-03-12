@@ -186,7 +186,6 @@ class ProductTemplate(models.Model):
                 # /!\ NOTE: If not segmentation set on WC fallback to
                 # production_cost segmentation
                 fn = wc.segmentation_cost or 'production_cost'
-                fn = 'production_cost'
                 sgmnt_dict[fn] += routing_price
 
         # Convert on product UoM quantities

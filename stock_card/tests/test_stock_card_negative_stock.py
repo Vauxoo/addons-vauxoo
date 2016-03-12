@@ -95,6 +95,8 @@ class TestStockCardNegativeStock(TransactionCase):
 
     def do_picking(self, picking_ids=False):
         for picking_id in picking_ids:
+            picking_id.action_assign()
+            picking_id.force_assign()
             picking_id.action_confirm()
             wizard_id = self.wizard.create({
                 'picking_id': picking_id.id,
