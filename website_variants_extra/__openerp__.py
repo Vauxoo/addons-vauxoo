@@ -17,6 +17,9 @@
     "data": [
         "views/layout.xml",
         "views/templates.xml",
+        "views/product_printable_view.xml",
+        "views/product_report.xml",
+        "views/report_layout.xml",
     ],
     "test": [],
     "installable": True,

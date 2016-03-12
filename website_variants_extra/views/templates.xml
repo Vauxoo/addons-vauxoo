@@ -109,7 +109,7 @@
                                                 <td><image src="/website_variants_extra/static/img/ask.png" class="custom-icon"/></td>
                                                 <td><span class="sale-action">Ask Question</span></td>
                                             </tr>
-                                            <tr>
+                                            <tr class="pepdf btn-link">
                                                 <td><image src="/website_variants_extra/static/img/print.png" class="custom-icon"/></td>
                                                 <td><span class="sale-action">Print/Export As PDF</span></td>
                                             </tr>

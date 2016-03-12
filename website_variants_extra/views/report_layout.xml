@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="website_variants_extra.layout_html" inherit_id="website_report.layout">
+    <xpath expr="//style" position="after">
+        <link href="/website_variants_extra/static/src/css/layout.css" rel="stylesheet"/>
+    </xpath>
+</template>
+
+<template id="website_variants_extra.layout_pdf" inherit_id="report.layout">
+    <xpath expr="//style" position="after">
+        <link href="/website_variants_extra/static/src/css/layout.css" rel="stylesheet"/>
+    </xpath>
+</template>
+
+<template id="website_variants_extra.minimal_layout" inherit_id="report.minimal_layout">
+    <xpath expr="//style" position="after">
+        <link href="/website_variants_extra/static/src/css/layout.css" rel="stylesheet"/>
+    </xpath>
+</template>
+
+<template id="report.style">
+    body {
+        color: #000;
+        word-wrap: break-word;
+    }
+</template>
+
+<template id="website_variants_extra.external_layout">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+    <!-- <t t-set="website" t-value="env['website'].search([])[0]"></t> -->
+    <t t-call="website_variants_extra.external_layout_header"/>
+    <t t-raw="0" />
+    <t t-call="website_variants_extra.external_layout_footer"/>
+</template>
+
+<template id="report.html_container">
+    <t t-set="body_classname" t-value="'vauxoo'"/>
+    <t t-call="report.layout">
+        <t t-raw="0"/>
+    </t>
+</template>
+<!-- End of what needs to be in a separate module -->
+<template id="website_variants_extra.external_layout_header">
+    <div class="header vauxoo">
+        <div class="col-xs-2">
+            <img class="img img-responsive" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-width: 150px;"/>
+        </div>
+        <div class="col-xs-9 col-xs-offset-1 mt16">
+            <div class="text-left" >
+                <h1>
+                <strong t-field="company.name" style="font-size: 56px; color: gray;"/>
+                </h1>
+            </div>
+        </div>
+        <div class="col-xs-12">
+        <div class="row">
+            <div class="h5 breadcrumb mt8">
+                <i>
+                    <t t-esc="breadcrumb"/>
+                </i>
+                <div class="pull-right">
+                    <span t-esc="time.strftime('%A, %d %B %Y')"/>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</template>
+
+<template id="website_variants_extra.external_layout_footer">
+    <div class="footer">
+        <div class="row">
+            <div class="footer_data col-xs-12 col-xs-offset-1">
+                <t t-set="address" t-value="company.partner_id"/>
+                <t t-if="address">
+                    <div class="text-left">
+                        <span t-raw="address.name"/><br/>
+                        <t t-if="address.street">
+                            <span t-raw="address.street"/>,
+                        </t>
+                        <t t-if="address.street2">
+                            <span t-raw="address.street2"/>,
+                        </t>
+                        <t t-if="address.country_id">
+                            <span t-raw="address.country_id.name.capitalize()"/>
+                        </t>
+                        <br/>
+                        <t t-if="address.phone">
+                            <span t-raw="address.phone"/>,
+                        </t>
+                        <t t-if="address.email">
+                            <span t-raw="address.email"/>
+                        </t>
+                        <br/>
+                    </div>
+                </t>
+            </div>
+            <ul class="pull-right list-inline hidden-md hidden-lg hidden-sm">
+                 <li>Page:</li>
+                 <li><span class="page"/></li>
+                 <li>/</li>
+                 <li><span class="topage"/></li>
+             </ul>
+        </div>
+    </div>
+    </template>
+
+
+</data>
+</openerp>
