@@ -221,7 +221,10 @@ msgid "Followers"
 msgstr "Seguidores"
 
 #. module: user_story
+#: selection:acceptability.criteria,accep_crit_state:0
+#: code:addons/user_story/model/user_story.py:29
 #: selection:user.story,state:0
+#, python-format
 msgid "New"
 msgstr "Nuevo"
 
@@ -252,9 +255,20 @@ msgid "Assumptions"
 msgstr "Suposiciones"
 
 #. module: user_story
-#: view:user.story:0 selection:user.story,state:0
+#: selection:acceptability.criteria,accep_crit_state:0
+#: code:addons/user_story/model/user_story.py:30
+#: view:user.story:user_story.view_userstory_form
+#: view:user.story:user_story.view_userstory_search
+#: selection:user.story,state:0
+#, python-format
 msgid "Done"
 msgstr "Realizado"
+
+#. module: user_story
+#: view:acceptability.criteria:user_story.view_acceptability_criteria_search
+#: field:acceptability.criteria,accep_crit_state:0
+msgid "User Story State"
+msgstr "Estado de Historia de Usuario"
 
 #. module: user_story
 #: view:acceptability.criteria:0 field:acceptability.criteria,accepted:0
@@ -384,7 +398,11 @@ msgid "us 3"
 msgstr "Historia de Usuario 3"
 
 #. module: user_story
-#: view:user.story:0 selection:user.story,state:0
+#: selection:acceptability.criteria,accep_crit_state:0
+#: code:addons/user_story/model/user_story.py:29
+#: view:user.story:user_story.view_userstory_form
+#: selection:user.story,state:0
+#, python-format
 msgid "Pending"
 msgstr "Pendiente"
 
@@ -483,7 +501,10 @@ msgid "Code"
 msgstr "Código"
 
 #. module: user_story
+#: selection:acceptability.criteria,accep_crit_state:0
+#: code:addons/user_story/model/user_story.py:30
 #: selection:user.story,state:0
+#, python-format
 msgid "Cancelled"
 msgstr "Cancelado"
 
@@ -508,7 +529,11 @@ msgid "Branch to clone"
 msgstr "Branch a clonar"
 
 #. module: user_story
+#: selection:acceptability.criteria,accep_crit_state:0
+#: code:addons/user_story/model/user_story.py:29
+#: view:user.story:user_story.view_userstory_search
 #: selection:user.story,state:0
+#, python-format
 msgid "In Progress"
 msgstr "En Progreso"
 

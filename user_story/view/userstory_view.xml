@@ -253,6 +253,7 @@
                 <field name="name"/>
                 <field name="scenario"/>
                 <field name="accep_crit_id"/>
+                <field name="accep_crit_state" invisible="True"/>
                 <field name="project_id" invisible="True"/>
                 <field name="sk_id" invisible="True"/>
                 <field name="categ_ids" invisible="True"/>
@@ -279,6 +280,7 @@
                     <field name="name"/>
                     <field name="scenario"/>
                     <field name="accep_crit_id"/>
+                    <field name="accep_crit_state"/>
                     <field name="accepted"/>
                     <field name="development"/>
                     <field name="difficulty"/>
@@ -288,6 +290,7 @@
                 <group expand="1" string="Group By...">
                     <filter name="accept_criteria_user_story_id" string="User Story" context="{'group_by':'accep_crit_id'}"/>
                     <filter name="accept_criteria_difficulty" string="Difficulty" context="{'group_by':'difficulty'}"/>
+                    <filter name="accept_criteria_user_story_state" string="User Story State" context="{'group_by':'accep_crit_state'}"/>
                     <separator/>
                     <filter name="accept_criteria_project_id" string="Project" context="{'group_by':'project_id'}"/>
                     <filter name="accept_criteria_sk_id" string="Sprint" context="{'group_by':'sk_id'}"/>
