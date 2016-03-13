@@ -50,7 +50,7 @@ class ProductTemplate(models.Model):
             self._cr.execute("""
               select avg(rating), res_id from mail_message where res_id = %s\
               and model = 'product.template' and rating > 0 group by res_id;
-              """ % (product.id))
+              """, (product.id,))
             record = self._cr.fetchall()
             if record:
                 product.rating = record[0][0]

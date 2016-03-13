@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="product.product_product_5b_product_template" model="product.template">
+            <field name="rating">5</field>
+        </record>
+        <record id="product.product_product_9_product_template" model="product.template">
+            <field name="rating">4</field>
+        </record>
+        <record id="product.product_product_7_product_template" model="product.template">
+            <field name="rating">3</field>
+        </record>
+        <record id="product.product_product_32_product_template" model="product.template">
+            <field name="rating">3</field>
+        </record>
+        <record id="product.product_product_27_product_template" model="product.template">
+            <field name="rating">2</field>
+        </record>
+        <record id="product.product_product_25_product_template" model="product.template">
+            <field name="rating">1</field>
+        </record>
+    </data>
+</openerp>
