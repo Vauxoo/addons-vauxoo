@@ -13,7 +13,7 @@
             {
                 title: 'Click on category Devices',
                 content: "Here we check if the products on the tree are the right ones to render on popular products",
-                waitFor: 'a:contains(Bose Mini Bluetooth Speaker), a:contains(Apple Wireless Keyboard), a:contains(Apple In-Ear Headphones)',
+                waitFor: '.subcategories:contains("Laptops"), .subcategories:contains("Computers"), .subcategories:contains("Devices")',
                 element: 'li[data-categid="11"] a',
             },
             {
