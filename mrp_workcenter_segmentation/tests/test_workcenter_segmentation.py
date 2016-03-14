@@ -6,6 +6,7 @@
 # planned by: hbto@vauxoo.com
 
 from openerp.tests.common import TransactionCase
+from collections import namedtuple
 
 
 class TestWorkcenterSegmentation(TransactionCase):
@@ -25,7 +26,7 @@ class TestWorkcenterSegmentation(TransactionCase):
         self.mrp_production_e = self.env.ref(
             'mrp_workcenter_segmentation.'
             'mrp_production_segmentation_e_product')
-        self.wip_account = self.ref(
+        self.wip_account = self.env.ref(
             'mrp_workcenter_account_move.rev_work_in_process')
         self.wizard = self.env['mrp.product.produce']
         self.wizard_line = self.env['mrp.product.produce.line']
@@ -33,9 +34,10 @@ class TestWorkcenterSegmentation(TransactionCase):
         self.location = self.env['stock.location']
         location_id = self.location.search([('name', '=', 'Production')])
         location_id.write({
-            'valuation_in_account_id': self.wip_account,
-            'valuation_out_account_id': self.wip_account
+            'valuation_in_account_id': self.wip_account.id,
+            'valuation_out_account_id': self.wip_account.id
         })
+        self.summary = namedtuple('summary', ['debit', 'credit', 'name'])
 
     def produce_product(self, production_id, qties):
         # Confirm the mrp production d.
@@ -73,6 +75,16 @@ class TestWorkcenterSegmentation(TransactionCase):
         wz_brw.do_produce()
         return True
 
+    def get_account_values(self, production_id, account_name):
+        rec_ids = production_id.account_move_id.line_id.filtered(
+            lambda l: l.account_id.name == account_name)
+        debit, credit = 0, 0
+        for rec_id in rec_ids:
+            debit += rec_id.debit
+            credit += rec_id.credit
+        res = self.summary(debit, credit, account_name)
+        return res
+
     def test_01_check_workcenters_segments(self):
         self.produce_product(self.mrp_production_d, [1, 2])
         segments_costs = self.mrp_production_d.\
@@ -83,6 +95,22 @@ class TestWorkcenterSegmentation(TransactionCase):
         self.assertEqual(segments_costs['subcontracting_cost'], 0)
 
         self.produce_product(self.mrp_production_e, [1])
+
+        production_vals = self.get_account_values(self.mrp_production_e,
+                                                  'PRODUCTION_COST_ACCOUNT')
+        self.assertEqual(production_vals.debit, 0)
+        self.assertEqual(production_vals.credit, 30)
+
+        deviation_vals = self.get_account_values(self.mrp_production_e,
+                                                 'INVENTORY_DEVIATION_ACCOUNT')
+        self.assertEqual(deviation_vals.debit, 20)
+        self.assertEqual(deviation_vals.credit, 0)
+
+        wip_vals = self.get_account_values(self.mrp_production_e,
+                                           'WORK_IN_PROCESS')
+        self.assertEqual(wip_vals.debit, 30)
+        self.assertEqual(wip_vals.credit, 20)
+
         segments_costs = self.mrp_production_e.\
             get_workcenter_segmentation_amount()
         self.assertEqual(segments_costs['material_cost'], 0)
