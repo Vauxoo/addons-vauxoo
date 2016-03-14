@@ -6,6 +6,7 @@
 # planned by: hbto@vauxoo.com
 
 from openerp.tests.common import TransactionCase
+from collections import namedtuple
 
 
 class TestWorkcenterSegmentation(TransactionCase):
@@ -36,6 +37,7 @@ class TestWorkcenterSegmentation(TransactionCase):
             'valuation_in_account_id': self.wip_account.id,
             'valuation_out_account_id': self.wip_account.id
         })
+        self.summary = namedtuple('summary', ['debit', 'credit', 'name'])
 
     def produce_product(self, production_id, qties):
         # Confirm the mrp production d.
@@ -73,12 +75,14 @@ class TestWorkcenterSegmentation(TransactionCase):
         wz_brw.do_produce()
         return True
 
-    def get_account_values(self, account_name):
-        rec_ids = self.mrp_production_e.account_move_id.line_id.filtered(
+    def get_account_values(self, production_id, account_name):
+        rec_ids = production_id.account_move_id.line_id.filtered(
             lambda l: l.account_id.name == account_name)
-        res = []
+        debit, credit = 0, 0
         for rec_id in rec_ids:
-            res.append((rec_id.debit, rec_id.credit))
+            debit += rec_id.debit
+            credit += rec_id.credit
+        res = self.summary(debit, credit, account_name)
         return res
 
     def test_01_check_workcenters_segments(self):
@@ -92,18 +96,20 @@ class TestWorkcenterSegmentation(TransactionCase):
 
         self.produce_product(self.mrp_production_e, [1])
 
-        production_vals = self.get_account_values('PRODUCTION_COST_ACCOUNT')
-        self.assertEqual(production_vals, [(0, 7.5), (0, 7.5), (0, 15)],
-                         'There is missing journal entries for production')
+        production_vals = self.get_account_values(self.mrp_production_e,
+                                                  'PRODUCTION_COST_ACCOUNT')
+        self.assertEqual(production_vals.debit, 0)
+        self.assertEqual(production_vals.credit, 30)
 
-        deviation_vals = self.get_account_values(
-            'INVENTORY_DEVIATION_ACCOUNT')
-        self.assertEqual(deviation_vals, [(20, 0)],
-                         'There is missing journal entries for deviation')
+        deviation_vals = self.get_account_values(self.mrp_production_e,
+                                                 'INVENTORY_DEVIATION_ACCOUNT')
+        self.assertEqual(deviation_vals.debit, 20)
+        self.assertEqual(deviation_vals.credit, 0)
 
-        wip_vals = self.get_account_values('WORK_IN_PROCESS')
-        self.assertEqual(wip_vals, [(0, 20), (7.5, 0), (7.5, 0), (15, 0)],
-                         'There is missing journal entries for production')
+        wip_vals = self.get_account_values(self.mrp_production_e,
+                                           'WORK_IN_PROCESS')
+        self.assertEqual(wip_vals.debit, 30)
+        self.assertEqual(wip_vals.credit, 20)
 
         segments_costs = self.mrp_production_e.\
             get_workcenter_segmentation_amount()
