@@ -148,6 +148,11 @@ msgid "RMA Receipt"
 msgstr "Recepción de Reclamo"
 
 #. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Customer's signature"
+msgstr "Firma del Cliente"
+
+#. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.product_on_claim
 #: view:website:crm_claim_summary_report.page_summary_report
 msgid "Priority"
