@@ -164,22 +164,27 @@
                     <thead>
                         <tr>
                             <th>Code</th>
+                            <th>Priority</th>
+                            <th>State</th>
                             <th>Product</th>
-                            <th>Description</th>
+                            <th>Inv. Line</th>
                             <th>Serial/Lot</th>
-                            <th>Invoice</th>
-                            <th>Claim</th>
+                            <th>Subject</th>
+                            <th>Problem Description</th>
                             <th>Warranty</th>
                         </tr>
                     </thead>
                     <tbody class="body-product-info">
                         <tr t-foreach="claim.claim_line_ids" t-as="line_id">
                             <td class="col-xs-1"><span t-field="line_id.number"/></td>
-                            <td class="col-xs-3"><t t-if="line_id.product_id.default_code"> <span t-field="line_id.product_id.default_code"></span> - </t>
-                            <span t-field="line_id.product_id.name"/></td>
-                            <td class="col-xs-3"><span t-field="line_id.claim_origin"/></td>
+                            <td class="col-xs-1"><span t-field="line_id.priority"/></td>
+                            <td class="col-xs-1"><span t-field="line_id.state"/></td>
+                            <td class="col-xs-3"><t t-if="line_id.product_id.default_code">
+                                <span t-field="line_id.product_id.default_code"></span> - </t><span t-field="line_id.product_id.name"/>
+                            </td>
+                            <td class="col-xs-3"><span t-field="line_id.invoice_line_id.name"/></td>
                             <td class="col-xs-1"><span t-field="line_id.prodlot_id.ref"/></td>
-                            <td class="col-xs-1"><span t-field="line_id.invoice_line_id.invoice_id.number"/></td>
+                            <td class="col-xs-1"><span t-field="line_id.claim_origin"/></td>
                             <td class="col-xs-1"><span t-field="line_id.name"/></td>
                             <td class="col-xs-1"><span t-field="line_id.warning"/></td>
                         </tr>
