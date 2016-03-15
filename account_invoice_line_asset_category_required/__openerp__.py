@@ -18,7 +18,9 @@
         'account',
         'account_asset',
     ],
-    'demo': [],
+    'demo': [
+        'demo/account_invoice_demo.xml',
+    ],
     'website': 'https://www.vauxoo.com',
     'data': [
         'views/account_view.xml'
