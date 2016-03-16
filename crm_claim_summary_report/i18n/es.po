@@ -115,7 +115,7 @@ msgstr "Factura"
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
 msgid "Serial/Lot"
-msgstr "Lote/No. Serial"
+msgstr "Serial"
 
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
@@ -148,9 +148,35 @@ msgid "RMA Receipt"
 msgstr "Recepción de Reclamo"
 
 #. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Customer's signature"
+msgstr "Firma del Cliente"
+
+#. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.product_on_claim
+#: view:website:crm_claim_summary_report.page_summary_report
 msgid "Priority"
 msgstr "Prioridad"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Subject"
+msgstr "Motivo de la Reclamación"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Inv. Line"
+msgstr "Línea de Factura"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "State"
+msgstr "Estado"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Problem Description"
+msgstr "Descripción"
 
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
