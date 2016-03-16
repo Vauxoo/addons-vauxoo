@@ -22,57 +22,39 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp import models, fields, api
 
 
-class MailMessage(osv.Model):
+class MailMessage(models.Model):
     _inherit = 'mail.message'
-    _columns = {
-        'rating': fields.integer('Rating'),
-    }
+    rating = fields.Integer('Rating')
 
-    def _message_read_dict(self, cr, uid, message, parent_id=False,
-                           context=None):
-        res = super(MailMessage, self)._message_read_dict(cr, uid,
-                                                          message,
-                                                          parent_id=parent_id,
-                                                          context=context)
+    @api.model
+    def _message_read_dict(self, message, parent_id=False):
+        res = super(MailMessage, self)._message_read_dict(message,
+                                                          parent_id=parent_id)
         res['rating'] = message.rating
         return res
 
 
-class ProductTemplate(osv.Model):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    def _get_rating(self, cr, uid, ids, field_name, arg, context):
-        res = {}
-        total = 0
-        cr.commit()
-        for pid in ids:
-            cr.execute("select avg(rating) from mail_message where res_id = %s\
-                        and model = 'product.template' and rating > 0;" %
-                       (pid))
-            fall = cr.fetchall()
-            total = fall[0][0] if fall else total
-            res[pid] = total
-        return res
+    @api.depends("message_last_post")
+    def _get_rating(self):
+        """
+        This method gets the rating for each rated template based on the
+        comments, the rating per comment is stored in the mail.message model
+        """
+        for product in self:
+            self._cr.execute("""
+              select avg(rating), res_id from mail_message where res_id = %s\
+              and model = 'product.template' and rating > 0 group by res_id;
+              """, (product.id,))
+            record = self._cr.fetchall()
+            if record:
+                product.rating = record[0][0]
+            else:
+                product.rating = 0
 
-    def _get_message_ids(self, cr, uid, ids, context=None):
-        product_ids = []
-        message_obj = self.pool.get('mail.message')
-        message_group = message_obj.read_group(cr, uid, [('model', '=',
-                                                          'product.template'),
-                                                         ('id', 'in', ids)],
-                                               ('res_id'),
-                                               ('res_id'))
-        for message in message_group:
-            product_ids.append(message.get('res_id'))
-        return product_ids
-
-    _columns = {
-        'rating': fields.function(_get_rating, type="integer", method=True,
-                                  string="Rating",
-                                  store={'mail.message':
-                                         (_get_message_ids, ['res_id',
-                                                             'model'], 10)}),
-    }
+    rating = fields.Integer(compute="_get_rating", string="Rating", store=True)
