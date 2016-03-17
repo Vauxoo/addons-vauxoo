@@ -9,7 +9,9 @@
     "depends": [
         "website_sale"
     ],
-    "demo": [],
+    "demo": [
+        "demo/rating_demo.xml"
+    ],
     "data": [
         "views/layout.xml",
         "views/star_rate.xml",
