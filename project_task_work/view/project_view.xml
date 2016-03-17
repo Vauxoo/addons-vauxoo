@@ -1,6 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
+        <record id="task_form" model="ir.ui.view">
+            <field name="name">project.task</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_ids']/tree" position="attributes">
+                    <attribute name="editable">bottom</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
         <record id="view_project_task_work_ext_tree" model="ir.ui.view">
             <field name="name">project.task.work.ext.tree</field>
             <field name="model">project.task.work</field>
