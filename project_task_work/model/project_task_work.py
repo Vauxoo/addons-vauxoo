@@ -64,6 +64,8 @@ class ProjectTask(osv.Model):
 class ProjectTaskWork(osv.Model):
     _inherit = 'project.task.work'
 
+    _order = 'id'
+
     def _get_project(self, cr, uid, ids, fieldname, arg, context=None):
         if context is None:
             context = {}
