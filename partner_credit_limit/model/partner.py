@@ -24,12 +24,18 @@ class ResPartner(models.Model):
         string="Credit Overloaded", type='Boolean',
         help="Indicates when the customer has credit overloaded")
     overdue_credit = fields.Boolean(
-        compute='_get_overdue_credit', string="Late Payments", type='Boolean',
+        compute='_get_overdue_credit', string="Late Payments",
         help="Indicates when the customer has late payments")
     allowed_sale = fields.Boolean(
-        compute='get_allowed_sale', string="Allowed Sales", type='Boolean',
+        compute='get_allowed_sale', string="Allowed Sales",
         help="If the Partner has credit overloaded or late payments,"
         " he can't validate invoices and sale orders.")
+    credit_available = fields.Float(compute="_get_credit_overloaded",
+                                    string="Available Credit")
+    overdue_amount = fields.Float(
+        compute='_get_overdue_credit', string="Overdue amout",
+        help="Payment has to be made for having reached "
+             "the maturity date of the obligation.")
 
     @api.multi
     def _get_credit_overloaded(self):
@@ -51,6 +57,8 @@ class ResPartner(models.Model):
                 new_amount, company.currency_id)
 
             new_credit = partner.credit + new_amount_currency
+            credit = partner.credit if partner.credit > 0 else 0
+            partner.credit_available = partner.credit_limit - credit
 
             if new_credit > partner.credit_limit:
                 partner.credit_overloaded = True
@@ -87,6 +95,7 @@ class ResPartner(models.Model):
                 credit_maturity += line.credit
                 # credit += line.credit
             balance_maturity = debit_maturity - credit_maturity
+            partner.overdue_amount = balance_maturity or 0
 
             if balance_maturity > 0.0:
                 partner.overdue_credit = True
