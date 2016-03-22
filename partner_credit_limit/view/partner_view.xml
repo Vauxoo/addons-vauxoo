@@ -24,6 +24,9 @@
                     <field name="allowed_sale"/>
                     <field name="grace_payment_days"/>
                 </field>
+                <field name="credit_limit" position="after">
+                    <field name="credit_available"/>
+                </field>
                 <xpath expr="//div[@name='buttons']" position="inside">
                     <button
                         type="action" class="oe_stat_button"
