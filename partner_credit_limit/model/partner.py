@@ -15,6 +15,19 @@ from datetime import timedelta
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    @api.multi
+    @api.depends('payment_terms_ids', 'payment_terms_ids.sequence')
+    def _default_payment_term(self):
+        partner = self
+        if partner.payment_terms_ids:
+            payment_term = self.env['account.payment.term'].search(
+                [("id", 'in', partner.payment_terms_ids.ids)],
+                order='sequence', limit=1).id
+        else:
+            payment_term = self.env['account.payment.term'].search(
+                [], limit=1).id
+        partner.property_payment_term = payment_term
+
     grace_payment_days = fields.Float(
         'Days grace payment',
         help='Days grace payment')
@@ -36,6 +49,14 @@ class ResPartner(models.Model):
         compute='_get_overdue_credit', string="Overdue amout",
         help="Payment has to be made for having reached "
              "the maturity date of the obligation.")
+    payment_terms_ids = fields.Many2many(
+        'account.payment.term', string="Allowed Payment Terms")
+    property_payment_term = fields.Many2one(
+        comodel_name="account.payment.term",
+        compute=_default_payment_term,
+        company_dependent=False,
+        store=True)
+
 
     @api.multi
     def _get_credit_overloaded(self):
