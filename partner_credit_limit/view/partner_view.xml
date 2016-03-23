@@ -27,6 +27,17 @@
                 <field name="credit_limit" position="after">
                     <field name="credit_available"/>
                 </field>
+                <field name="bank_ids" position="after">
+                    <field name="payment_terms_ids">
+                        <tree string="Payment Terms">
+                            <field name="name"/>
+                            <field name="sequence" widget="handle"/>
+                        </tree>
+                    </field>
+                </field>
+                <field name="property_payment_term" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </field>
                 <xpath expr="//div[@name='buttons']" position="inside">
                     <button
                         type="action" class="oe_stat_button"
