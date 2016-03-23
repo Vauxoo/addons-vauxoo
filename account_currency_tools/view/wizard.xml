@@ -5,7 +5,7 @@
             <field name="name">Foreign Currency Exchange Realization</field>
             <field name="model">foreign.exchange.realization</field>
             <field name="arch" type="xml">
-                <form string="Foreign Currency Exchange Realization">
+                <form string="Foreign Currency Exchange Realization" version="7.0">
                     <header>
                         <button
                             name="action_prepare"

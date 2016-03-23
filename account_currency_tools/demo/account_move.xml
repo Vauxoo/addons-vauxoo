@@ -45,143 +45,21 @@
         </record>
 
         <!--
-        Fiscal year
-        -->
-
-        <record id="data_fiscalyear" model="account.fiscalyear">
-            <field eval="'Fiscal Year X '+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'FY'+'%s' %(datetime.now().year-1)" name="code"/>
-            <field name="date_start" eval="'%s-01-01' %(datetime.now().year-1)"/>
-            <field name="date_stop" eval="'%s-12-31' %(datetime.now().year-1)"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-
-        <!--
-        Fiscal Periods
-        -->
-
-        <record id="period_0" model="account.period">
-            <field eval="'00/'+'%s' %(datetime.now().year-1)" name="code"/>
-            <field eval="'X Opening Period '+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="True" name="special"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-01-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-01-01'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_1" model="account.period">
-            <field eval="'01/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 01/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-01-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-01-31'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_2" model="account.period">
-            <field eval="'02/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 02/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-02-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-02-28'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_3" model="account.period">
-            <field eval="'03/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 03/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-03-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-03-31'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_4" model="account.period">
-            <field eval="'04/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 04/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-04-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-04-30'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_5" model="account.period">
-            <field eval="'05/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 05/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-05-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-05-31'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_6" model="account.period">
-            <field eval="'06/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 06/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-06-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-06-30'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_7" model="account.period">
-            <field eval="'07/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 07/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-07-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-07-31'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_8" model="account.period">
-            <field eval="'08/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 08/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-08-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-08-31'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_9" model="account.period">
-            <field eval="'09/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 09/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-09-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-09-30'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_10" model="account.period">
-            <field eval="'10/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 10/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-10-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-10-31'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_11" model="account.period">
-            <field eval="'11/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 11/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-11-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-11-30'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-        <record id="period_12" model="account.period">
-            <field eval="'12/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 12/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-12-01'" name="date_start"/>
-            <field eval="'%s' %(datetime.now().year-1)+'-12-31'" name="date_stop"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-
-        <!--
         Journal Entries
         -->
 
        <record id="act_am_00" model="account.move">
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="period_12"/>
-            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="period_id" ref="account.period_12"/>
+            <field name="date" eval="'%s' %(DateTime.now().year)+'-12-24'"/>
             <field name="ref">Shareholders Money</field>
        </record>
 
        <record id="act_aml_00_a" model="account.move.line">
             <field name="move_id" ref="act_am_00"/>
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="period_12"/>
-            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="period_id" ref="account.period_12"/>
+            <field name="date" eval="'%s' %(DateTime.now().year)+'-12-24'"/>
             <field name="name">Shareholders Money</field>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">1000.0</field>
@@ -193,8 +71,8 @@
        <record id="act_aml_00_b" model="account.move.line">
             <field name="move_id" ref="act_am_00"/>
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="period_12"/>
-            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="period_id" ref="account.period_12"/>
+            <field name="date" eval="'%s' %(DateTime.now().year)+'-12-24'"/>
             <field name="name">Shareholders Money</field>
             <field name="account_id" ref="a_equity"/>
             <field name="debit">0.0</field>
