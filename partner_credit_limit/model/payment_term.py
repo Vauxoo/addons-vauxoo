@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
@@ -8,4 +9,13 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from . import accout_invoice, partner, sale, payment_term
+from openerp import models, fields
+
+
+class PaymentTerm(models.Model):
+
+    _inherit = 'account.payment.term'
+    _order = 'sequence'
+
+    sequence = fields.Integer(
+        'Sequence', required=True)
