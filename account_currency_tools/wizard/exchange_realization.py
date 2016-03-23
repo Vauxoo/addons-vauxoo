@@ -423,7 +423,7 @@ class ForeignExchangeRealization(osv.osv_memory):
                 aml.state <> 'draft' AND
                 am.state IN (%(states)s) AND
                 aml.company_id = %(company_id)d AND
-                aa.id BETWEEN %(parent_left)d AND %(parent_right)d AND
+                aa.parent_left BETWEEN %(parent_left)d AND %(parent_right)d AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id
         ''' % args
@@ -528,7 +528,8 @@ class ForeignExchangeRealization(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        wzd_brw.line_ids.unlink()
+        if wzd_brw.line_ids:
+            wzd_brw.line_ids.unlink()
 
         account_ids = []
         for fn in ('bk_ids', 'rec_ids', 'pay_ids'):
@@ -581,8 +582,8 @@ class ForeignExchangeRealization(osv.osv_memory):
         context['date'] = dt.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         for values in res:
             values['wizard_id'] = wzd_brw.id
-            exchange_rate = cur_obj._get_current_rate(
-                cr, uid, [values['currency_id']], context=context)
+            exchange_rate = cur_obj._current_rate(
+                cr, uid, [values['currency_id']], '', {}, context=context)
             values['exchange_rate'] = exchange_rate.get(values['currency_id'])
             values['adjusted_balance'] = \
                 values['foreign_balance'] / values['exchange_rate']
@@ -687,8 +688,9 @@ class ForeignExchangeRealization(osv.osv_memory):
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
 
         fieldnames = ['currency_id', 'type', 'unrealized_gain_loss']
-        gal = wzd_brw.line_ids.read(fieldnames, load=None)
-        gal = [rec for rec in gal if rec.get('type') in dict_acc.keys()]
+        gal = [wzd_line.read(fieldnames) for wzd_line in wzd_brw.line_ids]
+        gal = gal and [
+            rec for rec in gal[0] if rec.get('type') in dict_acc.keys()]
         if not gal:
             return res
 
