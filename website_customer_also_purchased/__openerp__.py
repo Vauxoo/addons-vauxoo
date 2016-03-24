@@ -12,7 +12,10 @@
     "demo": [],
     "data": [
         "views/website_customer_purchased.xml",
-        "views/product_purchased_view.xml",
+        "views/website_customer_purchased_view.xml",
+        "views/res_config.xml",
+        "views/assets.xml",
+        "data/website_settings_data.xml",
     ],
     "test": [],
     "js": [],

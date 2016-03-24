@@ -46,15 +46,13 @@ class ProductTemplate(models.Model):
         This method gets the rating for each rated template based on the
         comments, the rating per comment is stored in the mail.message model
         """
-        for product in self:
-            self._cr.execute("""
-              select avg(rating), res_id from mail_message where res_id = %s\
-              and model = 'product.template' and rating > 0 group by res_id;
-              """, (product.id,))
-            record = self._cr.fetchall()
-            if record:
-                product.rating = record[0][0]
-            else:
-                product.rating = 0
+        self._cr.execute("""
+            SELECT res_id, avg(rating)
+            FROM mail_message
+            WHERE res_id IN %s AND model = 'product.template' AND rating > 0
+            GROUP BY res_id""", (self._ids,))
+        res = dict(self._cr.fetchall())
+        for record in self:
+            record.rating = res.get(record.id)
 
     rating = fields.Integer(compute="_get_rating", string="Rating", store=True)
