@@ -24,7 +24,6 @@
     'name': 'Payment Terms Type',
     'version': '1.0',
     'author': 'Tiny SPRL, Vauxoo',
-    'license': 'AGPL-3',
     'category': '',
     'license': 'AGPL-3',
     'depends': [
