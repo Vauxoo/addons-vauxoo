@@ -18,15 +18,15 @@ class ResPartner(models.Model):
     @api.multi
     @api.depends('payment_terms_ids', 'payment_terms_ids.sequence')
     def _default_payment_term(self):
-        partner = self
-        if partner.payment_terms_ids:
-            payment_term = self.env['account.payment.term'].search(
-                [("id", 'in', partner.payment_terms_ids.ids)],
-                order='sequence', limit=1).id
-        else:
-            payment_term = self.env['account.payment.term'].search(
-                [], limit=1).id
-        partner.property_payment_term = payment_term
+        for partner in self:
+            if partner.payment_terms_ids:
+                payment_term = self.env['account.payment.term'].search(
+                    [("id", 'in', partner.payment_terms_ids.ids)],
+                    order='sequence', limit=1).id
+            else:
+                payment_term = self.env['account.payment.term'].search(
+                    [], limit=1).id
+            partner.property_payment_term = payment_term
 
     grace_payment_days = fields.Float(
         'Days grace payment',
@@ -56,7 +56,6 @@ class ResPartner(models.Model):
         compute=_default_payment_term,
         company_dependent=False,
         store=True)
-
 
     @api.multi
     def _get_credit_overloaded(self):

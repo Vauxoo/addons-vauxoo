@@ -9,7 +9,6 @@
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
 from openerp import models, fields, api, _
-from openerp import exceptions
 
 
 class SaleOrder(models.Model):
@@ -57,15 +56,15 @@ class SaleOrder(models.Model):
                 if partner.credit_overloaded:
                     msg += ('\nHave exceeded the credit limit.'
                             '\nThe credit available is $%s'
-                            '\nAnd the credit is being requested is $%s') % (
-                            str((partner.credit_limit - partner.credit)),
-                            str(so.amount_total))
+                            '\nAnd the credit is being requested is $%s') % \
+                        (str((partner.credit_limit - partner.credit)),
+                         str(so.amount_total))
                 if partner.overdue_credit:
                     max_date = max(self.partner_overdue_payments.mapped(
                         'date_maturity'))
                     msg += ('\nIt has the overdue payment period.'
                             '\nThe expiration date was %s, '
-                            'the amount payable is: $%s') % (
-                            max_date, str(partner.credit))
+                            'the amount payable is: $%s') % \
+                        (max_date, str(partner.credit))
                 message = _(msg)
-                raise exceptions.Warning(('Warning!'), message)
+                self.message_post(body=message)
