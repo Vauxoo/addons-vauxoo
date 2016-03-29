@@ -14,6 +14,17 @@ from openerp import models, fields, api, _
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    @api.multi
+    def action_view_delivery(self):
+        res = super(SaleOrder, self).action_view_delivery()
+        pick_ids = []
+        for so in self:
+            pick_ids += [picking.id for picking in so.picking_ids]
+        if len(pick_ids) > 1:
+            res['domain'] = "['&', ('sale_state', '='," + \
+                " 'to_invoice'),('id','in', " + str(pick_ids) + ")]"
+        return res
+
     partner_credit_limit = fields.Float(related='partner_id.credit_limit',
                                         string="Partner Credit Limit",
                                         readonly=True)
