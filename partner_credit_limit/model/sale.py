@@ -67,4 +67,4 @@ class SaleOrder(models.Model):
                             'the amount payable is: $%s') % \
                         (max_date, str(partner.credit))
                 message = _(msg)
-                self.message_post(body=message)
+                self.message_post(subject="Exception Credit", body=message)
