@@ -17,7 +17,7 @@
     "license": "AGPL-3",
     "depends": [
         "account",
-        "sale",
+        "sale_stock",
         "payment_term_type", ],
     "demo": [],
     "data": [
