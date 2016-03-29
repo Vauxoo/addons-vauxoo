@@ -18,4 +18,6 @@ class PaymentTerm(models.Model):
     _order = 'sequence'
 
     sequence = fields.Integer(
-        'Sequence', required=True)
+        'Sequence', required=True,
+        default=lambda self: self.env['ir.sequence'].get(
+            'account.payment.term'))
