@@ -8,8 +8,6 @@
         <record model="ir.sequence" id="seq_payment_term">
             <field name="name">Payment Term code</field>
             <field name="code">account.payment.term</field>
-            <field name="prefix">PT/</field>
-            <field name="padding">0</field>
         </record>
     </data>
     <data>

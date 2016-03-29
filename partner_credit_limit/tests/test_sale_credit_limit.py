@@ -10,7 +10,6 @@
 ############################################################################
 
 from openerp.tests.common import TransactionCase
-from openerp import exceptions
 from datetime import datetime, timedelta
 
 
@@ -46,6 +45,7 @@ class TestSalesCreditLimits(TransactionCase):
         # sale order with amount total of 600.00
         sale_id = self.sale_order.create(
             {'partner_id': self.partner_china.id,
+             'order_policy': 'manual',
              'payment_term': self.payment_term_credit.id})
         self.sale_order_line.create(
             {'product_id': self.product_id.id,
@@ -57,8 +57,16 @@ class TestSalesCreditLimits(TransactionCase):
         # credit limit exceded
         # credit_limit = 500
         # amount_total = 600
-        with self.assertRaises(exceptions.Warning):
-            sale_id.action_button_confirm()
+        sale_id.action_button_confirm()
+        mail_message = self.env['mail.message'].search([
+            ('model', '=', 'sale.order'),
+            ('res_id', '=', sale_id.id),
+            ('subject', '=', 'Exception Credit'),
+            ('type', '=', 'notification'),
+        ])
+        self.assertIn(
+            'The Sale order pass to state of Exception Credit.',
+            mail_message.body)
 
     def test_partner_with_late_payments(self):
         """
@@ -94,6 +102,7 @@ class TestSalesCreditLimits(TransactionCase):
         # sale order with amount total of 600.00
         sale_id = self.sale_order.create(
             {'partner_id': self.partner_china.id,
+             'order_policy': 'manual',
              'payment_term': self.payment_term_credit.id})
         self.sale_order_line.create(
             {'product_id': self.product_id.id,
@@ -104,5 +113,12 @@ class TestSalesCreditLimits(TransactionCase):
         # should not confirm sale order should fail,
         # couse there are late payments
         # since the invoice 1 was validate with curent day minus 2 days
-        with self.assertRaises(exceptions.Warning):
-            sale_id.action_button_confirm()
+        sale_id.action_button_confirm()
+        mail_message = self.env['mail.message'].search([
+            ('model', '=', 'sale.order'),
+            ('res_id', '=', sale_id.id),
+            ('subject', '=', 'Exception Credit'),
+            ('type', '=', 'notification')
+        ])
+        self.assertIn('The Sale order pass to state of Exception Credit.',
+                      mail_message.body)
