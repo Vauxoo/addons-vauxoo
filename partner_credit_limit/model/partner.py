@@ -24,8 +24,8 @@ class ResPartner(models.Model):
                     [("id", 'in', partner.payment_terms_ids.ids)],
                     order='sequence', limit=1).id
             else:
-                payment_term = self.env['account.payment.term'].search(
-                    [], limit=1).id
+                payment_term = self.env['ir.values'].get_defaults_dict(
+                    'res.partner').get('property_payment_term')
             partner.property_payment_term = payment_term
 
     grace_payment_days = fields.Float(
