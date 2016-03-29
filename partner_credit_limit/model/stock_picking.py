@@ -8,4 +8,10 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from . import accout_invoice, partner, sale, payment_term, stock_picking
+from openerp import models, fields
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    sale_state = fields.Selection(related="sale_id.state", store=True)
