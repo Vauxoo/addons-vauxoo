@@ -14,27 +14,31 @@ from openerp import models, fields, api, _
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    partner_credit_limit = fields.Float(related='partner_id.credit_limit',
-                                        string="Partner Credit Limit",
-                                        readonly=True)
+    partner_credit_limit = fields.Float(
+        related='partner_id.credit_limit',
+        string="Partner Credit Limit",
+        readonly=True)
     partner_credit_available = fields.Float(
         related="partner_id.credit_available",
-        string="Partner Available Credit", readonly=True)
-    requested_credit = fields.Float(related="amount_total",
-                                    string="Requested Credit")
+        string="Partner Available Credit",
+        readonly=True)
+    requested_credit = fields.Float(
+        related="amount_total",
+        string="Requested Credit")
     partner_overdue_payments = fields.One2many(
         comodel_name="account.move.line",
         inverse_name='partner_id', readonly=True,
         compute="_get_late_payments")
-    partner_overdue_amount = fields.Float(related='partner_id.overdue_amount',
-                                          string='Partner Overdue Amount',
-                                          readonly=True)
+    partner_overdue_amount = fields.Float(
+        related='partner_id.overdue_amount',
+        string='Partner Overdue Amount',
+        readonly=True)
 
     def _get_late_payments(self):
         for so in self:
             moveline_obj = self.env['account.move.line']
             movelines = moveline_obj.search(
-                [('partner_id', '=', so.partner_id.id),
+                [('partner_id', '=', so.partner_id.commercial_partner_id.id),
                  ('account_id.type', '=', 'receivable'),
                  ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
             so.partner_overdue_payments = movelines

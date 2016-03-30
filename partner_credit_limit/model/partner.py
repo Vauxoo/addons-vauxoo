@@ -28,6 +28,10 @@ class ResPartner(models.Model):
                     'res.partner').get('property_payment_term')
             partner.property_payment_term = payment_term
 
+    def get_domain(self):
+        ids = self.env.user.company_id.payment_terms_ids.ids
+        return [('id', 'in', ids)]
+
     grace_payment_days = fields.Float(
         'Days grace payment',
         help='Days grace payment')
@@ -50,7 +54,8 @@ class ResPartner(models.Model):
         help="Payment has to be made for having reached "
              "the maturity date of the obligation.")
     payment_terms_ids = fields.Many2many(
-        'account.payment.term', string="Allowed Payment Terms")
+        'account.payment.term', string="Allowed Payment Terms",
+        domain=get_domain)
     property_payment_term = fields.Many2one(
         comodel_name="account.payment.term",
         compute=_default_payment_term,
@@ -90,7 +95,7 @@ class ResPartner(models.Model):
         for partner in self:
             moveline_obj = self.env['account.move.line']
             movelines = moveline_obj.search(
-                [('partner_id', '=', partner.id),
+                [('partner_id', '=', partner.commercial_partner_id.id),
                  ('account_id.type', '=', 'receivable'),
                  ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
             # credit = 0.0

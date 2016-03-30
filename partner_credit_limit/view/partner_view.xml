@@ -29,7 +29,8 @@
                 </field>
                 <field name="bank_ids" position="after">
                     <field name="payment_terms_ids">
-                        <tree string="Payment Terms">
+                        <tree string="Payment Terms" editable="bottom">
+                            <field name="id" invisible="True"/>
                             <field name="name"/>
                             <field name="sequence" widget="handle"/>
                         </tree>
