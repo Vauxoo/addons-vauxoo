@@ -62,6 +62,11 @@ class ResPartner(models.Model):
         company_dependent=False,
         store=True)
 
+    overdue_payments_ids = fields.One2many(
+        comodel_name="account.move.line",
+        inverse_name='partner_id',
+        compute="_get_overdue_credit")
+
     @api.multi
     def _get_credit_overloaded(self):
         for partner in self:
@@ -92,28 +97,20 @@ class ResPartner(models.Model):
 
     @api.multi
     def _get_overdue_credit(self):
+        moveline_obj = self.env['account.move.line']
         for partner in self:
-            moveline_obj = self.env['account.move.line']
             movelines = moveline_obj.search(
                 [('partner_id', '=', partner.commercial_partner_id.id),
                  ('account_id.type', '=', 'receivable'),
+                 ('debit', '!=', 0),
                  ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
             # credit = 0.0
             debit_maturity, credit_maturity = 0.0, 0.0
+            lines = []
             for line in movelines:
-                if line.date_maturity and line.partner_id.grace_payment_days:
-                    maturity = fields.Datetime.from_string(
-                        line.date_maturity)
-                    grace_payment_days = timedelta(
-                        days=line.partner_id.grace_payment_days)
-                    limit_day = maturity + grace_payment_days
-                    limit_day = limit_day.strftime("%Y-%m-%d")
-
-                elif line.date_maturity:
-                    limit_day = line.date_maturity
-                else:
-                    limit_day = fields.Date.today()
+                limit_day = self.get_limit_date(line)
                 if limit_day <= fields.Date.today():
+                    lines.append(line.id)
                     # credit and debit maturity sums all aml
                     # with late payments
                     debit_maturity += line.debit
@@ -121,11 +118,29 @@ class ResPartner(models.Model):
                 # credit += line.credit
             balance_maturity = debit_maturity - credit_maturity
             partner.overdue_amount = balance_maturity or 0
+            partner.overdue_payments_ids = lines
 
             if balance_maturity > 0.0:
                 partner.overdue_credit = True
             else:
                 partner.overdue_credit = False
+
+    def get_limit_date(self, line):
+        if line.date_maturity and line.partner_id.grace_payment_days:
+            maturity = fields.Datetime.from_string(
+                line.date_maturity)
+            grace_payment_days = timedelta(
+                days=line.partner_id.grace_payment_days)
+            limit_day = maturity + grace_payment_days
+            limit_day = limit_day.strftime("%Y-%m-%d")
+            return limit_day
+
+        elif line.date_maturity:
+            limit_day = line.date_maturity
+            return limit_day
+        else:
+            limit_day = fields.Date.today()
+            return limit_day
 
     @api.multi
     def get_allowed_sale(self):
