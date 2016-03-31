@@ -22,7 +22,7 @@
                         </group>
                         <group string="Payment deadline">
                             <field name="partner_overdue_amount"/>
-                            <field name="partner_overdue_payments"
+                            <field name="partner_overdue_payments_ids"
                                 nolabel="1" colspan="2">
                                 <tree create="false" edit="false" delete="false">
                                     <field name="journal_id"/>
@@ -31,7 +31,7 @@
                                     <field name="date_maturity"/>
                                     <field name="ref"/>
                                     <field name="debit"/>
-                                    <field name="credit"/>
+                                    <field name="amount_residual"/>
                                 </tree>
                             </field>
                         </group>

@@ -25,23 +25,14 @@ class SaleOrder(models.Model):
     requested_credit = fields.Float(
         related="amount_total",
         string="Requested Credit")
-    partner_overdue_payments = fields.One2many(
-        comodel_name="account.move.line",
-        inverse_name='partner_id', readonly=True,
-        compute="_get_late_payments")
+    partner_overdue_payments_ids = fields.One2many(
+        related='partner_id.overdue_payments_ids',
+        string='Partner Overdue Payments Items',
+        readonly=True)
     partner_overdue_amount = fields.Float(
         related='partner_id.overdue_amount',
         string='Partner Overdue Amount',
         readonly=True)
-
-    def _get_late_payments(self):
-        for so in self:
-            moveline_obj = self.env['account.move.line']
-            movelines = moveline_obj.search(
-                [('partner_id', '=', so.partner_id.commercial_partner_id.id),
-                 ('account_id.type', '=', 'receivable'),
-                 ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
-            so.partner_overdue_payments = movelines
 
     @api.multi
     def check_limit(self):
@@ -64,7 +55,7 @@ class SaleOrder(models.Model):
                         (str((partner.credit_limit - partner.credit)),
                          str(so.amount_total))
                 if partner.overdue_credit:
-                    max_date = max(self.partner_overdue_payments.mapped(
+                    max_date = max(self.partner_overdue_payments_ids.mapped(
                         'date_maturity'))
                     msg += ('\nIt has the overdue payment period.'
                             '\nThe expiration date was %s, '
