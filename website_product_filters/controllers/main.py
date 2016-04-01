@@ -1,5 +1,4 @@
 # coding: utf-8
-import openerp
 from openerp import http
 from openerp.http import request
 from openerp.addons.website_sale.controllers.main import website_sale
@@ -192,5 +191,3 @@ class WebsiteSale(website_sale):
                                                category=category,
                                                search=search, **kwargs)
         return res
-
-openerp.addons.website_sale.controllers.main.website_sale = WebsiteSale
