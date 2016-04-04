@@ -33,8 +33,8 @@ class ResPartner(models.Model):
         return [('id', 'in', ids)]
 
     grace_payment_days = fields.Float(
-        'Days grace payment',
-        help='Days grace payment')
+        related='property_payment_term.grace_payment_days',
+        help='Days grace payment', readonly=True)
 
     credit_overloaded = fields.Boolean(
         compute='_get_credit_overloaded',
