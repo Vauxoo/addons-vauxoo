@@ -21,3 +21,6 @@ class PaymentTerm(models.Model):
         'Sequence', required=True,
         default=lambda self: self.env['ir.sequence'].get(
             'account.payment.term'))
+    grace_payment_days = fields.Float(
+        'Days grace payment',
+        help='Days grace payment')
