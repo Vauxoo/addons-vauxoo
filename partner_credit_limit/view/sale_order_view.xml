@@ -37,6 +37,12 @@
                         </group>
                     </page>
                 </page>
+                <field name="payment_term" position="after">
+                    <field name="payment_terms_ids" invisible="True"/>
+                </field>
+                <field name="payment_term" position="attributes">
+                    <attribute name="domain">[('id', 'in', payment_terms_ids[0][2])]</attribute>
+                </field>
             </field>
         </record>
     </data>

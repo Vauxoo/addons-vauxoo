@@ -19,6 +19,7 @@
                 <xpath expr="//field[@name='active']" position="after">
                     <newline/>
                     <field name="sequence"/>
+                    <field name="grace_payment_days"/>
                 </xpath>
             </field>
         </record>
