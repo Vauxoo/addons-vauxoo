@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_sale_order_pay_sale_orders" model="ir.ui.view">
+            <field name="name">Pay Sale Orders</field>
+            <field name="model">sale.make.payments</field>
+            <field name="arch" type="xml">
+                <form string="Pay Sale Orders">
+                    <separator colspan="4" string="Do you really want to Pay the Sale Ordes ?" />
+                    <group>
+                        <field name="customer_id"/>
+                        <field name="journal_id"/>
+                        <field name="amount_to_pay"/>
+                    </group>
+                        <field name="line_ids" nolabel="1" widget="one2many">
+                            <tree editable="buttom">
+                                <field name="sale_id"/>
+                                <field name="balance"/>
+                                <field name="amount_to_pay"/>
+                            </tree>
+                        </field>
+                    <footer>
+                        <button name="pay_sale_orders" string="Create Invoices" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_sale_order_pay_sale_orders" model="ir.actions.act_window">
+            <field name="name">Pay Sale Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.make.payments</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sale_order_pay_sale_orders"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record model="ir.values" id="sale_order_pay_sale_ordes">
+            <field name="model_id" ref="sale.model_sale_order" />
+            <field name="name">Pay Sale Ordes</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_sale_order_pay_sale_orders'))" />
+            <field name="key">action</field>
+            <field name="model">sale.order</field>
+        </record>
+    </data>
+</openerp>
