@@ -33,6 +33,9 @@ class SaleOrder(models.Model):
         related='partner_id.overdue_amount',
         string='Partner Overdue Amount',
         readonly=True)
+    payment_terms_ids = fields.Many2many(
+        related='partner_id.payment_terms_ids',
+        string="Allowed Payment Terms")
 
     @api.multi
     def check_limit(self):
