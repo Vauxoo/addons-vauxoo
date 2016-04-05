@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 ############################################################################
 #    Module Writen For Odoo, Open Source Management Solution
@@ -8,4 +9,12 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
-from . import accout_invoice, partner, sale, payment_term, company
+from openerp import models, fields
+
+
+class ResCompany(models.Model):
+
+    _inherit = 'res.company'
+
+    payment_terms_ids = fields.Many2many(
+        'account.payment.term', string="Allowed Payment Terms")

@@ -47,7 +47,7 @@ class AccountPaymentTerm(models.Model):
         for record in self:
             if payment_type == 'bqp':
                 record.payment_type = 'cash'
-                if len(self.line_ids) > 1:
+                if len(record.line_ids) > 1:
                     record.payment_type = 'credit'
             elif payment_type == 'bdp':
                 for line in record.line_ids:
