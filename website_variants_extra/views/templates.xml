@@ -30,8 +30,12 @@
                                           <t t-set="ul_class" t-value="'nav-stacked'"/>
                                       </t>
                                     </t>
-                                    <strong>Characteristics</strong>
-                                    <hr t-if="product.description_sale" style="margin-top: 0px; margin-bottom: 0px;"/>
+                                    <hr t-if="product.description_sale" class="hidden"/>
+                                    <br/>
+                                    <t t-if="product.attribute_line_ids">
+                                        <strong class="text-muted" >Characteristics</strong>
+                                        <hr style="margin-top: 0px; margin-bottom: 0px;"/>
+                                    </t>
                                     <div class="row">
                                       <t t-foreach="product.attribute_line_ids" t-as="variant_id">
                                           <t t-if="len(variant_id.value_ids)==1">
