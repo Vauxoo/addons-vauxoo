@@ -91,3 +91,23 @@ msgstr ""
 #: field:product.product,stock_state:0
 msgid "Website Stock State"
 msgstr "Estatus De Disponibilidad en Website"
+
+#. module: website_variants_extra
+#: view:website:website_variants_extra.pprintable
+msgid "Model:"
+msgstr "Modelo:"
+
+#. module: website_variants_extra
+#: view:website:website_variants_extra.pprintable
+msgid "Manufacturer:"
+msgstr "Fabricante:"
+
+#. module: website_variants_extra
+#: view:website:website_variants_extra.pprintable
+msgid "Price:"
+msgstr "Precio:"
+
+#. module: website_variants_extra
+#: view:website:website_variants_extra.pprintable
+msgid "Product Specifications"
+msgstr "Especificaciones Del Producto"
