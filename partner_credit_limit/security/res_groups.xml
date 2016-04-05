@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="res.groups" id="grp_register_payment">
+            <field name="name">See Credit Details and Register Payments </field>
+        </record>
+    </data>
+</openerp>

@@ -8,6 +8,7 @@
             <field name="domain">[
                 ('account_id.type', '=', 'receivable'),
                 ('state', '!=', 'draft'), ('reconcile_id', '=', False),
+                ('debit', '!=', 0),
                 ('date_maturity','&lt;',time.strftime('%Y-%m-%d %H:%M:%S'))
             ]</field>
         </record>
@@ -23,6 +24,21 @@
                     <field name="overdue_credit" invisible='1'/>
                     <field name="allowed_sale"/>
                     <field name="grace_payment_days"/>
+                </field>
+                <field name="credit_limit" position="after">
+                    <field name="credit_available"/>
+                </field>
+                <field name="bank_ids" position="after">
+                    <field name="payment_terms_ids">
+                        <tree string="Payment Terms" editable="bottom">
+                            <field name="id" invisible="True"/>
+                            <field name="name"/>
+                            <field name="sequence" widget="handle"/>
+                        </tree>
+                    </field>
+                </field>
+                <field name="property_payment_term" position="attributes">
+                    <attribute name="readonly">True</attribute>
                 </field>
                 <xpath expr="//div[@name='buttons']" position="inside">
                     <button

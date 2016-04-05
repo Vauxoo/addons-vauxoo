@@ -7,5 +7,43 @@
             <field name="signal">order_confirm</field>
             <field name="condition">check_limit()</field>
         </record>
+        <record id="view_sale_credit_details" model="ir.ui.view">
+            <field name="name">sale.order.form.credit.details</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <page string="Other Information" position="after">
+                    <page string="Details Credit" groups="partner_credit_limit.grp_register_payment">
+                        <group>
+                            <separator string="Credit" colspan="2"/>
+                            <field name="partner_credit_limit"/>
+                            <field name="partner_credit_available"/>
+                            <field name="requested_credit"/>
+                        </group>
+                        <group string="Payment deadline">
+                            <field name="partner_overdue_amount"/>
+                            <field name="partner_overdue_payments_ids"
+                                nolabel="1" colspan="2">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="journal_id"/>
+                                    <field name="period_id"/>
+                                    <field name="date"/>
+                                    <field name="date_maturity"/>
+                                    <field name="ref"/>
+                                    <field name="debit"/>
+                                    <field name="amount_residual"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </page>
+                <field name="payment_term" position="after">
+                    <field name="payment_terms_ids" invisible="True"/>
+                </field>
+                <field name="payment_term" position="attributes">
+                    <attribute name="domain">[('id', 'in', payment_terms_ids[0][2])]</attribute>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
