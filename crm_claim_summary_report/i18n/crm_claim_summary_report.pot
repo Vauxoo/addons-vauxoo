@@ -36,6 +36,11 @@ msgid "CUSTOMER COPY"
 msgstr ""
 
 #. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.template_page_copy_title
+msgid "SUPPLIER COPY"
+msgstr ""
+
+#. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
 msgid "Claim"
 msgstr ""
@@ -113,7 +118,12 @@ msgstr ""
 
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
-msgid "Name"
+msgid "Supplier name"
+msgstr ""
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Customer name"
 msgstr ""
 
 #. module: crm_claim_summary_report
@@ -179,4 +189,19 @@ msgstr ""
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
 msgid "Pick the product in the store"
+msgstr ""
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.external_layout_header
+msgid "RMA Receipt"
+msgstr ""
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.external_layout_header
+msgid "RMA Receipt for Customer"
+msgstr ""
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.external_layout_header
+msgid "RMA for Supplier"
 msgstr ""
