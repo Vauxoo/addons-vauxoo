@@ -13,7 +13,7 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <page string="Other Information" position="after">
-                    <page string="Details Credit">
+                    <page string="Details Credit" groups="partner_credit_limit.grp_register_payment">
                         <group>
                             <separator string="Credit" colspan="2"/>
                             <field name="partner_credit_limit"/>
