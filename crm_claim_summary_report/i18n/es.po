@@ -33,7 +33,12 @@ msgstr "COPIA PARA SOPORTE INTERNO"
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.template_page_copy_title
 msgid "CUSTOMER COPY"
-msgstr "COPIA DEL CLIENTE"
+msgstr "COPIA CLIENTE"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.template_page_copy_title
+msgid "SUPPLIER COPY"
+msgstr "COPIA PROVEEDOR"
 
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
@@ -119,8 +124,13 @@ msgstr "Serial"
 
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
-msgid "Name"
-msgstr "Nombre"
+msgid "Supplier name"
+msgstr "Nombre del Proveedor"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Customer name"
+msgstr "Nombre del Cliente"
 
 #. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.page_summary_report
@@ -247,3 +257,18 @@ msgstr "NOTA IMPORTANTE"
 #: view:website:crm_claim_summary_report.page_summary_report
 msgid "Pick the product in the store"
 msgstr "Retira el producto en la tienda"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.external_layout_header
+msgid "RMA Receipt"
+msgstr "Recibo de Reclamo"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.external_layout_header
+msgid "RMA Receipt for Customer"
+msgstr "Recibo de Reclamo de Cliente"
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.external_layout_header
+msgid "RMA for Supplier"
+msgstr "Reclamo al Proveedor"

@@ -10,7 +10,7 @@
             <t t-set="body_classname" t-value="'container'"/>
             <t t-foreach="docs" t-as="doc">
                 <t t-call="crm_claim_summary_report.layout">
-                    <t t-set="page_copy_title" t-value="'customer'"/>
+                    <t t-set="page_copy_title" t-value="doc.claim_type.name.lower()"/>
                     <t t-call="crm_claim_summary_report.claim_copy_page"/>
                     <t t-set="page_copy_title" t-value="'internal'"/>
                     <t t-call="crm_claim_summary_report.claim_copy_page"/>
@@ -46,19 +46,22 @@
             </div>
             <div class="row" >
                 <div class="col-xs-2" style="text-align:right;">
-                    <t t-if="claim.partner_id.customer">
-                        <p class="row" style="font-size:12px"><strong>Customer Name<span>:</span></strong></p>
-                    </t>
-                        <p class="row" style="font-size:12px"><strong>Delivery Address<span>:</span></strong></p>
+                    <p class="row" style="font-size:12px">
+                        <strong>
+                            <t t-if="page_copy_title == 'customer'">Customer name</t>
+                            <t t-if="page_copy_title == 'supplier'">Supplier name</t>
+                            <t t-if="page_copy_title not in ['supplier','customer']">Name</t>
+                            <span>:</span>
+                        </strong>
+                    </p>
+                    <p class="row" style="font-size:12px"><strong>Delivery Address<span>:</span></strong></p>
                 </div>
                 <!-- DATA -->
-                <div class="col-xs-2">
+                <div class="col-xs-3">
 
-                    <t t-if="claim.partner_id.customer">
-                        <t t-if="claim.claim_type">
-                            <p t-field="claim.partner_id.name" style="font-size:12px"/>
-                        </t>
-                    </t>
+                    <p t-if="claim.claim_type">
+                        <span t-field="claim.partner_id.name" style="font-size:12px"/>
+                    </p>
 
                     <t t-if="not claim.pick and claim.delivery_address_id">
                         <p style="font-size:12px;white-space: nowrap;">
@@ -191,8 +194,10 @@
                     </tbody>
                 </table>
                 <br/> <br/> <br/> <br/>
-                <p align="center">_______________________________________________</p>
-                <p align="center">Customer's signature</p>
+                <t t-if="page_copy_title == 'customer'">
+                    <p align="center">_______________________________________________</p>
+                    <p align="center">Customer's signature</p>
+                </t>
             </div>
         </template>
         <template id="product_on_claim">
