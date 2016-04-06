@@ -83,13 +83,16 @@ class SaleOrder(models.Model):
         self.env.cr.execute(
             """
         SELECT product_id,
-        array_agg(CASE WHEN (location_dest_id = %s) THEN product_uom_qty ELSE 0 END) AS OUT,
-        array_agg(CASE WHEN (location_dest_id = %s) THEN product_uom_qty ELSE 0 END) AS IN
+        array_agg(CASE WHEN (
+            location_dest_id = %s) THEN product_uom_qty ELSE 0 END) AS OUT,
+        array_agg(CASE WHEN (
+            location_dest_id = %s) THEN product_uom_qty ELSE 0 END) AS IN
         FROM stock_move
         WHERE picking_id IN (SELECT id FROM stock_picking WHERE id in %s) and
             state='done' and location_dest_id in (%s, %s)
         GROUP BY product_id;
-            """, (loc_src, loc_dest, tuple(self.picking_ids.ids), loc_src, loc_dest)
+            """, (
+            loc_src, loc_dest, tuple(self.picking_ids.ids), loc_src, loc_dest)
         )
         prods = self.env.cr.fetchall()
         for prod in prods:
