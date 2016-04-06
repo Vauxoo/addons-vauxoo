@@ -2,7 +2,7 @@
 <openerp>
     <data>
         <record model="res.groups" id="grp_register_payment">
-            <field name="name">See Credit Details and Register Payments </field>
+            <field name="name">See Credit Details</field>
         </record>
     </data>
 </openerp>
