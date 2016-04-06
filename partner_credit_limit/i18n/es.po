@@ -25,7 +25,7 @@ msgstr "Términos De Pago Permitidos"
 #. module: partner_credit_limit
 #: field:res.partner,allowed_sale:0
 msgid "Allowed Sales"
-msgstr "Permitido Ordenes De Venta"
+msgstr "Venta a crédito permitida"
 
 #. module: partner_credit_limit
 #: field:res.partner,credit_available:0
