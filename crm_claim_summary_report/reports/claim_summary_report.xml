@@ -9,6 +9,7 @@
         <template id="summary_report">
             <t t-set="body_classname" t-value="'container'"/>
             <t t-foreach="docs" t-as="doc">
+                <t t-set="rma_ctx" t-value="doc.claim_type.name.lower()"/>
                 <t t-call="crm_claim_summary_report.layout">
                     <t t-set="page_copy_title" t-value="doc.claim_type.name.lower()"/>
                     <t t-call="crm_claim_summary_report.claim_copy_page"/>
@@ -48,9 +49,9 @@
                 <div class="col-xs-2" style="text-align:right;">
                     <p class="row" style="font-size:12px">
                         <strong>
-                            <t t-if="page_copy_title == 'customer'">Customer name</t>
-                            <t t-if="page_copy_title == 'supplier'">Supplier name</t>
-                            <t t-if="page_copy_title not in ['supplier','customer']">Name</t>
+                            <t t-if="rma_ctx == 'customer'">Customer name</t>
+                            <t t-if="rma_ctx == 'supplier'">Supplier name</t>
+                            <t t-if="rma_ctx not in ['supplier','customer']">Name</t>
                             <span>:</span>
                         </strong>
                     </p>
@@ -194,7 +195,7 @@
                     </tbody>
                 </table>
                 <br/> <br/> <br/> <br/>
-                <t t-if="page_copy_title == 'customer'">
+                <t t-if="rma_ctx == 'customer'">
                     <p align="center">_______________________________________________</p>
                     <p align="center">Customer's signature</p>
                 </t>
