@@ -28,7 +28,7 @@
                 <field name="credit_limit" position="after">
                     <field name="credit_available"/>
                 </field>
-                <field name="bank_ids" position="after">
+                <field name="bank_ids" position="before">
                     <field name="payment_terms_ids">
                         <tree string="Payment Terms" editable="bottom">
                             <field name="id" invisible="True"/>
