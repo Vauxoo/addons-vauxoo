@@ -9,7 +9,8 @@
         <template id="summary_report">
             <t t-set="body_classname" t-value="'container'"/>
             <t t-foreach="docs" t-as="doc">
-                <t t-set="rma_ctx" t-value="doc.claim_type.name.lower()"/>
+                <t t-set="rma_ctx" t-value="(doc.claim_type.id == ref('crm_claim_type.crm_claim_type_supplier') and 'supplier')
+                    or (doc.claim_type.id == ref('crm_claim_type.crm_claim_type_customer') and 'customer') or 'internal'"/>
                 <t t-call="crm_claim_summary_report.layout">
                     <t t-set="page_copy_title" t-value="doc.claim_type.name.lower()"/>
                     <t t-call="crm_claim_summary_report.claim_copy_page"/>
