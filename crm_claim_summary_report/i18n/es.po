@@ -163,6 +163,11 @@ msgid "Customer's signature"
 msgstr "Firma del Cliente"
 
 #. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Stamp of "
+msgstr "Sello de "
+
+#. module: crm_claim_summary_report
 #: view:website:crm_claim_summary_report.product_on_claim
 #: view:website:crm_claim_summary_report.page_summary_report
 msgid "Priority"
