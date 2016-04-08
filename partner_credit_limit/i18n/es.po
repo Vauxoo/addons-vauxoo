@@ -25,7 +25,7 @@ msgstr "Términos De Pago Permitidos"
 #. module: partner_credit_limit
 #: field:res.partner,allowed_sale:0
 msgid "Allowed Sales"
-msgstr "Permitido Ordenes De Venta"
+msgstr "Venta a crédito permitida"
 
 #. module: partner_credit_limit
 #: field:res.partner,credit_available:0
@@ -170,8 +170,8 @@ msgstr "Pedido de venta"
 
 #. module: partner_credit_limit
 #: model:res.groups,name:partner_credit_limit.grp_register_payment
-msgid "See Credit Details and Register Payments "
-msgstr "Ver Detalles del Crédito y Registrar Pagos"
+msgid "See Credit Details"
+msgstr "Ver Detalles del Crédito"
 
 #. module: partner_credit_limit
 #: field:account.payment.term,sequence:0
