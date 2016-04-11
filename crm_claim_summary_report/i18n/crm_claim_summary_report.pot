@@ -205,3 +205,14 @@ msgstr ""
 #: view:website:crm_claim_summary_report.external_layout_header
 msgid "RMA for Supplier"
 msgstr ""
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Customer's signature"
+msgstr ""
+
+#. module: crm_claim_summary_report
+#: view:website:crm_claim_summary_report.page_summary_report
+msgid "Stamp of"
+msgstr ""
+

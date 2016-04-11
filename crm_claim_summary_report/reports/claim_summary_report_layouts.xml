@@ -117,13 +117,13 @@
                             <h3><small><span>TIN</span>: <span t-field="company.vat"/> </small></h3>
                         </t>
                         <p><h4>
-                            <t t-if="page_copy_title == 'customer'">
+                            <t t-if="rma_ctx == 'customer'">
                                 RMA Receipt for Customer
                             </t>
-                            <t t-if="page_copy_title == 'supplier'">
+                            <t t-if="rma_ctx == 'supplier'">
                                 RMA for Supplier
                             </t>
-                            <t t-if="page_copy_title not in ['customer','supplier']">
+                            <t t-if="rma_ctx not in ['customer','supplier']">
                                 RMA Receipt
                             </t>
                         </h4></p>
@@ -177,10 +177,12 @@
             </t>
         </template>
         <template id="crm_claim_summary_report.external_layout_footer">
-            <div class="footer rma-page-note" t-if="page_copy_title">
-                <div class="row" >
+            <div class="row" >
+                <div class="footer rma-page-note" >
+                    <t t-if="rma_ctx == 'customer'">
                     <p style="font-size: 7pt;"><b>IMPORTANT NOTE</b><span>: </span><span t-field="company.rma_footer_note"/>
                     </p>
+                    </t>
                 </div>
             </div>
         </template>
