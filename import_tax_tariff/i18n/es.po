@@ -1,0 +1,167 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* import_tax_tariff
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-06 02:11+0000\n"
+"PO-Revision-Date: 2016-04-06 02:11+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: import_tax_tariff
+#: selection:tariff.tariff,type_id:0
+msgid "Ad Valorem"
+msgstr "Ad Valorem"
+
+#. module: import_tax_tariff
+#: help:tariff.tariff,minimum:0
+msgid "Amount Minimun"
+msgstr "Monto Mínimo"
+
+#. module: import_tax_tariff
+#: field:tariff.tariff,code:0
+msgid "Code"
+msgstr "Código"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,create_uid:0
+#: field:tariff.tariff,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,create_date:0
+#: field:tariff.tariff,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,description:0
+#: field:tariff.tariff,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,display_name:0
+#: field:tariff.tariff,display_name:0
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,id:0
+#: field:tariff.tariff,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: import_tax_tariff
+#: field:tariff.tariff,import_tax_id:0
+msgid "Import Tax"
+msgstr "Impuesto de Importación"
+
+#. module: import_tax_tariff
+#: view:import.tax.tariff:import_tax_tariff.view_import_tax_tariff_form
+#: view:import.tax.tariff:import_tax_tariff.view_import_tax_tariff_tree
+#: model:ir.actions.act_window,name:import_tax_tariff.action_import_tax_tariff
+#: model:ir.ui.menu,name:import_tax_tariff.menu_action_import_tax_tariff
+#: view:tariff.tariff:import_tax_tariff.view_tariff_tariff_form
+msgid "Import Tax - Tariff"
+msgstr "Impuesto de Importación - Arancel"
+
+#. module: import_tax_tariff
+#: model:ir.model,name:import_tax_tariff.model_import_tax_tariff
+msgid "Import Tax Tariff"
+msgstr "Tarifa del impuesto de importación"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,__last_update:0
+#: field:tariff.tariff,__last_update:0
+msgid "Last Modified on"
+msgstr "Modificado por última vez"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,write_uid:0
+#: field:tariff.tariff,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización realizada por"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,write_date:0
+#: field:tariff.tariff,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: import_tax_tariff
+#: field:tariff.tariff,minimum:0
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. module: import_tax_tariff
+#: selection:tariff.tariff,type_id:0
+msgid "Mixed"
+msgstr "Mixto"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,name:0
+#: field:tariff.tariff,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,product_category_id:0
+msgid "Product Category"
+msgstr "Categoría de Producto"
+
+#. module: import_tax_tariff
+#: model:ir.model,name:import_tax_tariff.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: import_tax_tariff
+#: selection:tariff.tariff,type_id:0
+msgid "Specific"
+msgstr "Determinado"
+
+#. module: import_tax_tariff
+#: field:import.tax.tariff,tariff_ids:0
+#: field:product.template,tariff_id:0
+msgid "Tariff"
+msgstr "Arancel"
+
+#. module: import_tax_tariff
+#: model:ir.actions.act_window,name:import_tax_tariff.action_tariff_tariff
+#: model:ir.ui.menu,name:import_tax_tariff.menu_action_tariff_tariff
+msgid "Tariff Tariff"
+msgstr "Medidas Arancelarias"
+
+#. module: import_tax_tariff
+#: help:tariff.tariff,unit_value:0
+msgid "Tariff per Unit of Product"
+msgstr "Tarifa por Unidad de Producto"
+
+#. module: import_tax_tariff
+#: help:tariff.tariff,tax_percentage:0
+msgid "Tax Percentage"
+msgstr "Porcentaje de Impuestos"
+
+#. module: import_tax_tariff
+#: field:tariff.tariff,tax_percentage:0
+msgid "Tax percentage"
+msgstr "Porcentaje de impuestos"
+
+#. module: import_tax_tariff
+#: field:tariff.tariff,type_id:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: import_tax_tariff
+#: field:tariff.tariff,unit_value:0
+msgid "Unit value"
+msgstr "Valor unitario"
+
