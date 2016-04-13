@@ -55,7 +55,7 @@ class AccountConfigSettings(models.TransientModel):
     def get_default_payment_term_type(self, fields_name):
         key_payment = "account.payment_term_type"
         payment_type = self.env["ir.config_parameter"].get_param(
-            key_payment, default='bqp')
+            key_payment, default='bdp')
         return {'payment_type': payment_type}
 
     @api.multi
