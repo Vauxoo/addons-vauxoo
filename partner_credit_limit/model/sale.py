@@ -29,6 +29,10 @@ class SaleOrder(models.Model):
         related='partner_id.overdue_payments_ids',
         string='Partner Overdue Payments Items',
         readonly=True)
+    partner_pending_payments_ids = fields.One2many(
+        related='partner_id.pending_payments_ids',
+        string='Partner Pending Payments Items',
+        readonly=True)
     partner_overdue_amount = fields.Float(
         related='partner_id.overdue_amount',
         string='Partner Overdue Amount',
