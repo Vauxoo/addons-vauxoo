@@ -53,20 +53,22 @@ class SaleOrder(models.Model):
             if partner.allowed_sale:
                 return True
             else:
-                msg = 'The Sale order pass to state of Exception Credit.' + \
-                    '\nThe partner %s:' % (partner.name)
+                msg = _('<div><p>The Sale order pass to state of '
+                        'Exception Credit.\n '
+                        '<br>The partner %s:') % (partner.name)
                 if partner.credit_overloaded:
-                    msg += ('\nHave exceeded the credit limit.'
-                            '\nThe credit available is $%s'
-                            '\nAnd the credit is being requested is $%s') % \
+                    msg += _('\n<br><br>Have exceeded the credit limit.'
+                             '\n<br>The credit available is $%s'
+                             '\n<br>And the credit is being'
+                             ' requested is $%s') % \
                         (str((partner.credit_limit - partner.credit)),
                          str(so.amount_total))
                 if partner.overdue_credit:
                     max_date = max(self.partner_overdue_payments_ids.mapped(
                         'date_maturity'))
-                    msg += ('\nIt has the overdue payment period.'
-                            '\nThe expiration date was %s, '
-                            'the amount payable is: $%s') % \
+                    msg += _('\n<br><br>It has the overdue payment period.'
+                             '\n<br>The expiration date was %s, '
+                             '<br>the amount payable is: $%s') % \
                         (max_date, str(partner.credit))
-                message = _(msg)
-                self.message_post(subject="Exception Credit", body=message)
+                message = msg
+                self.message_post(subject=_("Exception Credit"), body=message)
