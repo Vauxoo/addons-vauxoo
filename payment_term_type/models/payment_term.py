@@ -43,7 +43,7 @@ class AccountPaymentTerm(models.Model):
         """
         key_payment = "account.payment_term_type"
         payment_type = self.env["ir.config_parameter"].get_param(
-            key_payment, default='bdp')
+            key_payment, default='bqp')
         for record in self:
             if payment_type == 'bqp':
                 record.payment_type = 'cash'
