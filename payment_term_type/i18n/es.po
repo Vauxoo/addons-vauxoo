@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 21:50+0000\n"
-"PO-Revision-Date: 2015-08-26 21:50+0000\n"
+"POT-Creation-Date: 2016-04-13 17:26+0000\n"
+"PO-Revision-Date: 2016-04-13 17:26+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,47 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: payment_term_type
+#: help:account.config.settings,payment_type:0
+msgid "*bqp.- Based on quantity of payments\n"
+"Payments terms will be considered type: \n"
+" 'Cash Payment'- when the payments have been covered in just one exhibition. without matter the date of payment \n"
+" 'Credit Payment'- when the payments will be covered in just two or more exhibitions (partialities). \n"
+"*bdp.- Based on date of payments\n"
+"Payments terms will be considered type: \n"
+" 'Cash Payment'- when the payments have been covered in just one exhibition, in the same day that the  sale order be confirmed.\n"
+" 'Credit Payment'- when the payments will be covered in just one or more exhibitions, but the payments will be done in a different day that the sale order confirmation day."
+msgstr "*bqp.- Basado en la cantidad de pagos\n"
+"Los Términos de pago serán considerados de tipo: \n"
+" 'Pago de Contado'- Cuando los pagos sean cubiertos en solo una exhibición. Sin importar el día del pago. \n"
+" 'Pago a Crédito'- Cuando los pagos sean cubiertos en solo dos o más  exhibiciones (parcialidades). \n"
+"*bdp.- Basado en la fecha de pago\n"
+"Los Términos de pago serán considerados de tipo: \n"
+" 'Pago de Contado'- Cuando los pagos sean cubiertos en solo una exhibición, en el mismo día que la orden de venta fue confirmada. \n"
+" 'Pago a Crédito'- Cuando los pagos sean cubiertos en solo dos o más  exhibiciones pero los pagos serán echos en un día diferente que el día de confirmación de la orden de venta. \n"
+
+#. module: payment_term_type
+#: selection:account.config.settings,payment_type:0
+msgid "Based on date of payments"
+msgstr "Basado en la fecha de pagos"
+
+#. module: payment_term_type
+#: selection:account.config.settings,payment_type:0
+msgid "Based on quantity of payments"
+msgstr "Basado en la cantidad de pagos"
+
+#. module: payment_term_type
 #: selection:account.payment.term,payment_type:0
-#: code:addons/payment_term_type/models/payment_term.py:51
+#: code:addons/payment_term_type/models/payment_term.py:60
 #, python-format
 msgid "Cash"
 msgstr "Contado"
 
 #. module: payment_term_type
 #: selection:account.payment.term,payment_type:0
-#: code:addons/payment_term_type/models/payment_term.py:50
+#: code:addons/payment_term_type/models/payment_term.py:59
 #, python-format
 msgid "Credit"
-msgstr "Credito"
+msgstr "Crédito"
 
 #. module: payment_term_type
 #: model:ir.model,name:payment_term_type.model_account_payment_term
@@ -35,8 +64,22 @@ msgid "Payment Term"
 msgstr "Termino de Pago"
 
 #. module: payment_term_type
+#: model:account.payment.term,name:payment_term_type.payment_term_cash
+msgid "Payment Term Cash"
+msgstr "Término de Pago de Contado"
+
+#. module: payment_term_type
+#: model:account.payment.term,name:payment_term_type.payment_term_credit
+msgid "Payment Term credit"
+msgstr "Término de Pago a Cŕedito"
+
+#. module: payment_term_type
 #: field:account.payment.term,payment_type:0
 msgid "Payment Type"
 msgstr "Tipo de pago"
 
+#. module: payment_term_type
+#: field:account.config.settings,payment_type:0
+msgid "Payments terms"
+msgstr "Términos de PAgo"
 
