@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* email_template_att_dinamic
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-14 16:39+0000\n"
+"PO-Revision-Date: 2016-04-14 16:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: email_template_att_dinamic
+#: field:email.template,att_default:0
+msgid "Add attachment"
+msgstr "Add attachment"
+
+#. module: email_template_att_dinamic
+#: field:email.template,att_other_field:0
+msgid "Add attachment from other filed"
+msgstr "Add attachment from other filed"
+
+#. module: email_template_att_dinamic
+#: help:email.template,att_default:0
+msgid "Add attachment of record by default"
+msgstr "Add attachment of record by default"
+
+#. module: email_template_att_dinamic
+#: model:ir.model,name:email_template_att_dinamic.model_email_template
+msgid "Email Templates"
+msgstr "Plantillas de correo electrónico"
+
+#. module: email_template_att_dinamic
+#: model:ir.model,name:email_template_att_dinamic.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Asistente de creación de correo-e"
+
+#. module: email_template_att_dinamic
+#: help:email.template,att_other_field:0
+msgid "specify from which fields are to get attachments (only fields with relation to ir.attachment)"
+msgstr "specify from which fields are to get attachments (only fields with relation to ir.attachment)"
+
