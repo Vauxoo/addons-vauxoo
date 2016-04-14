@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name": "Account Move Nonzero",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Localization",
     "website": "http://vauxoo.com",

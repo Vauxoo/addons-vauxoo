@@ -26,7 +26,7 @@
 
 {
     'name': 'Stock Quants Menu',
-    'version': '1.0',
+    'version': '8.0.0.1.0',
     'author': 'Vauxoo',
     'category': '',
     'depends': [

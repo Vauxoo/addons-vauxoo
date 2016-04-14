@@ -26,7 +26,7 @@
 {
     "name": "Purchase Incoming Quantity",
     "summary": "Differentiate the Purchase Virtual Incoming Inventory",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "license": "AGPL-3",
     "website": "http://www.vauxoo.com/",
