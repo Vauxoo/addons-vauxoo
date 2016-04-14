@@ -4,7 +4,7 @@
     'category': 'website',
     'summary': 'This module enables RSS on Products',
     'website': 'http://vauxoo.com',
-    'version': '1.6',
+    'version': '8.0.0.1.6',
     'author': 'Vauxoo',
     'license': 'LGPL-3',
     'depends': [

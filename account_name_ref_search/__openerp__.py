@@ -22,7 +22,7 @@
 #"license" : "AGPL-3",
 {
     "name": "Add the Name and referenced in the view search account.move.line model",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",

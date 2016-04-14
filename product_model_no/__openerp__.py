@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Product Model Number",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Sales",
     "website": "http://www.vauxoo.com/",

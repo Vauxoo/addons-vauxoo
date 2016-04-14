@@ -4,7 +4,7 @@
     'category': 'website',
     'summary': 'Direct confirmation of SO',
     'website': 'http://vauxoo.com',
-    'version': '1.1',
+    'version': '8.0.0.1.1',
     'author': 'Vauxoo',
     'license': 'AGPL-3',
     'depends': [
