@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Website Product Filters",
-    "version": "1.0",
+    "version": "8.0.0.1.0",
     "author": "Vauxoo",
     "category": "Website",
     "website": "http://www.vauxoo.com/",

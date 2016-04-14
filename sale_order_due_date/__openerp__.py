@@ -9,7 +9,7 @@
 ############################################################################
 {
     "name": "Sale Order Due Date",
-    "version": "1.0",
+    "version": "8.0.0.1.0",
     "author": "Vauxoo",
     "category": "Sale",
     "website": "http://www.vauxoo.com/",

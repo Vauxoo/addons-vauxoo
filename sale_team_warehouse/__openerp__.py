@@ -12,7 +12,7 @@ realted field the correct default warehuse.
     'website': "http://www.vauxoo.com",
     'license': 'AGPL-3',
     'category': '',
-    'version': '0.1',
+    'version': '8.0.0.0.1',
     'depends': [
         # We must respect the "sequence" now due to demo data in testing
         # process may fail unspectly.

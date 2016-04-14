@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Update amount base tax in account move line",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "",
