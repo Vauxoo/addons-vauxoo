@@ -662,7 +662,9 @@ class AcceptabilityCriteria(osv.Model):
             type='char',
             string='US AC #',
             help='User Story and Acceptability Criteria Numbers',
-            store=True),
+            store={'acceptability.criteria': (lambda s, c, u, i, ctx: i,
+                                             ['accep_crit_id', 'name'], 16)}
+        ),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
