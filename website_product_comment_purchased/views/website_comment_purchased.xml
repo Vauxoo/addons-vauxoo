@@ -5,6 +5,9 @@
             <xpath  expr="//div[@class='media-body oe_msg_content']" position="after">
                     <t t-if="message.comment_bought"><span class="label label-success">Customer bought the item</span></t>
             </xpath>
+            <xpath expr="//span[@t-field='message.author_id']" position="replace">
+                <span t-field="message.author_id.name"/>
+            </xpath>
         </template>
     </data>
 </openerp>
