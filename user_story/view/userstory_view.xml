@@ -233,6 +233,7 @@
                     </h1>
                     <group>
                         <field name="scenario"/>
+                        <field name="us_ac_numbers"/>
                         <field name="accepted"/>
                         <field name="development"/>
                         <field name="difficulty" invisible="1"/>
@@ -250,6 +251,7 @@
         <field name="arch" type="xml">
             <tree string="Acceptability Criteria">
                 <field name="id"/>
+                <field name="us_ac_numbers"/>
                 <field name="name"/>
                 <field name="scenario"/>
                 <field name="accep_crit_id"/>
@@ -276,6 +278,7 @@
         <field name="arch" type="xml">
             <search string="Acceptability Criteria">
                 <group string="Filter">
+                    <field name="us_ac_numbers"/>
                     <field name="id"/>
                     <field name="name"/>
                     <field name="scenario"/>

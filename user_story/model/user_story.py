@@ -627,6 +627,21 @@ class AcceptabilityCriteria(osv.Model):
             res[ac.id] = ac.accep_crit_id.state
         return res
 
+    def _get_us_ca_numbers(self, cr, uid, ids, fieldname, arg,
+                           context=None):
+        ''' For acceptability.criteria,
+            returns the state of user.story to which belong '''
+        res = {}.fromkeys(ids)
+        for ac in self.browse(cr, uid, ids, context=context):
+            ac_number = ac.name.split(')')
+            if len(ac_number) > 1:
+                ac_number = ac_number[0]
+            else:
+                ac_number = ac.name[0:3]
+            res[ac.id] = \
+                'HU#' + str(ac.accep_crit_id.id) + ' CA#' + ac_number
+        return res
+
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False,
                             translate=True),
@@ -642,6 +657,12 @@ class AcceptabilityCriteria(osv.Model):
             string='User Story State',
             store={'user.story': (_get_ac_ids_by_us_ids, ['state'], 10)},
         ),
+        'us_ac_numbers': fields.function(
+            _get_us_ca_numbers,
+            type='char',
+            string='US AC #',
+            help='User Story and Acceptability Criteria Numbers',
+            store=True),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
