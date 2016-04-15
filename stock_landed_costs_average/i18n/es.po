@@ -1,0 +1,248 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_landed_costs_average
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-15 00:51+0000\n"
+"PO-Revision-Date: 2016-04-15 00:51+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:643
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:648
+#, python-format
+msgid " already out"
+msgstr " already out"
+
+#. module: stock_landed_costs_average
+#: view:attach.invoice.to.landed.costs.wizard:stock_landed_costs_average.attach_invoice_to_landed_costs_view
+msgid "Add"
+msgstr "Add"
+
+#. module: stock_landed_costs_average
+#: view:account.invoice:stock_landed_costs_average.landed_costs_extended_invoice_form
+msgid "Attach Invoice to Landed Costs"
+msgstr "Attach Invoice to Landed Costs"
+
+#. module: stock_landed_costs_average
+#: view:attach.invoice.to.landed.costs.wizard:stock_landed_costs_average.attach_invoice_to_landed_costs_view
+msgid "Attach invoice to an Landed Costs"
+msgstr "Attach invoice to an Landed Costs"
+
+#. module: stock_landed_costs_average
+#: model:ir.actions.act_window,name:stock_landed_costs_average.act_attach_invoice_to_landed_costs_wizard
+msgid "Attach to Landed Costs"
+msgstr "Attach to Landed Costs"
+
+#. module: stock_landed_costs_average
+#: model:product.template,name:stock_landed_costs_average.product_average_realtime_landed_cost_1_product_template
+msgid "Average Product to Valuate with Landed Costs"
+msgstr "Average Product to Valuate with Landed Costs"
+
+#. module: stock_landed_costs_average
+#: view:attach.invoice.to.landed.costs.wizard:stock_landed_costs_average.attach_invoice_to_landed_costs_view
+msgid "Cancel"
+msgstr "Cancel"
+
+#. module: stock_landed_costs_average
+#: field:attach.invoice.to.landed.costs.wizard,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: stock_landed_costs_average
+#: field:attach.invoice.to.landed.costs.wizard,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: stock_landed_costs_average
+#: field:attach.invoice.to.landed.costs.wizard,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:148
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:218
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:313
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:684
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:187
+#, python-format
+msgid "Gains on Inventory Deviation"
+msgstr "Gains on Inventory Deviation"
+
+#. module: stock_landed_costs_average
+#: view:stock.landed.cost:stock_landed_costs_average.view_stock_landed_cost_form
+msgid "Get Costs from Invoices"
+msgstr "Get Costs from Invoices"
+
+#. module: stock_landed_costs_average
+#: field:attach.invoice.to.landed.costs.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/attach_invoice_to_landed_costs_wizard.py:28
+#: code:addons/stock_landed_costs_average/model/attach_invoice_to_landed_costs_wizard.py:36
+#, python-format
+msgid "Invalid Procedure"
+msgstr "Invalid Procedure"
+
+#. module: stock_landed_costs_average
+#: model:ir.model,name:stock_landed_costs_average.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: stock_landed_costs_average
+#: field:stock.landed.cost,invoice_ids:0
+msgid "Invoices"
+msgstr "Invoices"
+
+#. module: stock_landed_costs_average
+#: help:stock.landed.cost,invoice_ids:0
+msgid "Invoices which contain items to be used as landed costs"
+msgstr "Invoices which contain items to be used as landed costs"
+
+#. module: stock_landed_costs_average
+#: field:account.invoice,stock_landed_cost_id:0
+#: view:attach.invoice.to.landed.costs.wizard:stock_landed_costs_average.attach_invoice_to_landed_costs_view
+#: field:attach.invoice.to.landed.costs.wizard,stock_landed_cost_id:0
+msgid "Landed Costs"
+msgstr "Landed Costs"
+
+#. module: stock_landed_costs_average
+#: model:ir.actions.act_window,name:stock_landed_costs_average.action_add_invoice_to_landed_costs
+msgid "Landed Costs Invoice"
+msgstr "Landed Costs Invoice"
+
+#. module: stock_landed_costs_average
+#: model:product.template,name:stock_landed_costs_average.service_standard_periodic_landed_cost_2_product_template
+msgid "Landed Costs Service (Ensurance)"
+msgstr "Landed Costs Service (Ensurance)"
+
+#. module: stock_landed_costs_average
+#: model:product.template,name:stock_landed_costs_average.service_standard_periodic_landed_cost_1_product_template
+msgid "Landed Costs Service (Freight)"
+msgstr "Landed Costs Service (Freight)"
+
+#. module: stock_landed_costs_average
+#: field:attach.invoice.to.landed.costs.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: stock_landed_costs_average
+#: field:attach.invoice.to.landed.costs.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: stock_landed_costs_average
+#: field:attach.invoice.to.landed.costs.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:174
+#, python-format
+msgid "Losses on Inventory Deviation"
+msgstr "Losses on Inventory Deviation"
+
+#. module: stock_landed_costs_average
+#: view:attach.invoice.to.landed.costs.wizard:stock_landed_costs_average.attach_invoice_to_landed_costs_view
+msgid "Note: It you already have an Landed Costs asociated to the Invoice, this wizard\n"
+"will replace the previews Landed Costs link and add a new relationship to the\n"
+"Landed Costs specified below. If you want to unlink an already related Landed\n"
+"Costs only needs to run this wizard with Landed Costs field no filled."
+msgstr "Note: It you already have an Landed Costs asociated to the Invoice, this wizard\n"
+"will replace the previews Landed Costs link and add a new relationship to the\n"
+"Landed Costs specified below. If you want to unlink an already related Landed\n"
+"Costs only needs to run this wizard with Landed Costs field no filled."
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:406
+#, python-format
+msgid "Only draft landed costs can be validated"
+msgstr "Only draft landed costs can be validated"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:219
+#, python-format
+msgid "Please configure Gain & Loss Inventory Valuation in your Company"
+msgstr "Please configure Gain & Loss Inventory Valuation in your Company"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:314
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:685
+#, python-format
+msgid "Please configure Stock Expense Account for product: %s."
+msgstr "Please configure Stock Expense Account for product: %s."
+
+#. module: stock_landed_costs_average
+#: field:stock.landed.cost,move_ids:0
+msgid "Production Moves"
+msgstr "Production Moves"
+
+#. module: stock_landed_costs_average
+#: help:stock.landed.cost,move_ids:0
+msgid "Production Moves to be increased in costs"
+msgstr "Production Moves to be increased in costs"
+
+#. module: stock_landed_costs_average
+#: model:product.template,name:stock_landed_costs_average.product_average_realtime_real_cost_1_product_template
+msgid "Real Product to Valuate with Landed Costs"
+msgstr "Real Product to Valuate with Landed Costs"
+
+#. module: stock_landed_costs_average
+#: model:ir.model,name:stock_landed_costs_average.model_stock_landed_cost
+msgid "Stock Landed Cost"
+msgstr "Costo en Destino de Existencia"
+
+#. module: stock_landed_costs_average
+#: model:product.template,name:stock_landed_costs_average.product_mouse_product_template
+msgid "Targus White Mouse"
+msgstr "Targus White Mouse"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:149
+#, python-format
+msgid "The selected picking does not contain any move that would be impacted by landed costs. Landed costs are only possible for products configured in real time valuation. Please make sure it is the case, or you selected the correct picking."
+msgstr "The selected picking does not contain any move that would be impacted by landed costs. Landed costs are only possible for products configured in real time valuation. Please make sure it is the case, or you selected the correct picking."
+
+#. module: stock_landed_costs_average
+#: view:stock.landed.cost:stock_landed_costs_average.view_stock_landed_cost_form
+msgid "Total Additional Landed Costs"
+msgstr "Total Additional Landed Costs"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/attach_invoice_to_landed_costs_wizard.py:37
+#, python-format
+msgid "You cannot change to another Landed Costs as the one you are try to link to (New One) is not in Draft State!"
+msgstr "You cannot change to another Landed Costs as the one you are try to link to (New One) is not in Draft State!"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/attach_invoice_to_landed_costs_wizard.py:29
+#, python-format
+msgid "You cannot change to another Landed Costs as the one your Invoice is linked to (Old One) is not in Draft State!"
+msgstr "You cannot change to another Landed Costs as the one your Invoice is linked to (Old One) is not in Draft State!"
+
+#. module: stock_landed_costs_average
+#: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:410
+#, python-format
+msgid "You cannot validate a landed cost which has no valid valuation adjustments lines. Did you click on Compute?"
+msgstr "You cannot validate a landed cost which has no valid valuation adjustments lines. Did you click on Compute?"
+
+#. module: stock_landed_costs_average
+#: view:attach.invoice.to.landed.costs.wizard:stock_landed_costs_average.attach_invoice_to_landed_costs_view
+msgid "or"
+msgstr "or"
+
