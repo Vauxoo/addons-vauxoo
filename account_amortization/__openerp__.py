@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Vauxoo Account Amortization",
-    "version": "8.0.0.6.1",
+    "version": "9.0.0.6.1",
     "author": "Vauxoo",
     "category": "Accounting & Finance",
     "website": "http://www.vauxoo.com",

@@ -24,7 +24,7 @@
 ############################################################################
 {
     "name": "User Story Messages",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://www.vauxoo.com/",

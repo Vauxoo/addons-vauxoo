@@ -21,7 +21,7 @@
 
 {
     'name': 'Automatic Product Attributes',
-    'version': '8.0.0.1.6',
+    'version': '9.0.0.1.6',
     'category': 'Tools',
     'author': 'Vauxoo',
     'license': 'AGPL-3',

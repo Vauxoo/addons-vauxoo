@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Stock Card",
-    "version": "8.0.2.0.0",
+    "version": "9.0.2.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",

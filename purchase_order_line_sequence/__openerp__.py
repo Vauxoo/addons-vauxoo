@@ -26,7 +26,7 @@
 {
     "name": "Purchase Order Line Sequence",
     "summary": "Enumerate purchase order lines",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",

@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Log of Terms and Conditions",
-    "version": "8.0.0.0.6",
+    "version": "9.0.0.0.6",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com",

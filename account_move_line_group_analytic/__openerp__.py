@@ -22,7 +22,7 @@
 #"license" : "AGPL-3",
 {
     "name": "Grouped by product,move_id y analytic in model account_move_line",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",

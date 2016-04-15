@@ -13,7 +13,7 @@
     "name": "Stock Move Tacking Number",
     "summary": "Add tracking number to the moves",
     "license": "LGPL-3",
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "category": "Stock",

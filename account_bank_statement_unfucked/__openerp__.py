@@ -22,7 +22,7 @@
 ##############################################################################
 {
     "name": "Account Bank Statement Unfucked",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
     "website": "http://www.vauxoo.com/",

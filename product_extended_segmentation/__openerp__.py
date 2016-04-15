@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name": "Product Extension to track Segmentation Cost",
-    "version": "8.0.1.6.0",
+    "version": "9.0.1.6.0",
     "author": "Vauxoo",
     'website': 'https://www.vauxoo.com',
     "license": "AGPL-3",

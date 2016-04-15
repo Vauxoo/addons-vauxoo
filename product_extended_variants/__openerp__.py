@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name": "Product extension to track sales and purchases from variants",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Vauxoo",
     'website': 'https://www.vauxoo.com',
     "license": "AGPL-3",

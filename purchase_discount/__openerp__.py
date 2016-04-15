@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Purchase order lines with discounts",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Tiny, Acysos S.L.",  # pylint: disable=C8101
     "category": "Generic Modules/Sales & Purchases",
     "website": "",

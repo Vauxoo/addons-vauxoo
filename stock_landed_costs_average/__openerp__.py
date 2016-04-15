@@ -2,7 +2,7 @@
 
 {
     "name": "Landed Costs for Avarage Costing Method",
-    "version": "8.0.1.1.0",
+    "version": "9.0.1.1.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",

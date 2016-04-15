@@ -22,7 +22,7 @@
 
 {
     'name': 'Supplier invoice - Quantity attachments',
-    'version': '8.0.0.1.6',
+    'version': '9.0.0.1.6',
     'author': 'Vauxoo',
     'license': 'AGPL-3',
     'category': '',

@@ -23,7 +23,7 @@
 ##########################################################################
 {
     "name": "Sale Double Validation",
-    "version": "8.0.0.0.6",
+    "version": "9.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Sales & Purchases",
     "website": "http://www.vauxoo.com",

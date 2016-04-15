@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Configure Account to partners",
-    "version": "8.0.0.0.6",
+    "version": "9.0.0.0.6",
     "author": "Vauxoo",
     "category": "Customization",
     "website": "http://vauxoo.com",

@@ -17,7 +17,7 @@
 #########################################################################
 {
     "name": "Product Image Gallery",
-    "version": "8.0.0.0.6",
+    "version": "9.0.0.0.6",
     "author": "Sharoon Thomas, Open Labs Business Solutions",  # pylint: disable=C8101
     "category": "Added functionality - Product Extension",
     "website": "http://openlabs.co.in/",

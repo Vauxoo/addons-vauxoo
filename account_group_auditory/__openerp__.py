@@ -26,7 +26,7 @@
 
 {
     "name": "Add Read-Only Accounting Group",
-    "version": "8.0.0.0.6",
+    "version": "9.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://www.vauxoo.com",

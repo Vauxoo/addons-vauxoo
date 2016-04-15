@@ -27,7 +27,7 @@
 #~ "security/ir.model.access.csv",
 {
     "name": "Product Price Visible",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Vauxoo",
     "category": "Product",
     "website": "www.vauxoo.com",

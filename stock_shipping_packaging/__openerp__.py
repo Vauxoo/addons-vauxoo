@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Stock Shipping Packaging",
-    "version": "8.0.0.0.6",
+    "version": "9.0.0.0.6",
     "author": "Vauxoo",
     "category": "Warehouse",
     "website": "http://vauxoo.com",

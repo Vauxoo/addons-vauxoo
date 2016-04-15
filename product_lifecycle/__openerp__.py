@@ -26,7 +26,7 @@
 {
     "name": "Product Lifecycle",
     "summary": "Manage replacement of obsolete products",
-    "version": "8.0.1.7.0",
+    "version": "9.0.1.7.0",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "license": "LGPL-3",

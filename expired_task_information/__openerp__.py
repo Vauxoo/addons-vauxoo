@@ -20,7 +20,7 @@
 #
 {
     "name": "Expired Task Information",
-    "version": "8.0.0.0.6",
+    "version": "9.0.0.0.6",
     "author": "Vauxoo",
     "category": "Project",
     "website": "http://www.vauxoo.com",

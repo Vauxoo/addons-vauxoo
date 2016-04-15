@@ -10,7 +10,7 @@
 ############################################################################
 {
     "name": "Purchase Third Validation",
-    "version": "8.0.0.1.0",
+    "version": "9.0.0.1.0",
     "author": "Vauxoo",
     "category": "Customization",
     "website": "http://www.vauxoo.com/",

@@ -10,7 +10,7 @@
 ############################################################################
 {
     "name": "Sale Block Cancellation",
-    "version": "8.0.0.1.0",
+    "version": "9.0.0.1.0",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://www.vauxoo.com/",

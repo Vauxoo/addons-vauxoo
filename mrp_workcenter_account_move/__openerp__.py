@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "MRP Workcenter Account Move",
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",

@@ -26,7 +26,7 @@
 {
     "name": "Stock Picking Log Message Transfer",
     "summary": "A message in log when the products are transfered",
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "license": "LGPL-3",

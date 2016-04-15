@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Account Move Folio",
-    "version": "8.0.0.1.6",
+    "version": "9.0.0.1.6",
     "author": "Vauxoo",
     "category": "Accounting & Finance",
     "website": "http://www.vauxoo.com/",

@@ -2,7 +2,7 @@
 
 {
     "name": "Account Move Line Production",
-    "version": "8.0.1.6.0",
+    "version": "9.0.1.6.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",
