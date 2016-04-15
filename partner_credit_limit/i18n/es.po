@@ -6,14 +6,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-05 23:18+0000\n"
-"PO-Revision-Date: 2016-04-05 23:18+0000\n"
+"POT-Creation-Date: 2016-04-14 01:11+0000\n"
+"PO-Revision-Date: 2016-04-14 01:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/model/sale.py:60
+#, python-format
+msgid "\n"
+"<br><br>Have exceeded the credit limit.\n"
+"<br>The credit available is $%s\n"
+"<br>And the credit is being requested is $%s"
+msgstr "\n"
+"<br><br>Ha excedido su límite de cŕedito.\n"
+"<br>El crédito disponible es $%s\n"
+"<br>Y el crédito que se esta solicitando es de $%s"
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/model/sale.py:69
+#, python-format
+msgid "\n"
+"<br><br>It has the overdue payment period.\n"
+"<br>The expiration date was %s, <br>the amount payable is: $%s"
+msgstr "\n"
+"<br><br>Tiene el plazo de pago vencido.\n"
+"<br>La fecha de vencimiento fue %s, <br>El monto a pagar es: $%s"
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/model/sale.py:56
+#, python-format
+msgid "<div><p>The Sale order pass to state of Exception Credit.\n"
+" <br>The partner %s:"
+msgstr "<div><p>La Orden de venta paso a estado Excepción de crédito.\n"
+" <br>El cliente %s:"
 
 #. module: partner_credit_limit
 #: field:res.company,payment_terms_ids:0
@@ -40,7 +70,8 @@ msgid "Can not validate the Invoice because Partner has late payments or has exc
 "Creadit Limit : %s"
 msgstr "No se puede validar la Factura porque el cliente tiene pagos atrasados o tiene un límite de crédito excedido.\n"
 "Por favor cubrir los pagos atrasados o revisar el límite de crédito.\n"
-"Límite de Crédito : %s"
+"Límite de Crédito : %s" 
+
 #. module: partner_credit_limit
 #: model:ir.model,name:partner_credit_limit.model_res_company
 msgid "Companies"
@@ -68,6 +99,12 @@ msgstr "Días de gracia para pago"
 #: view:sale.order:partner_credit_limit.view_sale_credit_details
 msgid "Details Credit"
 msgstr "Detalles del Crédito"
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/model/sale.py:74
+#, python-format
+msgid "Exception Credit"
+msgstr "Excepción de Crédito"
 
 #. module: partner_credit_limit
 #: help:res.partner,allowed_sale:0
@@ -132,9 +169,21 @@ msgid "Partner Overdue Amount"
 msgstr "Monto Vencido del Cliente"
 
 #. module: partner_credit_limit
+#: view:sale.order:partner_credit_limit.view_sale_credit_details
 #: field:sale.order,partner_overdue_payments_ids:0
 msgid "Partner Overdue Payments Items"
 msgstr "Pagos atrasados del Cliente"
+
+#. module: partner_credit_limit
+#: view:sale.order:partner_credit_limit.view_sale_credit_details
+#: field:sale.order,partner_pending_payments_ids:0
+msgid "Partner Pending Payments Items"
+msgstr "Pagos Pendientes del Cliente"
+
+#. module: partner_credit_limit
+#: view:sale.order:partner_credit_limit.view_sale_credit_details
+msgid "Payment Details"
+msgstr "Detalles de Pago"
 
 #. module: partner_credit_limit
 #: model:ir.model,name:partner_credit_limit.model_account_payment_term
@@ -148,15 +197,15 @@ msgid "Payment Terms"
 msgstr "Términos de Pago"
 
 #. module: partner_credit_limit
-#: view:sale.order:partner_credit_limit.view_sale_credit_details
-msgid "Payment deadline"
-msgstr "Tiempo límite de pago"
-
-#. module: partner_credit_limit
 #: help:res.partner,overdue_amount:0
 #: help:sale.order,partner_overdue_amount:0
 msgid "Payment has to be made for having reached the maturity date of the obligation."
 msgstr "El pago tiene que ser hecho por haber alcanzado la fecha de vencimiento de la obligación."
+
+#. module: partner_credit_limit
+#: field:res.partner,pending_payments_ids:0
+msgid "Pending payments ids"
+msgstr "Pagos pendientes"
 
 #. module: partner_credit_limit
 #: field:sale.order,requested_credit:0

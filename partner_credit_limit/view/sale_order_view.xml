@@ -20,10 +20,22 @@
                             <field name="partner_credit_available"/>
                             <field name="requested_credit"/>
                         </group>
-                        <group string="Payment deadline">
+                        <group string="Payment Details">
                             <field name="partner_overdue_amount"/>
-                            <field name="partner_overdue_payments_ids"
-                                nolabel="1" colspan="2">
+                            <separator string="Partner Overdue Payments Items" colspan="2"/>
+                            <field name="partner_overdue_payments_ids" nolabel="1" colspan="2">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="journal_id"/>
+                                    <field name="period_id"/>
+                                    <field name="date"/>
+                                    <field name="date_maturity"/>
+                                    <field name="ref"/>
+                                    <field name="debit"/>
+                                    <field name="amount_residual"/>
+                                </tree>
+                            </field>
+                            <separator string="Partner Pending Payments Items" colspan="2"/>
+                            <field name="partner_pending_payments_ids" nolabel="1" colspan="2">
                                 <tree create="false" edit="false" delete="false">
                                     <field name="journal_id"/>
                                     <field name="period_id"/>

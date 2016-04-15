@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Product Default Code Unique",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "",
     "website": "",

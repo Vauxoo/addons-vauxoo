@@ -25,7 +25,7 @@
 #
 {
     "name": "Report Multicompany",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Addons Vauxoo",
     "website": "http://vauxoo.com",

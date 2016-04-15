@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Convert Note to Task",
-    "version": "1.6.1",
+    "version": "8.0.1.6.1",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://vauxoo.com",

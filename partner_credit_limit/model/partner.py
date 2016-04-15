@@ -67,6 +67,11 @@ class ResPartner(models.Model):
         inverse_name='partner_id',
         compute="_get_overdue_credit")
 
+    pending_payments_ids = fields.One2many(
+        comodel_name="account.move.line",
+        inverse_name='partner_id',
+        compute="_get_overdue_credit")
+
     @api.multi
     def _get_credit_overloaded(self):
         for partner in self:
@@ -119,6 +124,9 @@ class ResPartner(models.Model):
             balance_maturity = debit_maturity - credit_maturity
             partner.overdue_amount = balance_maturity or 0
             partner.overdue_payments_ids = lines
+            pending_ids = [move.id for move in movelines
+                           if move.id not in lines]
+            partner.pending_payments_ids = pending_ids
 
             if balance_maturity > 0.0:
                 partner.overdue_credit = True
