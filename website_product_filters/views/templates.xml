@@ -4,12 +4,13 @@
         <template id="website_product_filters.range_detail" name="Range Details">
           <label style="margin: 0 5px;" t-att-class="'upper upper'+str(r.id)" t-att-id="r.id">
             <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
-            <span style="font-weight: normal; color: #009688;" t-field="r.lower" t-field-options='{
+            <span style="font-weight: normal;" t-esc="r.lower" t-esc-options='{
                                         "widget": "monetary",
                                         "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
                                         "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
                                     }'/>
-            - <span style="font-weight: normal; color: #009688;" t-field="r.upper" t-field-options='{
+            <span> - </span>
+            <span style="font-weight: normal;" t-esc="r.upper" t-esc-options='{
                                         "widget": "monetary",
                                         "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
                                         "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
