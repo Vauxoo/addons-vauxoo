@@ -1,0 +1,24 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_invoice_number
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-16 01:37+0000\n"
+"PO-Revision-Date: 2016-04-16 01:37+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_invoice_number
+#: view:account.invoice:account_invoice_number.account_invoice_form_inh_numberv6_01
+#: view:account.invoice:account_invoice_number.account_invoice_search_inh_numberv6_01
+#: view:account.invoice:account_invoice_number.account_invoice_tree_inh_numberv6_01
+msgid "True"
+msgstr "True"
+
