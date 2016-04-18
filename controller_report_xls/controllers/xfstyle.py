@@ -2,7 +2,7 @@
 
 from xlwt import XFStyle, Borders, Pattern, Font, Alignment
 
-excel_color_map = {
+EXCEL_COLOR_MAP = {
     'rgb(0, 0, 0)': -7,
     'rgba(0, 0, 0, 0)': -7,
     'rgb(255, 255, 255)': 2,
@@ -61,7 +61,7 @@ def css2excel(css):
 
     process_css = {
         'font-family': [fnt, "name", lambda x: x.split(",")[0]],
-        'color': [fnt, "colour_index", lambda x: excel_color_map.get(x, 0)+8],
+        'color': [fnt, "colour_index", lambda x: EXCEL_COLOR_MAP.get(x, 0)+8],
         'font-weight': [fnt, "bold", lambda x: x == 'bold'],
         'font-style': [fnt, "italic", lambda x: x == 'italic'],
         'text-align': [align, "horz",
@@ -75,7 +75,7 @@ def css2excel(css):
                                       'bottom': 'bottom',
                                       'justify': align.HORZ_JUSTIFIED}[x]],
         'background-color': [pattern, "pattern_fore_colour",
-                             lambda x: excel_color_map.get(x, -7)+8],
+                             lambda x: EXCEL_COLOR_MAP.get(x, -7)+8],
     }
     for i in css.keys():
         if i in process_css.keys():

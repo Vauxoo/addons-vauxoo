@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from xfstyle import css2excel
+from controller_report_xls.controllers.xfstyle import css2excel
 
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
@@ -102,7 +102,7 @@ def get_xls(html):
                             if cols:
                                 if cols[0].attrib.get('style', False):
                                     odoo_styles = get_odoo_style(odoo_styles,
-                                                                 td)
+                                                                 cols[0])
                                 for el in cols[0].iterdescendants():
                                     if el.tag == 'span':
                                         if el.attrib.get('style', False):
