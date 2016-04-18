@@ -1,10 +1,14 @@
-# coding: utf-8
+# -*- encoding: utf-8 -*-
+from . import xfstyle
+from xfstyle import css2excel
 
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
 import simplejson
 import lxml.html
+from lxml import etree
+from lxml.html import clean
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -13,32 +17,106 @@ import xlwt
 import StringIO
 
 
+
+
+def get_odoo_style(style, node):
+    style['background-color'] = 'rgb(0, 0, 0)'
+    if node.attrib.get('style', False):
+        style.update(dict(item.split(":") for item in node.attrib.get('style').split(";") if item != ''))
+    return style
+                            
 def get_xls(html):
-    wb = xlwt.Workbook()
+    wb = xlwt.Workbook(encoding='iso-8859-2', style_compression=2)
     ws = wb.add_sheet('Sheet 1')
-    elements = lxml.html.fromstring(html)
+    doc = lxml.html.fromstring(html)
+    cleaner = clean.Cleaner(style=False, links=True, add_nofollow=True, page_structure=False, safe_attrs_only=False)
+    elements = cleaner.clean_html(doc)
+    parser = etree.HTMLParser()
+    tree = etree.parse(StringIO.StringIO(html), parser)
+    root = tree.getroot()
     row = 0
-    for tag_id in ['table_header', 'table_body']:
-        table = elements.get_element_by_id(tag_id)
-        rows = table.findall(".//tr")
-        for tr in rows:
-            cols = tr.findall(".//td")
-            if not cols:
-                cols = tr.findall(".//th")
-            if not cols:
-                continue
-            col = 0
-            for td in cols:
-                text = "%s" % td.text_content().encode('ascii', 'ignore')
-                text = text.replace("&nbsp;", " ")
-                text = text.strip()
-                try:
-                    ws.row(row).set_cell_number(col, float(text))
-                except ValueError:
-                    ws.write(row, col, text)
-                col += 1
-            # update the row pointer AFTER a row has been printed
-            # this avoids the blank row at the top of your table
+    tables = root.xpath("//table")
+    if tables:
+        for table in tables:
+            heads = table.xpath("thead")
+            if not heads:
+                heads = table.xpath("table_header")
+            if heads:
+                for tag_id in heads:
+                    rows = tag_id.xpath("tr")
+                    if rows:
+                        for tr in rows:
+                            odoo_styles = get_odoo_style({}, tr)
+                            rowspan = 0
+                            if tr.attrib.get('rowspan', False):
+                                rowspan = int(td.attrib.get('rowspan')) - 1
+                            cols = tr.xpath("td")
+                            if not cols:
+                                cols = tr.xpath("th")
+                            if not cols:
+                                continue
+                            if cols:
+                                odoo_styles.update(get_odoo_style(odoo_styles, cols[0]))
+                            for k,v in odoo_styles.items():
+                                odoo_styles[k] = v.replace(' ', '')
+                            new_style = css2excel(odoo_styles)
+
+                            col = 0
+                            for td in cols:
+                                text = " ".join([x for x in td.itertext()]).strip().replace('\n', ' ').replace('\r', '').replace("&nbsp;", " ").replace("  ", "")
+                                colspan = 0
+                                if td.attrib.get('colspan', False):
+                                    colspan = int(td.attrib.get('colspan')) - 1
+                                try:
+                                    ws.write_merge(row, row + rowspan, col, col + colspan, float(text), new_style)
+                                except ValueError:
+                                    ws.write_merge(row, row + rowspan, col, col + colspan, text, new_style)
+                                col += colspan + 1
+                            # update the row pointer AFTER a row has been printed
+                            # this avoids the blank row at the top of your table
+                            row += rowspan + 1
+            body = table.xpath("tbody")
+            if not body:
+                body = table.xpath("table_body")
+            if body:
+                for tag_id in body:
+                    rows = tag_id.xpath("tr")
+                    if rows:
+                        for tr in rows:
+                            odoo_styles = get_odoo_style({}, tr)
+                            rowspan = 0
+                            if tr.attrib.get('rowspan', False):
+                                rowspan = int(td.attrib.get('rowspan')) - 1
+                            cols = tr.xpath("td")
+                            if not cols:
+                                cols = tr.xpath("th")
+                            if not cols:
+                                continue
+                            if cols:
+                                if cols[0].attrib.get('style', False):
+                                    odoo_styles = get_odoo_style(odoo_styles, td)                            
+                                for el in cols[0].iterdescendants():
+                                    if el.tag == 'span':
+                                        if el.attrib.get('style', False):
+                                            odoo_styles.update(get_odoo_style(odoo_styles, el))
+                            for k,v in odoo_styles.items():
+                                odoo_styles[k] = v.replace(' ', '')
+                            new_style = css2excel(odoo_styles)
+
+                            col = 0
+                            for td in cols:
+                                text = " ".join([x for x in td.itertext()]).strip().replace('\n', ' ').replace('\r', '').replace("&nbsp;", " ").replace("  ", "")
+                                colspan = 0
+                                if td.attrib.get('colspan', False):
+                                    colspan = int(td.attrib.get('colspan')) - 1
+                                try:
+                                    ws.write_merge(row, row + rowspan, col, col + colspan, float(text), new_style)
+                                except ValueError:
+                                    ws.write_merge(row, row + rowspan, col, col + colspan, text, new_style)
+                                col += colspan + 1
+                            # update the row pointer AFTER a row has been printed
+                            # this avoids the blank row at the top of your table
+                            row += rowspan + 1
             row += 1
     stream = StringIO.StringIO()
     wb.save(stream)
