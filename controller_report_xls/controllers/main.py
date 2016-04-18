@@ -10,27 +10,29 @@ import lxml.html
 from lxml import etree
 from lxml.html import clean
 
-import logging
-_logger = logging.getLogger(__name__)
-
 import xlwt
 import StringIO
 
-
+import logging
+_logger = logging.getLogger(__name__)
 
 
 def get_odoo_style(style, node):
     style['background-color'] = 'rgb(0, 0, 0)'
     if node.attrib.get('style', False):
-        style.update(dict(item.split(":") for item in node.attrib.get('style').split(";") if item != ''))
+        style.update(dict(item.split(":") for item in
+                     node.attrib.get('style').split(";") if item != ''))
     return style
-                            
+
+
+def text_adapt(text):
+    new_text = text.strip().replace('\n', ' ').replace('\r', '')
+    return new_text.replace("&nbsp;", " ").replace("  ", "")
+
+
 def get_xls(html):
     wb = xlwt.Workbook(style_compression=2)
     ws = wb.add_sheet('Sheet 1')
-    doc = lxml.html.fromstring(html)
-    cleaner = clean.Cleaner(style=False, links=True, add_nofollow=True, page_structure=False, safe_attrs_only=False)
-    elements = cleaner.clean_html(doc)
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO.StringIO(html), parser)
     root = tree.getroot()
@@ -56,24 +58,31 @@ def get_xls(html):
                             if not cols:
                                 continue
                             if cols:
-                                odoo_styles.update(get_odoo_style(odoo_styles, cols[0]))
-                            for k,v in odoo_styles.items():
+                                odoo_styles.update(get_odoo_style(odoo_styles,
+                                                                  cols[0]))
+                            for k, v in odoo_styles.items():
                                 odoo_styles[k] = v.replace(' ', '')
                             new_style = css2excel(odoo_styles)
 
                             col = 0
                             for td in cols:
-                                text = " ".join([x for x in td.itertext()]).strip().replace('\n', ' ').replace('\r', '').replace("&nbsp;", " ").replace("  ", "")
+                                text = text_adapt(
+                                    " ".join([x for x in td.itertext()]))
                                 colspan = 0
                                 if td.attrib.get('colspan', False):
                                     colspan = int(td.attrib.get('colspan')) - 1
                                 try:
-                                    ws.write_merge(row, row + rowspan, col, col + colspan, float(text), new_style)
+                                    ws.write_merge(row, row + rowspan, col,
+                                                   col + colspan, float(text),
+                                                   new_style)
                                 except ValueError:
-                                    ws.write_merge(row, row + rowspan, col, col + colspan, text, new_style)
+                                    ws.write_merge(row, row + rowspan, col,
+                                                   col + colspan, text,
+                                                   new_style)
                                 col += colspan + 1
-                            # update the row pointer AFTER a row has been printed
-                            # this avoids the blank row at the top of your table
+                            # update the row pointer AFTER a row has been
+                            # printed this avoids the blank row at the top
+                            #  of your table
                             row += rowspan + 1
             body = table.xpath("tbody")
             if not body:
@@ -94,28 +103,37 @@ def get_xls(html):
                                 continue
                             if cols:
                                 if cols[0].attrib.get('style', False):
-                                    odoo_styles = get_odoo_style(odoo_styles, td)                            
+                                    odoo_styles = get_odoo_style(odoo_styles,
+                                                                 td)
                                 for el in cols[0].iterdescendants():
                                     if el.tag == 'span':
                                         if el.attrib.get('style', False):
-                                            odoo_styles.update(get_odoo_style(odoo_styles, el))
-                            for k,v in odoo_styles.items():
+                                            odoo_styles.update(
+                                                get_odoo_style(odoo_styles,
+                                                               el))
+                            for k, v in odoo_styles.items():
                                 odoo_styles[k] = v.replace(' ', '')
                             new_style = css2excel(odoo_styles)
 
                             col = 0
                             for td in cols:
-                                text = " ".join([x for x in td.itertext()]).strip().replace('\n', ' ').replace('\r', '').replace("&nbsp;", " ").replace("  ", "")
+                                text = text_adapt(
+                                    " ".join([x for x in td.itertext()]))
                                 colspan = 0
                                 if td.attrib.get('colspan', False):
                                     colspan = int(td.attrib.get('colspan')) - 1
                                 try:
-                                    ws.write_merge(row, row + rowspan, col, col + colspan, float(text), new_style)
+                                    ws.write_merge(row, row + rowspan, col,
+                                                   col + colspan, float(text),
+                                                   new_style)
                                 except ValueError:
-                                    ws.write_merge(row, row + rowspan, col, col + colspan, text, new_style)
+                                    ws.write_merge(row, row + rowspan, col,
+                                                   col + colspan, text,
+                                                   new_style)
                                 col += colspan + 1
-                            # update the row pointer AFTER a row has been printed
-                            # this avoids the blank row at the top of your table
+                            # update the row pointer AFTER a row has been
+                            # printed this avoids the blank row at the top
+                            #  of your table
                             row += rowspan + 1
             row += 1
     stream = StringIO.StringIO()
