@@ -51,7 +51,7 @@ def get_xls(html):
                             odoo_styles = get_odoo_style({}, tr)
                             rowspan = 0
                             if tr.attrib.get('rowspan', False):
-                                rowspan = int(td.attrib.get('rowspan')) - 1
+                                rowspan = int(tr.attrib.get('rowspan')) - 1
                             cols = tr.xpath("td")
                             if not cols:
                                 cols = tr.xpath("th")
@@ -95,7 +95,7 @@ def get_xls(html):
                             odoo_styles = get_odoo_style({}, tr)
                             rowspan = 0
                             if tr.attrib.get('rowspan', False):
-                                rowspan = int(td.attrib.get('rowspan')) - 1
+                                rowspan = int(tr.attrib.get('rowspan')) - 1
                             cols = tr.xpath("td")
                             if not cols:
                                 cols = tr.xpath("th")
