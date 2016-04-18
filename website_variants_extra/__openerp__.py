@@ -9,10 +9,12 @@
     "depends": [
         "website_sale",
         "website_rate_product",  # In to add read reviews link
+        "website_product_comment_purchased",  # In to add read reviews link
         "website_product_filters",  # In to add share product icons
     ],
     "demo": [
         "demo/demo.xml",
+        "demo/website_settings.yml",
     ],
     "data": [
         "views/layout.xml",
