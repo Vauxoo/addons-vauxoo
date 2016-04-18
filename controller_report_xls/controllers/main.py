@@ -26,7 +26,7 @@ def get_odoo_style(style, node):
     return style
                             
 def get_xls(html):
-    wb = xlwt.Workbook(encoding='iso-8859-2', style_compression=2)
+    wb = xlwt.Workbook(style_compression=2)
     ws = wb.add_sheet('Sheet 1')
     doc = lxml.html.fromstring(html)
     cleaner = clean.Cleaner(style=False, links=True, add_nofollow=True, page_structure=False, safe_attrs_only=False)
