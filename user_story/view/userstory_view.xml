@@ -89,6 +89,7 @@
               <h1><label for="accep_crit_ids" string="4.- Acceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1">
                 <tree string="Acceptability Criteria" editable="bottom">
+                  <field name="sequence_ac"/>
                   <field name="name"/>
                   <field name="scenario"/>
                   <field name="accepted"/>
