@@ -56,7 +56,8 @@ class StockTansferDetails(models.TransientModel):
                     qty = tran_dict.get(item.product_id.id, 0) + item.quantity
                     tran_dict.update({item.product_id.id: qty})
                 inv_dict = {}
-                for item in invoice.invoice_line:
+                for item in invoice.invoice_line.filtered(
+                        lambda r: r.product_id.type in ('consu', 'product')):
                     qty = inv_dict.get(item.product_id.id, 0) + item.quantity
                     inv_dict.update({item.product_id.id: qty})
                 if inv_dict == tran_dict:
