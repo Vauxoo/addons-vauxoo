@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from ...controller_report_xls.controllers.xfstyle import css2excel
+from ..controllers.xfstyle import css2excel
 
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
 import simplejson
-import lxml
 from lxml import etree
 import cssutils
 from cssutils import parseString
@@ -32,7 +31,6 @@ def get_css_style(csstext, style):
 
 def get_odoo_style(html, style, node):
     if node.attrib.get('class', False):
-        styles = []
         for style_element in html.xpath('//style[@type="text/css"]'):
             styleclass = get_css_style(style_element.text,
                                        node.attrib.get('class'))
@@ -83,11 +81,14 @@ def write_cols_to_excel(ws, row, rowspan, nodes, html, styles):
 
 def text_adapt(text):
     new_text = text.strip().replace('\n', ' ').replace('\r', '')
-    return new_text.replace("&nbsp;", " ").replace("  ", "").replace(
-           "; ", ";").replace(": ", ":")
+    new_text = new_text.replace("&nbsp;", " ").replace("  ", "")
+    return new_text.replace("; ", ";").replace(": ", ":")
 
 
 def write_cell_to_excel(ws, row, rowspan, col, colspan, node, styles):
+    # Should implement if column have many classes with different styles,
+    # but write_rich_text doesn't support write to multiple rows and columns
+    # taken from rowspan and colspan
     cell_styles = css2excel(styles)
     rich_text = []
     for line in node.iter():
@@ -110,7 +111,6 @@ def get_xls(html):
     ws = wb.add_sheet('Sheet 1')
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO.StringIO(html), parser)
-    tree.write('output.xml', xml_declaration=True, encoding='utf-16')
     root = tree.getroot()
     html = root
     row = 0
