@@ -42,7 +42,7 @@ def get_odoo_style(html, style, node):
     return style
 
 
-def write_rows_to_excel(ws, row, nodes, html, styles):
+def write_rows_to_excel(sheet, row, nodes, html, styles):
     for tr in nodes:
         new_styles = get_odoo_style(html, styles, tr)
         rowspan = 0
@@ -54,12 +54,12 @@ def write_rows_to_excel(ws, row, nodes, html, styles):
         if not cols:
             continue
         if cols:
-            write_cols_to_excel(ws, row, rowspan, cols, html, new_styles)
+            write_cols_to_excel(sheet, row, rowspan, cols, html, new_styles)
         row += rowspan + 1
     return row
 
 
-def write_cols_to_excel(ws, row, rowspan, nodes, html, styles):
+def write_cols_to_excel(sheet, row, rowspan, nodes, html, styles):
     col = 0
     for td in nodes:
         new_styles = get_odoo_style(html, styles, td)
@@ -72,9 +72,9 @@ def write_cols_to_excel(ws, row, rowspan, nodes, html, styles):
         except ValueError:
             new_text = text
         cell_styles = css2excel(new_styles)
-        ws.write_merge(row, row+rowspan,
-                       col, col+colspan,
-                       new_text, cell_styles)
+        sheet.write_merge(row, row+rowspan,
+                          col, col+colspan,
+                          new_text, cell_styles)
         col += colspan + 1
     return True
 
@@ -85,7 +85,7 @@ def text_adapt(text):
     return new_text.replace("; ", ";").replace(": ", ":")
 
 
-def write_cell_to_excel(ws, row, rowspan, col, colspan, node, styles):
+def write_cell_to_excel(sheet, row, rowspan, col, colspan, node, styles):
     # Should implement if column have many classes with different styles,
     # but write_rich_text doesn't support write to multiple rows and columns
     # taken from rowspan and colspan
@@ -102,7 +102,7 @@ def write_cell_to_excel(ws, row, rowspan, col, colspan, node, styles):
             rich_text.append(new_text)
             text_style = css2excel(new_style)
             rich_text.append(text_style)
-    ws.write_rich_text(row, col, tuple(rich_text), cell_styles)
+    sheet.write_rich_text(row, col, tuple(rich_text), cell_styles)
     return True
 
 

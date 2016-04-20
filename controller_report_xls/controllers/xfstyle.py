@@ -176,16 +176,16 @@ def color_distance(rgb1, rgb2):
     # Adapted from Colour metric by Thiadmer Riemersma,
     # http://www.compuphase.com/cmetric.htm
     rmean = (rgb1[0] + rgb2[0]) / 2
-    r = rgb1[0] - rgb2[0]
-    g = rgb1[1] - rgb2[1]
-    b = rgb1[2] - rgb2[2]
-    distance = (((512 + rmean) * r * r) / 256)
-    distance += 4 * g * g
-    distance += (((767 - rmean) * b * b) / 256)
-    return  distance
+    rgbr = rgb1[0] - rgb2[0]
+    rgbg = rgb1[1] - rgb2[1]
+    rgbb = rgb1[2] - rgb2[2]
+    distance = (((512 + rmean) * rgbr * rgbr) / 256)
+    distance += 4 * rgbg * rgbg
+    distance += (((767 - rmean) * rgbb * rgbb) / 256)
+    return distance
 
 
-def HTMLColorToRGB(colorstring):
+def htmlcolortorgb(colorstring):
     """ convert #RRGGBB to an (R, G, B) tuple """
     colorstring = colorstring.strip()
     if colorstring[0] == '#':
@@ -198,26 +198,22 @@ def HTMLColorToRGB(colorstring):
         colorstring = ''.join([colorstring[0], colorstring[0], colorstring[1],
                                colorstring[1], colorstring[2], colorstring[2]])
 
-    (r, g, b) = (0, 0, 0)
+    (rgbr, rgbg, rgbb) = (0, 0, 0)
     if len(colorstring) == 6:
-        r, g, b = colorstring[:2], colorstring[2:4], colorstring[4:]
-        r, g, b = [int(n, 16) for n in (r, g, b)]
-    return (r, g, b)
+        rgbr, rgbg, rgbb = colorstring[:2], colorstring[2:4], colorstring[4:]
+        rgbr, rgbg, rgbb = [int(n, 16) for n in (rgbr, rgbg, rgbb)]
+    return (rgbr, rgbg, rgbb)
 
 
 def match_color_index(color):
     """Takes an "R,G,B" string or wx.Color and returns a matching xlwt
     color.
     """
-    color = HTMLColorToRGB(color)
+    color = htmlcolortorgb(color)
     if isinstance(color, int):
         return color
     if color:
-        if isinstance(color, basestring):
-            rgb = map(int, color.split(','))
-        else:
-            rgb = color
-        distances = [color_distance(rgb, x) for x in XLWT_COLORS]
+        distances = [color_distance(color, x) for x in XLWT_COLORS]
         result = distances.index(min(distances))
     return result
 
@@ -244,7 +240,7 @@ def css2excel(css):
                                       'bottom': 'bottom',
                                       'justify': align.VERT_JUSTIFIED}[x]],
         'background-color': [pattern, "pattern_fore_colour",
-                             lambda x: match_color_index(x)],
+                             lambda x: match_color_index(x.upper())],
     }
     for i in css.keys():
         if i in process_css.keys():
@@ -261,6 +257,5 @@ def css2excel(css):
     style.borders = borders
     style.pattern = pattern
     style.pattern.pattern = 1
-    style.pattern.SOLID_PATTERN
     style.alignment = align
     return style
