@@ -10,7 +10,7 @@
 ############################################################################
 {
     "name": "Partner Credit Limit",
-    "version": "8.0.0.1.0",
+    "version": "1.0",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",
@@ -24,9 +24,6 @@
         "view/invoice_workflow.xml",
         "view/sale_order_view.xml",
         "view/partner_view.xml",
-        "view/payment_term_sequence.xml",
-        "view/company_view.xml",
-        "security/res_groups.xml",
     ],
     "installable": True,
 }
