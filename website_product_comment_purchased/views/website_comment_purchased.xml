@@ -2,11 +2,12 @@
 <openerp>
     <data>
         <template id="discussion_purchased" inherit_id="website_sale.product_comment" active="False" customize_show="True" name="Bougth Item On Comments">
-            <xpath  expr="//div[@class='media-body oe_msg_content']" position="after">
-                    <t t-if="message.comment_bought"><span class="label label-success">Customer bought the item</span></t>
-            </xpath>
             <xpath expr="//span[@t-field='message.author_id']" position="replace">
                 <span t-field="message.author_id.name"/>
+            </xpath>
+            <xpath expr="//div[@class='media-body oe_msg']" position="attributes">
+                <attribute name="t-att-data-author-id">message.author_id.id</attribute>
+                <attribute name="t-att-data-product-id">product.id</attribute>
             </xpath>
         </template>
     </data>
