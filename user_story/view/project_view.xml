@@ -16,6 +16,10 @@
         <xpath expr="//field[@name='name']" position="attributes">
             <attribute name="class"></attribute>
         </xpath>
+
+        <xpath expr="//field[@name='work_ids']/tree" position="attributes">
+            <attribute name="editable">bottom</attribute>
+        </xpath>
         
       </field>
     </record>
