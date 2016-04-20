@@ -1,31 +1,108 @@
 # -*- coding: utf-8 -*-
 
-from controller_report_xls.controllers.xfstyle import css2excel
+from ...controller_report_xls.controllers.xfstyle import css2excel
 
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
 import simplejson
+import lxml
 from lxml import etree
-
+import cssutils
+from cssutils import parseString
 import xlwt
 import StringIO
 
+
 import logging
+cssutils.log.setLevel(logging.CRITICAL)
 _logger = logging.getLogger(__name__)
 
 
-def get_odoo_style(style, node):
-    style['background-color'] = 'rgb(0, 0, 0)'
+def get_css_style(csstext, style):
+    cssstyle = ""
+    if csstext:
+        cssnode = parseString(csstext)
+        stylesheet = cssnode.cssRules
+        for rule in stylesheet:
+            if rule.selectorText.replace(".", "") == style:
+                cssstyle = str(rule.style.cssText)
+    return cssstyle
+
+
+def get_odoo_style(html, style, node):
+    if node.attrib.get('class', False):
+        styles = []
+        for style_element in html.xpath('//style[@type="text/css"]'):
+            styleclass = get_css_style(style_element.text,
+                                       node.attrib.get('class'))
+            style.update(dict(item.split(":") for item in
+                         text_adapt(styleclass).split(";") if item != ''))
     if node.attrib.get('style', False):
         style.update(dict(item.split(":") for item in
                      node.attrib.get('style').split(";") if item != ''))
     return style
 
 
+def write_rows_to_excel(ws, row, nodes, html, styles):
+    for tr in nodes:
+        new_styles = get_odoo_style(html, styles, tr)
+        rowspan = 0
+        if tr.attrib.get('rowspan', False):
+            rowspan = int(tr.attrib.get('rowspan')) - 1
+        cols = tr.xpath("td")
+        if not cols:
+            cols = tr.xpath("th")
+        if not cols:
+            continue
+        if cols:
+            write_cols_to_excel(ws, row, rowspan, cols, html, new_styles)
+        row += rowspan + 1
+    return row
+
+
+def write_cols_to_excel(ws, row, rowspan, nodes, html, styles):
+    col = 0
+    for td in nodes:
+        new_styles = get_odoo_style(html, styles, td)
+        colspan = 0
+        if td.attrib.get('colspan', False):
+            colspan = int(td.attrib.get('colspan')) - 1
+        text = text_adapt(" ".join([x for x in td.itertext()]))
+        try:
+            new_text = float(text)
+        except ValueError:
+            new_text = text
+        cell_styles = css2excel(new_styles)
+        ws.write_merge(row, row+rowspan,
+                       col, col+colspan,
+                       new_text, cell_styles)
+        col += colspan + 1
+    return True
+
+
 def text_adapt(text):
     new_text = text.strip().replace('\n', ' ').replace('\r', '')
-    return new_text.replace("&nbsp;", " ").replace("  ", "")
+    return new_text.replace("&nbsp;", " ").replace("  ", "").replace(
+           "; ", ";").replace(": ", ":")
+
+
+def write_cell_to_excel(ws, row, rowspan, col, colspan, node, styles):
+    cell_styles = css2excel(styles)
+    rich_text = []
+    for line in node.iter():
+        text = text_adapt(" ".join([x for x in line.itertext()]))
+        try:
+            new_text = float(text)
+        except ValueError:
+            new_text = text
+        new_style = get_odoo_style(styles, line)
+        if new_text:
+            rich_text.append(new_text)
+            text_style = css2excel(new_style)
+            rich_text.append(text_style)
+    ws.write_rich_text(row, col, tuple(rich_text), cell_styles)
+    return True
 
 
 def get_xls(html):
@@ -33,106 +110,41 @@ def get_xls(html):
     ws = wb.add_sheet('Sheet 1')
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO.StringIO(html), parser)
+    tree.write('output.xml', xml_declaration=True, encoding='utf-16')
     root = tree.getroot()
+    html = root
     row = 0
     tables = root.xpath("//table")
     if tables:
         for table in tables:
-            heads = table.xpath("thead")
-            if not heads:
-                heads = table.xpath("table_header")
-            if heads:
-                for tag_id in heads:
-                    rows = tag_id.xpath("tr")
+            table_styles = {}
+            table_styles['background-color'] = '#FFFFFF'
+            table_styles = get_odoo_style(html, table_styles, table)
+            headers = table.xpath("thead")
+            if not headers:
+                headers = table.xpath("table_header")
+            if headers:
+                for header in headers:
+                    head_style = get_odoo_style(html, table_styles, header)
+                    rows = header.xpath("tr")
                     if rows:
-                        for tr in rows:
-                            odoo_styles = get_odoo_style({}, tr)
-                            rowspan = 0
-                            if tr.attrib.get('rowspan', False):
-                                rowspan = int(tr.attrib.get('rowspan')) - 1
-                            cols = tr.xpath("td")
-                            if not cols:
-                                cols = tr.xpath("th")
-                            if not cols:
-                                continue
-                            if cols:
-                                odoo_styles.update(get_odoo_style(odoo_styles,
-                                                                  cols[0]))
-                            for k, v in odoo_styles.items():
-                                odoo_styles[k] = v.replace(' ', '')
-                            new_style = css2excel(odoo_styles)
-
-                            col = 0
-                            for td in cols:
-                                text = text_adapt(
-                                    " ".join([x for x in td.itertext()]))
-                                colspan = 0
-                                if td.attrib.get('colspan', False):
-                                    colspan = int(td.attrib.get('colspan')) - 1
-                                try:
-                                    ws.write_merge(row, row + rowspan, col,
-                                                   col + colspan, float(text),
-                                                   new_style)
-                                except ValueError:
-                                    ws.write_merge(row, row + rowspan, col,
-                                                   col + colspan, text,
-                                                   new_style)
-                                col += colspan + 1
-                            # update the row pointer AFTER a row has been
-                            # printed this avoids the blank row at the top
-                            #  of your table
-                            row += rowspan + 1
-            body = table.xpath("tbody")
-            if not body:
-                body = table.xpath("table_body")
-            if body:
-                for tag_id in body:
-                    rows = tag_id.xpath("tr")
+                        row = write_rows_to_excel(ws, row, rows,
+                                                  html, head_style)
+            bodies = table.xpath("tbody")
+            if not bodies:
+                bodies = table.xpath("table_body")
+            if bodies:
+                for body in bodies:
+                    body_style = get_odoo_style(html, table_styles, body)
+                    rows = body.xpath("tr")
                     if rows:
-                        for tr in rows:
-                            odoo_styles = get_odoo_style({}, tr)
-                            rowspan = 0
-                            if tr.attrib.get('rowspan', False):
-                                rowspan = int(tr.attrib.get('rowspan')) - 1
-                            cols = tr.xpath("td")
-                            if not cols:
-                                cols = tr.xpath("th")
-                            if not cols:
-                                continue
-                            if cols:
-                                if cols[0].attrib.get('style', False):
-                                    odoo_styles = get_odoo_style(odoo_styles,
-                                                                 cols[0])
-                                for el in cols[0].iterdescendants():
-                                    if el.tag == 'span':
-                                        if el.attrib.get('style', False):
-                                            odoo_styles.update(
-                                                get_odoo_style(odoo_styles,
-                                                               el))
-                            for k, v in odoo_styles.items():
-                                odoo_styles[k] = v.replace(' ', '')
-                            new_style = css2excel(odoo_styles)
-
-                            col = 0
-                            for td in cols:
-                                text = text_adapt(
-                                    " ".join([x for x in td.itertext()]))
-                                colspan = 0
-                                if td.attrib.get('colspan', False):
-                                    colspan = int(td.attrib.get('colspan')) - 1
-                                try:
-                                    ws.write_merge(row, row + rowspan, col,
-                                                   col + colspan, float(text),
-                                                   new_style)
-                                except ValueError:
-                                    ws.write_merge(row, row + rowspan, col,
-                                                   col + colspan, text,
-                                                   new_style)
-                                col += colspan + 1
-                            # update the row pointer AFTER a row has been
-                            # printed this avoids the blank row at the top
-                            #  of your table
-                            row += rowspan + 1
+                        row = write_rows_to_excel(ws, row, rows,
+                                                  html, body_style)
+            if not headers and not bodies:
+                rows = table.xpath("tr")
+                if rows:
+                    row = write_rows_to_excel(ws, row, rows,
+                                              html, table_styles)
             row += 1
     stream = StringIO.StringIO()
     wb.save(stream)

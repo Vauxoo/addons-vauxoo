@@ -29,6 +29,9 @@
     "depends": [
         "report",
     ],
+    "external_dependencies": {
+        'python': ['cssutils']
+    },
     "demo": [],
     "data": [
     ],
