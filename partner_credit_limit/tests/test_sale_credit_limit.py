@@ -65,7 +65,7 @@ class TestSalesCreditLimits(TransactionCase):
             ('type', '=', 'notification'),
         ])
         self.assertIn(
-            'The Sale order pass to state of Exception Credit.',
+            'The Sale order pass to state of <b>Exception Credit</b>.',
             mail_message.body)
 
     def test_partner_with_late_payments(self):
@@ -120,5 +120,6 @@ class TestSalesCreditLimits(TransactionCase):
             ('subject', '=', 'Exception Credit'),
             ('type', '=', 'notification')
         ])
-        self.assertIn('The Sale order pass to state of Exception Credit.',
-                      mail_message.body)
+        self.assertIn(
+            'The Sale order pass to state of <b>Exception Credit</b>.',
+            mail_message.body)

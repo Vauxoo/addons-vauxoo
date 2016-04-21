@@ -94,11 +94,7 @@ class ResPartner(models.Model):
             new_credit = partner.credit + new_amount_currency
             credit = partner.credit if partner.credit > 0 else 0
             partner.credit_available = partner.credit_limit - credit
-
-            if new_credit > partner.credit_limit:
-                partner.credit_overloaded = True
-            else:
-                partner.credit_overloaded = False
+            partner.credit_overloaded = new_credit > partner.credit_limit
 
     @api.multi
     def _get_overdue_credit(self):
@@ -127,11 +123,7 @@ class ResPartner(models.Model):
             pending_ids = [move.id for move in movelines
                            if move.id not in lines]
             partner.pending_payments_ids = pending_ids
-
-            if balance_maturity > 0.0:
-                partner.overdue_credit = True
-            else:
-                partner.overdue_credit = False
+            partner.overdue_credit = balance_maturity > 0.0
 
     def get_limit_date(self, line):
         if line.date_maturity and line.partner_id.grace_payment_days:
@@ -153,7 +145,5 @@ class ResPartner(models.Model):
     @api.multi
     def get_allowed_sale(self):
         for partner in self:
-            if not partner.credit_overloaded and not partner.overdue_credit:
-                partner.allowed_sale = True
-            else:
-                partner.allowed_sale = False
+            partner.allowed_sale = not partner.credit_overloaded \
+                and not partner.overdue_credit

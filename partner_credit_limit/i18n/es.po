@@ -20,30 +20,30 @@ msgstr ""
 #, python-format
 msgid "\n"
 "<br><br>Have exceeded the credit limit.\n"
-"<br>The credit available is $%s\n"
-"<br>And the credit is being requested is $%s"
+"<br>The credit available is <b>$%s</b>\n"
+"<br>And the credit is being requested is <b>$%s</b>"
 msgstr "\n"
 "<br><br>Ha excedido su límite de cŕedito.\n"
-"<br>El crédito disponible es $%s\n"
-"<br>Y el crédito que se esta solicitando es de $%s"
+"<br>El crédito disponible es <b>$%s</b>\n"
+"<br>Y el crédito que se esta solicitando es de <b>$%s</b>"
 
 #. module: partner_credit_limit
 #: code:addons/partner_credit_limit/model/sale.py:69
 #, python-format
 msgid "\n"
 "<br><br>It has the overdue payment period.\n"
-"<br>The expiration date was %s, <br>the amount payable is: $%s"
+"<br>The expiration date was <b>%s</b>, <br>the amount payable is: <b>$%s</b>"
 msgstr "\n"
 "<br><br>Tiene el plazo de pago vencido.\n"
-"<br>La fecha de vencimiento fue %s, <br>El monto a pagar es: $%s"
+"<br>La fecha de vencimiento fue <b>%s</b>, <br>El monto a pagar es: <b>$%s</b>"
 
 #. module: partner_credit_limit
 #: code:addons/partner_credit_limit/model/sale.py:56
 #, python-format
-msgid "<div><p>The Sale order pass to state of Exception Credit.\n"
-" <br>The partner %s:"
-msgstr "<div><p>La Orden de venta paso a estado Excepción de crédito.\n"
-" <br>El cliente %s:"
+msgid "<div><p>The Sale order pass to state of <b>Exception Credit</b>.\n"
+" <br>The partner <b>%s</b>:"
+msgstr "<div><p>La Orden de venta paso a estado <b>Excepción de crédito</b>.\n"
+" <br>El cliente <b>%s</b>:"
 
 #. module: partner_credit_limit
 #: field:res.company,payment_terms_ids:0

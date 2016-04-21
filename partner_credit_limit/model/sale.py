@@ -9,6 +9,8 @@
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
 from openerp import models, fields, api, _
+from openerp.tools import float_round, float_repr
+from datetime import datetime
 
 
 class SaleOrder(models.Model):
@@ -54,21 +56,34 @@ class SaleOrder(models.Model):
                 return True
             else:
                 msg = _('<div><p>The Sale order pass to state of '
-                        'Exception Credit.\n '
-                        '<br>The partner %s:') % (partner.name)
+                        '<b>Exception Credit</b>.\n '
+                        '<br>The partner <b>%s</b>:') % (partner.name)
                 if partner.credit_overloaded:
+                    available_credit = float_repr(
+                        float_round(
+                            partner.credit_limit - partner.credit,
+                            precision_digits=2),
+                        precision_digits=2)
+                    requested_credit = float_repr(
+                        float_round(so.amount_total, precision_digits=2),
+                        precision_digits=2)
                     msg += _('\n<br><br>Have exceeded the credit limit.'
-                             '\n<br>The credit available is $%s'
+                             '\n<br>The credit available is <b>$%s</b>'
                              '\n<br>And the credit is being'
-                             ' requested is $%s') % \
-                        (str((partner.credit_limit - partner.credit)),
-                         str(so.amount_total))
+                             ' requested is <b>$%s</b>') % \
+                        (available_credit, requested_credit)
                 if partner.overdue_credit:
                     max_date = max(self.partner_overdue_payments_ids.mapped(
                         'date_maturity'))
+                    max_date = datetime.strptime(
+                        max_date, '%Y-%m-%d').strftime('%d-%m-%Y')
+                    overdue_amount = float_repr(
+                        float_round(self.partner_overdue_amount,
+                                    precision_digits=2),
+                        precision_digits=2)
                     msg += _('\n<br><br>It has the overdue payment period.'
-                             '\n<br>The expiration date was %s, '
-                             '<br>the amount payable is: $%s') % \
-                        (max_date, str(partner.credit))
+                             '\n<br>The expiration date was <b>%s</b>, '
+                             '<br>the amount payable is: <b>$%s</b>') % \
+                        (max_date, overdue_amount)
                 message = msg
                 self.message_post(subject=_("Exception Credit"), body=message)
