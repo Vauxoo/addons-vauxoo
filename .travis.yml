@@ -37,6 +37,8 @@ install:
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
   - wget https://raw.githubusercontent.com/vauxoo-dev/pylint-conf/master-dummy-translation-errors-dev-lescobarvx/conf/pylint_vauxoo_light_pr.cfg -O ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint.cfg
+  - git clone --single-branch --depth=1 https://github.com/vauxoo-dev/pylint-odoo.git -b master-oca-traslation-errors-dev-lescobarvx ${HOME}/tools/pylint-odoo
+  - (cd ${HOME}/tools/pylint-odoo && pip install --upgrade .)
 
 script:
   # get modules changed and set environment variable INCLUDE_LINT
