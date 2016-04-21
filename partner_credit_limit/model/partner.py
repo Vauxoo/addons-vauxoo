@@ -51,11 +51,7 @@ class ResPartner(models.Model):
                 new_amount, company.currency_id)
 
             new_credit = partner.credit + new_amount_currency
-
-            if new_credit > partner.credit_limit:
-                partner.credit_overloaded = True
-            else:
-                partner.credit_overloaded = False
+            partner.credit_overloaded = new_credit > partner.credit_limit
 
     @api.multi
     def _get_overdue_credit(self):
@@ -87,16 +83,10 @@ class ResPartner(models.Model):
                 credit_maturity += line.credit
                 # credit += line.credit
             balance_maturity = debit_maturity - credit_maturity
-
-            if balance_maturity > 0.0:
-                partner.overdue_credit = True
-            else:
-                partner.overdue_credit = False
+            partner.overdue_credit = balance_maturity > 0.0
 
     @api.multi
     def get_allowed_sale(self):
         for partner in self:
-            if not partner.credit_overloaded and not partner.overdue_credit:
-                partner.allowed_sale = True
-            else:
-                partner.allowed_sale = False
+            partner.allowed_sale = not partner.credit_overloaded and \
+                not partner.overdue_credit
