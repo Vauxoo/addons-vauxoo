@@ -42,7 +42,39 @@ def get_odoo_style(html, style, node):
     return style
 
 
-def write_rows_to_excel(sheet, row, nodes, html, styles):
+def write_tables_to_excel(sheet, row, col, tables, html, table_styles):
+    for table in tables:
+        table_styles = get_odoo_style(html, table_styles, table)
+        headers = table.xpath("thead")
+        if not headers:
+            headers = table.xpath("table_header")
+        if headers:
+            for header in headers:
+                head_style = get_odoo_style(html, table_styles, header)
+                rows = header.xpath("tr")
+                if rows:
+                    row = write_rows_to_excel(sheet, row, col, rows,
+                                              html, head_style)
+        bodies = table.xpath("tbody")
+        if not bodies:
+            bodies = table.xpath("table_body")
+        if bodies:
+            for body in bodies:
+                body_style = get_odoo_style(html, table_styles, body)
+                rows = body.xpath("tr")
+                if rows:
+                    row = write_rows_to_excel(sheet, row, col, rows,
+                                              html, body_style)
+        if not headers and not bodies:
+            rows = table.xpath("tr")
+            if rows:
+                row = write_rows_to_excel(sheet, row, col, rows,
+                                          html, table_styles)
+        row += 1
+    return row
+
+
+def write_rows_to_excel(sheet, row, col, nodes, html, styles):
     for tr in nodes:
         new_styles = get_odoo_style(html, styles, tr)
         rowspan = 0
@@ -54,29 +86,36 @@ def write_rows_to_excel(sheet, row, nodes, html, styles):
         if not cols:
             continue
         if cols:
-            write_cols_to_excel(sheet, row, rowspan, cols, html, new_styles)
+            row = write_cols_to_excel(sheet, row, col, rowspan, cols,
+                                      html, new_styles)
         row += rowspan + 1
     return row
 
 
-def write_cols_to_excel(sheet, row, rowspan, nodes, html, styles):
-    col = 0
+def write_cols_to_excel(sheet, row, col, rowspan, nodes, html, styles):
     for td in nodes:
         new_styles = get_odoo_style(html, styles, td)
-        colspan = 0
-        if td.attrib.get('colspan', False):
-            colspan = int(td.attrib.get('colspan')) - 1
-        text = text_adapt(" ".join([x for x in td.itertext()]))
-        try:
-            new_text = float(text)
-        except ValueError:
-            new_text = text
-        cell_styles = css2excel(new_styles)
-        sheet.write_merge(row, row+rowspan,
-                          col, col+colspan,
-                          new_text, cell_styles)
-        col += colspan + 1
-    return True
+        # Check tables in column
+        tables = td.xpath("table")
+        if tables:
+            row = write_tables_to_excel(sheet, row, col, tables,
+                                        html, new_styles)
+        else:
+            new_text = ""
+            colspan = 0
+            if td.attrib.get('colspan', False):
+                colspan = int(td.attrib.get('colspan')) - 1
+            text = text_adapt(" ".join([x for x in td.itertext()]))
+            try:
+                new_text = float(text)
+            except ValueError:
+                new_text = text
+            cell_styles = css2excel(new_styles)
+            sheet.write_merge(row, row+rowspan,
+                              col, col+colspan,
+                              new_text, cell_styles)
+            col += colspan + 1
+    return row
 
 
 def text_adapt(text):
@@ -111,41 +150,25 @@ def get_xls(html):
     ws = wb.add_sheet('Sheet 1')
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO.StringIO(html), parser)
+    tree.write("output.xml")
     root = tree.getroot()
     html = root
     row = 0
-    tables = root.xpath("//table")
+    col = 0
+    table_styles = {}
+    table_styles['background-color'] = '#FFFFFF'
+    # Check header tables
+    tables = root.xpath("//div[@class=\"header\"]/table")
     if tables:
-        for table in tables:
-            table_styles = {}
-            table_styles['background-color'] = '#FFFFFF'
-            table_styles = get_odoo_style(html, table_styles, table)
-            headers = table.xpath("thead")
-            if not headers:
-                headers = table.xpath("table_header")
-            if headers:
-                for header in headers:
-                    head_style = get_odoo_style(html, table_styles, header)
-                    rows = header.xpath("tr")
-                    if rows:
-                        row = write_rows_to_excel(ws, row, rows,
-                                                  html, head_style)
-            bodies = table.xpath("tbody")
-            if not bodies:
-                bodies = table.xpath("table_body")
-            if bodies:
-                for body in bodies:
-                    body_style = get_odoo_style(html, table_styles, body)
-                    rows = body.xpath("tr")
-                    if rows:
-                        row = write_rows_to_excel(ws, row, rows,
-                                                  html, body_style)
-            if not headers and not bodies:
-                rows = table.xpath("tr")
-                if rows:
-                    row = write_rows_to_excel(ws, row, rows,
-                                              html, table_styles)
-            row += 1
+        row = write_tables_to_excel(ws, row, col, tables, html, table_styles)
+    # Check page tables
+    tables = root.xpath("//div[@class=\"page\"]/table")
+    if tables:
+        row = write_tables_to_excel(ws, row, col, tables, html, table_styles)
+    # Check footer tables
+    tables = root.xpath("//div[@class=\"footer\"]/table")
+    if tables:
+        row = write_tables_to_excel(ws, row, col, tables, html, table_styles)
     stream = StringIO.StringIO()
     wb.save(stream)
     return stream.getvalue()
