@@ -633,33 +633,34 @@ class AcceptabilityCriteria(osv.Model):
             returns the state of user.story to which belong '''
         res = {}.fromkeys(ids)
         for ac in self.browse(cr, uid, ids, context=context):
-            ac_number = ac.name.split(')')
-            if len(ac_number) > 1:
-                ac_number = ac_number[0]
+            if ac.sequence_ac:
+                ac_number = str(ac.sequence_ac)
             else:
-                ac_number = ac.name[0:3]
+                ac_number = ac.name.split(')')
+                if len(ac_number) > 1:
+                    ac_number = ac_number[0]
+                else:
+                    ac_number = ac.name[0:3]
             res[ac.id] = \
                 'HU#' + str(ac.accep_crit_id.id) + ' CA#' + ac_number
         return res
 
-    def _get_sequence_ac(self, cr, uid, ids, fieldname, arg,
-                           context=None):
-        ''' For acceptability.criteria,
-            returns the sequence of acceptability.criteria'''
-        list_ids = []
-        for ac_id in self.browse(cr, uid, ids, context=context):
-            list_ids += self.search(cr, uid,
-                            [('accep_crit_id', '=', ac_id.accep_crit_id.id)])
-        res = {}.fromkeys(list(set(list_ids)))
-        for ac in self.browse(cr, uid, res.keys(), context=context):
-            ac_srch = self.search(cr, uid,
-                            [('accep_crit_id', '=', ac.accep_crit_id.id),
-                            ('id', '<=', ac.id)])
+    def _get_default_sequence(self, cr, uid, context=None):
+        ''' Method to place the sequence of acceptability criteria '''
+        ac_ids = context.get('accep_crit_ids', [])
+        in_memory = [x for x in ac_ids if x[2]]
+        if in_memory:
+            order = sorted(in_memory, key=lambda x: x[2]['sequence_ac'])
+            seq = order[-1][2]['sequence_ac'] + 1
+        elif len(ac_ids):
+            order = [x[1] for x in ac_ids]
+            read_ac = self.read(cr, uid, order,
+                                ['sequence_ac'], context=context)
+            maxi = max(read_ac, key=lambda x: x['sequence_ac'])
+            seq = maxi['sequence_ac'] + 1
+        else:
             seq = 1
-            if len(ac_srch) > 0:
-                seq = len(ac_srch)
-            res[ac.id] = seq
-        return res
+        return seq
 
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False,
@@ -682,7 +683,8 @@ class AcceptabilityCriteria(osv.Model):
             string='US AC #',
             help='User Story and Acceptability Criteria Numbers',
             store={'acceptability.criteria': (lambda s, c, u, i, ctx: i,
-                                             ['accep_crit_id', 'name'], 16)}
+                                             ['accep_crit_id', 'name',
+                                              'sequence_ac'], 16)}
         ),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
@@ -756,47 +758,13 @@ class AcceptabilityCriteria(osv.Model):
                                            ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['user_execute_id'], 20),
             }),
-        'sequence_ac': fields.function(
-            _get_sequence_ac,
-            type="integer",
-            string='Sequence',
-            help='Sequence for Acceptability Criteria',
-            store={
-                'acceptability.criteria': (lambda s, c, u, i, ctx: i,
-                                           ['accep_crit_id'], 16),
-                'user.story': (_get_ac_ids_by_us_ids, ['sequence_ac'], 20),
-            }),
+        'sequence_ac': fields.integer("Sequence"),
     }
     _defaults = {
         'name': lambda *a: None,
         'difficulty': 'na',
+        'sequence_ac': _get_default_sequence
     }
-
-    def unlink(self, cr, uid, ids, context=None):
-        """ Overwrite the unlink method to update sequence of acceptability
-            criteria"""
-        context = context or {}
-        list_ids = []
-        for ac_id in self.browse(cr, uid, ids, context=context):
-            list_ids += self.search(cr, uid,
-                            [('accep_crit_id', '=', ac_id.accep_crit_id.id),
-                             ('id', '!=', ac_id.id)])
-        list_ids = list(set(list_ids))
-        res = super(AcceptabilityCriteria, self).unlink(cr, uid, ids,
-                                context=context)
-        for ac in self.browse(cr, uid, list_ids, context=context):
-            ac_srch = self.search(cr, uid,
-                            [('accep_crit_id', '=', ac.accep_crit_id.id),
-                            ('id', '<=', ac.id)])
-            seq = 1
-            if len(ac_srch) > 0:
-                seq = len(ac_srch)
-            query = """UPDATE acceptability_criteria
-                       SET sequence_ac = %s
-                       WHERE id = %s"""
-            cr.execute(query, (seq, ac.id))
-
-        return res
 
 class ProjectTask(osv.Model):
     _inherit = 'project.task'
