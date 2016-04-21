@@ -36,6 +36,7 @@ install:
   - find ${HOME}/maintainer-quality-tools/travis -name test_flake8 -exec sed -i "s/get_modules_changed(os.path.abspath('.')/get_modules_changed(os.path.abspath('.'), 'origin\/' \+ os.environ['TRAVIS_BRANCH']/g" {} \;
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
+  - wget https://raw.githubusercontent.com/vauxoo-dev/pylint-conf/master-dummy-translation-errors-dev-lescobarvx/conf/pylint_vauxoo_light_pr.cfg -O ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint.cfg
 
 script:
   # get modules changed and set environment variable INCLUDE_LINT
