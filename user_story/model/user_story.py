@@ -680,9 +680,10 @@ class AcceptabilityCriteria(osv.Model):
             type='char',
             string='US AC #',
             help='User Story and Acceptability Criteria Numbers',
-            store={'acceptability.criteria': (lambda s, c, u, i, ctx: i,
-                                             ['accep_crit_id', 'name',
-                                              'sequence_ac'], 16)}
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i,
+                                           ['accep_crit_id', 'name',
+                                            'sequence_ac'], 16)}
         ),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
@@ -763,6 +764,7 @@ class AcceptabilityCriteria(osv.Model):
         'difficulty': 'na',
         'sequence_ac': _get_default_sequence
     }
+
 
 class ProjectTask(osv.Model):
     _inherit = 'project.task'
