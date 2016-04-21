@@ -95,16 +95,15 @@ class ProductTemplate(models.Model):
 
     def get_product_accounts(self, cr, uid, product_id, context=None):
         context = context or {}
-        res = super(ProductTemplate, self)\
-            .get_product_accounts(cr, uid, product_id,
-                                  context=context)
-        product_brw = self.browse(cr, uid, product_id)
-        # noqa
-        diff_acc_id = product_brw.property_account_creditor_price_difference and \
-            product_brw.property_account_creditor_price_difference.id or \
-            product_brw.categ_id.property_account_creditor_price_difference_categ and \
-            product_brw.categ_id.property_account_creditor_price_difference_categ.id or \
-            False
+        res = super(ProductTemplate, self).get_product_accounts(
+            cr, uid, product_id, context=context)
+        product = self.browse(cr, uid, product_id)
+        diff_acc_id = product.property_account_creditor_price_difference and \
+            product.property_account_creditor_price_difference.id or \
+            product.categ_id.\
+            property_account_creditor_price_difference_categ and \
+            product.categ_id.\
+            property_account_creditor_price_difference_categ.id or False
 
         res.update({'property_difference_price_account_id': diff_acc_id})
         return res
@@ -126,6 +125,10 @@ class ProductTemplate(models.Model):
                                        ('company_id', '=', user_company_id)])
         for rec_id in ids:
             datas = self.get_product_accounts(cr, uid, rec_id, context=context)
+            diff = self.browse(
+                cr, uid, rec_id, context=context).standard_price - new_price
+            if not diff:
+                continue
             for location in location_obj.browse(cr, uid, loc_ids,
                                                 context=context):
                 contextc = context.copy()
@@ -133,9 +136,6 @@ class ProductTemplate(models.Model):
                                  'compute_child': False})
                 product = self.browse(cr, uid, rec_id, context=contextc)
 
-                diff = product.standard_price - new_price
-                if not diff:
-                    continue
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
                     if qty:
