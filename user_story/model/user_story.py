@@ -633,14 +633,13 @@ class AcceptabilityCriteria(osv.Model):
             returns the state of user.story to which belong '''
         res = {}.fromkeys(ids)
         for ac in self.browse(cr, uid, ids, context=context):
+            ac_number = ac.name.split(')')
+            if len(ac_number) > 1:
+                ac_number = ac_number[0]
+            else:
+                ac_number = ac.name[0:3]
             if ac.sequence_ac:
                 ac_number = str(ac.sequence_ac)
-            else:
-                ac_number = ac.name.split(')')
-                if len(ac_number) > 1:
-                    ac_number = ac_number[0]
-                else:
-                    ac_number = ac.name[0:3]
             res[ac.id] = \
                 'HU#' + str(ac.accep_crit_id.id) + ' CA#' + ac_number
         return res
@@ -649,6 +648,7 @@ class AcceptabilityCriteria(osv.Model):
         ''' Method to place the sequence of acceptability criteria '''
         ac_ids = context.get('accep_crit_ids', [])
         in_memory = [x for x in ac_ids if x[2]]
+        seq = len(ac_ids) + 1
         if in_memory:
             order = sorted(in_memory, key=lambda x: x[2]['sequence_ac'])
             seq = order[-1][2]['sequence_ac'] + 1
@@ -658,8 +658,6 @@ class AcceptabilityCriteria(osv.Model):
                                 ['sequence_ac'], context=context)
             maxi = max(read_ac, key=lambda x: x['sequence_ac'])
             seq = maxi['sequence_ac'] + 1
-        else:
-            seq = 1
         return seq
 
     _columns = {
