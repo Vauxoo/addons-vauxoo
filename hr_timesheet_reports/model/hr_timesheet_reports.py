@@ -347,7 +347,7 @@ class HrTimesheetReportsBase(models.Model):
         domain=[('model_id', 'ilike', 'account.invoice')],
         help='Filter of Invoices to be shown TIP = '
         'Go to Accounting/Customer '
-        'Invoices in order to create the filter you want to show on this'
+        'Invoices in order to create the filter you want to show on this '
         'report.',)
     filter_id = fields.Many2one('ir.filters', 'Filter',
                                 domain=[
@@ -367,7 +367,7 @@ class HrTimesheetReportsBase(models.Model):
     prod_ent_ids = fields.Many2many('product.product', 'prod_report_timesheet_rel1', 'report_id', 'prod_ent_id', 'Products for Enterprises',
                                     help="All lines on invoices the "
                                     "have this product will "
-                                    "be ignored as Effectivally "
+                                    "be ignored as Effectively "
                                     "Invoiced time already invoiced")
     prod_train_ids = fields.Many2many('product.product',
                                       'prod_report_timesheet_rel2',
@@ -382,11 +382,11 @@ class HrTimesheetReportsBase(models.Model):
                                      'report_id', 'prod_cons_id',
                                      'Products for Consultancy',
                                      help="All products here will be "
-                                     "considered as consultancy"
+                                     "considered as consultancy "
                                      "then it will be compared by "
                                      "currency and by "
                                      "considering the product "
-                                     "in this reports to use "
+                                     "in these reports to use "
                                      "the unit_price and the currency")
 
     _defaults = {

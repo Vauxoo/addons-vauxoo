@@ -10,7 +10,7 @@
             <field name="report_template" ref="hr_timesheet_reports_base"/>
             <field name="lang">${object.partner_id.lang}</field>
             <field name="body_html"><![CDATA[
-<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+<div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
 
     <p>Hello ${object.partner_id.name},</p>
 
@@ -20,7 +20,7 @@
     </p>
 
     <p>If you have any question, do not hesitate to contact us.</p>
-    <p>Thank you for choosing ${object.company_id.name or 'us'} as your IT suplier!</p>
+    <p>Thank you for choosing ${object.company_id.name or 'us'} as your IT supplier!</p>
 </div>
             ]]></field>
         </record>
