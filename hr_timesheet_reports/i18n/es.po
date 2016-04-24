@@ -1,0 +1,853 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* hr_timesheet_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-21 03:17+0000\n"
+"PO-Revision-Date: 2016-04-21 03:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hr_timesheet_reports
+#: model:email.template,body_html:hr_timesheet_reports.email_reports_base
+msgid "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hello ${object.partner_id.name},</p>\n"
+"\n"
+"    <p>Here is your project report ${object.name}</p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"    </p>\n"
+"\n"
+"    <p>If you have any question, do not hesitate to contact us.</p>\n"
+"    <p>Thank you for choosing ${object.company_id.name or 'us'} as your IT supplier!</p>\n"
+"</div>\n"
+"            "
+msgstr "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hola ${object.partner_id.name},</p>\n"
+"\n"
+"    <p>Aquí está el reporte de su proyecto ${object.name}</p>\n"
+"\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"    </p>\n"
+"\n"
+"    <p>Si tiene alguna pregunta, no dude en contactarnos.</p>\n"
+"    <p>¡Gracias por elegir ${object.company_id.name or 'nos'} como su proveedor de TI!</p>\n"
+"</div>\n"
+"            "
+
+#. module: hr_timesheet_reports
+#: model:email.template,subject:hr_timesheet_reports.email_reports_base
+msgid "${(object.title|safe)}"
+msgstr "${(object.title|safe)}"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_analytic
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,prod_ent_ids:0
+msgid "All lines on invoices the have this product will be ignored as Effectively Invoiced time already invoiced"
+msgstr "Todas las líneas en las facturas que tengan este producto serán ignoradas como Efectivamente Facturado al momento de ser facturado"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,prod_train_ids:0
+msgid "All lines that have this products will Be ignored due to this is just for products"
+msgstr "Todas las líneas que tienen estos productos serán ignoradas debido a que ésto es sólo para productos"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,prod_cons_ids:0
+msgid "All products here will be considered as consultancy then it will be compared by currency and by considering the product in these reports to use the unit_price and the currency"
+msgstr "Todos los productos aquí presentes serán considerados como consultoría, luego serán comparados por la moneda y considerando el producto en estos informes para utilizar el unit_price y la moneda."
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "All timesheet must have a value for billable time, this button trigger a write on them to ensure that."
+msgstr "Toda hoja de asistencias debe tener un valor de tiempo facturable, este botón realiza una escritura en ella para asegurar eso."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Amounts Resumed"
+msgstr "Montos Resumidos"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.issues
+msgid "Analytic Account"
+msgstr "Cuenta Analítica"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Analytic Account:"
+msgstr "Cuenta Analítica:"
+
+#. module: hr_timesheet_reports
+#: view:set.invoice:hr_timesheet_reports.view_set_invoice_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Asked By"
+msgstr "Solicitado por"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Basic Information"
+msgstr "Información Básica"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Bill"
+msgstr "Facturar"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Billable"
+msgstr "Facturable"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_analytic
+#: view:website:hr_timesheet_reports.ts_by_dates
+#: view:website:hr_timesheet_reports.ts_by_user
+msgid "Billable Hours"
+msgstr "Horas Facturables"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Billable:"
+msgstr "Facturable:"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Billables - Billed"
+msgstr "Facturables - Facturadas"
+
+#. module: hr_timesheet_reports
+#: view:set.invoice:hr_timesheet_reports.view_set_invoice_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Clean Timesheets"
+msgstr "Limpiar Hojas de asistencias"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Comment Issues"
+msgstr "Comentario de las Incidencias"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,comment_invoices:0
+msgid "Comment about Invoices"
+msgstr "Comentarios acerca de Facturas"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,comment_hu:0
+#: field:hr.timesheet.reports.base,comment_issues:0
+#: field:hr.timesheet.reports.base,comment_timesheet:0
+msgid "Comment about Timesheets"
+msgstr "Comentarios acerca de Hojas de asistencias"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,ci2html:0
+msgid "Comments Invoices html"
+msgstr "Comentarios de Facturas html"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,ciss2html:0
+msgid "Comments Issues html"
+msgstr "Comentarios de Incidencias html"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,cts2html:0
+msgid "Comments TS html"
+msgstr "Comentarios de HA html"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Comments User Stories"
+msgstr "Comentarios de Historias de Usuarios"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,chu2html:0
+msgid "Comments User Stories html"
+msgstr "Comentarios de Historias de Usuario html"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,company_id:0
+msgid "Company which this report belongs to"
+msgstr "Compañía a la cual pertenece este reporte"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Consultancy:"
+msgstr "Consultoría:"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,partner_id:0
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,partner_id:0
+msgid "Contact which you will send this report."
+msgstr "Contacto al cual enviará este reporte."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Conversion Rate:"
+msgstr "Tasa de Conversión:"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,create_uid:0
+#: field:set.invoice,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,create_date:0
+#: field:set.invoice,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,currency_id:0
+#: field:set.invoice,currency_id:0
+#: view:website:hr_timesheet_reports.table_invoices
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: hr_timesheet_reports
+#: help:set.invoice,currency_id:0
+msgid "Currency on report"
+msgstr "Moneda en el reporte"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Date"
+msgstr "Fecha"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "Fecha del último mensaje publicado en el registro."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Description"
+msgstr "Descripción"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Detailed Report"
+msgstr "Reporte Detallado"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,display_name:0
+#: field:report.hr_timesheet_reports.timesheet_report_vauxoo,display_name:0
+#: field:set.invoice,display_name:0
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: hr_timesheet_reports
+#: selection:hr.timesheet.reports.base,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Duration"
+msgstr "Duración"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Edit Online"
+msgstr "Editar En línea"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Effective"
+msgstr "Efectivas"
+
+#. module: hr_timesheet_reports
+#: model:ir.model,name:hr_timesheet_reports.model_hr_timesheet_reports_base
+msgid "Email Thread"
+msgstr "Hilo de mensajes"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Enterprises:"
+msgstr "Empresas:"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,filter_id:0
+msgid "Filter"
+msgstr "Filtro"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+#: view:website:hr_timesheet_reports.issues
+#: view:website:hr_timesheet_reports.timesheets
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Filter Name:"
+msgstr "Nombre del Filtro:"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,filter_invoice_id:0
+msgid "Filter of Invoices to be shown TIP = Go to Accounting/Customer Invoices in order to create the filter you want to show on this report."
+msgstr "Filtro de las Facturas a ser mostradas TIP = Vaya a Contabilidad/Facturas de Cliente con el fin de crear el filtro que desea mostrar en este reporte."
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,filter_id:0
+msgid "Filter should be by date, group_by is ignored, the model which the filter should belong to is timesheet."
+msgstr "El filtro debe ser por fecha, group_by es ignorado, el modelo al cual el filtro debe pertenecer a su hoja de asistencias."
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,message_follower_ids:0
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr "Contiene el resumen del chat (número de mensajes, ...). Este resumen está directamente en formato html con el fin de ser insertado en las vistas kanban."
+
+#. module: hr_timesheet_reports
+#: view:set.invoice:hr_timesheet_reports.view_set_invoice_form
+msgid "Hours for"
+msgstr "Horas por"
+
+#. module: hr_timesheet_reports
+#: model:ir.actions.report.xml,name:hr_timesheet_reports.hr_timesheet_reports_base
+#: model:ir.actions.report.xml,name:hr_timesheet_reports.qweb_hr_timesheet_reports_base
+msgid "Hr timesheet reports base"
+msgstr "RH base de reportes de hojas de asistencia"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,id:0
+#: field:report.hr_timesheet_reports.timesheet_report_vauxoo,id:0
+#: field:set.invoice,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Si se marca nuevos mensajes requieren su atención."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Invoice Information"
+msgstr "Información de la Factura"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_tree
+#: view:set.invoice:hr_timesheet_reports.view_set_invoice_form
+msgid "Invoice Line"
+msgstr "Línea de Factura"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Invoice Lines with this products"
+msgstr "Líneas de factura con estos productos"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Invoiceable"
+msgstr "Facturable"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,filter_invoice_id:0
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Invoices Section"
+msgstr "Sección de Facturas"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Invoices on this filter"
+msgstr "Facturas en este filtro"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es un seguidor."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "Issue"
+msgstr "Incidencia"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,filter_issue_id:0
+msgid "Issues"
+msgstr "Incidencias"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Issues Section"
+msgstr "Sección de Incidencias"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Issues on this filter"
+msgstr "Incidencias en este filtro"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.issues
+msgid "Issues."
+msgstr "Incidencias."
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,comment_invoices:0
+msgid "It will appear just above list of invoices."
+msgstr "Aparecerá justo por encima de la lista de facturas."
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,comment_hu:0
+msgid "It will appear just above the resumed hu status."
+msgstr "Aparecerá justo por encima del estado resumido de la hu."
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,comment_issues:0
+msgid "It will appear just above the resumed issues."
+msgstr "Aparecerá justo por encima de las incidencias resumidas."
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,chu2html:0
+#: help:hr.timesheet.reports.base,ci2html:0
+#: help:hr.timesheet.reports.base,ciss2html:0
+#: help:hr.timesheet.reports.base,comment_timesheet:0
+#: help:hr.timesheet.reports.base,cts2html:0
+msgid "It will appear just above the resumed timesheets."
+msgstr "Aparecerá justo por encima de las hojas de asistencias resumidas."
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Just Print report"
+msgstr "Sólo imprimir reporte"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Just print report and send a message with the report to followers."
+msgstr "Sólo imprimir reporte y enviar un mensaje con el reporte a los seguidores."
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,message_last_post:0
+msgid "Last Message Date"
+msgstr "Fecha del último mensaje"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,__last_update:0
+#: field:report.hr_timesheet_reports.timesheet_report_vauxoo,__last_update:0
+#: field:set.invoice,__last_update:0
+msgid "Last Modified on"
+msgstr "Modificado por última vez"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,write_uid:0
+#: field:set.invoice,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,write_date:0
+#: field:set.invoice,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Mark Timesheet as Invoiced"
+msgstr "Marcar Hoja de asistencias como Facturada"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Mark timesheet elements as reported"
+msgstr "Marcar elementos de la hoja de asistencias como reportados"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,state:0
+msgid "Message sent already to customer (it will block edition)"
+msgstr "Mensaje recién enviado al cliente (bloqueará la edición)"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,message_ids:0
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,message_ids:0
+msgid "Messages and communication history"
+msgstr "Mensajes e historial de comunicación"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_dates
+msgid "Month"
+msgstr "Mes"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.table_invoices
+msgid "Number"
+msgstr "Número"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Others:"
+msgstr "Otros:"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,user_id:0
+msgid "Owner of the report, generally the person that create it."
+msgstr "Propietario del reporte, generalmente la persona que lo creó."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.external_layout_footer
+msgid "Page:"
+msgstr "Página:"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+#: view:website:hr_timesheet_reports.table_invoices
+msgid "Pending"
+msgstr "Pendiente"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.table_invoices
+msgid "Period"
+msgstr "Período"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Planned"
+msgstr "Planeado"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_tree
+msgid "Print and Send"
+msgstr "Imprimir y Enviar"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Product Information"
+msgstr "Información del Producto"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,product_id:0
+msgid "Product to Compute Totals"
+msgstr "Producto para Calcular los Totales"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,prod_cons_ids:0
+msgid "Products for Consultancy"
+msgstr "Productos para Consultoría"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,prod_ent_ids:0
+msgid "Products for Enterprises"
+msgstr "Productos para Empresas"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,prod_train_ids:0
+msgid "Products for Training"
+msgstr "Productos para Capacitación"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.issues
+msgid "Qty"
+msgstr "Cantidad"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,records:0
+msgid "Records"
+msgstr "Registros"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,name:0
+msgid "Report Title"
+msgstr "Título del Reporte"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,user_id:0
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Resume of economical status"
+msgstr "Resumen del estado económico"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.timesheets
+msgid "Resumed Timesheet Report"
+msgstr "Reporte Resumido de Hojas de asistencias"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Resumed amounts in"
+msgstr "Montos resumidos en"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Send Report by Email"
+msgstr "Enviar Reporte por Correo Electrónico"
+
+#. module: hr_timesheet_reports
+#: selection:hr.timesheet.reports.base,state:0
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: hr_timesheet_reports
+#: model:ir.actions.act_window,name:hr_timesheet_reports.action_set_invoice
+msgid "Set Invoice"
+msgstr "Establecer Factura"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,filter_issue_id:0
+msgid "Set the filter for issues TIP = go to issues and look for  the filter that adjust to your needs of issues to be shown."
+msgstr "Configurar el filtro para las incidencias TIP = vaya a incidencias y busque el filtro que se ajuste a sus necesidades de incidencias por ser mostradas."
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,filter_hu_id:0
+msgid "Set the filter for issues TIP = go to issues and look for the filter that adjust to your needs of issues to be shown."
+msgstr "Configurar el filtro para las incidencias TIP = vaya a incidencias y busque el filtro que se ajuste a sus necesidades de incidencias por ser mostradas."
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,show_details:0
+msgid "Show Detailed Timesheets"
+msgstr "Mostrar Hojas de asistencias Detalladas"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,state:0
+#: view:website:hr_timesheet_reports.issues
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Status"
+msgstr "Estado"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Status of User Stories until today in the project."
+msgstr "Estado de las Historias de Usuario en el proyecto hasta el día de hoy."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.table_invoices
+msgid "Status of invoices until today in the project"
+msgstr "Estado de las facturas en el proyecto hasta el día de hoy"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.issues
+msgid "Status of issues until today in the project."
+msgstr "Estado de las incidencias en el proyecto hasta el día de hoy."
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,message_summary:0
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.table_invoices
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Technical Information"
+msgstr "Información Técnica"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,currency_id:0
+#: help:hr.timesheet.reports.base,product_id:0
+msgid "This product will be used to compute totals"
+msgstr "Este producto se utilizará para calcular los totales"
+
+#. module: hr_timesheet_reports
+#: help:set.invoice,total_timesheet:0
+msgid "This will be the quantity to be set to this invoice be sure quantities are consistent"
+msgstr "Ésta será la cantidad a establecer en esta factura, asegúrese que las cantidades son consistentes"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Timesheet Comments"
+msgstr "Comentarios de la Hoja de asistencias"
+
+#. module: hr_timesheet_reports
+#: model:ir.actions.act_window,name:hr_timesheet_reports.action_hr_report_base_tree
+msgid "Timesheet Report"
+msgstr "Reporte de Hoja de asistencias"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Timesheet Section"
+msgstr "Sección de la Hoja de asistencias"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_user
+msgid "Timesheet consumed by User"
+msgstr "Hoja de tiempo consumido por el Usuario"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_analytic
+msgid "Timesheet consumed by analytic account"
+msgstr "Hoja de tiempo consumido por cuenta analítica"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_dates
+msgid "Timesheet consumed by dates"
+msgstr "Hoja de tiempo consumido por fechas"
+
+#. module: hr_timesheet_reports
+#: model:ir.ui.menu,name:hr_timesheet_reports.menu_hr_report_base
+msgid "Timesheet report"
+msgstr "Reporte de Hoja de asistencias"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "Timesheets with this filter"
+msgstr "Hojas de asistencias con este filtro"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.user_stories
+msgid "Title"
+msgstr "Título"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.table_invoices
+msgid "Total"
+msgstr "Total"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Total Amounts in Currency"
+msgstr "Montos totales en Moneda"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_analytic
+#: view:website:hr_timesheet_reports.ts_by_dates
+#: view:website:hr_timesheet_reports.ts_by_user
+msgid "Total Hours"
+msgstr "Total horas"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Total Invoiced"
+msgstr "Total facturado"
+
+#. module: hr_timesheet_reports
+#: field:set.invoice,total_money:0
+msgid "Total Timesheet in Money"
+msgstr "Total de Hoja de asistencias en Dinero"
+
+#. module: hr_timesheet_reports
+#: field:set.invoice,total_timesheet:0
+msgid "Total Timesheet to set"
+msgstr "Total de la Hoja de asistencias por establecer"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Total in"
+msgstr "Total en"
+
+#. module: hr_timesheet_reports
+#: help:set.invoice,total_money:0
+msgid "Total in money with the currency andproduct of the report which you comes from"
+msgstr "Total en dinero con la moneda y producto del reporte del cual viene"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Total:"
+msgstr "Total:"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.ts_by_analytic
+#: view:website:hr_timesheet_reports.ts_by_dates
+#: view:website:hr_timesheet_reports.ts_by_user
+msgid "Totals"
+msgstr "Totales"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Totals Timesheet"
+msgstr "Totales de la Hoja de asistencias"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.invoices
+msgid "Training:"
+msgstr "Capacitación:"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,message_unread:0
+msgid "Unread Messages"
+msgstr "Mensajes sin leer"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+#: view:website:hr_timesheet_reports.ts_by_user
+msgid "User"
+msgstr "Usuario"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,filter_hu_id:0
+msgid "User Stories"
+msgstr "Historias de Usuarios"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "User Stories Section"
+msgstr "Sección de Historias de Usuarios"
+
+#. module: hr_timesheet_reports
+#: view:hr.timesheet.reports.base:hr_timesheet_reports.view_reports_base_form
+msgid "User Stories on this filter"
+msgstr "Historias de Usuarios en este filtro"
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.user_stories
+msgid "User Stories."
+msgstr "Historias de Usuarios."
+
+#. module: hr_timesheet_reports
+#: view:website:hr_timesheet_reports.details
+msgid "User Story"
+msgstr "Historia de Usuario"
+
+#. module: hr_timesheet_reports
+#: field:hr.timesheet.reports.base,website_message_ids:0
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: hr_timesheet_reports
+#: help:hr.timesheet.reports.base,website_message_ids:0
+msgid "Website communication history"
+msgstr "Historial de comunicaciones del sitio web"
+
+#. module: hr_timesheet_reports
+#: view:set.invoice:hr_timesheet_reports.view_set_invoice_form
+msgid "or"
+msgstr "o"
+
