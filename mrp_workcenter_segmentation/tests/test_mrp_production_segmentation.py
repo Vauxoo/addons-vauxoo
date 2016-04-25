@@ -9,14 +9,13 @@ from openerp.tests.common import TransactionCase
 
 
 class TestMrpProduction(TransactionCase):
-    '''
-        This test do the following:
+    """This test do the following:
             1.- Create a mrp.production.
             2.- Proceed to approve.
             3.- Proceed to begin production.
             4.- Proceed with consumption & finish production.
             5.- Check segmentation on production products.
-    '''
+    """
 
     # Pseudo-constructor method of the setUp test.
     def setUp(self):
