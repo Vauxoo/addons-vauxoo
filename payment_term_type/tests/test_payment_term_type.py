@@ -23,8 +23,7 @@ from openerp.tests.common import TransactionCase
 
 
 class TestPaymentTermType(TransactionCase):
-    """
-        This Tests validate the payment type dependig
+    """This Tests validate the payment type dependig
         payment terms line to compute
     """
 
@@ -32,8 +31,7 @@ class TestPaymentTermType(TransactionCase):
         super(TestPaymentTermType, self).setUp()
 
     def test_payment_term_type_cash(self):
-        """
-            This test validate payment type in cash
+        """This test validate payment type in cash
         """
         self.payment_term_cash = self.env.ref(
             'payment_term_type.payment_term_cash')
@@ -42,8 +40,7 @@ class TestPaymentTermType(TransactionCase):
             'Payment term should be in cash')
 
     def test_payment_term_type_credit(self):
-        """
-            This test validate payment type in credit
+        """This test validate payment type in credit
         """
         self.payment_term_credit = self.env.ref(
             'payment_term_type.payment_term_credit')
