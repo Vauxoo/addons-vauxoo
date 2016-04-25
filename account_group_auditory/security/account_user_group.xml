@@ -5,48 +5,19 @@
         <record id="group_account_user_audit" model="res.groups">
             <field name="name">Auditor (Read-Only)</field>
             <field name="category_id" ref="base.module_category_accounting_and_finance"/>
-        </record>
-
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_finance'))]"/>
-        </record>
-
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_action_account_moves_all'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_tax_report'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_finance_bank_and_cash'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_finance_entries'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_action_move_journal_line_form'))]"/>
-        </record>
-
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_journals_report'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_unrealized_gains_losses'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_general_ledger'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_account_partner_ledger'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_action_tax_code_tree'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account.menu_finance_reports'))]"/>
-        </record>
-
-        <record id="group_account_user_audit" model="res.groups">
+            <field name="menu_access"
+                eval="[(4, ref('account.menu_finance')),
+                       (4, ref('account.menu_action_account_moves_all')),
+                       (4, ref('account.menu_tax_report')),
+                       (4, ref('account.menu_finance_bank_and_cash')),
+                       (4, ref('account.menu_finance_entries')),
+                       (4, ref('account.menu_action_move_journal_line_form')),
+                       (4, ref('account.menu_journals_report')),
+                       (4, ref('account.menu_unrealized_gains_losses')),
+                       (4, ref('account.menu_general_ledger')),
+                       (4, ref('account.menu_account_partner_ledger')),
+                       (4, ref('account.menu_action_tax_code_tree')),
+                       (4, ref('account.menu_finance_reports'))]"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
     </data>

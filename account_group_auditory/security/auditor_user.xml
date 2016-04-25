@@ -2,13 +2,13 @@
 
 <openerp>
     <data noupdate="1">
-        <record model="res.users" id="res_auditor_user">
+        <record model="res.users" id="res_auditor_user" context="{'no_reset_password': True}">
             <field name="name">Auditor user</field>
             <field name="login">auditor</field>
             <field name="tz">America/Mexico_City</field>
             <field name="password">auditor</field>
             <field name="alias_name">auditor</field>
-            <field name="company_id" eval="ref('base.main_company')"/> 
+            <field name="company_id" eval="ref('base.main_company')"/>
             <field name="groups_id"  eval="[(6,0,[ref('account_group_auditory.group_account_user_audit')])]"/>
         </record>
     </data>
