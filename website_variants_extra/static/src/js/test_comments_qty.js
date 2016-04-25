@@ -28,25 +28,30 @@
                 element:   '#comments-list',
             },
             {
-                title:     "Post second comment",
+                title:     "Redact second comment",
                 onload:    function(Tour){
                             $('#comment textarea').text('2nd Phantom Comment');
                                $('#comment .fa-star-o:last').trigger('click');
                             },
                 waitFor:   '#comments-list:first:contains(1st)',
-                element:  'form a:contains(Post)',
+            },
+            {
+                title:     "Post second comment",
+                element:   'form a:contains(Post)',
+                onload:    function(Tour){
+                            $('form a:contains(Post)').trigger('click');
+                            },
             },
             {
                 title: 'check comment qty',
                 waitFor: '#no-reviews:contains(5)',
-                element: '#no-reviews',
             },
             {
                 title:     "Publish second comment",
                 onload:    function(Tour){
                                 $('#comments-list .btn-danger').first().trigger('click');
                            },
-                waitFor:   '#comments-list:first:contains(2nd)',
+                waitFor:   '#comments-list li:first:contains(2nd)',
                 element:   '#comments-list',
             },
             {

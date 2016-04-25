@@ -55,7 +55,7 @@
                                $item.trigger('click');
                                $item.prev().trigger('click');
                            },
-                waitNot:   '.product_header:contains(Blue)',
+                waitNot:   '.product_header:contains(Blue Cover)',
                 waitFor:  '.product_header:contains(Pink)',
                 element:     '.js_add_cart_variants span:contains(Wall)',
             },
