@@ -78,8 +78,7 @@ class PurchaseQuotationWizard(models.TransientModel):
 
     @api.model
     def get_xls_eof(self, sheet):
-        """
-        Search for the last row of a Spreadsheet
+        """Search for the last row of a Spreadsheet
         @return: return int
         """
         row = 0
@@ -93,8 +92,7 @@ class PurchaseQuotationWizard(models.TransientModel):
 
     @api.multi
     def import_xls(self):
-        """
-        Validate and read xls file to update quotation
+        """Validate and read xls file to update quotation
         """
         context = dict(self._context)
         fdata = self.xls_file
@@ -172,8 +170,7 @@ class PurchaseQuotationWizard(models.TransientModel):
 
     @api.multi
     def print_report(self):
-        """
-        Print the report
+        """Print the report
         @return : return report
         """
         ctx = dict(self._context)

@@ -25,8 +25,7 @@ from openerp.osv import fields, osv
 
 class AccountInvoice(osv.Model):
 
-    """
-    account_invoice
+    """account_invoice
     """
     _inherit = 'account.invoice'
     _columns = {

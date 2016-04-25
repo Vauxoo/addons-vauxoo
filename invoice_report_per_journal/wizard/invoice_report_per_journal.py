@@ -22,10 +22,9 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 # ######################################################################## #
-'''
-File to added wizard to print report that is selected in the journal of
+"""File to added wizard to print report that is selected in the journal of
 invoice to print.
-'''
+"""
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
@@ -37,14 +36,12 @@ _logger = logging.getLogger(__name__)
 
 class InvoiceReportPerJournal(osv.TransientModel):
 
-    """
-    OpenERP Wizard: invoice.report.per.journal
+    """OpenERP Wizard: invoice.report.per.journal
     """
     _name = "invoice.report.per.journal"
 
     def get_journal_object(self, cr, uid, ids, context=None):
-        '''
-        Method to return the journal assigned in the register received in ids
+        """Method to return the journal assigned in the register received in ids
         and model is taken from context.
         @param self: The object pointer.
         @param cr: A database cursor
@@ -52,7 +49,7 @@ class InvoiceReportPerJournal(osv.TransientModel):
         @param ids: Ids to invoice's to print ticket
         @param context: A standard dictionary
         @return : retrun browse object of journal
-        '''
+        """
         if context is None:
             context = {}
         record_brw = self.pool.get(context['active_model']).browse(
@@ -63,8 +60,7 @@ class InvoiceReportPerJournal(osv.TransientModel):
         return record_brw.journal_id
 
     def _get_journal(self, cr, uid, context=None):
-        '''
-        Method to call function to get the journal assigned in the register
+        """Method to call function to get the journal assigned in the register
         received in ids and model is taken from context.
         @param self: The object pointer.
         @param cr: A database cursor
@@ -72,37 +68,35 @@ class InvoiceReportPerJournal(osv.TransientModel):
         @param ids: Ids to invoice's to print ticket
         @param context: A standard dictionary
         @return : retrun browse object of journal
-        '''
+        """
         if context is None:
             context = {}
         ids = context.get('active_ids', [])
         return self.get_journal_object(cr, uid, ids[0], context=context).name
 
     def _prepare_service(self, cr, uid, report, context=None):
-        '''
-        Method to create report.
+        """Method to create report.
         @param self: The object pointer.
         @param cr: A database cursor
         @param uid: ID of the user currently logged in
         @param report: Name report to create
         @param context: A standard dictionary
         @return : result of creation of report
-        '''
+        """
         (result, formato) = openerp.report.render_report(
             cr, uid, context.get('active_ids', []), report.report_name,
             {'model': context.get('active_model', '')}, context=None)
         return (result, formato)
 
     def _get_report(self, cr, uid, context=None):
-        '''
-        Method to get data of report
+        """Method to get data of report
         and model is taken from context.
         @param self: The object pointer.
         @param cr: A database cursor
         @param uid: ID of the user currently logged in
         @param context: A standard dictionary
         @return : data of report
-        '''
+        """
         if context is None:
             context = {}
         res = ''
@@ -147,8 +141,7 @@ class InvoiceReportPerJournal(osv.TransientModel):
         return base64.encodestring(res)
 
     def _get_report_name(self, cr, uid, context=None):
-        '''
-        Method to get name of report to print, this review report assigned in
+        """Method to get name of report to print, this review report assigned in
         the journal of invoice
         and model is taken from context.
         @param self: The object pointer.
@@ -156,7 +149,7 @@ class InvoiceReportPerJournal(osv.TransientModel):
         @param uid: ID of the user currently logged in
         @param context: A standard dictionary
         @return : name of report
-        '''
+        """
         if context is None:
             context = {}
         ids = context.get('active_ids', [])
@@ -179,15 +172,14 @@ class InvoiceReportPerJournal(osv.TransientModel):
         return report.report_name
 
     def print_invoice(self, cr, uid, ids, context=None):
-        '''
-        Method called by button print report in wizard, to print report in pdf
+        """Method called by button print report in wizard, to print report in pdf
         @param self: The object pointer.
         @param cr: A database cursor
         @param uid: ID of the user currently logged in
         @param ids: Ids to invoice's to print ticket
         @param context: A standard dictionary
         @return : retrun report pdf generated
-        '''
+        """
         if context is None:
             context = {}
         if len(context.get('active_ids', [])) > 1:

@@ -65,10 +65,9 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def get_costs_from_invoices(self):
-        '''
-        Update Costs Lines with Invoice Lines in the Invoices related to
+        """Update Costs Lines with Invoice Lines in the Invoices related to
         Document
-        '''
+        """
         slcl_obj = self.env['stock.landed.cost.lines']
         for lc_brw in self:
             for cl_brw in lc_brw.cost_lines:
@@ -104,8 +103,7 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def get_valuation_lines(self, picking_ids=None):
-        """
-        It returns product valuations based on picking's moves
+        """It returns product valuations based on picking's moves
         """
         picking_obj = self.env['stock.picking']
         lines = []
@@ -156,8 +154,7 @@ class StockLandedCost(models.Model):
     def _create_deviation_account_move_line(
             self, move_id, gain_account_id, loss_account_id,
             valuation_account_id, diff, product_brw):
-        """
-        It generates journal items to track landed costs
+        """It generates journal items to track landed costs
         """
         ctx = dict(self._context)
         aml_obj = self.pool.get('account.move.line')
@@ -202,10 +199,9 @@ class StockLandedCost(models.Model):
         return True
 
     def _get_deviation_accounts(self, product_id, acc_prod):
-        '''
-        This method takes the variation in value for average and books it as
+        """This method takes the variation in value for average and books it as
         Inventory Valuation Deviation
-        '''
+        """
         accounts = acc_prod[product_id]
         valuation_account_id = accounts['property_stock_valuation_account_id']
 
@@ -223,10 +219,9 @@ class StockLandedCost(models.Model):
 
     def _create_deviation_accounting_entries(
             self, move_id, product_id, diff, acc_prod=None):
-        '''
-        This method takes the variation in value for average and books it as
+        """This method takes the variation in value for average and books it as
         Inventory Valuation Deviation
-        '''
+        """
         # TODO: improve code to profit from acc_prod dictionary
         # and reduce overhead with this repetitive query
         valuation_account_id, gain_account_id, loss_account_id = \
@@ -241,8 +236,7 @@ class StockLandedCost(models.Model):
     def _create_standard_deviation_entry_lines(
             self, line, move_id, valuation_account_id, gain_account_id,
             loss_account_id):
-        """
-        It generates journal items to track landed costs, using arbitrary
+        """It generates journal items to track landed costs, using arbitrary
         accounts for valuation, gain and loss
         """
         aml_obj = self.env['account.move.line']
@@ -272,8 +266,7 @@ class StockLandedCost(models.Model):
 
     @api.multi
     def _create_standard_deviation_entries(self, line, move_id, acc_prod=None):
-        """
-        Create standard deviation journal items based on predefined product
+        """Create standard deviation journal items based on predefined product
         account valuation, gain and loss company's accounts
         """
         if float_is_zero(
@@ -292,11 +285,10 @@ class StockLandedCost(models.Model):
     @api.multi
     def _create_cogs_accounting_entries(
             self, product_id, move_id, diff, acc_prod=None):
-        '''
-        This method takes the amount of cost that needs to be booked as
+        """This method takes the amount of cost that needs to be booked as
         inventory value and later takes the amount of COGS that is needed to
         book if any sale was done because of this landing cost been applied
-        '''
+        """
         product_brw = self.env['product.product'].browse(product_id)
         accounts = acc_prod[product_id]
         debit_account_id = accounts['property_stock_valuation_account_id']
@@ -321,8 +313,7 @@ class StockLandedCost(models.Model):
     def _create_cogs_account_move_line(
             self, product_brw, move_id, debit_account_id, cogs_account_id,
             diff):
-        """
-        Create journal items for COGS for those products sold
+        """Create journal items for COGS for those products sold
         before landed costs were applied
         """
 
@@ -374,10 +365,9 @@ class StockLandedCost(models.Model):
         return True
 
     def compute_average_cost(self, dct=None):
-        '''
-        This method updates standard_price field in products with costing
+        """This method updates standard_price field in products with costing
         method equal to average
-        '''
+        """
         dct = dict(dct or {})
         scp_obj = self.env['stock.card.product']
         if not dct:
@@ -527,8 +517,7 @@ class StockLandedCost(models.Model):
 
     @api.v7
     def compute_landed_cost(self, cr, uid, ids, context=None):
-        """
-        It compute valuation lines for landed costs based on
+        """It compute valuation lines for landed costs based on
         splitting method used
         """
         line_obj = self.pool.get('stock.valuation.adjustment.lines')
@@ -608,8 +597,7 @@ class StockLandedCost(models.Model):
     def _create_landed_account_move_line(
             self, line, move_id, credit_account_id, debit_account_id, qty_out,
             already_out_account_id):
-        """
-        Generate the account.move.line values to track the landed cost.
+        """Generate the account.move.line values to track the landed cost.
         Afterwards, for the goods that are already out of stock, we should
         create the out moves
         """

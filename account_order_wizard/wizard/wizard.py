@@ -87,15 +87,14 @@ class AccountOrderWizard(osv.TransientModel):
         return patron
 
     def _ordering(self, cr, uid, patron, len_patron, dict, dict_i0, k, i=0):
-        '''
-        patron: es una lista de enteros indicando la longitud de cada patron
+        """patron: es una lista de enteros indicando la longitud de cada patron
         len_patron: es el numero de patrones con el cual se estara trabajando
         dict: es un diccionario con una lista en cada clave
         [codigo, parent_flag, parent_id] dict_i0: codigo que se envia para
         hacer el ordenamiento, funge de codigo padre
         k:  es el id del codigo padre,
         i: es el contador para hacer el recorrido sobre el patron
-        '''
+        """
         for j in dict.keys():
             #~ la similitud del codigo con la similutud del patron
             #~

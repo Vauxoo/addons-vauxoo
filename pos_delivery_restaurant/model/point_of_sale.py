@@ -27,8 +27,7 @@ from openerp.osv import osv, fields
 
 class PosConfig(osv.Model):
 
-    """
-    To add a field which determine if the point of sale is a restaurant or delivery
+    """To add a field which determine if the point of sale is a restaurant or delivery
     """
     _inherit = 'pos.config'
     _description = ('')

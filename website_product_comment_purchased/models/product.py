@@ -30,8 +30,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def comment_bought(self, product_id, author_ids):
-        """
-        This method retrieves a dictionary with two keys, `author_id` and
+        """This method retrieves a dictionary with two keys, `author_id` and
         `purchased` the first is the id of the author of the comment on the
         given `product_id` the second its a boolean that will be true if a
         sale order is found with partner related to the user that commented

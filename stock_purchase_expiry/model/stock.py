@@ -37,8 +37,7 @@ class StockPicking(osv.Model):
     }
 
     def action_process(self, cur, uid, ids, context=None):
-        """
-        overwrite the method to add a verification of the contract due
+        """overwrite the method to add a verification of the contract due
         date before process the stock picking.
         """
         context = context or {}
@@ -58,8 +57,7 @@ class StockPicking(osv.Model):
 
     @api.one
     def copy(self, default=None):
-        """
-        Ovwerwrite the copy method to also copy the date_contract_expiry value.
+        """Ovwerwrite the copy method to also copy the date_contract_expiry value.
         """
         default = default or {}
         default['date_contract_expiry'] = False
@@ -76,8 +74,7 @@ class StockPickingIn(osv.Model):
     }
 
     def action_process(self, cur, uid, ids, context=None):
-        """
-        overwrite the method to add a verification of the contract due
+        """overwrite the method to add a verification of the contract due
         date before process the stock picking in.
         """
         context = context or {}
@@ -97,8 +94,7 @@ class StockPickingIn(osv.Model):
 
     @api.one
     def copy(self, default=None):
-        """
-        Ovwerwrite the copy method to also copy the date_contract_expiry value.
+        """Ovwerwrite the copy method to also copy the date_contract_expiry value.
         """
         default = default or {}
         default['date_contract_expiry'] = False
@@ -115,8 +111,7 @@ class StockPickingOut(osv.Model):
     }
 
     def action_process(self, cur, uid, ids, context=None):
-        """
-        overwrite the method to add a verification of the contract due
+        """overwrite the method to add a verification of the contract due
         date before process the stock picking out.
         """
         context = context or {}
@@ -136,8 +131,7 @@ class StockPickingOut(osv.Model):
 
     @api.one
     def copy(self, default=None):
-        """
-        Ovwerwrite the copy method to also copy the date_contract_expiry value.
+        """Ovwerwrite the copy method to also copy the date_contract_expiry value.
         """
         default = default or {}
         default['date_contract_expiry'] = False

@@ -28,8 +28,7 @@ from openerp.osv import osv, fields
 
 class PurchaseRequisition(osv.Model):
 
-    """
-    This is an extension of the purchase requisition model to add the
+    """This is an extension of the purchase requisition model to add the
     functionality to manage a suggested list of partners.
     """
 
@@ -57,8 +56,7 @@ class PurchaseRequisition(osv.Model):
     }
 
     def create_orders(self, cr, uid, ids, context=None):
-        """
-        This method create the quotations of the purchase requisition for all
+        """This method create the quotations of the purchase requisition for all
         the partners given in the purchase requisition suggested partner.
         @return True
         """

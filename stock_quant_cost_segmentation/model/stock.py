@@ -33,11 +33,10 @@ class StockMove(models.Model):
     @api.v7
     def product_segmentation_fetch_before_done(
             self, cr, uid, ids, context=None):
-        '''
-        Fetch standard_price and segmentation cost for every product that was
+        """Fetch standard_price and segmentation cost for every product that was
         purchased and is average costing method prior to change its values.
         Returns a dictionary.
-        '''
+        """
         res = {}
         precision = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
@@ -72,10 +71,9 @@ class StockMove(models.Model):
     @api.v7
     def product_segmentation_update_after_done(
             self, cr, uid, ids, sgmnt, context=None):
-        '''
-        Computes segmentation values on average product based on previous
+        """Computes segmentation values on average product based on previous
         values stored before action_done method is applied
-        '''
+        """
         context = dict(context or {})
         product_obj = self.pool.get('product.product')
         res = {}
@@ -317,10 +315,9 @@ class StockQuant(models.Model):
             self, cr, uid, qty, move, lot_id=False, owner_id=False,
             src_package_id=False, dest_package_id=False,
             force_location_from=False, force_location_to=False, context=None):
-        '''
-        Create a quant in the destination location and create a negative quant
+        """Create a quant in the destination location and create a negative quant
         in the source location if it's an internal location.
-        '''
+        """
         if context is None:
             context = {}
         price_unit = self.pool.get('stock.move').get_price_unit(
@@ -424,8 +421,7 @@ class StockQuant(models.Model):
 
     @api.v7
     def _quant_reconcile_negative(self, cr, uid, quant, move, context=None):
-        """
-            When new quant arrive in a location, try to reconcile it with
+        """When new quant arrive in a location, try to reconcile it with
             negative quants. If it's possible, apply the cost of the new
             quant to the counter-part of the negative quant.
         """

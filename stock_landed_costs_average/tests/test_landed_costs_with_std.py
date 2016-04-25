@@ -6,8 +6,7 @@ from openerp.addons.stock.tests.common import TestStockCommon
 class TestLandedCostsWithStd(TestStockCommon):
 
     def setUp(self):
-        """
-        basic method to define some basic data to be re use in all test cases.
+        """basic method to define some basic data to be re use in all test cases.
         """
         super(TestLandedCostsWithStd, self).setUp()
         self.invoice_id = self.env.ref(

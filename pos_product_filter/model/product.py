@@ -27,8 +27,7 @@ from openerp.osv import osv, fields
 
 class ProductProduct(osv.Model):
 
-    """
-    To add two fields which determine if a product is show in restaurant and/or delivery
+    """To add two fields which determine if a product is show in restaurant and/or delivery
     point of sale
     """
     _inherit = 'product.product'

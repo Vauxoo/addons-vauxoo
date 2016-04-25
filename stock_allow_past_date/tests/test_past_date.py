@@ -16,8 +16,7 @@ from dateutil.relativedelta import relativedelta
 
 class TestPickingDate(common.TransactionCase):
 
-    """
-    Test that can create a picking with the current date of a past date,
+    """Test that can create a picking with the current date of a past date,
     validate then and generate a move and quant with that past date instead the
     current date.
     """

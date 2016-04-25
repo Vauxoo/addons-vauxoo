@@ -41,9 +41,8 @@ class AccountInvoice(osv.Model):
     #~ return res
 
     def action_number(self, cr, uid, ids, context=None):
-        '''
-        Modified to witholding vat validate
-        '''
+        """Modified to witholding vat validate
+        """
         wf_service = workflow
         res = super(AccountInvoice, self).action_number(cr, uid, ids)
         invo_brw = self.browse(cr, uid, ids, context=context)[0]

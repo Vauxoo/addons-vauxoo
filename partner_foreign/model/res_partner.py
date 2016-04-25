@@ -33,8 +33,7 @@ class ResPartner(models.Model):
 
     @api.model
     def _get_location_options(self):
-        """
-        @return a list of tuples with the selection field options.
+        """@return a list of tuples with the selection field options.
         """
         return [('undefine', _('Undefine')),
                 ('international', _('International')),
@@ -42,8 +41,7 @@ class ResPartner(models.Model):
 
     @api.depends('country_id')
     def _get_partner_scope(self):
-        """
-        @return dictionary {res.partner.id: selecction field value}
+        """@return dictionary {res.partner.id: selecction field value}
         """
         company = self.env["res.company"]
         for rp_brw in self:
@@ -67,8 +65,7 @@ class ResPartner(models.Model):
 
     @api.depends('international')
     def _get_warning_message(self):
-        """
-        @return dictionary {res.partner id: message value}
+        """@return dictionary {res.partner id: message value}
         """
         msg = _('Missing Configuration: international/national partner'
                 ' data is set using your configurate company country.\n'

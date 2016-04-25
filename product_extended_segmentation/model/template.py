@@ -255,11 +255,10 @@ class ProductTemplate(models.Model):
     def compute_price(self, cr, uid, product_ids, template_ids=False,
                       recursive=False, test=False, real_time_accounting=False,
                       context=None):
-        '''
-        Will return test dict when the test = False
+        """Will return test dict when the test = False
         Multiple ids at once?
         testdict is used to inform the user about the changes to be made
-        '''
+        """
         context = dict(context or {})
         if '_calc_price_recursive' not in context:
             context['_calc_price_recursive'] = recursive

@@ -30,8 +30,7 @@ class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     def button_draft_voucher(self, cr, uid, ids, context=None):
-        """
-        method used in the new button used when paying the account voucher.
+        """method used in the new button used when paying the account voucher.
         @return close the pop up window.
         """
         context = context or {}

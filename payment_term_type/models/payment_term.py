@@ -34,8 +34,7 @@ class AccountPaymentTerm(models.Model):
     @api.multi
     @api.depends('line_ids')
     def _compute_payment_type(self):
-        """
-            This method compute the Payment type
+        """This method compute the Payment type
             It is cash when payment term
             has only one line to compute,
             It is credit when payment term has

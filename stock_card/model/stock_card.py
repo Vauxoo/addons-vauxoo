@@ -344,11 +344,10 @@ class StockCardProduct(models.TransientModel):
 
     @api.multi
     def action_view_moves(self):
-        '''
-        This function returns an action that display existing invoices of given
+        """This function returns an action that display existing invoices of given
         commission payment ids. It can either be a in a list or in a form view,
         if there is only one invoice to show.
-        '''
+        """
         self.ensure_one()
         ctx = self._context.copy()
 

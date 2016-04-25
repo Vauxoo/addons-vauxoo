@@ -1,7 +1,6 @@
 # coding: utf-8
 
-"""
-Inherit the stock location model to add a code attribute and make the code
+"""Inherit the stock location model to add a code attribute and make the code
 searchable.
 
 New feature: Add the warehouse to location.
@@ -39,8 +38,7 @@ import re
 
 class StockLocation(osv.Model):
 
-    """
-    Inherit the stock location model to add a code attribute and make the code
+    """Inherit the stock location model to add a code attribute and make the code
     searchable.
     """
 
@@ -81,8 +79,7 @@ class StockLocation(osv.Model):
         return result
 
     def _name_get(self, cr, uid, location, context=None):
-        """
-        Implements the stock location code in a new feauture, where if the
+        """Implements the stock location code in a new feauture, where if the
         location has a reference to a warehouse, the name in a m2o search
         concatenates the code and warehouse to a location if they exist.
         Visually, it's better to know which owns the warehouse location.

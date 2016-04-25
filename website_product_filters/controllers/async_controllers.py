@@ -11,8 +11,7 @@ class WebsiteAsync(http.Controller):
                 auth="public",
                 website=True)
     def products_per_attr(self, **post):
-        """
-        This method main purpose is to get asynchronously all the quantity of
+        """This method main purpose is to get asynchronously all the quantity of
         products per attribute on a given category.
         """
         cr, uid, pool = request.cr, request.uid, request.registry
@@ -26,8 +25,7 @@ class WebsiteAsync(http.Controller):
                 auth="public",
                 website=True)
     def products_per_range(self, **post):
-        """
-        This method main purpose is to get asynchronously all the quantity of
+        """This method main purpose is to get asynchronously all the quantity of
         products per price range on a given category.
         """
         cr, uid, pool = request.cr, request.uid, request.registry

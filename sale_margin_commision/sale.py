@@ -4,8 +4,7 @@ from openerp.osv import fields, osv
 
 class SaleOrder(osv.Model):
 
-    """
-    sale_order
+    """sale_order
     """
 
     def _get_commision(self, price, cost):

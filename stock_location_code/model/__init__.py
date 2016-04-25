@@ -1,7 +1,6 @@
 # coding: utf-8
 
-"""
-Init file to import all the models in the stock_location_code module.
+"""Init file to import all the models in the stock_location_code module.
 """
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution

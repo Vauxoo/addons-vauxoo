@@ -79,8 +79,7 @@ class AccountJournalBsConfig(osv.Model):
     }
 
     def _check_expresion(self, cr, user, ids, context=None):
-        """
-        A user defined constraints listed in {_constraints}
+        """A user defined constraints listed in {_constraints}
         @param cr: cursor to database
         @param user: id of current user
         @param ids: list of record ids on which constraints executes

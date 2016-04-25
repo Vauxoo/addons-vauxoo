@@ -58,9 +58,8 @@ COMMISSION_POLICY_BAREMO = [
 
 
 def t_time(date):
-    '''
-    Trims time from "%Y-%m-%d %H:%M:%S" to "%Y-%m-%d"
-    '''
+    """Trims time from "%Y-%m-%d %H:%M:%S" to "%Y-%m-%d"
+    """
     date = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
     date = datetime.date(date.year, date.month, date.day)
     return date.strftime("%Y-%m-%d")
@@ -68,8 +67,7 @@ def t_time(date):
 
 class CommissionPayment(osv.Model):
 
-    """
-    OpenERP Model : commission_payment
+    """OpenERP Model : commission_payment
     """
 
     _name = 'commission.payment'
@@ -234,11 +232,10 @@ class CommissionPayment(osv.Model):
     }
 
     def action_view_fixlines(self, cr, uid, ids, context=None):
-        '''
-        This function returns an action that display existing Commissions of
+        """This function returns an action that display existing Commissions of
         given commission payment ids that are required for some details to
         provide a proper computation of commissions.
-        '''
+        """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
 
@@ -263,11 +260,10 @@ class CommissionPayment(osv.Model):
         return result
 
     def action_view_payment(self, cr, uid, ids, context=None):
-        '''
-        This function returns an action that display existing Payments of given
+        """This function returns an action that display existing Payments of given
         commission payment ids. It can either be a in a list or in a form view,
         if there is only one invoice to show.
-        '''
+        """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
 
@@ -289,11 +285,10 @@ class CommissionPayment(osv.Model):
         return result
 
     def action_view_invoice(self, cr, uid, ids, context=None):
-        '''
-        This function returns an action that display existing invoices of given
+        """This function returns an action that display existing invoices of given
         commission payment ids. It can either be a in a list or in a form view,
         if there is only one invoice to show.
-        '''
+        """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
 
@@ -1094,8 +1089,7 @@ class CommissionPayment(osv.Model):
         return True
 
     def prepare(self, cr, uid, ids, context=None):
-        """
-        Este metodo recorre los elementos de lineas de asiento y verifica al
+        """Este metodo recorre los elementos de lineas de asiento y verifica al
         menos tres (3) caracteristicas primordiales para continuar con los
         mismos: estas caracteristicas son:
         - journal_id.type in ('cash', 'bank'): quiere decir que la linea es de
@@ -1168,9 +1162,8 @@ class CommissionPayment(osv.Model):
         return True
 
     def clear(self, cr, user, ids, context=None):
-        '''
-        Deletes all associated record from Commission Payment
-        '''
+        """Deletes all associated record from Commission Payment
+        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
@@ -1208,8 +1201,7 @@ class CommissionPayment(osv.Model):
 
 class CommissionSaleNoid(osv.Model):
 
-    """
-    Commission Payment : commission_sale_noid
+    """Commission Payment : commission_sale_noid
     """
 
     _name = 'commission.sale.noid'
@@ -1227,8 +1219,7 @@ class CommissionSaleNoid(osv.Model):
 
 class CommissionNoprice(osv.Model):
 
-    """
-    Commission Payment : commission_sale_noid
+    """Commission Payment : commission_sale_noid
     """
 
     _name = 'commission.noprice'
@@ -1248,8 +1239,7 @@ class CommissionNoprice(osv.Model):
 
 class CommissionLines(osv.Model):
 
-    """
-    Commission Payment : commission_lines
+    """Commission Payment : commission_lines
     """
 
     _name = 'commission.lines'
@@ -1423,8 +1413,7 @@ class CommissionLines(osv.Model):
 
 class CommissionSalesman(osv.Model):
 
-    """
-    Commission Payment : commission_salesman
+    """Commission Payment : commission_salesman
     """
 
     _name = 'commission.salesman'
@@ -1466,8 +1455,7 @@ class CommissionSalesman(osv.Model):
 
 class CommissionVoucher(osv.Model):
 
-    """
-    Commission Payment : commission_voucher
+    """Commission Payment : commission_voucher
     """
 
     _name = 'commission.voucher'
@@ -1489,8 +1477,7 @@ class CommissionVoucher(osv.Model):
 
 class CommissionInvoice(osv.Model):
 
-    """
-    Commission Payment : commission_invoice
+    """Commission Payment : commission_invoice
     """
 
     _name = 'commission.invoice'
@@ -1515,8 +1502,7 @@ class CommissionInvoice(osv.Model):
 
 class CommissionLines2(osv.Model):
 
-    """
-    Commission Payment : commission_lines_2
+    """Commission Payment : commission_lines_2
     """
 
     _inherit = 'commission.lines'

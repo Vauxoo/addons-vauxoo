@@ -37,9 +37,8 @@ class WhIvaDoc(osv.Model):
     }
 
     def check_state_cancel(self, cr, uid, ids, context=None):
-        '''
-        Check invoice state to not move in state
-        '''
+        """Check invoice state to not move in state
+        """
         # iva_brw = self.browse(cr, uid, ids, context=context)[0]
 
         for i in self.browse(cr, uid, ids, context=context)[0].wh_lines:

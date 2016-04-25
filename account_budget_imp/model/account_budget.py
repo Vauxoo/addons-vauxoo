@@ -124,11 +124,10 @@ class CrossoveredBudgetLines(osv.osv):
         return super(CrossoveredBudgetLines, self).create(cr, uid, values, context=context)
 
     def _prac_amt_acc(self, cr, uid, ids, context=None):
-        '''
-        This Method should compute considering Accounts Accounts due to the
+        """This Method should compute considering Accounts Accounts due to the
         Account Analityc Account is not mandatory in the budget Line.
         If the account Analityc Account is empty
-        '''
+        """
         res = {}
         result = 0.0
         if context is None:

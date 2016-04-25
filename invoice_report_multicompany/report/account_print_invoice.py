@@ -33,8 +33,7 @@ class AccountInvoice2(report_sxw.rml_parse):
         })
 
     def context_get(self):
-        """
-        Description about method
+        """Description about method
 
         @param obj: object passed from report to be process
 
