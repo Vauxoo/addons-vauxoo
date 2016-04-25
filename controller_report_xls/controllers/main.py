@@ -150,7 +150,6 @@ def get_xls(html):
     ws = wb.add_sheet('Sheet 1')
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO.StringIO(html), parser)
-    tree.write("output.xml")
     root = tree.getroot()
     html = root
     row = 0
