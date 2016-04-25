@@ -41,8 +41,7 @@ class PurchaseRequisition(osv.Model):
     _inherit = 'purchase.requisition'
 
     def make_purchase_order(self, cr, uid, ids, partner_id, context=None):
-        """
-        Create New RFQ for Supplier
+        """Create New RFQ for Supplier
         """
         if context is None:
             context = {}
