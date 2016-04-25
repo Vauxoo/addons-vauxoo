@@ -19,27 +19,27 @@ class StockTansferDetails(models.TransientModel):
     def get_chec_inv_pick(self):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='check')
+            key, default=True)
         for record in self:
             record.check_inv_pick = check_inv_pick
     invoice_id = fields.Many2one(
         'account.invoice', string='Invoice to validate')
     picking_type_code = fields.Char(
         string='Picking Type Code', related='picking_id.picking_type_code')
-    check_inv_pick = fields.Char(
+    check_inv_pick = fields.Boolean(
         "Check invoice vs picking", compute=get_chec_inv_pick)
 
     @api.multi
     def do_detailed_transfer(self):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='check')
-        if not check_inv_pick == 'check':
+            key, default=True)
+        if not check_inv_pick:
             res = super(StockTansferDetails, self).do_detailed_transfer()
             return res
         for transfer in self:
             if transfer.picking_type_code == 'outgoing' and \
-                    transfer.picking_id.check_invoice == 'check':
+                    transfer.picking_id.check_invoice:
                 invoice = transfer.invoice_id
                 old_invoice = self.env['stock.picking'].search(
                     [('picking_type_code', '=', 'outgoing'),

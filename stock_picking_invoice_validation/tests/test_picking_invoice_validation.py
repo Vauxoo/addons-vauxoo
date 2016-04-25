@@ -82,7 +82,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
             'company_id': self.env.user.company_id.id,
             'partner_id': self.china_export.id,
             'order_policy': 'manual',
-            'check_invoice': 'check',
+            'check_invoice': True,
             'picking_policy': 'direct',
             'warehouse_id': self.warehouse.id,
         })
@@ -225,7 +225,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
             'company_id': self.env.user.company_id.id,
             'partner_id': self.china_export.id,
             'order_policy': 'manual',
-            'check_invoice': 'check',
+            'check_invoice': True,
             'picking_policy': 'direct',
             'warehouse_id': self.warehouse.id,
         })

@@ -15,15 +15,13 @@ class StockConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
     # general validation to check picking vs invoice
-    check_inv_pick = fields.Selection(
-        [('check', 'Check'),
-         ('no_check', 'No Check')], "Check invoice vs picking")
+    check_inv_pick = fields.Boolean("Check invoice vs picking")
 
     @api.model
     def get_default_check_inv_pick(self, fields_name):
         key = "stock.check_inv_pick"
         check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='check')
+            key, default=True)
         return {'check_inv_pick': check_inv_pick}
 
     @api.multi
@@ -31,4 +29,4 @@ class StockConfigSettings(models.TransientModel):
         config_parameters = self.env["ir.config_parameter"]
         key = "stock.check_inv_pick"
         config_parameters.set_param(
-            key, self.check_inv_pick or 'check', [])
+            key, self.check_inv_pick or True, [])

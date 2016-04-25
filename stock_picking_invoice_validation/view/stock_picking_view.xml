@@ -44,7 +44,7 @@
                     <field name="check_invoice" invisible="True"/>
                     <field name="invoice_id"
                         attrs="{'invisible':['|', ('picking_type_code', 'in', ('internal', 'incoming')),
-                                             ('check_invoice', '=', 'no_check')]}"
+                                             ('check_invoice', '=', False)]}"
                         domain="[('state','in',('open', 'paid'))]"/>
                 </xpath>
             </field>
