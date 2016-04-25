@@ -1,33 +1,25 @@
 # coding: utf-8
 {
     'name': "Sale Team Warehouse",
-    'summary': """
-Adding a field for the default user warehouse and
-modifing the global default method for asign in any
-realted field the correct default warehuse.
+    'summary': """Adding a field for the default user warehouse and modifying
+    the global default method for assign in any related field the correct
+    default warehouse.
     """,
-    # Autoloaded on v8.0 from README.rst
-    # 'description': """
     'author': "Vauxoo",
     'website': "http://www.vauxoo.com",
     'license': 'AGPL-3',
     'category': '',
-    'version': '8.0.0.0.1',
+    'version': '8.0.0.0.2',
     'depends': [
-        # We must respect the "sequence" now due to demo data in testing
-        # process may fail unspectly.
-        'base',
-        'sale',
-        'stock',
-        'crm',
+        'sale_stock',
         'sales_team',
     ],
     'test': [
     ],
     'data': [
         'views/sales_team_view.xml',
+        'security/ir.model.access.csv',
     ],
-    # only loaded in demonstration mode
     'demo': [
     ],
 }
