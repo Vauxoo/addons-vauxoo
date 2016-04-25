@@ -13,8 +13,7 @@ from openerp.tests.common import TransactionCase
 
 
 class TestProductTemplate(TransactionCase):
-    """
-        This test is to know if all the products that were purchased in the
+    """This test is to know if all the products that were purchased in the
         same order are retrieved to the functional field 'customer_purchased'.
     """
 
@@ -35,8 +34,7 @@ class TestProductTemplate(TransactionCase):
             self.product_objs.append(self.env.ref(prod))
 
     def test_cap_best_seller_sort(self):
-        """
-        This is the test that validates all products that are in the same
+        """This is the test that validates all products that are in the same
         sale order and that they are sorted by the given criteria.
         """
         product_objs = self.product_objs[:]

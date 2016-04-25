@@ -102,8 +102,7 @@ class AccountVoucher(osv.Model):
     }
 
     def first_move_line_get(self, cr, uid, voucher_id, move_id, company_currency, current_currency, context=None):
-        '''
-        Return a dict to be use to create the first account move line of given voucher.
+        """Return a dict to be use to create the first account move line of given voucher.
 
         :param voucher_id: Id of voucher what we are creating account_move.
         :param move_id: Id of account move where this line will be added.
@@ -111,7 +110,7 @@ class AccountVoucher(osv.Model):
         :param current_currency: id of currency of the voucher
         :return: mapping between fieldname and value of account move line to create
         :rtype: dict
-        '''
+        """
         context = context or {}
         move_line = super(AccountVoucher, self).first_move_line_get(cr, uid,
                                                                     voucher_id, move_id, company_currency, current_currency,

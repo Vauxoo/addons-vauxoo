@@ -583,8 +583,7 @@ class AccountAgingPartnerWizard(osv.osv_memory):
 
     def _get_invoice_by_partner(self, cr, uid, partner_ids,
                                 inv_type='out_invoice', context=None):
-        """
-        return a dictionary of dictionaries.
+        """return a dictionary of dictionaries.
             { partner_id: { values and invoice list } }
         """
         context = dict(context or {})
@@ -714,8 +713,7 @@ class AccountAgingPartnerWizard(osv.osv_memory):
         return True
 
     def print_report(self, cr, uid, ids, context=None):
-        """
-        To get the date and print the report
+        """To get the date and print the report
         @return : return report
         """
         context = dict(context or {})

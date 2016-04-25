@@ -18,18 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-'''
-This file loads the necessary information for the custom timesheet view.
-'''
+"""This file loads the necessary information for the custom timesheet view.
+"""
 from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
 
 class CustomTimesheetAll(osv.Model):
 
-    '''
-    Class that contains the methods needed to return the data to the view.
-    '''
+    """Class that contains the methods needed to return the data to the view.
+    """
     _name = "custom.timesheet.all"
     _order = "date desc"
     _auto = False
@@ -63,9 +61,8 @@ class CustomTimesheetAll(osv.Model):
     }
 
     def init(self, cr):
-        '''
-        Search method that executes query.
-        '''
+        """Search method that executes query.
+        """
         drop_view_if_exists(cr, 'custom_timesheet_all')
         cr.execute('''
             create or replace view custom_timesheet_all as (

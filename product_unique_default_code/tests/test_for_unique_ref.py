@@ -32,8 +32,7 @@ from openerp.tools import mute_logger
 
 class TestForUniqueRef(TransactionCase):
 
-    """
-    This test will prove the new constraint constraint and copy
+    """This test will prove the new constraint constraint and copy
     ovarriding function to can create a duplicated product with
     a unique internal reference (default_code product field)
     """
@@ -42,8 +41,7 @@ class TestForUniqueRef(TransactionCase):
         super(TestForUniqueRef, self).setUp()
 
     def test_1_copied_product_unique_default_code(self):
-        """
-        Test 1: This test will prove the next case:
+        """Test 1: This test will prove the next case:
         - Create a product with an internal reference
         - Execute the copy method to create another product record
         - Verify that copied-product has an internal reference totally unique
@@ -65,8 +63,7 @@ class TestForUniqueRef(TransactionCase):
         '.tests.test_for_unique_ref',
         'openerp.sql_db')
     def test_2_constraint_unique_internal_reference(self):
-        """
-        Test 2: This test will prove the new constraint added to this module
+        """Test 2: This test will prove the new constraint added to this module
         to can store only product with unique default_codes (internal refs):
         - Create two products with the same internal reference
         - Check if expected constraint exception is raised

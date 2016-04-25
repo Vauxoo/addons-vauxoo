@@ -30,16 +30,14 @@ class TestPartnerLocationMultiCompany(TransactionCase):
         self.get_records()
 
     def get_records(self):
-        """
-        get records to test
+        """get records to test
         """
         self.partner_rec = self.env.ref('base.main_partner')
         self.vauxoo_rec = self.env.ref('base.res_partner_23')
         self.vicking_rec = self.env.ref('base.res_partner_22')
 
     def test_international_field(self):
-        """
-        This international field is a fied defined at the res.partner model and
+        """This international field is a fied defined at the res.partner model and
         crm.claim model. This fiels is a functional property field.
         The current test will check:
             1. Multicumpany test (property).

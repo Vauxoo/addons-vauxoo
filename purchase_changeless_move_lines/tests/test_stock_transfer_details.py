@@ -30,20 +30,17 @@ from openerp.addons.purchase_changeless_move_lines.tests.common \
 
 class TestStockTransferDetails(TestStockCommon):
 
-    """
-    Picking Validation via Stock Transfer Detail Wizard.
+    """Picking Validation via Stock Transfer Detail Wizard.
     """
 
     def setUp(self):
-        """
-        Add global varaible for the model and xml id record used in this test
+        """Add global varaible for the model and xml id record used in this test
         """
         super(TestStockTransferDetails, self).setUp()
         self.wiz_obj = self.env['stock.transfer_details']
 
     def add_transfer_item(self, wiz):
-        """
-        Add new transfer item line to the stock transfer details wizard.
+        """Add new transfer item line to the stock transfer details wizard.
         """
         product = self.product_obj.browse(self.product3)
         wiz.write({
@@ -57,16 +54,14 @@ class TestStockTransferDetails(TestStockCommon):
         })
 
     def remove_transfer_item(self, wiz):
-        """
-        Add new transfer item line to the stock transfer details wizard.
+        """Add new transfer item line to the stock transfer details wizard.
         """
         item = wiz.item_ids.filtered(
             lambda line: line.product_id.id == self.product2)
         wiz.write({'item_ids': [(3, item.id)]})
 
     def test_01_manual(self):
-        """
-        Create stock transfer detauks wizard by hand (manually).
+        """Create stock transfer detauks wizard by hand (manually).
         """
         # Create/validate PO
         order = self.create_and_validate_po()
@@ -88,8 +83,7 @@ class TestStockTransferDetails(TestStockCommon):
         self.assertEqual(picking.state, 'done')
 
     def test_02_wizard(self):
-        """
-        This simaluate the picking Transfer via interface. When the user click
+        """This simaluate the picking Transfer via interface. When the user click
         the Transfer button and the Enter Transfer Detail wizard show up. In
         this case no line change in purchase order, picking or transfer wizard.
         """
@@ -106,8 +100,7 @@ class TestStockTransferDetails(TestStockCommon):
         self.assertEqual(picking.state, 'done')
 
     def test_03_add_move(self):
-        """
-        This simaluate the picking Transfer via interface. When the user click
+        """This simaluate the picking Transfer via interface. When the user click
         the Transfer button and the Enter Transfer Detail wizard show up. In
         this case will add a picking line before call the wizard. This must be
         fail.
@@ -130,8 +123,7 @@ class TestStockTransferDetails(TestStockCommon):
         self.assertEqual(picking.state, 'draft')
 
     def test_04_remove_move(self):
-        """
-        This simaluate the picking Transfer via interface. When the user click
+        """This simaluate the picking Transfer via interface. When the user click
         the Transfer button and the Enter Transfer Detail wizard show up. In
         this case will add a picking line before call the wizard. This must be
         fail.
@@ -154,8 +146,7 @@ class TestStockTransferDetails(TestStockCommon):
         self.assertEqual(picking.state, 'assigned')
 
     def test_05_edit_move(self):
-        """
-        This simaluate the picking Transfer via interface. When the user click
+        """This simaluate the picking Transfer via interface. When the user click
         the Transfer button and the Enter Transfer Detail wizard show up. In
         this case will edit a picking line before call the wizard. This must be
         fail.
@@ -180,8 +171,7 @@ class TestStockTransferDetails(TestStockCommon):
         self.assertEqual(picking.state, 'assigned')
 
     def test_06_add_transfer_item(self):
-        """
-        This simaluate the picking Transfer via interface. When the user click
+        """This simaluate the picking Transfer via interface. When the user click
         the Transfer button and the Enter Transfer Detail wizard show up. In
         this case will add a picking line before call the wizard. This must be
         fail.
@@ -204,8 +194,7 @@ class TestStockTransferDetails(TestStockCommon):
             wiz.do_detailed_transfer()
 
     def test_07_remove_transfer_item(self):
-        """
-        This simaluate the picking Transfer via interface. When the user click
+        """This simaluate the picking Transfer via interface. When the user click
         the Transfer button and the Enter Transfer Detail wizard show up. In
         this case will remove a picking line before call the wizard. This must
         be fail.

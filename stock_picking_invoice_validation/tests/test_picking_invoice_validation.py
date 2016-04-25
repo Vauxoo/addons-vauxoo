@@ -15,8 +15,7 @@ from datetime import datetime, timedelta
 
 
 class TestStockPickingInvoiceValidation(TransactionCase):
-    """
-        This Tests validate the payment type dependig
+    """This Tests validate the payment type dependig
         payment terms line to compute
     """
     def setUp(self):
@@ -116,8 +115,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
             self.assertEqual(invoice_id.state, 'paid')
 
     def test_00_validate_the_correct_invoice(self):
-        """
-            This test validates that is registered the correct invoice
+        """This test validates that is registered the correct invoice
             in the picking
         """
         invoice_2 = self.env.ref('sale.test_crm_sale_invoice_2')
@@ -155,8 +153,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
                 wiz.do_detailed_transfer()
 
     def test_01_validate_products_and_qtys(self):
-        """
-            This test validates that an invoice has the correct products and
+        """This test validates that an invoice has the correct products and
             qty vs the moves picking
         """
         product = self.env.ref('product.product_product_4')
@@ -214,8 +211,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
                 wiz.do_detailed_transfer()
 
     def test_02_validate_the_registered_invoice(self):
-        """
-            This test validates that is registered the correct invoice
+        """This test validates that is registered the correct invoice
             in no more than one picking
         """
 

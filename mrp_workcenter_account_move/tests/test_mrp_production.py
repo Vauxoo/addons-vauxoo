@@ -10,8 +10,7 @@ from openerp.tests.common import TransactionCase
 
 class TestMrpProduction(TransactionCase):
 
-    '''
-        This test do the following:
+    """This test do the following:
             1.- Create a mrp.production.
             2.- Proceed to approve.
             3.- Proceed to begin production.
@@ -21,7 +20,7 @@ class TestMrpProduction(TransactionCase):
                 credit ==15
             7.- Check move_id.line_id.account_id=
                     rev_inventory_deviation_account,credit ==5
-    '''
+    """
 
     # Pseudo-constructor method of the setUp test.
     def setUp(self):

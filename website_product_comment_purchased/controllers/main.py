@@ -12,8 +12,7 @@ class WebsiteCommentsAsync(http.Controller):
                 auth="public",
                 website=True)
     def products_per_attr(self, **post):
-        """
-        This method main purpose is to get asynchronously all the wether the
+        """This method main purpose is to get asynchronously all the wether the
         customer purchased or not the product he commented.
         """
         cr, uid, pool = request.cr, request.uid, request.registry

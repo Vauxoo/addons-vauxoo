@@ -18,18 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-'''
-This file loads the necessary information for the custom task view.
-'''
+"""This file loads the necessary information for the custom task view.
+"""
 from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
 
 class CustomProjectTask(osv.Model):
 
-    '''
-    Class that contains the methods needed to return the data to the view.
-    '''
+    """Class that contains the methods needed to return the data to the view.
+    """
     _name = "custom.project.task"
     _auto = False
 
@@ -61,9 +59,8 @@ class CustomProjectTask(osv.Model):
     }
 
     def init(self, cr):
-        '''
-        Search method that executes query.
-        '''
+        """Search method that executes query.
+        """
         drop_view_if_exists(cr, 'custom_project_task')
         cr.execute('''
             create or replace view custom_project_task as (

@@ -5,8 +5,7 @@ from openerp.addons.stock.tests.common import TestStockCommon
 
 class TestsLandedCosts(TestStockCommon):
 
-    """
-    Testint Stock Landed Costs for Average Case
+    """Testint Stock Landed Costs for Average Case
     1. Create a product
     2. Provide inventory prior to reception of material by importation
     2.a.- Can I provide valuation when creating inventory
@@ -19,8 +18,7 @@ class TestsLandedCosts(TestStockCommon):
     """
 
     def setUp(self):
-        """
-        basic method to define some basic data to be re use in all test cases.
+        """basic method to define some basic data to be re use in all test cases.
         """
         super(TestsLandedCosts, self).setUp()
         self.return_obj = self.env['stock.return.picking']

@@ -1,7 +1,6 @@
 # coding: utf-8
 
-"""
-Definition of the module testing cases (unittest)
+"""Definition of the module testing cases (unittest)
 """
 
 ###############################################################################
@@ -32,13 +31,11 @@ from openerp.tests.common import TransactionCase
 
 class TestCommission(TransactionCase):
 
-    """
-    Tests for Commissions (commission.payment)
+    """Tests for Commissions (commission.payment)
     """
 
     def setUp(self):
-        """
-        basic method to define some basic data to be re use in all test cases.
+        """basic method to define some basic data to be re use in all test cases.
         """
         super(TestCommission, self).setUp()
         self.cp_model = self.registry('commission.payment')

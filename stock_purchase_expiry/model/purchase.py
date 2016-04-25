@@ -34,8 +34,7 @@ class PurchaseOrder(osv.Model):
     }
 
     def _prepare_order_picking(self, cur, uid, order, context=None):
-        """
-        Overwirthe the method that create the values for the picking creation
+        """Overwirthe the method that create the values for the picking creation
         and add the purchase order date_contract_expiry field to the stock
         picking element.
         """

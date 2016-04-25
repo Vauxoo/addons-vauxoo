@@ -23,23 +23,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-'''
-File to inherit hr.employee and added fields to complete name
-'''
+"""File to inherit hr.employee and added fields to complete name
+"""
 from openerp.osv import osv, fields
 
 
 class HrEmployee(osv.Model):
-    '''
-    Inherit hr.employee to added fields to complete name
-    '''
+    """Inherit hr.employee to added fields to complete name
+    """
     _inherit = 'hr.employee'
 
     def _get_full_name(self, cr, uid, ids, fields_name, args, context=None):
-        '''
-        Method to concatenate last_name, second_last_name, name & second_name
+        """Method to concatenate last_name, second_last_name, name & second_name
         in a new field function
-        '''
+        """
         if context is None:
             context = {}
         res = {}
@@ -50,9 +47,8 @@ class HrEmployee(osv.Model):
         return res
 
     def _update_fill_name(self, cr, uid, ids, context=None):
-        '''
-        Method call function
-        '''
+        """Method call function
+        """
         return ids
 
     def _get_full_first_name(self, cr, uid, ids, fields_name, args,

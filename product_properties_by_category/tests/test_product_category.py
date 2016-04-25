@@ -41,8 +41,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         })
 
     def test_01_category_prch_rqst(self):
-        """
-        Test 01: Check that the product receive the default value
+        """Test 01: Check that the product receive the default value
         defined in the product.category
         """
         # Set "Call for Bids" False to the product.
@@ -56,8 +55,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         self.assertTrue(self.product.purchase_requisition)
 
     def test_02_no_restriction(self):
-        """
-        Test 02: No restriction over the inherit values.
+        """Test 02: No restriction over the inherit values.
         The user can manually change a value inherit form
         the product.category as is needed.
         """
@@ -72,8 +70,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
             bool(int(self.product_category.purchase_requisition)))
 
     def test_03_sub_category_default_value(self):
-        """
-        Test 03: Check pull the default value form
+        """Test 03: Check pull the default value form
         the parent category one level above.
         """
         category_a = self.product_category
@@ -90,8 +87,7 @@ class TestProductCategoryProperties(common.SingleTransactionCase):
         self.assertTrue(self.product.purchase_requisition)
 
     def test_04_all_category_default_no_set(self):
-        """
-        Test 04: What happen when is not default value
+        """Test 04: What happen when is not default value
         defined in the product category or in either of its parents.
         """
         # Change the product "Call for Bids" to True.

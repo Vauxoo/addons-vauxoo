@@ -43,9 +43,8 @@ class AccountInvoice(osv.Model):
     # ~                         'set_to_draft', cr)
     # ~ return res
     def action_number(self, cr, uid, ids, context=None):
-        '''
-        Modified to witholding vat validate
-        '''
+        """Modified to witholding vat validate
+        """
         wf_service = workflow
         res = super(AccountInvoice, self).action_number(cr, uid, ids)
         iva_line_obj = self.pool.get('account.wh.iva.line')

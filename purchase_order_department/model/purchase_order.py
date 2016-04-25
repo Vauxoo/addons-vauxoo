@@ -56,8 +56,7 @@ class PurchaseRequisition(osv.Model):
     _inherit = "purchase.requisition"
 
     def make_purchase_order(self, cur, uid, ids, partner_id, context=None):
-        """
-        Over write the method to also extract the department_id from the
+        """Over write the method to also extract the department_id from the
         purchase requisition.
         """
         context = context or {}

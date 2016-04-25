@@ -300,8 +300,7 @@ class StockWarehouse(models.Model):
 
     @api.model
     def compute_next_color(self):
-        """
-        Choose the next available color for
+        """Choose the next available color for
         the picking types of this warehouse
         """
         available_colors = [c % 9 for c in range(3, 12)]

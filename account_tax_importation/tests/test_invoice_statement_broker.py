@@ -3,8 +3,7 @@ from openerp.addons.account_tax_importation.tests.common import TestTaxCommon
 
 
 class TestInvoiceStatementBroker(TestTaxCommon):
-    """
-    This test is to check that when I create a invoice to 'Reposicion de
+    """This test is to check that when I create a invoice to 'Reposicion de
     gastos' this invoice not create 'Iva efectivamente pagado' to this invoice,
     only to invoice that send me the broker from mi supplier.
     """
@@ -13,8 +12,7 @@ class TestInvoiceStatementBroker(TestTaxCommon):
         super(TestInvoiceStatementBroker, self).setUp()
 
     def test_programmatic_tax_statement(self):
-        """
-        This method test the feature with bank.statement
+        """This method test the feature with bank.statement
         """
         cr, uid = self.cr, self.uid
         # I create the invoice to broker

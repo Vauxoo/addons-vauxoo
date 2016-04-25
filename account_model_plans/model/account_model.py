@@ -1,7 +1,6 @@
 # coding: utf-8
 
-"""
-Inherit the account.model.line model in the account_model_plans Odoo module.
+"""Inherit the account.model.line model in the account_model_plans Odoo module.
 """
 
 ###############################################################################
@@ -32,8 +31,7 @@ from openerp.osv import fields, osv
 
 
 class AccountModelLine(osv.Model):
-    """
-    Extend the account.model.line model:
+    """Extend the account.model.line model:
         - Add a new field named analytics_id.
     """
 
@@ -46,8 +44,7 @@ class AccountModelLine(osv.Model):
 
 
 class AccountModel(osv.Model):
-    """
-    Extend the account.model model:
+    """Extend the account.model model:
         - overwrite the generate_line_values method to take into account the
           analytics_id field.
     """
@@ -55,8 +52,7 @@ class AccountModel(osv.Model):
     _inherit = 'account.model'
 
     def generate_line_values(self, cr, uid, line, context=None):
-        """
-        Overwrite method to take into account the analytics_id field.
+        """Overwrite method to take into account the analytics_id field.
         The val dictionary is updated to add the field and value.
         @return a tuple (val, context) where val is a dictionary.
         """

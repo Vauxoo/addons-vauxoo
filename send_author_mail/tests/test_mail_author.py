@@ -23,8 +23,7 @@ from openerp.addons.mail.tests.common import TestMail
 
 
 class TestMailMailAuthor(TestMail):
-    """
-        These tests validate the cases when partner is allow to receive
+    """These tests validate the cases when partner is allow to receive
         your own emails
 
     """
@@ -39,8 +38,7 @@ class TestMailMailAuthor(TestMail):
     # -----------------------------------------------------------
 
     def test_receive_mail_author(self):
-        """
-            This test validate when partner that send email must receive
+        """This test validate when partner that send email must receive
             your own email, because has this configuration:
                 @receive_my_emails: True
                 @notify_email: always
@@ -70,8 +68,7 @@ class TestMailMailAuthor(TestMail):
             'Partner to notify incorrect, should be two partners to notify')
 
     def test_not_receive_mail_author(self):
-        """
-            This test validate when partner that send email must not receive
+        """This test validate when partner that send email must not receive
             your own email, because has this configuration:
                 @receive_my_emails: False
                 @notify_email: always
@@ -101,8 +98,7 @@ class TestMailMailAuthor(TestMail):
             'Partner to notify incorrect, should be only partner to notify')
 
     def test_not_receive_mail_author_2(self):
-        """
-            This test validate when partner that send email must not receive
+        """This test validate when partner that send email must not receive
             your own email, because has this configuration:
                 @receive_my_emails: True
                 @notify_email: none
@@ -132,8 +128,7 @@ class TestMailMailAuthor(TestMail):
             'Partner to notify incorrect, should be only partner to notify')
 
     def test_not_receive_mail_author3(self):
-        """
-            This test validate when partner that send email must not receive
+        """This test validate when partner that send email must not receive
             your own email, because has this configuration:
                 @receive_my_emails: False
                 @notify_email: none

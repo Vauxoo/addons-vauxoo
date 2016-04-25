@@ -35,8 +35,7 @@ import openerp.workflow as workflow
 
 class PrintPurchaseReport(osv.TransientModel):
 
-    """
-    OpenERP Wizard : print.purchase.report
+    """OpenERP Wizard : print.purchase.report
     """
     _name = "print.purchase.report"
 

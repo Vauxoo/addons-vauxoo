@@ -4,8 +4,7 @@ from openerp.tests.common import TransactionCase
 
 
 class TestMrpLocationSrcFromRule(TransactionCase):
-    """
-        These tests validate the Locations of MO
+    """These tests validate the Locations of MO
         created from procurement
     """
 

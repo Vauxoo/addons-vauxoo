@@ -30,8 +30,7 @@ from openerp.osv import fields, osv
 
 class InheritedProduct(osv.Model):
 
-    """
-    Inherit to add rfq field for indicate which product has requisition
+    """Inherit to add rfq field for indicate which product has requisition
     """
     _inherit = "product.product"
     _columns = {
