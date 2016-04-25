@@ -49,8 +49,7 @@ class ReportController(main.ReportController):
 
     @route(['/report/download'], type='http', auth="user")
     def report_download(self, data, token):
-        """
-        This is an override of original method in ReportController class in
+        """This is an override of original method in ReportController class in
         report module
         What is intended here is to properly assign to the extension to XLS
         """
