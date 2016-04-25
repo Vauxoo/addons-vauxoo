@@ -48,11 +48,10 @@ class AccountInvoice(osv.osv):
         return super(AccountInvoice, self).copy(default)
 
     def payment_approve(self, cr, uid, ids, context=None):
-        '''
-        Mark boolean as True, to approve invoice to be pay.
+        """Mark boolean as True, to approve invoice to be pay.
         Added message to messaging block of supplier invoice,
         when approve invoice.
-        '''
+        """
         context = context or {}
 
         context.update({'default_body': _(u'Invoice Approved to Pay'),
@@ -82,11 +81,10 @@ class AccountInvoice(osv.osv):
         return self.write(cr, uid, ids, {'to_pay': True})
 
     def payment_disapproves(self, cr, uid, ids, context=None):
-        '''
-        Mark boolean as False, to Disapprove invoice to be pay.
+        """Mark boolean as False, to Disapprove invoice to be pay.
         Added message to messaging block of supplier invoice,
         when disapproved to Pay.
-        '''
+        """
         context = context or {}
 
         context.update({'default_body': _(u'Invoice Disapproved to Pay'),

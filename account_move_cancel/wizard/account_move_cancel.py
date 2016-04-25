@@ -41,11 +41,10 @@ class AccountMoveCancel(osv.TransientModel):
 
     def cancel_account_move(self, cr, uid, ids, context=None,
                             invoice_ids=False):
-        '''
-            Cancel invoices to delete account move
+        """Cancel invoices to delete account move
             @param invoice_ids, ids list of invoices to method apply
             @param ids, ids of wizard if called from this
-        '''
+        """
         if context is None:
             context = {}
         invo_obj = self.pool.get('account.invoice')

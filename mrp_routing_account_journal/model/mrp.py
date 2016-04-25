@@ -13,8 +13,7 @@ class MrpBom(models.Model):
 
 
 class MrpRouting(models.Model):
-    """
-    For specifying the routings of Work Centers.
+    """For specifying the routings of Work Centers.
     """
     _inherit = 'mrp.routing'
     journal_id = fields.Many2one(

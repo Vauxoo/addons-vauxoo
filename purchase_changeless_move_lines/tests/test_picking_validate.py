@@ -30,20 +30,17 @@ from openerp.addons.purchase_changeless_move_lines.tests.common \
 
 class TestPickingValidate(TestStockCommon):
 
-    """
-    Test picking validation taking the picking create from a purchase order
+    """Test picking validation taking the picking create from a purchase order
     confirmation
     """
 
     def setUp(self):
-        """
-        Add global varaible for the model and xml id record used in this test
+        """Add global varaible for the model and xml id record used in this test
         """
         super(TestPickingValidate, self).setUp()
 
     def test_01_base(self):
-        """
-        Validate a picking from a purchase order making not changes to the
+        """Validate a picking from a purchase order making not changes to the
         picking moves and with a purchase order change_picking False.
         """
         # Create/validate PO
@@ -55,8 +52,7 @@ class TestPickingValidate(TestStockCommon):
         self.assertEqual(picking.state, 'done')
 
     def test_02_add_move(self):
-        """
-        Validate a picking generate via purchase order (w/change_picking False)
+        """Validate a picking generate via purchase order (w/change_picking False)
         adding one move to picking. This will fail and raise and exception
         indicating this is not possible.
         """
@@ -74,8 +70,7 @@ class TestPickingValidate(TestStockCommon):
         self.assertEqual(picking.state, 'draft')
 
     def test_03_edit_move(self):
-        """
-        Validate a picking generate via purchase order (w/change_picking False)
+        """Validate a picking generate via purchase order (w/change_picking False)
         editing the product or qty on the move. This will fail and raise
         and exception indicating this is not possible.
         """
@@ -96,8 +91,7 @@ class TestPickingValidate(TestStockCommon):
         self.assertEqual(picking.state, 'assigned')
 
     def test_04_remove_move(self):
-        """
-        Validate a picking generate via purchase order (w/change_picking False)
+        """Validate a picking generate via purchase order (w/change_picking False)
         remove one move. This will fail and raise and exception indicating
         this is not possible.
         """

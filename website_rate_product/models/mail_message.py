@@ -42,8 +42,7 @@ class ProductTemplate(models.Model):
 
     @api.depends("message_last_post")
     def _get_rating(self):
-        """
-        This method gets the rating for each rated template based on the
+        """This method gets the rating for each rated template based on the
         comments, the rating per comment is stored in the mail.message model
         """
         self._cr.execute("""

@@ -29,8 +29,7 @@ class MrpProductProduct(models.TransientModel):
 
     @api.multi
     def on_change_qty(self, product_qty, consume_lines):
-        """
-        When changing the quantity of products to be produced it will
+        """When changing the quantity of products to be produced it will
         recalculate the number of raw materials needed according
         to the scheduled products and the already consumed/produced products
         It will return the consume lines needed for the products to be produced
@@ -72,10 +71,9 @@ class MrpProductProduct(models.TransientModel):
 
     @api.multi
     def do_produce(self):
-        '''
-        Overwritten to show a message if someone try to produce more than
+        """Overwritten to show a message if someone try to produce more than
         available to produce
-        '''
+        """
         production_id = self._context.get('active_id', False)
         assert production_id, "Production Id should be specified "\
             "in context as a Active ID."

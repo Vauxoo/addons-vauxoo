@@ -36,8 +36,7 @@ class SaleOrder(models.Model):
     @api.multi
     @api.depends('order_line.product_id')
     def _get_commitment_date(self):
-        """
-            This method is overwrite because we need to get
+        """This method is overwrite because we need to get
             Commitment date field in base to max date of the
             sale order line
         """

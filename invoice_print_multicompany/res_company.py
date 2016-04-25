@@ -28,8 +28,7 @@ from openerp.osv import fields, osv
 
 class InvoiceMulticompanyReport(osv.Model):
 
-    """
-    invoice_multicompany_report
+    """invoice_multicompany_report
     """
 
     _inherit = 'res.company'

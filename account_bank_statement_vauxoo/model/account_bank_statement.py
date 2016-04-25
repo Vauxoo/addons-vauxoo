@@ -95,11 +95,10 @@ class AccountBankStatement(osv.Model):
             return True
 
     def file_verify_cr(self, cr, uid, ids, context={}):
-        '''
-        Verification of format Files.
+        """Verification of format Files.
         For CR Banco Nacional
         #Oficina    FechaMovimiento NumDocumento    Debito  Credito Descripcion
-        '''
+        """
         sheet = context.get('xls_sheet')
         if sheet:
             if sheet.cell(0, 0).value == 'Oficina' and \
@@ -169,10 +168,9 @@ class AccountBankStatement(osv.Model):
         return date_range
 
     def set_counterpart(self, cr, uid, ids, context=None):
-        '''
-        Return account_id to set the line in bank statement
+        """Return account_id to set the line in bank statement
         TODO: Make better doc
-        '''
+        """
         bsl = self.pool.get('bank.statement.imported.lines').browse(
             cr, uid, context.get('bsl_id', []), context=context)
         a_obj = self.pool.get('account.account')
@@ -376,8 +374,7 @@ class AccountBankStatement(osv.Model):
 
 class BankStatementImportedLines(osv.Model):
 
-    """
-    OpenERP Model : ClassName
+    """OpenERP Model : ClassName
     """
 
     _name = 'bank.statement.imported.lines'

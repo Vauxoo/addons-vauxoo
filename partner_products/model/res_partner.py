@@ -40,8 +40,7 @@ class ResPartner(osv.Model):
 
     @api.one
     def copy(self, default=None):
-        """
-        overwrite the copy orm method to clean the produc_ids list.
+        """overwrite the copy orm method to clean the produc_ids list.
         """
         default = default or {}
         default.update({'product_ids': []})

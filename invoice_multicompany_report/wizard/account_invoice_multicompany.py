@@ -35,8 +35,7 @@ import openerp.workflow as workflow
 
 class PrintAccountInvoiceReport(osv.TransientModel):
 
-    """
-    OpenERP Wizard : print.account.invoice.report
+    """OpenERP Wizard : print.account.invoice.report
     """
     _name = "print.account.invoice.report"
 

@@ -26,8 +26,7 @@ class MrpWorkcenter(models.Model):
 
 
 class MrpProduction(models.Model):
-    """
-    Production Orders / Manufacturing Orders
+    """Production Orders / Manufacturing Orders
     """
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order'
@@ -93,8 +92,7 @@ class MrpProduction(models.Model):
 
     @api.v7
     def refresh_quant(self, cr, uid, production, amount, diff):
-        """
-        Method that allow to refresh values for quant & segmentation costs
+        """Method that allow to refresh values for quant & segmentation costs
         """
 
         super(MrpProduction, self).refresh_quant(

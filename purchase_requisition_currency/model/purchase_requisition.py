@@ -41,8 +41,7 @@ class PurchaseRequisition(osv.Model):
     }
 
     def make_purchase_order(self, cr, uid, ids, partner_id, context=None):
-        """
-        overwrithe method to check if the pricelist select by the created
+        """overwrithe method to check if the pricelist select by the created
         purchase order have the same currency of the purchase requisition
         currency. If not, it look for one pricelist that fits and change it.
         If it do not find any pricelist that fit then it would raise an

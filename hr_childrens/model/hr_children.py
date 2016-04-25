@@ -23,17 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-'''
-File to add fields date_start and children_ids in hr.employee, and the
+"""File to add fields date_start and children_ids in hr.employee, and the
 attributes to childrens of employee.
-'''
+"""
 from openerp.osv import osv, fields
 
 
 class HrEmployee(osv.Model):
-    '''
-    Inherit hr_employee to add date_start and to add yours childrens
-    '''
+    """Inherit hr_employee to add date_start and to add yours childrens
+    """
     _inherit = "hr.employee"
 
     _columns = {
@@ -44,9 +42,8 @@ class HrEmployee(osv.Model):
 
 
 class HrChildren(osv.Model):
-    '''
-    Class to add object of childrens to employee
-    '''
+    """Class to add object of childrens to employee
+    """
     _name = "hr.children"
 
     _order = 'name'

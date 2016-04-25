@@ -27,15 +27,13 @@ from openerp import api, models
 
 
 class StockConfigSettings(models.TransientModel):
-    """
-    Add method to configure the stock config settings.
+    """Add method to configure the stock config settings.
     """
     _inherit = "stock.config.settings"
 
     @api.model
     def action_stock_config_settings_lot_repeated(self):
-        """
-        Active tracks lots or serial numbers
+        """Active tracks lots or serial numbers
         @return True
         """
         res = self.create({

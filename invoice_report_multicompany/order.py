@@ -4,8 +4,7 @@ from openerp.osv import fields, osv
 
 class SaleOrderLine(osv.Model):
 
-    """
-    OpenERP Model : sale_order_line
+    """OpenERP Model : sale_order_line
     """
     _inherit = 'sale.order.line'
     _columns = {
@@ -15,8 +14,7 @@ class SaleOrderLine(osv.Model):
 
 class SaleOrder(osv.Model):
 
-    """
-    OpenERP Model : sale_order_line
+    """OpenERP Model : sale_order_line
     """
     _inherit = 'sale.order'
 

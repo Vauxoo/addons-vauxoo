@@ -50,8 +50,7 @@ class ProductTemplate(models.Model):
 
     @api.onchange('categ_id')
     def get_product_properties(self):
-        """
-        Reviews the state of the field product property in the product.category
+        """Reviews the state of the field product property in the product.category
         and update the default value of the corresponding fields in the
         product.template. If the category have not default value defined in the
         field will search into its parent categorty and so on until found a
@@ -65,8 +64,7 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def get_purchase_requisition_default(self):
-        """
-        Add return the default value for the "Call for Bids" boolean field.
+        """Add return the default value for the "Call for Bids" boolean field.
         """
         cr_categ_id = self.categ_id
         default_value = '-1'

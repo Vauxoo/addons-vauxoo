@@ -13,8 +13,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         self.res_user_obj = self.env['res.users']
 
     def test_sale_team_warehoue(self):
-        '''
-        1.- Testing that the Demo User has not sales team set.
+        """1.- Testing that the Demo User has not sales team set.
         2.-Testing that the sales order created by Demo User has
         the main warehouse assigned by default.
         3.- Writting a sales team to Demo user and a default warehouse for
@@ -22,7 +21,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         4.- Testing that the sales order created by Demo User after
         the sales team assignation has the default warehouse set
         on the user sales team.
-        '''
+        """
         demo_user = self.env.ref('base.user_demo')
         main_wh = self.env.ref('stock.warehouse0')
         test_wh = self.env.ref('stock.stock_warehouse_shop0')

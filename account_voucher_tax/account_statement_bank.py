@@ -37,8 +37,7 @@ class AccountBankStatementLine(osv.osv):
             self, cr, uid, parent,
             move_line_counterpart, move_line_payment_tax, amount_residual,
             company_currency, current_currency, context=None):
-        '''
-        Prepare to taxes the two lines in company currency due to currency rate
+        """Prepare to taxes the two lines in company currency due to currency rate
         difference.
 
         :param @parent: browse record of the voucher.line
@@ -53,7 +52,7 @@ class AccountBankStatementLine(osv.osv):
         :return: the account move line and its counterpart to create,
             depicted as mapping between fieldname and value
         :rtype: tuple of dict
-        '''
+        """
         if amount_residual > 0:
             account_id = parent.company_id.expense_currency_exchange_account_id
             if not account_id:
@@ -268,11 +267,10 @@ class AccountBankStatementLine(osv.osv):
 
     def _check_moves_to_concile(
             self, cr, uid, id, mv_line_dicts, context=None):
-        '''
-        Method to send to validate lines to statement to check that not try
+        """Method to send to validate lines to statement to check that not try
         reconcile a invoice refound with a invoice in a statment.
         param @mv_line_dicts: dict with data of lines to statement
-        '''
+        """
         if context is None:
             context = {}
         move_line_obj = self.pool.get('account.move.line')
@@ -295,13 +293,12 @@ class AccountBankStatementLine(osv.osv):
         return True
 
     def _validate_not_refund(self, cr, uid, t_move, t_lines, context=None):
-        '''
-        This method not does allow reconcile a invoice refund with a
+        """This method not does allow reconcile a invoice refund with a
         invoice in a payment.
         param @t_move: Type of payment to make (payment or receipt)
         param @t_lines: dict with 2 keys (cr, dr), and each of this with a
         list that contain the objects from the journals of lines to pay.
-        '''
+        """
         inc_moves = []
         if t_lines.get('cr', False) and t_lines.get('dr', False):
             if t_move == 'payment':
@@ -329,7 +326,7 @@ class AccountBankStatementLine(osv.osv):
             move_line_tax, move_line_rec,
             amount_rec_payable, amount_unreconcile_rec_pay,
             parent, company_currency, statement_currency, context=None):
-        ''' This function create reconcile of taxes and validate
+        """ This function create reconcile of taxes and validate
             if there is rate exchange difference to called function that create
             the two lines of adjust
 
@@ -348,7 +345,7 @@ class AccountBankStatementLine(osv.osv):
             return: list with position [0] all moves created and position [1]
                 just aml to reconcile
             rtype: tuple of list
-            '''
+            """
 
         move_line_obj = self.pool.get('account.move.line')
         currency_obj = self.pool.get('res.currency')
@@ -581,10 +578,10 @@ class AccountBankStatementLine(osv.osv):
         return dat
 
     def _get_retention(self, cr, uid, account_group=None, tax=None):
-        ''' Get retention of same type of category tax
+        """ Get retention of same type of category tax
             @param account_group: Dictionary with grouped by key of account_id
                 and value amount fox example {1: 1.0}
-            @param tax: Object Browse of tax '''
+            @param tax: Object Browse of tax """
 
         tax_obj = self.pool.get('account.tax')
         amount_retention_tax = 0

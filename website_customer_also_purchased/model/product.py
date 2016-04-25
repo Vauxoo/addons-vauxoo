@@ -48,8 +48,7 @@ class ProductTemplate(models.Model):
     @api.multi
     def _get_purchased(self, offset=0, max_product_qty=6):
 
-        """
-        This method gets all the products that were purchased in the
+        """This method gets all the products that were purchased in the
         sale order of the current product.The returned product are sorted
         according to website configuration.
         """

@@ -64,9 +64,8 @@ class SignYoutubeConf(osv.Model):
     }
 
     def get_items(self, entry):
-        '''
-        Return the video details
-        '''
+        """Return the video details
+        """
         youtube_id = ''
         if entry:
             youtube_url = entry.GetHtmlLink().href
@@ -108,9 +107,8 @@ class SignYoutubeConf(osv.Model):
         return True
 
     def load_videos(self, cr, uid, ids, filters_name=None, context=None):
-        '''
-        Load the videos for your account and added in the config lines
-        '''
+        """Load the videos for your account and added in the config lines
+        """
         if context is None:
             context = {}
         line = self.pool.get('sign.youtube.conf.line')
@@ -215,9 +213,8 @@ class SignYoutubeConfLine(osv.Model):
     _order = 'views desc'
 
     def load_url(self, cr, uid, ids, context=None):
-        '''
-        Launch a new window where you can the watch the video
-        '''
+        """Launch a new window where you can the watch the video
+        """
         if context is None:
             context = {}
         for wzr in self.browse(cr, uid, ids, context=context):
@@ -228,9 +225,8 @@ class SignYoutubeConfLine(osv.Model):
             }
 
     def show_on_inbox(self, cr, uid, ids, context=None):
-        '''
-        Generate a new windows to add a message for then send it to the inbox message
-        '''
+        """Generate a new windows to add a message for then send it to the inbox message
+        """
         if context is None:
             context = {}
         for wzr in self.browse(cr, uid, ids, context=context):
@@ -257,9 +253,8 @@ class SignYoutubeConfLine(osv.Model):
             }
 
     def send_to_inbox(self, cr, uid, ids, context=None):
-        '''
-        Send the message to the inbox for the specific group
-        '''
+        """Send the message to the inbox for the specific group
+        """
         if context is None:
             context = {}
         message_obj = self.pool.get('mail.group')

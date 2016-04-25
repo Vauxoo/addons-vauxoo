@@ -42,8 +42,7 @@ class BaremoBook(osv.Model):
 
 class Baremo(osv.Model):
 
-    """
-    OpenERP Model : baremo
+    """OpenERP Model : baremo
     """
 
     _name = 'baremo'
@@ -69,8 +68,7 @@ class Baremo(osv.Model):
 
 class BaremoDiscount(osv.Model):
 
-    """
-    OpenERP Model : baremo_discount
+    """OpenERP Model : baremo_discount
     """
 
     _name = 'baremo.discount'

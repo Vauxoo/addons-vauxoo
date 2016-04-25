@@ -5,13 +5,11 @@ from openerp.addons.stock.tests.common import TestStockCommon
 
 class TestsStockQuantCostSegmentation(TestStockCommon):
 
-    """
-    Testing Material Cost on Quants
+    """Testing Material Cost on Quants
     """
 
     def setUp(self):
-        """
-        basic method to define some basic data to be re use in all test cases.
+        """basic method to define some basic data to be re use in all test cases.
         """
         super(TestsStockQuantCostSegmentation, self).setUp()
         self.quant = self.env['stock.quant']

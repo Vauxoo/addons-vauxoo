@@ -32,8 +32,7 @@ class StockInvoiceOnshipping(osv.TransientModel):
     _inherit = 'stock.invoice.onshipping'
 
     def open_invoice(self, cur, uid, ids, context=None):
-        """
-        Overwrite the wizard to first check that the stock picking elements
+        """Overwrite the wizard to first check that the stock picking elements
         have not contract due date, if one of then is expired then will
         raise an exception. If not one is expire will peform the create invoice
         action propertly.

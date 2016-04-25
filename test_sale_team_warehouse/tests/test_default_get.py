@@ -14,14 +14,13 @@ class TestDefaultGet(TransactionCase):
             'test.default.get.warehouse.model']
 
     def tests_default_get_model(self):
-        '''
-        1.- Testing the default basic method.
+        """1.- Testing the default basic method.
         2.- Testing that the overwriting default_get works.
         3.- Testing that the record warehouse_id match with the
         warehouse returned for the _default_warehouse method.
         4.- Testing that the record warehouse_id match with the
         warehouse_id assign on the sales team of the user.
-        '''
+        """
         record = self.generic_model_obj.create({'name': 'TestName1'})
         self.assertTrue(record.character == 'Test Default Chart',
                         'Default character text is not set.')

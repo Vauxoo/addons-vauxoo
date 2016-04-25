@@ -42,8 +42,7 @@ SUMINISTRO = [('comprar', 'Comprar'),
 
 class StockCount(osv.TransientModel):
 
-    """
-    Conteo del Stock
+    """Conteo del Stock
     """
     _name = "stock.count"
     _columns = {

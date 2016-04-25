@@ -33,8 +33,7 @@ class TestPurchaseOrder(TestStockCommon):
         super(TestPurchaseOrder, self).setUp()
 
     def test_01_po(self):
-        """
-        Purchase Order CRUD: Create, Read, Update, Duplicate, and Delete
+        """Purchase Order CRUD: Create, Read, Update, Duplicate, and Delete
         """
         # Create Purchase Order: Check that was created correctly in draft
         # state with no lines and with change_picking = False.

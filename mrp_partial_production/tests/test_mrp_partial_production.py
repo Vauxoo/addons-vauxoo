@@ -22,9 +22,8 @@ class TestValidatePickings(TransactionCase):
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_01_produce_partially(self):
-        '''
-        Test the whole process with partial productions
-        '''
+        """Test the whole process with partial productions
+        """
         mrp_brw = self.mrp.search([('product_id', '=', self.product.id)])
 
         # Reserving products

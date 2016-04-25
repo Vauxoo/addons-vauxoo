@@ -231,8 +231,7 @@ class AccountVoucher(osv.Model):
             self, cr, uid, voucher, line_total, move_id, name,
             company_currency, current_currency, move_reconcile_id,
             context=None):
-        '''
-        Set a dict to be use to create the writeoff move line.
+        """Set a dict to be use to create the writeoff move line.
 
         :param voucher_id: Id of voucher what we are creating account_move.
         :param line_total: Amount remaining to be allocated on lines.
@@ -245,7 +244,7 @@ class AccountVoucher(osv.Model):
         :return: mapping between fieldname and value of account move line to
             create
         :rtype: dict
-        '''
+        """
         currency_obj = self.pool.get('res.currency')
         move_line_obj = self.pool.get('account.move.line')
         move_line = {}

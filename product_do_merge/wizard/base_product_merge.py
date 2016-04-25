@@ -603,8 +603,7 @@ class MergeProductAutomatic(models.TransientModel):
         return ' '.join(text)
 
     def _process_query(self, cr, uid, ids, query, context=None):
-        """
-        Execute the select request and write the result in this wizard
+        """Execute the select request and write the result in this wizard
         """
         proxy = self.pool.get('base.product.merge.line')
         this = self.browse(cr, uid, ids[0], context=context)
@@ -710,8 +709,7 @@ class MergeProductAutomatic(models.TransientModel):
         }
 
     def start_process_cb(self, cr, uid, ids, context=None):
-        """
-        Start the process.
+        """Start the process.
         * Compute the selected groups (with duplication)
         * If the user has selected the 'exclude_XXX' fields, avoid the
         products.
@@ -726,8 +724,7 @@ class MergeProductAutomatic(models.TransientModel):
         return self.other_screen(cr, uid, ids, context)
 
     def next_cb(self, cr, uid, ids, context=None):
-        """
-        Don't compute any thing
+        """Don't compute any thing
         """
         context = dict(context or {}, active_test=False)
         this = self.browse(cr, uid, ids[0], context=context)

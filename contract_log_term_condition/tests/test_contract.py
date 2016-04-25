@@ -11,9 +11,8 @@ class TestAnalytic(TransactionCase):
         self.user = self.registry('res.users')
 
     def test_log_terms_conditions(self):
-        '''
-        Check if the log about terms and conditions field was created
-        '''
+        """Check if the log about terms and conditions field was created
+        """
         cr, uid = self.cr, self.uid
         analytic_id = self.analytic.create(cr, uid, {
             'name': 'Test Terms and Conditions Log',

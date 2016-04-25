@@ -40,8 +40,7 @@ class WizardPrice(models.Model):
             subject='Automatically Computed Standard Price')
 
     def _get_products(self, cr, uid, ids=None, context=None):
-        '''
-        Return all products which represent top parent in bom
+        """Return all products which represent top parent in bom
         [x]---+   [y]
          |    |    |
          |    |    |
@@ -50,7 +49,7 @@ class WizardPrice(models.Model):
          |    |
         [t]  [u]
         That is x and y
-        '''
+        """
         cr.execute('''
             SELECT
             DISTINCT mb.product_id AS pp1,
@@ -144,14 +143,13 @@ class WizardPrice(models.Model):
         return True
 
     def __execute_cron(self, cr, uid, ids=None, context=None):  # noqa
-        '''
-         This method is incorrectly designed due to the write on the product as
+        """This method is incorrectly designed due to the write on the product as
          obsolete should be a core feature not a cron feature.
 
          I do not delete it because I need review afterwards such feature.
 
          Dear Future me I am really sorry
-        '''
+        """
         ids = ids or []
         context = context or {}
         product_obj = self.pool.get('product.product')
