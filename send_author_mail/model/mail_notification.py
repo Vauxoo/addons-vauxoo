@@ -36,7 +36,7 @@ class MailNotification(osv.Model):
         res = super(MailNotification, self).get_partners_to_email(
             cr, uid, ids, message, context=context)
 
-        for notification in self.browse(cr, uid, ids, context=context):
+        for element in self.browse(cr, uid, ids, context=context):
             if message.author_id and\
                 (message.author_id.receive_my_emails and
                     message.author_id.notify_email != "none"):
