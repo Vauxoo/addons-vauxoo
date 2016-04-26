@@ -19,11 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models
+from openerp import api, models
 from openerp.addons.product import _common
 from openerp.tools import float_is_zero
 import logging
-
 _logger = logging.getLogger(__name__)
 SEGMENTATION_COST = [
     'landed_cost',
@@ -91,9 +90,6 @@ class ProductTemplate(models.Model):
         wizard_obj = self.pool.get("stock.change.standard.price")
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
-        user = self.pool.get('res.users').browse(cr, uid, uid, context)
-        precision_id = self.pool.get('decimal.precision').precision_get(
-            cr, uid, 'Account')
         model = 'product.product'
 
         def _get_sgmnt(prod_id):
@@ -204,45 +200,39 @@ class ProductTemplate(models.Model):
         product_tmpl_id = tmpl_obj.browse(
             cr, uid, bom.product_tmpl_id.id, context=context)
 
-        bottom_price_threshold = product_tmpl_id.company_id.\
-            std_price_neg_threshold
-        if not bottom_price_threshold:
-            bottom_price_threshold = user.company_id.std_price_neg_threshold
+        bottom_th = product_tmpl_id.get_bottom_price_threshold()
 
         current_price = product_tmpl_id.standard_price
         diff = price - current_price
-        computed_th = current_price and abs(diff * 100 / current_price) or 0.0
+        computed_th = self._compute_threshold(current_price, price)
 
         if diff < 0 and current_price == 0:
             return price
 
-        if float_is_zero(diff, precision_id) or \
-                (current_price and diff < 0 and
-                    computed_th > bottom_price_threshold):
-            tmpl_obj.message_post(cr, uid, [product_tmpl_id.id],
-                                  'Not Updated Cost, But Segments only.',
-                                  'I cowardly did not update Standard new \n'
-                                  'price less than old price \n'
-                                  'new {new} old {old} \n'
-                                  'Segments where written CHECK AFTERWARDS.'
-                                  '{segments}'.
-                                  format(old=current_price, new=price,
-                                         segments=str(sgmnt_dict)))
-            # Just writting segments to be consistent with segmentation
-            # feature. TODO: A report should show differences.
-            tmpl_obj.write(cr, uid, [product_tmpl_id.id], sgmnt_dict,
-                           context=context)
-            return price
+        threshold_reached = product_tmpl_id._evaluate_threshold(
+            bottom_th, computed_th, diff)
+        vals = {
+            'threshold_reached': threshold_reached,
+            'sgmnts_dict': sgmnt_dict,
+            'new_price': {'standard_price': price},
+            'current_price': current_price,
+            'computed_th': computed_th,
+            'current_bottom_th': bottom_th,
+        }
+
+        ctx = dict(context or {})
+        ctx.update({
+            'active_id': product_tmpl_id.id,
+            'active_ids': product_tmpl_id.ids,
+        })
+        if threshold_reached:
+            return self.ensure_change_price_log_messages(cr, uid, vals, ctx)
 
         diff = product_tmpl_id.standard_price - price
         # Write standard price
         if product_tmpl_id.valuation == "real_time" and \
                 real_time_accounting and diff:
             # Call wizard function here
-            ctx = context.copy()
-            ctx.update(
-                {'active_id': product_tmpl_id.id,
-                 'active_model': 'product.template'})
             wizard_id = wizard_obj.create(
                 cr, uid, {'new_price': price}, context=ctx)
             wizard_obj.change_price(cr, uid, [wizard_id], context=ctx)
@@ -250,10 +240,75 @@ class ProductTemplate(models.Model):
             tmpl_obj.write(
                 cr, uid, [product_tmpl_id.id], {'standard_price': price},
                 context=context)
-        tmpl_obj.write(
-            cr, uid, [product_tmpl_id.id], sgmnt_dict, context=context)
+        return self.ensure_change_price_log_messages(cr, uid, vals, ctx)
 
-        return price
+    @api.multi
+    def _evaluate_threshold(self, bottom_th, computed_th, diff):
+        """ Checks if bottom threshold is reached by computed threshold """
+        precision_id = self.env['decimal.precision'].precision_get('Account')
+        return float_is_zero(diff, precision_id) or\
+            (self.standard_price and diff < 0 and
+             computed_th > bottom_th)
+
+    @staticmethod
+    def _compute_threshold(std_price, new_price):
+        """ Computes price variation used for threshold checking """
+        return std_price and abs((new_price - std_price) * 100 / std_price)\
+            or 0.0
+
+    @api.multi
+    def get_bottom_price_threshold(self):
+        """ Returns bottom threshold giving priority to product's company,
+        if not, user's company is taken """
+        user = self.env['res.users'].browse(self._uid)
+        threshold = self.company_id.\
+            std_price_neg_threshold
+        if not threshold:
+            threshold = user.company_id.std_price_neg_threshold
+        return threshold
+
+    @api.model
+    def ensure_change_price_log_messages(self, vals):
+        """ Write in products (unless log_only is True) and then log messages
+        if segments or products (or both) were updated """
+        sgmnts_dict = vals.get('sgmnts_dict', False)
+        log_only = vals.get('log_only', False)
+        new_price = vals.get('new_price', False)
+        prod_id = self.env.context.get('active_id')
+        prod_model = self.env.context.get('active_model')
+        product_id = self.env[prod_model].browse(prod_id)
+        if prod_model == 'product.template':
+            product_id = product_id.product_variant_ids
+        if not product_id:
+            return False
+
+        # Just writting segments to be consistent with segmentation
+        # feature. TODO: A report should show differences.
+        body = ''
+        subject = "Segments NOT updated. "
+        if sgmnts_dict:
+            if not log_only:
+                product_id.write(sgmnts_dict)
+            subject = "Segments updated. "
+            body = 'Segments were written CHECK AFTERWARDS.'\
+                '{0}'.format(str(sgmnts_dict))
+
+        if not vals.get('threshold_reached', False):
+            if not log_only:
+                product_id.write(new_price)
+            subject += "Cost updated correctly. "
+            body += ""
+        else:
+            subject += 'I cowardly did not update cost, Standard new\n'
+            body += "Price is {comp_th:.2f}% less than old price\n"\
+                "new {new} old {old} \n"\
+                "(current max allowed is {max_th})\n"\
+                .format(old=vals['current_price'],
+                        new=new_price['standard_price'],
+                        comp_th=vals['computed_th'],
+                        max_th=vals['current_bottom_th'])
+        product_id.message_post(body=body, subject=subject)
+        return new_price['standard_price']
 
     def compute_price(self, cr, uid, product_ids, template_ids=False,
                       recursive=False, test=False, real_time_accounting=False,
@@ -315,3 +370,29 @@ class ProductTemplate(models.Model):
         if test:
             return testdict
         return True
+
+    @api.multi
+    def do_change_standard_price(self, new_price):
+        """ When updating the standard_price for a product using the wizard, it
+        checks if bottom threshold got reached, if not let it get updated and
+        post messages about it
+        """
+        bottom_th = self.get_bottom_price_threshold()
+        diff = new_price - self.standard_price
+        computed_th = self._compute_threshold(self.standard_price, new_price)
+        threshold_reached = self._evaluate_threshold(bottom_th,
+                                                     computed_th, diff)
+        vals = {
+            'log_only': True,
+            'new_price': {'standard_price': new_price},
+            'current_price': self.standard_price,
+            'threshold_reached': threshold_reached,
+            'computed_th': computed_th,
+            'current_bottom_th': bottom_th,
+        }
+        self.ensure_change_price_log_messages(vals)
+        if threshold_reached:
+            return True
+        res = super(ProductTemplate, self).do_change_standard_price(
+            new_price)
+        return res
