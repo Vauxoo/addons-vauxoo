@@ -1,0 +1,194 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* baremo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-14 16:00+0000\n"
+"PO-Revision-Date: 2016-04-14 16:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: baremo
+#: field:baremo.discount,porc_com:0
+msgid "% Com."
+msgstr "% Com."
+
+#. module: baremo
+#: field:baremo.discount,porc_disc:0
+msgid "% Dcto"
+msgstr "% Dcto"
+
+#. module: baremo
+#: help:baremo.discount,porc_com:0
+msgid "% de Comision @ porcentaje Descuento"
+msgstr "% de Comision @ porcentaje Descuento"
+
+#. module: baremo
+#: help:baremo.discount,porc_disc:0
+msgid "% de Descuento por producto"
+msgstr "% de Descuento por producto"
+
+#. module: baremo
+#: view:baremo.book:baremo.view_baremo_book_form
+msgid "3% Commission at 30 days w/o Disc."
+msgstr "3% Commission at 30 days w/o Disc."
+
+#. module: baremo
+#: view:baremo.book:baremo.view_baremo_book_tree
+#: model:ir.actions.act_window,name:baremo.commision_baremo_act
+#: model:ir.ui.menu,name:baremo.menu_baremes_tree
+msgid "Baremes"
+msgstr "Baremes"
+
+#. module: baremo
+#: field:baremo.discount,disc_id:0
+#: view:res.company:baremo.res_company_view_baremo
+#: field:res.company,baremo_id:0
+#: field:res.partner,baremo_id:0
+msgid "Baremo"
+msgstr "Baremo"
+
+#. module: baremo
+#: model:res.groups,name:baremo.group_baremo_manager
+msgid "Baremo / Manager"
+msgstr "Baremo / Manager"
+
+#. module: baremo
+#: model:res.groups,name:baremo.group_baremo_user
+msgid "Baremo / User"
+msgstr "Baremo / User"
+
+#. module: baremo
+#: field:baremo.book,name:0
+msgid "Baremo Description"
+msgstr "Baremo Description"
+
+#. module: baremo
+#: view:baremo.book:baremo.view_baremo_book_form
+msgid "Baremos"
+msgstr "Baremos"
+
+#. module: baremo
+#: view:baremo:baremo.view_baremo_form
+#: view:baremo:baremo.view_baremo_tree
+msgid "Commission Days & Discounts"
+msgstr "Commission Days & Discounts"
+
+#. module: baremo
+#: model:ir.ui.menu,name:baremo.commission
+msgid "Commission Settings"
+msgstr "Commission Settings"
+
+#. module: baremo
+#: view:baremo:baremo.view_baremo_form
+#: view:baremo.discount:baremo.view_baremo_discount_form
+msgid "Commission by Discount"
+msgstr "Commission by Discount"
+
+#. module: baremo
+#: field:baremo,disc_ids:0
+#: help:baremo,disc_ids:0
+msgid "Commission per Discount @ Due Days"
+msgstr "Commission per Discount @ Due Days"
+
+#. module: baremo
+#: model:ir.model,name:baremo.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: baremo
+#: field:baremo,create_uid:0
+#: field:baremo.book,create_uid:0
+#: field:baremo.discount,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: baremo
+#: field:baremo,create_date:0
+#: field:baremo.book,create_date:0
+#: field:baremo.discount,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: baremo
+#: help:baremo,number:0
+msgid "Days since Emission/Due Date"
+msgstr "Days since Emission/Due Date"
+
+#. module: baremo
+#: field:baremo,display_name:0
+#: field:baremo.book,display_name:0
+#: field:baremo.discount,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: baremo
+#: field:baremo,number:0
+msgid "Due Days"
+msgstr "Due Days"
+
+#. module: baremo
+#: field:baremo,name:0
+msgid "Due Days Description"
+msgstr "Due Days Description"
+
+#. module: baremo
+#: help:baremo,name:0
+msgid "Due days Description"
+msgstr "Due days Description"
+
+#. module: baremo
+#: field:baremo.book,bar_ids:0
+msgid "Emission Days"
+msgstr "Emission Days"
+
+#. module: baremo
+#: field:baremo,id:0
+#: field:baremo.book,id:0
+#: field:baremo.discount,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: baremo
+#: field:baremo,__last_update:0
+#: field:baremo.book,__last_update:0
+#: field:baremo.discount,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: baremo
+#: field:baremo,write_uid:0
+#: field:baremo.book,write_uid:0
+#: field:baremo.discount,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: baremo
+#: field:baremo,write_date:0
+#: field:baremo.book,write_date:0
+#: field:baremo.discount,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: baremo
+#: field:baremo,baremo_id:0
+msgid "Padre"
+msgstr "Padre"
+
+#. module: baremo
+#: model:ir.model,name:baremo.model_res_partner
+msgid "Partner"
+msgstr "Partner"
+
+#. module: baremo
+#: view:baremo:baremo.view_baremo_form
+msgid "Up to 30 days"
+msgstr "Up to 30 days"
+
