@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+       <record model="ir.ui.view" id="view_crm_case_section_form_inherit">
+            <field name="name">view.crm.case.section.form.inherit</field>
+            <field name="model">crm.case.section</field>
+            <field name="inherit_id" ref="sales_team.crm_case_section_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="default_warehouse" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
