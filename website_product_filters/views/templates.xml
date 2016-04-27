@@ -178,7 +178,9 @@
                    <t t-if="child_categ.has_products_ok">
                     <div id="categories_grid" class='col-md-4 col-xs-6 col-sm-4'>
                         <div class='mt16 text-center'>
-                            <span t-field="child_categ.image_medium" t-field-options='{"widget": "image"}'/>
+                            <a t-att-href="'/shop/category/' + slug(child_categ)">
+                              <span t-field="child_categ.image_medium" t-field-options='{"widget": "image"}'/>
+                            </a>
                             <h5>
                                 <a t-att-href="'/shop/category/' + slug(child_categ)" style="display: block">
                                     <span t-field='child_categ.name' style="display: block"/>
@@ -199,7 +201,9 @@
                     <t t-foreach="populars" t-as="popular">
                       <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
                           <div class='mt16 text-center'>
-                              <span t-field="popular.image_medium" t-field-options='{"widget": "image"}'/>
+                              <a t-attf-href="/shop/product/#{ slug(popular) }">
+                                <span t-field="popular.image_medium" t-field-options='{"widget": "image"}'/>
+                              </a>
                               <t t-set="product" t-value="popular"/>
                               <t t-call="website_rate_product.show_product_rating"/>
                               <h5>
@@ -238,7 +242,9 @@
                     <t t-foreach="newest" t-as="new_p">
                       <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
                           <div class='mt16 text-center'>
-                              <span t-field="new_p.image_medium" t-field-options='{"widget": "image"}'/>
+                              <a t-attf-href="/shop/product/#{ slug(new_p) }">
+                                <span t-field="new_p.image_medium" t-field-options='{"widget": "image"}'/>
+                              </a>
                               <h5>
                                   <a t-attf-href="/shop/product/#{ slug(new_p) }" style="display: block">
                                       <span t-field='new_p.name' style="display: block"/>

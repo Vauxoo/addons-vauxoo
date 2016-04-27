@@ -48,8 +48,11 @@ class TestProductSegmentation(TransactionCase):
         }).compute_from_bom()
 
     def test_01_product_update_with_production_sgmnts(self):
+        current_price = self.prod_e_id.standard_price
+        self.assertEqual(current_price, 80, "It must be price=80 at first")
         self.create_update_wizard(self.prod_e_id.product_tmpl_id,
                                   False, True)
+
         self.assertEqual(self.prod_e_id.standard_price, 110)
         # 30(C) + 50(D)
         self.assertEqual(self.prod_e_id.material_cost, 80)

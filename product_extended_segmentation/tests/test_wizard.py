@@ -152,3 +152,41 @@ class TestWizard(TransactionCase):
         # check production_cost
         self.assertEqual(self.producto_e_id.production_cost, 15,
                          'Production Cost for E should be 15')
+
+    def test_02_use_product_variant_wizard_with_greater_new_price(self):
+        current_price = self.producto_e_id.standard_price
+        new_price = 100
+        self.assertEqual(current_price, 80, "Price should be 80")
+        wizard_id = self.env['stock.change.standard.price'].with_context({
+            'active_model': self.producto_e_id._name,
+            'active_ids': self.producto_e_id.ids,
+            'active_id': self.producto_e_id.id,
+        }).create({
+            'new_price': new_price,
+        })
+        wizard_id.change_price()
+        self.assertRegexpMatches(
+            self.producto_e_id.message_ids[0].subject,
+            '.*Segments NOT updated. Cost updated correctly.*')
+        self.assertEqual(self.producto_e_id.standard_price, new_price,
+                         'There is not threshold, price MUST be up to {0}'.
+                         format(new_price))
+
+    def test_03_use_product_variant_wizard_with_lesser_new_price(self):
+        current_price = self.producto_e_id.standard_price
+        new_price = 50
+        self.assertEqual(current_price, 80, "Price should be 80")
+        wizard_id = self.env['stock.change.standard.price'].with_context({
+            'active_model': self.producto_e_id._name,
+            'active_id': self.producto_e_id.id,
+            'active_ids': self.producto_e_id.ids,
+        }).create({
+            'new_price': new_price,
+        })
+        wizard_id.change_price()
+        self.assertRegexpMatches(
+            self.producto_e_id.message_ids[0].subject,
+            '.*Segments NOT updated. I cowardly did not update cost.*')
+        self.assertEqual(self.producto_e_id.standard_price, current_price,
+                         'There is not TOP threshold, price MUST keep to {0}'.
+                         format(current_price))
