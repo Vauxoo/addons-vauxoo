@@ -6,8 +6,7 @@ from openerp.exceptions import except_orm, Warning as UserError
 
 class MrpProduction(models.Model):
 
-    """
-    Production Orders / Manufacturing Orders
+    """Production Orders / Manufacturing Orders
     """
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order'
@@ -155,8 +154,7 @@ class MrpProduction(models.Model):
     @api.multi
     def _create_adjustment_account_move_line(
             self, move_id, production_account_id, valuation_account_id, diff):
-        """
-        Generate the account.move.line values to track the production cost.
+        """Generate the account.move.line values to track the production cost.
         """
         self.ensure_one()
         aml_obj = self.env['account.move.line']
@@ -192,8 +190,7 @@ class MrpProduction(models.Model):
 
     @api.multi
     def _create_account_move_line(self, move_id, production_account_id):
-        """
-        Generate the account.move.line values to track the production cost.
+        """Generate the account.move.line values to track the production cost.
         """
         self.ensure_one()
         aml_obj = self.env['account.move.line']
@@ -313,10 +310,9 @@ class MrpProduction(models.Model):
     # TODO: Should this be moved to a new module?
     @api.v7
     def costs_generate(self, cr, uid, ids):
-        '''
-        Method to be used by a Web Service
+        """Method to be used by a Web Service
         It returns id of Journal Entry that was created for Cost Generated
-        '''
+        """
         ids = isinstance(ids, (int, long)) and ids or ids[0]
         production = self.browse(cr, uid, ids)
         if not production.workcenter_lines:
@@ -368,8 +364,7 @@ class MrpProduction(models.Model):
 
     @api.v7
     def refresh_quant(self, cr, uid, production, amount, diff):
-        """
-        Method that allow to refresh values for quant & segmentation costs
+        """Method that allow to refresh values for quant & segmentation costs
         """
         # TODO: if product produced is AVG recompute avg value
         # NOTE: Recompute quant cost if not STD

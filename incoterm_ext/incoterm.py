@@ -24,8 +24,7 @@ from openerp.osv import fields, osv
 
 class StockIncoterms(osv.Model):
 
-    """
-    stock_incoterm
+    """stock_incoterm
     """
 
     _inherit = 'stock.incoterms'

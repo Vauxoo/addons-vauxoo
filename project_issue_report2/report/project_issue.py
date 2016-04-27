@@ -29,8 +29,7 @@ from openerp.report import report_sxw
 class ProjectIssue(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
-        """
-        Initlize a report parser, add custome methods to localcontext
+        """Initlize a report parser, add custome methods to localcontext
         @param cr: cursor to database
         @param user: id of current user
         @param name: name of the reports it self

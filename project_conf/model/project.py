@@ -36,9 +36,8 @@ class ProjectTask(osv.osv):
         return res
 
     def send_mail_task_new_test(self, cr, uid, ids, context=None):
-        '''
-        Send mail automatically to change task to Backlog and to Testing Leader.
-        '''
+        """Send mail automatically to change task to Backlog and to Testing Leader.
+        """
         context = context or {}
         # Dont send context to dont get language of user in read method
         if ids.stage_id:

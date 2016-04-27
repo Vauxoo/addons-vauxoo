@@ -29,8 +29,7 @@ import time
 
 class ProductHistorical(models.Model):
 
-    """
-    product_historical
+    """product_historical
     """
 
     _inherit = 'product.template'

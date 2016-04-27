@@ -27,8 +27,8 @@ from openerp.osv import osv, fields
 
 class AccountClosurePreparation(osv.TransientModel):
 
-    '''Prepare a Chart of Account to be used properly when closing a
-    fiscayear'''
+    """Prepare a Chart of Account to be used properly when closing a
+    fiscayear"""
 
     _name = 'account.closure.preparation'
 

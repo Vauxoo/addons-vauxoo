@@ -39,11 +39,10 @@ class SearchDuplicatedTask(osv.TransientModel):
         return task_ids
 
     def get_match_task(self, cr, uid, full_name, context=None):
-        '''
-        Search task that match with this full_name
+        """Search task that match with this full_name
         @param full_name: Name to search if match whit other task name or
         description
-        '''
+        """
         if context is None:
             context = {}
         lines = []
@@ -98,11 +97,10 @@ class SearchDuplicatedTask(osv.TransientModel):
         return lines
 
     def default_get(self, cr, uid, fields, context=None):
-        '''
-        Overwrite default get method to search tasks  matching the task name
+        """Overwrite default get method to search tasks  matching the task name
         with other tasks in system
 
-        '''
+        """
         if context is None:
             context = {}
         lines = False

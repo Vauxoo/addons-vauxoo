@@ -28,8 +28,7 @@ from openerp.tests.common import TransactionCase
 
 
 class TestMessageLog(TransactionCase):
-    """
-    Search last message and check that must be about Transfer
+    """Search last message and check that must be about Transfer
     """
 
     def setUp(self):

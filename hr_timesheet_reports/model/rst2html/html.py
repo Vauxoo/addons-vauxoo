@@ -1,9 +1,8 @@
 # coding: utf-8
-'''
-Very simple tool to convert rst fields to html
+"""Very simple tool to convert rst fields to html
 
 TODO: make generic
-'''
+"""
 
 from docutils.core import publish_parts
 from tempfile import NamedTemporaryFile
@@ -26,7 +25,7 @@ TEMPLATE = '''
 
 
 def rst2html(rst, opts=None):
-    '''Simple tool to convert rst to html to be embeded in any document
+    """Simple tool to convert rst to html to be embeded in any document
 
     Example:
 
@@ -61,7 +60,7 @@ def rst2html(rst, opts=None):
     No errors shown, ensure change your types to strings or unicode
 
     @param: rst Text multiline in rst format
-    '''
+    """
     if not isinstance(rst, basestring) or not rst:
         # In order to ensure the correct functioning with None and False types
         return u''

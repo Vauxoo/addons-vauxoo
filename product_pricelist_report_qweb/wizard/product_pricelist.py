@@ -43,8 +43,7 @@ class ProductPriceList(osv.osv_memory):
     }
 
     def print_report(self, cr, uid, ids, context=None):
-        """
-        To get the date and print the report
+        """To get the date and print the report
         @return : return report
         """
         context = context and dict(context) or {}

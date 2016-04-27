@@ -49,8 +49,7 @@ class AccountInvoiceTax(models.Model):
 
     @api.v8
     def compute_broker(self, invoice):
-        """
-        Super to this method, to calculate values to taxes from lines that your
+        """Super to this method, to calculate values to taxes from lines that your
         quantity is 0, and have invoice_broker_id.
         """
         currency = invoice.currency_id.with_context(
@@ -163,11 +162,10 @@ class AccountInvoiceTax(models.Model):
         return res
 
     def move_line_get(self, cr, uid, invoice_id, context=None):
-        '''
-        Super to function, to add partner_id in dict, this to create the
+        """Super to function, to add partner_id in dict, this to create the
         line corresponding to tax with the partner to this, this when the
         line of tax is to register cost of to broker
-        '''
+        """
         res = []
         super(AccountInvoiceTax, self).move_line_get(cr, uid, invoice_id)
         tax_invoice_ids = self.search(cr, uid, [
@@ -222,12 +220,11 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def invoice_validate(self):
-        '''
-        Inherit function to add raise if the partner is broker_ok and the
+        """Inherit function to add raise if the partner is broker_ok and the
         product line not is type service, because is not is service can be
         real time and this try create a journal entry and this generates an
         error, by try made a division by zero
-        '''
+        """
         for inv in self:
             if inv.partner_id.is_broker_ok:
                 for line in inv.invoice_line:
@@ -240,9 +237,8 @@ class AccountInvoice(models.Model):
 
     @api.model
     def line_get_convert(self, line, part, date):
-        '''
-        Super to write in the line of move the partner from tax
-        '''
+        """Super to write in the line of move the partner from tax
+        """
         res = super(AccountInvoice, self).line_get_convert(
             line, part, date)
         res = dict(res, partner_id=line.get('partner_id', False) or part)

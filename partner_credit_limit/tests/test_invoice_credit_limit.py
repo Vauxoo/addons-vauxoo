@@ -15,8 +15,7 @@ from datetime import datetime, timedelta
 
 
 class TestCreditLimits(TransactionCase):
-    """
-        This test Validate credit limit, late pyaments and credit
+    """This test Validate credit limit, late pyaments and credit
         overloaded.
     """
     def setUp(self):
@@ -32,8 +31,7 @@ class TestCreditLimits(TransactionCase):
         self.product_id = self.env.ref("product.product_product_6")
 
     def test_credit_limit_overloaded(self):
-        """
-            This test validate the partner has credit overloaded
+        """This test validate the partner has credit overloaded
             and can not validate the invoice
 
         """
@@ -62,8 +60,7 @@ class TestCreditLimits(TransactionCase):
             invoice_id.signal_workflow('invoice_open')
 
     def test_partner_with_late_payments(self):
-        """
-            This test validate that the partner has not late payments
+        """This test validate that the partner has not late payments
 
         """
 

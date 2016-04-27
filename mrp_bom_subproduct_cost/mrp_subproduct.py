@@ -39,11 +39,10 @@ class MrpSubproduct(osv.Model):
         return res
 
     def _calc_cost_u(self, cr, uid, ids, field_name, arg, context):
-        '''
-        funcion para el calculo del costo unitario, el cual es: product cost/ product qty
+        """funcion para el calculo del costo unitario, el cual es: product cost/ product qty
         @cost = se almacena el costo unitario final.
         @res = diccionario usado para retornar el id y el costo unitario.
-        '''
+        """
         res = {}
         for i in self.browse(cr, uid, ids):
             cost = 0.00

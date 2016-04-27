@@ -18,10 +18,10 @@ class SaleOrder(models.Model):
     @api.multi
     @api.depends('picking_ids', 'picking_ids.state', 'state')
     def _get_allow_cancel(self):
-        '''If all the pickings related to a SO are on "Ready to transfer" or
+        """If all the pickings related to a SO are on "Ready to transfer" or
         in "Waiting another move" state, the cancellation of this must be
         allowed, or even whit pickings on different states, if the moved
-        product quantities are correctly returned.'''
+        product quantities are correctly returned."""
         for sale in self:
             if sale.state in ('manual', 'progress') and sale.picking_ids.ids:
                 self._cr.execute(

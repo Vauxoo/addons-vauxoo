@@ -105,10 +105,9 @@ class UserStory(osv.Model):
             return False
 
     def body_criteria(self, cr, uid, ids, template, criteria, context=None):
-        '''
-        TODO: This method is incorrect, change for the original method which
+        """TODO: This method is incorrect, change for the original method which
         render the template with the original engine.
-        '''
+        """
         if context is None:
             context = {}
         imd_obj = self.pool.get('ir.model.data')
@@ -352,10 +351,9 @@ class UserStory(osv.Model):
         return self.write(cr, uid, ids, {'state': 'open'}, context=context)
 
     def get_body_disapproval(self, cr, uid, ids, context=None):
-        '''
-        TODO: This body must be verified to give the information regarding the
+        """TODO: This body must be verified to give the information regarding the
         answers in the do_disaproval method.
-        '''
+        """
         usname = self.browse(cr, uid, ids).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
         link = '#id={i}&view_type=form&model=user.story'.format(i=ids)
@@ -367,15 +365,14 @@ class UserStory(osv.Model):
                                          link=link))
 
     def do_disapproval(self, cr, uid, ids, context=None):
-        '''
-        TODO: Think about this project this is the reverse.
+        """TODO: Think about this project this is the reverse.
         Questions:
             Can be done IF?
             What are the actions if We desapprove, (Cancel it too)?
             What Happen with tasks already done?
             What is the actions that must be take by, Project Manager, Product
             Owner and the rest of the team?
-        '''
+        """
         return self.write(cr, uid, ids, {'approved': False}, context=context)
 
     def get_body_approval(self, cr, uid, i, context=None):
@@ -477,8 +474,7 @@ class AcceptabilityCriteria(osv.Model):
     _description = 'Acceptability Criteria'
 
     def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
-        """
-        This method is as the method of the sensitive store tuple for the
+        """This method is as the method of the sensitive store tuple for the
         functional fields defined in the current field that pretend to pull
         data form the user.story model. The method get us_ids and make a search
         for the acceptability.criteria records that need to be updated.
@@ -491,18 +487,16 @@ class AcceptabilityCriteria(osv.Model):
         return ac_ids
 
     def get_body_disapproval(self, cr, uid, ids, context=None):
-        '''
-        TODO: This body must be verified to give the information regarding the
+        """TODO: This body must be verified to give the information regarding the
         answers in the do_disaproval method.
-        '''
+        """
         model_brw = self.browse(cr, uid, ids[0])
         link = '#id={i}&view_type=form&model=user.story'.\
             format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
         return link
 
     def approve(self, cr, uid, ids, context=None):
-        """
-        Approve a acceptabilty criteria and send an email.
+        """Approve a acceptabilty criteria and send an email.
         """
         context = context or {}
         criterial_brw = self.browse(cr, uid, ids[0])
@@ -603,8 +597,7 @@ class AcceptabilityCriteria(osv.Model):
 
     def _get_user_story_field(self, cr, uid, ids, fieldname, arg,
                               context=None):
-        """
-        Method used as the function for extracting values for the user.story
+        """Method used as the function for extracting values for the user.story
         model using functional fields. This method is used for various fields,
         the fieldname it matters to extract the value, the field name need to
         be the same from the user.story model.
@@ -620,8 +613,8 @@ class AcceptabilityCriteria(osv.Model):
 
     def _get_user_story_state(self, cr, uid, ids, fieldname, arg,
                               context=None):
-        ''' For acceptability.criteria,
-            returns the state of user.story to which belong '''
+        """ For acceptability.criteria,
+            returns the state of user.story to which belong """
         res = {}.fromkeys(ids)
         for ac in self.browse(cr, uid, ids, context=context):
             res[ac.id] = ac.accep_crit_id.state
@@ -629,8 +622,8 @@ class AcceptabilityCriteria(osv.Model):
 
     def _get_us_ca_numbers(self, cr, uid, ids, fieldname, arg,
                            context=None):
-        ''' For acceptability.criteria,
-            returns the state of user.story to which belong '''
+        """ For acceptability.criteria,
+            returns the state of user.story to which belong """
         res = {}.fromkeys(ids)
         for ac in self.browse(cr, uid, ids, context=context):
             ac_number = ac.name.split(')')
@@ -748,7 +741,7 @@ class ProjectTask(osv.Model):
     _inherit = 'project.task'
 
     def default_get(self, cr, uid, field, context=None):
-        '''Owerwrite default get to add project in new task automatically'''
+        """Owerwrite default get to add project in new task automatically"""
         if context is None:
             context = {}
         res = super(ProjectTask, self).default_get(
@@ -798,7 +791,7 @@ class ProjectTask(osv.Model):
 
 class InheritProject(osv.Model):
 
-    '''Inheirt project model to a new Descripcion field'''
+    """Inheirt project model to a new Descripcion field"""
 
     _inherit = 'project.project'
     _columns = {

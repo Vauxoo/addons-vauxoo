@@ -44,8 +44,7 @@ class TestStockCommon(common.TransactionCase):
         self.wiz_obj = self.env['stock.transfer_details']
 
     def create_pol(self, order, product=False):
-        """
-        Create a new purchase order line for the given purchase order taking
+        """Create a new purchase order line for the given purchase order taking
         as input only the product
         """
         product = self.product_obj.browse(product or self.product)
@@ -90,8 +89,7 @@ class TestStockCommon(common.TransactionCase):
         })]})
 
     def remove_move(self, picking):
-        """
-        remove move line from stock picking
+        """remove move line from stock picking
         """
         move2 = picking.move_lines.filtered(
             lambda line: line.product_id.id == self.product2)

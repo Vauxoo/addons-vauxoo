@@ -1,7 +1,6 @@
 # coding: utf-8
 
-"""
-Init file for the test in the bdp_purchase_requistion Odoo module.
+"""Init file for the test in the bdp_purchase_requistion Odoo module.
 """
 
 ###############################################################################

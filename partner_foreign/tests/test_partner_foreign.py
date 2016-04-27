@@ -30,16 +30,14 @@ class TestPartnerLocation(TransactionCase):
         self.get_records()
 
     def get_records(self):
-        """
-        get records to test
+        """get records to test
         """
         self.partner_rec = self.env.ref('base.main_partner')
         self.vauxoo_rec = self.env.ref('base.res_partner_23')
         self.vicking_rec = self.env.ref('base.res_partner_22')
 
     def test_company_foreign(self):
-        """
-        Test if partners are national or international depends
+        """Test if partners are national or international depends
         of main partner
         """
         country_ve = self.env.ref('base.ve')

@@ -36,15 +36,13 @@ class IslrWhDoc(osv.Model):
     }
 
     def check_state_draft(self, cr, uid, ids, context=None):
-        '''
-        Modified to witholding vat validate
-        '''
+        """Modified to witholding vat validate
+        """
         return True
 
     def check_state_cancel(self, cr, uid, ids, context=None):
-        '''
-        Modified to witholding vat validate
-        '''
+        """Modified to witholding vat validate
+        """
         islr_brw = self.browse(cr, uid, ids, context=context)[0]
         if islr_brw.invoice_id.state == 'cancel':
             return False

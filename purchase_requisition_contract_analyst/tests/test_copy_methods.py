@@ -4,9 +4,8 @@ from openerp.tests.common import TransactionCase
 
 
 class TestPurchaseRequisitionContractAnalystCopy(TransactionCase):
-    '''
-    Test for purchase_requisition_contract_analyst copy method.
-    '''
+    """Test for purchase_requisition_contract_analyst copy method.
+    """
 
     # Method pseudo-constructor of test setUp
     def setUp(self):
@@ -15,8 +14,7 @@ class TestPurchaseRequisitionContractAnalystCopy(TransactionCase):
         self.requisition = self.env['purchase.requisition']
 
     def test_10_copy_method(self):
-        '''
-        Test to verify that the copy method works fine
-        '''
+        """Test to verify that the copy method works fine
+        """
         requisition = self.env.ref('purchase_requisition.requisition1')
         requisition.copy()

@@ -28,14 +28,13 @@ from openerp.tools.translate import _
 
 class MessagePostShowAll(osv.Model):
 
-    '''
-    With this object you can add an extensive log in your model like the
+    """With this object you can add an extensive log in your model like the
     traditional message log don't does
     You need do it the following way:
         _name = "account.invoice"
         _inherit = ['account.invoice', 'message.post.show.all']
 
-    '''
+    """
 
     _name = 'message.post.show.all'
     _inherit = ['mail.thread']
@@ -43,15 +42,14 @@ class MessagePostShowAll(osv.Model):
     # pylint: disable=W0622
     def get_last_value(self, cr, uid, ids, model=None, field=None,
                        field_type=None, context=None):
-        '''
-        Return the last value of a record in the model to show a post with the
+        """Return the last value of a record in the model to show a post with the
         change
         @param ids: int with id record
         @param model: String with model name
         @param field: Name field to return his value
 
         return the value of the field
-        '''
+        """
         context = context or {}
 
         field = ids and field or []

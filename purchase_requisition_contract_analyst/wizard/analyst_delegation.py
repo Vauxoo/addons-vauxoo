@@ -1,7 +1,6 @@
 # coding: utf-8
 
-"""
-Wizard definition for the bdp Odoo module.
+"""Wizard definition for the bdp Odoo module.
 """
 
 ###############################################################################
@@ -34,8 +33,7 @@ from openerp.tools.translate import _
 
 class PurchaseRequisitionAnalystDelegation(osv.TransientModel):
 
-    """
-    This wizard permit to delegate a authority given the user the change to
+    """This wizard permit to delegate a authority given the user the change to
     select the employee that will have the delegation.
     """
     _name = 'purchase.requisition.analyst.delegation'
@@ -48,8 +46,7 @@ class PurchaseRequisitionAnalystDelegation(osv.TransientModel):
     }
 
     def delegate(self, cur, uid, ids, context=None):
-        """
-        @return True
+        """@return True
         """
         context = context or {}
         pr_obj = self.pool.get('purchase.requisition')

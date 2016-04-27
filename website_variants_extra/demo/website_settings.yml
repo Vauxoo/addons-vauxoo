@@ -1,0 +1,5 @@
+-
+    product_variants_description_3columns auto setted up
+-
+  !python {model: ir.ui.view}: |
+          self.write(cr, uid, [ref('website_variants_extra.product_variants_description_3columns')], {'active': True}, context={'active_test': True})

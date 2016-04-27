@@ -108,7 +108,7 @@ class TestAvgCosts(TransactionCase):
         template_id = self.prod_e_id.product_tmpl_id
         self.prod_d_id.write({'cost_method': 'real'})
         res = self.env['product.template'].compute_price(
-            product_ids=False, recursive=True,  real_time_accounting=False,
+            product_ids=False, recursive=True, real_time_accounting=False,
             template_ids=[template_id.id], test=True)
         self.assertEqual(str(res),
                          '{{{0}: 75.0}}'.format(str(template_id.id)))
@@ -119,8 +119,26 @@ class TestAvgCosts(TransactionCase):
             'cost_method': 'real',
             'standard_price': 20.0
         })
-        old_price = self.prod_d_id.standard_price
-        self.env['product.template'].compute_price(
-            product_ids=False, recursive=True,  real_time_accounting=True,
+        old_price = template_id.standard_price
+        old_values = {}.fromkeys(SEGMENTATION_COST, .0)
+        for k in old_values.keys():
+            old_values[k] = getattr(template_id, k)
+        self.env['product.template'].with_context({
+            'active_model': 'product.template',
+            'active_id': template_id.id,
+            'active_ids': template_id.ids,
+        }).compute_price(
+            product_ids=False, recursive=True, real_time_accounting=True,
             template_ids=[template_id.id], test=False)
         self.assertNotEqual(old_price, self.prod_d_id.standard_price)
+        self.assertEqual(old_values['landed_cost'], template_id.landed_cost,
+                         "landed_cost have been written wrongly")
+        self.assertEqual(old_values['subcontracting_cost'],
+                         template_id.subcontracting_cost,
+                         "subcontracting_cost have been written wrongly")
+        self.assertNotEqual(old_values['material_cost'],
+                            template_id.material_cost,
+                            "material_cost have been written wrongly")
+        self.assertNotEqual(old_values['production_cost'],
+                            template_id.production_cost,
+                            "production_cost have been written wrongly")

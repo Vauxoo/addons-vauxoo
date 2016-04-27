@@ -4,9 +4,8 @@ from openerp.tests.common import TransactionCase
 
 
 class TestHrExpenseReplenishmentTaxCopy(TransactionCase):
-    '''
-    Test for hr_expense_replenishment_tax copy method.
-    '''
+    """Test for hr_expense_replenishment_tax copy method.
+    """
 
     # Method pseudo-constructor of test setUp
     def setUp(self):
@@ -15,8 +14,7 @@ class TestHrExpenseReplenishmentTaxCopy(TransactionCase):
         self.expense = self.env['hr.expense.expense']
 
     def test_10_copy_method(self):
-        '''
-        Test to verify that the copy method works fine
-        '''
+        """Test to verify that the copy method works fine
+        """
         expense = self.env.ref('hr_expense.expenses0')
         expense.copy()

@@ -55,10 +55,9 @@ class SetAccountingDataWizard(osv.osv_memory):
     }
 
     def set_accounting_company(self, cr, uid, ids, context=None):
-        '''
-        This wizard assigns a partner account and change your account
+        """This wizard assigns a partner account and change your account
         type to root/view .
-        '''
+        """
         data = self.browse(cr, uid, ids, context=context)[0]
         if data.type_accounts == 'accounts':
             cr.execute("""
