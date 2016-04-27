@@ -296,6 +296,36 @@ def get_font_height(height):
     return new_size
 
 
+def get_horizontal_align(halign, align):
+    if halign:
+        halign = halign.strip().upper()
+    style = {
+        'LEFT': align.HORZ_LEFT,
+        'RIGHT': align.HORZ_RIGHT,
+        'CENTER': align.HORZ_CENTER,
+        'JUSTIFY': align.HORZ_JUSTIFIED
+    }
+    new_halign = align.HORZ_GENERAL
+    if halign in style.keys():
+        new_halign = style[halign]
+    return new_halign
+
+
+def get_vertical_align(valign, align):
+    if valign:
+        valign = valign.strip().upper()
+    style = {
+        'TOP': align.VERT_TOP,
+        'MIDDLE': align.VERT_CENTER,
+        'BOTTOM': align.VERT_BOTTOM,
+        'JUSTIFY': align.VERT_JUSTIFIED
+    }
+    new_valign = align.VERT_TOP
+    if valign in style.keys():
+        new_valign = style[valign]
+    return new_valign
+
+
 def css2excel(css):
     fnt = Font()
     borders = Borders()
@@ -309,15 +339,9 @@ def css2excel(css):
         'font-weight': [fnt, "bold", lambda x: x == 'bold'],
         'font-style': [fnt, "italic", lambda x: x == 'italic'],
         'text-align': [align, "horz",
-                       lambda x: {'left': align.HORZ_LEFT,
-                                  'right': align.HORZ_RIGHT,
-                                  'center': align.HORZ_CENTER,
-                                  'justify': align.HORZ_JUSTIFIED}[x]],
+                       lambda x: get_horizontal_align(x, align)],
         'vertical-align': [align, "vert",
-                           lambda x: {'top': 'top',
-                                      'middle': 'center',
-                                      'bottom': 'bottom',
-                                      'justify': align.VERT_JUSTIFIED}[x]],
+                           lambda x: get_vertical_align(x, align)],
         'background-color': [pattern, "pattern_fore_colour",
                              lambda x: match_color_index(x.upper())],
     }
@@ -325,7 +349,7 @@ def css2excel(css):
         if i in process_css.keys():
             setattr(process_css[i][0],
                     process_css[i][1],
-                    process_css[i][2](css[i]))
+                    process_css[i][2](css[i].strip()))
 
     style = XFStyle()
     style.font = fnt

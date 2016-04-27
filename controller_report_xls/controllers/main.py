@@ -31,11 +31,12 @@ def get_css_style(csstext, style):
 
 def get_odoo_style(html, style, node):
     if node.attrib.get('class', False):
-        for style_element in html.xpath('//style[@type="text/css"]'):
-            styleclass = get_css_style(style_element.text,
-                                       node.attrib.get('class'))
-            style.update(dict(item.split(":") for item in
-                         text_adapt(styleclass).split(";") if item != ''))
+        for class_style in node.attrib.get('class', False).split():
+            for style_element in html.xpath('//style[@type="text/css"]'):
+                styleclass = get_css_style(style_element.text,
+                                           class_style)
+                style.update(dict(item.split(":") for item in
+                             text_adapt(styleclass).split(";") if item != ''))
     if node.attrib.get('style', False):
         style.update(dict(item.split(":") for item in
                      node.attrib.get('style').split(";") if item != ''))
@@ -119,9 +120,9 @@ def write_cols_to_excel(sheet, row, col, rowspan, nodes, html, styles):
 
 
 def text_adapt(text):
-    new_text = text.strip().replace('\n', ' ').replace('\r', '')
+    new_text = text.replace('\n', ' ').replace('\r', '')
     new_text = new_text.replace("&nbsp;", " ").replace("  ", "")
-    return new_text.replace("; ", ";").replace(": ", ":")
+    return new_text.replace("; ", ";").replace(": ", ":").strip()
 
 
 def write_cell_to_excel(sheet, row, rowspan, col, colspan, node, styles):
