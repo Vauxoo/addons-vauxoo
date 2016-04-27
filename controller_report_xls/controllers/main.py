@@ -1,26 +1,52 @@
 # -*- coding: utf-8 -*-
+###########################################################################
+#    Module Writen to OpenERP, Open Source Management Solution
+#    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
+#    All Rights Reserved
+# #############Credits######################################################
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
+#    Planified by: Humberto Arocha <hbto@vauxoo.com>
+#    Audited by: Humberto Arocha <hbto@vauxoo.com>
+#############################################################################
+#    This program is free software: you can redistribute it and/or modify it
+#    under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or (at your
+#    option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
 
 from ..controllers.xfstyle import css2excel
 
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
+
 import simplejson
-from lxml import etree
-import cssutils
-from cssutils import parseString
 import xlwt
+from lxml import etree
+
 import StringIO
-
-
 import logging
-cssutils.log.setLevel(logging.CRITICAL)
 _logger = logging.getLogger(__name__)
 
 
 def get_css_style(csstext, style):
     cssstyle = ""
     if csstext:
+        try:
+            import cssutils
+            from cssutils import parseString
+            cssutils.log.setLevel(logging.CRITICAL)
+        except ImportError:
+            pass
         cssnode = parseString(csstext)
         stylesheet = cssnode.cssRules
         for rule in stylesheet:
