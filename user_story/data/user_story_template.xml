@@ -6,7 +6,7 @@
     SEND EMAIL TEMPLATE
     =====================================================
     -->
-        <record id="template_approve_aceptabilty_criterial" model="email.template" forcecreate="True">
+        <record id="template_approve_aceptabilty_criterial" model="mail.template" forcecreate="True">
             <field name="name">Approve</field>
             <field name="email_from"></field>
             <field name="model_id" ref="user_story.model_acceptability_criteria" />
@@ -493,7 +493,7 @@ For any questions we are at your disposal.
 </html>
             ]]></field>
         </record>
-        <record id="template_ask_aceptabilty_criterial" model="email.template" forcecreate="True">
+        <record id="template_ask_aceptabilty_criterial" model="mail.template" forcecreate="True">
             <field name="name">Ask For Review</field>
             <field name="email_from"></field>
             <field name="model_id" ref="user_story.model_acceptability_criteria" />
@@ -980,7 +980,7 @@ For any questions we are at your disposal.
 </html>
             ]]></field>
         </record>
-        <record id="template_send_email_hu" model="email.template" forcecreate="True">
+        <record id="template_send_email_hu" model="mail.template" forcecreate="True">
             <field name="name">Accept Criteria</field>
             <field name="email_from"></field>
             <field name="model_id" ref="user_story.model_user_story" />
@@ -1464,7 +1464,7 @@ For any questions we are at your disposal.
             ]]></field>
         </record>
 
-        <record id="template_send_email_hu_progress" model="email.template" forcecreate="True">
+        <record id="template_send_email_hu_progress" model="mail.template" forcecreate="True">
             <field name="name">User Story in Progress</field>
             <field name="email_from"></field>
             <field name="model_id" ref="user_story.model_user_story" />

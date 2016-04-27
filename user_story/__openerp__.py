@@ -35,8 +35,6 @@
         "project",
         "sprint_kanban",
         "project_timesheet",
-        "hr_timesheet_invoice",
-        "project_conf",
         "report_webkit"
     ],
     "demo": [

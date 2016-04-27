@@ -26,7 +26,7 @@ from openerp.osv import osv, fields
 
 class EmailTemplate(osv.Model):
 
-    _inherit = 'email.template'
+    _inherit = 'mail.template'
 
     _columns = {
         'composition_mode_comment': fields.boolean('Composition Mode',
