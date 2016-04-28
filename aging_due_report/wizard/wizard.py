@@ -33,12 +33,12 @@ class AccountAgingWizardDocument(models.TransientModel):
     _rec_name = 'partner_id'
     _order = 'due_days'
 
-    @api.one
     def _get_due_days(self):
-        today = datetime.now()
-        if self.date_due:
-            date_due = datetime.strptime(self.date_due, '%Y-%m-%d')
-            self.due_days = (today - date_due).days
+        for record in self:
+            today = datetime.now()
+            if record.date_due:
+                date_due = datetime.strptime(record.date_due, '%Y-%m-%d')
+                record.due_days = (today - date_due).days
 
     partner_id = fields.Many2one('res.partner', 'Partner')
     invoice_id = fields.Many2one('account.invoice', 'Invoice')
@@ -71,45 +71,57 @@ class AccountAgingWizardPartner(models.TransientModel):
     _rec_name = 'partner_id'
     _order = 'name'
 
-    @api.one
     @api.depends('document_ids', 'document_ids.residual',
                  'document_ids.payment', 'document_ids.total')
     def _get_amount(self):
-        direction = self.aaw_id.direction == 'past'
-        spans = [self.aaw_id.period_length * x * (direction and 1 or -1)
-                 for x in range(5)]
-        for doc in self.document_ids:
-            self.residual += doc.residual
-            self.payment += doc.payment
-            self.total += doc.total
+        for record in self:
+            residual = payment = total = not_due = 0.00
+            span01 = span02 = span03 = span04 = span05 = 0.00
 
-            if not direction:
-                # We will use same field not due to store all due amounts
-                if doc.due_days > 0:
-                    self.not_due += doc.residual
-                if doc.due_days <= 0 and doc.due_days > spans[1]:
-                    self.span01 += doc.residual
-                if doc.due_days <= spans[1] and doc.due_days > spans[2]:
-                    self.span02 += doc.residual
-                if doc.due_days <= spans[2] and doc.due_days > spans[3]:
-                    self.span03 += doc.residual
-                if doc.due_days <= spans[3] and doc.due_days > spans[4]:
-                    self.span04 += doc.residual
-                if doc.due_days <= spans[4]:
-                    self.span05 += doc.residual
-            else:
-                if doc.due_days <= 0:
-                    self.not_due += doc.residual
-                if doc.due_days > 0 and doc.due_days <= spans[1]:
-                    self.span01 += doc.residual
-                if doc.due_days > spans[1] and doc.due_days <= spans[2]:
-                    self.span02 += doc.residual
-                if doc.due_days > spans[2] and doc.due_days <= spans[3]:
-                    self.span03 += doc.residual
-                if doc.due_days > spans[3] and doc.due_days <= spans[4]:
-                    self.span04 += doc.residual
-                if doc.due_days > spans[4]:
-                    self.span05 += doc.residual
+            direction = record.aaw_id.direction == 'past'
+            spans = [record.aaw_id.period_length * x * (direction and 1 or -1)
+                     for x in range(5)]
+            for doc in record.document_ids:
+                residual += doc.residual
+                payment += doc.payment
+                total += doc.total
+
+                if not direction:
+                    # We will use same field not due to store all due amounts
+                    if doc.due_days > 0:
+                        not_due += doc.residual
+                    if doc.due_days <= 0 and doc.due_days > spans[1]:
+                        span01 += doc.residual
+                    if doc.due_days <= spans[1] and doc.due_days > spans[2]:
+                        span02 += doc.residual
+                    if doc.due_days <= spans[2] and doc.due_days > spans[3]:
+                        span03 += doc.residual
+                    if doc.due_days <= spans[3] and doc.due_days > spans[4]:
+                        span04 += doc.residual
+                    if doc.due_days <= spans[4]:
+                        span05 += doc.residual
+                else:
+                    if doc.due_days <= 0:
+                        not_due += doc.residual
+                    if doc.due_days > 0 and doc.due_days <= spans[1]:
+                        span01 += doc.residual
+                    if doc.due_days > spans[1] and doc.due_days <= spans[2]:
+                        span02 += doc.residual
+                    if doc.due_days > spans[2] and doc.due_days <= spans[3]:
+                        span03 += doc.residual
+                    if doc.due_days > spans[3] and doc.due_days <= spans[4]:
+                        span04 += doc.residual
+                    if doc.due_days > spans[4]:
+                        span05 += doc.residual
+            record.residual = residual
+            record.payment = payment
+            record.total = total
+            record.not_due = not_due
+            record.span01 = span01
+            record.span02 = span02
+            record.span03 = span03
+            record.span04 = span04
+            record.span05 = span05
 
     partner_id = fields.Many2one('res.partner', string='Partner',
                                  required=True)
@@ -162,20 +174,29 @@ class AccountAgingWizardCurrency(models.TransientModel):
     _description = 'Account Aging Wizard Currency'
     _rec_name = 'currency_id'
 
-    @api.one
     @api.depends('partner_ids', 'partner_ids.residual',
                  'partner_ids.not_due', 'partner_ids.span01',
                  'partner_ids.span02', 'partner_ids.span03',
                  'partner_ids.span04', 'partner_ids.span05')
     def _get_amount(self):
-        for part in self.partner_ids:
-            self.residual += part.residual
-            self.not_due += part.not_due
-            self.span01 += part.span01
-            self.span02 += part.span02
-            self.span03 += part.span03
-            self.span04 += part.span04
-            self.span05 += part.span05
+        for record in self:
+            residual = not_due = span01 = span02 = 0.00
+            span03 = span04 = span05 = 0.00
+            for part in record.partner_ids:
+                residual += part.residual
+                not_due += part.not_due
+                span01 += part.span01
+                span02 += part.span02
+                span03 += part.span03
+                span04 += part.span04
+                span05 += part.span05
+            record.residual = residual
+            record.not_due = not_due
+            record.span01 = span01
+            record.span02 = span02
+            record.span03 = span03
+            record.span04 = span04
+            record.span05 = span05
 
     currency_id = fields.Many2one('res.currency', 'Currency',
                                   required=True)
