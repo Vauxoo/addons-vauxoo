@@ -34,41 +34,37 @@ class StockTansferDetails(models.TransientModel):
             res = super(StockTansferDetails, self).do_detailed_transfer()
             return res
         for transfer in self:
-            if transfer.picking_type_code == 'outgoing' and \
-                    transfer.picking_id.check_invoice:
-                invoice = transfer.invoice_id
-                old_invoice = self.env['stock.picking'].search(
-                    [('picking_type_code', '=', 'outgoing'),
-                     ('invoice_id', '=', invoice.id)])
-                if old_invoice:
-                    msg = _(
-                        'You cannot transfer the current picking, '
-                        'because the invoice is already registered with the '
-                        'picking %s') % (transfer.picking_id.name)
-                    raise exceptions.Warning(
-                        ('Warning!'), msg)
-                tran_dict = {}
-                for item in transfer.item_ids:
-                    qty = tran_dict.get(item.product_id.id, 0) + item.quantity
-                    tran_dict.update({item.product_id.id: qty})
-                inv_dict = {}
-                for item in invoice.invoice_line.filtered(
-                        lambda r: r.product_id.type in ('consu', 'product')):
-                    qty = inv_dict.get(item.product_id.id, 0) + item.quantity
-                    inv_dict.update({item.product_id.id: qty})
-                if inv_dict == tran_dict:
-                    transfer.picking_id.invoice_id = invoice.id
-                    res = super(
-                        StockTansferDetails, self).do_detailed_transfer()
-                    return res
-                else:
-                    raise exceptions.Warning(
-                        _('Warning!'),
-                        _('Incorrect Invoice, '
-                          'products and quantities are different '
-                          'between moves and invoice lines.'))
-                    # raise exceptions.Warning(
-                    #     _('Warning!'), _('Incorrect Invoice'))
-            else:
+            if transfer.picking_type_code != 'outgoing' or \
+                    transfer.picking_id.check_invoice is False:
                 res = super(StockTansferDetails, self).do_detailed_transfer()
                 return res
+            invoice = transfer.invoice_id
+            old_invoice = self.env['stock.picking'].search(
+                [('picking_type_code', '=', 'outgoing'),
+                 ('invoice_id', '=', invoice.id)])
+            if old_invoice:
+                msg = _(
+                    'You cannot transfer the current picking, '
+                    'because the invoice is already registered with the '
+                    'picking %s') % (transfer.picking_id.name)
+                raise exceptions.Warning(
+                    _('Warning!'), msg)
+            tran_dict = {}
+            for item in transfer.item_ids:
+                qty = tran_dict.get(item.product_id.id, 0) + item.quantity
+                tran_dict.update({item.product_id.id: qty})
+            inv_dict = {}
+            for item in invoice.invoice_line.filtered(
+                    lambda r: r.product_id.type in ('consu', 'product')):
+                qty = inv_dict.get(item.product_id.id, 0) + item.quantity
+                inv_dict.update({item.product_id.id: qty})
+            if inv_dict != tran_dict:
+                raise exceptions.Warning(
+                    _('Warning!'),
+                    _('Incorrect Invoice, '
+                      'products and quantities are different '
+                      'between moves and invoice lines.'))
+            transfer.picking_id.invoice_id = invoice.id
+            res = super(
+                StockTansferDetails, self).do_detailed_transfer()
+            return res

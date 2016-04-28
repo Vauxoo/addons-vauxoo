@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_invoice_validation
+#    * stock_picking_invoice_validation
 #
 msgid ""
 msgstr ""
@@ -14,79 +14,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: stock_picking_invoice_validation
-#: selection:sale.order,check_invoice:0
-#: selection:stock.config.settings,check_inv_pick:0
-#: selection:stock.picking,check_invoice:0
-msgid "Check"
-msgstr "Check"
-
-#. module: stock_picking_invoice_validation
-#: field:stock.picking,check_invoice:0
-msgid "Check invoice"
-msgstr "Check invoice"
-
-#. module: stock_picking_invoice_validation
-#: field:stock.config.settings,check_inv_pick:0
-msgid "Check invoice vs picking"
-msgstr "Check invoice vs picking"
-
-#. module: stock_picking_invoice_validation
-#: code:addons/stock_picking_invoice_validation/model/stock_transfer_details.py:72
-#, python-format
-msgid "Incorrect Invoice"
-msgstr "Incorrect Invoice"
-
-#. module: stock_picking_invoice_validation
-#: code:addons/stock_picking_invoice_validation/model/stock_transfer_details.py:62
-#, python-format
-msgid "Incorrect Invoice, products and quantities are different between moves and invoice lines."
-msgstr "Incorrect Invoice, products and quantities are different between moves and invoice lines."
-
-#. module: stock_picking_invoice_validation
-#: field:stock.transfer_details,invoice_id:0
-msgid "Invoice to validate"
-msgstr "Invoice to validate"
-
-#. module: stock_picking_invoice_validation
-#: selection:sale.order,check_invoice:0
-#: selection:stock.config.settings,check_inv_pick:0
-#: selection:stock.picking,check_invoice:0
-msgid "No Check"
-msgstr "No Check"
-
-#. module: stock_picking_invoice_validation
-#: model:ir.model,name:stock_picking_invoice_validation.model_stock_picking
-msgid "Picking List"
-msgstr "Albarán"
-
-#. module: stock_picking_invoice_validation
-#: model:ir.model,name:stock_picking_invoice_validation.model_stock_transfer_details
-msgid "Picking wizard"
-msgstr "Asistente de albarán"
-
-#. module: stock_picking_invoice_validation
-#: model:ir.model,name:stock_picking_invoice_validation.model_sale_order
-msgid "Sales Order"
-msgstr "Pedido de venta"
-
-#. module: stock_picking_invoice_validation
-#: field:sale.order,check_invoice:0
-#: field:stock.picking,invoice_id:0
-msgid "Verified Invoice"
-msgstr "Verified Invoice"
-
-#. module: stock_picking_invoice_validation
-#: code:addons/stock_picking_invoice_validation/model/stock_transfer_details.py:61
-#: code:addons/stock_picking_invoice_validation/model/stock_transfer_details.py:72
-#, python-format
-msgid "Warning!"
-msgstr "Warning!"
-
-#. module: stock_picking_invoice_validation
-#: code:addons/stock_picking_invoice_validation/model/stock_transfer_details.py:48
-#, python-format
-msgid "You cannot transfer the current picking, because the invoice is already registered with the picking %s"
-msgstr "You cannot transfer the current picking, because the invoice is already registered with the picking %s"
-

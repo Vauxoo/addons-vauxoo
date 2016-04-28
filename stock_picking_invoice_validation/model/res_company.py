@@ -14,5 +14,5 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     check_invoice = fields.Boolean(
-        readonly=True, default=False,
+        readonly=True, default=True,
         help="Check Invoices vs Pickings in all Customers transfers")

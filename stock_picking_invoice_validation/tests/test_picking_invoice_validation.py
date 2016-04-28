@@ -8,9 +8,9 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
+from datetime import datetime, date, timedelta
 from openerp.tests.common import TransactionCase
 from openerp import exceptions
-from datetime import datetime, date, timedelta
 
 
 class TestStockPickingInvoiceValidation(TransactionCase):
