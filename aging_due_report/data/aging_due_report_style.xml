@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data>
-		<template id="aging_due_report.style_aging_due_report">
+    <data>
+        <template id="aging_due_report.style_aging_due_report">
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
@@ -55,7 +55,7 @@
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; 
+  width: 100%;
   border-bottom: 1px solid #DFDFDE; }
 
 .panel {
@@ -164,7 +164,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -222,7 +222,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -245,35 +245,35 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
  .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -346,7 +346,7 @@ color: black; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; 
+  width: 100%;
   border-bottom: 1px solid #DFDFDE; }
 
 .panel {
@@ -455,7 +455,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -513,7 +513,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -536,21 +536,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -558,7 +558,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -566,7 +566,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -580,14 +580,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .ITEMBOLD{
   background-color: lightgrey;
   font-weight: bold;
@@ -650,7 +650,7 @@ color: black; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; 
+  width: 100%;
   border-bottom: 1px solid #DFDFDE; }
 
 .panel {
@@ -759,7 +759,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -817,7 +817,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -840,21 +840,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -862,7 +862,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -870,7 +870,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -885,14 +885,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .CUSTOMEROTHER {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -956,7 +956,7 @@ color: black; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; 
+  width: 100%;
   border-bottom: 1px solid #DFDFDE; }
 
 .panel {
@@ -1065,7 +1065,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -1123,7 +1123,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -1146,35 +1146,35 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
  .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1247,7 +1247,7 @@ color: black; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; 
+  width: 100%;
   border-bottom: 1px solid #DFDFDE; }
 
 .panel {
@@ -1356,7 +1356,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -1414,7 +1414,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -1437,21 +1437,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -1459,7 +1459,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -1467,7 +1467,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1481,14 +1481,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .ITEMBOLD{
   background-color: lightgrey;
   font-weight: bold;
@@ -1551,7 +1551,7 @@ color: black; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; 
+  width: 100%;
   border-bottom: 1px solid #DFDFDE; }
 
 .panel {
@@ -1660,7 +1660,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -1718,7 +1718,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -1741,21 +1741,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -1763,7 +1763,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -1771,7 +1771,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1786,14 +1786,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .CUSTOMEROTHER {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1802,5 +1802,5 @@ color: black; }
  }
 </template>
 
-	</data>
+    </data>
 </openerp>
