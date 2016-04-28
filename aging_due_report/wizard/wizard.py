@@ -20,6 +20,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 # Extra Imports
+import logging
+_logger = logging.getLogger(__name__)
 try:
     from pandas import DataFrame
 except ImportError:
@@ -30,9 +32,6 @@ except ImportError:
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from datetime import datetime
-
-import logging
-_logger = logging.getLogger(__name__)
 
 
 class AccountAgingWizardDocument(osv.TransientModel):
