@@ -19,19 +19,13 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-# Extra Imports
-import logging
-_logger = logging.getLogger(__name__)
-try:
-    from pandas import DataFrame
-except ImportError:
-    _logger.info('aging_due_report is declared '
-                 ' from addons-vauxoo '
-                 ' you will need: sudo pip install pandas')
 
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from datetime import datetime
+
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class AccountAgingWizardDocument(osv.TransientModel):
@@ -447,6 +441,12 @@ class AccountAgingPartnerWizard(osv.osv_memory):
             cr, uid, aml_ids, ['partner_id', 'reconcile_partial_id', 'debit',
                                'credit', 'amount_currency', 'currency_id'],
             load=None, context=context)
+        try:
+            from pandas import DataFrame
+        except ImportError:
+            _logger.info('aging_due_report is declared '
+                         ' from addons-vauxoo '
+                         ' you will need: sudo pip install pandas')
         aml_data = DataFrame(aml_rd).set_index('id')
         aml_data_grouped = aml_data.groupby(['partner_id',
                                              'reconcile_partial_id'])
