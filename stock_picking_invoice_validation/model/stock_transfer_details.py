@@ -17,9 +17,7 @@ class StockTansferDetails(models.TransientModel):
 
     @api.multi
     def get_chec_inv_pick(self):
-        key = "stock.check_inv_pick"
-        check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default=True)
+        check_inv_pick = self.env.user.company_id.check_invoice
         for record in self:
             record.check_inv_pick = check_inv_pick
     invoice_id = fields.Many2one(
@@ -31,9 +29,7 @@ class StockTansferDetails(models.TransientModel):
 
     @api.multi
     def do_detailed_transfer(self):
-        key = "stock.check_inv_pick"
-        check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default=True)
+        check_inv_pick = self.env.user.company_id.check_invoice
         if not check_inv_pick:
             res = super(StockTansferDetails, self).do_detailed_transfer()
             return res

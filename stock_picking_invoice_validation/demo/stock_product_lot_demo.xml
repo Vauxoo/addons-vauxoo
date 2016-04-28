@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
-    	<!--Payment term Cash-->
-    	<record id="stock_production_lot_104" model="stock.production.lot">
+        <!--Payment term Cash-->
+        <record id="stock_production_lot_104" model="stock.production.lot">
             <field name="name">0000104</field>
             <field name="product_id" ref="product.product_product_4"/>
             <field name="supplier_id" ref="base.res_partner_3"/>

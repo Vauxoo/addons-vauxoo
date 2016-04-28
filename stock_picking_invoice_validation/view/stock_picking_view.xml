@@ -20,21 +20,6 @@
                 </xpath>
             </field>
         </record>
-        <record id="view_stock_config_settings_check_inv_pick" model="ir.ui.view">
-            <field name="name">stock.config.setting.check.inv.pick</field>
-            <field name="model">stock.config.settings</field>
-            <field name="inherit_id" ref="stock_account.view_stock_config_settings_inherit"/>
-            <field name="arch" type="xml">
-                <xpath expr="//div/field[@name='module_stock_landed_costs']/.." position="after">
-                    <div>
-                        <label for="check_inv_pick"/>
-                        <field name="check_inv_pick" class="oe_inline"/>
-
-                    </div>
-                </xpath>
-            </field>
-        </record>
-
         <record id="view_stock_picking_inh_check_invoice" model="ir.ui.view">
             <field name="name">stock.stock.picking.check.inv.pick</field>
             <field name="model">stock.picking</field>

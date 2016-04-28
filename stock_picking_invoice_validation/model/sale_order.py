@@ -15,14 +15,13 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.multi
-    def _get_wh_conf(self):
-        key = "stock.check_inv_pick"
-        check_inv_pick = self.env["ir.config_parameter"].get_param(key)
+    def _get_company_conf(self):
+        check_inv_pick = self.env.user.company_id.check_invoice
         return check_inv_pick
 
     # field to make an exception invalidation invoice vs picking
     check_invoice = fields.Boolean(
-        "Verified Invoice", default=_get_wh_conf)
+        "Verified Invoice", default=_get_company_conf)
 
     def action_ship_create(self, cr, uid, ids, context=None):
         res = super(SaleOrder, self).action_ship_create(
