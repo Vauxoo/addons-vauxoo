@@ -20,7 +20,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import api, models, fields, _
+from openerp import api, models, fields
 import openerp.addons.decimal_precision as dp
 from datetime import datetime
 
@@ -37,7 +37,7 @@ class AccountAgingWizardDocument(models.TransientModel):
     def _get_due_days(self):
         today = datetime.now()
         if self.date_due:
-            date_due = datetime.strptime(line.date_due, '%Y-%m-%d')
+            date_due = datetime.strptime(self.date_due, '%Y-%m-%d')
             self.due_days = (today - date_due).days
 
     partner_id = fields.Many2one('res.partner', 'Partner')
@@ -214,53 +214,56 @@ class AccountAgingPartnerWizard(models.TransientModel):
     _rec_name = 'result_selection'
 
     report_format = fields.Selection(
-            [('pdf', 'PDF'),
-             # TODO: enable print on controller to HTML
-             # ('html', 'HTML'),
-             ('xls', 'Spreadsheet')],
-            'Report Format',
-            required=True, default='pdf')
+        [
+            ('pdf', 'PDF'),
+            # TODO: enable print on controller to HTML
+            # ('html', 'HTML'),
+            ('xls', 'Spreadsheet')
+        ], 'Report Format',
+        required=True, default='pdf')
     result_selection = fields.Selection(
-            [('supplier', 'Payable'),
-             ('customer', 'Receivable')],
-            "Target",
-            required=True, default='customer')
+        [
+            ('supplier', 'Payable'),
+            ('customer', 'Receivable')
+        ], "Target",
+        required=True, default='customer')
     type = fields.Selection(
-            [('aging', 'Aging Report'),
-             ('detail', 'Detailed Report'),
-             ('aging_detail', 'Aging Detailed Report')],
-            # ('formal', 'Formal Report')],
-            "Type",
-            required=True, default='aging')
+        [
+            ('aging', 'Aging Report'),
+            ('detail', 'Detailed Report'),
+            ('aging_detail', 'Aging Detailed Report')
+        ],# ('formal', 'Formal Report')],
+        "Type",
+        required=True, default='aging')
     currency_ids = fields.One2many(
-            'account.aging.wizard.currency',
-            'aaw_id', 'Balance by Currency',
-            help='Balance by Currency')
+        'account.aging.wizard.currency',
+        'aaw_id', 'Balance by Currency',
+        help='Balance by Currency')
     document_ids = fields.One2many(
-            'account.aging.wizard.document',
-            'aaw_id', 'Document',
-            help='Document')
+        'account.aging.wizard.document',
+        'aaw_id', 'Document',
+        help='Document')
     partner_ids = fields.One2many(
-            'account.aging.wizard.partner',
-            'aaw_id', 'Partners',
-            help='Partners')
+        'account.aging.wizard.partner',
+        'aaw_id', 'Partners',
+        help='Partners')
     company_id = fields.Many2one(
-            'res.company', 'Company', required=True,
-            default=lambda self: self.env['res.company']._company_default_get(
-                'account.aging.wizard'))
+        'res.company', 'Company', required=True,
+        default=lambda self: self.env['res.company']._company_default_get(
+            'account.aging.wizard'))
     period_length = fields.Integer(
-            'Period Length (days)', required=True, default='30')
+        'Period Length (days)', required=True, default='30')
     user_id = fields.Many2one(
-            'res.users', 'User', default=lambda self: self.env.user)
+        'res.users', 'User', default=lambda self: self.env.user)
     direction = fields.Selection(
-            [('future', 'Future'),
-             ('past', 'Past')],
-            "Direction",
-            required=True, default='past')
+        [
+            ('future', 'Future'),
+            ('past', 'Past')
+        ], "Direction",
+        required=True, default='past')
 
     @api.multi
     def _get_lines_by_partner_without_invoice(self, rp_ids):
-        context = self._context
         wzd_brw = self[0]
         aml_obj = self.env['account.move.line']
         company_id = wzd_brw.company_id.id
