@@ -167,7 +167,7 @@
             <page string="Tasks">
               <separator string="Tasks" colspan='4' />
               <field name="task_ids" context="{'project_task':project_id,'categ_task':categ_ids,'sprint_task':sk_id,'userstory_task':active_id}" colspan="4" nolabel="1" widget="many2many">
-                <tree string="Tasks" editable="top">
+                <tree string="Tasks">
                   <field name="id"/>
                   <field name="name" />
                   <field name="project_id" />
