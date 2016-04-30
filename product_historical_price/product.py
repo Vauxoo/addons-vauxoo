@@ -21,49 +21,82 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
-from openerp import models, fields
+from openerp.osv import fields, osv
 
 from openerp.addons.decimal_precision import decimal_precision as dp
 import time
 
 
-class ProductHistorical(models.Model):
+class ProductHistorical(osv.Model):
 
     """product_historical
     """
 
+    def _get_historical_price(self, cr, uid, ids, field_name, field_value,
+                              arg, context=None):
+        context = context or {}
+        res = {}
+        product_hist = self.pool.get('product.historic.price')
+        for brw in self.browse(cr, uid, ids, context=context):
+            res[brw.id] = brw.list_price_historical
+            if brw.list_price != brw.list_price_historical:
+                res[brw.id] = brw.list_price
+                values = {
+                    'product_id': brw.id,
+                    'name': time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'price': brw.list_price,
+                }
+                product_hist.create(cr, uid, values, context=context)
+        return res
+
     _inherit = 'product.template'
+    _columns = {
+        'list_price_historical': fields.function(
+            _get_historical_price,
+            method=True, string='Latest Price',
+            type='float',
+            digits_compute=dp.get_precision('List_Price_Historical'),
+            store={
+                _inherit: (
+                    lambda self, cr, uid, ids, c={}: ids,
+                    ['list_price'], 50),
+            },
+            help="Latest Recorded Historical Value"),
+        'list_price_historical_ids': fields.one2many(
+            'product.historic.price',
+            'product_id',
+            'Historical Prices',
+            help='Historical changes '
+            'of the sale price of '
+            'this product'),
+        'cost_historical_ids': fields.one2many(
+            'product.price.history',
+            'product_template_id',
+            'Historical Cost',
+            help='Historical changes '
+            'in the cost of this product')
+    }
 
-    list_price_historical_ids = fields.One2many('product.historic.price',
-                                                'product_id',
-                                                'Historical Prices',
-                                                help='Historical changes '
-                                                'of the sale price of '
-                                                'this product')
-    cost_historical_ids = fields.One2many('product.price.history',
-                                          'product_template_id',
-                                          'Historical Cost',
-                                          help='Historical changes '
-                                          'in the cost of this product')
 
-
-class ProductHistoricPrice(models.Model):
+class ProductHistoricPrice(osv.Model):
     _order = "name desc"
     _name = "product.historic.price"
     _description = "Historical Price List"
 
-    product_id = fields.Many2one('product.template',
-                                 ondelete='cascade',
-                                 string='Product related to this Price',
-                                 required=True)
-    name = fields.Datetime(string='Date',
-                           default=lambda *a:
-                           time.strftime('%Y-%m-%d %H:%M:%S'),
-                           required=True)
-    price = fields.Float(string='Price',
-                         digits_compute=dp.get_precision('Price'))
-    product_uom = fields.Many2one('product.uom', string="Supplier UoM",
-                                  help="""Choose here the Unit of Measure
-                                          in which the prices and
-                                          quantities are expressed
-                                          below.""")
+    _columns = {
+        'product_id': fields.many2one(
+            'product.template',
+            string='Product related to this Price',
+            required=True),
+        'name': fields.datetime(string='Date', required=True),
+        'price': fields.float(
+            string='Price', digits_compute=dp.get_precision('Price')),
+        'product_uom': fields.many2one(
+            'product.uom', string="Supplier UoM",
+            help="""Choose here the Unit of Measure in which the prices and
+                    quantities are expressed below."""),
+    }
+
+    _defaults = {
+        'name': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+    }
