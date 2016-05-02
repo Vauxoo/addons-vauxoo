@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-01 06:07+0000\n"
-"PO-Revision-Date: 2015-02-01 06:07+0000\n"
+"POT-Creation-Date: 2016-05-02 03:21+0000\n"
+"PO-Revision-Date: 2016-05-02 03:21+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: commission_payment
-#: model:ir.model,name:commission_payment.model_commission_payment
-msgid "\n"
-"    OpenERP Model : commission_payment\n"
-"    "
-msgstr ""
-
-#. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "% COMM"
+msgid "% COMMISSION"
 msgstr ""
 
 #. module: commission_payment
@@ -67,6 +60,11 @@ msgid "<p class=\"oe_view_nocontent_create\">\n"
 msgstr ""
 
 #. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "AMOUNT"
+msgstr ""
+
+#. module: commission_payment
 #: field:commission.invoice,pay_inv:0
 msgid "Abono Fact."
 msgstr ""
@@ -74,6 +72,11 @@ msgstr ""
 #. module: commission_payment
 #: model:ir.ui.menu,name:commission_payment.commission_all_mi
 msgid "All Commissions"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,unknown_salespeople:0
+msgid "Allow Unknown Salespeople?"
 msgstr ""
 
 #. module: commission_payment
@@ -108,32 +111,27 @@ msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "BAREMO DAYS"
+msgid "BAREME COMMISSION %"
 msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "BAREMO DSCT"
+msgid "BAREME DAYS"
 msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "BRMO COMM %"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "BRMO DAYS"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "BRMO DSCT"
+msgid "BAREME DISCOUNT"
 msgstr ""
 
 #. module: commission_payment
 #: field:commission.payment,baremo_id:0
 msgid "Baremo"
+msgstr ""
+
+#. module: commission_payment
+#: selection:commission.payment,commission_baremo_policy:0
+msgid "Baremo Matrix"
 msgstr ""
 
 #. module: commission_payment
@@ -144,6 +142,12 @@ msgstr ""
 #. module: commission_payment
 #: view:commission.payment:commission_payment.commission_payment_form
 msgid "Baremo from"
+msgstr ""
+
+#. module: commission_payment
+#: code:addons/commission_payment/model/commission.py:1145
+#, python-format
+msgid "Baremo on Matrix only applies on Invoiced Products"
 msgstr ""
 
 #. module: commission_payment
@@ -250,9 +254,11 @@ msgid "Commission"
 msgstr ""
 
 #. module: commission_payment
+#: field:commission.invoice,commission:0
 #: field:commission.lines,commission:0
 #: view:commission.salesman:commission_payment.commission_salesman_tree
 #: field:commission.salesman,comm_total:0
+#: field:commission.voucher,commission:0
 msgid "Commission Amount"
 msgstr ""
 
@@ -462,8 +468,9 @@ msgid "Entry Line"
 msgstr ""
 
 #. module: commission_payment
-#: code:addons/commission_payment/model/commission.py:74
-#: code:addons/commission_payment/model/commission.py:1160
+#: code:addons/commission_payment/model/commission.py:83
+#: code:addons/commission_payment/model/commission.py:1144
+#: code:addons/commission_payment/model/commission.py:1220
 #, python-format
 msgid "Error!"
 msgstr ""
@@ -476,11 +483,6 @@ msgstr ""
 #. module: commission_payment
 #: field:commission.payment,exchange_date:0
 msgid "Exchange Date"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "FECHA"
 msgstr ""
 
 #. module: commission_payment
@@ -533,47 +535,32 @@ msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "INV. NUMBER"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INV. SUBTOTAL"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INV. TOT."
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE DATE"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE NUMBER"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE SUBTOTAL"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE TOTAL"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
 msgid "INVOICE DATE"
 msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
+msgid "INVOICE NUMBER"
+msgstr ""
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
 msgid "INVOICE PAYMENT"
+msgstr ""
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "INVOICE SUBTOTAL"
+msgstr ""
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "INVOICE TOTAL"
+msgstr ""
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "INVOICED AMOUNT"
 msgstr ""
 
 #. module: commission_payment
@@ -691,11 +678,6 @@ msgid "List Date"
 msgstr ""
 
 #. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "MONTO"
-msgstr ""
-
-#. module: commission_payment
 #: field:commission.payment,message_ids:0
 msgid "Messages"
 msgstr ""
@@ -711,6 +693,12 @@ msgid "NO SALESMAN SET (NEEDS TO BE FIXED)"
 msgstr ""
 
 #. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_payment
+msgid "OpenERP Model : commission_payment\n"
+"    "
+msgstr ""
+
+#. module: commission_payment
 #: view:commission.payment:commission_payment.commission_payment_form
 msgid "Other Info"
 msgstr ""
@@ -722,12 +710,12 @@ msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "PAY. INV."
+msgid "PAYMENT AMOUNT"
 msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "PAYMENT AMOUNT"
+msgid "PRODUCT"
 msgstr ""
 
 #. module: commission_payment
@@ -936,11 +924,6 @@ msgstr ""
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "TRANSACCION"
-msgstr ""
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
 msgid "TRANSACTION"
 msgstr ""
 
@@ -950,13 +933,13 @@ msgid "Tax (%)"
 msgstr ""
 
 #. module: commission_payment
-#: code:addons/commission_payment/model/commission.py:1160
+#: code:addons/commission_payment/model/commission.py:1220
 #, python-format
 msgid "There are items to fix"
 msgstr ""
 
 #. module: commission_payment
-#: code:addons/commission_payment/model/commission.py:75
+#: code:addons/commission_payment/model/commission.py:84
 #, python-format
 msgid "There is no default company for the current user!"
 msgstr ""
