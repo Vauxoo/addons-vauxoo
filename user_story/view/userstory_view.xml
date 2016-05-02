@@ -253,6 +253,7 @@
             <tree string="Acceptability Criteria">
                 <field name="id"/>
                 <field name="us_ac_numbers"/>
+                <field name="sequence_ac"/>
                 <field name="name"/>
                 <field name="scenario"/>
                 <field name="accep_crit_id"/>
@@ -281,6 +282,7 @@
                 <group string="Filter">
                     <field name="us_ac_numbers"/>
                     <field name="id"/>
+                    <field name="sequence_ac"/>
                     <field name="name"/>
                     <field name="scenario"/>
                     <field name="accep_crit_id"/>
