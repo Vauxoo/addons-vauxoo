@@ -22,8 +22,12 @@ class SaleOrder(models.Model):
         in "Waiting another move" state, the cancellation of this must be
         allowed, or even whit pickings on different states, if the moved
         product quantities are correctly returned."""
-        for sale in self:
-            if sale.state in ('manual', 'progress') and sale.picking_ids.ids:
+        sales = self.search([
+            ('id', 'in', self.ids),
+            ('state', 'in', ('manual', 'progress')),
+        ])
+        for sale in sales:
+            if sale.picking_ids.ids:
                 self._cr.execute(
                     """SELECT id FROM stock_picking
                     WHERE state not in (
