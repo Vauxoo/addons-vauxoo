@@ -438,6 +438,22 @@ class UserStory(osv.Model):
         return self.write(cr, uid, ids, {'state': 'cancelled'},
                           context=context)
 
+    def onchange_sequence_line(self, cr, uid, ids, lines, context=None):
+        context = context or {}
+        res = {}
+        res['value'] = {}
+
+        count_dict = {}
+        count = len(lines[0][2])
+        for index, line in enumerate(lines):
+            if line[0] == 0:
+                count += 1
+                count_dict[index] = count
+        for k in count_dict:
+            lines[k][2]['sequence_ac'] = count_dict[k]
+        res['value'].update({'accep_crit_ids': lines})
+        return res
+
 
 class UserStoryPriority(osv.Model):
     _name = 'user.story.priority'
@@ -644,13 +660,15 @@ class AcceptabilityCriteria(osv.Model):
         seq = len(ac_ids) + 1
         if in_memory:
             order = sorted(in_memory, key=lambda x: x[2]['sequence_ac'])
-            seq = order[-1][2]['sequence_ac'] + 1
+            if order[-1][2]['sequence_ac'] > len(ac_ids):
+                seq = order[-1][2]['sequence_ac'] + 1
         elif len(ac_ids):
             order = [x[1] for x in ac_ids]
             read_ac = self.read(cr, uid, order,
                                 ['sequence_ac'], context=context)
             maxi = max(read_ac, key=lambda x: x['sequence_ac'])
-            seq = maxi['sequence_ac'] + 1
+            if maxi['sequence_ac'] > len(ac_ids):
+                seq = maxi['sequence_ac'] + 1
         return seq
 
     _columns = {
@@ -659,8 +677,7 @@ class AcceptabilityCriteria(osv.Model):
         'scenario': fields.text('Scenario', required=True, translate=True),
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
-                                         ondelete='cascade',
-                                         ),
+                                         ondelete='cascade',),
         'accep_crit_state': fields.function(
             _get_user_story_state,
             type='selection',
@@ -756,6 +773,11 @@ class AcceptabilityCriteria(osv.Model):
         'name': lambda *a: None,
         'difficulty': 'na',
         'sequence_ac': _get_default_sequence
+    }
+
+    _sql_constraints = {
+        ('unique_sequence_ac', 'unique(accep_crit_id, sequence_ac)',
+         'Sequence must be unique'),
     }
 
 
