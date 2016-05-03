@@ -1,0 +1,110 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_extended_segmentation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-03 07:10+0000\n"
+"PO-Revision-Date: 2016-05-03 08:15+0000\n"
+"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
+"Language-Team: Spanish <http://example.com/projects/addons-"
+"vauxoo/product_extended_segmentation/es/>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
+
+#. module: product_extended_segmentation
+#: code:addons/product_extended_segmentation/model/company.py:19
+#, python-format
+msgid "Bottom cost threshold must be positive"
+msgstr "Umbral de costo inferior debe ser positivo"
+
+#. module: product_extended_segmentation
+#: model:ir.model,name:product_extended_segmentation.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: product_extended_segmentation
+#: model:ir.model,name:product_extended_segmentation.model_wizard_price
+msgid "Compute price wizard"
+msgstr "Asistente de cálculo de precio"
+
+#. module: product_extended_segmentation
+#: help:res.company,std_price_neg_threshold:0
+msgid "Maximum percentage threshold that Standard Price is allowed to be lower in order to be changed with the update cost wizard"
+msgstr ""
+"Umbral porcentual máximo al cual el Precio Estándar está permitido bajar con "
+"el fin de cambiar con el asistente de actualización de costo"
+
+#. module: product_extended_segmentation
+#: help:purchase.config.settings,std_price_neg_threshold:0
+msgid "Maximum percentage threshold that Standard Price is allowed to lower"
+msgstr ""
+"Umbral porcentual máximo al cual el Precio Estándar está permitido bajar"
+
+#. module: product_extended_segmentation
+#: model:ir.model,name:product_extended_segmentation.model_product_product
+#: view:purchase.config.settings:product_extended_segmentation.view_double_purchase_configuration
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_extended_segmentation
+#: model:ir.model,name:product_extended_segmentation.model_product_template
+msgid "Product Template"
+msgstr "Platilla de Producto"
+
+#. module: product_extended_segmentation
+#: field:purchase.config.settings,std_price_neg_threshold:0
+#: field:res.company,std_price_neg_threshold:0
+msgid "Standard Price Bottom Threshold (%)"
+msgstr "Umbral Inferior del Precio Estándar (%)"
+
+#. module: product_extended_segmentation
+#: view:res.company:product_extended_segmentation.res_company_view_product_extended_segmentation
+msgid "Standard Price Threshold"
+msgstr "Umbral del Precio Estándar (%)"
+
+#. module: product_extended_segmentation
+#: field:wizard.price,update_avg_costs:0
+msgid "Update Average Product Costs"
+msgstr "Actualizar Costos de Producto a Precio Promedio"
+
+#. module: product_extended_segmentation
+#: model:ir.actions.server,name:product_extended_segmentation.update_material_cost_on_zero_segmentation
+msgid "Update Material Cost on Zero Segmentation"
+msgstr "Actualizar Costo de Material con Segmentación en Cero"
+
+#. module: product_extended_segmentation
+#: view:wizard.price:product_extended_segmentation.view_compute_price_wizard
+msgid "onchange_recursive(recursive)"
+msgstr "onchange_recursive(recursive)"
+
+#. module: product_extended_segmentation
+#: model:product.template,name:product_extended_segmentation.producto_a_product_template
+msgid "producto_a"
+msgstr "producto_a"
+
+#. module: product_extended_segmentation
+#: model:product.template,name:product_extended_segmentation.producto_b_product_template
+msgid "producto_b"
+msgstr "producto_b"
+
+#. module: product_extended_segmentation
+#: model:product.template,name:product_extended_segmentation.producto_c_product_template
+msgid "producto_c"
+msgstr "producto_c"
+
+#. module: product_extended_segmentation
+#: model:product.template,name:product_extended_segmentation.producto_d_product_template
+msgid "producto_d"
+msgstr "producto_d"
+
+#. module: product_extended_segmentation
+#: model:product.template,name:product_extended_segmentation.producto_e_product_template
+msgid "producto_e"
+msgstr "producto_e"
