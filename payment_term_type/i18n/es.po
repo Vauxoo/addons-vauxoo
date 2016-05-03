@@ -81,5 +81,5 @@ msgstr "Tipo de pago"
 #. module: payment_term_type
 #: field:account.config.settings,payment_type:0
 msgid "Payments terms"
-msgstr "Términos de PAgo"
+msgstr "Términos de Pago"
 

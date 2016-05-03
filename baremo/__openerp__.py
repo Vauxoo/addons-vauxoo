@@ -28,9 +28,12 @@
     "license": "",
     "depends": [
         "base",
-        "decimal_precision"
+        "decimal_precision",
+        "product",
     ],
-    "demo": [],
+    "demo": [
+        "demo/demo.xml",
+    ],
     "data": [
         "security/baremo_security.xml",
         "security/ir.model.access.csv",

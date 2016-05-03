@@ -24,6 +24,20 @@
                     <group>
                         <field name="bar_ids" nolabel="1" colspan="6"/>
                     </group>
+                    <group string='Bareme Matrix'>
+                        <label string='For these Partners &amp; Products this Bareme will be used'/>
+                        <newline/>
+                        <label string='On Commission Payment this Bareme can be used with other options'/>
+                        <field
+                            name="matrix_ids"
+                            nolabel="1"
+                            colspan="6">
+                            <tree editable='top'>
+                                <field name="user_id"/>
+                                <field name="product_id"/>
+                            </tree>
+                        </field>
+                    </group>
                 </sheet>
             </form>
         </field>
@@ -167,8 +181,26 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='tz']" position="after">
-                <field name="baremo_id"/>
+            <xpath expr="//group[@name='messaging']" position="after">
+                <group string="Baremo" name="baremo" colspan='4'>
+                    <group colspan='4'>
+                        <label string='Bareme to be used when selected Bareme from Salesman on Commission Payment'/>
+                    </group>
+                    <newline/>
+                    <field name="baremo_id"/>
+                    <group colspan='4'>
+                        <label string='On this Salesman these Baremes will be used when these products are present on Invoices and option Matrix Bareme on Commission Payment is selected'/>
+                    </group>
+                    <field
+                        name="matrix_ids"
+                        nolabel="1"
+                        colspan="6">
+                        <tree editable='top'>
+                            <field name="baremo_id"/>
+                            <field name="product_id"/>
+                        </tree>
+                    </field>
+                </group>
             </xpath>
         </field>
     </record>
@@ -186,5 +218,92 @@
             </field>
         </record>
 
+    <record model="ir.ui.view" id="view_baremo_matrix_tree">
+        <field name="name">baremo.matrix.tree</field>
+        <field name="model">baremo.matrix</field>
+        <field name="arch" type="xml">
+            <tree string="Bareme Matrix">
+                <field name="baremo_id"/>
+                <field name="user_id"/>
+                <field name="product_id"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_baremo_matrix_form">
+        <field name="name">baremo.matrix.form</field>
+        <field name="model">baremo.matrix</field>
+        <field name="arch" type="xml">
+            <form string="Bareme Matrix" version="7.0">
+                <sheet>
+                    <div class="oe_title oe_left" style="width: 100%;">
+                        <div class="oe_edit_only">
+                            <label for="baremo_id"/>
+                        </div>
+                        <h1 style="width: 100%;">
+                            <field
+                                name="baremo_id"
+                                default_focus="1"
+                                placeholder="Select a Baremo"
+                                />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="user_id"/>
+                        <field name="product_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="commission_baremo_matrix_act">
+        <field name="name">Bareme Matrix</field>
+        <field name="res_model">baremo.matrix</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_baremo_matrix_tree">
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_baremo_matrix_tree"/>
+        <field name="act_window_id" ref="commission_baremo_matrix_act"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_baremo_matrix_form">
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_baremo_matrix_form"/>
+        <field name="act_window_id" ref="commission_baremo_matrix_act"/>
+    </record>
+
+    <menuitem
+        name="Bareme Matrix"
+        parent="commission"
+        id="menu_bareme_matrix_tree"
+        action="commission_baremo_matrix_act"
+        groups="baremo.group_baremo_manager"
+        />
+
+
+    <record model="ir.ui.view" id="view_product_baremo_tree">
+        <field name="name">product.product.baremo.tree</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sale_condition']" position="after">
+                <group string="Baremo" name="baremo" colspan='4'>
+                    <label string='On this Product these Baremes will be used when Commission Payment on these Salesmen are computed on Invoiced Products and option Matrix Bareme is selected'/>
+                    <field
+                        name="matrix_ids"
+                        nolabel="1"
+                        colspan="6">
+                        <tree editable='top'>
+                            <field name="baremo_id"/>
+                            <field name="user_id"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
     </data>
 </openerp>
