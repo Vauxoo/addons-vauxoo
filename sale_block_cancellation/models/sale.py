@@ -44,7 +44,6 @@ class SaleOrder(models.Model):
             sale.picking_ids = res.get(sale.id)
 
     def _search_pickings(self, operator, value):
-        res = []
         pick_obj = self.env["stock.picking"]
         pick_ids = []
         if operator == 'in' and value:
@@ -53,13 +52,8 @@ class SaleOrder(models.Model):
             pick_ids = pick_obj.search([('name', operator, value)])
         else:
             pick_ids = pick_obj.search([])
-        if pick_ids:
-            for pick in pick_ids:
-                proc_gp = pick.group_id
-                if proc_gp:
-                    sale_ids = self.search([
-                        ('procurement_group_id', '=', proc_gp.id)])
-                    res.extend(sale_ids.ids)
+        groups = [p.group_id.id for p in pick_ids if p.group_id]
+        res = self.search([('procurement_group_id', 'in', groups)]).ids
         if operator == '=' and not value:
             return [('id', 'not in', res)]
         return [('id', 'in', res)]
