@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_refund_early_payment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-03 06:25+0000\n"
+"PO-Revision-Date: 2016-05-03 06:25+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_refund_early_payment
+#: field:account.invoice.refund,active_id:0
+msgid "Active ID"
+msgstr "ID Activo"
+
+#. module: account_refund_early_payment
+#: field:account.invoice.refund,amount_total:0
+msgid "Amount"
+msgstr "Cantidad"
+
+#. module: account_refund_early_payment
+#: model:ir.actions.act_window,name:account_refund_early_payment.act_wizard_refund_invoice
+msgid "Create refund invoice"
+msgstr "Crear Nota de Crédito"
+
+#. module: account_refund_early_payment
+#: model:product.template,name:account_refund_early_payment.product_discount_early_payment_product_template
+msgid "Discount Early Payment"
+msgstr "Descuento por Pronto Pago"
+
+#. module: account_refund_early_payment
+#: model:ir.model,name:account_refund_early_payment.model_account_invoice_refund
+msgid "Invoice Refund"
+msgstr "Nota de Crédito"
+
+#. module: account_refund_early_payment
+#: field:account.invoice.refund,percent:0
+msgid "Percent"
+msgstr "Porcentaje"
+
+#. module: account_refund_early_payment
+#: field:account.invoice.refund,product_id:0
+msgid "Product"
+msgstr "Producto"
+
