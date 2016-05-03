@@ -87,7 +87,7 @@
                 </div>
               <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('approved','=',True)]}" placeholder="Add a description here ..." widget="html"/>
               <h1><label for="accep_crit_ids" string="4.- Acceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
-              <field name="accep_crit_ids" colspan="4" nolabel="1" context="{'accep_crit_ids': accep_crit_ids}" on_change="onchange_sequence_line(accep_crit_ids, context)">
+              <field name="accep_crit_ids" colspan="4" nolabel="1" context="{'accep_crit_ids': accep_crit_ids}">
                 <tree string="Acceptability Criteria" editable="bottom" default_order="sequence_ac">
                   <field name="sequence_ac"/>
                   <field name="name"/>

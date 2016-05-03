@@ -438,22 +438,6 @@ class UserStory(osv.Model):
         return self.write(cr, uid, ids, {'state': 'cancelled'},
                           context=context)
 
-    def onchange_sequence_line(self, cr, uid, ids, lines, context=None):
-        context = context or {}
-        res = {}
-        res['value'] = {}
-
-        count_dict = {}
-        count = len(lines[0][2])
-        for index, line in enumerate(lines):
-            if line[0] == 0:
-                count += 1
-                count_dict[index] = count
-        for k in count_dict:
-            lines[k][2]['sequence_ac'] = count_dict[k]
-        res['value'].update({'accep_crit_ids': lines})
-        return res
-
 
 class UserStoryPriority(osv.Model):
     _name = 'user.story.priority'
