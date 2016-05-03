@@ -18,15 +18,15 @@ msgstr ""
 #. module: stock_deviation_account
 #: model:ir.model,name:stock_deviation_account.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Compañías"
 
 #. module: stock_deviation_account
 #: field:res.company,gain_inventory_deviation_account_id:0
 msgid "Gain Inventory Deviation Account"
-msgstr ""
+msgstr "Cuenta de Desviación Ganancia en Inventario"
 
 #. module: stock_deviation_account
 #: field:res.company,loss_inventory_deviation_account_id:0
 msgid "Loss Inventory Deviation Account"
-msgstr ""
+msgstr "Cuenta de Desviación Pérdidas en Inventario"
 
