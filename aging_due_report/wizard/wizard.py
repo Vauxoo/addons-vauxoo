@@ -20,9 +20,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from datetime import datetime
+
 from openerp import api, models, fields
 import openerp.addons.decimal_precision as dp
-from datetime import datetime
 
 import logging
 _logger = logging.getLogger(__name__)
