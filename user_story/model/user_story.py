@@ -645,14 +645,16 @@ class AcceptabilityCriteria(osv.Model):
         if in_memory:
             order = sorted(in_memory, key=lambda x: x[2]['sequence_ac'])
             if order[-1][2]['sequence_ac'] > len(ac_ids):
-                seq = order[-1][2]['sequence_ac'] + 1
+                order[-1][2]['sequence_ac'] += 1
+                seq = order[-1][2]['sequence_ac']
         elif len(ac_ids):
             order = [x[1] for x in ac_ids]
             read_ac = self.read(cr, uid, order,
                                 ['sequence_ac'], context=context)
             maxi = max(read_ac, key=lambda x: x['sequence_ac'])
             if maxi['sequence_ac'] > len(ac_ids):
-                seq = maxi['sequence_ac'] + 1
+                maxi['sequence_ac'] += 1
+                seq = maxi['sequence_ac']
         return seq
 
     _columns = {
