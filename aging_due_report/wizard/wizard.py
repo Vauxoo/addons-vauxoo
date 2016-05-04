@@ -253,7 +253,7 @@ class AccountAgingPartnerWizard(models.TransientModel):
             ('aging', 'Aging Report'),
             ('detail', 'Detailed Report'),
             ('aging_detail', 'Aging Detailed Report')
-        ],# ('formal', 'Formal Report')],
+        ],  # ('formal', 'Formal Report')],
         "Type",
         required=True, default='aging')
     currency_ids = fields.One2many(
