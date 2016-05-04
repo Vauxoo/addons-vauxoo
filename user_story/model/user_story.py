@@ -638,7 +638,7 @@ class AcceptabilityCriteria(osv.Model):
         return res
 
     def _get_default_sequence(self, cr, uid, context=None):
-        ''' Method to place the sequence of acceptability criteria '''
+        """ Method to place the sequence of acceptability criteria """
         ac_ids = context.get('accep_crit_ids', [])
         in_memory = [x for x in ac_ids if isinstance(x[2], dict)]
         seq = len(ac_ids) + 1
