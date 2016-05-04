@@ -5,7 +5,7 @@
 #    All Rights Reserved
 # #############Credits######################################################
 #    Coded by: Humberto Arocha <hbto@vauxoo.com>
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>
+#    Coded by: Fekete Mihai <feketemihai@gmail.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 #############################################################################
