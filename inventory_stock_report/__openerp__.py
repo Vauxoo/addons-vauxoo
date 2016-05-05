@@ -23,7 +23,7 @@
 ##########################################################################
 {
     "name": "l10n-co-stock-count",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://wiki.openerp.org.ve/",

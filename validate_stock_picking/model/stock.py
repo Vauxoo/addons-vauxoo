@@ -9,8 +9,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -61,20 +61,34 @@ class InheritStockMove(osv.Model):
             if move.move_dest_id.id and (move.state != 'done'):
                 # Downstream move should only be triggered if this move is the
                 # last pending upstream move
-                other_upstream_move_ids = self.search(cr, uid, [('id', '!=', move.id), ('state', 'not in', ['done', 'cancel']),
-                                                                ('move_dest_id', '=', move.move_dest_id.id)], context=context)
+                other_upstream_move_ids = self.search(
+                    cr,
+                    uid,
+                    [('id', '!=', move.id),
+                     ('state', 'not in', ['done', 'cancel']),
+                     ('move_dest_id', '=', move.move_dest_id.id)],
+                    context=context)
                 if not other_upstream_move_ids:
-                    self.write(cr, uid, [move.id], {
-                               'move_history_ids': [(4, move.move_dest_id.id)]})
+                    self.write(
+                        cr,
+                        uid,
+                        [move.id],
+                        {'move_history_ids': [(4, move.move_dest_id.id)]})
                     if move.move_dest_id.state in ('waiting', 'confirmed'):
                         self.force_assign(
                             cr, uid, [move.move_dest_id.id], context=context)
                         if move.move_dest_id.picking_id:
                             wf_service.trg_write(
-                                uid, 'stock.picking', move.move_dest_id.picking_id.id, cr)
+                                uid,
+                                'stock.picking',
+                                move.move_dest_id.picking_id.id,
+                                cr)
                         if move.move_dest_id.auto_validate:
                             self.action_done(
-                                cr, uid, [move.move_dest_id.id], context=context)
+                                cr,
+                                uid,
+                                [move.move_dest_id.id],
+                                context=context)
 
             self._create_product_valuation_moves(
                 cr, uid, move, context=context)
@@ -87,8 +101,13 @@ class InheritStockMove(osv.Model):
         if context.get('no_change_date', False):
             self.write(cr, uid, move_ids, {'state': 'done'}, context=context)
         else:
-            self.write(cr, uid, move_ids, {'state': 'done', 'date': time.strftime(
-                DEFAULT_SERVER_DATETIME_FORMAT)}, context=context)
+            self.write(
+                cr,
+                uid,
+                move_ids,
+                {'state': 'done',
+                 'date': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)},
+                context=context)
 
         for id in move_ids:
             wf_service.trg_trigger(uid, 'stock.move', id, cr)

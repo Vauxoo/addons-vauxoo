@@ -290,8 +290,7 @@ class HrExpenseExpense(osv.Model):
         return res
 
     def onchange_no_danvace_option(self, cr, uid, ids, skip, context=None):
-        """
-        Clean up the expense advances when the No advances checkbox is set
+        """Clean up the expense advances when the No advances checkbox is set
         """
         context = context or {}
         res = {'value': {}}
@@ -387,8 +386,7 @@ class HrExpenseExpense(osv.Model):
 
     def group_aml_inv_ids_by_partner(self, cr, uid, aml_inv_ids,
                                      context=None):
-        """
-        Return a list o with sub lists of invoice ids grouped for partners.
+        """Return a list o with sub lists of invoice ids grouped for partners.
         @param aml_inv_ids: list of invoices account move lines ids to order.
         """
         context = context or {}
@@ -534,8 +532,7 @@ class HrExpenseExpense(osv.Model):
 
     def expense_reconcile_partial_deduction(self, cr, uid, ids, aml,
                                             context=None):
-        """
-        This method make a distribution of the advances, whenever applies
+        """This method make a distribution of the advances, whenever applies
         paying fully those invoice that can be paid and leaving just a
         remaining to that that just can be paid partially, this way is less
         cumbersome due to the fact that partial reconciliation in openerp over
@@ -564,8 +561,7 @@ class HrExpenseExpense(osv.Model):
     # pylint: disable=R0911
     def expense_reconcile_partial_payment(self, cr, uid, ids, aml,
                                           context=None):
-        """
-        This method make a distribution of the advances, whenever applies
+        """This method make a distribution of the advances, whenever applies
         paying fully those invoice that can be paid and leaving just a
         remaining to that that just can be paid partially, this way is less
         cumbersome due to the fact that partial reconciliation in openerp over
@@ -613,8 +609,7 @@ class HrExpenseExpense(osv.Model):
                             account_id=False, partner_id=False, date=None,
                             advance_amount=False, line_type=None,
                             adjust_balance_to=None, context=None):
-        """
-        Create new move lines to match to the expense. receive only one id
+        """Create new move lines to match to the expense. receive only one id
         @param aml_ids: acc.move.line list of ids
         @param am_id: account move id
         """
@@ -643,8 +638,7 @@ class HrExpenseExpense(osv.Model):
                              account_id=False, partner_id=False, date=None,
                              advance_amount=False, line_type=None,
                              adjust_balance_to=None, context=None):
-        """
-        Create new move lines to match to the expense. receive only one id
+        """Create new move lines to match to the expense. receive only one id
         @param aml_ids: acc.move.line list of ids
         @param am_id: account move id
         """
@@ -679,8 +673,7 @@ class HrExpenseExpense(osv.Model):
         return aml_obj.create(cr, uid, vals, context=context)
 
     def expense_reconcile_partial(self, cr, uid, ids, context=None):
-        """
-        make a partial reconciliation between invoices debit and advances
+        """make a partial reconciliation between invoices debit and advances
         credit.
         """
         context = context or {}
@@ -697,8 +690,7 @@ class HrExpenseExpense(osv.Model):
         return True
 
     def expense_reconcile(self, cr, uid, ids, context=None):
-        """
-        When expense debit and credit are equal.
+        """When expense debit and credit are equal.
         """
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
@@ -713,8 +705,7 @@ class HrExpenseExpense(osv.Model):
         return True
 
     def check_advance_no_empty_condition(self, cr, uid, ids, context=None):
-        """
-        Check if the Expense have not advances and force him to active the
+        """Check if the Expense have not advances and force him to active the
         checkbox for allow leave the advances empty and leave the user now
         the repercussions of this configuration.
         """
@@ -747,8 +738,7 @@ class HrExpenseExpense(osv.Model):
 
     def create_and_reconcile_invoice_lines(self, cr, uid, ids, inv_aml_ids,
                                            adjust_balance_to, context=None):
-        """
-        Create the account move lines to balance the expense invoices and
+        """Create the account move lines to balance the expense invoices and
         reconcile them with the original invoice move lines.
         @param inv_aml_ids: list of expense invoices move line ids.
         @param adjust_balance_to: indicates who is greater credit or debit.
@@ -768,8 +758,7 @@ class HrExpenseExpense(osv.Model):
     def invoice_counter_move_lines(self, cr, uid, ids, am_id, aml_ids,
                                    advance_amount=False, line_type=None,
                                    adjust_balance_to=None, context=None):
-        """
-        Create new move lines to match to the expense. receive only one id
+        """Create new move lines to match to the expense. receive only one id
         @param aml_ids: acc.move.line list of ids
         @param am_id: account move id
         """
@@ -800,8 +789,7 @@ class HrExpenseExpense(osv.Model):
     def create_reconcile_move_lines(self, cr, uid, ids, am_id, aml_ids,
                                     advance_amount=False, line_type=None,
                                     adjust_balance_to=None, context=None):
-        """
-        Create new move lines to match to the expense. receive only one id
+        """Create new move lines to match to the expense. receive only one id
         @param aml_ids: acc.move.line list of ids
         @param am_id: account move id
         """
@@ -982,8 +970,7 @@ class HrExpenseExpense(osv.Model):
         return True
 
     def expense_pay(self, cr, uid, ids, context=None):
-        """
-        Expense credit is greater than the expense debit. That means that the
+        """Expense credit is greater than the expense debit. That means that the
         expense have no advances or the total advances amount dont fullfill the
         payment. So now we create a account voucher to pay the employee the
         missing expense amount.
@@ -1020,8 +1007,7 @@ class HrExpenseExpense(osv.Model):
         }
 
     def expense_deduction(self, cr, uid, ids, context=None):
-        """
-        Expense debit is greater than the expense credit. That means that the
+        """Expense debit is greater than the expense credit. That means that the
         expense have advances and they fullfill the payment. So now is time
         to reconcile expense payable move lines with the expense advances.
         """
@@ -1104,11 +1090,10 @@ class HrExpenseExpense(osv.Model):
         }
 
     def action_receipt_create(self, cr, uid, ids, context=None):
-        '''
-        main function that is called when trying to create the accounting
+        """main function that is called when trying to create the accounting
         entries related to an expense then this super tries to get rid of
         the Journal Entry Lines in zero
-        '''
+        """
         super(HrExpenseExpense, self).action_receipt_create(
             cr, uid, ids, context=context)
         aml_obj = self.pool.get('account.move.line')
@@ -1123,8 +1108,7 @@ class HrExpenseExpense(osv.Model):
         return True
 
     def account_move_get(self, cr, uid, expense_id, context=None):
-        '''
-        This method prepare the creation of the account move related to the
+        """This method prepare the creation of the account move related to the
         given expense.
 
         For this case it will override the date_confirm using date_post
@@ -1133,7 +1117,7 @@ class HrExpenseExpense(osv.Model):
                            account_move.
         :return: mapping between fieldname and value of account move to create
         :rtype: dict
-        '''
+        """
         context = context or {}
         period_obj = self.pool.get('account.period')
         expense = self.browse(cr, uid, expense_id, context=context)

@@ -4,12 +4,11 @@ from openerp import fields, models
 
 
 class TestGenericModel(models.Model):
-    '''
-        Generic model to perform tests over the
+    """Generic model to perform tests over the
         sale_team_warehouse module that makes a
         Monkey-patch over  global default_get
         Case: field with default
-    '''
+    """
     _name = 'test.generic.model'
     _description = 'Generic model to perform tests'
 
@@ -20,12 +19,11 @@ class TestGenericModel(models.Model):
 
 
 class TestDefaultGetModel(models.Model):
-    '''
-        Generic model to perform tests over the
+    """Generic model to perform tests over the
         sale_team_warehouse module that makes a
         Monkey-patch over  global default_get
         Case: overwriting default_get
-    '''
+    """
     _name = 'test.default.get.model'
     _description = 'Generic model to perform tests'
 
@@ -34,9 +32,8 @@ class TestDefaultGetModel(models.Model):
     character = fields.Char(string='Character', readonly=True)
 
     def default_get(self, cr, uid, fields, context=None):
-        '''
-        Default get method locally inherited using old api.
-        '''
+        """Default get method locally inherited using old api.
+        """
         if context is None:
             context = {}
         res = super(TestDefaultGetModel, self).default_get(
@@ -47,12 +44,11 @@ class TestDefaultGetModel(models.Model):
 
 
 class TestDefaultGetWarehouseModel(models.Model):
-    '''
-        Generic model to perform tests over the
+    """Generic model to perform tests over the
         sale_team_warehouse module that makes a
         Monkey-patch over  global default_get
         Case: testing warehouse_id global default
-    '''
+    """
     _name = 'test.default.get.warehouse.model'
     _description = 'Generic model to perform tests'
 

@@ -32,8 +32,7 @@ class StockTransferDetails(models.TransientModel):
 
     @api.multi
     def do_detailed_transfer(self):
-        """
-        Before transfer the picking move lines will check if the transfer lines
+        """Before transfer the picking move lines will check if the transfer lines
         differ from the move lines.
         """
         self.ensure_one()
@@ -43,8 +42,7 @@ class StockTransferDetails(models.TransientModel):
 
     @api.multi
     def check_transfer_lines(self):
-        """
-        This method check if the transfer move lines differ from the move lines
+        """This method check if the transfer move lines differ from the move lines
         and if is True raise and exception.
         """
         differ_lines = []
@@ -72,15 +70,13 @@ class StockTransferDetails(models.TransientModel):
         return True
 
     def get_edited_lines(self, src_lines, dest_lines):
-        """
-        Return differ between the groups of lines.
+        """Return differ between the groups of lines.
         """
         picking = self.env['stock.picking']
         return picking.get_edited_lines(src_lines, dest_lines)
 
     def line_print(self, title, lines):
-        """
-        Same as picking
+        """Same as picking
         """
         picking = self.env['stock.picking']
         return picking.line_print(title, lines)

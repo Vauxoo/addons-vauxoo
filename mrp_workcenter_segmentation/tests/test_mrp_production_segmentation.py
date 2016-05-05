@@ -9,14 +9,13 @@ from openerp.tests.common import TransactionCase
 
 
 class TestMrpProduction(TransactionCase):
-    '''
-        This test do the following:
+    """This test do the following:
             1.- Create a mrp.production.
             2.- Proceed to approve.
             3.- Proceed to begin production.
             4.- Proceed with consumption & finish production.
             5.- Check segmentation on production products.
-    '''
+    """
 
     # Pseudo-constructor method of the setUp test.
     def setUp(self):
@@ -51,8 +50,20 @@ class TestMrpProduction(TransactionCase):
 
         # Confirm the mrp production d.
         self.mrp_production_d.signal_workflow('button_confirm')
-        self.mrp_production_d.signal_workflow('moves_ready')
+        self.assertEqual(self.mrp_production_d.state,
+                         'confirmed',
+                         "The mrp is not in Confirmed state.")
+
+        self.mrp_production_d.action_assign()
+        self.assertEqual(self.mrp_production_d.state,
+                         'ready',
+                         "The mrp is not in Ready state.")
+
+        # Begin mrp production.
         self.mrp_production_d.signal_workflow('button_produce')
+        self.assertEqual(self.mrp_production_d.state,
+                         'in_production',
+                         "The mrp is not in production.")
         # Consumption and finish production.
         self.create_wizard(self.mrp_production_d, qty=1)
         self.create_wizard(self.mrp_production_d, qty=2)
@@ -102,6 +113,9 @@ class TestMrpProduction(TransactionCase):
 
         quant_brw = quant_obj.search(
             [('product_id', '=', self.mrp_production_d.product_id.id)])
+        self.assertEqual(
+            sum([qnt.qty for qnt in quant_brw]), 3,
+            "Quant quantity in Production is wrong")
         self.assertEqual(quant_brw[0].cost, 100, "Cost on Quant is wrong")
         self.assertEqual(
             quant_brw[0].material_cost, 80,
@@ -109,27 +123,26 @@ class TestMrpProduction(TransactionCase):
         self.assertEqual(
             quant_brw[0].production_cost, 15,
             "Production Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[0].qty, 1,
-            "Production Cost on Quant is wrong")
-        self.assertEqual(quant_brw[1].cost, 100, "Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[1].material_cost, 80,
-            "Material Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[1].production_cost, 15,
-            "Production Cost on Quant is wrong")
-        self.assertEqual(
-            quant_brw[1].qty, 2,
-            "Production Cost on Quant is wrong")
 
         # Confirm the mrp production e.
         self.mrp_production_e.signal_workflow('button_confirm')
-        self.mrp_production_e.signal_workflow('moves_ready')
+        self.assertEqual(self.mrp_production_e.state,
+                         'confirmed',
+                         "The mrp is not in Confirmed state.")
+
+        self.mrp_production_e.action_assign()
+        self.assertEqual(self.mrp_production_e.state,
+                         'ready',
+                         "The mrp is not in Ready state.")
+
+        # Begin mrp production.
         self.mrp_production_e.signal_workflow('button_produce')
+        self.assertEqual(self.mrp_production_e.state,
+                         'in_production',
+                         "The mrp is not in production.")
+
         # Consumption and finish production.
         self.create_wizard(self.mrp_production_e, qty=1)
-        self.create_wizard(self.mrp_production_e, qty=2)
         self.assertEqual(self.mrp_production_e.state,
                          'done',
                          "The mrp production doesn't done.")
@@ -181,21 +194,30 @@ class TestMrpProduction(TransactionCase):
             quant_brw.material_cost, 120,
             "Material Cost on Quant is wrong")
         self.assertEqual(
-            quant_brw.production_cost, 45,
+            quant_brw.production_cost, 30,
             "Production Cost on Quant is wrong")
         self.assertEqual(
-            quant_brw.qty, 1,
+            quant_brw.subcontracting_cost, 15,
+            "Subcontracting Cost on Quant is wrong")
+        self.assertEqual(
+            sum([qnt.qty for qnt in quant_brw]), 1,
             "Production Cost on Quant is wrong")
 
     def create_wizard(self, mrp_production, qty=1):
-        self.wzd_id = self.wzd_obj.with_context(
-            {'active_id': mrp_production.id}).create({'product_qty': qty})
-        values = self.wzd_obj.with_context(
-            {'active_id': mrp_production.id}).on_change_qty(qty, [])
-        values = values['value']['consume_lines']
-        for val in values:
-            val = val[2]
-            val['produce_id'] = self.wzd_id.id
-            self.wzd_line_obj.create(val)
-        self.wzd_id.do_produce()
+        # Setting Environment
+        wz_env = self.wzd_obj.with_context(
+            {'active_id': mrp_production.id,
+             'active_ids': [mrp_production.id]})
+
+        # Creating wizard to product
+        wz_values = wz_env.default_get([])
+        wz_brw = wz_env.create(wz_values)
+
+        # Changing the quantity suggested
+        wz_brw.product_qty = qty
+
+        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
+        values = values.get('value')
+        wz_brw.write(values)
+        wz_brw.do_produce()
         return True

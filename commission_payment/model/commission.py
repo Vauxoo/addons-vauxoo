@@ -53,14 +53,14 @@ COMMISSION_POLICY_BAREMO = [
     ('onPartner', 'Partner'),
     ('onAccountingPartner', 'Commercial Entity'),
     ('onUser', 'Salespeople'),
+    ('onMatrix', 'Baremo Matrix'),
     ('onCommission', 'Document'),
 ]
 
 
 def t_time(date):
-    '''
-    Trims time from "%Y-%m-%d %H:%M:%S" to "%Y-%m-%d"
-    '''
+    """Trims time from "%Y-%m-%d %H:%M:%S" to "%Y-%m-%d"
+    """
     date = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
     date = datetime.date(date.year, date.month, date.day)
     return date.strftime("%Y-%m-%d")
@@ -68,8 +68,7 @@ def t_time(date):
 
 class CommissionPayment(osv.Model):
 
-    """
-    OpenERP Model : commission_payment
+    """OpenERP Model : commission_payment
     """
 
     _name = 'commission.payment'
@@ -234,11 +233,10 @@ class CommissionPayment(osv.Model):
     }
 
     def action_view_fixlines(self, cr, uid, ids, context=None):
-        '''
-        This function returns an action that display existing Commissions of
+        """This function returns an action that display existing Commissions of
         given commission payment ids that are required for some details to
         provide a proper computation of commissions.
-        '''
+        """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
 
@@ -263,11 +261,10 @@ class CommissionPayment(osv.Model):
         return result
 
     def action_view_payment(self, cr, uid, ids, context=None):
-        '''
-        This function returns an action that display existing Payments of given
+        """This function returns an action that display existing Payments of given
         commission payment ids. It can either be a in a list or in a form view,
         if there is only one invoice to show.
-        '''
+        """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
 
@@ -289,11 +286,10 @@ class CommissionPayment(osv.Model):
         return result
 
     def action_view_invoice(self, cr, uid, ids, context=None):
-        '''
-        This function returns an action that display existing invoices of given
+        """This function returns an action that display existing invoices of given
         commission payment ids. It can either be a in a list or in a form view,
         if there is only one invoice to show.
-        '''
+        """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
 
@@ -550,6 +546,21 @@ class CommissionPayment(osv.Model):
 
         return res
 
+    def _get_commission_matrix_policy(self, cr, uid, ids, product_id,
+                                      salesman_id, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        bm_obj = self.pool.get('baremo.matrix')
+        res = bm_obj.search(cr, uid, [
+            ('product_id', '=', product_id),
+            ('user_id', '=', salesman_id.id),
+        ])
+        if res:
+            return bm_obj.browse(cr, uid, res[0], context=context).baremo_id
+
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        return comm_brw.baremo_id
+
     def _get_commission_policy_baremo(self, cr, uid, ids, pay_id,
                                       partner_id=None, salesman_id=None,
                                       context=None):
@@ -624,10 +635,11 @@ class CommissionPayment(osv.Model):
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
         inv_brw = aml_brw.rec_invoice
-
-        commission_policy_baremo = \
-            self._get_commission_policy_baremo(cr, uid, ids, pay_id,
-                                               context=context)
+        commission_baremo_policy = comm_brw.commission_baremo_policy
+        # /!\ NOTE: Retrieve here the fallback commission baremo policy
+        if not commission_baremo_policy == 'onMatrix':
+            commission_policy_baremo = self._get_commission_policy_baremo(
+                cr, uid, ids, pay_id, context=context)
 
         # Revision de cada linea de factura (productos)
         for inv_lin in inv_brw.invoice_line:
@@ -681,6 +693,14 @@ class CommissionPayment(osv.Model):
                                      list_price, 1)
                     rate_item = dcto
 
+                    if commission_baremo_policy == 'onMatrix':
+                        commission_policy_baremo = \
+                            self._get_commission_matrix_policy(
+                                cr, uid, ids, inv_lin.product_id.id,
+                                salesman, context=None)
+
+                    # CHECK: If no commission policy is passed why it retrieves
+                    # values
                     commission_params = self._get_commission_rate(
                         cr, uid, comm_brw.id,
                         commission_policy_date_end,
@@ -1094,8 +1114,7 @@ class CommissionPayment(osv.Model):
         return True
 
     def prepare(self, cr, uid, ids, context=None):
-        """
-        Este metodo recorre los elementos de lineas de asiento y verifica al
+        """Este metodo recorre los elementos de lineas de asiento y verifica al
         menos tres (3) caracteristicas primordiales para continuar con los
         mismos: estas caracteristicas son:
         - journal_id.type in ('cash', 'bank'): quiere decir que la linea es de
@@ -1119,6 +1138,11 @@ class CommissionPayment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
+        if comm_brw.commission_baremo_policy == 'onMatrix' and \
+                comm_brw.commission_scope != 'product_invoiced':
+            raise osv.except_osv(
+                _('Error!'),
+                _('Baremo on Matrix only applies on Invoiced Products'))
         # Desvincular lineas existentes, si las hubiere
         comm_brw.clear()
         if comm_brw.commission_type == 'partial_payment':
@@ -1168,9 +1192,8 @@ class CommissionPayment(osv.Model):
         return True
 
     def clear(self, cr, user, ids, context=None):
-        '''
-        Deletes all associated record from Commission Payment
-        '''
+        """Deletes all associated record from Commission Payment
+        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
@@ -1208,8 +1231,7 @@ class CommissionPayment(osv.Model):
 
 class CommissionSaleNoid(osv.Model):
 
-    """
-    Commission Payment : commission_sale_noid
+    """Commission Payment : commission_sale_noid
     """
 
     _name = 'commission.sale.noid'
@@ -1227,8 +1249,7 @@ class CommissionSaleNoid(osv.Model):
 
 class CommissionNoprice(osv.Model):
 
-    """
-    Commission Payment : commission_sale_noid
+    """Commission Payment : commission_sale_noid
     """
 
     _name = 'commission.noprice'
@@ -1248,8 +1269,7 @@ class CommissionNoprice(osv.Model):
 
 class CommissionLines(osv.Model):
 
-    """
-    Commission Payment : commission_lines
+    """Commission Payment : commission_lines
     """
 
     _name = 'commission.lines'
@@ -1423,8 +1443,7 @@ class CommissionLines(osv.Model):
 
 class CommissionSalesman(osv.Model):
 
-    """
-    Commission Payment : commission_salesman
+    """Commission Payment : commission_salesman
     """
 
     _name = 'commission.salesman'
@@ -1466,13 +1485,20 @@ class CommissionSalesman(osv.Model):
 
 class CommissionVoucher(osv.Model):
 
-    """
-    Commission Payment : commission_voucher
+    """Commission Payment : commission_voucher
     """
 
     _name = 'commission.voucher'
     _order = 'date'
     _rec_name = 'am_id'
+
+    def _get_commission(self, cr, uid, ids, name, args, context=None):
+        context = dict(context or {})
+        res = {}.fromkeys(ids, 0.0)
+        for brw in self.browse(cr, uid, ids, context=context):
+            res[brw.id] = sum(
+                [ci_brw.commission for ci_brw in brw.comm_invoice_ids])
+        return res
 
     _columns = {
         'commission_id': fields.many2one('commission.payment', 'Commission'),
@@ -1484,17 +1510,29 @@ class CommissionVoucher(osv.Model):
             required=False),
         'date': fields.related('am_id', 'date', string='Date', type='date',
                                store=True, readonly=True),
+        'commission': fields.function(
+            _get_commission,
+            type='float',
+            string='Commission Amount',
+            digits_compute=dp.get_precision('Commission')),
     }
 
 
 class CommissionInvoice(osv.Model):
 
-    """
-    Commission Payment : commission_invoice
+    """Commission Payment : commission_invoice
     """
 
     _name = 'commission.invoice'
     _order = 'invoice_id'
+
+    def _get_commission(self, cr, uid, ids, name, args, context=None):
+        context = dict(context or {})
+        res = {}.fromkeys(ids, 0.0)
+        for brw in self.browse(cr, uid, ids, context=context):
+            res[brw.id] = sum(
+                [cl_brw.commission for cl_brw in brw.comm_line_ids])
+        return res
 
     _columns = {
         'name': fields.char('Comentario', size=256),
@@ -1507,6 +1545,11 @@ class CommissionInvoice(osv.Model):
         'pay_inv': fields.float(
             'Abono Fact.',
             digits_compute=dp.get_precision('Commission')),
+        'commission': fields.function(
+            _get_commission,
+            type='float',
+            string='Commission Amount',
+            digits_compute=dp.get_precision('Commission')),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -1515,8 +1558,7 @@ class CommissionInvoice(osv.Model):
 
 class CommissionLines2(osv.Model):
 
-    """
-    Commission Payment : commission_lines_2
+    """Commission Payment : commission_lines_2
     """
 
     _inherit = 'commission.lines'

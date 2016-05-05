@@ -21,3 +21,4 @@
 ##############################################################################
 from . import test_wizard
 from . import test_avg_costs
+from . import test_product_segmentation

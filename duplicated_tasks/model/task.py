@@ -27,8 +27,8 @@ from openerp.osv import osv, fields
 
 class InheritTask(osv.Model):
 
-    '''Inherit project task module to add description fields  when a task is
-        duplicated'''
+    """Inherit project task module to add description fields  when a task is
+        duplicated"""
 
     _inherit = 'project.task'
 

@@ -23,8 +23,7 @@ class ModifyTrackingNumber(models.TransientModel):
 
     @api.model
     def _get_lines(self):
-        """
-        Get the move lines form current picking
+        """Get the move lines form current picking
         :return: a list of dictionaries to create the new wizard lines.
         """
         res = []
@@ -44,8 +43,7 @@ class ModifyTrackingNumber(models.TransientModel):
 
     @api.model
     def check_active_model(self):
-        """
-        Check that the active model is stock picking if not raise a warning.
+        """Check that the active model is stock picking if not raise a warning.
         """
         model = self._context.get('active_model', False)
         if model != 'stock.picking':

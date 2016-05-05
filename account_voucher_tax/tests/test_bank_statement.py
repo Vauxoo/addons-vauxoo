@@ -4,8 +4,7 @@ import time
 
 
 class TestPaymentTax(TestTaxCommon):
-    """
-        These Tests were made based on this document,
+    """These Tests were made based on this document,
         https://docs.google.com/a/vauxoo.com/spreadsheets/d/1O82bBb-mySbpH7SiY1KQILsIIRMgcO5E0ddNuCGC0N8/edit#gid=0
         to test the successful creation of taxes efectivamete pagado / cobrado
         of supplier in payments by bank statement
@@ -15,8 +14,7 @@ class TestPaymentTax(TestTaxCommon):
         super(TestPaymentTax, self).setUp()
 
     def test_iva_16_supplier(self):
-        """
-            Tests Supplier with tax 16% and two payments
+        """Tests Supplier with tax 16% and two payments
         """
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
@@ -88,8 +86,7 @@ class TestPaymentTax(TestTaxCommon):
                 continue
 
     def test_iva_16_ret_supplier(self):
-        """
-            Tests Supplier with two taxes IVA 16%
+        """Tests Supplier with two taxes IVA 16%
             and Retention 10.67% with one payment
         """
         cr, uid = self.cr, self.uid
@@ -173,8 +170,7 @@ class TestPaymentTax(TestTaxCommon):
         self.assertEquals(amount_iva16, 16)
 
     def test_iva_16_currency_supplier(self):
-        """
-            Tests Supplier with currency USD and tax 16% with two payments
+        """Tests Supplier with currency USD and tax 16% with two payments
         """
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
@@ -271,8 +267,7 @@ class TestPaymentTax(TestTaxCommon):
         self.assertEquals(checked_line, 4)
 
     def test_iva_16_currency_supplier_almost_complete(self):
-        """
-            Tests Supplier with currency USD and tax 16% and two payments
+        """Tests Supplier with currency USD and tax 16% and two payments
             First payment almost complete and exchange rate
                 greater then invoice
             Second payment with exchange rate same that invoice
@@ -372,8 +367,7 @@ class TestPaymentTax(TestTaxCommon):
         self.assertEquals(checked_line, 4)
 
     def test_iva_16_supplier_difference_currency_usd(self):
-        """
-            Tests Supplier with invoice currency USD and tax 16% with
+        """Tests Supplier with invoice currency USD and tax 16% with
             payment with currency of company EUR
             and specific rate in statement line
         """
@@ -452,8 +446,7 @@ class TestPaymentTax(TestTaxCommon):
         self.assertEquals(checked_line, 4)
 
     def test_iva_16_supplier_difference_currency_eur(self):
-        """
-            Tests Supplier with invoice currency company EUR and tax 16% with
+        """Tests Supplier with invoice currency company EUR and tax 16% with
             payment with currency USD
             and specific rate in statement line
         """

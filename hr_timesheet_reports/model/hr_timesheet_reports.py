@@ -498,10 +498,9 @@ class HrTimesheetReportsBase(models.Model):
         return True
 
     def clean_timesheet(self, cr, uid, ids, context=None):
-        '''
-        To be sure all timesheet lines are at least setted as billable
+        """To be sure all timesheet lines are at least setted as billable
         100% in order to show correct first approach of numbers.
-        '''
+        """
         timesheet_obj = self.pool.get('hr.analytic.timesheet')
         report = self.browse(cr, uid, ids, context=context)[0]
         domain = report.filter_id.domain

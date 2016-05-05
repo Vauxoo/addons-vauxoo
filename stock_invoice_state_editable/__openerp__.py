@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Stock invoice state editable",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Stock",
     "website": "http://www.vauxoo.com/",

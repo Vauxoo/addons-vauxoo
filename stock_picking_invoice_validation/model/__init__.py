@@ -12,3 +12,4 @@ from . import stock_picking
 from . import stock_transfer_details
 from . import stock_config_settings
 from . import sale_order
+from . import account_invoice

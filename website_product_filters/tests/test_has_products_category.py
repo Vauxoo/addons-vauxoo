@@ -20,8 +20,7 @@ class TestCategoryHasProducts(TransactionCase):
         self.category_graphics = self.env.ref('product.graphics_card')
 
     def test_01_has_products_ok(self):
-        """
-            This test validate the fiel has_products_ok in
+        """This test validate the fiel has_products_ok in
             product.public.category
         """
         # Create a Product Variant

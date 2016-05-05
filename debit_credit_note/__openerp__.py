@@ -29,7 +29,7 @@
 ##############################################################################
 {
     "name": "Debit and Credit Notes on Invoice",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Accounting",
     "website": "http://vauxoo.com",

@@ -20,6 +20,8 @@
             <field name="price_unit">2000</field>
             <field name="quantity">5</field>
             <field name="account_id" ref="account.a_sale"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="product_id" ref="product.product_product_4"/>
         </record>
         <record id="invoice_1_line_2" model="account.invoice.line">
             <field name="name">VX Consultancy</field>
@@ -82,6 +84,58 @@
             <field name="disc_id" ref="baremo_03"/>
         </record>
 
+        <record id="baremo_book_02" model="baremo.book">
+            <field name="name">5% Commission No Discounts 30 days</field>
+        </record>
+
+        <record id="baremo_01a" model="baremo">
+            <field name="name">Up to 30 days delay in payment</field>
+            <field name="number">30</field>
+            <field name="baremo_id" ref="baremo_book_02"/>
+        </record>
+
+        <record id="baremo_discount_01a" model="baremo.discount">
+            <field name="porc_com">5.0</field>
+            <field name="porc_disc">0.0</field>
+            <field name="disc_id" ref="baremo_01a"/>
+        </record>
+
+        <record id="baremo_02a" model="baremo">
+            <field name="name">Up to 60 days delay in payment</field>
+            <field name="number">60</field>
+            <field name="baremo_id" ref="baremo_book_02"/>
+        </record>
+
+        <record id="baremo_discount_02a" model="baremo.discount">
+            <field name="porc_com">2.5</field>
+            <field name="porc_disc">0.0</field>
+            <field name="disc_id" ref="baremo_02a"/>
+        </record>
+
+        <record id="baremo_03a" model="baremo">
+            <field name="name">Up to 90 days delay in payment</field>
+            <field name="number">90</field>
+            <field name="baremo_id" ref="baremo_book_02"/>
+        </record>
+
+        <record id="baremo_discount_03a" model="baremo.discount">
+            <field name="porc_com">1.25</field>
+            <field name="porc_disc">0.0</field>
+            <field name="disc_id" ref="baremo_03a"/>
+        </record>
+
+        <record id="baremo_matrix_01" model="baremo.matrix">
+            <field name="baremo_id" ref="baremo_book_02"/>
+            <field name="product_id" ref="product.product_product_4"/>
+            <field name="user_id">1</field>
+        </record>
+
+        <record id="product_historic_price_01" model="product.historic.price">
+            <field name="price">1500.0</field>
+            <field name="product_id" ref="product.product_product_4_product_template"/>
+            <field name="name" eval="time.strftime('%Y-%m') + '-01 00:00:00'"/>
+        </record>
+
         <record id="commission_1" model="commission.payment">
             <field name="name">Commission Concept #1</field>
             <field name="currency_id" ref="base.EUR"/>
@@ -99,9 +153,72 @@
             <field name="user_ids" eval="[(4, ref('base.user_demo'))]"/>
         </record>
 
+        <record id="commission_2" model="commission.payment">
+            <field name="name">Commission Concept #2 (Invoiced Products)</field>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="date_start" eval="time.strftime('%Y-%m') + '-01'"/>
+            <field name="date_stop" eval="time.strftime('%Y-%m-%d')"/>
+            <field name="state">draft</field>
+            <field name="commission_type">fully_paid_invoice</field>
+            <field name="commission_scope">product_invoiced</field>
+            <field name="commission_policy_date_start">invoice_due_date</field>
+            <field name="commission_policy_date_end">last_payment_date</field>
+            <field name="commission_salesman_policy">on_invoice</field>
+            <field name="commission_baremo_policy">onMatrix</field>
+            <field name="baremo_id" ref="baremo_book_01"/>
+            <field name="user_ids" eval="[(4, 1)]"/>
+        </record>
+
         <function model="commission.payment" name="prepare">
             <!-- ids = -->                    <value eval="[ref('commission_1')]"/>
         </function>
 
+        <record id="account_move_00" model="account.move">
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="period_id" ref="account.period_1"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-01'"/>
+        </record>
+        <record id="aml_rec_debit" model="account.move.line">
+            <field name="name">Receivable - Debit</field>
+            <field name="move_id" ref="commission_payment.account_move_00"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="period_id" ref="account.period_1"/>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="debit">1000.0</field>
+            <field name="credit">0.0</field>
+        </record>
+        <record id="aml_sale_credit" model="account.move.line">
+            <field name="name">Sale</field>
+            <field name="move_id" ref="commission_payment.account_move_00"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="period_id" ref="account.period_1"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1000.0</field>
+        </record>
+        <record id="account_move_01" model="account.move">
+            <field name="journal_id" ref="account.bank_journal"/>
+            <field name="period_id" ref="account.period_1"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-30'"/>
+        </record>
+        <record id="aml_bnk_debit" model="account.move.line">
+            <field name="name">Bank</field>
+            <field name="move_id" ref="commission_payment.account_move_01"/>
+            <field name="journal_id" ref="account.bank_journal"/>
+            <field name="period_id" ref="account.period_1"/>
+            <field name="account_id" ref="account.bnk"/>
+            <field name="debit">1000.0</field>
+            <field name="credit">0.0</field>
+        </record>
+        <record id="aml_rec_credit" model="account.move.line">
+            <field name="name">Receivable - Credit</field>
+            <field name="move_id" ref="commission_payment.account_move_01"/>
+            <field name="journal_id" ref="account.bank_journal"/>
+            <field name="period_id" ref="account.period_1"/>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1000.0</field>
+        </record>
     </data>
 </openerp>

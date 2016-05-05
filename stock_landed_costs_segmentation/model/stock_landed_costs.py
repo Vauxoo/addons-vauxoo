@@ -44,6 +44,7 @@ class StockLandedCost(models.Model):
                 raise UserError(
                     _('Please fill the segmentation field in Cost Lines'))
 
+            quant_dict = {}
             for line in cost.valuation_adjustment_lines:
                 if not line.move_id:
                     continue
@@ -52,7 +53,6 @@ class StockLandedCost(models.Model):
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
 
-                quant_dict = {}
                 for quant in line.move_id.quant_ids:
                     if quant.id not in quant_dict:
                         quant_dict[quant.id] = {}
@@ -65,7 +65,7 @@ class StockLandedCost(models.Model):
                         else:
                             quant_dict[quant.id][segment] += diff
 
-                for key, pair in quant_dict.items():
-                    for segment, value in pair.items():
-                        quant_obj.browse(key).write({segment: value})
+            for key, pair in quant_dict.items():
+                quant_obj.sudo().browse(key).write(pair)
+
         return super(StockLandedCost, self).button_validate()

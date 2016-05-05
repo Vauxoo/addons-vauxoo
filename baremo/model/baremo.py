@@ -24,6 +24,29 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp import SUPERUSER_ID
 
 
+class BaremoMatrix(osv.Model):
+
+    """
+    OpenERP Model : baremo matrix
+    """
+
+    _name = 'baremo.matrix'
+
+    _columns = {
+        'baremo_id': fields.many2one(
+            'baremo.book', 'Bareme', required=True),
+        'user_id': fields.many2one(
+            'res.users', 'Salesman', required=True),
+        'product_id': fields.many2one(
+            'product.product', 'Product', required=True),
+    }
+
+    _sql_constraints = [
+        ('baremo_permutation_unique',
+         'unique(user_id, product_id)',
+         'Same Salesman & Product can be assigned to only one Baremo')]
+
+
 class BaremoBook(osv.Model):
     _name = 'baremo.book'
 
@@ -37,13 +60,17 @@ class BaremoBook(osv.Model):
             required=False,
             copy=True,
         ),
+        'matrix_ids': fields.one2many(
+            'baremo.matrix', 'baremo_id',
+            'Baremo Matrix',
+            copy=False,
+        ),
     }
 
 
 class Baremo(osv.Model):
 
-    """
-    OpenERP Model : baremo
+    """OpenERP Model : baremo
     """
 
     _name = 'baremo'
@@ -69,8 +96,7 @@ class Baremo(osv.Model):
 
 class BaremoDiscount(osv.Model):
 
-    """
-    OpenERP Model : baremo_discount
+    """OpenERP Model : baremo_discount
     """
 
     _name = 'baremo.discount'
@@ -91,6 +117,28 @@ class ResParter(osv.Model):
     _inherit = "res.partner"
     _columns = {
         'baremo_id': fields.many2one('baremo.book', 'Baremo', required=False),
+    }
+
+
+class ResUsers(osv.Model):
+    _inherit = "res.users"
+    _columns = {
+        'matrix_ids': fields.one2many(
+            'baremo.matrix', 'user_id',
+            'Baremo Matrix',
+            copy=False,
+        ),
+    }
+
+
+class ProductProduct(osv.Model):
+    _inherit = "product.product"
+    _columns = {
+        'matrix_ids': fields.one2many(
+            'baremo.matrix', 'product_id',
+            'Baremo Matrix',
+            copy=False,
+        ),
     }
 
 

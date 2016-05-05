@@ -3,12 +3,12 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# ##############Credits######################################################
 #    Coded by: vauxoo consultores (info@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -21,7 +21,7 @@
 ##########################################################################
 {
     "name": "Forward Mail",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Addons Vauxoo",
     "website": "http://vauxoo.com",

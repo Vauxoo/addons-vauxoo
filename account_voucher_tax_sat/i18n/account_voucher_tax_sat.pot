@@ -1,13 +1,13 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* account_voucher_tax_sat
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 01:12+0000\n"
-"PO-Revision-Date: 2013-11-07 01:12+0000\n"
+"POT-Creation-Date: 2016-05-03 06:40+0000\n"
+"PO-Revision-Date: 2016-05-03 06:40+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,15 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_voucher_tax_sat
-#: model:res.groups,name:account_voucher_tax_sat.group_voucher_tax_sat_manager
-msgid "Tax SAT Manager"
+#: view:account.voucher.tax.assigned:account_voucher_tax_sat.view_account_voucher_tax_form2
+#: model:ir.actions.act_window,name:account_voucher_tax_sat.action_view_account_voucher_tax_assigned
+msgid "Account Voucher Tax Assigned"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: model:ir.actions.act_window,name:account_voucher_tax_sat.account_voucher_tax_sat_action
-#: model:ir.ui.menu,name:account_voucher_tax_sat.account_voucher_tax_sat_menu
-msgid "Voucher Tax SAT"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: help:account.voucher.tax.sat,move_id:0
-msgid "Accounting Entry"
+#: view:account.voucher.tax.sat:account_voucher_tax_sat.view_account_voucher_tax_sat_form
+#: view:account.voucher.tax.sat:account_voucher_tax_sat.view_account_voucher_tax_sat_tree
+msgid "Account Voucher Tax SAT"
 msgstr ""
 
 #. module: account_voucher_tax_sat
@@ -37,38 +33,36 @@ msgid "Account to Close"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: model:ir.model,name:account_voucher_tax_sat.model_account_tax
-msgid "Tax"
+#: help:account.voucher.tax.sat,move_id:0
+msgid "Accounting Entry"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: help:account.voucher.tax.sat,partner_id:0
-msgid "Partner of SAT"
+#: help:account.voucher.tax.sat,journal_id:0
+msgid "Accounting Journal where Entries will be posted"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: field:account.voucher.tax.sat,period_id:0
-msgid "Period"
+#: view:account.voucher.tax.sat:account_voucher_tax_sat.view_account_voucher_tax_sat_form
+msgid "Assigned Account"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: view:account.voucher.tax.assigned:account_voucher_tax_sat.view_account_voucher_tax_form2
+#: view:account.voucher.tax.sat:account_voucher_tax_sat.view_account_voucher_tax_sat_form
+msgid "Cancel"
 msgstr ""
 
 #. module: account_voucher_tax_sat
 #: selection:account.voucher.tax.sat,state:0
-msgid "New"
+msgid "Cancelled"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: help:account.voucher.tax.sat,aml_ids:0
-msgid "Entries to close"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: field:account.voucher.tax.sat,state:0
-msgid "Status"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: view:account.voucher.tax.assigned:0
-msgid "or"
+#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:169
+#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:183
+#, python-format
+msgid "Close of IVA Retained"
 msgstr ""
 
 #. module: account_voucher_tax_sat
@@ -78,58 +72,78 @@ msgid "Company"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: field:account.voucher.tax.sat,aml_ids:0
-msgid "Move Lines"
+#: field:account.voucher.tax.assigned,create_uid:0
+#: field:account.voucher.tax.sat,create_uid:0
+msgid "Created by"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: view:account.voucher.tax.sat:0
-msgid "Account Voucher Tax SAT"
+#: field:account.voucher.tax.assigned,create_date:0
+#: field:account.voucher.tax.sat,create_date:0
+msgid "Created on"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: field:account.tax,tax_reference:0
-msgid "Tax Reference"
+#: selection:account.voucher.tax.sat,state:0
+msgid "Done"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:88
-#, python-format
-msgid "Warning"
+#: help:account.voucher.tax.sat,aml_iva_ids:0
+msgid "Entries IVA to close"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: model:res.groups,name:account_voucher_tax_sat.group_voucher_tax_sat_user
-msgid "Tax SAT User"
+#: help:account.voucher.tax.sat,aml_ids:0
+msgid "Entries to close"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: view:account.voucher.tax.sat:0
+#: field:account.voucher.tax.assigned,id:0
+#: field:account.voucher.tax.sat,id:0
+msgid "ID"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: field:res.partner,sat:0
+msgid "Is SAT?"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: field:account.voucher.tax.sat,journal_id:0
+msgid "Journal"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: field:account.voucher.tax.sat,move_id:0
+msgid "Journal Entry"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: field:account.voucher.tax.assigned,write_uid:0
+#: field:account.voucher.tax.sat,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: field:account.voucher.tax.assigned,write_date:0
+#: field:account.voucher.tax.sat,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: view:account.voucher.tax.sat:account_voucher_tax_sat.view_account_voucher_tax_sat_form
 msgid "Liquidar Cuentas"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: field:account.voucher.tax.sat,date:0
-msgid "Accounting Date"
+#: field:account.voucher.tax.sat,aml_ids:0
+#: field:account.voucher.tax.sat,aml_iva_ids:0
+msgid "Move Lines"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: help:account.voucher.tax.sat,period_id:0
-msgid "Period of Entries to find"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: model:ir.model,name:account_voucher_tax_sat.model_account_voucher_tax_sat
-msgid "account.voucher.tax.sat"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: view:account.voucher.tax.assigned:0
-msgid "Ok"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: view:account.voucher.tax.sat:0
+#: view:account.voucher.tax.sat:account_voucher_tax_sat.view_account_voucher_tax_sat_form
 #: field:account.voucher.tax.sat,name:0
 msgid "Name"
 msgstr ""
@@ -140,95 +154,8 @@ msgid "Name of This Document"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: view:account.voucher.tax.assigned:0
-#: model:ir.actions.act_window,name:account_voucher_tax_sat.action_view_account_voucher_tax_assigned
-msgid "Account Voucher Tax Assigned"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: field:account.tax,account_id_by_creditable:0
-msgid "Account of entries SAT x Acreditable"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: field:res.partner,sat:0
-msgid "Is SAT?"
-msgstr ""
-
-#. module: account_voucher_tax_sat
 #: selection:account.voucher.tax.sat,state:0
-msgid "Cancelled"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: model:ir.model,name:account_voucher_tax_sat.model_account_voucher_tax_assigned
-msgid "account.voucher.tax.assigned"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: field:account.tax,tax_sat_ok:0
-msgid "Create entries IVA to SAT"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: help:account.voucher.tax.sat,journal_id:0
-msgid "Accounting Journal where Entries will be posted"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: help:account.tax,tax_reference:0
-msgid "Tax Reference to get data of DIOT/SAT"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: field:account.voucher.tax.assigned,tax_ids:0
-msgid "Taxes to Close"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: field:account.tax,account_id_creditable:0
-msgid "Account of entries SAT Acreditable"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: view:account.voucher.tax.sat:0
-msgid "Assigned Account"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: view:account.voucher.tax.sat:0
-#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:236
-#, python-format
-msgid "Pay SAT"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:89
-#, python-format
-msgid "You have this jornal items in other voucher tax sat '%s' "
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:171
-#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:186
-#, python-format
-msgid "Close of IVA Retained"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: help:account.voucher.tax.sat,date:0
-msgid "Accounting date affected"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: selection:account.voucher.tax.sat,state:0
-msgid "Done"
-msgstr ""
-
-#. module: account_voucher_tax_sat
-#: view:account.voucher.tax.assigned:0
-#: view:account.voucher.tax.sat:0
-msgid "Cancel"
+msgid "New"
 msgstr ""
 
 #. module: account_voucher_tax_sat
@@ -238,18 +165,73 @@ msgid "Partner"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:206
+#: help:account.voucher.tax.sat,partner_id:0
+msgid "Partner of SAT"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: view:account.voucher.tax.sat:account_voucher_tax_sat.view_account_voucher_tax_sat_form
+#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:234
+#, python-format
+msgid "Pay SAT"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:205
 #, python-format
 msgid "Payment to SAT"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: field:account.voucher.tax.sat,move_id:0
-msgid "Journal Entry"
+#: field:account.voucher.tax.sat,period_id:0
+msgid "Period"
 msgstr ""
 
 #. module: account_voucher_tax_sat
-#: field:account.voucher.tax.sat,journal_id:0
-msgid "Journal"
+#: help:account.voucher.tax.sat,period_id:0
+msgid "Period of Entries to find"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: field:account.voucher.tax.sat,state:0
+msgid "Status"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: model:res.groups,name:account_voucher_tax_sat.group_voucher_tax_sat_manager
+msgid "Tax SAT Manager"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: model:res.groups,name:account_voucher_tax_sat.group_voucher_tax_sat_user
+msgid "Tax SAT User"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: field:account.voucher.tax.assigned,tax_ids:0
+msgid "Taxes to Close"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: model:ir.actions.act_window,name:account_voucher_tax_sat.account_voucher_tax_sat_action
+#: model:ir.ui.menu,name:account_voucher_tax_sat.account_voucher_tax_sat_menu
+msgid "Voucher Tax SAT"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:98
+#, python-format
+msgid "Warning"
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: code:addons/account_voucher_tax_sat/model/account_voucher_tax_sat.py:99
+#, python-format
+msgid "You have this jornal items in other voucher tax sat '%s' "
+msgstr ""
+
+#. module: account_voucher_tax_sat
+#: view:account.voucher.tax.assigned:account_voucher_tax_sat.view_account_voucher_tax_form2
+msgid "or"
 msgstr ""
 

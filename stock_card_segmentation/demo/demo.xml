@@ -235,7 +235,7 @@
         </record>
         <workflow action="order_confirm" model="sale.order" ref="so_05"/>
         <workflow action="manual_invoice" model="sale.order" ref="so_05" uid="base.user_root"/>
-        <function model="stock.picking" name="action_assign">
+        <function model="stock.picking" name="force_assign">
             <value eval="[obj(ref('so_05')).picking_ids[0].id]" model="sale.order"/>
         </function>
         <function model="stock.picking" name="do_enter_transfer_details">

@@ -66,13 +66,12 @@ class ReportMulticompany(osv.Model):
         return {'value': {'model': model_id}}
 
     def report_multicompany_create(self, cr, uid, report_id, company_id=False, sequence=False, context=None):
-        '''
-            This function adds or updates a record in a report associated
+        """This function adds or updates a record in a report associated
             with a company in which if the record exists and performs
             an upgrade assigning the sequence minimal and subtract one.
             If this record not exist are creates and
             assigns in the sequence sequence minimal and subtract one
-        '''
+        """
         if context is None:
             context = {}
 

@@ -28,8 +28,7 @@ class Module(osv.Model):
     _inherit = 'ir.module.module'
 
     def get_doc_inside(self, cr, uid, ids, context=None):
-        """
-        Doc in classes on my module
+        """Doc in classes on my module
         """
 #        for d in dir(self.pool.get("res.partner")):
 #            exec('A=self.pool.get("res.partner").%s.__doc__'%d)
@@ -37,14 +36,13 @@ class Module(osv.Model):
         return "DOCUMENTACION DOCUMENTACION \n MAS DOCUMENTACION"
 
     def format_help(self, cr, uid, dict_txt, context={}):
-        '''
-        {'MenuName':menu.name,
+        """{'MenuName':menu.name,
         'CompleteMenuName':menu.complete_name,
         'ActionHelp':menu.action.help,
         'ModuleName':action.__module__
         'XmlId':data_id.name}
         :return docStr Variable with wiki text.
-        '''
+        """
         docStr = ''
         Name = dict_txt.get('MenuName')
         CompleteMenuName = dict_txt.get('CompleteMenuName')
@@ -61,11 +59,10 @@ class Module(osv.Model):
         return docStr
 
     def title_help(self, cr, uid, mod_id, Module, context={}):
-        '''
-        {'CompleteModuleName':action.__module__
+        """{'CompleteModuleName':action.__module__
         'ModuleName':action.__module__}
         :return docStr Variable with wiki text.
-        '''
+        """
         docStr = "==%s==\n%s" % (self.browse(cr, uid,
                                              mod_id,
                                              context=context).shortdesc,
@@ -74,18 +71,16 @@ class Module(osv.Model):
         return docStr
 
     def sub_title_help(self, cr, uid, module_name, context={}):
-        '''
-        Subtitle generator
+        """Subtitle generator
         :return docStr Variable with wiki text.
-        '''
+        """
         docStr = "'''Technical Name: ''' ''%s''" % module_name
         return docStr
 
     def _get_docs(self, cr, uid, ids, field_name=None, arg=None, context=None):
-        '''
-        Field function with instrospection algorithm to obtain documentation for
+        """Field function with instrospection algorithm to obtain documentation for
         Module.
-        '''
+        """
         res = {}
         model_data_obj = self.pool.get('ir.model.data')
         menu_obj = self.pool.get('ir.ui.menu')

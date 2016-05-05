@@ -14,8 +14,7 @@ class AccountMoveFolioFillGap(osv.TransientModel):
     }
 
     def data_save(self, cr, uid, ids, context=None):
-        """
-        This function fill the Gaps in Journal Entry Folios
+        """This function fill the Gaps in Journal Entry Folios
         @param cr: the current row, from the database cursor,
         @param uid: the current user’s ID for security checks,
         @param ids: list of wizard ids

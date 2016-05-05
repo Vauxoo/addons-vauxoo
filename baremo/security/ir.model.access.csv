@@ -2,7 +2,9 @@
 "access_baremo_user","baremo","model_baremo","baremo.group_baremo_user",1,0,0,0
 "access_baremo_discount_user","baremo.discount","model_baremo_discount","baremo.group_baremo_user",1,0,0,0
 "access_baremo_book_user","baremo.book","model_baremo_book","baremo.group_baremo_user",1,0,0,0
+"access_baremo_matrix_user","baremo.matrix","model_baremo_matrix","baremo.group_baremo_user",1,0,0,0
 "access_baremo_discount_manager","baremo.discount","model_baremo_discount","baremo.group_baremo_manager",1,1,1,1
 "access_baremo_manager","baremo","model_baremo","baremo.group_baremo_manager",1,1,1,1
 "access_baremo_book_manager","baremo.book","model_baremo_book","baremo.group_baremo_manager",1,1,1,1
+"access_baremo_matrix_manager","baremo.matrix","model_baremo_matrix","baremo.group_baremo_manager",1,1,1,1
 

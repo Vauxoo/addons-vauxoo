@@ -28,8 +28,7 @@ from openerp.tests.common import TransactionCase
 
 
 class TestLotNotRepeated(TransactionCase):
-    """
-    Test that the lot is not repeated when item was splited
+    """Test that the lot is not repeated when item was splited
     """
 
     def setUp(self):

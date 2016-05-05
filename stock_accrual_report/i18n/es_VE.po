@@ -1,0 +1,497 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_accrual_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-03 08:30+0000\n"
+"PO-Revision-Date: 2016-05-03 08:59+0000\n"
+"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
+"Language-Team: Spanish <http://example.com/projects/addons-"
+"vauxoo/stock_accrual_report/es/>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_footer
+msgid "&bull;"
+msgstr "&bull;"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.minimal_layout
+msgid "<!DOCTYPE html>"
+msgstr "<!DOCTYPE html>"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,accrual_filter:0
+msgid "Accrual on Lines:"
+msgstr "Provisión en Líneas:"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Accrual on Lines: Bring All Order Lines"
+msgstr "Provisión en Líneas: Traer Todas las Líneas de la Orden"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Accrual on Lines: Only with Accruals"
+msgstr "Provisión en Líneas: Solamente con Provisiones"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,time_span:0
+msgid "All Periods"
+msgstr "Todos los Períodos"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,reconcile_filter:0
+msgid "Bring All Accruals"
+msgstr "Traer Todas las Provisiones"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,accrual_filter:0
+msgid "Bring All Order Lines"
+msgstr "Traer Todas las Líneas de las Órdenes"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,filter:0
+msgid "By Date"
+msgstr "Por Fecha"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,filter:0
+msgid "By Period"
+msgstr "Por Período"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "CREDIT"
+msgstr "CRÉDITO"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+#: view:stock.accrual.wizard.line:stock_accrual_report.view_wizard_stock_accrual_line
+msgid "Choose your date"
+msgstr "Escoger su fecha"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,create_uid:0
+#: field:stock.accrual.wizard.line,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,create_date:0
+#: field:stock.accrual.wizard.line,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,credit:0
+#: help:stock.accrual.wizard,credit:0
+#: field:stock.accrual.wizard.line,credit:0
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "DEBIT"
+msgstr "DÉBITO"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "DELIVERED QTY"
+msgstr "CANT ENTREGADA"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "DESCRIPTION"
+msgstr "DESCRIPCIÓN"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,filter:0
+msgid "Date/Period Filter"
+msgstr "Filtro Fecha/Período"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,debit:0
+#: help:stock.accrual.wizard,debit:0
+#: field:stock.accrual.wizard.line,debit:0
+msgid "Debit"
+msgstr "Débito"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard.line,qty_delivered:0
+msgid "Delivered Quantity"
+msgstr "Cantidad Entregada"
+
+#. module: stock_accrual_report
+#: code:addons/stock_accrual_report/wizard/wizard.py:163
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: stock_accrual_report
+#: constraint:stock.accrual.wizard:0
+msgid "Error!\n"
+"Beginning and Ending Dates in report are not logical."
+msgstr ""
+"Error!\n"
+"Fechas de Inicio y Fin en el reporte no son lógicas."
+
+#. module: stock_accrual_report
+#: help:stock.accrual.wizard,fy_start_id:0
+#: help:stock.accrual.wizard,fy_stop_id:0
+msgid "Fiscal Year"
+msgstr "Ejercicio Fiscal"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,date_start:0
+msgid "From Date"
+msgstr "Desde Fecha"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,fy_start_id:0
+msgid "From Fiscal Year"
+msgstr "Desde Ejercicio Fiscal"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,period_start_id:0
+msgid "From Period"
+msgstr "Desde Período"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "From:"
+msgstr "Desde:"
+
+#. module: stock_accrual_report
+#: field:report.stock_accrual_report.stock_accrual_report_name,id:0
+#: field:stock.accrual.wizard,id:0
+#: field:stock.accrual.wizard.line,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "INVOICED QTY"
+msgstr "CANT FACTURADA"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard.line,qty_invoiced:0
+msgid "Invoiced Quantity"
+msgstr "Cantidad Facturada"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,write_uid:0
+#: field:stock.accrual.wizard.line,write_uid:0
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,write_date:0
+#: field:stock.accrual.wizard.line,write_date:0
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,line_ids:0
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Lines from: All Periods"
+msgstr "Líneas de: Todos Los Períodos"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Lines from: This Period"
+msgstr "Líneas de: Este Período"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,time_span:0
+msgid "Lines on:"
+msgstr "Líneas en:"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "ORDERED QTY"
+msgstr "CANT ORDENADA"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,reconcile_filter:0
+msgid "Only Fully Reconciled Accruals"
+msgstr "Solamente Provisiones Completamente Conciliadas"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,accrual_filter:0
+msgid "Only with Accruals"
+msgstr "Solamente con Provisiones"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard.line,order_id:0
+msgid "Order"
+msgstr "Orden"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard.line,line_id:0
+msgid "Order Line"
+msgstr "Línea de Orden"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "Order Options"
+msgstr "Opciones de la Orden"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "Output Options"
+msgstr "Opciones de Salida"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,report_format:0
+msgid "PDF"
+msgstr "PDF"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "PURCHASE ORDER"
+msgstr "ORDEN DE COMPRA"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_footer
+msgid "Page:"
+msgstr "Página:"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "Print Report"
+msgstr "Imprimir Reporte"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_footer
+msgid "Printed"
+msgstr "Impreso"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,type:0
+#: selection:stock.accrual.wizard.line,order_id:0
+msgid "Purchase Order"
+msgstr "Orden de Compra"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard.line,line_id:0
+msgid "Purchase Order Line"
+msgstr "Línea de la Orden de Compra"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_footer
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Purchase Order Stock Accrual Report"
+msgstr "Reporte de Provisión de Inventario de la Orden de Compra"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard.line,product_qty:0
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "RECEIVED QTY"
+msgstr "CANT RECIBIDA"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,reconcile_filter:0
+msgid "Reconciliation:"
+msgstr "Conciliación:"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Reconciliation: Bring All Accruals"
+msgstr "Conciliación: Traer Todas las Provisiones"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Reconciliation: Only Fully Reconciled Accruals"
+msgstr "Conciliación: Solamente Provisiones Completamente Conciliadas"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Reconciliation: Unreconciled & Partial Reconciled Accruals"
+msgstr "Concialiación: Provisiones Parcialmente Conciliadas & No Conciliadas"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,report_format:0
+msgid "Report Format"
+msgstr "Formato de Reporte"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "Retrieval Options"
+msgstr "Opciones de Obtención"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "SALES ORDER"
+msgstr "ORDEN DE VENTA"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard.line,line_id:0
+msgid "Sale Order Line"
+msgstr "Línea de Orden de Venta"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,type:0
+#: selection:stock.accrual.wizard.line,order_id:0
+msgid "Sales Order"
+msgstr "Orden de Venta"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_footer
+#: view:website:stock_accrual_report.external_layout_header
+msgid "Sales Order Stock Accrual Report"
+msgstr "Reporte de Provisión de Inventario de Orden de Venta"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,report_format:0
+msgid "Spreadsheet"
+msgstr "Hoja de Cálculo"
+
+#. module: stock_accrual_report
+#: model:ir.actions.act_window,name:stock_accrual_report.action_wizard_stock_accrual
+#: model:ir.ui.menu,name:stock_accrual_report.menu_action_wizard_valuation_history
+msgid "Stock Accrual"
+msgstr "Provisión de Inventario"
+
+#. module: stock_accrual_report
+#: code:addons/stock_accrual_report/wizard/wizard.py:520
+#, python-format
+msgid "Stock Accrual Lines"
+msgstr "Líneas de Provisión de Inventario"
+
+#. module: stock_accrual_report
+#: model:ir.actions.report.xml,name:stock_accrual_report.stock_accrual_report_id
+msgid "Stock Accrual Report"
+msgstr "Reporte de Provisión de Inventario"
+
+#. module: stock_accrual_report
+#: code:addons/stock_accrual_report/wizard/wizard.py:164
+#, python-format
+msgid "There is no default company for the current user!"
+msgstr "No compañía predeterminada para el usuario actual!"
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,time_span:0
+msgid "This Period Only"
+msgstr "Solamente Este Período"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "Time Options"
+msgstr "Opciones de Tiempo"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,date_stop:0
+msgid "To Date"
+msgstr "A la Fecha"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,fy_stop_id:0
+msgid "To Fiscal Year"
+msgstr "Al Ejercicio Fiscal"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,period_stop_id:0
+msgid "To Period"
+msgstr "Al Período"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard.line:stock_accrual_report.view_wizard_stock_accrual_line
+msgid "Total Credit"
+msgstr "Crédito Total"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard.line:stock_accrual_report.view_wizard_stock_accrual_line
+msgid "Total Debit"
+msgstr "Débito Total"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.stock_accrual_document
+msgid "UOM"
+msgstr "UDM"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard.line,product_uom:0
+msgid "Unit of Measure "
+msgstr "Unidad de Medida "
+
+#. module: stock_accrual_report
+#: selection:stock.accrual.wizard,reconcile_filter:0
+msgid "Unreconciled & Partial Reconciled Accruals"
+msgstr "Provisiones Parcialmente Conciliadas & No Conciliadas"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard,user_id:0
+msgid "User"
+msgstr "Usuario"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "View Report"
+msgstr "Ver Reporte"
+
+#. module: stock_accrual_report
+#: field:stock.accrual.wizard.line,wzd_id:0
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.layout
+msgid "data_report_dpi if data_report_dpi else None"
+msgstr "data_report_dpi if data_report_dpi else None"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.layout
+msgid "data_report_header_spacing if data_report_header_spacing else None"
+msgstr "data_report_header_spacing if data_report_header_spacing else None"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.layout
+msgid "data_report_margin_top if data_report_margin_top else None"
+msgstr "data_report_margin_top if data_report_margin_top else None"
+
+#. module: stock_accrual_report
+#: view:stock.accrual.wizard:stock_accrual_report.view_wizard_stock_accrual
+msgid "or"
+msgstr "o"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.layout
+msgid "stock_accrual_report.layout"
+msgstr "stock_accrual_report.layout"
+
+#. module: stock_accrual_report
+#: view:website:stock_accrual_report.external_layout_header
+msgid "to:"
+msgstr "a:"

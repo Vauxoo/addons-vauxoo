@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Website Product Rate",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Website",
     "website": "http://www.vauxoo.com/",
@@ -9,7 +9,9 @@
     "depends": [
         "website_sale"
     ],
-    "demo": [],
+    "demo": [
+        "demo/rating_demo.xml"
+    ],
     "data": [
         "views/layout.xml",
         "views/star_rate.xml",

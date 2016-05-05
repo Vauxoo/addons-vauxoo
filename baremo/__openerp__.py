@@ -21,16 +21,19 @@
 ##############################################################################
 {
     "name": "Baremo for calculating commissions",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
         "base",
-        "decimal_precision"
+        "decimal_precision",
+        "product",
     ],
-    "demo": [],
+    "demo": [
+        "demo/demo.xml",
+    ],
     "data": [
         "security/baremo_security.xml",
         "security/ir.model.access.csv",

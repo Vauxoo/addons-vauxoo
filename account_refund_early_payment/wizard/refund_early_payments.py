@@ -66,8 +66,7 @@ class AccountInvoiceRefund(models.TransientModel):
 
     @api.model
     def _get_percent_default(self):
-        """
-        It is a hook method. In order to put some smart computation.
+        """It is a hook method. In order to put some smart computation.
         """
         return 5.0
 

@@ -22,9 +22,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-'''
-File to added method and function to report Demo
-'''
+"""File to added method and function to report Demo
+"""
 
 from openerp.report import report_sxw
 from openerp.addons.report_webkit import webkit_report
@@ -32,19 +31,17 @@ from openerp.addons.report_webkit import webkit_report
 
 class InvoiceReportDemoHtml(report_sxw.rml_parse):
 
-    '''
-    Define methods that need the report
-    '''
+    """Define methods that need the report
+    """
 
     def __init__(self, cr, uid, name, context=None):
-        '''
-        Initialization method
+        """Initialization method
         @param self: The object pointer.
         @param cr: A database cursor
         @param uid: ID of the user currently logged in
         @param name: Ids to invoice's to print ticket
         @param context: A standard dictionary
-        '''
+        """
         if context is None:
             context = {}
         super(InvoiceReportDemoHtml, self).__init__(

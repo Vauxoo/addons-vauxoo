@@ -47,8 +47,7 @@ class StockPicking(models.Model):
 
     @api.depends('move_lines', 'change_picking')
     def _compute_purchase_fields(self):
-        """
-        Calculate if the stock picking have been generated via purchase order
+        """Calculate if the stock picking have been generated via purchase order
         confirmation. If this is the case then the move lines of the picking
         will have purchase order lines associated. The purchase order and the
         change picking field are extract from the purchase order and added to
@@ -81,8 +80,7 @@ class StockPicking(models.Model):
 
     @api.cr_uid_ids_context
     def do_enter_transfer_details(self, cr, uid, picking, context=None):
-        """
-        Before call the wizard to enter the transfer defailts will check if the
+        """Before call the wizard to enter the transfer defailts will check if the
         current picking move lines have been change from the purchase order.
 
         NOTE: This validation applies when trying to validate a picking from
@@ -96,8 +94,7 @@ class StockPicking(models.Model):
 
     @api.multi
     def do_transfer(self):
-        """
-        Overwrite method used to transfer the picking to verify if the
+        """Overwrite method used to transfer the picking to verify if the
         change_picking field is False and then check that the picking move
         lines match with the purchase order lines.
         """
@@ -107,8 +104,7 @@ class StockPicking(models.Model):
 
     @api.model
     def get_error_msg(self, ch_state='DIFFER'):
-        """
-        Return a string with the error message header to show when the change
+        """Return a string with the error message header to show when the change
         picking False option is set in the purchase order
         """
         return ' '.join([
@@ -119,8 +115,7 @@ class StockPicking(models.Model):
 
     @api.multi
     def check_move_lines(self):
-        """
-        This method check if the move lines match with the purchase order
+        """This method check if the move lines match with the purchase order
         lines. Check if any move line have been addded, removed or edited.
 
         NOTE: Only apply when have a stock picking generated via purchase
@@ -160,15 +155,13 @@ class StockPicking(models.Model):
 
     @api.model
     def line_print(self, title, lines):
-        """
-        Print in logger the lines data.
+        """Print in logger the lines data.
         """
         return '\n' + '---- ' + title + '\n' + self.line2str(lines) + '\n'
 
     @api.model
     def line2str(self, lines):
-        """
-        Return a string human readable representation of the move line.
+        """Return a string human readable representation of the move line.
         """
         res = str()
         if isinstance(lines, list):
@@ -200,8 +193,7 @@ class StockPicking(models.Model):
         return res
 
     def get_added_lines(self):
-        """
-        Search the move lines added to the picking that are not related to a
+        """Search the move lines added to the picking that are not related to a
         purchase order line.
         """
         move_lines = self.move_lines
@@ -210,8 +202,7 @@ class StockPicking(models.Model):
         return lines_wo_pol
 
     def get_remove_lines(self):
-        """
-        Search between the purchase order lines and the picking move lines and
+        """Search between the purchase order lines and the picking move lines and
         return the remove move lines correspond to a purchase line.
         """
         move_lines = self.move_lines
@@ -221,8 +212,7 @@ class StockPicking(models.Model):
         return missing_lines
 
     def get_edited_lines(self, src_lines, new_lines):
-        """
-        Search when differ from purchase line, picking line, transfer line,
+        """Search when differ from purchase line, picking line, transfer line,
         """
         differ_lines = []
         for line in new_lines:

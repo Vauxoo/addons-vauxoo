@@ -36,6 +36,7 @@
         "sale",
     ],
     "demo": [
+        "demo/stock_inventory.xml",
         "demo/sale_order.xml",
         "demo/transfer_details.xml",
     ],

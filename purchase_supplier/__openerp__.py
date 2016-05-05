@@ -28,7 +28,7 @@
 #~ 'purchase_workflow.xml',
 {
     "name": "Purchase - supplier",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Purchases",
     "website": "http://www.vauxoo.com",

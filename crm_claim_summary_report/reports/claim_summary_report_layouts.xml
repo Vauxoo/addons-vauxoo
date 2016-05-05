@@ -117,12 +117,15 @@
                             <h3><small><span>TIN</span>: <span t-field="company.vat"/> </small></h3>
                         </t>
                         <p><h4>
-                            <t t-if="claim.claim_type">
-                                RMA Receipt for
-                                <t t-esc="claim.claim_type.name"/>
+                            <t t-if="rma_ctx == 'customer'">
+                                RMA Receipt for Customer
                             </t>
-                            <t t-if="not claim.claim_type">RMA Receipt</t>
-                            <span> </span>
+                            <t t-if="rma_ctx == 'supplier'">
+                                RMA for Supplier
+                            </t>
+                            <t t-if="rma_ctx not in ['customer','supplier']">
+                                RMA Receipt
+                            </t>
                         </h4></p>
                     </div>
                 </div>
@@ -161,16 +164,25 @@
         <template id="crm_claim_summary_report.template_page_copy_title">
             <t t-if="page_copy_title">
                 <div class="text-center page-copy-title">
-                    <t t-if="page_copy_title == 'customer'"> CUSTOMER COPY </t>
-                    <t t-if="page_copy_title == 'internal'"> COPY FOR INTERNAL SUPPORT </t>
+                    <t t-if="page_copy_title == 'internal'">
+                        COPY FOR INTERNAL SUPPORT
+                    </t>
+                    <t t-if="page_copy_title == 'customer'">
+                        CUSTOMER COPY
+                    </t>
+                    <t t-if="page_copy_title == 'supplier'">
+                        SUPPLIER COPY
+                    </t>
                 </div>
             </t>
         </template>
         <template id="crm_claim_summary_report.external_layout_footer">
-            <div class="footer rma-page-note" t-if="page_copy_title">
-                <div class="row" >
+            <div class="row" >
+                <div class="footer rma-page-note" >
+                    <t t-if="rma_ctx == 'customer'">
                     <p style="font-size: 7pt;"><b>IMPORTANT NOTE</b><span>: </span><span t-field="company.rma_footer_note"/>
                     </p>
+                    </t>
                 </div>
             </div>
         </template>

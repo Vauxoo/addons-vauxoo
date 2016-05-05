@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Website Product Filters",
-    "version": "1.0",
+    "version": "8.0.0.1.0",
     "author": "Vauxoo",
     "category": "Website",
     "website": "http://www.vauxoo.com/",
@@ -16,7 +16,6 @@
         'demo/filters_demo_data.xml',
     ],
     "data": [
-        'data/filters_data.yml',
         'data/price_ranges_data.xml',
         'data/website_settings_data.xml',
         'security/price_ranges_security.xml',
@@ -25,6 +24,7 @@
         'views/assets.xml',
         'views/templates.xml',
         'views/res_config.xml',
+        'data/filters_data.yml',
     ],
     "test": [],
     "qweb": [

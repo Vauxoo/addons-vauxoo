@@ -6,6 +6,9 @@ from openerp.tools.float_utils import float_compare, float_round, float_is_zero
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
 import openerp.addons.decimal_precision as dp
+import logging
+
+_logger = logging.getLogger(__name__)
 
 SEGMENTATION_COST = [
     'landed_cost',
@@ -30,11 +33,10 @@ class StockMove(models.Model):
     @api.v7
     def product_segmentation_fetch_before_done(
             self, cr, uid, ids, context=None):
-        '''
-        Fetch standard_price and segmentation cost for every product that was
+        """Fetch standard_price and segmentation cost for every product that was
         purchased and is average costing method prior to change its values.
         Returns a dictionary.
-        '''
+        """
         res = {}
         precision = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
@@ -69,10 +71,9 @@ class StockMove(models.Model):
     @api.v7
     def product_segmentation_update_after_done(
             self, cr, uid, ids, sgmnt, context=None):
-        '''
-        Computes segmentation values on average product based on previous
+        """Computes segmentation values on average product based on previous
         values stored before action_done method is applied
-        '''
+        """
         context = dict(context or {})
         product_obj = self.pool.get('product.product')
         res = {}
@@ -131,15 +132,192 @@ class StockQuant(models.Model):
               "`material cost`, `subcontracting cost`, `landed cost` "
               "& `production cost`"))
 
+    def initializing_quant_segmentation(self):
+        self._cr.execute('''
+            SELECT
+            COUNT(sq.id)
+            FROM stock_quant AS sq
+            INNER JOIN product_product AS pp ON sq.product_id = pp.id
+            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+            INNER JOIN ir_property AS ip1 ON (
+            ip1.res_id = 'product.template,' || pt.id::text
+            AND ip1.name = 'cost_method')
+            LEFT JOIN ir_property AS ip2 ON (
+            ip2.res_id = 'product.template,' || pt.id::text
+            AND ip2.name = 'standard_price')
+            WHERE
+            sq.material_cost = 0
+            AND sq.landed_cost = 0
+            AND sq.production_cost = 0
+            AND sq.subcontracting_cost = 0
+            -- AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
+            ;''')
+        res = self._cr.fetchone()
+        _logger.info('%s quants are to be fixed', str(int(res[0])))
+
+        _logger.info('Updating to zero quants with segment in NULL')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET material_cost = 0.0000
+            WHERE material_cost IS NULL;
+            ;''')
+        _logger.info('Material Cost with NULL has been updated')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET landed_cost = 0.0000
+            WHERE landed_cost IS NULL;
+            ;''')
+        _logger.info('Landed Cost with NULL has been updated')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET production_cost = 0.0000
+            WHERE production_cost IS NULL;
+            ;''')
+        _logger.info('Production Cost with NULL has been updated')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET subcontracting_cost = 0.0000
+            WHERE subcontracting_cost IS NULL;
+            ;''')
+        _logger.info('Subcontracting Cost with NULL has been updated')
+
+        _logger.info('Setting Material Cost equal to Cost on Quant')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET material_cost = cost
+            WHERE
+                cost != 0
+                AND material_cost = 0
+                AND landed_cost  = 0
+                AND production_cost = 0
+                AND subcontracting_cost = 0
+            ;''')
+        _logger.info('Material Cost equal to Cost on Quant has been set')
+
+        _logger.info('Updating Segmentation Cost with sum of Segmentation')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET segmentation_cost = (
+                material_cost + landed_cost +
+                production_cost + subcontracting_cost)
+            WHERE
+            material_cost != 0
+            OR landed_cost != 0
+            OR production_cost != 0
+            OR subcontracting_cost != 0
+            ;''')
+        _logger.info('Segmentation Cost has been updated')
+
+        self._cr.execute('''
+            SELECT
+            COUNT(sq.id)
+            FROM stock_quant AS sq
+            INNER JOIN product_product AS pp ON sq.product_id = pp.id
+            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+            INNER JOIN ir_property AS ip1 ON (
+            ip1.res_id = 'product.template,' || pt.id::text
+            AND ip1.name = 'cost_method')
+            LEFT JOIN ir_property AS ip2 ON (
+            ip2.res_id = 'product.template,' || pt.id::text
+            AND ip2.name = 'standard_price')
+            WHERE
+            sq.material_cost = 0
+            AND sq.landed_cost = 0
+            AND sq.production_cost = 0
+            AND sq.subcontracting_cost = 0
+            -- AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
+            ;''')
+        res = self._cr.fetchone()
+        _logger.info('%s quants not fixed', str(int(res[0])))
+
+        self._cr.execute('''
+            SELECT COUNT(sq.id)
+            FROM stock_quant AS sq
+            INNER JOIN product_product AS pp ON pp.id = sq.product_id
+            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+            INNER JOIN ir_property AS ip1 ON (
+                ip1.res_id = 'product.template,' || pt.id::text
+                AND ip1.name = 'cost_method')
+            INNER JOIN ir_property AS ip2 ON (
+                ip2.res_id = 'product.template,' || pt.id::text
+                AND ip2.name = 'standard_price')
+            WHERE
+            sq.cost = 0
+            AND sq.material_cost = 0
+            AND sq.landed_cost = 0
+            AND sq.production_cost = 0
+            AND sq.subcontracting_cost = 0
+            AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
+            AND ip2.value_float != 0
+            -- DO NOT LOSE TIME TRYING TO UPDATE WITH ZERO
+            ;''')
+        res = self._cr.fetchone()
+        _logger.info(
+            '%s quants that can be fixed from Product that are STD',
+            str(int(res[0])))
+
+        _logger.info(
+            'Updating quants that can be fixed from Product that are STD')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET material_cost = ip2.value_float,
+                segmentation_cost = ip2.value_float
+            FROM product_product AS pp
+            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+            INNER JOIN ir_property AS ip1 ON (
+                ip1.res_id = 'product.template,' || pt.id::text
+                AND ip1.name = 'cost_method')
+            INNER JOIN ir_property AS ip2 ON (
+                ip2.res_id = 'product.template,' || pt.id::text
+                AND ip2.name = 'standard_price')
+            WHERE
+            stock_quant.cost = 0
+            AND stock_quant.product_id = pp.id
+            AND stock_quant.material_cost = 0
+            AND stock_quant.landed_cost  = 0
+            AND stock_quant.production_cost = 0
+            AND stock_quant.subcontracting_cost = 0
+            AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
+            AND ip2.value_float != 0
+            -- DO NOT LOSE TIME TRYING TO UPDATE WITH ZERO
+            ;''')
+        _logger.info(
+            'Quants that could be fixed from Product and are STD were updated')
+
+        self._cr.execute('''
+            SELECT
+            DISTINCT product_id,
+            pt.name,
+            ip1.value_text as cost_method
+            FROM stock_quant AS sq
+            INNER JOIN product_product AS pp ON sq.product_id = pp.id
+            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+            INNER JOIN ir_property AS ip1 ON (ip1.res_id = 'product.template,'
+            || pt.id::text AND ip1.name = 'cost_method')
+            LEFT JOIN ir_property AS ip2 ON (
+                ip2.res_id = 'product.template,' || pt.id::text
+                AND ip2.name = 'standard_price')
+            WHERE
+            sq.material_cost = 0
+            AND sq.landed_cost  = 0
+            AND sq.production_cost = 0
+            AND sq.subcontracting_cost = 0
+            AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
+            ;''')
+        res = self._cr.fetchall()
+        if res:
+            _logger.warning('Products that have standard_price in zero')
+        for prod_id, name, cost_method in res:
+            _logger.warning('%s, %s, %s', str(prod_id), name, cost_method)
+
     @api.v7
     def _quant_create(
             self, cr, uid, qty, move, lot_id=False, owner_id=False,
             src_package_id=False, dest_package_id=False,
             force_location_from=False, force_location_to=False, context=None):
-        '''
-        Create a quant in the destination location and create a negative quant
+        """Create a quant in the destination location and create a negative quant
         in the source location if it's an internal location.
-        '''
+        """
         if context is None:
             context = {}
         price_unit = self.pool.get('stock.move').get_price_unit(
@@ -243,8 +421,7 @@ class StockQuant(models.Model):
 
     @api.v7
     def _quant_reconcile_negative(self, cr, uid, quant, move, context=None):
-        """
-            When new quant arrive in a location, try to reconcile it with
+        """When new quant arrive in a location, try to reconcile it with
             negative quants. If it's possible, apply the cost of the new
             quant to the counter-part of the negative quant.
         """

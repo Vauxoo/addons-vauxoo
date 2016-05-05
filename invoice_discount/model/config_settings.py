@@ -23,10 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-'''
-File to add functionalitity in account.invoice.line to get the amount without
+"""File to add functionalitity in account.invoice.line to get the amount without
 discount and the value of the discount
-'''
+"""
 from openerp.osv import osv
 
 

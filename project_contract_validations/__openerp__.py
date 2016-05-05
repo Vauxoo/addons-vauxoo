@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Project Contract Validations",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
