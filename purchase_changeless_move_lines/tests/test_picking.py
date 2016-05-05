@@ -33,8 +33,7 @@ class TestPicking(TestStockCommon):
         super(TestPicking, self).setUp()
 
     def test_01_picking(self):
-        """
-        Stock Picking CRUD: Create, Read, Update, Duplicate, and Delete
+        """Stock Picking CRUD: Create, Read, Update, Duplicate, and Delete
         """
         # Create Picking: Create manually and check it was correctly created
         # in draft state, with no purchase_id releated. and with change_picking
@@ -89,8 +88,7 @@ class TestPicking(TestStockCommon):
         self.assertFalse(picking2.exists())
 
     def test_02_picking_create_from_po(self):
-        """
-        Create a stock picking from a purchase order confirmation and checking
+        """Create a stock picking from a purchase order confirmation and checking
         that the picking inherit the purchase order id and change_picking
         attribute to False (By default a purchase order picking can not change
         its move lines).
@@ -120,8 +118,7 @@ class TestPicking(TestStockCommon):
         self.assertEqual(picking.change_picking, order.change_picking)
 
     def test_03_picking_create_from_po_change_lines(self):
-        """
-        """
+        """"""
         # Create a purchase order and then change the default change_picking =
         # False to True.
         order = self.create_po()

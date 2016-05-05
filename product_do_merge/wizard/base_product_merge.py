@@ -28,8 +28,8 @@ import logging
 import operator
 from ast import literal_eval
 import openerp
-from openerp.osv import osv, orm
-from openerp.osv import fields
+from openerp.osv import orm, osv
+from openerp import fields, models
 from openerp.osv.orm import browse_record
 from openerp.tools.translate import _
 
@@ -40,62 +40,54 @@ def is_integer_list(ids):
     return all(isinstance(i, (int, long)) for i in ids)
 
 
-class MergeProductLine(osv.TransientModel):
+class MergeProductLine(models.TransientModel):
     _name = 'base.product.merge.line'
-
-    _columns = {
-        'wizard_id': fields.many2one(
-            'base.product.merge.automatic.wizard',
-            'Wizard'),
-        'min_id': fields.integer('MinID'),
-        'aggr_ids': fields.char('Ids', required=True),
-    }
-
     _order = 'min_id asc'
 
+    wizard_id = fields.Many2one(
+        'base.product.merge.automatic.wizard',
+        'Wizard')
+    min_id = fields.Integer('MinID')
+    aggr_ids = fields.Char('Ids', required=True)
 
-class MergeProductAutomatic(osv.TransientModel):
+
+class MergeProductAutomatic(models.TransientModel):
     _name = 'base.product.merge.automatic.wizard'
 
-    _columns = {
-        'group_by_name_template': fields.boolean('Nombre'),
-        'group_by_default_code': fields.boolean('Referencia'),
-        'group_by_categ_id': fields.boolean('Categoria'),
-        'group_by_uom_id': fields.boolean('Unidad de medida'),
-        'state': fields.selection([('option', 'Option'),
-                                   ('selection', 'Selection'),
-                                   ('finished', 'Finished')],
-                                  'State',
-                                  readonly=True,
-                                  required=True),
-        'number_group': fields.integer("Group of Products",
-                                       readonly=True),
-        'current_product_id': fields.many2one('product.product',
-                                              string='Current product'),
-        'product_from': fields.many2one('product.product',
-                                        string='Product from'),
-        'product_to': fields.many2one('product.product',
-                                      string='Product to'),
-        'current_line_id': fields.many2one('base.product.merge.line',
-                                           'Current Line'),
-        'line_ids': fields.one2many('base.product.merge.line',
-                                    'wizard_id', 'Lines'),
-        'dst_product_id': fields.many2one('product.product',
-                                          string='Destination Contact'),
-        'product_ids': fields.many2many(
-            'product.product', 'product_rel', 'product_merge_id',
-            'product_id', string="Products to merge"),
-        'maximum_group': fields.integer("Maximum of Group of Contacts"),
-    }
-
-    _defaults = {
-        'state': 'option'
-    }
+    group_by_name_template = fields.Boolean('Nombre')
+    group_by_default_code = fields.Boolean('Referencia')
+    group_by_categ_id = fields.Boolean('Categoria')
+    group_by_uom_id = fields.Boolean('Unidad de medida')
+    state = fields.Selection([('option', 'Option'),
+                              ('selection', 'Selection'),
+                              ('finished', 'Finished')],
+                             'State',
+                             readonly=True,
+                             default='option',
+                             required=True)
+    number_group = fields.Integer("Group of Products",
+                                  readonly=True)
+    current_product_id = fields.Many2one('product.product',
+                                         string='Current product')
+    product_from = fields.Many2one('product.product',
+                                   string='Product from')
+    product_to = fields.Many2one('product.product',
+                                 string='Product to')
+    current_line_id = fields.Many2one('base.product.merge.line',
+                                      'Current Line')
+    line_ids = fields.One2many('base.product.merge.line',
+                               'wizard_id', 'Lines')
+    dst_product_id = fields.Many2one('product.product',
+                                     string='Destination Contact')
+    product_ids = fields.Many2many(
+        'product.product', 'product_rel', 'product_merge_id',
+        'product_id', string="Products to merge")
+    maximum_group = fields.Integer("Maximum of Group of Contacts")
 
     def get_fk_on(self, cr, table, tables=None):
         tables = tables and tuple(tables) or []
         where = tables and 'AND cli.relname in %s' % (str(tables))
-        q = """  SELECT cl1.relname as table,
+        query = """  SELECT cl1.relname as table,
                         att1.attname as column
                    FROM pg_constraint as con, pg_class as cl1, pg_class as cl2,
                         pg_attribute as att1, pg_attribute as att2
@@ -112,7 +104,7 @@ class MergeProductAutomatic(osv.TransientModel):
                     AND con.contype = 'f'
                     %s
         """
-        return cr.execute(q, (table, tables and where or '',))
+        return cr.execute(query, (table, tables and where or '',))
 
     def _update_foreign_keys(self, cr, uid, src_products, dst_product,
                              model=None, context=None):
@@ -123,7 +115,7 @@ class MergeProductAutomatic(osv.TransientModel):
         else:
             # find the many2one relation to a product
             proxy = self.pool.get('product.product')
-            uom_ids =  self.pool.get('product.uom').\
+            uom_ids = self.pool.get('product.uom').\
                 search(cr, uid,
                        [('category_id', '=',
                          dst_product.uom_id.category_id.id)],
@@ -147,7 +139,7 @@ class MergeProductAutomatic(osv.TransientModel):
                 if 'base_product_merge_' in table:
                     continue
 
-                product_ids = tuple(map(int, src_products))
+                product_ids = tuple([int(i) for i in src_products])
 
                 query = """SELECT column_name FROM information_schema.columns
                            WHERE table_name LIKE '%s'""" % (
@@ -187,18 +179,21 @@ class MergeProductAutomatic(osv.TransientModel):
                         query = '''UPDATE "%(table)s" SET %(column)s = %%s
                                    WHERE %(column)s IN %%s''' % query_dic
                         cr.execute(query, (dst_product.id, product_ids,))
-                        if column == proxy._parent_name and table == 'product_product':
+                        if column == proxy._parent_name and \
+                                table == 'product_product':
                             query = """
-                                WITH RECURSIVE cycle(id, product_id) AS (
-                                        SELECT id, product_id FROM product_product
-                                    UNION
-                                       SELECT  cycle.id, product_product.parent_id
-                                       FROM    product_product, cycle
-                                       WHERE   product_product.id = cycle.parent_id AND
-                                                cycle.id != cycle.parent_id
-                                )
-                                SELECT id FROM cycle
-                                WHERE id = parent_id AND id = %s
+                            WITH RECURSIVE cycle(id, product_id) AS (
+                                    SELECT id, product_id
+                                    FROM product_product
+                                UNION
+                                    SELECT  cycle.id,
+                                            product_product.parent_id
+                                    FROM  product_product, cycle
+                                    WHERE product_product.id = cycle.parent_id
+                                          AND cycle.id != cycle.parent_id
+                            )
+                            SELECT id FROM cycle
+                            WHERE id = parent_id AND id = %s
                             """
                             cr.execute(query, (dst_product.id,))
                             if cr.fetchall():
@@ -206,14 +201,18 @@ class MergeProductAutomatic(osv.TransientModel):
                                     "ROLLBACK TO SAVEPOINT "
                                     "recursive_product_savepoint")
                     else:
-                        query = '''SELECT * from "%(table)s" WHERE %(column)s IN %%s''' % query_dic
+                        query = '''SELECT *
+                                   FROM "%(table)s"
+                                   WHERE %(column)s IN %%s''' % query_dic
                         cr.execute(query, (product_ids,))
                         # Validation with flag
                         for match in cr.dictfetchall():
                             uos_field = uos_table.get(table)
                             uos_id = [match.get(i)
-                                      for i in uos_field if match.get(i, False)]
-                            if all([(i in uom_ids and True or False) for i in uos_id]):
+                                      for i in uos_field
+                                      if match.get(i, False)]
+                            if all([(i in uom_ids and True or False)
+                                    for i in uos_id]):
                                 continue
                             else:
                                 flag.append(False)
@@ -221,35 +220,39 @@ class MergeProductAutomatic(osv.TransientModel):
                         if False in flag:
                             raise osv.except_osv(_('Error!'), _(
                                 """You must verify the units of measurement in which
-                                the products do you wish to merge already have operations.
+                                the products do you wish to merge already have
+                                operations.
                                 """))
                         else:
                             cr.execute(query, (product_ids,))
                             for match in cr.dictfetchall():
                                 uos_field = uos_table.get(table)
                                 uos_id = [match.get(i)
-                                          for i in uos_field if match.get(i, False)]
-                                if all([(i in uom_ids and True or False) for i in uos_id]):
+                                          for i in uos_field
+                                          if match.get(i, False)]
+                                if all([(i in uom_ids and True or False)
+                                        for i in uos_id]):
                                     query = '''UPDATE "%(table)s"
                                                SET %(column)s = %%s
                                                WHERE id=%%s''' % query_dic
                                     cr.execute(query,
-                                               (dst_product.id, match.get('id'),))
+                                               (dst_product.id,
+                                                match.get('id'),))
                                     if column == proxy._parent_name and \
                                             table == 'product_product':
                                         query = """
-                                            WITH RECURSIVE cycle(id, product_id)
-                                            AS (SELECT id, product_id
-                                                FROM product_product
-                                                UNION
-                                                 SELECT  cycle.id,
-                                                         product_product.parent_id
-                                                 FROM    product_product, cycle
-                                                 WHERE   product_product.id = cycle.parent_id AND
-                                                         cycle.id != cycle.parent_id
-                                            )
-                                            SELECT id FROM cycle
-                                            WHERE id = parent_id AND id = %s
+                            WITH RECURSIVE cycle(id, product_id)
+                            AS (SELECT id, product_id
+                                FROM product_product
+                                UNION
+                                    SELECT  cycle.id,
+                                            product_product.parent_id
+                                    FROM product_product, cycle
+                                    WHERE product_product.id = cycle.parent_id
+                                          AND cycle.id != cycle.parent_id
+                            )
+                            SELECT id FROM cycle
+                            WHERE id = parent_id AND id = %s
                                         """
                                         cr.execute(query, (dst_product.id,))
                                         if cr.fetchall():
@@ -314,7 +317,8 @@ class MergeProductAutomatic(osv.TransientModel):
                            WHERE table_name LIKE '%s'""" % (table)
 
                 columns = []
-                for column in po_table.get(table, False) and uos_table.get(table) or []:
+                for column in po_table.get(table, False) and \
+                        uos_table.get(table) or []:
                     cr.execute(querys, ())
                     for data in cr.fetchall():
                         if data[0] != column:
@@ -349,7 +353,8 @@ class MergeProductAutomatic(osv.TransientModel):
                         query = '''UPDATE "%(table)s" SET %(column)s = %%s
                                    WHERE %(param)s IN %%s''' % query_dic
                         cr.execute(query, (dst_product, product_ids))
-                        if column == proxy._parent_name and table == 'product_uom':
+                        if column == proxy._parent_name and \
+                                table == 'product_uom':
 
                             query = """
                                 WITH RECURSIVE cycle(id, product_id) AS (
@@ -362,7 +367,7 @@ class MergeProductAutomatic(osv.TransientModel):
                                 )
                                 SELECT id FROM cycle
                                 WHERE id = parent_id AND id = %%s
-                            """  % (model, model, model, model)
+                            """ % (model, model, model, model)
                             cr.execute(query, (dst_product,))
                             if cr.fetchall():
                                 cr.execute(
@@ -399,7 +404,7 @@ class MergeProductAutomatic(osv.TransientModel):
                                    context=context):
             proxy_model = self.pool[record.model]
 
-            field_type = proxy_model._columns.get(record.name).__class__._type
+            field_type = proxy_model._fields.get(record.name).type
 
             if field_type == 'function':
                 continue
@@ -421,7 +426,7 @@ class MergeProductAutomatic(osv.TransientModel):
     def _update_values(self, cr, uid, src_products,
                        dst_product, context=None):
         product_bad = []
-        columns = dst_product._columns
+        columns = dst_product._fields
 
         def write_serializer(column, item):
             if isinstance(item, browse_record):
@@ -431,8 +436,8 @@ class MergeProductAutomatic(osv.TransientModel):
 
         values = dict()
         for column, field in columns.iteritems():
-            if field._type not in ('many2many', 'one2many') and not \
-                    isinstance(field, fields.function):
+            if field.type not in ('many2many', 'one2many') and not \
+                    field.compute:
                 for item in itertools.chain(src_products, [dst_product]):
                     if item[column]:
                         values[column] = write_serializer(column, item[column])
@@ -469,8 +474,8 @@ class MergeProductAutomatic(osv.TransientModel):
                 """))
         if dst_product and dst_product.id in product_ids:
             src_products = proxy.browse(cr, uid, [
-                                        id for id in product_ids
-                                        if id != dst_product.id],
+                                        i for i in product_ids
+                                        if i != dst_product.id],
                                         context=context)
         else:
             ordered_products = self._get_ordered_product(
@@ -483,22 +488,24 @@ class MergeProductAutomatic(osv.TransientModel):
                 self._model_is_installed(cr, uid, 'account.move.line',
                                          context=context) and \
                 self.pool.get('account.move.line').\
-        search(cr, openerp.SUPERUSER_ID,
-                    [('product_id', 'in', [product.id for product in
-                                           src_products])],
-                    context=context):
+                search(cr, openerp.SUPERUSER_ID,
+                       [('product_id', 'in', [product.id for product in
+                                              src_products])],
+                       context=context):
             raise osv.except_osv(_('Error!'), _(
                 """Only the destination product may be linked to existing
                    Journal Items. Please ask the Administrator if you need
                    to merge several products linked to existing Journal
                    Items."""))
-        call_it = lambda function: function(
-            cr, uid, src_products, dst_product, context=context)
         product_bad = []
 
-        product_bad += call_it(self._update_foreign_keys)
-        product_bad += call_it(self._update_reference_fields)
-        product_bad += call_it(self._update_values)
+        product_bad += self._update_foreign_keys(cr, uid, src_products,
+                                                 dst_product, context=context)
+        product_bad += self._update_reference_fields(cr, uid, src_products,
+                                                     dst_product,
+                                                     context=context)
+        product_bad += self._update_values(cr, uid, src_products, dst_product,
+                                           context=context)
         product_bad = set(product_bad)
         for product in src_products:
             if product.id not in product_bad:
@@ -527,11 +534,11 @@ class MergeProductAutomatic(osv.TransientModel):
 
         context = dict(context or {}, active_test=False)
         this = self.browse(cr, uid, ids[0], context=context)
-        p_ids = this.product_ids and this.product_ids
-        p_ids and p_ids.append(this.product_to)
-        product_ids = set(map(int, this.product_from and
-                              [this.product_to, this.product_from] or
-                              p_ids))
+        p_ids = this.product_ids and this.product_ids.ids
+        if p_ids:
+            p_ids.append(this.product_to)
+        product_ids = set([int(i) for i in this.product_from and
+                           [this.product_to, this.product_from] or p_ids])
         if not list(product_ids):
             raise osv.except_osv(_('Error!'), _(
                 """The product from must be selected for
@@ -545,15 +552,15 @@ class MergeProductAutomatic(osv.TransientModel):
         group_by_str = 'group_by_'
         group_by_len = len(group_by_str)
 
-        fields = [
+        lfields = [
             key[group_by_len:]
-            for key in self._columns.keys()
+            for key in self._fields.keys()
             if key.startswith(group_by_str)
         ]
 
         groups = [
             field
-            for field in fields
+            for field in lfields
             if getattr(this, '%s%s' % (group_by_str, field), False)
         ]
 
@@ -563,11 +570,11 @@ class MergeProductAutomatic(osv.TransientModel):
                                       selection."""))
         return groups
 
-    def _generate_query(self, fields, maximum_group=100):
-        group_fields = ', '.join(fields)
+    def _generate_query(self, lfields, maximum_group=100):
+        group_fields = ', '.join(lfields)
 
         filters = []
-        for field in fields:
+        for field in lfields:
             if field in ['name_template', 'default_code', ]:
                 filters.append((field, 'IS NOT', 'NULL'))
 
@@ -596,8 +603,7 @@ class MergeProductAutomatic(osv.TransientModel):
         return ' '.join(text)
 
     def _process_query(self, cr, uid, ids, query, context=None):
-        """
-        Execute the select request and write the result in this wizard
+        """Execute the select request and write the result in this wizard
         """
         proxy = self.pool.get('base.product.merge.line')
         this = self.browse(cr, uid, ids[0], context=context)
@@ -687,7 +693,8 @@ class MergeProductAutomatic(osv.TransientModel):
         obj_model = self.pool.get('ir.model.data')
         model_data_ids = obj_model.search(
             cr, uid, [('model', '=', 'ir.ui.view'),
-                      ('name', '=', 'base_product_merge_automatic_wizard_form_two')])
+                      ('name', '=',
+                       'base_product_merge_automatic_wizard_form_two')])
         resource_id = obj_model.read(cr, uid, model_data_ids,
                                      fields=['res_id'])[0]['res_id']
 
@@ -702,8 +709,7 @@ class MergeProductAutomatic(osv.TransientModel):
         }
 
     def start_process_cb(self, cr, uid, ids, context=None):
-        """
-        Start the process.
+        """Start the process.
         * Compute the selected groups (with duplication)
         * If the user has selected the 'exclude_XXX' fields, avoid the
         products.
@@ -718,8 +724,7 @@ class MergeProductAutomatic(osv.TransientModel):
         return self.other_screen(cr, uid, ids, context)
 
     def next_cb(self, cr, uid, ids, context=None):
-        """
-        Don't compute any thing
+        """Don't compute any thing
         """
         context = dict(context or {}, active_test=False)
         this = self.browse(cr, uid, ids[0], context=context)

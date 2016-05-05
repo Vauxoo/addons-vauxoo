@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Crm Profiling Report",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Accounting",
     "website": "http://vauxoo.com",

@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Purchase Requisition for Everybody",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Security",
     "website": "http://www.vauxoo.com",

@@ -83,8 +83,7 @@ class AccountInvoiceRefund(osv.osv_memory):
         return res
 
     def _get_period(self, cr, uid, context={}):
-        """
-        Return  default account period value
+        """Return  default account period value
         """
         account_period_obj = self.pool.get('account.period')
         ids = account_period_obj.find(cr, uid, context=context)
@@ -94,8 +93,7 @@ class AccountInvoiceRefund(osv.osv_memory):
         return period_id
 
     def _get_orig(self, cr, uid, inv, context={}):
-        """
-        Return  default origin value
+        """Return  default origin value
         """
         nro_ref = ''
         if inv.type == 'out_invoice':
@@ -105,8 +103,7 @@ class AccountInvoiceRefund(osv.osv_memory):
         return orig
 
     def compute_refund(self, cr, uid, ids, mode='refund', context=None):
-        """
-        @param cr: the current row, from the database cursor,
+        """@param cr: the current row, from the database cursor,
         @param uid: the current user’s ID for security checks,
         @param ids: the account invoice refund’s ID or list of IDs
 

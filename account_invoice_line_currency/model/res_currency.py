@@ -31,8 +31,7 @@ class ResCurrency(osv.Model):
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id,
                  from_currency_id, exchange_date, context=None):
-        """
-        Exchange an amount between the two currencies. Return the amount
+        """Exchange an amount between the two currencies. Return the amount
         with the conversion.
         @param from_amount: the amount where the exchange will be done.
         @param to_currency_id: id of the currency to be convert.

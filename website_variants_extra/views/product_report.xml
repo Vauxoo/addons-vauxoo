@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="product_printable"
+            model="product.product"
+            string="Product"
+            report_type="qweb-pdf"
+            name="website_variants_extra.pprintable"
+            file="website_variants_extra.pprintable"
+        />
+    </data>
+</openerp>

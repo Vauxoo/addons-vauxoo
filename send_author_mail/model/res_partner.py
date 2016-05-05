@@ -21,15 +21,13 @@
 ###############################################################################
 
 
-from openerp.osv import osv, fields
+from openerp import models, fields
 
 
-class ResPartner(osv.Model):
+class ResPartner(models.Model):
 
     _inherit = 'res.partner'
 
-    _columns = {
-        'receive_my_emails': fields.boolean(
-            'receive your own email?',
-            help="receives its own messages if you have enabled this option")
-    }
+    receive_my_emails = fields.Boolean(
+        'receive your own email?',
+        help="receives its own messages if you have enabled this option")

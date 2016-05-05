@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Validate Stock Picking",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Stock",
     "website": "http://www.vauxoo.com",

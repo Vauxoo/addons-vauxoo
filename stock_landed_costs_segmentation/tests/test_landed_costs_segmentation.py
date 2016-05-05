@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
+from openerp.exceptions import Warning as UserError
 
 
 class TestLandedCostsSegmentation(TransactionCase):
@@ -75,10 +76,10 @@ class TestLandedCostsSegmentation(TransactionCase):
         wizard_id.do_detailed_transfer()
         self.assertEqual(picking_id.state, 'done')
 
-    def create_and_validate_landed_costs(self, picking_id=False,
-                                         insurance_cost=15000,
-                                         freight_cost=18000):
-        slc_id = self.slc.create({
+    def create_landed_cost(self, picking_id,
+                           insurance_cost=15000, freight_cost=18000,
+                           split_method='by_quantity'):
+        return self.slc.create({
             'account_journal_id': self.ref(
                 'stock_landed_costs_average.stock_landed_cost_1'),
             'picking_ids': [(4, picking_id.id), ],
@@ -87,7 +88,7 @@ class TestLandedCostsSegmentation(TransactionCase):
                     'name': 'insurance',
                     'product_id': self.product_insurance_id.id,
                     'account_id': self.account_insurance_id.id,
-                    'split_method': 'by_quantity',
+                    'split_method': split_method,
                     'price_unit': insurance_cost,
                     'segmentation_cost': 'subcontracting_cost',
                 }),
@@ -95,12 +96,18 @@ class TestLandedCostsSegmentation(TransactionCase):
                     'name': 'freight',
                     'product_id': self.product_freight_id.id,
                     'account_id': self.account_freight_id.id,
-                    'split_method': 'by_quantity',
+                    'split_method': split_method,
                     'price_unit': freight_cost,
                     'segmentation_cost': 'landed_cost',
                 }),
             ]
         })
+
+    def create_and_validate_landed_costs(self, picking_id=False,
+                                         insurance_cost=15000,
+                                         freight_cost=18000):
+        slc_id = self.create_landed_cost(picking_id, insurance_cost,
+                                         freight_cost)
 
         self.assertEqual(len(slc_id.picking_ids), 1)
         self.assertEqual(len(slc_id.cost_lines), 2)
@@ -119,6 +126,22 @@ class TestLandedCostsSegmentation(TransactionCase):
             if quant_id.product_id == product_id:
                 return quant_id
 
+    def test_00_user_validations(self):
+        self.do_picking(self.picking_01_id)
+        landed_cost_id = self.create_landed_cost(self.picking_01_id)
+        landed_cost_id.compute_landed_cost()
+        landed_cost_id.cost_lines.write({
+            'segmentation_cost': False,
+        })
+        msg_error = 'Please fill the segmentation field in Cost Lines'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            landed_cost_id.button_validate()
+
+        landed_cost_id = self.create_landed_cost(self.picking_01_id)
+        msg_error = 'You cannot validate a landed cost which has no valid.*'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            landed_cost_id.button_validate()
+
     def test_01_segmentations(self):
         # check initial product costs
         self.assertEqual(self.product_01.standard_price, 100)
@@ -127,10 +150,11 @@ class TestLandedCostsSegmentation(TransactionCase):
 
         # make incoming stock movements
         self.do_picking(self.picking_01_id)
-        self.create_and_validate_landed_costs(self.picking_01_id,
-                                              insurance_cost=15000,
-                                              freight_cost=18000)
-
+        landed_cost_id = self.create_and_validate_landed_costs(
+            self.picking_01_id, insurance_cost=15000, freight_cost=18000)
+        msg_error = 'Only draft landed costs can be validated'
+        with self.assertRaisesRegexp(UserError, msg_error):
+            landed_cost_id.button_validate()
         self.assertEqual(self.product_02.material_cost, 100)
         self.assertEqual(self.product_02.landed_cost, 60)
         self.assertEqual(self.product_02.production_cost, 0)
@@ -225,3 +249,35 @@ class TestLandedCostsSegmentation(TransactionCase):
         self.assertEqual(self.product_01.standard_price, 100)
         self.assertEqual(self.product_02.standard_price, 264)
         self.assertEqual(self.product_03.standard_price, 100)
+
+    def get_lines_by_cost_name(self, landed_cost_id, name):
+        val_ids = landed_cost_id.valuation_adjustment_lines
+        return name and [vid.additional_landed_cost for vid in val_ids
+                         if vid.cost_line_id.display_name == name]
+
+    def test_02_split_methods(self):
+        vals = [
+            'by_quantity',
+            'by_weight',
+            'by_volume',
+            'equal',
+            'by_current_cost_price',
+        ]
+
+        # leave only the avg one
+        move_ids = self.picking_01_id.move_lines
+        self.picking_01_id.write({
+            'move_lines': [(3, mid.id) for mid in move_ids
+                           if mid.product_id != self.product_02]
+        })
+        for split_method in vals:
+            landed_cost_id = self.create_landed_cost(
+                picking_id=self.picking_01_id, split_method=split_method)
+            landed_cost_id.compute_landed_cost()
+
+            insurance = self.get_lines_by_cost_name(
+                landed_cost_id, 'insurance')
+            freight = self.get_lines_by_cost_name(landed_cost_id, 'freight')
+
+            self.assertEqual(insurance[0], 15000)
+            self.assertEqual(freight[0], 18000)

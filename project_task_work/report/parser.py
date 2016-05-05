@@ -40,12 +40,11 @@ class ProjectTaskWorkReport(report_sxw.rml_parse):
         })
 
     def _get_hour(self, float_hour, format='hh:mm:ss'):
-        '''
-        This method takes a floating
+        """This method takes a floating
         and returns it in  time format 'hh:mm:ss' or 'hh:mm'
         This Method was taken from
         http://stackoverflow.com/questions/775049/python-time-seconds-to-hms
-        '''
+        """
         seconds = int(float_hour * 3600)
         hours = seconds / 3600
         seconds -= 3600 * hours
@@ -54,10 +53,9 @@ class ProjectTaskWorkReport(report_sxw.rml_parse):
         return format == 'hh:mm:ss' and "%02d:%02d:%02d" % (hours, minutes, seconds) or "%02d:%02d" % (hours, minutes + round(seconds / 60.0))
 
     def _get_time(self, strtime=time.strftime('%Y-%m-%d %H:%M:%S')):
-        '''
-        This method take strtime in the format '%Y-%m-%d %H:%M:%S'
+        """This method take strtime in the format '%Y-%m-%d %H:%M:%S'
         and returns it in the format '%Y-%m-%d'
-        '''
+        """
         t = time.strptime(strtime, '%Y-%m-%d %H:%M:%S')
         t = time.mktime(t)
 

@@ -296,8 +296,7 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
         self.assertEquals(checked_line, 3)
 
     def test_cf_iva_16_customer_eur(self):
-        """
-            Test customer advance with payment in currency company EUR
+        """Test customer advance with payment in currency company EUR
                 and specific rate in currency secondary USD
             Invoice with secondary currency USD
             Reconcile with special journal with secondary currency USD
@@ -461,8 +460,7 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
         self.assertEquals(checked_line, 4)
 
     def test_cf_iva_16_customer_usd(self):
-        """
-            Test customer advance with payment in secondary currency USD
+        """Test customer advance with payment in secondary currency USD
             and specific rate company currency EUR
         """
         cr, uid = self.cr, self.uid
@@ -504,8 +502,7 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
         self.assertEquals(checked_line, 3)
 
     def test_cf_iva_16_customer_currency(self):
-        """
-            Test customer advance with payment in secondary currency USD
+        """Test customer advance with payment in secondary currency USD
             Invoice in USD
             Voucher with special journal in USD
         """

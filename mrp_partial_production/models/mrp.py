@@ -35,10 +35,9 @@ class MrpProduction(models.Model):
 
     @api.multi
     def _compute_qty_to_produce(self):
-        '''
-        Used to shown the quantity available to produce considering the
+        """Used to shown the quantity available to produce considering the
         reserves in the moves related
-        '''
+        """
         for record in self:
             total = record.get_qty_available_to_produce()
             record.qty_available_to_produce = total
@@ -55,16 +54,13 @@ class MrpProduction(models.Model):
         for record in self:
             if record.qty_available_to_produce > 0:
                 res = True
-            else:
-                res = False
         return res
 
     @api.multi
     def get_qty_available_to_produce(self):
-        '''
-        Compute the total available to produce considering
+        """Compute the total available to produce considering
         the lines reserved
-        '''
+        """
         uom_obj = self.env['product.uom']
         for record in self:
             bom_obj = self.env['mrp.bom']
@@ -92,7 +88,8 @@ class MrpProduction(models.Model):
             for line in consume_lines and consume_lines[0] or ():
                 product_id = line.get('product_id')
                 val = line.get('product_qty') and \
-                    int(result.get(product_id) / line.get('product_qty')) or 0
+                    int(result.get(product_id, 0) /
+                        line.get('product_qty')) or 0
                 qty.append(val)
 
         return min(qty)
@@ -101,8 +98,7 @@ class MrpProduction(models.Model):
     def action_produce(self, cr, uid, production_id, production_qty,
                        production_mode,
                        wiz=False, context=None):
-        '''
-        Overwritten the method to avoid produce more than available to produce
+        """Overwritten the method to avoid produce more than available to produce
         @param production_id: the ID of mrp.production object
         @param production_qty: specify qty to produce in the uom of the
         production order
@@ -111,7 +107,7 @@ class MrpProduction(models.Model):
         @param wiz: the mrp produce product wizard, which will tell the amount
         of consumed products needed
         @return: True
-        '''
+        """
         record = self.browse(cr, uid, production_id)
         if production_qty > record.qty_available_to_produce:
             raise UserError(_('''You cannot produce more than available to

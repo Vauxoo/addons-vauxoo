@@ -32,8 +32,7 @@ class StockTransferDetails(models.TransientModel):
 
     @api.multi
     def do_detailed_transfer(self):
-        """
-        When the transfer was made, a message in log is displayed
+        """When the transfer was made, a message in log is displayed
         """
         for transfer_detail in self:
             message = _("<b>Picking transfered</b>\n"

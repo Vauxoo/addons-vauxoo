@@ -1,5 +1,4 @@
 # coding: utf-8
-import openerp
 from openerp import http
 from openerp.http import request
 from openerp.addons.website_sale.controllers.main import website_sale
@@ -15,8 +14,7 @@ class WebsiteSale(website_sale):
         '/shop/category/<model("product.public.category"):category>/page/<int:page>',  # noqa
         '/shop/brands'], type='http', auth="public", website=True)
     def shop(self, page=0, category=None, search='', ppg=False, **post):
-        """
-        This method was inherited wit the purpose of filtering attributes
+        """This method was inherited wit the purpose of filtering attributes
         instead of showing all that exist on the instance, it will allow
         to show attribute filters based on the selected category.
         """
@@ -122,8 +120,7 @@ class WebsiteSale(website_sale):
         return res
 
     def _normalize_category(self, category):
-        """
-        This method returns a condition value usable on tuples, because
+        """This method returns a condition value usable on tuples, because
         sometimes category can come from different places, sometimes it
         can be an Odoo object and some others an int or a unicode.
         """
@@ -152,8 +149,7 @@ class WebsiteSale(website_sale):
         return brand_ids
 
     def _get_used_attrs(self, category):
-        """
-        This method retrieves all ids of the category selected on the
+        """This method retrieves all ids of the category selected on the
         website.
         """
         cr, uid, context, pool = (request.cr,
@@ -183,6 +179,8 @@ class WebsiteSale(website_sale):
         cr, uid, context, pool =\
             request.cr, request.uid, request.context, request.registry
         template_obj = pool['product.template']
+        if not category and len(product.public_categ_ids) >= 1:
+            category = product.public_categ_ids[0]
         viewed = product.views + 1
         template_obj.write(cr, uid, [product.id],
                            {'views': viewed}, context=context)
@@ -190,5 +188,3 @@ class WebsiteSale(website_sale):
                                                category=category,
                                                search=search, **kwargs)
         return res
-
-openerp.addons.website_sale.controllers.main.website_sale = WebsiteSale

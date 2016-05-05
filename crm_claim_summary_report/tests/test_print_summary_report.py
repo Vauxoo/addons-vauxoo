@@ -31,23 +31,21 @@ class TestPrintSummaryReport(TransactionCase):
         self.report_name = 'crm_claim_summary_report.report_translated'
 
     def call_qweb_report(self, claim_ids):
-        '''
-        This function serve as a wrapper for report call when printing
-        '''
+        """This function serve as a wrapper for report call when printing
+        """
         return self.env['report'].\
             get_action(claim_ids, self.report_name)
 
     def print_html_qweb_report(self, claim_ids):
-        '''
-        This function serve as a wrapper when printing a report in html format
-        '''
+        """This function serve as a wrapper when printing a report in html format
+        """
         return self.env['report'].get_html(claim_ids, self.report_name)
 
     def test_01_print_report_call(self):
         res = self.call_qweb_report(self.claim_ids)
 
-        self.assertTrue(res and res['context']
-                        and res['context']['active_ids'])
+        self.assertTrue(res and res['context'] and
+                        res['context']['active_ids'])
         self.assertEqual(res['context']['active_ids'], [self.claim_id])
 
     def test_02_get_html(self):

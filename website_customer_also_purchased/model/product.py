@@ -23,59 +23,39 @@
 #
 ##############################################################################
 
-from openerp.osv import osv
-from openerp.osv import fields
-from openerp import SUPERUSER_ID
+from openerp import api, models
 
 
-class ProductTemplate(osv.osv):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    def _get_purchased(self, cr, uid, ids, field_names, arg=None,
-                       context=None):
-        """
-        This method gets all the products that were purchased in the
-        same sale order og the current product.
-        """
-        result = {}
-        pids_t = []
-        for p_id in ids:
-            result[p_id] = []
-        cr.execute("""
-            select id
-            from product_product
-            where product_tmpl_id = {0}
-            """.format(ids[0]))
-        pid = cr.fetchall()
-        for pr in pid:
-            pids_t.append(pr[0])
-        pids = '(%s)' % ', '.join(map  # pylint: disable=W0141,W0110
-                                  (repr,
-                                   tuple(pids_t)))
-        if pids and pids != '()':
-            cr.execute("\
-                SELECT product_tmpl_id\
-                FROM product_product\
-                WHERE id in (\
-                select product_id\
-                from sale_order_line\
-                where order_id in (select order_id\
-                               from sale_order_line\
-                               where product_id in {0}\
-                               ) and product_id not in {0}\
-                group by product_id)\
-                GROUP BY product_tmpl_id;\
-            ".format(pids))
-            res = cr.fetchall()
-            for ret in res:
-                if self.browse(cr, SUPERUSER_ID, [ret[0]],
-                               context)[0].website_published:
-                    result[ids[0]].append(ret[0])
-        return result
+    def _best_sell_sort(self, product_tmp, offset=0, max_product_qty=6):
+        variants_ids = product_tmp.product_variant_ids._ids
+        query = "\
+            SELECT p.product_tmpl_id from sale_order_line sol \
+            join sale_order_line sol2 on sol.order_id=sol2.order_id \
+            join product_product p on sol2.product_id = p.id \
+            join product_template p_tmpl on p.product_tmpl_id=p_tmpl.id \
+            where sol.product_id in %s and p.product_tmpl_id != %s \
+            and p_tmpl.website_published=True \
+            group by p.product_tmpl_id \
+            order by count(sol2.product_id) desc LIMIT %s OFFSET %s;"
+        product_tmp._cr.execute(query, (variants_ids, product_tmp.id,
+                                        max_product_qty, offset))
+        other_products = product_tmp._cr.fetchall()
+        return [op[0] for op in other_products]
 
-    _columns = {
-        'customer_purchased': fields.function(_get_purchased, method=True,
-                                              type='one2many',
-                                              relation='product.template',
-                                              string="Customers Purchased")
-    }
+    @api.multi
+    def _get_purchased(self, offset=0, max_product_qty=6):
+
+        """This method gets all the products that were purchased in the
+        sale order of the current product.The returned product are sorted
+        according to website configuration.
+        """
+        self.ensure_one()
+        sort = self.env['website'].get_current_website().cap_sort
+        product_list = []
+        if sort == 'best_seller':
+            product_list = self._best_sell_sort(self,
+                                                offset, max_product_qty)
+        return self.browse(product_list)

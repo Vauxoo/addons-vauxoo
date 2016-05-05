@@ -4,12 +4,13 @@
         <template id="website_product_filters.range_detail" name="Range Details">
           <label style="margin: 0 5px;" t-att-class="'upper upper'+str(r.id)" t-att-id="r.id">
             <input type="checkbox" name="range" t-att-value="'%s' % (r.id)" t-att-checked="'checked' if r.id in ranges_set else ''"/>
-            <span style="font-weight: normal" t-field="r.lower" t-field-options='{
+            <span style="font-weight: normal;" t-esc="r.lower" t-esc-options='{
                                         "widget": "monetary",
                                         "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
                                         "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
                                     }'/>
-            - <span style="font-weight: normal" t-field="r.upper" t-field-options='{
+            <span> - </span>
+            <span style="font-weight: normal;" t-esc="r.upper" t-esc-options='{
                                         "widget": "monetary",
                                         "from_currency": "user_id.partner_id.property_product_pricelist.currency_id",
                                         "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
@@ -56,7 +57,7 @@
                                         <li t-att-class="'active attribute' if v.id in attrib_set else 'attribute'">
                                             <label style="margin: 0 5px;">
                                                 <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
-                                                <span t-att-id="v.id" class="att-value" style="font-weight: normal" t-field="v.name"/>
+                                                <span t-att-id="v.id" class="att-value green-text" style="font-weight: normal" t-field="v.name"/>
                                             </label>
                                         </li>
                                       </t>
@@ -64,7 +65,7 @@
                                         <li t-att-class="'hidden active attribute' if v.id in attrib_set else 'hidden attribute'">
                                             <label style="margin: 0 5px;">
                                                 <input type="checkbox" name="attrib" t-att-value="'%s-%s' % (a.id,v.id)" t-att-checked="'checked' if v.id in attrib_set else ''"/>
-                                                <span t-att-id="v.id" class="att-value" style="font-weight: normal" t-field="v.name"/>
+                                                <span t-att-id="v.id" class="att-value green-text" style="font-weight: normal" t-field="v.name"/>
                                             </label>
                                         </li>
                                       </t>
@@ -132,7 +133,7 @@
                           <li t-att-class="'brand active' if b.id in brand_set else ''">
                           <label style="margin: 0 5px;">
                                   <input type="checkbox" name="brand" t-att-value="'%s' % b.id" t-att-checked="'checked' if b.id in brand_set else ''"/>
-                            <span style="font-weight: normal" t-field="b.name"/>
+                            <span style="font-weight: normal" class="green-text" t-field="b.name"/>
                             </label>
                           </li>
                           </t>
@@ -172,17 +173,19 @@
               <t t-foreach="categories" t-as="parent_categs">
                 <t t-if="parent_categs.child_id">
                 <div class="col-md-9 pull-right mt16" >
-                  <div class="panel panel-default panel-heading gray-bg"><b><span>Categories of </span><t t-esc="parent_categs.name"/></b></div>
+                  <div class="panel-heading"><b class="title"><span>Categories of </span><t t-esc="parent_categs.name"/></b></div>
                   <t t-foreach="parent_categs.child_id" t-as="child_categ">
                    <t t-if="child_categ.has_products_ok">
                     <div id="categories_grid" class='col-md-4 col-xs-6 col-sm-4'>
                         <div class='mt16 text-center'>
-                            <span t-field="child_categ.image_medium" t-field-options='{"widget": "image"}'/>
-                            <h4>
+                            <a t-att-href="'/shop/category/' + slug(child_categ)">
+                              <span t-field="child_categ.image_medium" t-field-options='{"widget": "image"}'/>
+                            </a>
+                            <h5>
                                 <a t-att-href="'/shop/category/' + slug(child_categ)" style="display: block">
                                     <span t-field='child_categ.name' style="display: block"/>
                                 </a>
-                            </h4>
+                            </h5>
                         </div>
                     </div>
                   </t>
@@ -198,14 +201,36 @@
                     <t t-foreach="populars" t-as="popular">
                       <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
                           <div class='mt16 text-center'>
-                              <span t-field="popular.image_medium" t-field-options='{"widget": "image"}'/>
+                              <a t-attf-href="/shop/product/#{ slug(popular) }">
+                                <span t-field="popular.image_medium" t-field-options='{"widget": "image"}'/>
+                              </a>
                               <t t-set="product" t-value="popular"/>
                               <t t-call="website_rate_product.show_product_rating"/>
-                              <h4>
+                              <h5>
                                   <a t-attf-href="/shop/product/#{ slug(popular) }" style="display: block">
                                       <span t-field='popular.name' style="display: block"/>
                                   </a>
-                              </h4>
+                              </h5>
+                              <t t-set="p_price" t-value="popular.with_context({'partner': user_id.partner_id.id, 'pricelist': user_id.partner_id.property_product_pricelist.id}).price"/>
+                              <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price" t-if="popular.product_variant_ids">
+                                  <b>
+                                      <t t-if="(compute_currency(popular.lst_price) - p_price) &gt; 0.1">
+                                        <del class="text-danger" style="white-space: nowrap;" t-field="popular.lst_price" t-field-options='{
+                                          "widget": "monetary",
+                                          "from_currency": "popular.company_id.currency_id",
+                                          "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                        }'/>
+                                      </t>
+                                        <span t-esc="p_price" style="white-space: nowrap;"  t-esc-options='{
+                                             "widget": "monetary",
+                                             "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                         }'>
+                                        </span>
+
+                                      <span itemprop="price" style="display:none;" t-esc="p_price"/>
+                                      <span itemprop="priceCurrency" style="display:none;" t-field="user_id.partner_id.property_product_pricelist.currency_id.name"/>
+                                  </b>
+                              </div>
                           </div>
                       </div>
                     </t>
@@ -217,12 +242,34 @@
                     <t t-foreach="newest" t-as="new_p">
                       <div id="popular_products_grid" class='col-md-4 col-xs-6 col-sm-4'>
                           <div class='mt16 text-center'>
-                              <span t-field="new_p.image_medium" t-field-options='{"widget": "image"}'/>
-                              <h4>
+                              <a t-attf-href="/shop/product/#{ slug(new_p) }">
+                                <span t-field="new_p.image_medium" t-field-options='{"widget": "image"}'/>
+                              </a>
+                              <h5>
                                   <a t-attf-href="/shop/product/#{ slug(new_p) }" style="display: block">
                                       <span t-field='new_p.name' style="display: block"/>
                                   </a>
-                              </h4>
+                              </h5>
+                              <t t-set="p_price" t-value="new_p.with_context({'partner': user_id.partner_id.id, 'pricelist': user_id.partner_id.property_product_pricelist.id}).price"/>
+                              <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price" t-if="new_p.product_variant_ids">
+                                  <b>
+                                      <t t-if="(compute_currency(new_p.lst_price) - p_price) &gt; 0.1">
+                                        <del class="text-danger" style="white-space: nowrap;" t-field="new_p.lst_price" t-field-options='{
+                                          "widget": "monetary",
+                                          "from_currency": "new_p.company_id.currency_id",
+                                          "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                        }'/>
+                                      </t>
+                                        <span t-esc="p_price" style="white-space: nowrap;"  t-esc-options='{
+                                             "widget": "monetary",
+                                             "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                         }'>
+                                        </span>
+
+                                      <span itemprop="price" style="display:none;" t-esc="p_price"/>
+                                      <span itemprop="priceCurrency" style="display:none;" t-field="user_id.partner_id.property_product_pricelist.currency_id.name"/>
+                                  </b>
+                              </div>
                           </div>
                       </div>
                     </t>
@@ -328,12 +375,13 @@
             :param obj categ: the categories retrieved by the controller shop.
         -->
         <template id="option_collapse_categories_recursive" name="Collapse Category Recursive">
-          <li t-att-class="'active' if categ.id == int(category or 0) else ''" t-att-data-categid="categ.id">
+          <li t-att-class="'active' if categ.id == int(category or 0) else 'inactive'" t-att-data-categid="categ.id">
             <t t-set="has_product" t-value="categ.has_products_ok"/>
             <i t-if="categ.child_id and has_product"
               t-attf-class="text-primary" t-att-data-arrowid="categ.id"/>
             <!-- Link itself of category with the qty of products -->
             <t t-if="has_product">
+              <div t-att-class="'active' if categ.id == int(category or 0) else 'inactive'" t-att-data-categid="categ.id">
               <a style="display:inline" t-att-href="keep('/shop/category/' + slug(categ), category=0)">
                 <t t-esc="'%s ' %(categ.name)"/>
                 <t t-if="categ.id != int(category or 0)">
@@ -342,6 +390,7 @@
                   </span>
                 </t>
               </a>
+            </div>
             </t>
             <!-- New sublist of child categories, rendered by this same template
                  (recursive).-->

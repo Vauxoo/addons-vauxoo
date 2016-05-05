@@ -3,21 +3,15 @@
 <data>
 
 
-      
-<!--        From WH_ROUTER to Withholdings-->
-        <record id="l10n_ve_withholding_iva.trans_wh_router_wh_vat" model="workflow.transition">
-            <field name="act_from" ref="l10n_ve_withholding.act_wh_router"/>
-            <field name="act_to" ref="l10n_ve_withholding_iva.act_withold_vat"/>
-            <field name="condition">check_wh_apply() and check_withholdable() and check_iva()</field>
-            <field name="signal"/>
-        </record>
-        
-        
-        
+
+<!--        From WH_ROUTER to Withholdings was deprecated and added to the Server Actions
+            at l10n_ve_withholding_iva
+-->
+
         <record id="l10n_ve_withholding_iva.trans_cancel_draft" model="workflow.transition">
             <field name="act_from" ref="l10n_ve_withholding_iva.act_cancel"/>
             <field name="act_to" ref="l10n_ve_withholding_iva.act_draft"/>
-            <field name="condition">check_state_cancel()</field> 
+            <field name="condition">check_state_cancel()</field>
             <field name="signal">set_to_draft</field>
         </record>
 

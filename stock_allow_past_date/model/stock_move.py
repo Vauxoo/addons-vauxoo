@@ -83,8 +83,8 @@ class StockMove(models.Model):
             for record in ops.linked_move_operation_ids:
                 move = record.move_id
                 self.check_tracking(
-                    cr, uid, move, not ops.product_id and ops.package_id.id
-                    or ops.lot_id.id, context=context)
+                    cr, uid, move, not ops.product_id and ops.package_id.id or
+                    ops.lot_id.id, context=context)
                 prefered_domain = [('reservation_id', '=', move.id)]
                 fallback_domain = [('reservation_id', '=', False)]
                 fallback_domain2 = ['&',
@@ -120,8 +120,8 @@ class StockMove(models.Model):
                     dest_package_id=quant_dest_package_id, context=ctx)
 
                 # Handle pack in pack
-                if (not ops.product_id and ops.package_id
-                        and ops.result_package_id.id !=
+                if (not ops.product_id and ops.package_id and
+                        ops.result_package_id.id !=
                         ops.package_id.parent_id.id):
                     self.pool.get('stock.quant.package').write(
                         cr, SUPERUSER_ID, [ops.package_id.id], {
@@ -169,8 +169,8 @@ class StockMove(models.Model):
                     owner_id=move.restrict_partner_id.id, context=context)
 
             # If the move has a destination, add it to the list to reserve
-            if (move.move_dest_id
-                    and move.move_dest_id.state in ('waiting', 'confirmed')):
+            if (move.move_dest_id and
+                    move.move_dest_id.state in ('waiting', 'confirmed')):
                 move_dest_ids.add(move.move_dest_id.id)
 
             if move.procurement_id:

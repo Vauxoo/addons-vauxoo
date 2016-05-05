@@ -47,7 +47,7 @@ class AccountMoveLine(osv.Model):
 
 class AccountReconcileAdvance(osv.Model):
 
-    '''description'''
+    """description"""
 
     _name = 'account.reconcile.advance'
 
@@ -89,8 +89,7 @@ class AccountReconcileAdvance(osv.Model):
 
     def invoice_credit_lines(self, cr, uid, ids, amount, am_id=None,
                              account_id=False, partner_id=False, date=None, context=None):
-        """
-        """
+        """"""
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -115,8 +114,7 @@ class AccountReconcileAdvance(osv.Model):
 
     def invoice_debit_lines(self, cr, uid, ids, amount, am_id=None,
                             account_id=False, partner_id=False, date=None, context=None):
-        """
-        """
+        """"""
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -363,10 +361,9 @@ class AccountVoucher(osv.Model):
     _inherit = 'account.voucher'
 
     def _get_advance(self, cr, uid, ids, name, args, context=None):
-        '''
-        Check if there is at least one payable or receivable line not
+        """Check if there is at least one payable or receivable line not
         reconciled at all, if so it will be regarded as an advance
-        '''
+        """
         context = context or {}
         res = {}.fromkeys(ids, False)
         for av_brw in self.browse(cr, uid, ids, context=context):

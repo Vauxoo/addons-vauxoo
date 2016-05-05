@@ -90,6 +90,24 @@
             <field name="sequence">5</field>
         </record>
 
+        <record id="mrp_workcenter_account_move.rev_workcenter" model="mrp.workcenter">
+            <field name="segmentation_cost">production_cost</field>
+        </record>
+
+        <record id="workcenter_02" model="mrp.workcenter">
+            <field name="name">WORKCENTER #2</field>
+            <field name="resource_type">material</field>
+            <field name="time_efficiency" eval="1.0"/>
+            <field name="time_cycle">1</field>
+            <field name="costs_cycle">7.5</field>
+            <field name="costs_hour">7.5</field>
+            <field name="costs_cycle_account_id" ref="mrp_workcenter_account_move.rev_production_analytic_account"/>
+            <field name="costs_hour_account_id" ref="mrp_workcenter_account_move.rev_production_analytic_account"/>
+            <field name="costs_general_account_id" ref="mrp_workcenter_account_move.rev_production_cost_account"/>
+            <field name="costs_journal_id" ref="mrp_routing_account_journal.analytic_landed_cost_journal_1"/>
+            <field name="segmentation_cost">subcontracting_cost</field>
+        </record>
+
         <record id="routing_segmentation_e_product" model="mrp.routing">
             <field name="name">ROUTING_SEGMENTATION_E_PRODUCT</field>
             <field name="journal_id" ref="mrp_routing_account_journal.landed_cost_journal_1"/>
@@ -98,9 +116,18 @@
             <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_e_product"/>
             <field name="workcenter_id" ref="mrp_workcenter_account_move.rev_workcenter"/>
             <field name="name">ROUTING_WORKCENTER_SEGMENTATION_E_PRODUCT</field>
-            <field name="hour_nbr">2</field>
+            <field name="hour_nbr">1</field>
             <field name="cycle_nbr">0</field>
             <field name="sequence">5</field>
+        </record>
+
+        <record id="routing_workcenter_segmentation_e_product_2" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_e_product"/>
+            <field name="workcenter_id" ref="workcenter_02"/>
+            <field name="name">ROUTING_WORKCENTER_SEGMENTATION_E_PRODUCT_2</field>
+            <field name="hour_nbr">0</field>
+            <field name="cycle_nbr">1</field>
+            <field name="sequence">10</field>
         </record>
 
         <record id="bom_segmentation_d_product" model="mrp.bom">

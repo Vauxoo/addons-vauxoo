@@ -63,8 +63,7 @@ class TestStockEasyInternalTransfer(TransactionCase):
         return inventory
 
     def create_picking(self):
-        """
-        Utility to create pickings during the test.
+        """Utility to create pickings during the test.
         """
         picking_type = self.env['stock.picking.type'].search(self.easy_domain)
         values = {

@@ -1,37 +1,25 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* commission_payment
+#	* commission_payment
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-01 06:07+0000\n"
-"PO-Revision-Date: 2015-08-03 16:06+0200\n"
-"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
-"Language-Team: Spanish <http://example.com/projects/addons-vauxoo/commission_payment/es_MX/>\n"
-"Language: es_MX\n"
+"POT-Creation-Date: 2016-05-02 03:21+0000\n"
+"PO-Revision-Date: 2016-05-02 03:21+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: es_VE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.2\n"
-
-#. module: commission_payment
-#: model:ir.model,name:commission_payment.model_commission_payment
-msgid ""
-"\n"
-"    OpenERP Model : commission_payment\n"
-"    "
-msgstr ""
-"\n"
-"    OpenERP Model : commission_payment\n"
-"    "
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "% COMM"
-msgstr "% COM"
+msgid "% COMMISSION"
+msgstr "% COMISION"
 
 #. module: commission_payment
 #: view:website:commission_payment.external_layout_footer
@@ -52,8 +40,7 @@ msgstr "<!DOCTYPE html>"
 #: model:ir.actions.act_window,help:commission_payment.comm_line_fix_act
 #: model:ir.actions.act_window,help:commission_payment.comm_line_invoice_ids_all_act
 #: model:ir.actions.act_window,help:commission_payment.comm_line_product_ids_all_act
-msgid ""
-"<p class=\"oe_view_nocontent_create\">\n"
+msgid "<p class=\"oe_view_nocontent_create\">\n"
 "                No commissions for Products have been computed\n"
 "              </p><p>\n"
 "                It could be due to the fact that there are some missing\n"
@@ -71,8 +58,7 @@ msgstr ""
 
 #. module: commission_payment
 #: model:ir.actions.act_window,help:commission_payment.commission_salesman_all_act
-msgid ""
-"<p class=\"oe_view_nocontent_create\">\n"
+msgid "<p class=\"oe_view_nocontent_create\">\n"
 "                No commissions for Salespeople have been computed\n"
 "              </p><p>\n"
 "                It could be due to the fact that there are some missing\n"
@@ -89,6 +75,11 @@ msgstr ""
 "            "
 
 #. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "AMOUNT"
+msgstr "CANTIDAD"
+
+#. module: commission_payment
 #: field:commission.invoice,pay_inv:0
 msgid "Abono Fact."
 msgstr "Abono Fact."
@@ -97,6 +88,11 @@ msgstr "Abono Fact."
 #: model:ir.ui.menu,name:commission_payment.commission_all_mi
 msgid "All Commissions"
 msgstr "Todas las Comisiones"
+
+#. module: commission_payment
+#: field:commission.payment,unknown_salespeople:0
+msgid "Allow Unknown Salespeople?"
+msgstr "Permitir Vendedor Desconocido"
 
 #. module: commission_payment
 #: view:commission.lines:commission_payment.commission_lines_tree
@@ -111,7 +107,7 @@ msgstr "Artículos sin asociación"
 #. module: commission_payment
 #: view:commission.payment:commission_payment.commission_payment_form
 msgid "Asesor"
-msgstr "Asesor"
+msgstr "Vendedor"
 
 #. module: commission_payment
 #: field:commission.lines,baremo_comm:0
@@ -130,33 +126,28 @@ msgstr "Tasa/B. (%)"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "BAREMO DAYS"
-msgstr "DÍAS BAREMO"
+msgid "BAREME COMMISSION %"
+msgstr "COMISION DE BAREMO %"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "BAREMO DSCT"
-msgstr "DCTO BAREMO"
+msgid "BAREME DAYS"
+msgstr "DÍAS DE BAREMO"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "BRMO COMM %"
-msgstr "% COM BRMO"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "BRMO DAYS"
-msgstr "DÍAS BRMO"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "BRMO DSCT"
-msgstr "DCTO BRMO"
+msgid "BAREME DISCOUNT"
+msgstr "DESCUENTO EN BAREMO"
 
 #. module: commission_payment
 #: field:commission.payment,baremo_id:0
 msgid "Baremo"
 msgstr "Baremo"
+
+#. module: commission_payment
+#: selection:commission.payment,commission_baremo_policy:0
+msgid "Baremo Matrix"
+msgstr "Matriz Baremo"
 
 #. module: commission_payment
 #: field:commission.payment,commission_baremo_policy:0
@@ -167,6 +158,12 @@ msgstr "Política de Baremo"
 #: view:commission.payment:commission_payment.commission_payment_form
 msgid "Baremo from"
 msgstr "Baremo en"
+
+#. module: commission_payment
+#: code:addons/commission_payment/model/commission.py:1145
+#, python-format
+msgid "Baremo on Matrix only applies on Invoiced Products"
+msgstr "Baremo en Matriz solo aplica a Productos Facturados"
 
 #. module: commission_payment
 #: view:commission.payment:commission_payment.commission_payment_form
@@ -214,7 +211,8 @@ msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: commission_payment
-#: field:commission.invoice,name:0 field:commission.noprice,name:0
+#: field:commission.invoice,name:0
+#: field:commission.noprice,name:0
 #: field:commission.sale.noid,name:0
 msgid "Comentario"
 msgstr "Comentario"
@@ -271,9 +269,11 @@ msgid "Commission"
 msgstr "Comisión"
 
 #. module: commission_payment
+#: field:commission.invoice,commission:0
 #: field:commission.lines,commission:0
 #: view:commission.salesman:commission_payment.commission_salesman_tree
 #: field:commission.salesman,comm_total:0
+#: field:commission.voucher,commission:0
 msgid "Commission Amount"
 msgstr "Monto de Comisión"
 
@@ -345,8 +345,10 @@ msgid "Compute on"
 msgstr "Calcular con"
 
 #. module: commission_payment
-#: field:commission.invoice,create_uid:0 field:commission.lines,create_uid:0
-#: field:commission.noprice,create_uid:0 field:commission.payment,create_uid:0
+#: field:commission.invoice,create_uid:0
+#: field:commission.lines,create_uid:0
+#: field:commission.noprice,create_uid:0
+#: field:commission.payment,create_uid:0
 #: field:commission.sale.noid,create_uid:0
 #: field:commission.salesman,create_uid:0
 #: field:commission.voucher,create_uid:0
@@ -354,7 +356,8 @@ msgid "Created by"
 msgstr "Creado por"
 
 #. module: commission_payment
-#: field:commission.invoice,create_date:0 field:commission.lines,create_date:0
+#: field:commission.invoice,create_date:0
+#: field:commission.lines,create_date:0
 #: field:commission.noprice,create_date:0
 #: field:commission.payment,create_date:0
 #: field:commission.sale.noid,create_date:0
@@ -364,7 +367,8 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: commission_payment
-#: field:commission.lines,currency_id:0 field:commission.payment,currency_id:0
+#: field:commission.lines,currency_id:0
+#: field:commission.payment,currency_id:0
 #: field:commission.salesman,currency_id:0
 msgid "Currency"
 msgstr "Moneda"
@@ -376,9 +380,12 @@ msgid "Currency Amount"
 msgstr "Cantidad en Moneda"
 
 #. module: commission_payment
-#: help:commission.payment,currency_id:0 help:commission.salesman,company_id:0
+#: help:commission.payment,currency_id:0
+#: help:commission.salesman,company_id:0
 msgid "Currency at which this report will be                     expressed. If not selected will be used the                     one set in the company"
-msgstr "Moneda en la cual este reporte será                     expresado. Si no se selecciona se usará la                     que está en la compañía"
+msgstr ""
+"Moneda en la cual este reporte será                     expresado. Si no se "
+"selecciona se usará la                     que está en la compañía"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
@@ -391,7 +398,8 @@ msgid "DUE DAYS"
 msgstr "FECHA VENCIMIENTO"
 
 #. module: commission_payment
-#: field:commission.noprice,date:0 field:commission.voucher,date:0
+#: field:commission.noprice,date:0
+#: field:commission.voucher,date:0
 msgid "Date"
 msgstr "Fecha"
 
@@ -403,7 +411,13 @@ msgstr "Fecha de Pago"
 #. module: commission_payment
 #: help:commission.payment,exchange_date:0
 msgid "Date of change                                                            that will be                                                            printed in the                                                            report, with                                                            respect to the                                                            currency of the                                                            company"
-msgstr "Fecha de cambio                                                            que será                                                            impresa en el                                                            reporte, con                                                            respecto a la                                                            moneda de la                                                            compañía"
+msgstr ""
+"Fecha de cambio                                                            "
+"que será                                                            impresa "
+"en el                                                            reporte, "
+"con                                                            respecto a "
+"la                                                            moneda de "
+"la                                                            compañía"
 
 #. module: commission_payment
 #: help:commission.payment,message_last_post:0
@@ -461,7 +475,8 @@ msgid "Emission Date"
 msgstr "Fecha Emisión"
 
 #. module: commission_payment
-#: field:commission.lines,date_stop:0 field:commission.payment,date_stop:0
+#: field:commission.lines,date_stop:0
+#: field:commission.payment,date_stop:0
 msgid "End Date"
 msgstr "Fecha Final"
 
@@ -476,8 +491,9 @@ msgid "Entry Line"
 msgstr "Línea de Asiento"
 
 #. module: commission_payment
-#: code:addons/commission_payment/model/commission.py:74
-#: code:addons/commission_payment/model/commission.py:1160
+#: code:addons/commission_payment/model/commission.py:83
+#: code:addons/commission_payment/model/commission.py:1144
+#: code:addons/commission_payment/model/commission.py:1220
 #, python-format
 msgid "Error!"
 msgstr "Error!"
@@ -491,11 +507,6 @@ msgstr "Estado"
 #: field:commission.payment,exchange_date:0
 msgid "Exchange Date"
 msgstr "Fecha de Cambio"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "FECHA"
-msgstr "FECHA"
 
 #. module: commission_payment
 #: field:commission.invoice,invoice_id:0
@@ -531,51 +542,22 @@ msgstr "Facturas Totalmente Pagadas"
 #. module: commission_payment
 #: help:commission.payment,message_summary:0
 msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
-msgstr "Contiene el sumario de Conversaciones (número de mensajes, ...). Este sumario está directamente en formato html con el fin de ser insertado en las vistas kanban."
+msgstr ""
+"Contiene el sumario de Conversaciones (número de mensajes, ...). Este "
+"sumario está directamente en formato html con el fin de ser insertado en las "
+"vistas kanban."
 
 #. module: commission_payment
-#: field:commission.invoice,id:0 field:commission.lines,id:0
-#: field:commission.noprice,id:0 field:commission.payment,id:0
-#: field:commission.sale.noid,id:0 field:commission.salesman,id:0
+#: field:commission.invoice,id:0
+#: field:commission.lines,id:0
+#: field:commission.noprice,id:0
+#: field:commission.payment,id:0
+#: field:commission.sale.noid,id:0
+#: field:commission.salesman,id:0
 #: field:commission.voucher,id:0
 #: field:report.commission_payment.comm_salespeople_template,id:0
 msgid "ID"
 msgstr "ID"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INV. NUMBER"
-msgstr "No. FACT."
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INV. SUBTOTAL"
-msgstr "SUBTOTAL FACT."
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INV. TOT."
-msgstr "TOT. FACT."
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE DATE"
-msgstr "FECHA FACTURA"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE NUMBER"
-msgstr "NÚMERO FACTURA"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE SUBTOTAL"
-msgstr "SUBTOTAL FACTURA"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "INVIOCE TOTAL"
-msgstr "TOTAL FACTURA"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
@@ -584,8 +566,28 @@ msgstr "FECHA FACTURA"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
+msgid "INVOICE NUMBER"
+msgstr "NÚMERO DE FACTURA"
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
 msgid "INVOICE PAYMENT"
 msgstr "PAGO FACTURA"
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "INVOICE SUBTOTAL"
+msgstr "SUBTOTAL FACTURADO"
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "INVOICE TOTAL"
+msgstr "TOTAL FACTURADO"
+
+#. module: commission_payment
+#: view:website:commission_payment.salespeople_document
+msgid "INVOICED AMOUNT"
+msgstr "CANTIDAD FACTURADA"
 
 #. module: commission_payment
 #: help:commission.payment,message_unread:0
@@ -645,7 +647,8 @@ msgid "Item w/o Products"
 msgstr "Artículo sin Productos"
 
 #. module: commission_payment
-#: field:commission.lines,am_id:0 field:commission.voucher,am_id:0
+#: field:commission.lines,am_id:0
+#: field:commission.voucher,am_id:0
 msgid "Journal Entry"
 msgstr "Asiento Contable"
 
@@ -674,16 +677,21 @@ msgid "Last Payment on Invoice"
 msgstr "Último Pago en Factura"
 
 #. module: commission_payment
-#: field:commission.invoice,write_uid:0 field:commission.lines,write_uid:0
-#: field:commission.noprice,write_uid:0 field:commission.payment,write_uid:0
+#: field:commission.invoice,write_uid:0
+#: field:commission.lines,write_uid:0
+#: field:commission.noprice,write_uid:0
+#: field:commission.payment,write_uid:0
 #: field:commission.sale.noid,write_uid:0
-#: field:commission.salesman,write_uid:0 field:commission.voucher,write_uid:0
+#: field:commission.salesman,write_uid:0
+#: field:commission.voucher,write_uid:0
 msgid "Last Updated by"
 msgstr "Última Actualización por"
 
 #. module: commission_payment
-#: field:commission.invoice,write_date:0 field:commission.lines,write_date:0
-#: field:commission.noprice,write_date:0 field:commission.payment,write_date:0
+#: field:commission.invoice,write_date:0
+#: field:commission.lines,write_date:0
+#: field:commission.noprice,write_date:0
+#: field:commission.payment,write_date:0
 #: field:commission.sale.noid,write_date:0
 #: field:commission.salesman,write_date:0
 #: field:commission.voucher,write_date:0
@@ -694,11 +702,6 @@ msgstr "Última Actualización el"
 #: field:commission.lines,price_date:0
 msgid "List Date"
 msgstr "Fecha de Lista"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
-msgid "MONTO"
-msgstr "MONTO"
 
 #. module: commission_payment
 #: field:commission.payment,message_ids:0
@@ -716,6 +719,14 @@ msgid "NO SALESMAN SET (NEEDS TO BE FIXED)"
 msgstr "SIN VENDEDOR ASIGNADO (SE NECESITA SOLVENTAR)"
 
 #. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_payment
+msgid "OpenERP Model : commission_payment\n"
+"    "
+msgstr ""
+"OpenERP Model : commission_payment↵\n"
+"    "
+
+#. module: commission_payment
 #: view:commission.payment:commission_payment.commission_payment_form
 msgid "Other Info"
 msgstr "Otra Información"
@@ -727,13 +738,13 @@ msgstr "PARTNER"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "PAY. INV."
-msgstr "PAGA FACT."
+msgid "PAYMENT AMOUNT"
+msgstr "MONTO DE PAGO"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "PAYMENT AMOUNT"
-msgstr "MONTO DE PAGO"
+msgid "PRODUCT"
+msgstr "PRODUCTO"
 
 #. module: commission_payment
 #: view:website:commission_payment.external_layout_footer
@@ -836,7 +847,8 @@ msgid "Reconciling Entry"
 msgstr "Asiento Conciliatorio"
 
 #. module: commission_payment
-#: field:account.move.line,rec_invoice:0 field:commission.lines,invoice_id:0
+#: field:account.move.line,rec_invoice:0
+#: field:commission.lines,invoice_id:0
 msgid "Reconciling Invoice"
 msgstr "Factura Conciliatoria"
 
@@ -908,7 +920,8 @@ msgid "Set to Draft"
 msgstr "Volver a Borrador"
 
 #. module: commission_payment
-#: field:commission.lines,date_start:0 field:commission.payment,date_start:0
+#: field:commission.lines,date_start:0
+#: field:commission.payment,date_start:0
 msgid "Start Date"
 msgstr "Fecha de Inicio"
 
@@ -939,11 +952,6 @@ msgstr "% IVA"
 
 #. module: commission_payment
 #: view:website:commission_payment.salespeople_document
-msgid "TRANSACCION"
-msgstr "TRANSACCIÓN"
-
-#. module: commission_payment
-#: view:website:commission_payment.salespeople_document
 msgid "TRANSACTION"
 msgstr "TRANSACCIÓN"
 
@@ -953,13 +961,13 @@ msgid "Tax (%)"
 msgstr "Imp. (%)"
 
 #. module: commission_payment
-#: code:addons/commission_payment/model/commission.py:1160
+#: code:addons/commission_payment/model/commission.py:1220
 #, python-format
 msgid "There are items to fix"
 msgstr "Hay artículos que resolver"
 
 #. module: commission_payment
-#: code:addons/commission_payment/model/commission.py:75
+#: code:addons/commission_payment/model/commission.py:84
 #, python-format
 msgid "There is no default company for the current user!"
 msgstr "No compañía predeterminada para el usuario actual!"

@@ -4,8 +4,7 @@ import time
 
 
 class TestInvoiceVoucherBroker(TestTaxCommon):
-    """
-    This test is to check that when I create a invoice to 'Reposicion de
+    """This test is to check that when I create a invoice to 'Reposicion de
     gastos' this invoice not create 'Iva efectivamente pagado' to this invoice,
     only to invoice that send me the broker from mi supplier.
     """
@@ -14,8 +13,7 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
         super(TestInvoiceVoucherBroker, self).setUp()
 
     def test_programmatic_tax_voucher(self):
-        """
-        This method test the feature with account.voucher
+        """This method test the feature with account.voucher
         """
         cr, uid = self.cr, self.uid
         # I create the invoice to broker

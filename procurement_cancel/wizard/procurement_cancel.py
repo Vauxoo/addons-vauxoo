@@ -31,8 +31,7 @@ class CancelProcurementOrder(osv.osv_memory):
     _description = 'Cancel procurement'
 
     def cancel_procurement(self, cr, uid, ids, context=None):
-        """
-        @param self: The object pointer.
+        """@param self: The object pointer.
         @param cr: A database cursor
         @param uid: ID of the user currently logged in
         @param ids: List of IDs selected

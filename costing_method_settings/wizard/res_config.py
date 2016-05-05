@@ -41,8 +41,7 @@ class PurchaseConfigSettings(models.TransientModel):
 
     @api.onchange('default_cost_method')
     def active_group_costing_method(self):
-        """
-        Set the group_costing_method to true when the default_cost_method is
+        """Set the group_costing_method to true when the default_cost_method is
         set
         """
         if self.default_cost_method:

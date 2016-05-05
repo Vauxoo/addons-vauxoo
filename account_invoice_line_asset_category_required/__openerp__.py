@@ -10,7 +10,7 @@
 ############################################################################
 {
     'name': 'Account Invoice Line Asset Category Required',
-    'version': '1.6',
+    'version': '8.0.0.1.6',
     'author': 'Vauxoo',
     'license': 'AGPL-3',
     'category': '',
@@ -18,7 +18,9 @@
         'account',
         'account_asset',
     ],
-    'demo': [],
+    'demo': [
+        'demo/account_invoice_demo.xml',
+    ],
     'website': 'https://www.vauxoo.com',
     'data': [
         'views/account_view.xml'

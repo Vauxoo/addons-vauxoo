@@ -5,13 +5,11 @@ from openerp.report import report_sxw
 
 class CrmReportProfile(report_sxw.rml_parse):
 
-    """
-    Description about crm_report_profile
+    """Description about crm_report_profile
     """
 
     def __init__(self, cr, uid, name, context=None):
-        """
-        Initlize a report parser, add custome methods to localcontext
+        """Initlize a report parser, add custome methods to localcontext
         @param cr: cursor to database
         @param user: id of current user
         @param name: name of the reports it self

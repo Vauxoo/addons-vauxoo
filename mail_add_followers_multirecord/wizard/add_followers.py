@@ -31,10 +31,9 @@ class InviteWizard(osv.osv_memory):
     _description = 'Invite wizard'
 
     def default_get(self, cr, uid, _fields, context=None):
-        '''
-        Creating in an smart way the default message with the titles of
+        """Creating in an smart way the default message with the titles of
         elements to share.
-        '''
+        """
 
         result = super(InviteWizard, self).default_get(
             cr, uid, _fields, context=context)
@@ -91,12 +90,11 @@ class InviteWizard(osv.osv_memory):
     }
 
     def mail_add_followers_multirecord(self, cr, uid, ids, context=None):
-        '''
-        Overwrite the original model work with many documents at the same time
+        """Overwrite the original model work with many documents at the same time
         and add followers in eech.
 
         Each id is get by context field
-        '''
+        """
         res = {'type': 'ir.actions.act_window_close'}
         for wizard in self.browse(cr, uid, ids, context=context):
             if context.get('second', False):
@@ -158,12 +156,11 @@ class InviteWizard(osv.osv_memory):
         return res
 
     def remove_followers(self, cr, uid, ids, context=None):
-        '''
-        Overwrite the original model work with many documents at the same time
+        """Overwrite the original model work with many documents at the same time
         and add followers in eech.
 
         Each id is get by context field
-        '''
+        """
         res = {'type': 'ir.actions.act_window_close'}
         for wizard in self.browse(cr, uid, ids, context=context):
             for res_id in context.get('active_ids', []):
@@ -188,9 +185,9 @@ class InviteWizard(osv.osv_memory):
 
     def load_partners(self, cr, uid, ids, mail_groups, check, check2,
                       context=None):
-        ''' Used to add all partnes in mail.group selected in the view and
+        """ Used to add all partnes in mail.group selected in the view and
             return it
-        '''
+        """
         if context is None:
             context = {}
         res = {'value': {}}
@@ -211,9 +208,9 @@ class InviteWizard(osv.osv_memory):
         return res
 
     def bring_partner(self, cr, uid, ids, context=None):
-        ''' Used to add all partnes in mail.group selected in the view and
+        """ Used to add all partnes in mail.group selected in the view and
             return it
-        '''
+        """
         if context is None:
             context = {}
         res = {'value': {}}

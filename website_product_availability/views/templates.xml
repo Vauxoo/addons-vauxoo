@@ -2,63 +2,57 @@
 <openerp>
     <data>
          <template id="product_stock_available_website" inherit_id="website_variants_extra.product_variants_description_3columns">
-             <xpath expr="//div[@class='col-sm-3 col-md-3 col-lg-3 descriptions_column']" position="after">
-                <t t-set="attr_value_ids" t-value="get_locations_variant_ids(product)"/>
-                <div class="col-sm-3 col-md-3 col-lg-3">
+             <xpath expr="//div[@class='css_quantity input-group oe_website_spinner']" position="before">
+                <div class="warehouse-availability">
+                    <t t-set="attr_value_ids" t-value="get_locations_variant_ids(product)"/>
                     <t t-if="attr_value_ids">
                         <t t-foreach="attr_value_ids" t-as="variant">
                             <t t-if="variant[4]">
-                                <div class="panel panel-primary product_variant_states"
-                                    t-att-id="'product-variant-%s' % (variant[0])">
-                                    <div class="panel-heading">
-                                        <h3>Availability by Store</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <ul class="nav nav-pills nav-stacked mt16">
+                                    <div class="product_variant_states hidden" t-att-id="'product-variant-%s' % (variant[0])">
                                             <t t-foreach="variant[4]" t-as="location">
-                                                <li>
-                                                    <span>
-                                                        <t t-raw="location[0]"></t>
-                                                    </span>
+                                            <div class="small-text">
+                                                <small><span>
+                                                    <strong>
+                                                        <t t-raw="location[0]"/>:
+                                                    </strong>
                                                     <t t-if="location[1] == '1'">
-                                                        <span class="pull-right label label-success">
+                                                        <span class="text-green">
                                                         Available
                                                         </span>
                                                     </t>
                                                     <t t-if="location[1] == '2'">
                                                         <t t-if="location[2] == 'unknown'">
-                                                            <span class="pull-right label label-danger">
+                                                            <span class="text-green">
                                                             Not Available
                                                             </span>
                                                         </t>
                                                         <t t-if="location[2] != 'unknown'">
-                                                            <span class="pull-right label label-info stock_delay">
+                                                            <span class="text-green stock_delay">
                                                                <t t-raw="location[2]"/>
                                                             </span>
                                                         </t>
                                                     </t>
                                                     <t t-if="location[1] == '3'">
-                                                        <span class=" pull-right label label-warning">
+                                                        <span class="text-green">
                                                             Low Availability
                                                         </span>
                                                     </t>
                                                     <t t-if="location[1] == '4'">
                                                         <t t-if="location[2] == 'unknown'">
-                                                            <span class="pull-right label label-danger">
+                                                            <span class="text-green">
                                                             On Request
                                                             </span>
                                                         </t>
                                                         <t t-if="location[2] != 'unknown'">
-                                                            <span class="pull-right label label-info stock_delay">
+                                                            <span class="text-green stock_delay">
                                                                 <t t-raw="location[2]"/>
                                                             </span>
                                                         </t>
                                                     </t>
-                                                </li>
+                                                </span></small>
+                                            </div>
                                             </t>
-                                        </ul>
                                     </div>
-                                </div>
                             </t>
                             <!-- <t t-if="not variant[6] and variant.product_planned_dates_ids">
                                 <div role='alert' class="alert alert-danger">

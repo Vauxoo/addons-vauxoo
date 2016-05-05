@@ -31,9 +31,8 @@ class AccountMoveLineReconcileWriteoff(osv.osv_memory):
     _inherit = 'account.move.line.reconcile.writeoff'
 
     def trans_rec_reconcile_partial(self, cr, uid, ids, context=None):
-        '''
-            This function is overwrite because we need reconcile also
-            the aml of taxes when is reconcile partial '''
+        """This function is overwrite because we need reconcile also
+            the aml of taxes when is reconcile partial """
         if context is None:
             context = {}
         res = super(
@@ -46,10 +45,9 @@ class AccountMoveLineReconcileWriteoff(osv.osv_memory):
         return res
 
     def trans_rec_reconcile(self, cr, uid, ids, context=None):
-        '''
-            This function is overwrite because we need reconcile also
+        """This function is overwrite because we need reconcile also
             the aml of taxes and create journal items with difference by
-            writeoff in manual reconcile '''
+            writeoff in manual reconcile """
         if context is None:
             context = {}
 
@@ -81,7 +79,7 @@ class AccountMoveLineReconcileWriteoff(osv.osv_memory):
     def trans_rec_reconcile_tax(
             self, cr, uid, ids, account_id=None, period_id=None,
             journal_id=None, context=None):
-        ''' This function get ids of aml with account recivable/payable and
+        """ This function get ids of aml with account recivable/payable and
             get ids of aml taxes to reconcile in manual process
             writeoff/partial
             param @account_id: to use this account when reconcile is with
@@ -89,7 +87,7 @@ class AccountMoveLineReconcileWriteoff(osv.osv_memory):
             param @period_id: to use this period when reconcile is writeoff
                 this value is calculated
             param @journal_id: to use thi journal_id when reconcile is
-                writeoff this value is set in wizard '''
+                writeoff this value is set in wizard """
         if context is None:
             context = {}
         account_move_line_obj = self.pool.get('account.move.line')

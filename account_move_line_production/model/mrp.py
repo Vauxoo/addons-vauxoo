@@ -4,8 +4,7 @@ from openerp import models, fields
 
 
 class MrpProduction(models.Model):
-    """
-    Production Orders / Manufacturing Orders
+    """Production Orders / Manufacturing Orders
     """
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order'

@@ -35,8 +35,7 @@ class PurchaseOrder(models.Model):
     @api.one
     @api.constrains('order_line')
     def _check_order_lines_sequence(self):
-        """
-        check that the sequence is unique per purchase order line.
+        """check that the sequence is unique per purchase order line.
         """
         all_sequences = self.order_line.mapped('sequence')
         sequences = list(set(all_sequences))
@@ -59,8 +58,7 @@ class PurchaseOrderLine(models.Model):
 
     @api.model
     def default_get(self, fields_list):
-        """
-        Overwrite the default value of the sequence field taking into account
+        """Overwrite the default value of the sequence field taking into account
         the current number of lines in the purchase order. If is not call from
         the purchase order will use the default value.
         """
