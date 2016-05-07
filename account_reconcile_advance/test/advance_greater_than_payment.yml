@@ -219,16 +219,16 @@
     for move in moves_line :
         if move.debit == 500:
             print move.account_id.name,'\t\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment01 (Debit)"
+            assert move.reconcile_id.name == False and move.reconcile_partial_id.name == False , "Wrong in account move line of Payment01 (Debit)"
         elif move.credit == 500:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment01 (Credit)"
+            assert move.reconcile_id.name == False and move.reconcile_partial_id.name == False , "Wrong in account move line of Payment01 (Credit)"
         elif move.debit == 1000:
             print move.account_id.name,'\t\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment02 (Debit)"
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == False , "Wrong in account move line of Payment02 (Debit)"
         elif move.credit == 1000:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment02 (Credit)"
+            assert move.reconcile_id.name == False and move.reconcile_partial_id.name == False , "Wrong in account move line of Payment02 (Credit)"
         else:
             assert False, "Wrong entry. Unrecognized in account move line."
 -
@@ -259,21 +259,21 @@
     for move in moves_line :
         if move.debit == 100:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Invoice01 (Debit)"
+            assert move.reconcile_id.name == False and move.reconcile_partial_id.name == False , "Wrong in account move line of Invoice01 (Debit)"
         elif move.credit == 100:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice01 (Credit)"
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == False , "Wrong in account move line of Invoice01 (Credit)"
         elif move.debit == 200:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name== None and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice02 (Debit)"
+            assert move.reconcile_id.name == False and move.reconcile_partial_id.name == False , "Wrong in account move line of Invoice02 (Debit)"
         elif move.credit == 200:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice02 (Credit)"
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == False , "Wrong in account move line of Invoice02 (Credit)"
         elif move.debit == 300:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name== None and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice03 (Debit)"
+            assert move.reconcile_id.name == False and move.reconcile_partial_id.name == False , "Wrong in account move line of Invoice03 (Debit)"
         elif move.credit == 300:
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice03 (Credit)"
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == False , "Wrong in account move line of Invoice03 (Credit)"
         else:
             assert False, "Wrong entry. Unrecognized in account move line."
