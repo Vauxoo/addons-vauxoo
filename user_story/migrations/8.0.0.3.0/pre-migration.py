@@ -31,7 +31,7 @@ def add_sequence_ac(cr):
     """
     cr.execute("""SELECT id, accep_crit_id, sequence_ac
                FROM acceptability_criteria
-               ORDER BY accep_crit_id, id;""")
+               ORDER BY accep_crit_id, name, id;""")
 
     dict_ac = {}
     ite = 0
@@ -40,14 +40,17 @@ def add_sequence_ac(cr):
         if cur != ac['accep_crit_id']:
             cur = ac['accep_crit_id']
             ite = 1
-        if not ac['sequence_ac']:
-            dict_ac.update({ac['id']: ite})
-            ite += 1
+        dict_ac.update({ac['id']: ite})
+        ite += 1
+
+    cr.execute("""ALTER TABLE acceptability_criteria
+               ADD COLUMN old_sequence INTEGER""")
 
     for key, value in dict_ac.iteritems():
         sql = """
          UPDATE acceptability_criteria
-         SET sequence_ac = %s
+         SET old_sequence = acceptability_criteria.sequence_ac,
+            sequence_ac = %s
          WHERE id = %s
         """
         cr.execute(sql, (value, key))
