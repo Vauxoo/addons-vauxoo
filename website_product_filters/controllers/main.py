@@ -66,7 +66,7 @@ class WebsiteSale(website_sale):
             res.qcontext['populars'] = popular
             res.qcontext['newest'] = newest
             res.qcontext['products'] = ordered_products
-        elif not category and not search:
+        elif not category and not search and not brand_list:
             res.qcontext['products'] = []
             res.qcontext['pager']['page_count'] = 0
         else:
