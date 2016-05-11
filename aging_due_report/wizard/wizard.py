@@ -19,6 +19,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp import api
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 import logging
@@ -90,60 +91,51 @@ class AccountAgingWizardPartner(osv.osv_memory):
     _rec_name = 'partner_id'
     _order = 'name'
 
+    @api.model
+    def _get_amount_span(self, field_names, res_line, doc, spans, direction):
+        len_span = len(spans) if spans else 0
+        first_item = 0
+        last_item = len_span - 1
+        for item in range(len_span):
+            span = 'span%02d' % (item + 1)
+            if span not in field_names:
+                continue
+            if not direction:
+                if first_item == item and doc.due_days <= 0 or \
+                        last_item == item and doc.due_days <= spans[item] or \
+                        doc.due_days <= spans[item] and \
+                        doc.due_days > spans[item + 1]:
+                    res_line[span] += doc.residual
+            else:
+                if first_item == item and doc.due_days > 0 \
+                        and doc.due_days <= spans[item] or \
+                        last_item == item and doc.due_days > spans[item] or \
+                        doc.due_days > spans[item] and \
+                        doc.due_days <= spans[item + 1]:
+                    res_line[span] += doc.residual
+
     def _get_amount(self, cr, uid, ids, field_names, arg, context=None):
-        context = dict(context or {})
+        if context is None:
+            context = {}
         res = {}
+        field_sum = set(field_names) & set(['residual', 'payment', 'total'])
         for line in self.browse(cr, uid, ids, context=context):
             direction = line.aaw_id.direction == 'past'
             spans = [line.aaw_id.period_length * x * (direction and 1 or -1)
                      for x in range(5)]
             res[line.id] = dict((fn, 0.0) for fn in field_names)
             for doc in line.document_ids:
-                if 'residual' in field_names:
-                    res[line.id]['residual'] += doc.residual
-                if 'payment' in field_names:
-                    res[line.id]['payment'] += doc.payment
-                if 'total' in field_names:
-                    res[line.id]['total'] += doc.total
+                for field_name in field_sum:
+                    res[line.id][field_name] += getattr(doc, field_name)
 
-                if 'not_due' in field_names and not direction:
-                    # We will use same field not due to store all due amounts
-                    if doc.due_days > 0:
+                if 'not_due' in field_names:
+                    if not direction and doc.due_days > 0 \
+                            or direction and doc.due_days <= 0:
+                        # We will use same field not due
+                        # to store all due amounts
                         res[line.id]['not_due'] += doc.residual
-                if 'span01' in field_names and not direction:
-                    if doc.due_days <= 0 and doc.due_days > spans[1]:
-                        res[line.id]['span01'] += doc.residual
-                if 'span02' in field_names and not direction:
-                    if doc.due_days <= spans[1] and doc.due_days > spans[2]:
-                        res[line.id]['span02'] += doc.residual
-                if 'span03' in field_names and not direction:
-                    if doc.due_days <= spans[2] and doc.due_days > spans[3]:
-                        res[line.id]['span03'] += doc.residual
-                if 'span04' in field_names and not direction:
-                    if doc.due_days <= spans[3] and doc.due_days > spans[4]:
-                        res[line.id]['span04'] += doc.residual
-                if 'span05' in field_names and not direction:
-                    if doc.due_days <= spans[4]:
-                        res[line.id]['span05'] += doc.residual
-
-                if 'not_due' in field_names and direction:
-                    if doc.due_days <= 0:
-                        res[line.id]['not_due'] += doc.residual
-                if 'span01' in field_names and direction:
-                    if doc.due_days > 0 and doc.due_days <= spans[1]:
-                        res[line.id]['span01'] += doc.residual
-                if 'span02' in field_names and direction:
-                    if doc.due_days > spans[1] and doc.due_days <= spans[2]:
-                        res[line.id]['span02'] += doc.residual
-                if 'span03' in field_names and direction:
-                    if doc.due_days > spans[2] and doc.due_days <= spans[3]:
-                        res[line.id]['span03'] += doc.residual
-                if 'span04' in field_names and direction:
-                    if doc.due_days > spans[3] and doc.due_days <= spans[4]:
-                        res[line.id]['span04'] += doc.residual
-                if 'span05' in field_names and direction:
-                    if doc.due_days > spans[4]:
-                        res[line.id]['span05'] += doc.residual
+                line._get_amount_span(
+                    field_names, res[line.id], doc, spans, direction)
 
         return res
 
@@ -274,23 +266,14 @@ class AccountAgingWizardCurrency(osv.osv_memory):
     def _get_amount(self, cr, uid, ids, field_names, arg, context=None):
         context = dict(context or {})
         res = {}
+        fields_span = ['span%02d' % item for item in range(1, 6)]
+        fields_sum = set(field_names) & \
+            set(['residual', 'not_due'] + fields_span)
         for line in self.browse(cr, uid, ids, context=context):
             res[line.id] = dict((fn, 0.0) for fn in field_names)
             for part in line.partner_ids:
-                if 'residual' in field_names:
-                    res[line.id]['residual'] += part.residual
-                if 'not_due' in field_names:
-                    res[line.id]['not_due'] += part.not_due
-                if 'span01' in field_names:
-                    res[line.id]['span01'] += part.span01
-                if 'span02' in field_names:
-                    res[line.id]['span02'] += part.span02
-                if 'span03' in field_names:
-                    res[line.id]['span03'] += part.span03
-                if 'span04' in field_names:
-                    res[line.id]['span04'] += part.span04
-                if 'span05' in field_names:
-                    res[line.id]['span05'] += part.span05
+                for field_sum in fields_sum:
+                    res[line.id][field_sum] += getattr(part, field_sum)
         return res
 
     _columns = {
