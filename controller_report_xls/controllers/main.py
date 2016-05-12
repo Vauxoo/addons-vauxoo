@@ -23,15 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from ..controllers.xfstyle import css2excel
-
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
+from lxml import etree
+
+from ..controllers.xfstyle import css2excel
 
 import simplejson
 import xlwt
-from lxml import etree
 
 import StringIO
 import logging
