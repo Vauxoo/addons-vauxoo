@@ -41,7 +41,7 @@ class AccountAgingWizardDocument(models.TransientModel):
     _rec_name = 'partner_id'
     _order = 'date_due'
 
-    @api.depends()
+    @api.depends('date_due')
     def _get_due_days(self):
         for record in self:
             today = datetime.now()
