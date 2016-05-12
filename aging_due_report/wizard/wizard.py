@@ -20,9 +20,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+try:
+    from pandas import DataFrame
+except ImportError:
+    _logger.info('aging_due_report is declared '
+                 ' from addons-vauxoo '
+                 ' you will need: sudo pip install pandas')
+
 from datetime import datetime
 
-from openerp import api, models, fields
+from openerp import api, models, fields, _
 import openerp.addons.decimal_precision as dp
 
 import logging
@@ -32,14 +39,14 @@ _logger = logging.getLogger(__name__)
 class AccountAgingWizardDocument(models.TransientModel):
     _name = 'account.aging.wizard.document'
     _rec_name = 'partner_id'
-    _order = 'due_days'
+    _order = 'date_due'
 
+    @api.depends()
     def _get_due_days(self):
         for record in self:
             today = datetime.now()
-            if record.date_due:
-                date_due = datetime.strptime(record.date_due, '%Y-%m-%d')
-                record.due_days = (today - date_due).days
+            date_due = datetime.strptime(record.date_due, '%Y-%m-%d')
+            record.due_days = (today - date_due).days
 
     partner_id = fields.Many2one('res.partner', 'Partner')
     invoice_id = fields.Many2one('account.invoice', 'Invoice')
@@ -52,8 +59,7 @@ class AccountAgingWizardDocument(models.TransientModel):
     total = fields.Float('Total')
     payment = fields.Float('Payment')
     due_days = fields.Integer(string='Due Days',
-                              compute="_get_due_days",
-                              store=True)
+                              compute="_get_due_days")
     date_emission = fields.Date('Emission Date')
     date_due = fields.Date('Due Date')
     company_id = fields.Many2one('res.company', u'Company')
@@ -72,57 +78,52 @@ class AccountAgingWizardPartner(models.TransientModel):
     _rec_name = 'partner_id'
     _order = 'name'
 
+    @api.model
+    def _get_amount_span(self, field_names, res_line, doc, spans, direction):
+        len_span = len(spans) if spans else 0
+        first_item = 0
+        last_item = len_span - 1
+        for item in range(len_span):
+            span = 'span%02d' % (item + 1)
+            if span not in field_names:
+                continue
+            if not direction:
+                if first_item == item and doc.due_days <= 0 or \
+                        last_item == item and doc.due_days <= spans[item] or \
+                        doc.due_days <= spans[item] and \
+                        doc.due_days > spans[item + 1]:
+                    res_line[span] += doc.residual
+            else:
+                if first_item == item and doc.due_days > 0 \
+                        and doc.due_days <= spans[item] or \
+                        last_item == item and doc.due_days > spans[item] or \
+                        doc.due_days > spans[item] and \
+                        doc.due_days <= spans[item + 1]:
+                    res_line[span] += doc.residual
+
     @api.depends('document_ids', 'document_ids.residual',
                  'document_ids.payment', 'document_ids.total')
     def _get_amount(self):
+        field_sum = ['residual', 'payment', 'total', 'not_due']
+        field_spans = ['span01', 'span02', 'span03', 'span04', 'span05']
+        field_names = field_spans + field_sum
         for record in self:
-            residual = payment = total = not_due = 0.00
-            span01 = span02 = span03 = span04 = span05 = 0.00
-
+            res = {}
             direction = record.aaw_id.direction == 'past'
             spans = [record.aaw_id.period_length * x * (direction and 1 or -1)
                      for x in range(5)]
+            for fn in field_names:
+                res[fn] = 0.0
             for doc in record.document_ids:
-                residual += doc.residual
-                payment += doc.payment
-                total += doc.total
-
-                if not direction:
-                    # We will use same field not due to store all due amounts
-                    if doc.due_days > 0:
-                        not_due += doc.residual
-                    if doc.due_days <= 0 and doc.due_days > spans[1]:
-                        span01 += doc.residual
-                    if doc.due_days <= spans[1] and doc.due_days > spans[2]:
-                        span02 += doc.residual
-                    if doc.due_days <= spans[2] and doc.due_days > spans[3]:
-                        span03 += doc.residual
-                    if doc.due_days <= spans[3] and doc.due_days > spans[4]:
-                        span04 += doc.residual
-                    if doc.due_days <= spans[4]:
-                        span05 += doc.residual
-                else:
-                    if doc.due_days <= 0:
-                        not_due += doc.residual
-                    if doc.due_days > 0 and doc.due_days <= spans[1]:
-                        span01 += doc.residual
-                    if doc.due_days > spans[1] and doc.due_days <= spans[2]:
-                        span02 += doc.residual
-                    if doc.due_days > spans[2] and doc.due_days <= spans[3]:
-                        span03 += doc.residual
-                    if doc.due_days > spans[3] and doc.due_days <= spans[4]:
-                        span04 += doc.residual
-                    if doc.due_days > spans[4]:
-                        span05 += doc.residual
-            record.residual = residual
-            record.payment = payment
-            record.total = total
-            record.not_due = not_due
-            record.span01 = span01
-            record.span02 = span02
-            record.span03 = span03
-            record.span04 = span04
-            record.span05 = span05
+                for fsum in field_sum:
+                    if fsum != 'not_due':
+                        res[fsum] += doc.read([fsum])[0][fsum]
+                if not direction and doc.due_days > 0 \
+                        or direction and doc.due_days <= 0:
+                    res['not_due'] += doc.residual
+                record._get_amount_span(field_spans, res, doc,
+                                        spans, direction)
+            record.update(res)
 
     partner_id = fields.Many2one('res.partner', string='Partner',
                                  required=True)
@@ -322,16 +323,8 @@ class AccountAgingPartnerWizard(models.TransientModel):
         # used in the original place where the method was called
         if not aml_ids:
             return []
-        aml_rd = aml_obj.read(aml_ids,
-                              ['partner_id', 'reconcile_partial_id', 'debit',
-                               'credit', 'amount_currency', 'currency_id'],
-                              load=None)
-        try:
-            from pandas import DataFrame
-        except ImportError:
-            _logger.info('aging_due_report is declared '
-                         ' from addons-vauxoo '
-                         ' you will need: sudo pip install pandas')
+        aml_rd = aml_ids.read(['partner_id', 'reconcile_partial_id', 'debit',
+                               'credit', 'amount_currency', 'currency_id'])
         aml_data = DataFrame(aml_rd).set_index('id')
         aml_data_grouped = aml_data.groupby(['partner_id',
                                              'reconcile_partial_id'])

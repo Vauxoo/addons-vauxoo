@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+###############################################################################
 #    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -22,20 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import osv
+from openerp import models, api
 
 
-class StockMove(osv.osv):
-    _inherit = "stock.move"
+class StockQuant(models.Model):
+    _inherit = "stock.quant"
 
-    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
-        res = super(StockMove, self)._create_account_move_line(cr, uid, move, src_account_id,
-                                                               dest_account_id, reference_amount, reference_currency_id, context=context)
-        if move.purchase_line_id and move.purchase_line_id.analytics_id:
+    @api.model
+    def _prepare_account_move_line(self, move, qty, cost,
+                                   credit_account_id, debit_account_id):
+        res = super(StockQuant, self)._prepare_account_move_line(
+            move, qty, cost, credit_account_id, debit_account_id)
+        purchase_line_id = move.purchase_line_id
+        if not purchase_line_id and move.origin_returned_move_id:
+            purchase_line_id = move.origin_returned_move_id.purchase_line_id
+        if purchase_line_id and purchase_line_id.analytics_id:
             debit_line_vals, credit_line_vals = res[0][2], res[1][2]
-            debit_line_vals[
-                'analytics_id'] = move.purchase_line_id.analytics_id.id
-            credit_line_vals[
-                'analytics_id'] = move.purchase_line_id.analytics_id.id
+            if move.location_dest_id.usage == 'internal':
+                debit_line_vals[
+                    'analytics_id'] = purchase_line_id.analytics_id.id
+            else:
+                credit_line_vals[
+                    'analytics_id'] = purchase_line_id.analytics_id.id
             res = [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
         return res

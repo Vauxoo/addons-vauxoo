@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_reconcile_grouping
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-03 06:21+0000\n"
+"PO-Revision-Date: 2016-05-03 06:21+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_reconcile_grouping
+#: view:account.move.line:account_reconcile_grouping.account_move_line_grouping_reconcile_search
+msgid "Parcial Reconcile"
+msgstr ""
+
+#. module: account_reconcile_grouping
+#: view:account.move.line:account_reconcile_grouping.account_move_line_grouping_reconcile_search
+msgid "Total Reconcile"
+msgstr ""
+
