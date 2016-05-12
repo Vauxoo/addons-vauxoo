@@ -20,12 +20,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-
-from datetime import datetime
-
-from openerp import api, models, fields
-import openerp.addons.decimal_precision as dp
-
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -35,6 +29,12 @@ except ImportError:
     _logger.info('aging_due_report is declared '
                  ' from addons-vauxoo '
                  ' you will need: sudo pip install pandas')
+
+from datetime import datetime
+
+from openerp import api, models, fields
+import openerp.addons.decimal_precision as dp
+
 
 class AccountAgingWizardDocument(models.TransientModel):
     _name = 'account.aging.wizard.document'
