@@ -740,6 +740,11 @@ msgid "Sprint"
 msgstr "Sprint"
 
 #. module: user_story
+#: view:user.story:user_story.view_userstory_form
+msgid "Seq"
+msgstr "Sec"
+
+#. module: user_story
 #: field:acceptability.criteria,sequence_ac:0
 msgid "Sequence"
 msgstr "Secuencia"
