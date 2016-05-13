@@ -9,7 +9,14 @@ from openerp.tests.common import TransactionCase
 
 
 class TestSaleWebsiteCleanup(TransactionCase):
-    """Pseudo-constructor method of the setUp test."""
+    """In order to test the cancellation of draft orders that have been
+    created by the public user over 24 hours ago.
+    So, this test does the following:
+
+    1. Update a draft order setting a past date and the public user as partner.
+    2. Call the cancel_old_orders method to cancel the previous draft order.
+    3. Do an assertTrue to verify that the cancellation was successful.
+    """
 
     def setUp(self):
         """Define global variables to test method."""

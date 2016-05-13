@@ -6,13 +6,13 @@
             <field name="active" eval="True"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_type">weeks</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
             <field name="model" eval="'sale.order'"/>
             <field name="function" eval="'cancel_old_orders'"/>
             <field name="args" eval="'(1,)'"/>
-            <field name="priority">5</field>
+            <field name="priority">50</field>
         </record>
     </data>
 </openerp>
