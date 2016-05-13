@@ -58,7 +58,7 @@
         <record id="ac_31" model="acceptability.criteria">
             <field name="name">criterion 3.1</field>
             <field name="scenario">sc 3.1</field>
-            <field name="sequence_ac">3</field>
+            <field name="sequence_ac">1</field>
             <field name="accep_crit_id" ref="us_3"/>
             <field name="difficulty">low</field>
         </record>
