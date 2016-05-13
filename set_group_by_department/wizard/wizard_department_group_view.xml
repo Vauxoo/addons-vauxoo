@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="wizard_department_group_form" model="ir.ui.view">
+            <field name="name">wizard.department.group.form</field>
+            <field name="model">wizard.department.group</field>
+            <field name="arch" type="xml">
+                <form string="Set Group by Department">
+                    <field name="dept_group_id"/>
+                    <button name="set_group" string="Set Group by Department" type="object" class="oe_highlight"/>
+                    or
+                    <button class="oe_link" special="cancel" string="Cancel"/>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Create or set an user with all Vauxoo ACL"
+            key2="client_action_multi"
+            res_model="wizard.department.group"
+            src_model="hr.employee"
+            view_mode="form"
+            view_type="form"
+            target="new"
+            id="action_set_group"/>
+    </data>
+</openerp>
