@@ -30,7 +30,7 @@ class CancelOrders(models.Model):
             ('partner_id', '=', self.env.ref('base.public_user').id),
             ('date_order', '<=', strf_date)
         ])
-        _logger.info("Cancelling %s" % len(draft_order))
+        _logger.info("Cancelling %s", (len(draft_order)))
         for order in draft_order:
             order.action_cancel()
-            _logger.info("Cancelling this order id: %s" % order.id)
+            _logger.info("Cancelling this order id: %s", (order.id))

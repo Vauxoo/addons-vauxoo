@@ -4,7 +4,7 @@
 Sale Website Cleanup
 ====================
 
-This module add a cronjob that will cancel the orders that have been created
+This module adds a cronjob that will cancel the orders that have been created
 more than 24 hours.
 
 Requirements:
