@@ -44,5 +44,35 @@
             <field name="rating">3</field>
             <field name="res_id" ref="product.product_product_32_product_template"/>
         </record>
+
+        <!-- Demo data to create attributes on products without values -->
+        <record id="website_filters_galaxy_product_template" model="product.template">
+            <field name="name">Samsung Galaxy Tab</field>
+            <field name="sale_ok">1</field>
+            <field name="website_published">1</field>
+            <field name="public_categ_ids" eval="[(6,0,[ref('product.Computer_all_in_one')])]"/>
+            <field name="list_price">150</field>
+            <field name="attribute_line_ids" eval="[(6,0,[ref('product_attribute_memory_line_1')])]"/>
+          <field name="image_medium" type="base64" file="website_product_filters/static/img/galaxy.png"/>
+        </record>
+        <record id="website_filters_nexus_product_template" model="product.template">
+            <field name="name">Google Nexus Tab</field>
+            <field name="sale_ok">1</field>
+            <field name="website_published">1</field>
+            <field name="public_categ_ids" eval="[(6,0,[ref('product.Computer_all_in_one')])]"/>
+            <field name="list_price">80</field>
+            <field name="attribute_line_ids" eval="[(6,0,[ref('product_attribute_memory_line_2')])]"/>
+          <field name="image_medium" type="base64" file="website_product_filters/static/img/nexus.png"/>
+        </record>
+        <record id="product_attribute_memory_line_1" model="product.attribute.line">
+            <field name="product_tmpl_id" ref="website_filters_galaxy_product_template"/>
+            <field name="attribute_id" ref="product.product_attribute_1"/>
+        </record>
+        <record id="product_attribute_memory_line_2" model="product.attribute.line">
+            <field name="product_tmpl_id" ref="website_filters_nexus_product_template"/>
+            <field name="attribute_id" ref="product.product_attribute_1"/>
+        </record>
+
+
     </data>
 </openerp>
