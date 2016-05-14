@@ -27,16 +27,19 @@ class WizardDepartmentGroup(models.TransientModel):
 
     @api.multi
     def set_group(self):
-        users = []
         users_obj = self.env['res.users']
         for record in self._brw_active_employees():
             if record.user_id:
                 users_obj = users_obj + record.user_id
             else:
                 work_email = record.work_email
-                users_obj = users_obj + users_obj.search(
+                users_id = users_obj.search(
                     [('login', '=', work_email)])
+                users_obj = users_obj + users_id
+                record.write({
+                    'user_id': users_id.id,
+                })
         users_obj.write({
             'groups_id': [(6, 0, [self.dept_group_id.id])]
         })
-        return {'type': 'ir.actions.act_window_close'}
+        return False
