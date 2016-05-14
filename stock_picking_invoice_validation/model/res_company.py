@@ -5,11 +5,14 @@
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
-#    coded by: hugo@vauxoo.com
-#    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
+#    coded by: Hugo Adan, <hugo@vauxoo.com>
 ############################################################################
-from . import res_company
-from . import stock_picking
-from . import stock_transfer_details
-from . import sale_order
-from . import account_invoice
+from openerp import models, fields
+
+
+class ResCompany(models.Model):
+    _inherit = 'res.company'
+
+    check_invoice = fields.Boolean(
+        readonly=True, default=True,
+        help="Check Invoices vs Pickings in all Customers transfers")
