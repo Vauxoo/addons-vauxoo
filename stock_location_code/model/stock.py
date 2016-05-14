@@ -45,39 +45,23 @@ class StockLocation(models.Model):
 
     _inherit = 'stock.location'
 
-    def name_search(self, cr, user, name='', args=None,
-                    operator='ilike', context=None, limit=100):
-        args = args or []
-        if name:
-            ids = self.search(
-                cr, user, [('loc_barcode', '=', name)] + args, limit=limit,
-                context=context)
-            if not ids:
-                ids = set()
-                ids.update(self.search(cr, user, args + [(
-                    'loc_barcode', operator, name)],
-                    limit=limit,
-                    context=context))
-                if not limit or len(ids) < limit:
-                    # we may underrun the limit because of dupes in the
-                    # results, that's fine
-                    ids.update(self.search(
-                        cr, user, args + [('name', operator, name)],
-                        limit=(limit and (limit - len(ids)) or False),
-                        context=context))
-                ids = list(ids)
+    # barcode is between [] e.g. "[1234] location1"
+    barcode_re = re.compile(r'\[(?P<barcode>.*?)\]')
 
-            if not ids:
-                ptrn = re.compile(r'(\[(.*?)\])')
-                res = ptrn.search(name)
-                if res:
-                    ids = self.search(
-                        cr, user, [('loc_barcode', '=', res.group(2))] + args,
-                        limit=limit, context=context)
-        else:
-            ids = self.search(cr, user, args, limit=limit, context=context)
-        result = self.name_get(cr, user, ids, context=context)
-        return result
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        """Search by barcode or the default way"""
+        if args is None:
+            args = []
+        recs = self.browse()
+        if name:
+            re_search = self.barcode_re.search(name)
+            barcode = re_search.group('barcode') if re_search else name
+            recs = self.search([('loc_barcode', '=', barcode)] + args,
+                               limit=limit)
+        res = recs.name_get() or super(StockLocation, self).name_search(
+            name, args=args, operator=operator, limit=limit)
+        return res
 
     @api.model
     def _name_get(self, location):
@@ -89,4 +73,4 @@ class StockLocation(models.Model):
         name = super(StockLocation, self)._name_get(location)
         barcode = "[%(barcode)s]" % {'barcode': location.loc_barcode} \
             if location.loc_barcode else ''
-        return barcode + ' ' + new_name if barcode else new_name
+        return barcode + ' ' + name if barcode else name
