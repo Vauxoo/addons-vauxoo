@@ -89,11 +89,4 @@ class StockLocation(models.Model):
         name = super(StockLocation, self)._name_get(location)
         barcode = "[%(barcode)s]" % {'barcode': location.loc_barcode} \
             if location.loc_barcode else ''
-        warehouse = self.env['stock.warehouse'].browse(
-            self.get_warehouse(location))
-        wh_name = "(%(warehouse)s)" % {'warehouse': warehouse.name} \
-            if warehouse else ''
-        new_name = ' '.join(
-            item for item in [barcode.strip(), name.strip(), wh_name.strip()]
-            if item)
-        return new_name
+        return barcode + ' ' + new_name if barcode else new_name
