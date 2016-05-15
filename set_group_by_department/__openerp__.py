@@ -20,6 +20,7 @@
         'wizard/wizard_department_group_view.xml',
     ],
     'demo': [
+        'demo/employees.xml',
     ],
     'test': [],
     'qweb': [],
