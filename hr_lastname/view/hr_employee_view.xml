@@ -7,7 +7,7 @@
             <field name='model'>hr.employee</field>
             <field name='inherit_id' ref='hr.view_employee_form'/>
             <field name='arch' type='xml'>
-                <xpath expr="//label[@for='category_ids']" position="before">
+                <xpath expr="//field[@name='category_ids']" position="before">
                     <group>
                         <group>
                             <field name="second_name" placeholder="Second Name..." nolabel="1"/>
