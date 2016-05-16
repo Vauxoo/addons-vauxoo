@@ -87,19 +87,22 @@ class AccountAgingWizardPartner(models.TransientModel):
             span = 'span%02d' % (item + 1)
             if span not in field_names:
                 continue
+            is_first_item = first_item == item
+            is_last_item = last_item == item
+            is_mid_item = not is_first_item and not is_last_item
             if not direction:
-                if first_item == item and doc.due_days <= 0 or \
-                        last_item == item and doc.due_days <= spans[item] or \
-                        doc.due_days <= spans[item] and \
-                        doc.due_days > spans[item + 1]:
-                    res_line[span] += doc.residual
+                first_span = is_first_item and doc.due_days <= 0
+                last_span = is_last_item and doc.due_days <= spans[item]
+                mid_span = is_mid_item and doc.due_days <= spans[item] and \
+                    doc.due_days > spans[item + 1]
             else:
-                if first_item == item and doc.due_days > 0 \
-                        and doc.due_days <= spans[item] or \
-                        last_item == item and doc.due_days > spans[item] or \
-                        doc.due_days > spans[item] and \
-                        doc.due_days <= spans[item + 1]:
-                    res_line[span] += doc.residual
+                first_span = is_first_item and doc.due_days > 0 \
+                    and doc.due_days <= spans[item]
+                last_span = is_last_item and doc.due_days > spans[item]
+                mid_span = is_mid_item and doc.due_days > spans[item] and \
+                    doc.due_days <= spans[item + 1]
+            res_line[span] += (first_span or last_span or mid_span) \
+                and doc.residual or 0
 
     @api.depends('document_ids', 'document_ids.residual',
                  'document_ids.payment', 'document_ids.total')
