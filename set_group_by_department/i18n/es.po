@@ -1,0 +1,109 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* set_group_by_department
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-14 05:39+0000\n"
+"PO-Revision-Date: 2016-05-14 05:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: set_group_by_department
+#: model:res.groups,comment:set_group_by_department.res_group_vx_administrative_team
+msgid "\n"
+"            This group is for employees who are part of the administrative team.\n"
+"            "
+msgstr "\n"
+"            Este grupo es para los empleados que forman parte del equipo administrativo.\n"
+"            "
+
+#. module: set_group_by_department
+#: model:res.groups,comment:set_group_by_department.res_group_vx_manager_team
+msgid "\n"
+"            This group is for employees who are part of the manager team.\n"
+"            "
+msgstr "\n"
+"            Este grupo es para los empleados que forman parte del equipo gerencial.\n"
+"            "
+
+#. module: set_group_by_department
+#: model:res.groups,comment:set_group_by_department.res_group_vx_technical_team
+msgid "\n"
+"            This group is for employees who are part of the technical team.\n"
+"            "
+msgstr "\n"
+"            Este grupo es para los empleados que forman parte del equipo técnico.\n"
+"            "
+
+#. module: set_group_by_department
+#: view:wizard.department.group:set_group_by_department.wizard_department_group_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: set_group_by_department
+#: model:ir.actions.act_window,name:set_group_by_department.action_set_group
+msgid "Create or set an user with all Vauxoo ACL"
+msgstr "Crea o establece un usuario con todos los permisos para Vauxoo"
+
+#. module: set_group_by_department
+#: field:wizard.department.group,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: set_group_by_department
+#: field:wizard.department.group,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: set_group_by_department
+#: field:wizard.department.group,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: set_group_by_department
+#: field:wizard.department.group,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: set_group_by_department
+#: field:wizard.department.group,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: set_group_by_department
+#: field:wizard.department.group,dept_group_id:0
+msgid "Select the Vauxoo Group that do you want to add."
+msgstr "Selecciona el Grupo de Vauxoo que deseas agregar."
+
+#. module: set_group_by_department
+#: view:wizard.department.group:set_group_by_department.wizard_department_group_form
+msgid "Set Group by Department"
+msgstr "Establecer Grupo por Departamento"
+
+#. module: set_group_by_department
+#: model:res.groups,name:set_group_by_department.res_group_vx_administrative_team
+msgid "Vauxoo Administrative Team"
+msgstr "Equipo Administrativo de Vauxoo"
+
+#. module: set_group_by_department
+#: model:res.groups,name:set_group_by_department.res_group_vx_manager_team
+msgid "Vauxoo Manager Team"
+msgstr "Equipo Gerencial de Vauxoo"
+
+#. module: set_group_by_department
+#: model:res.groups,name:set_group_by_department.res_group_vx_technical_team
+msgid "Vauxoo Technical Team"
+msgstr "Equipo Técnico de Vauxoo"
+
+#. module: set_group_by_department
+#: view:wizard.department.group:set_group_by_department.wizard_department_group_form
+msgid "or"
+msgstr "o"
+
