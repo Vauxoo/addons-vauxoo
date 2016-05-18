@@ -46,7 +46,7 @@ def get_css_style(csstext, style):
             from cssutils import parseString
             cssutils.log.setLevel(logging.CRITICAL)
         except ImportError:
-            pass
+            return ""
         cssnode = parseString(csstext)
         stylesheet = cssnode.cssRules
         for rule in stylesheet:
