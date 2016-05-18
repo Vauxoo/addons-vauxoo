@@ -2,7 +2,7 @@
     <openerp>
         <data>
             <template id="report_detail_due_report_qweb_document">
-            	<style type="text/css">
+                <style type="text/css">
                     <t t-call="aging_due_report.style_detail_due_report"/>
                 </style>
                 <!-- CALLING HEADER and FOOTER -->
@@ -40,7 +40,7 @@
                         </ul>
                     </div>
                 </div>
-            	<div class="page">
+                <div class="page">
                   <t t-foreach="objects" t-as="o">
                     <table class="basic_table" width="100%" id="table_header">
                         <tr>
@@ -60,67 +60,79 @@
                             <td class="CUSTOMERNAME" style="text-align:right;"><span t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/></td>
                        </tr>
                     </table>
-                    <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%" id='table_body'>
+                    <table class="table_column_border table_title_bg_color" width="100%" id='table_body'>
                           <t t-foreach="o.partner_ids" t-as="p_obj">
-				        	<tbody>
-					            <tr style="border-top: 1px solid #000000;">
-					                <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(p_obj.partner_id.vat and p_obj.partner_id.vat[2:] or '').upper()"/></td>
-					                <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="p_obj.partner_id.name or ''"/> (<span t-esc=" p_obj.currency_id.name or '' "/>)</td>
-					                <td colspan="1" class="ITEMSLEFT ITEMBOLD" style="background-color:
-					                lightgrey;"><span t-esc="p_obj.partner_id.ref or ''"/><span t-esc="p_obj.partner_id.user_id.name or '' "/></td>
+                            <tbody>
+                                <tr style="border-top: 1px solid #000000;">
+                                    <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(p_obj.partner_id.vat and p_obj.partner_id.vat[2:] or '').upper()"/></td>
+                                    <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="p_obj.partner_id.name or ''"/> (<span t-esc=" p_obj.currency_id.name or '' "/>)</td>
+                                    <td colspan="1" class="ITEMSLEFT ITEMBOLD" style="background-color:
+                                    lightgrey;"><span t-esc="p_obj.partner_id.ref or ''"/><span t-esc="p_obj.partner_id.user_id.name or '' "/></td>
                                 <td colspan="3" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;">Amounts expressed in (<span t-esc="p_obj.currency_id and p_obj.currency_id.name or 'N/A'"/>)</td>
-					            </tr>
-					            <tr>
-					                <th width="14%" class="ITEMSTITLELEFT">DOCUMENT</th>
-					                <th width="8%" class="ITEMSTITLELEFT">EMIS DATE</th>
-					                <th width="8%" class="ITEMSTITLELEFT">DUE DATE</th>
-					                <th width="7%" class="ITEMSTITLELEFT">DUE DAYS</th>
-					                <th width="7%" class="ITEMSTITLERIGHT">BASE</th>
-					                <th width="7%" class="ITEMSTITLERIGHT">TAX</th>
-					                <th width="7%" class="ITEMSTITLERIGHT">TOT/INV.</th>
+                                </tr>
+                                <tr class="table_column_border table_title_bg_color">
+                                    <th width="14%" class="ITEMSTITLELEFT">DOCUMENT</th>
+                                    <th width="8%" class="ITEMSTITLELEFT">EMIS DATE</th>
+                                    <th width="8%" class="ITEMSTITLELEFT">DUE DATE</th>
+                                    <th width="7%" class="ITEMSTITLELEFT">DUE DAYS</th>
+                                    <th width="7%" class="ITEMSTITLERIGHT">BASE</th>
+                                    <th width="7%" class="ITEMSTITLERIGHT">TAX</th>
+                                    <th width="7%" class="ITEMSTITLERIGHT">TOT/INV.</th>
                                     <th width="7%" class="ITEMSTITLERIGHT">
                                         <t t-if="o.result_selection =='customer'">COLLECTS</t>
                                         <t t-if="o.result_selection =='supplier'">PAYMENTS</t>
                                     </th>
-					                <th width="7%" class="ITEMSTITLERIGHT">BALANCE</th>
-					            </tr>
-				            	<t t-foreach="p_obj.document_ids" t-as="doc">
-					            	<tr>
-                                        <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.number or doc.aml_id and doc.aml_id.move_id and doc.aml_id.move_id.name or 'N/A'"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="doc.date_emission and datetime.strptime(doc.date_emission.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="doc.date_due and datetime.strptime(doc.date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="doc.due_days and '%s' %doc.due_days or '0' "/> DAY(S)</td>
-					                    <td class="ITEMSRIGHT"><span t-esc="'0.00' "/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="'0.00'"/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.total) or '0.00'"/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.payment) or '0.00'"/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.residual) or '0.00'"/></td>
-					                </tr>
-					            </t>
-					            <tr>
-				                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;"><span t-esc="'TOTAL'"/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.total)"/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.payment)"/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.residual)"/></td>
-					            </tr>
-					            <tr>
-					            	<td colspan="9" style="height: 8px;"></td>
-					            </tr>
-				        	</tbody>
-                    	  </t>
-                    	<tbody>
+                                    <th width="7%" class="ITEMSTITLERIGHT">BALANCE</th>
+                                </tr>
+                                <t t-foreach="p_obj.document_ids" t-as="doc">
+                                    <t t-if='doc_parity == "even"'>
+                                        <tr class="table_alter_color_row1">
+                                            <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.number or doc.aml_id and doc.aml_id.move_id and doc.aml_id.move_id.name or 'N/A'"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="doc.date_emission and datetime.strptime(doc.date_emission.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="doc.date_due and datetime.strptime(doc.date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="doc.due_days and '%s' %doc.due_days or '0' "/> DAY(S)</td>
+                                            <td class="ITEMSRIGHT"><span t-esc="'0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="'0.00'"/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.total) or '0.00'"/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.payment) or '0.00'"/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.residual) or '0.00'"/></td>
+                                        </tr>
+                                    </t>
+                                    <t t-if='doc_parity == "odd"'>
+                                        <tr class="table_alter_color_row2">
+                                            <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.number or doc.aml_id and doc.aml_id.move_id and doc.aml_id.move_id.name or 'N/A'"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="doc.date_emission and datetime.strptime(doc.date_emission.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="doc.date_due and datetime.strptime(doc.date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="doc.due_days and '%s' %doc.due_days or '0' "/> DAY(S)</td>
+                                            <td class="ITEMSRIGHT"><span t-esc="'0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="'0.00'"/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.total) or '0.00'"/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.payment) or '0.00'"/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.residual) or '0.00'"/></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <tr class="panel strong">
+                                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;"><span t-esc="'TOTAL'"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.total)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.payment)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.residual)"/></td>
+                                </tr>
+                            </tbody>
+                          </t>
+                        <tbody>
                             <t t-foreach="o.currency_ids" t-as="c_obj">
-					            <tr>
-					                <td colspan="7" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;">TOTAL IN <span t-esc="c_obj.currency_id.name"/></td>
-					                <td colspan="2" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"><span t-esc="formatLang(c_obj.residual)"/></td>
-					            </tr>
-			            	</t>
-                    	</tbody>
+                                <tr class="panel strong">
+                                    <td colspan="7" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;">TOTAL IN <span t-esc="c_obj.currency_id.name"/></td>
+                                    <td colspan="2" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"><span t-esc="formatLang(c_obj.residual)"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
                     </table>
-				    <p style="word-wrap:break-word;"></p>
-				    <p style="page-break-before: always;"></p>
+                    <p style="word-wrap:break-word;"></p>
+                    <p style="page-break-before: always;"></p>
                   </t>
-				</div>
+                </div>
             </template>
             <template id="detail_due_report_qweb">
                 <t t-set="doc_id" t-value="doc_ids[0]"/>

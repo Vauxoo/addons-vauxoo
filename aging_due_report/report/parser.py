@@ -24,9 +24,10 @@
 
 
 import time
+from datetime import datetime
+
 from openerp.report import report_sxw
 from openerp.osv import osv
-from datetime import datetime
 
 
 class AgingParser(report_sxw.rml_parse):
