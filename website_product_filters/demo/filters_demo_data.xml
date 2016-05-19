@@ -44,5 +44,30 @@
             <field name="rating">3</field>
             <field name="res_id" ref="product.product_product_32_product_template"/>
         </record>
+
+        <!-- Demo data to create attributes on products without values -->
+        <record id="product_attribute_memory_line_1" model="product.attribute.line">
+            <field name="product_tmpl_id" ref="product.product_product_3_product_template"/>
+            <field name="attribute_id" ref="product.product_attribute_1"/>
+        </record>
+        <record id="product_attribute_memory_line_2" model="product.attribute.line">
+            <field name="product_tmpl_id" ref="product.product_product_25_product_template"/>
+            <field name="attribute_id" ref="product.product_attribute_1"/>
+        </record>
+        <record id="product.product_product_3_product_template" model="product.template">
+            <field name="name">Samsung Galaxy Tab</field>
+            <field name="website_published">1</field>
+            <field name="public_categ_ids" eval="[(6,0,[ref('product.Computer_all_in_one')])]"/>
+            <field name="image_medium" type="base64" file="website_product_filters/static/img/galaxy.png"/>
+            <field name="attribute_line_ids" eval="[(6,0,[ref('product_attribute_memory_line_1')])]"/>
+        </record>
+        <record id="product.product_product_25_product_template" model="product.template">
+            <field name="name">Google Nexus Tab</field>
+            <field name="website_published">1</field>
+            <field name="public_categ_ids" eval="[(6,0,[ref('product.Computer_all_in_one')])]"/>
+            <field name="image_medium" type="base64" file="website_product_filters/static/img/nexus.png"/>
+            <field name="attribute_line_ids" eval="[(6,0,[ref('product_attribute_memory_line_2')])]"/>
+        </record>
+
     </data>
 </openerp>
