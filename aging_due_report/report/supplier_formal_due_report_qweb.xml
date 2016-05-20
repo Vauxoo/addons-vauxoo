@@ -32,8 +32,8 @@
                         </em>
                         <!-- TABLA DE CABECERA -->
                         <t t-foreach="data" t-as="line">
-                            <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
-                                <tr>
+                            <table class="table_column_border table_title_bg_color" width="100%">
+                                <tr class="table_column_border table_title_bg_color">
                                     <th width="15%" class="ITEMSTITLELEFT">DOCUMENT</th>
                                     <th width="15%" class="ITEMSTITLELEFT">EMIS DATE</th>
                                     <th width="10%" class="ITEMSTITLELEFT">DUE DATE</th>
@@ -46,33 +46,62 @@
                                 </tr>
                                 <!-- TABLA CENTRAL DEL REPORTE -->
                                 <t t-foreach="line['inv_ids']" t-as="inv">
-                                    <tr>
-                                        <td class="ITEMSLEFT">I: <span t-esc="inv['inv_brw'].number or 0"/></td>
-                                        <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-                                        <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-                                        <td class="ITEMSLEFT"><span t-esc="inv.get('due_days') and '%s DAYS'%inv.get('due_days') or '0 DAYS' "/></td>
-                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_untaxed) or '0.00' "/></td>
-                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_tax) or '0.00' "/></td>
-                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_total) or '0.00' "/></td>
-                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('payment')) or '0.00' "/></td>
-                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('residual')) or '0.00' "/></td>
-                                    </tr>
-                                    <!-- TABLE DE REFUNDS -->
-                                    <t t-foreach="inv['refund_brws']" t-as="ref_brw">
-                                        <tr>
-                                            <td class="ITEMSLEFT">C: <span t-esc="int(ref_brw.number or 0)"/></td>
-                                            <td class="ITEMSLEFT"><span t-esc="formatLang(ref_brw.date_invoice,date=True) "/></td>
-                                            <td class="ITEMSLEFT"></td>
-                                            <td class="ITEMSLEFT"></td>
-                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_untaxed) or '0.00'"/></td>
-                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_tax) or '0.00'"/></td>
-                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_total) or '0.00'"/></td>
-                                            <td class="ITEMSRIGHT"></td>
-                                            <td class="ITEMSRIGHT"></td>
+                                    <t t-if='inv_parity == "even"'>
+                                        <tr class="table_alter_color_row1">
+                                            <td class="ITEMSLEFT">I: <span t-esc="inv['inv_brw'].number or 0"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="inv.get('due_days') and '%s DAYS'%inv.get('due_days') or '0 DAYS' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_untaxed) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_tax) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_total) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('payment')) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('residual')) or '0.00' "/></td>
                                         </tr>
+                                        <!-- TABLE DE REFUNDS -->
+                                        <t t-foreach="inv['refund_brws']" t-as="ref_brw">
+                                            <tr class="table_alter_color_row1">
+                                                <td class="ITEMSLEFT">C: <span t-esc="int(ref_brw.number or 0)"/></td>
+                                                <td class="ITEMSLEFT"><span t-esc="formatLang(ref_brw.date_invoice,date=True) "/></td>
+                                                <td class="ITEMSLEFT"></td>
+                                                <td class="ITEMSLEFT"></td>
+                                                <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_untaxed) or '0.00'"/></td>
+                                                <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_tax) or '0.00'"/></td>
+                                                <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_total) or '0.00'"/></td>
+                                                <td class="ITEMSRIGHT"></td>
+                                                <td class="ITEMSRIGHT"></td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <t t-if='inv_parity == "odd"'>
+                                        <tr class="table_alter_color_row2">
+                                            <td class="ITEMSLEFT">I: <span t-esc="inv['inv_brw'].number or 0"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                            <td class="ITEMSLEFT"><span t-esc="inv.get('due_days') and '%s DAYS'%inv.get('due_days') or '0 DAYS' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_untaxed) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_tax) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_total) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('payment')) or '0.00' "/></td>
+                                            <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('residual')) or '0.00' "/></td>
+                                        </tr>
+                                        <!-- TABLE DE REFUNDS -->
+                                        <t t-foreach="inv['refund_brws']" t-as="ref_brw">
+                                            <tr class="table_alter_color_row2">
+                                                <td class="ITEMSLEFT">C: <span t-esc="int(ref_brw.number or 0)"/></td>
+                                                <td class="ITEMSLEFT"><span t-esc="formatLang(ref_brw.date_invoice,date=True) "/></td>
+                                                <td class="ITEMSLEFT"></td>
+                                                <td class="ITEMSLEFT"></td>
+                                                <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_untaxed) or '0.00'"/></td>
+                                                <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_tax) or '0.00'"/></td>
+                                                <td class="ITEMSRIGHT"><span t-esc="formatLang(ref_brw.amount_total) or '0.00'"/></td>
+                                                <td class="ITEMSRIGHT"></td>
+                                                <td class="ITEMSRIGHT"></td>
+                                            </tr>
+                                        </t>
                                     </t>
                                 </t>
-                                <tr style=" border-top: 1px solid #000000;">
+                                <tr class="panel strong" style=" border-top: 1px solid #000000;">
                                     <td class="ITEMSLEFT" style="background-color: lightgrey;">I: INVOICE</td>
                                     <td class="ITEMSLEFT" style="background-color: lightgrey;">C: C/N</td>
                                     <td class="ITEMSLEFT" style="background-color: lightgrey;">D: D/N</td>

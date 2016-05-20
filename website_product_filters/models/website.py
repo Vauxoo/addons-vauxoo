@@ -40,6 +40,7 @@ class Website(models.Model):
     @api.model
     def sale_product_domain(self):
         rg_domain = []
+        unknown_domain = []
         if request.params.get('range', False):
             ranges_obj = self.env['product.price.ranges']
             ranges_list = request.httprequest.args.getlist('range')
@@ -48,5 +49,17 @@ class Website(models.Model):
             for rang in ranges_selected:
                 rg_domain.append(('lst_price', '>=', rang.lower))
                 rg_domain.append(('lst_price', '<=', rang.upper))
+        if request.params.get('unknown', False):
+            line_obj = self.env['product.attribute.line']
+            unknown_list = request.httprequest.args.getlist('unknown')
+            values = [map(int, v.split("-")) for v in unknown_list if v]
+            if values:
+                ids = []
+                for value in values:
+                    if value[0] not in ids:
+                        ids.append(value[0])
+            line_ids = line_obj.search([('attribute_id', 'in', ids),
+                                        ('value_ids', '=', False)])
+            unknown_domain.append(('attribute_line_ids', 'in', line_ids._ids))
         domain = super(Website, self).sale_product_domain()
-        return domain + rg_domain
+        return domain + rg_domain + unknown_domain

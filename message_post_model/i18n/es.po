@@ -1,0 +1,154 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* message_post_model
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-04 19:11+0000\n"
+"PO-Revision-Date: 2016-05-04 19:30+0000\n"
+"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
+"Language-Team: Spanish <http://example.com/projects/addons-"
+"vauxoo/message_post_model/es/>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:148
+#, python-format
+msgid "%s\n"
+"<h3>Line %s</h3>"
+msgstr ""
+"%s\n"
+"<h3>Line %s</h3>"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:100
+#, python-format
+msgid "Added"
+msgstr "Agregado"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:228
+#, python-format
+msgid "Changes in Fields"
+msgstr "Cambios en Campos"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:73
+#, python-format
+msgid "Created New Line"
+msgstr "Nueva Línea Creada"
+
+#. module: message_post_model
+#: field:message.post.show.all,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: message_post_model
+#: field:message.post.show.all,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: message_post_model
+#: help:message.post.show.all,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "Fecha del último mensaje escrito en el documento."
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:101
+#, python-format
+msgid "Deleted"
+msgstr "Borrado"
+
+#. module: message_post_model
+#: model:ir.model,name:message_post_model.model_message_post_show_all
+msgid "Email Thread"
+msgstr "Hilo de Correos"
+
+#. module: message_post_model
+#: field:message.post.show.all,message_follower_ids:0
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: message_post_model
+#: help:message.post.show.all,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr ""
+"Contiene el sumario de Conversaciones (número de mensajes, ...). Este "
+"sumario está directamente en formato html con el fin de ser insertado en las "
+"vistas kanban."
+
+#. module: message_post_model
+#: field:message.post.show.all,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: message_post_model
+#: help:message.post.show.all,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Si está marcado nuevos mensajes requieren de su atención."
+
+#. module: message_post_model
+#: field:message.post.show.all,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es un Seguidor"
+
+#. module: message_post_model
+#: field:message.post.show.all,message_last_post:0
+msgid "Last Message Date"
+msgstr "Fecha Último Mensaje"
+
+#. module: message_post_model
+#: field:message.post.show.all,write_uid:0
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: message_post_model
+#: field:message.post.show.all,write_date:0
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: message_post_model
+#: field:message.post.show.all,message_ids:0
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: message_post_model
+#: help:message.post.show.all,message_ids:0
+msgid "Messages and communication history"
+msgstr "Mensajes e historia de comunicación"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:75
+#: code:addons/message_post_model/model/message_post.py:76
+#, python-format
+msgid "Removed Line"
+msgstr "Línea Removida"
+
+#. module: message_post_model
+#: field:message.post.show.all,message_summary:0
+msgid "Summary"
+msgstr "Sumario"
+
+#. module: message_post_model
+#: field:message.post.show.all,message_unread:0
+msgid "Unread Messages"
+msgstr "Mensajes no leídos"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:74
+#, python-format
+msgid "Updated Line"
+msgstr "Línea Actualizada"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:77
+#, python-format
+msgid "many2many"
+msgstr "many2many"

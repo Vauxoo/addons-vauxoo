@@ -738,3 +738,18 @@ msgstr "Administrador"
 #: view:user.story:0
 msgid "Sprint"
 msgstr "Sprint"
+
+#. module: user_story
+#: view:user.story:user_story.view_userstory_form
+msgid "Seq"
+msgstr "Sec"
+
+#. module: user_story
+#: field:acceptability.criteria,sequence_ac:0
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: user_story
+#: sql_constraint:acceptability.criteria:0
+msgid "Sequence must be unique"
+msgstr "La secuencia debe ser única"

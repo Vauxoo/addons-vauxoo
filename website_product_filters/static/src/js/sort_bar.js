@@ -5,8 +5,14 @@
             ev.preventDefault();
             var $element = jQuery(this);
             var value_id = $element.data('attrvalue');
+            var unknown_id = $element.data('attr-unknown');
             $element.parents("h4").remove();
-            $('.att-value#'+value_id).trigger('click');
+            if (value_id) {
+                $('.att-value#'+value_id).trigger('click');
+            }
+            if (unknown_id) {
+                $(".att-unknown[data-id='"+unknown_id+"']").trigger('click');
+            }
         });
     });
 }());

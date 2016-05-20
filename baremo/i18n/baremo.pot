@@ -1,72 +1,19 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* baremo
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 01:12+0000\n"
-"PO-Revision-Date: 2013-11-07 01:12+0000\n"
+"POT-Creation-Date: 2016-05-02 21:48+0000\n"
+"PO-Revision-Date: 2016-05-02 21:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: baremo
-#: view:baremo:0
-#: view:baremo.discount:0
-msgid "Commission by Discount"
-msgstr ""
-
-#. module: baremo
-#: model:res.groups,name:baremo.group_baremo_manager
-msgid "Baremo / Manager"
-msgstr ""
-
-#. module: baremo
-#: model:ir.ui.menu,name:baremo.commission
-msgid "Commission Settings"
-msgstr ""
-
-#. module: baremo
-#: field:baremo,name:0
-#: field:baremo.discount,name:0
-msgid "Nombre"
-msgstr ""
-
-#. module: baremo
-#: help:baremo,disc_ids:0
-msgid "Comision x Dscto x Dia"
-msgstr ""
-
-#. module: baremo
-#: field:baremo,number:0
-msgid "Dias"
-msgstr ""
-
-#. module: baremo
-#: field:baremo.book,name:0
-#: field:baremo.discount,disc_id:0
-msgid "Baremo"
-msgstr ""
-
-#. module: baremo
-#: field:baremo.book,bar_ids:0
-msgid "Dias de Emision"
-msgstr ""
-
-#. module: baremo
-#: model:res.groups,name:baremo.group_baremo_user
-msgid "Baremo / User"
-msgstr ""
-
-#. module: baremo
-#: help:baremo.discount,porc_com:0
-msgid "% de Comision @ porcentaje Descuento"
-msgstr ""
 
 #. module: baremo
 #: field:baremo.discount,porc_com:0
@@ -79,69 +26,234 @@ msgid "% Dcto"
 msgstr ""
 
 #. module: baremo
+#: help:baremo.discount,porc_com:0
+msgid "% de Comision @ porcentaje Descuento"
+msgstr ""
+
+#. module: baremo
 #: help:baremo.discount,porc_disc:0
 msgid "% de Descuento por producto"
 msgstr ""
 
 #. module: baremo
-#: help:baremo,name:0
-msgid "Nombre del termino de Vencimiento"
+#: view:baremo.book:baremo.view_baremo_book_form
+msgid "3% Commission at 30 days w/o Disc."
 msgstr ""
 
 #. module: baremo
-#: model:ir.model,name:baremo.model_baremo
-msgid "baremo"
+#: field:baremo.matrix,baremo_id:0
+msgid "Bareme"
 msgstr ""
 
 #. module: baremo
-#: view:baremo:0
-msgid "Commission Days & Discounts"
+#: view:baremo.book:baremo.view_baremo_book_form
+#: view:baremo.matrix:baremo.view_baremo_matrix_form
+#: view:baremo.matrix:baremo.view_baremo_matrix_tree
+#: model:ir.actions.act_window,name:baremo.commission_baremo_matrix_act
+#: model:ir.ui.menu,name:baremo.menu_bareme_matrix_tree
+msgid "Bareme Matrix"
 msgstr ""
 
 #. module: baremo
-#: view:baremo.book:0
+#: view:res.users:baremo.res_users_view_baremo
+msgid "Bareme to be used when selected Bareme from Salesman on Commission Payment"
+msgstr ""
+
+#. module: baremo
+#: view:baremo.book:baremo.view_baremo_book_tree
 #: model:ir.actions.act_window,name:baremo.commision_baremo_act
 #: model:ir.ui.menu,name:baremo.menu_baremes_tree
 msgid "Baremes"
 msgstr ""
 
 #. module: baremo
-#: field:baremo,bar_id:0
-msgid "Padre"
+#: field:baremo.discount,disc_id:0
+#: view:product.product:baremo.view_product_baremo_tree
+#: view:res.company:baremo.res_company_view_baremo
+#: field:res.company,baremo_id:0
+#: field:res.partner,baremo_id:0
+#: view:res.users:baremo.res_users_view_baremo
+msgid "Baremo"
 msgstr ""
 
 #. module: baremo
-#: field:baremo.book,notes:0
-msgid "Notas"
+#: model:res.groups,name:baremo.group_baremo_manager
+msgid "Baremo / Manager"
 msgstr ""
 
 #. module: baremo
-#: view:baremo.book:0
-msgid "Notes"
+#: model:res.groups,name:baremo.group_baremo_user
+msgid "Baremo / User"
 msgstr ""
 
 #. module: baremo
-#: model:ir.model,name:baremo.model_baremo_book
-msgid "baremo.book"
+#: field:baremo.book,name:0
+msgid "Baremo Description"
 msgstr ""
 
 #. module: baremo
-#: model:ir.model,name:baremo.model_baremo_discount
-msgid "baremo.discount"
+#: field:baremo.book,matrix_ids:0
+#: field:product.product,matrix_ids:0
+#: field:res.users,matrix_ids:0
+msgid "Baremo Matrix"
 msgstr ""
 
 #. module: baremo
-#: help:baremo.discount,name:0
-msgid "No Usado"
+#: view:baremo.book:baremo.view_baremo_book_form
+msgid "Baremos"
+msgstr ""
+
+#. module: baremo
+#: view:baremo:baremo.view_baremo_form
+#: view:baremo:baremo.view_baremo_tree
+msgid "Commission Days & Discounts"
+msgstr ""
+
+#. module: baremo
+#: model:ir.ui.menu,name:baremo.commission
+msgid "Commission Settings"
+msgstr ""
+
+#. module: baremo
+#: view:baremo:baremo.view_baremo_form
+#: view:baremo.discount:baremo.view_baremo_discount_form
+msgid "Commission by Discount"
 msgstr ""
 
 #. module: baremo
 #: field:baremo,disc_ids:0
-msgid "Comision x Dscto."
+#: help:baremo,disc_ids:0
+msgid "Commission per Discount @ Due Days"
+msgstr ""
+
+#. module: baremo
+#: model:ir.model,name:baremo.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,create_uid:0
+#: field:baremo.book,create_uid:0
+#: field:baremo.discount,create_uid:0
+#: field:baremo.matrix,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,create_date:0
+#: field:baremo.book,create_date:0
+#: field:baremo.discount,create_date:0
+#: field:baremo.matrix,create_date:0
+msgid "Created on"
 msgstr ""
 
 #. module: baremo
 #: help:baremo,number:0
-msgid "Dias desde emision de la factura"
+msgid "Days since Emission/Due Date"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,number:0
+msgid "Due Days"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,name:0
+msgid "Due Days Description"
+msgstr ""
+
+#. module: baremo
+#: help:baremo,name:0
+msgid "Due days Description"
+msgstr ""
+
+#. module: baremo
+#: field:baremo.book,bar_ids:0
+msgid "Emission Days"
+msgstr ""
+
+#. module: baremo
+#: view:baremo.book:baremo.view_baremo_book_form
+msgid "For these Partners & Products this Bareme will be used"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,id:0
+#: field:baremo.book,id:0
+#: field:baremo.discount,id:0
+#: field:baremo.matrix,id:0
+msgid "ID"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,write_uid:0
+#: field:baremo.book,write_uid:0
+#: field:baremo.discount,write_uid:0
+#: field:baremo.matrix,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,write_date:0
+#: field:baremo.book,write_date:0
+#: field:baremo.discount,write_date:0
+#: field:baremo.matrix,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: baremo
+#: view:baremo.book:baremo.view_baremo_book_form
+msgid "On Commission Payment this Bareme can be used with other options"
+msgstr ""
+
+#. module: baremo
+#: view:product.product:baremo.view_product_baremo_tree
+msgid "On this Product these Baremes will be used when Commission Payment on these Salesmen are computed on Invoiced Products and option Matrix Bareme is selected"
+msgstr ""
+
+#. module: baremo
+#: view:res.users:baremo.res_users_view_baremo
+msgid "On this Salesman these Baremes will be used when these products are present on Invoices and option Matrix Bareme on Commission Payment is selected"
+msgstr ""
+
+#. module: baremo
+#: field:baremo,baremo_id:0
+msgid "Padre"
+msgstr ""
+
+#. module: baremo
+#: model:ir.model,name:baremo.model_res_partner
+msgid "Partner"
+msgstr ""
+
+#. module: baremo
+#: field:baremo.matrix,product_id:0
+#: model:ir.model,name:baremo.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: baremo
+#: field:baremo.matrix,user_id:0
+msgid "Salesman"
+msgstr ""
+
+#. module: baremo
+#: sql_constraint:baremo.matrix:0
+msgid "Same Salesman & Product can be assigned to only one Baremo"
+msgstr ""
+
+#. module: baremo
+#: view:baremo.matrix:baremo.view_baremo_matrix_form
+msgid "Select a Baremo"
+msgstr ""
+
+#. module: baremo
+#: view:baremo:baremo.view_baremo_form
+msgid "Up to 30 days"
+msgstr ""
+
+#. module: baremo
+#: model:ir.model,name:baremo.model_res_users
+msgid "Users"
 msgstr ""
 

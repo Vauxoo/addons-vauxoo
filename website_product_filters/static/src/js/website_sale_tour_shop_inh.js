@@ -35,8 +35,8 @@
                 content:   _t("Enter a name for your new product then click 'Continue'."),
             },
             {
-                waitNot:   '.modal input[type=text]:not([value!=""])',
-                element:   '.modal button.btn-primary',
+                waitNot:   '.modal form#editor_new_product input[type=text]:not([value!=""])',
+                element:   '.modal button.btn-primary:contains(Continue)',
                 placement: 'right',
                 title:     _t("Create Product"),
                 content:   _t("Click <em>Continue</em> to create the product."),

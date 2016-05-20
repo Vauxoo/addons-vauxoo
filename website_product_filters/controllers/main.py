@@ -33,15 +33,19 @@ class WebsiteSale(website_sale):
         category_obj = pool['product.public.category']
         ranges_list = request.httprequest.args.getlist('range')
         brand_list = request.httprequest.args.getlist('brand')
+        unknown_list = request.httprequest.args.getlist('unknown')
+        unknown_values = [map(int, a.split("-")) for a in unknown_list if a]
         brand_selected_ids = [int(b) for b in brand_list if b]
         ranges_selected_ids = [int(v) for v in ranges_list if v]
+        unknown_set = set([x[0] for x in unknown_values])
         ranges_ids = ranges_obj.search(cr, uid, [], context=context)
         ranges = ranges_obj.browse(cr, uid, ranges_ids, context=context)
-        attribute_ids = self._get_used_attrs(category)
+        attribute_ids, attrs_unknown = self._get_used_attrs(category)
         brand_ids = self._get_category_brands(category)
         attributes = attributes_obj.browse(cr, uid, attribute_ids,
                                            context=context)
         res.qcontext['attributes'] = attributes
+        res.qcontext['attrs_unknown'] = attrs_unknown
         filtered_products = res.qcontext['products']
         args = res.qcontext['keep'].args
         if category and category.child_id and not search:
@@ -66,7 +70,7 @@ class WebsiteSale(website_sale):
             res.qcontext['populars'] = popular
             res.qcontext['newest'] = newest
             res.qcontext['products'] = ordered_products
-        elif not category and not search:
+        elif not category and not search and not brand_list:
             res.qcontext['products'] = []
             res.qcontext['pager']['page_count'] = 0
         else:
@@ -117,6 +121,7 @@ class WebsiteSale(website_sale):
         res.qcontext['price_ranges'] = ranges
         res.qcontext['brand_set'] = brand_selected_ids
         res.qcontext['ranges_set'] = ranges_selected_ids
+        res.qcontext['unknown_set'] = unknown_set
         return res
 
     def _normalize_category(self, category):
@@ -158,6 +163,7 @@ class WebsiteSale(website_sale):
                                   request.registry)
         attribute_ids = []
         prod_ids = []
+        attrs_unknown = {}
         product_obj = pool['product.template']
         if category:
             cond = self._normalize_category(category)
@@ -167,11 +173,13 @@ class WebsiteSale(website_sale):
                 [('public_categ_ids', '=', cond)], context=context)
             for product in product_obj.browse(cr, uid, prod_ids,
                                               context=context):
-                for attribute in product.attribute_line_ids:
-                    if attribute.attribute_id.id not in attribute_ids:
-                        attribute_ids.append(attribute.attribute_id.id)
-
-        return attribute_ids
+                for line in product.attribute_line_ids:
+                    if line.attribute_id.id not in attribute_ids:
+                        attribute_ids.append(line.attribute_id.id)
+                    if not line.value_ids and line.attribute_id.id in \
+                            attribute_ids:
+                        attrs_unknown[line.attribute_id.id] = True
+        return attribute_ids, attrs_unknown
 
     @http.route(['/shop/product/<model("product.template"):product>'],
                 type='http', auth="public", website=True)

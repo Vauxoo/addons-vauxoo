@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "User Story",
-    "version": "8.0.0.2.6",
+    "version": "8.0.0.3.0",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
