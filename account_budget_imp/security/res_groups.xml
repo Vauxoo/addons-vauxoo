@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<openerp>
-    <data>
-        <record model="res.groups" id="bugdet_multicompany">
-            <field name="name">Budget Multicompany</field>
-        </record>
-    </data>
-</openerp>
