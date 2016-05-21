@@ -85,5 +85,5 @@ class TestReportProductXls(TestXLSProductCommon):
         book = xlrd.open_workbook(file_xls)
         sh = book.sheet_by_index(0)
         self.assertEquals(
-            sh.nrows, 7,
+            sh.nrows, 11,
             'the generated file contains more or less lines than expected')
