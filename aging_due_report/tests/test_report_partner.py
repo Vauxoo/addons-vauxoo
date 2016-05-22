@@ -79,7 +79,7 @@ class TestReportAging(TestAgingCommon):
         })
         context = {
             'report_name': 'aging_due_report.aging_due_report_qweb',
-            'rows': 4
+            'rows': 5
         }
         self._create_report(wiz_id, context=context)
 
