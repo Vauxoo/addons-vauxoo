@@ -9,8 +9,32 @@
    Message Post Log
   </h2>
   <p class="oe_mt32">
-   TODO: Add module description
+    This module adds an extended log in your model that appears in the mail.message
+    for each change made in the fields unlike the traditional way in wich Odoo did.
   </p>
+    <strong>
+    Features
+    </strong>
+  <p class="oe_mt32">
+    The extended log is added to your model's module in the following way:
+  </p>
+  <p>
+        _name = "account.invoice"
+  </p>
+  <p>
+        _inherit = ['account.invoice', 'message.post.show.all']
+  </p>
+    Also, if you need it, there is a testing module called message_post_test to
+    prove the funtionality.
+  </p>
+  <p class="oe_mt32">
+    Requirements:
+  </p>
+  <ul>
+    <li>
+      Go to https://github.com/Vauxoo/addons-vauxoo and download the repo in order to install message_post_model and message_post_test modules.
+    </li>
+  </ul>
  </div>
 </section>
 <section class="oe_container">
