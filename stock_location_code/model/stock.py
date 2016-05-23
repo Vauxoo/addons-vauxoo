@@ -46,7 +46,8 @@ class StockLocation(models.Model):
     _inherit = 'stock.location'
 
     # barcode is between [] e.g. "[1234] location1"
-    barcode_re = re.compile(r'\[(?P<barcode>.*?)\]')
+    barcode_re = re.compile(r'^\[(?P<barcode>.*?)\]')
+    warehouse_re = re.compile(r' \((?P<wh>.*?)\)$')
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
@@ -59,6 +60,7 @@ class StockLocation(models.Model):
             barcode = re_search.group('barcode') if re_search else name
             recs = self.search([('loc_barcode', '=', barcode)] + args,
                                limit=limit)
+            # TODO: Search by warehouse too with self.warehouse_re
         res = recs.name_get() or super(StockLocation, self).name_search(
             name, args=args, operator=operator, limit=limit)
         return res
@@ -70,7 +72,14 @@ class StockLocation(models.Model):
         concatenates the code and warehouse to a location if they exist.
         Visually, it's better to know which owns the warehouse location.
         """
-        name = super(StockLocation, self)._name_get(location)
         barcode = "[%(barcode)s]" % {'barcode': location.loc_barcode} \
             if location.loc_barcode else ''
-        return barcode + ' ' + name if barcode else name
+        # TODO: Add fields.function to get warehouse. get_warehouse is too slow
+        # TODO: Add a parameters for a location path name or a wh_name
+        warehouse = self.env['stock.warehouse'].browse(
+            self.get_warehouse(location))
+        wh_name = "(%(warehouse)s)" % {'warehouse': warehouse.name} \
+            if warehouse else ''
+        items = [barcode.strip(), location.name.strip(), wh_name.strip()]
+        new_name = ' '.join(item for item in items if item)
+        return new_name
