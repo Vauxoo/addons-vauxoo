@@ -17,10 +17,6 @@
       <xpath expr="//script[last()]" position="after">
         <script type="text/javascript" src="/website_product_filters/static/src/js/website_sale_tour_filters.js"></script>
         <script type="text/javascript" src="/website_product_filters/static/src/js/test_attributes.js"></script>
-      </xpath>
-    </template>
-    <template id="assets_frontend_shop_tour_shop_tests" inherit_id="website_sale.assets_editor" name="Shop">
-        <xpath expr="//script[@src='/website_sale/static/src/js/website_sale_tour_shop.js']" position="after">
         <script type="text/javascript" src="/website_product_filters/static/src/js/website_sale_tour_shop_inh.js"></script>
       </xpath>
     </template>
