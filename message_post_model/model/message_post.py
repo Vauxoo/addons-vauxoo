@@ -84,15 +84,17 @@ class MessagePostShowAll(models.Model):
             if val and info.get(val[0], False):
                 if val[0] == 0:
                     value = val[2]
-                    message = u'%s\n<li><b>%s<b>: %s</li>' % \
+                    message = '%s\n<li><b>%s<b>: %s</li>' % \
                         (message, info.get(val[0]), value.get(r_name),)
                 elif val[0] in (2, 3):
                     model_brw = obj.browse(val[1])
                     last_value = model_brw.name_get()
                     last_value = last_value and last_value[0][1]
                     value = val[1]
-                    message = u'%s\n<li><b>%s<b>: %s</li>' % \
-                        (message, info.get(val[0]), last_value)
+                    message = '%s\n<li><b>%s<b>: %s</li>' % \
+                        (self.get_encode_value(message),
+                         self.get_encode_value(info.get(val[0])),
+                         self.get_encode_value(last_value))
 
                 elif val[0] == 6:
                     lastv = list(set(val[2]) - set(last))
@@ -103,14 +105,19 @@ class MessagePostShowAll(models.Model):
                         dele = [obj.browse(i).name_get()[0][1]
                                 for i in lastv]
                         mes = ' - '.join(dele)
-                        message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                            (message, add, string, mes)
+                        message = '%s\n<li><b>%s %s<b>: %s</li>' % \
+                            (self.get_encode_value(message),
+                             add, string,
+                             mes)
                     if not lastv and new:
 
                         dele = [obj.browse(i).name_get()[0][1] for i in new]
                         mes = '-'.join(dele)
-                        message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                            (message, delete, string, mes)
+                        message = '%s\n<li><b>%s %s<b>: %s</li>' % \
+                            (self.get_encode_value(message),
+                             delete,
+                             string,
+                             mes)
 
                 elif val[0] == 1:
                     vals = val[2]
@@ -144,10 +151,12 @@ class MessagePostShowAll(models.Model):
                             message = id_line != val[1] and \
                                 _('%s\n<h3>Line %s</h3>' % (message, val[1])) \
                                 or message
-                            message = '%s\n%s' % (message, mes)
+                            message = '%s\n%s' % \
+                                (self.get_encode_value(message),
+                                 mes)
                             id_line = val[1]
 
-        message = '%s\n</ul>' % message
+        message = '%s\n</ul>' % self.get_encode_value(message)
         return message
 
     @api.model
@@ -181,11 +190,22 @@ class MessagePostShowAll(models.Model):
         new_value = new_value and new_value[0][1]
 
         if not (last_value == new_value) and any((new_value, last_value)):
-            message = u'<li><b>%s<b>: %s → %s</li>' % \
+            message = '<li><b>%s<b>: %s → %s</li>' % \
                 (self.get_string_by_field(obj, field),
-                 last_value,
-                 new_value)
+                 self.get_encode_value(last_value),
+                 self.get_encode_value(new_value))
         return message
+
+    @staticmethod
+    def get_encode_value(value):
+        """Encode string values to avoid unicode errors
+        @param value: Any object to try encode the value
+        @type value: str bool date
+        """
+        val = value
+        if isinstance(value, (unicode)):
+            val = value.encode('utf-8', 'ignore')
+        return val
 
     @api.model
     def prepare_simple_info(self, ids, n_obj, field,
@@ -195,12 +215,13 @@ class MessagePostShowAll(models.Model):
         last_value = self.get_last_value(
             ids, obj._name, field, obj._fields[field].type)
 
-        if ((unicode(last_value) != unicode(vals[field])) and
+        if ((self.get_encode_value(last_value) !=
+             self.get_encode_value(vals[field])) and
                 any((last_value, vals[field]))):
-            message = u'<li><b>%s<b>: %s → %s</li>' % \
+            message = '<li><b>%s<b>: %s → %s</li>' % \
                 (self.get_string_by_field(obj, field),
-                 last_value,
-                 vals[field])
+                 self.get_encode_value(last_value),
+                 self.get_encode_value(vals[field]))
         return message
 
     # pylint: disable=W0106
