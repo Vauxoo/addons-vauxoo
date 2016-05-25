@@ -45,7 +45,8 @@
     "data": [
         "account_tax_view.xml",
         "account_voucher_tax_view.xml",
-        "security/ir.model.access.csv"
+        "security/ir.model.access.csv",
+        "data/ir_actions_server.xml"
     ],
     "test": [
         "test/account_voucher_taxes.yml",
