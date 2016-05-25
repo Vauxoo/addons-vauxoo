@@ -122,7 +122,7 @@ class MessagePostShowAll(models.Model):
 
                             last_value = is_many and self.get_last_value(
                                 val[1], n_obj, field, 'many2many')
-                            field_str = obj._fields[field].string
+                            field_str = self.get_string_by_field(obj, field)
                             new_n_obj = obj._fields[field].comodel_name
                             mes = self.prepare_many_info(val[1],
                                                          vals[field],
@@ -151,6 +151,24 @@ class MessagePostShowAll(models.Model):
         return message
 
     @api.model
+    def get_string_by_field(self, source_obj, field):
+        """Get the string of a field using fields_get method to
+        get the string depending of the user lang
+
+        @param source_obj: Model that contains the field
+        @type source_obj: RecordSet
+        @param field: Database name of the field
+        @type field: str or unicode
+
+        @returns: String of the field shown in the views
+        @rtype: str
+        """
+        description = source_obj.fields_get([field])
+        description = description and description.get(field, {})
+        description = description and description.get('string', '') or ''
+        return description.encode('utf-8', 'ignore')
+
+    @api.model
     def prepare_many2one_info(self, ids, n_obj, field, vals):
         obj = self.env[n_obj]
         message = '<p>'
@@ -164,7 +182,7 @@ class MessagePostShowAll(models.Model):
 
         if not (last_value == new_value) and any((new_value, last_value)):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
-                (obj._fields[field].string,
+                (self.get_string_by_field(obj, field),
                  last_value,
                  new_value)
         return message
@@ -180,7 +198,7 @@ class MessagePostShowAll(models.Model):
         if ((unicode(last_value) != unicode(vals[field])) and
                 any((last_value, vals[field]))):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
-                (obj._fields[field].string,
+                (self.get_string_by_field(obj, field),
                  last_value,
                  vals[field])
         return message
@@ -198,7 +216,7 @@ class MessagePostShowAll(models.Model):
 
                     last_value = is_many and self.get_last_value(
                         idx.id, self._name, field, 'many2many')
-                    field_str = self._fields[field].string
+                    field_str = self.get_string_by_field(self, field)
                     n_obj = self._fields[field].comodel_name
                     message = self.prepare_many_info(
                         idx.id, vals[field], field_str, n_obj,
