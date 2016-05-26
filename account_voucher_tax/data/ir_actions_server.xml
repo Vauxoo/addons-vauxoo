@@ -17,17 +17,7 @@
 #  - workflow: Workflow engine
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
-if object.name in (
-        'Rounding error from currency conversion',
-        u'Error de redondeo por conversión de moneda'):
-    move_line_amount_rounding = abs(object.debit + object.credit)
-    move_line_bank = object.move_id.line_id.filtered(
-        lambda dat: dat.account_id.type == 'liquidity')
-    move_line_bank_debit_credit = abs(
-        move_line_bank.debit+move_line_bank.credit)
-    if move_line_amount_rounding > move_line_bank_debit_credit:
-        raise Warning('Rounding amount is too high  %s and payment bank %s' % (
-            move_line_amount_rounding, move_line_bank_debit_credit))
+object.validate_rounding_high()
             </field>
         </record>
 
