@@ -25,7 +25,7 @@
         $('#add_to_cart').addClass('product_price');
         $('.pepdf').click(function(){
             var product_id= $('.product_id').val();
-            var url = '/report/pdf/website_variants_extra.pprintable/'+product_id;
+            var url = '/downloadable/productbrochure/'+product_id;
             var win = window.open(url, '_blank');
             win.focus();
         });
