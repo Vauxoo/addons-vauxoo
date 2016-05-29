@@ -38,41 +38,61 @@ except ImportError:
 class PurchaseQuotationWizard(models.TransientModel):
     _description = 'Purchase Quotation'
     _name = 'purchase.quotation.wizard'
+    _col_start = "External ID"
 
-    report_format = fields.Selection([
-        ('pdf', "PDF"),
-        ('xls', "Spreadsheet"),
-    ], default='xls')
+    @api.depends()
+    def _get_purchase(self):
+        context = dict(self._context)
+        active_ids = context['active_ids'][0]
+        self.purchase = self.env['purchase.order'].browse(active_ids)
+
     template_action = fields.Selection([
         ('export', "Get a quotation template without prices"),
         ('import', "Update a quotation prices"),
-    ], default='import')
-    xls_file = fields.Binary("Upload template")
+    ], default='import',
+       help='Get a quotation template without prices: Simply download the '
+            'template xls.\n'
+            'Update a quotation: Given a filled template upload it and update '
+            'the prices sent by supplier')
+    xls_file = fields.Binary('Valid XLS file')
     xls_name = fields.Char()
     state = fields.Selection([('form', 'form'),
                               ('success', 'success'),
                               ('success2', 'success2')], default='form')
-    lines_ids = fields.One2many(
+    line_ids = fields.One2many(
         'purchase.quotation.wizard.line', 'wizard_id')
+    purchase = fields.Many2one('purchase.order', compute='_get_purchase')
 
     @api.multi
-    @api.constrains('xls_name')
+    @api.constrains('xls_name', 'xls_file')
     def _check_xls(self):
-        if self.template_action == 'import' and self.xls_file:
-            if not self.xls_name:
-                raise ValidationError(_("There is no file"))
-            else:
-                if not self.xls_name.endswith('.xls'):
-                    raise ValidationError(_("The file must be a xls file"))
+        if self.template_action != 'import':
+            return True
+        if not self.xls_file:
+            raise ValidationError(_("Load a Valid XLS File"))
+        if self.template_action == 'import' and \
+                not self.xls_name.endswith('.xls'):
+            raise ValidationError(_("The file must be a Valid Excel xls file"))
+        purchase = self.purchase
+        fname = '/tmp/%s' % (self.xls_name)
+        with open(fname, 'w') as tmp_fname:
+            tmp_fname.write(base64.b64decode(self.xls_file))
+            tmp_fname.close()
+        sheet = xlrd.open_workbook(fname).sheet_by_index(0)
+        if sheet.cell_type(2, 5) not in \
+                (xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK) and \
+                sheet.cell_value(2, 6) != purchase.name:
+            raise UserError(' '.join([
+                _('Is not a valid template for Quotation'),
+                str(purchase.name)]))
 
     @api.model
     def _update_price(self, order_line, price, qty):
         data = {}
-        if type(price) == type(qty) == float:
+        if isinstance(price, float) and isinstance(qty, float):
+            data.update({'price_unit': price, 'product_qty': qty})
             if order_line.product_qty <= qty:
                 data['price_unit'] = price
-            else:
-                data.update({'price_unit': price, 'product_qty': qty})
             return order_line.write(data)
         return False
 
@@ -94,79 +114,48 @@ class PurchaseQuotationWizard(models.TransientModel):
     def import_xls(self):
         """Validate and read xls file to update quotation
         """
+        self.ensure_one()
         context = dict(self._context)
-        fdata = self.xls_file
+        purchase = self.purchase
         fname = '/tmp/%s' % (self.xls_name)
-        f = open(fname, 'w')
-        f.write(base64.b64decode(fdata))
-        f.close()
-        doc = xlrd.open_workbook(fname)
-        sheet = doc.sheet_by_index(0)
-        purchase = self.env['purchase.order'].browse(
-            context['active_ids'])[0]
-        # validate template format
-        if sheet.cell_type(2, 5) not in \
-                (xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK) and \
-                sheet.cell_value(2, 5) != purchase.name:
-            raise UserError(' '.join([
-                _('Is not a valid template for Quotation'),
-                str(purchase.name)]))
+        # I go directly to the sheet, because the contraint already validated
+        # which is the proper format for the sheet.
+        sheet = xlrd.open_workbook(fname).sheet_by_index(0)
         eof = self.get_xls_eof(sheet)
         # First col header on Qweb report: template.xml
-        col_start = "External ID"
-        can_start = False
-        done_ids = []
-        new_products = []
+        can_start, done_ids, new_products = False, [], []
         for row in range(eof):
-            if not can_start:
-                if col_start == sheet.cell_value(row, 0):
-                    can_start = True
+            if self._col_start == sheet.cell_value(row, 0):
+                can_start = True
                 continue
-            # External ID
-            xml_id = sheet.cell_value(row, 0)
-            # Vendor Code
-            vendor_code = sheet.cell_value(row, 2)
-            # Description
-            description = sheet.cell_value(row, 3)
-            # Qty
+            if not can_start:
+                continue
+            # Proposed product Quantity
             product_qty = sheet.cell_value(row, 4)
-            # Cost
             price_unit = sheet.cell_value(row, 5)
-            # check xml reference
-            try:
-                order_line = self.env.ref(xml_id)
-                if self._update_price(order_line, price_unit, product_qty):
-                    done_ids.append(order_line.id)
-            except:
+            # Using the External ID I try to get the order
+            order_line = self.env.ref(sheet.cell_value(row, 0))
+            if order_line:
+                self._update_price(order_line, price_unit, product_qty)
+                done_ids.append(order_line.id)
+            if not order_line:
                 new_products.append((0, 0, {
-                    'description': description,
-                    'vendor_code': vendor_code,
+                    'vendor_code': sheet.cell_value(row, 2),
+                    'description': sheet.cell_value(row, 3),
                     'cost': price_unit,
+                    # Vendor Code
                 }))
-
         if done_ids:
             order_line_done = self.env['purchase.order.line'].browse(done_ids)
             # intersect objects and unlink diff
             order_line_diff = purchase.order_line - order_line_done
-            order_line_diff.unlink()
-        else:
-            raise UserError(
-                _('Nothing to update! Probably not has product cost defined '
-                  'in template'))
+            # TODO: I think they should not be deleted.
+            # order_line_diff.unlink()
+        self.write({'state': 'success2'})
         if new_products:
-            self.write({'state': 'success', 'lines_ids': new_products})
-        else:
-            self.write({'state': 'success2'})
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'purchase.quotation.wizard',
-            'view_mode': 'form',
-            'view_type': 'form',
-            'res_id': self.id,
-            'views': [(False, 'form')],
-            'target': 'new',
-            'context': context,
-        }
+            self.write({'state': 'success', 'line_ids': new_products})
+        action = self.env.ref('purchase_rfq_xls.action_purchase_quotation')
+        return action.with_context(context).read([])
 
     @api.multi
     def print_report(self):
@@ -174,7 +163,7 @@ class PurchaseQuotationWizard(models.TransientModel):
         @return : return report
         """
         ctx = dict(self._context)
-        ctx['xls_report'] = self.report_format == 'xls'
+        ctx['xls_report'] = True
         purchase = self.env['purchase.order'].browse(ctx['active_ids'])[0]
         return self.env['report'].with_context(ctx).get_action(
             purchase,
