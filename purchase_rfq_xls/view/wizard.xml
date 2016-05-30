@@ -19,17 +19,45 @@
                     </group>
                     <separator/>
                     <group string="Import successfully done" states="success,success2">
-                        <p states="success">All was done properly but you need
-                        yet the following items should be added to the P.O.
-                        manually.</p>
-                        <p states="success2">No differences to report!</p>
+                        <p class="oe_grey" states="success">All was done
+                        properly but you need yet the following items should be
+                        added to the P.O. manually.</p>
+                        <p class="oe_grey" states="success2">No differences to
+                        report!</p>
                         <group string="Relevant Information">
                             <field name="line_ids" nolabel="1" readonly="1">
-                                <tree delete='0'>
+                                <tree>
+                                    <field name="product"/>
+                                    <field name="product_tmpl"/>
+                                    <field name="internal_code"/>
                                     <field name="vendor_code"/>
                                     <field name="description"/>
                                     <field name="cost"/>
+                                    <button name="add_pol" string="Add" type="object"
+                                        attrs="{'invisible': [('product', '=', False)]}"/>
+                                    <button name="create_product_add_pol" string="Create and Add"
+                                        attrs="{'invisible': [('product', '!=', False), ('product_tmpl', '=', False)]}"
+                                        type="object"/>
+                                    <button name="open_in_web" string="Search in Web" type="object"/>
                                 </tree>
+                                <form>
+                                    <group>
+                                        <field name="product"/>
+                                        <field name="product_tmpl"/>
+                                        <field name="internal_code"/>
+                                        <field name="vendor_code"/>
+                                        <field name="description"/>
+                                        <field name="cost"/>
+                                    </group>
+                                    <footer>
+                                        <button name="add_pol" string="Add" type="object"
+                                            attrs="{'invisible': [('product', '=', False)]}"/>
+                                        <button name="create_product_add_pol" string="Create and Add"
+                                            attrs="{'invisible': [('product', '!=', False), ('product_tmpl', '=', False)]}"
+                                            type="object"/>
+                                        <button name="open_in_web" string="Search in Web" type="object"/>
+                                    </footer>
+                                </form>
                             </field>
                         </group>
                     </group>

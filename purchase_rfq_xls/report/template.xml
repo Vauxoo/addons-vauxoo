@@ -1,30 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <template id="purchase_rfq_xls.external_layout_header">
+            <!--VARIABLES TO BE USED LATER-->
+            <div class="page-header">
+                <ul class="nav nav-pills">
+                    <li role="presentation"><a target="new" t-attf-href="/purchase_rfq_xls/download/{{o.id}}" class="btn btn-link">Download in Excel</a></li>
+                    <li role="presentation"><a target="new" t-attf-href="/report/pdf/purchase_rfq_xls.report_template/{{o.id}}" class="btn btn-link">Download in PDF</a></li>
+                    <li role="presentation"><a href="#" class="btn btn-link">Resend by Email</a></li>
+                    <li role="presentation"><a target="new" t-attf-href="/purchase_rfq_xls/upload/{{o.id}}" class="btn btn-link">Upload Excel</a></li>
+                    <li role="presentation"><a href="/purchase_rfq_xls/report/help" class="btn btn-link">Help</a></li>
+                </ul>
+            </div>
+        </template>
         <template id="report_document">
             <t t-call="purchase_rfq_xls.external_layout">
-                <!--VARIABLES TO BE USED LATER-->
-
-                <!-- CALLING HEADER and FOOTER -->
-                <t t-call="purchase_rfq_xls.external_layout_header"/>
-                <t t-call="purchase_rfq_xls.external_layout_footer"/>
-
                 <div class="page">
-                    <table class="basic_table" width="100%" id="table_body">
+                    <t t-call="purchase_rfq_xls.external_layout_header"/>
+                    <table class="table table-condensed table-hover table-bordered" id="table_body">
                         <thead>
                             <tr>
-                                <td><strong>External ID</strong></td>
-                                <td><strong>Model</strong></td>
-                                <td><strong>Vendor Code</strong></td>
-                                <td><strong>Description</strong></td>
-                                <td class="text-center"><strong>Qty</strong></td>
-                                <td class="text-right"><strong>Cost</strong></td>
+                                <th>Number</th>
+                                <th><span t-field="o.name"/></th>
+                                <th>Sale Order</th>
+                                <th><span t-field="o.partner_ref"/></th>
+                                <th>Origin</th>
+                                <th><span t-field="o.origin"/></th>
+                                <th>Order State</th>
+                                <th><span t-field="o.state"/></th>
+                            </tr>
+                            <tr>
+                                <th>Printed date</th>
+                                <th><span t-esc="datetime.now().strftime('%d/%m/%Y')"/></th>
+                                <th>Order Date</th>
+                                <th><span t-field="o.date_order" t-field-options='{"format": "dd/MM/yyyy"}'/></th>
+                                <th>Expected Date</th>
+                                <th><span t-field="o.minimum_planned_date" t-field-options='{"format": "dd/MM/yyyy"}'/></th>
+                                <th>Warehouse</th>
+                                <th><span t-field="o.picking_type_id.warehouse_id.name"/></th>
+                            </tr>
+                            <tr>
+                                <th>Ship To</th>
+                                <th colspan="7"><span t-field="o.picking_type_id.warehouse_id.partner_id.display_name" /></th>
+                            </tr>
+                            <tr>
+                                <th>Vendor</th>
+                                <th>TODO: PARTNER_CODE</th>
+                                <th colspan="6"><span t-field="o.partner_id.display_name"/></th>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table class="table table-condensed table-hover table-bordered" id="table_body">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product Code</th>
+                                <th>Vendor Code</th>
+                                <th>Description</th>
+                                <th>Date Planned</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-center">Last Cost</th>
+                                <th class="text-center">Cost Proposed</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr t-foreach="o.order_line" t-as="order_line">
                                 <td>
-                                    <span t-field="order_line.xml_id"/>
+                                    <span t-field="order_line.id"/>
                                 </td>
                                 <td>
                                     <span t-field="order_line.product_id.default_code"/>
@@ -33,12 +79,18 @@
                                     <span t-field="order_line.vendor_code"/>
                                 </td>
                                 <td>
-                                    <span t-field="order_line.product_id.name"/>
+                                    <span t-field="order_line.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="order_line.date_planned"/>
                                 </td>
                                 <td class="text-center">
                                     <span t-field="order_line.product_qty"/>
                                 </td>
-                                <td class="text-right"></td>
+                                <td class="text-center">
+                                    <span t-field="order_line.price_unit"/>
+                                </td>
+                                <td class="text-center"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -49,7 +101,7 @@
         <template id="report_template">
             <t t-call="purchase_rfq_xls.html_container">
                 <t t-set="doc_id" t-value="doc_ids[0]"/>
-                <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'purchase_rfq_xls.report_document')"/>
+                <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'purchase_rfq_xls.report_document')"/>
             </t>
         </template>
     </data>

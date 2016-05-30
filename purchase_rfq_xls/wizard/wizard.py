@@ -38,7 +38,7 @@ except ImportError:
 class PurchaseQuotationWizard(models.TransientModel):
     _description = 'Purchase Quotation'
     _name = 'purchase.quotation.wizard'
-    _col_start = "External ID"
+    _col_start = "ID"
 
     @api.depends()
     def _get_purchase(self):
@@ -49,11 +49,11 @@ class PurchaseQuotationWizard(models.TransientModel):
     template_action = fields.Selection([
         ('export', "Get a quotation template without prices"),
         ('import', "Update a quotation prices"),
-    ], default='import',
-       help='Get a quotation template without prices: Simply download the '
-            'template xls.\n'
-            'Update a quotation: Given a filled template upload it and update '
-            'the prices sent by supplier')
+    ], default='import', help='Get a quotation template without prices: '
+                              'Simply download the template xls. \n '
+                              'Update a quotation: Given a '
+                              'filled template upload it and update the '
+                              'prices sent by supplier')
     xls_file = fields.Binary('Valid XLS file')
     xls_name = fields.Char()
     state = fields.Selection([('form', 'form'),
@@ -91,8 +91,6 @@ class PurchaseQuotationWizard(models.TransientModel):
         data = {}
         if isinstance(price, float) and isinstance(qty, float):
             data.update({'price_unit': price, 'product_qty': qty})
-            if order_line.product_qty <= qty:
-                data['price_unit'] = price
             return order_line.write(data)
         return False
 
@@ -116,14 +114,15 @@ class PurchaseQuotationWizard(models.TransientModel):
         """
         self.ensure_one()
         context = dict(self._context)
-        purchase = self.purchase
         fname = '/tmp/%s' % (self.xls_name)
         # I go directly to the sheet, because the contraint already validated
         # which is the proper format for the sheet.
         sheet = xlrd.open_workbook(fname).sheet_by_index(0)
         eof = self.get_xls_eof(sheet)
         # First col header on Qweb report: template.xml
-        can_start, done_ids, new_products = False, [], []
+        can_start = False
+        done_ids = self.env['purchase.order.line']
+        new_products = []
         for row in range(eof):
             if self._col_start == sheet.cell_value(row, 0):
                 can_start = True
@@ -131,29 +130,58 @@ class PurchaseQuotationWizard(models.TransientModel):
             if not can_start:
                 continue
             # Proposed product Quantity
-            product_qty = sheet.cell_value(row, 4)
-            price_unit = sheet.cell_value(row, 5)
+            order_line = self.env['purchase.order.line']
+            product = self.env['product.supplierinfo']
+            prod = self.env['product.product']
+            values = dict(identifier=sheet.cell_value(row, 0),
+                          internal_code=sheet.cell_value(row, 1),
+                          vendor_code=sheet.cell_value(row, 2),
+                          description=sheet.cell_value(row, 3),
+                          date_planned=sheet.cell_value(row, 4),
+                          product_qty=sheet.cell_value(row, 5),
+                          # cell on column 6 is the price that I know, then
+                          # just ignoring it.
+                          price_unit=sheet.cell_value(row, 7))
             # Using the External ID I try to get the order
-            order_line = self.env.ref(sheet.cell_value(row, 0))
+            if values['identifier']:
+                # If identifier: we will try the line as it is (no code and/or
+                # any other check more than the qty and price).
+                order_line = done_ids.search([('id', '=',
+                                               int(values['identifier']))],
+                                             limit=1)
+            if values['vendor_code'] and not values['identifier']:
+                # If no identifier: we will try to look by internal code.
+                product = product.search([('product_code', '=',
+                                           values['vendor_code'])])
+            if values['internal_code'] and not values['identifier']:
+                prod = prod.search([('default_code', '=',
+                                     values['internal_code'])])
             if order_line:
-                self._update_price(order_line, price_unit, product_qty)
-                done_ids.append(order_line.id)
+                self._update_price(order_line,
+                                   values['price_unit'],
+                                   values['product_qty'])
+                done_ids += order_line
             if not order_line:
                 new_products.append((0, 0, {
-                    'vendor_code': sheet.cell_value(row, 2),
-                    'description': sheet.cell_value(row, 3),
-                    'cost': price_unit,
-                    # Vendor Code
+                    'product': prod,
+                    'product_tmpl': product,
+                    'vendor_code': values['vendor_code'],
+                    'internal_code': values['internal_code'],
+                    'description': values['description'],
+                    'cost': values['price_unit'],
+                    'product_qty': values['product_qty'],
                 }))
-        if done_ids:
-            order_line_done = self.env['purchase.order.line'].browse(done_ids)
+        # if done_ids:
             # intersect objects and unlink diff
-            order_line_diff = purchase.order_line - order_line_done
+            # order_line_diff = purchase.order_line - done_ids
             # TODO: I think they should not be deleted.
             # order_line_diff.unlink()
         self.write({'state': 'success2'})
         if new_products:
-            self.write({'state': 'success', 'line_ids': new_products})
+            self.write({
+                'state': 'success',
+                'line_ids': new_products
+                })
         action = self.env.ref('purchase_rfq_xls.action_purchase_quotation')
         return action.with_context(context).read([])
 
@@ -174,8 +202,13 @@ class PurchaseQuotationWizard(models.TransientModel):
 class PurchaseQuotationWizardLine(models.TransientModel):
     _description = 'Purchase Quotation Details'
     _name = 'purchase.quotation.wizard.line'
+    _rec_name = 'description'
 
     description = fields.Char()
     vendor_code = fields.Char()
+    internal_code = fields.Char()
     wizard_id = fields.Many2one('purchase.quotation.wizard')
+    product = fields.Many2one('product.product')
+    product_tmpl = fields.Many2one('product.template')
     cost = fields.Float()
+    product_qty = fields.Float()

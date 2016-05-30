@@ -8,12 +8,6 @@
         <attribute name="t-att-data-report-header-spacing">data_report_header_spacing if data_report_header_spacing else None</attribute>
         <attribute name="t-att-data-report-dpi">data_report_dpi if data_report_dpi else None</attribute>
     </xpath>
-    <!-- Add report style -->
-    <xpath expr="//head" position="inside">
-        <style type="text/css">
-            <t t-call="purchase_rfq_xls.style"/>
-        </style>
-    </xpath>
     <!-- Remove conflicting style -->
     <xpath expr="//head/link[@href='/web/static/src/css/full.css']" position="replace"></xpath>
 </template>
@@ -25,110 +19,10 @@
     </t>
 </template>
 
-<template id="purchase_rfq_xls.style">
-    table {
-    border-collapse: separated;
-    }
-
-    table, th, td {
-    border: 2px solid white;
-    }
-
-    table.basic_table{
-    text-align:left;
-    }
-
-    .dest_address {
-    font-size:12pt;
-    margin-left:0;
-    text-align:left;
-    line-height:80%;
-    padding-top:0px
-    }
-
-    .prueba{
-    color:black;
-    background-color:#dcdcdc;
-    }
-
-    .celdaTotalTitulo{
-    font-size:11pt;
-    text-align:left;
-    font-weight:bold;
-    font-family:Arial,Helvetica,sans-serif;
-    background-color:#dcdcdc;
-    }
-
-    .celdaTotal{
-    font-size:10pt;
-    font-style:normal;
-    font-family: FreeMono;
-    text-align:right;
-    font-weight:bold;
-    background-color:#dcdcdc;
-    }
-
-    .celdaDetailTitulo{
-    font-style:italic;
-    font-size:11pt;
-    text-align:left;
-    font-family:Arial,Helvetica,sans-serif;
-    background-color:#F5F5F5;
-    }
-
-    .celdaDetail{
-    font-size:10pt;
-    font-family: monospace;
-    text-align:right;
-    background-color:#F5F5F5;
-    }
-
-    .celdaDetailLeft{
-    font-size:10pt;
-    font-family: monospace;
-    text-align:left;
-    background-color:#F5F5F5;
-    }
-
-    .celdaAbstractTotal{
-    font-size:11pt;
-    text-align:left;
-    font-family:Arial,Helvetica,sans-serif;
-    background-color:#EAEAEA;
-    }
-
-    .celdaTituloTabla{
-    font-size:11pt;
-    text-align:left;
-    font-family:Arial,Helvetica,sans-serif;
-    background-color:#620400;
-    color:#FFFFFF;
-    }
-
-    .celdaAbstract{
-    font-size:10pt;
-    font-family: monospace;
-    text-align:right;
-    background-color:#EAEAEA;
-    }
-
-    div.td_company{
-    font-size:12pt;
-    margin-left:0;
-    font-weight:bold;
-    font-family:Arial,Helvetica,sans-serif;
-    }
-
-    div.td_company_title{
-    font-size:22pt;
-    margin-left:0;
-    font-weight:bold;
-    font-family:Arial,Helvetica,sans-serif;
-    }
-</template>
-
 <template id="purchase_rfq_xls.external_layout">
     <!-- Multicompany -->
+    <t t-call="purchase_rfq_xls.minimal_layout">
+    </t>
     <t t-if="o and 'company_id' in o">
         <t t-set="company" t-value="o.company_id"></t>
     </t>
@@ -136,100 +30,6 @@
         <t t-set="company" t-value="res_company"></t>
     </t>
     <t t-raw="0" />
-</template>
-
-<template id="purchase_rfq_xls.external_layout_header">
-    <!--VARIABLES TO BE USED LATER-->
-    <div class="header">
-        <table width="100%">
-          <tr>
-              <td width="30%">
-                  <div>
-                    <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/>
-                  </div>
-              </td>
-              <td width="70%">
-                  <table style="width: 100%; text-align:center;" id="table_header">
-                      <tr><td></td></tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                              <span t-esc="datetime.now().strftime('%d/%m/%Y')"/>
-                          </td>
-                      </tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            P.O.#:
-                          </td>
-                          <td>
-                            <span t-field="o.name" />
-                          </td>
-                      </tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            Creation Date:
-                          </td>
-                          <td>
-                            <span t-field="o.date_order" t-field-options='{"format": "dd/MM/yyyy"}'/>
-                          </td>
-                      </tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            Creation By:
-                          </td>
-                          <td>
-                            <span t-field="o.company_id.name" />
-                          </td>
-                      </tr>
-                      <!-- (if) Get destinatary address -->
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            Ext. P.O.#:
-                          </td>
-                          <td>
-                              <span t-field="o.partner_ref" />
-                          </td>
-                      </tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            Reference:
-                          </td>
-                          <td>
-                            <span t-field="o.origin" />
-                          </td>
-                      </tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            Expected Date:
-                          </td>
-                          <td>
-                              <span t-field="o.minimum_planned_date" t-field-options='{"format": "dd/MM/yyyy"}'/>
-                          </td>
-                      </tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            Ship Via:
-                          </td>
-                          <td>
-                            <span t-field="o.picking_type_id.warehouse_id.name" />
-                          </td>
-                      </tr>
-                      <tr><td></td><td></td><td></td><td></td>
-                          <td class="text-right">
-                            Cust.#:
-                          </td>
-                          <td>
-                            <span t-field="o.partner_id.ref" />
-                          </td>
-                      </tr>
-                 </table>
-              </td>
-          </tr>
-        </table>
-        <table class="basic_table"  width="100%" border="0">
-            <thead>
-            </thead>
-        </table>
-    </div>
 </template>
 
 <template id="purchase_rfq_xls.external_layout_footer">
