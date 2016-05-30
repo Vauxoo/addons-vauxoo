@@ -102,7 +102,7 @@ class PurchaseOrder(models.Model):
         )['value']
         # assign new attachment
         template_values['attachment_ids'] = [
-            (4, id) for id in template_values.get('attachment_ids', [])
+            (4, elem) for elem in template_values.get('attachment_ids', [])
         ]
         template_values['attachment_ids'].append((4, file_xls.id))
         composer.write(template_values)
