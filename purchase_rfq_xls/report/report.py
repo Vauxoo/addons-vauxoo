@@ -19,9 +19,9 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from datetime import datetime
 from openerp.osv import osv
 from openerp.report import report_sxw
-from datetime import datetime
 
 
 class Parser(report_sxw.rml_parse):
