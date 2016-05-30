@@ -106,7 +106,7 @@ class PurchaseQuotationWizard(models.TransientModel):
             try:
                 sheet.cell_value(row, 0)
                 row += 1
-            except:
+            except IndexError:
                 break
         return row
 
