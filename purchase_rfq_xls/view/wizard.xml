@@ -10,55 +10,80 @@
             <field name="arch" type="xml">
                 <form string="Update a Quotation Prices">
                     <field name="state" invisible="1" />
-                    <div states="success">
-                        <h2>Import successful</h2>
-                        <p>The following items should be added to the P.O. manually:</p>
-                        <group>
-                            <field name="lines_ids" nolabel="1" readonly="1">
-                                <tree delete='0'>
+                    <header>
+                        <button name="import_xls" string="Import" type="object" class="oe_highlight" attrs="{'invisible': [('template_action', '=', 'export')]}"/>
+                        <button name="print_report" string="Export" type="object" class="oe_highlight" attrs="{'invisible': [('template_action', '=', 'import')]}"/>
+                    </header>
+                    <group string="Purchase">
+                        <h2><field name="purchase"/></h2>
+                    </group>
+                    <separator/>
+                    <group string="Import successfully done" states="success,success2">
+                        <p class="oe_grey" states="success">All was done
+                        properly but you need yet the following items should be
+                        added to the P.O. manually.</p>
+                        <p class="oe_grey" states="success2">No differences to
+                        report!</p>
+                        <group string="Relevant Information">
+                            <field name="line_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="product"/>
+                                    <field name="product_tmpl"/>
+                                    <field name="internal_code"/>
                                     <field name="vendor_code"/>
                                     <field name="description"/>
                                     <field name="cost"/>
+                                    <button name="add_pol" string="Add" type="object"
+                                        attrs="{'invisible': [('product', '=', False)]}"/>
+                                    <button name="create_product_add_pol" string="Create and Add"
+                                        attrs="{'invisible': [('product', '!=', False), ('product_tmpl', '=', False)]}"
+                                        type="object"/>
+                                    <button name="open_in_web" string="Search in Web" type="object"/>
                                 </tree>
+                                <form>
+                                    <group>
+                                        <field name="product"/>
+                                        <field name="product_tmpl"/>
+                                        <field name="internal_code"/>
+                                        <field name="vendor_code"/>
+                                        <field name="description"/>
+                                        <field name="cost"/>
+                                    </group>
+                                    <footer>
+                                        <button name="add_pol" string="Add" type="object"
+                                            attrs="{'invisible': [('product', '=', False)]}"/>
+                                        <button name="create_product_add_pol" string="Create and Add"
+                                            attrs="{'invisible': [('product', '!=', False), ('product_tmpl', '=', False)]}"
+                                            type="object"/>
+                                        <button name="open_in_web" string="Search in Web" type="object"/>
+                                    </footer>
+                                </form>
                             </field>
                         </group>
-                    </div>
-                    <div states="success2">
-                        <h2>Import successful</h2>
-                        <p>No issue to report!</p>
-                    </div>
+                    </group>
+                    <separator/>
                     <group states="form">
-                        <group string="Import / Export a Quotation Template">
+                        <group string="What do you want to do?">
                             <field name="template_action" widget="selection" required='1'/>
                         </group>
-                        <group invisible='1'>
-                            <field name="report_format" widget="selection" required='1'/>
-                        </group>
+                        <separator/>
                         <group attrs="{'invisible': [('template_action', '=', 'export')]}">
                             <field name="xls_name" invisible="1" />
                             <field name="xls_file" filename="xls_name" />
                         </group>
                     </group>
-                    <footer states="form">
-                        <button name="import_xls" string="Import" type="object" class="oe_highlight" attrs="{'invisible': [('template_action', '=', 'export')]}"/>
-                        <button name="print_report" string="Export" type="object" class="oe_highlight" attrs="{'invisible': [('template_action', '=', 'import')]}"/>
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
-                    <footer states="success,success2">
-                        <button string="Close" special="cancel" type="object" />
-                    </footer>
                 </form>
             </field>
         </record>
-
-        <act_window id="action_purchase_quotation"
+        <act_window
+            id="action_purchase_quotation"
             key2="client_print_multi"
             name="Update a Quotation Prices"
             res_model="purchase.quotation.wizard"
             src_model="purchase.order"
-            view_mode="form" target="new" view_type="form" />
-
+            view_mode="form"
+            target="inline"
+            view_type="form"/>
     </data>
 </openerp>
 
