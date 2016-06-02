@@ -224,6 +224,7 @@ class ProductTemplate(models.Model):
         ctx.update({
             'active_id': product_tmpl_id.id,
             'active_ids': product_tmpl_id.ids,
+            'active_model': product_tmpl_id._name,
         })
         if threshold_reached:
             return self.ensure_change_price_log_messages(cr, uid, vals, ctx)
