@@ -34,6 +34,7 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     @api.multi
+    @api.depends('state', 'move_lines', 'move_lines2')
     def _compute_qty_to_produce(self):
         """Used to shown the quantity available to produce considering the
         reserves in the moves related
