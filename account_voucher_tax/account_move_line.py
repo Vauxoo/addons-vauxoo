@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: el_rodo_1 (rodo@vauxoo.com)
+#    Coded by: Vauxoo Consultores (info@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,45 +18,32 @@
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU Affero General Public License for more details.
-#    This program is distributed in the hope that it will be useful,
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name": "Account Voucher Tax",
-    "version": "8.0.0.1.6",
-    "author": "Vauxoo",
-    "category": "Localization/Mexico",
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": [
-        "account",
-        "account_voucher",
-        "account_invoice_tax",
-        "analytic",
-        "account_move_line_base_tax",
-        "account_cancel",
-        "base_action_rule",
-    ],
-    "demo": [
-        "demo/account_voucher_tax_demo.xml"
-    ],
-    "data": [
-        "account_tax_view.xml",
-        "account_voucher_tax_view.xml",
-        "security/ir.model.access.csv",
-        "data/ir_actions_server.xml",
-    ],
-    "test": [
-        "test/account_voucher_taxes.yml",
-        "test/account_voucher_tax_write_off.yml",
-        "test/account_voucher_tax_currency_diff.yml"
-    ],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-}
+
+from openerp import models, api, exceptions, _
+
+
+class AccountMoveLine(models.Model):
+
+    _inherit = 'account.move.line'
+
+    @api.multi
+    def validate_rounding_high(self):
+        for move in self:
+            if move.name == _('Rounding error from currency conversion'):
+                move_line_amount_rounding = abs(move.debit + move.credit)
+                move_line_bank = move.move_id.line_id.filtered(
+                    lambda dat: dat.account_id.type == 'liquidity')
+                move_line_bank_debit_credit = abs(
+                    move_line_bank.debit + move_line_bank.credit)
+                if move_line_amount_rounding > move_line_bank_debit_credit:
+                    raise exceptions.Warning(
+                        _('Warning!'),
+                        _('Rounding amount is too high  %s '
+                          'and payment bank %s') % (
+                              move_line_amount_rounding,
+                              move_line_bank_debit_credit))
