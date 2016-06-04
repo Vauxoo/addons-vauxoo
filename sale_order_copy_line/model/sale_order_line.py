@@ -34,7 +34,7 @@ class SaleOrderLine(osv.Model):
         sale_order_obj = self.pool.get('sale.order')
         data_sale_order = sale_order_obj.browse(cr, uid, data.get('order_id'))
 
-        if data_sale_order.state == 'draft':
+        if data_sale_order.state in ('draft', 'sent'):
             self.create(cr, uid, data, context=context)
             return {
                 'type': 'ir.actions.act_window',
