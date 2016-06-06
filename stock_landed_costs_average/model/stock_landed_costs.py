@@ -164,7 +164,7 @@ class StockLandedCost(models.Model):
             'product_id': product_brw.id,
         }
 
-        name = '{name}: {memo} - AVG'
+        name = u'{name}: {memo} - AVG'
 
         if diff < 0:
             name = name.format(
@@ -328,7 +328,7 @@ class StockLandedCost(models.Model):
         # NOTE: knowing how many products that were affected, COGS was to
         # change, by this landed cost is not really necessary
 
-        name = '{name}: COGS - {memo}'
+        name = u'{name}: COGS - {memo}'
         if diff > 0:
             name = name.format(
                 name=product_brw.name, memo='[+]')
