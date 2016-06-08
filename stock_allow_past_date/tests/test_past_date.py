@@ -44,21 +44,21 @@ class TestPickingDate(common.TransactionCase):
         """Create picking with current date for a product without quants.
         Generate move/quant with the same date.
         """
-        picking_date = datetime.today()
+        picking_date = datetime(2016, 6, 8, 12, 0)
         self._test_picking_date(picking_date, self.product_wo_quant)
 
     def test_02_current_date_w_quants(self):
         """Create picking with current date for a product with quants.
         Generate move/quant with the same date.
         """
-        picking_date = datetime.today()
+        picking_date = datetime(2016, 6, 8, 12, 0)
         self._test_picking_date(picking_date, self.product_w_quant)
 
     def test_03_past_date_wo_quants(self):
         """Create picking with past date for a product without quants.
         Generate move/quant with the same date.
         """
-        picking_date = datetime.today() - relativedelta(days=15)
+        picking_date = datetime(2016, 6, 8, 12, 0) - relativedelta(days=15)
         self._test_picking_date(picking_date, self.product_wo_quant)
 
     def test_04_past_date_w_quants(self):
@@ -66,8 +66,8 @@ class TestPickingDate(common.TransactionCase):
         Generate move/quant with the same date.
         In this case the quant must to do with the current date.
         """
-        picking_date = datetime.today() - relativedelta(days=15)
-        diff_day = self.get_day(datetime.today())
+        picking_date = datetime(2016, 6, 8, 12, 0) - relativedelta(days=15)
+        diff_day = self.get_day(datetime(2016, 6, 8, 12, 0))
         self._test_picking_date(picking_date, self.product_w_quant, diff_day)
 
     def _test_picking_date(self, picking_date, product, diff_day=None):
