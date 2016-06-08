@@ -62,15 +62,16 @@ class ProductProduct(models.Model):
                 if route.consider_on_request:
                     product.stock_state = '4'
                     return
-            product.stock_state = self._get_availability_by_qty(
-                product.qty_available, product.low_stock)
+            product.stock_state = product._get_availability_by_qty()
 
-    def _get_availability_by_qty(self, qtys, low_stock):
-        if qtys > low_stock:
+    @api.multi
+    def _get_availability_by_qty(self):
+        self.ensure_one()
+        if self.qty_available > self.low_stock:
             return '1'
-        elif 0 < qtys <= low_stock:
+        elif 0 < self.qty_available <= self.low_stock:
             return '3'
-        elif qtys <= 0:
+        elif self.qty_available <= 0:
             return '2'
 
     low_stock = fields.Integer(
