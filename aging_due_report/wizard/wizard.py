@@ -83,26 +83,31 @@ class AccountAgingWizardPartner(models.TransientModel):
         len_span = len(spans) if spans else 0
         first_item = 0
         last_item = len_span - 1
-        for item in range(len_span):
+        span_items = range(len_span)
+        if not direction:
+            span_items.reverse()
+            first_item, last_item = last_item, first_item
+        for item in span_items:
             span = 'span%02d' % (item + 1)
             if span not in field_names:
                 continue
-            is_first_item = first_item == item
-            is_last_item = last_item == item
-            is_mid_item = not is_first_item and not is_last_item
+
+            lt_lim = gt_lim = True
             if not direction:
-                first_span = is_first_item and doc.due_days <= 0
-                last_span = is_last_item and doc.due_days <= spans[item]
-                mid_span = is_mid_item and doc.due_days <= spans[item] and \
-                    doc.due_days > spans[item + 1]
+                if first_item == item:
+                    gt_lim = spans[item] >= doc.due_days
+                else:
+                    lt_lim = spans[item + 1] < doc.due_days
+                    gt_lim = spans[item] >= doc.due_days
             else:
-                first_span = is_first_item and doc.due_days > 0 \
-                    and doc.due_days <= spans[item]
-                last_span = is_last_item and doc.due_days > spans[item]
-                mid_span = is_mid_item and doc.due_days > spans[item] and \
-                    doc.due_days <= spans[item + 1]
-            res_line[span] += (first_span or last_span or mid_span) \
-                and doc.residual or 0
+                if last_item == item:
+                    lt_lim = spans[item] < doc.due_days
+                else:
+                    lt_lim = spans[item] < doc.due_days
+                    gt_lim = spans[item + 1] >= doc.due_days
+
+            if lt_lim and gt_lim:
+                res_line[span] += doc.residual
 
     @api.depends('document_ids', 'document_ids.residual',
                  'document_ids.payment', 'document_ids.total')
@@ -124,8 +129,9 @@ class AccountAgingWizardPartner(models.TransientModel):
                 if not direction and doc.due_days > 0 \
                         or direction and doc.due_days <= 0:
                     res['not_due'] += doc.residual
-                record._get_amount_span(field_spans, res, doc,
-                                        spans, direction)
+                else:
+                    record._get_amount_span(
+                        field_spans, res, doc, spans, direction)
             record.update(res)
 
     partner_id = fields.Many2one('res.partner', string='Partner',
