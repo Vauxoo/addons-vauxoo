@@ -107,15 +107,16 @@ class MessagePostShowAll(models.Model):
                         mes = ' - '.join(dele)
                         message = '%s\n<li><b>%s %s<b>: %s</li>' % \
                             (self.get_encode_value(message),
-                             add, string,
-                             mes)
+                             self.get_encode_value(add),
+                             self.get_encode_value(string),
+                             self.get_encode_value(mes))
                     if not lastv and new:
 
                         dele = [obj.browse(i).name_get()[0][1] for i in new]
                         mes = '-'.join(dele)
                         message = '%s\n<li><b>%s %s<b>: %s</li>' % \
                             (self.get_encode_value(message),
-                             delete,
+                             self.get_encode_value(delete),
                              string,
                              mes)
 
