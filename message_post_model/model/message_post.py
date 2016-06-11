@@ -85,7 +85,9 @@ class MessagePostShowAll(models.Model):
                 if val[0] == 0:
                     value = val[2]
                     message = '%s\n<li><b>%s<b>: %s</li>' % \
-                        (message, info.get(val[0]), value.get(r_name),)
+                        (self.get_encode_value(message),
+                         self.get_encode_value(info.get(val[0])),
+                         self.get_encode_value(value.get(r_name)))
                 elif val[0] in (2, 3):
                     model_brw = obj.browse(val[1])
                     last_value = model_brw.name_get()
@@ -107,17 +109,18 @@ class MessagePostShowAll(models.Model):
                         mes = ' - '.join(dele)
                         message = '%s\n<li><b>%s %s<b>: %s</li>' % \
                             (self.get_encode_value(message),
-                             add, string,
-                             mes)
+                             self.get_encode_value(add),
+                             self.get_encode_value(string),
+                             self.get_encode_value(mes))
                     if not lastv and new:
 
                         dele = [obj.browse(i).name_get()[0][1] for i in new]
                         mes = '-'.join(dele)
                         message = '%s\n<li><b>%s %s<b>: %s</li>' % \
                             (self.get_encode_value(message),
-                             delete,
-                             string,
-                             mes)
+                             self.get_encode_value(delete),
+                             self.get_encode_value(string),
+                             self.get_encode_value(mes))
 
                 elif val[0] == 1:
                     vals = val[2]
