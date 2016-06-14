@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-         <template id="product_stock_available_website" inherit_id="website_sale.product">
+         <template id="product_stock_available_website" inherit_id="website_sale.product_quantity">
              <xpath expr="//div[@class='css_quantity input-group oe_website_spinner']" position="before">
                 <div class="warehouse-availability">
                     <t t-set="attr_value_ids" t-value="get_locations_variant_ids(product)"/>
