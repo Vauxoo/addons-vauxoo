@@ -109,8 +109,7 @@ class ProductProduct(models.Model):
                         stock_state = '4'
                         break
                 if stock_state != '4':
-                    stock_state = self._get_availability_by_qty(
-                        product.qty_available, product.low_stock)
+                    stock_state = product._get_availability_by_qty()
                 location_ok = stock_locations_obj.search(
                     [('product_id', '=', product_id),
                      ('location_id', '=', location.id)])
