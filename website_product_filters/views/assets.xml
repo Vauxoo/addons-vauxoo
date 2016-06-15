@@ -25,11 +25,11 @@
       </xpath>
     </template>
     <!-- HERE ARE ALL THE STYLING NEEDED -->
-    <template id="assets_frontend_filters_less" name="Product filters frontend assets" inherit_id="website.theme">
-        <xpath expr='//link[@href="/website/static/src/css/website.css"]' position="after">
-            <link href="/website_product_filters/static/src/less/filters.less" rel="stylesheet" type="text/less"/>
-            <link href="/website_product_filters/static/src/css/website_sale.css" rel="stylesheet"/>
-        </xpath>
-    </template>
+    <!-- <template id="assets_frontend_filters_less" name="Product filters frontend assets" inherit_id="website.theme"> -->
+    <!--     <xpath expr='//link[@href="/website/static/src/css/website.css"]' position="after"> -->
+    <!--         <link href="/website_product_filters/static/src/less/filters.less" rel="stylesheet" type="text/less"/> -->
+    <!--         <link href="/website_product_filters/static/src/css/website_sale.css" rel="stylesheet"/> -->
+    <!--     </xpath> -->
+    <!-- </template> -->
     </data>
 </openerp>
