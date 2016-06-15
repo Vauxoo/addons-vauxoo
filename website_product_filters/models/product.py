@@ -93,7 +93,7 @@ class ProductCategory(models.Model):
 
     @api.model
     def _get_async_ranges(self, category):
-        prod_obj = self.env['product.template']
+        prod_obj = self.env['product.product']
         ranges_obj = self.env['product.price.ranges'].search([])
         count_dict = {}
         prod_ids = []
@@ -104,7 +104,7 @@ class ProductCategory(models.Model):
         if prod_ids:
             for prod in prod_ids:
                 for ran in ranges_obj:
-                    if ran.upper > prod.list_price > ran.lower:
+                    if ran.upper > prod.lst_price > ran.lower:
                         if ran.id in count_dict.keys():
                             count_dict[ran.id] += 1
                         else:
@@ -116,7 +116,7 @@ class ProductCategory(models.Model):
 
     @api.model
     def _get_async_values(self, category):
-        prod_obj = self.env['product.template']
+        prod_obj = self.env['product.product']
         count_dict = {}
         prod_ids = []
         if category:
@@ -138,7 +138,7 @@ class ProductCategory(models.Model):
 
     @api.depends("product_ids", "product_ids.website_published")
     def _get_product_count(self):
-        prod_obj = self.env["product.template"]
+        prod_obj = self.env["product.product"]
         for rec in self:
             prod_ids = prod_obj.search(
                 [('public_categ_ids', 'child_of', rec.id),
