@@ -60,11 +60,36 @@ class WebsiteProductMetadata(models.Model):
         "product_public_category_id")
 
 
+class ProductPriceRangesQty(models.Model):
+    _name = "product.price.ranges.qty"
+    _rec_name = "range_id"
+
+    range_id = fields.Many2one("product.price.range")
+    product_id = fields.Many2one("product.product")
+    quantity = fields.Integer()
+
+class ProductPriceRangesQty(models.Model):
+    _name = "product.category.public.qty"
+    _rec_name = "category_id"
+
+    category_id = fields.Many2one("product.price.range")
+    product_id = fields.Many2one("product.product")
+    quantity = fields.Integer()
+
+
 class ProductPriceRanges(models.Model):
     _name = "product.price.ranges"
+    _rec_name = "lower"
 
     lower = fields.Integer("Lower")
     upper = fields.Integer("Upper")
+
+    @api.model
+    def in_range(self, lst_price):
+        # Sudo to save a little of time and avoid check_acl
+        if self.sudo().upper > lst_price > self.sudo().lower:
+            return True
+        return False
 
 
 class ProductCategory(models.Model):
@@ -90,25 +115,25 @@ class ProductCategory(models.Model):
     @api.model
     def _get_async_ranges(self, category):
         prod_obj = self.env['product.product']
-        ranges_obj = self.env['product.price.ranges'].search([])
+        # sudo just to avoid check_acl and speed up the counting.
+        # Due to we will use a website_published search filter then
+        # this sudo can be considered secure.
+        ranges_obj = self.env['product.price.ranges'].sudo().search([])
         count_dict = {}
-        prod_ids = []
+        to_jsonfy = []
         if category:
-            prod_ids = prod_obj.search(
+            prod_obj = prod_obj.sudo().search(
                 [('public_categ_ids', 'child_of', int(category)),
                  ('website_published', '=', True)])
-        if prod_ids:
-            for prod in prod_ids:
-                for ran in ranges_obj:
-                    if ran.upper > prod.lst_price > ran.lower:
-                        if ran.id in count_dict.keys():
-                            count_dict[ran.id] += 1
-                        else:
-                            count_dict[ran.id] = 1
-                    if ran.id not in count_dict.keys():
-                        count_dict[ran.id] = 0
-            to_jsonfy = [{'id': k, 'qty': count_dict[k]} for k in count_dict]
-            return to_jsonfy
+        for ran in ranges_obj:
+            count_dict[ran.id] = 0
+            for prod in prod_obj.filtered(
+                    lambda p: ran.in_range(p.lst_price)):
+                count_dict[ran.id] += 1
+        # TODO: Write the interim table new here.
+        to_jsonfy = [{'id': k, 'qty': count_dict[k]}
+                     for k in count_dict if count_dict[k]]
+        return to_jsonfy
 
     @api.model
     def _get_async_values(self, category):
