@@ -38,13 +38,27 @@ class WarehouseUser(models.Model):
         access_rule = super(WarehouseUser, self).check_access_rule(operation)
 
         # TODO delete this
-        print access_rule
+        print ' ------ check_access_rule'
+        # print access_rule
         import pdb
         pdb.set_trace()
 
-        # res_users_obj = self.env['res.users']
-        # user_brw = res_users_obj.browse(self._uid)
-        # warehouse = user_brw.default_section_id.warehouse_id
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form',
+                        toolbar=False, submenu=False):
+        """ Can view only the ones for for the warehouse
+        """
+        res = super(WarehouseUser, self).fields_view_get(
+            view_id=view_id, view_type=view_type,
+            toolbar=toolbar, submenu=submenu)
+
+        warehouse = self.env.user.default_section_id.warehouse_id
+
+        print ' ------ field_view_get', warehouse
+        # import pdb
+        # pdb.set_trace()
+
+        return res
 
 
 class StockPickingType(models.Model):
