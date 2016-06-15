@@ -41,14 +41,10 @@ class WebsiteSeoMetadata(models.Model):
 
     @api.cr_uid_ids_context
     def write(self, cr, uid, ids, values, context=None):
-        for record in ids:
-            if values.get('views', False):
-                return super(WebsiteSeoMetadata, self).write(
-                    cr, SUPERUSER_ID, [record], values)
-            if values.get('website_published', False):
-                now = datetime.now()
-                decimal_time = time.mktime(now.timetuple())
-                values['decimal_time'] = decimal_time
+        if values.get('website_published', False):
+            now = datetime.now()
+            decimal_time = time.mktime(now.timetuple())
+            values['decimal_time'] = decimal_time
         return super(WebsiteSeoMetadata, self).write(
             cr, uid, ids, values)
 
