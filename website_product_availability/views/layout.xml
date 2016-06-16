@@ -1,6 +1,6 @@
 <openerp>
     <data>
-		<template id="assets_frontend" inherit_id="website.assets_frontend" name="Shop Stock State">
+        <template id="assets_frontend" inherit_id="website.assets_frontend" name="Shop Stock State">
             <xpath expr="//script[@src='/website_sale/static/src/js/website_sale.js']" position="replace">
                 <script type="text/javascript" src="/website_product_availability/static/src/js/website_sale.js"></script>
             </xpath>

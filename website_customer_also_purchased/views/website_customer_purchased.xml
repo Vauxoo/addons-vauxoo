@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    	<template id="customer_purchased" inherit_id="website_sale.product" customize_show="True" name="Other Customers Purchased">
-		  <xpath expr="//div[@id='product_full_description']" position="after">
+      <template id="customer_purchased" inherit_id="website_sale.product" customize_show="True" name="Other Customers Purchased">
+      <xpath expr="//div[@id='product_full_description']" position="after">
                   <div class="container mt32">
                       <h3>Other Customers Purchased:</h3>
                       <div class='row mt16' style="margin-left: 15px !important;">
-                          <div class="opproducts" data-slick='{"slidesToShow": 6, "slidesToScroll": 6}'>
+                          <div class="opproducts hidden-xs" data-slick='{"slidesToShow": 6, "slidesToScroll": 6}'>
+                          </div>
+                          <div class="opproducts hidden-lg" data-slick='{"slidesToShow": 2, "slidesToScroll": 2}'>
                           </div>
                       </div>
                   </div>
-		  </xpath>
-		</template>
+      </xpath>
+    </template>
     </data>
 </openerp>

@@ -67,20 +67,12 @@
             <field name="name">IPOD001</field>
             <field name="ref">IPOD001</field>
             <field name="product_id" ref="product.product_product_11b"/>
-            <field name="last_location_id" ref="stock.stock_location_company"/>
-            <field name="supplier_id"  ref="base.res_partner_21"/>
-            <field name="supplier_invoice_line_id"  model="account.invoice.line"
-                search="[('origin', '=', 'Order Purchase availability 1'), ('name', '=', 'Order Purchase availability 1 Line 1')]"/>
         </record>
 
          <record id="lot_purchase_item_2" model="stock.production.lot">
             <field name="name">IPOD002</field>
             <field name="ref">IPOD002</field>
             <field name="product_id" ref="product.product_product_11b"/>
-            <field name="last_location_id" ref="stock.stock_location_company"/>
-            <field name="supplier_id"  ref="base.res_partner_21"/>
-            <field name="supplier_invoice_line_id"  model="account.invoice.line"
-                search="[('origin', '=', 'Order Purchase availability 1'), ('name', '=', 'Order Purchase availability 1 Line 1')]"/>
         </record>
         <!-- Transfer Detail Items of Product Transfer -->
 

@@ -7,7 +7,6 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "website_sale",
         "website_product_brand",
         "website_rate_product",
         "website_sale_options",
