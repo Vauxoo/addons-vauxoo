@@ -38,6 +38,96 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+def is_float(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
+
+def is_integer(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
+
+
+def is_formatted_number(value):
+    set_sign = set([',', '.', '-'])
+    set_val = set(list(value))
+    if set_val == set():
+        return False
+    elif any([val.isalpha() for val in set_val]):
+        return False
+    elif any([val.isspace() for val in set_val]):
+        return False
+    elif not all([val.isdigit() for val in set_val - set_sign]):
+        return False
+    elif value.count('-') > 1:
+        return False
+    elif '-' in set_val and not value[0] == '-':
+        return False
+
+    # /!\ NOTE: Assumption. ',' is thousands separator
+    # /!\ NOTE: Assumption. '.' is decimal separator
+    if value.count(',') > 0:
+        value = value.replace(',', '')
+    if is_integer(value):
+        return True
+    elif is_float(value):
+        return True
+
+    return False
+
+
+def unformat_number(value):
+    if not is_formatted_number(value):
+        return value
+
+    set_val = set(list(value))
+    sign = 1
+    if '-' in set_val:
+        sign = -1
+        value = value.replace('-', '')
+
+    # /!\ NOTE: Assumption. ',' is thousands separator
+    # /!\ NOTE: Assumption. '.' is decimal separator
+    if value.count(',') > 0:
+        value = value.replace(',', '')
+
+    if is_integer(value):
+        value = int(value)
+    elif is_float(value):
+        value = float(value)
+
+    return sign * value
+
+
+def string_to_number(value, style=None):
+    '''
+    Features:
+        - brute force conversion of thousands separated value into float
+
+        TODO:
+        - converted thousands separated value by char into float
+        - take the thousands separator from res.lang
+        - take the decimal separator from res.lang
+        - change style in cell to currency if currency symbol available
+    '''
+    if is_integer(value):
+        value = int(value)
+        # TODO: Call style change
+    elif is_float(value):
+        value = float(value)
+        # TODO: Call style change
+    else:
+        value = unformat_number(value)
+
+    return value
+
+
 def get_css_style(csstext, style):
     cssstyle = ""
     if csstext:
@@ -133,10 +223,7 @@ def write_cols_to_excel(sheet, row, col, rowspan, nodes, html, styles):
             if td.attrib.get('colspan', False):
                 colspan = int(td.attrib.get('colspan')) - 1
             text = text_adapt(" ".join([x for x in td.itertext()]))
-            try:
-                new_text = float(text)
-            except ValueError:
-                new_text = text
+            new_text = string_to_number(text)
             cell_styles = css2excel(new_styles)
             sheet.write_merge(row, row+rowspan,
                               col, col+colspan,
