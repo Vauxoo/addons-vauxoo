@@ -372,7 +372,7 @@ class StockCardProduct(models.TransientModel):
     def _stock_card_move_history_get(self, product_id):
         self._cr.execute(
             '''
-            SELECT
+            SELECT distinct
                 sm.id AS move_id, sm.date, sm.product_id, prod.product_tmpl_id,
                 sm.product_qty, sl_src.usage AS src_usage,
                 sl_dst.usage AS dst_usage,
