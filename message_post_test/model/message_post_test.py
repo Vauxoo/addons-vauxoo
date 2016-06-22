@@ -56,6 +56,8 @@ class MessagePostTest(osv.Model):
         'user_ids': fields.many2many('res.users', 'test_user_table', 'test_id',
                                      'user_id', 'Users'),
         'check': fields.boolean('Check'),
+        'select': fields.selection([('1', 'Testing'), ('2', 'Changed')],
+                                   'Selection'),
     }
 
 
@@ -72,6 +74,8 @@ class MessagePostTestNewApi(models.Model):
     user_ids = newfields.Many2many('res.users', 'test_user_table_new_api',
                                    'test_id',
                                    'user_id', 'Users')
+    select = newfields.Selection([('1', 'Testing'), ('2', 'Changed')],
+                                 'Selection')
     check = newfields.Boolean('Check')
 
 
