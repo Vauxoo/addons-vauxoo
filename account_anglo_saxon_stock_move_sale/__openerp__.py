@@ -30,6 +30,7 @@
     "license": "",
     "depends": [
         "account_anglo_saxon_stock_move",
+        "sale",
     ],
     "demo": [],
     "data": [
