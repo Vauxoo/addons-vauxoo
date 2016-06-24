@@ -9,6 +9,12 @@ the webstore instead of only product categories, it
 features:
 - Filter by category attributes
 - Filter by category brands
+- Filter by price range
+
+The filters will be visible only when you land in a last level category
+(a category that has no sub cateories).
+The attributes shown which you can filter with are the ones that were found
+on the belonging products to the last level category.
 
 Extras:
 -------

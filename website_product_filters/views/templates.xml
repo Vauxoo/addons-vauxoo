@@ -21,8 +21,8 @@
         <!-- TEMPLATE TO SHOW BRANDS AND ATTRIBUTES BASED ON CATEGORY -->
         <template id="website_sale.products_attributes" inherit_id="website_sale.products_categories" active="False" customize_show="True" name="Product Attribute's Filters">
           <xpath expr="//ul" position="after">
-            <t t-if="attributes">
               <form class="js_attributes" method="get">
+                <t t-if="attributes">
                   <input type="hidden" name="search" t-att-value="search"/>
                   <select style="display:none;" t-att-value="sortby" class="form-control yoytec-input mt3" id="product_sorter" name="product_sorter">
                     <option value="0" selected="selected">Sort By...</option>
@@ -106,6 +106,7 @@
                         </t>
                       </t>
                   </ul>
+            </t>
             <t t-if="price_ranges">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Price Range</strong></div>
@@ -134,7 +135,7 @@
             </t>
             <t t-if="brands">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Brands</div>
+                    <div class="panel-heading"><strong>Brands</strong></div>
                     <div class="panel-body">
                       <ul class="nav nav-pills nav-stacked">
                           <t t-foreach="brands" t-as="b">
@@ -150,7 +151,6 @@
                 </div>
             </t>
               </form>
-            </t>
           </xpath>
           <xpath expr="//div[@id='products_grid_before']" position="attributes">
               <attribute name="class">col-md-3 hidden-xs</attribute>
