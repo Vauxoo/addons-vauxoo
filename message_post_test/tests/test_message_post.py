@@ -32,6 +32,8 @@ class TestMessagePost(TransactionCase):
                                                               'user_ids')
             check_field = message_test.get_string_by_field(message_test,
                                                            'check')
+            select_field = message_test.get_string_by_field(message_test,
+                                                            'select')
             user_1 = self.user.create({'name': 'Test 1',
                                        'login': 'test%s' % str(1 + i)}).id
             user_2 = self.user.create({'name': 'Test 2 ó%á',
@@ -40,6 +42,7 @@ class TestMessagePost(TransactionCase):
                 'name': 'Test Message ó%á',
                 'user_id': SUPERUSER_ID,
                 'check': True,
+                'select': '2',
                 'number': 56,
                 'user_ids': [(6, 0, [user_1, user_2, SUPERUSER_ID])],
                 'line_ids': [
@@ -54,6 +57,7 @@ class TestMessagePost(TransactionCase):
                 'check': False,
                 'number': 78,
                 'user_id': user_1,
+                'select': '1',
                 'line_ids': [
                     (0, 0, {'name': 'Test 5 óá%'}),
                     (0, 0, {'name': 'Test 6'}),
@@ -74,12 +78,14 @@ class TestMessagePost(TransactionCase):
                     ('body', 'ilike', '%' + check_field + '%'),
                     ('body', 'ilike', '%' + number_field + '%'),
                     ('body', 'ilike', '%' + user_id_field + '%'),
+                    ('body', 'ilike', '%' + select_field + '%'),
                     ('body', 'ilike', '%' + line_ids_field +
                      '%' + term + '%'),
                     ('body', 'ilike', '%' + 'False' + '%'),
                     ('body', 'ilike', '%' + '78' + '%'),
                     ('body', 'ilike', '%' + 'Test 1' + '%'),
                     ('body', 'ilike', '%' + 'Test 5' + '%'),
+                    ('body', 'ilike', '%' + 'Testing' + '%'),
                     ('body', 'ilike', '%' + 'Test 6' + '%'),
                 ])
 
