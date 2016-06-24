@@ -42,7 +42,15 @@ class TestReportProductXls(TestXLSProductCommon):
         super(TestReportProductXls, self).setUp()
 
     def test_report_xls_product_pricelist(self):
+        self.products_with_price = False
+        self.columns_number = 11
         _logger.info('I generate the report xls for product price_list')
+        self._generate_report_product()
+        _logger.info(
+            'I generate the report xls for product price_list witout price')
+        self.products_with_price = True
+        self.product.list_price = 0
+        self.columns_number = 10
         self._generate_report_product()
 
     def _generate_report_product(self):
@@ -54,6 +62,7 @@ class TestReportProductXls(TestXLSProductCommon):
             'qty4': 0,
             'qty5': 0,
             'report_format': 'xls',
+            'products_with_price': self.products_with_price,
         })
         context = {
             'xls_report': True,
@@ -85,5 +94,5 @@ class TestReportProductXls(TestXLSProductCommon):
         book = xlrd.open_workbook(file_xls)
         sh = book.sheet_by_index(0)
         self.assertEquals(
-            sh.nrows, 11,
+            sh.nrows, self.columns_number,
             'the generated file contains more or less lines than expected')
