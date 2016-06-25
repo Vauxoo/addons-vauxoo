@@ -13,7 +13,8 @@ class WebsiteSale(website_sale):
         '/shop/category/<model("product.public.category"):category>',
         '/shop/category/<model("product.public.category"):category>/page/<int:page>',  # noqa
         '/shop/brands'], type='http', auth="public", website=True)
-    def shop(self, page=0, category=None, search='', ppg=False, **post):
+    def shop(self, page=0, category=None, search='', brand='', ppg=False,
+             **post):
         """This method was inherited wit the purpose of filtering attributes
         instead of showing all that exist on the instance, it will allow
         to show attribute filters based on the selected category.
@@ -104,9 +105,17 @@ class WebsiteSale(website_sale):
                 res.qcontext['keep'] = QueryURL(
                     '/shop',
                     category=category and int(category),
-                    search=search)
+                    search=search, brand=brand)
+        if brand_selected_ids:
+            res.qcontext['keep'] = QueryURL(
+                '/shop',
+                category=category and int(category),
+                search=search,
+                brand=brand_selected_ids[0]
+            )
         brands = brand_obj.browse(cr, uid, brand_ids, context=context)
-
+        if not category and brand_selected_ids:
+            category = self._get_brand_categories(brand_selected_ids)
         parent_category_ids = []
         if category:
             categs = category
@@ -134,6 +143,20 @@ class WebsiteSale(website_sale):
         else:
             cond = category.id
         return cond
+
+    def _get_brand_categories(self, brand_ids):
+        cr, uid, context, pool = (request.cr,
+                                  request.uid,
+                                  request.context,
+                                  request.registry)
+        categ_ids = []
+        product_obj = pool['product.template']
+        product_ids = product_obj.search(
+            cr, uid, [('product_brand_id', 'in', brand_ids)])
+        for product in product_obj.browse(cr, uid, product_ids, context):
+            if product.public_categ_ids not in categ_ids:
+                categ_ids.append(product.public_categ_ids)
+        return categ_ids
 
     def _get_category_brands(self, category):
         cr, uid, context, pool = (request.cr,
