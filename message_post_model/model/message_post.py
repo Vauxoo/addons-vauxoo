@@ -78,7 +78,7 @@ class MessagePostShowAll(models.Model):
         message = '<ul>'
         obj = self.env[n_obj]
         r_name = obj._rec_name
-        mes = False
+        mes = ''
         last = last or []
         for val in records:
             if val and info.get(val[0], False):
@@ -163,6 +163,29 @@ class MessagePostShowAll(models.Model):
         return message
 
     @api.model
+    def get_selection_value(self, source_obj, field, value):
+        """Get the string of a selection field using
+        fields_get method to get the string
+
+        @param source_obj: Model that contains the field
+        @type source_obj: RecordSet
+        @param field: Database name of the field
+        @type field: str or unicode
+        @param value: Database value used to find its the
+                      string in the selection
+        @type value: str or unicode
+
+        @returns: String shown in the selection field
+        @rtype: str
+        """
+        val = source_obj.fields_get([field])
+        val = val and val.get(field, {})
+        val = val and val.get('selection', ()) or ()
+        val = [i[1] for i in val if value in i]
+        val = val and val[0] or ''
+        return val.encode('utf-8', 'ignore')
+
+    @api.model
     def get_string_by_field(self, source_obj, field):
         """Get the string of a field using fields_get method to
         get the string depending of the user lang
@@ -218,13 +241,18 @@ class MessagePostShowAll(models.Model):
         last_value = self.get_last_value(
             ids, obj._name, field, obj._fields[field].type)
 
-        if ((self.get_encode_value(last_value) !=
-             self.get_encode_value(vals[field])) and
-                any((last_value, vals[field]))):
-            message = '<li><b>%s<b>: %s → %s</li>' % \
-                (self.get_string_by_field(obj, field),
-                 self.get_encode_value(last_value),
-                 self.get_encode_value(vals[field]))
+        last_value = obj._fields[field].type == 'selection' and \
+            self.get_selection_value(obj, field, last_value) or last_value
+        new_value = obj._fields[field].type == 'selection' and \
+            self.get_selection_value(obj, field, vals[field]) or vals[field]
+        last_value = self.get_encode_value(last_value)
+        new_value = self.get_encode_value(new_value)
+
+        message = ((last_value != new_value) and
+                   any((last_value, vals[field]))) and \
+            '<li><b>%s<b>: %s → %s</li>' % \
+            (self.get_string_by_field(obj, field), last_value,
+             new_value) or '<p>'
         return message
 
     # pylint: disable=W0106
@@ -232,9 +260,8 @@ class MessagePostShowAll(models.Model):
     def write(self, vals):
         for idx in self:
             body = '<ul>'
-            message = False
+            message = ''
             for field in vals:
-
                 if self._fields[field].type in ('one2many', 'many2many'):
                     is_many = self._fields[field].type == 'many2many'
 
@@ -246,7 +273,7 @@ class MessagePostShowAll(models.Model):
                         idx.id, vals[field], field_str, n_obj,
                         last_value)
                     body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (
-                        body, field_str, message)
+                        body, field_str, message) or body
 
                 elif self._fields[field].type == 'many2one':
                     message = self.prepare_many2one_info(idx.id,
