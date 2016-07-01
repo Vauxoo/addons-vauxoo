@@ -24,6 +24,7 @@
         <record id="ac_11" model="acceptability.criteria">
             <field name="name">criterion 1.1</field>
             <field name="scenario">sc 1.1</field>
+            <field name="sequence_ac">1</field>
             <field name="accep_crit_id" ref="us_1"/>
             <field name="development">True</field>
             <field name="difficulty">low</field>
@@ -32,6 +33,7 @@
         <record id="ac_12" model="acceptability.criteria">
             <field name="name">criterion 1.2</field>
             <field name="scenario">sc 1.2</field>
+            <field name="sequence_ac">2</field>
             <field name="accep_crit_id" ref="us_1"/>
             <field name="accepted">True</field>
             <field name="difficulty">high</field>
@@ -40,6 +42,7 @@
         <record id="ac_21" model="acceptability.criteria">
             <field name="name">criterion 2.1</field>
             <field name="scenario">sc 2.1</field>
+            <field name="sequence_ac">1</field>
             <field name="accep_crit_id" ref="us_2"/>
             <field name="development">True</field>
         </record>
@@ -47,6 +50,7 @@
         <record id="ac_22" model="acceptability.criteria">
             <field name="name">criterion 2.2</field>
             <field name="scenario">sc 2.2</field>
+            <field name="sequence_ac">2</field>
             <field name="accep_crit_id" ref="us_2"/>
             <field name="difficulty">medium</field>
         </record>
@@ -54,6 +58,7 @@
         <record id="ac_31" model="acceptability.criteria">
             <field name="name">criterion 3.1</field>
             <field name="scenario">sc 3.1</field>
+            <field name="sequence_ac">1</field>
             <field name="accep_crit_id" ref="us_3"/>
             <field name="difficulty">low</field>
         </record>

@@ -22,11 +22,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # #########################################################################
 
-from openerp.osv import osv
-from openerp.tools.translate import _
+from openerp import models, api, _
 
 
-class MessagePostShowAll(osv.Model):
+class MessagePostShowAll(models.Model):
 
     """With this object you can add an extensive log in your model like the
     traditional message log don't does
@@ -40,8 +39,9 @@ class MessagePostShowAll(osv.Model):
     _inherit = ['mail.thread']
 
     # pylint: disable=W0622
-    def get_last_value(self, cr, uid, ids, model=None, field=None,
-                       field_type=None, context=None):
+    @api.model
+    def get_last_value(self, ids, model=None, field=None,
+                       fieldtype=None):
         """Return the last value of a record in the model to show a post with the
         change
         @param ids: int with id record
@@ -50,25 +50,24 @@ class MessagePostShowAll(osv.Model):
 
         return the value of the field
         """
-        context = context or {}
 
         field = ids and field or []
-        model_obj = self.pool.get(model)
-        model_brw = model_obj.browse(cr, uid, ids, context=context)
-        if 'many2one' in field_type:
+        model_obj = self.env[model]
+        model_brw = model_obj.browse(ids)
+        if 'many2one' in fieldtype:
             value = field and model_brw[field] and \
                 model_brw[field].name_get() or ''
             value = value and value[0][1]
-        elif 'many2many' in field_type:
+        elif 'many2many' in fieldtype:
             value = [i.id for i in model_brw[field]]
         else:
             value = field and model_brw[field] or ''
 
         return field and value or ''
 
-    def prepare_many_info(self, cr, uid, ids, records, string, n_obj,
-                          last=None, context=None):
-        context = context or {}
+    @api.model
+    def prepare_many_info(self, ids, records, string, n_obj,
+                          last=None):
         info = {
             0: _('Created New Line'),
             1: _('Updated Line'),
@@ -77,22 +76,27 @@ class MessagePostShowAll(osv.Model):
             6: _('many2many'),
         }
         message = '<ul>'
-        obj = self.pool.get(n_obj)
+        obj = self.env[n_obj]
         r_name = obj._rec_name
-        mes = False
+        mes = ''
+        last = last or []
         for val in records:
             if val and info.get(val[0], False):
                 if val[0] == 0:
                     value = val[2]
-                    message = u'%s\n<li><b>%s<b>: %s</li>' % \
-                        (message, info.get(val[0]), value.get(r_name),)
+                    message = '%s\n<li><b>%s<b>: %s</li>' % \
+                        (self.get_encode_value(message),
+                         self.get_encode_value(info.get(val[0])),
+                         self.get_encode_value(value.get(r_name)))
                 elif val[0] in (2, 3):
-                    model_brw = obj.browse(cr, uid, val[1], context=context)
+                    model_brw = obj.browse(val[1])
                     last_value = model_brw.name_get()
                     last_value = last_value and last_value[0][1]
                     value = val[1]
-                    message = u'%s\n<li><b>%s<b>: %s</li>' % \
-                        (message, info.get(val[0]), last_value)
+                    message = '%s\n<li><b>%s<b>: %s</li>' % \
+                        (self.get_encode_value(message),
+                         self.get_encode_value(info.get(val[0])),
+                         self.get_encode_value(last_value))
 
                 elif val[0] == 6:
                     lastv = list(set(val[2]) - set(last))
@@ -100,132 +104,191 @@ class MessagePostShowAll(osv.Model):
                     add = _('Added')
                     delete = _('Deleted')
                     if lastv and not new:
-                        dele = [obj.name_get(cr, uid, [i])[0][1]
+                        dele = [obj.browse(i).name_get()[0][1]
                                 for i in lastv]
                         mes = ' - '.join(dele)
-                        message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                            (message, add, string, mes)
+                        message = '%s\n<li><b>%s %s<b>: %s</li>' % \
+                            (self.get_encode_value(message),
+                             self.get_encode_value(add),
+                             self.get_encode_value(string),
+                             self.get_encode_value(mes))
                     if not lastv and new:
 
-                        dele = [obj.name_get(cr, uid, [i])[0][1] for i in new]
+                        dele = [obj.browse(i).name_get()[0][1] for i in new]
                         mes = '-'.join(dele)
-                        message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                            (message, delete, string, mes)
+                        message = '%s\n<li><b>%s %s<b>: %s</li>' % \
+                            (self.get_encode_value(message),
+                             self.get_encode_value(delete),
+                             self.get_encode_value(string),
+                             self.get_encode_value(mes))
 
                 elif val[0] == 1:
                     vals = val[2]
                     id_line = 0
                     for field in vals:
-                        if obj._columns[field]._type in ('one2many',
-                                                         'many2many'):
-                            is_many = obj._columns[field]._type == 'many2many'
+                        if obj._fields[field].type in \
+                                ('one2many', 'many2many'):
+                            is_many = obj._fields[field].type == 'many2many'
 
                             last_value = is_many and self.get_last_value(
-                                cr, uid, val[1], n_obj, field, 'many2many',
-                                context)
-                            field_str = obj._columns[field].string
-                            new_n_obj = obj._columns[field]._obj
-                            mes = self.prepare_many_info(cr, uid, val[1],
+                                val[1], n_obj, field, 'many2many')
+                            field_str = self.get_string_by_field(obj, field)
+                            new_n_obj = obj._fields[field].comodel_name
+                            mes = self.prepare_many_info(val[1],
                                                          vals[field],
                                                          field_str,
                                                          new_n_obj,
-                                                         last_value,
-                                                         context)
+                                                         last_value)
 
-                        elif obj._columns[field]._type == 'many2one':
-                            mes = self.prepare_many2one_info(cr, uid, val[1],
+                        elif obj._fields[field].type == 'many2one':
+                            mes = self.prepare_many2one_info(val[1],
                                                              n_obj,
                                                              field,
-                                                             vals,
-                                                             context)
+                                                             vals)
 
-                        elif 'many' not in obj._columns[field]._type:
-                            mes = self.prepare_simple_info(cr, uid, val[1],
+                        elif 'many' not in obj._fields[field].type:
+                            mes = self.prepare_simple_info(val[1],
                                                            n_obj, field,
-                                                           vals, context)
+                                                           vals)
                         if mes and mes != '<p>':
                             message = id_line != val[1] and \
                                 _('%s\n<h3>Line %s</h3>' % (message, val[1])) \
                                 or message
-                            message = '%s\n%s' % (message, mes)
+                            message = '%s\n%s' % \
+                                (self.get_encode_value(message),
+                                 mes)
                             id_line = val[1]
 
-        message = '%s\n</ul>' % message
+        message = '%s\n</ul>' % self.get_encode_value(message)
         return message
 
-    def prepare_many2one_info(self, cr, uid, ids, n_obj, field, vals,
-                              context=None):
-        context = context or {}
-        obj = self.pool.get(n_obj)
+    @api.model
+    def get_selection_value(self, source_obj, field, value):
+        """Get the string of a selection field using
+        fields_get method to get the string
+
+        @param source_obj: Model that contains the field
+        @type source_obj: RecordSet
+        @param field: Database name of the field
+        @type field: str or unicode
+        @param value: Database value used to find its the
+                      string in the selection
+        @type value: str or unicode
+
+        @returns: String shown in the selection field
+        @rtype: str
+        """
+        val = source_obj.fields_get([field])
+        val = val and val.get(field, {})
+        val = val and val.get('selection', ()) or ()
+        val = [i[1] for i in val if value in i]
+        val = val and val[0] or ''
+        return val.encode('utf-8', 'ignore')
+
+    @api.model
+    def get_string_by_field(self, source_obj, field):
+        """Get the string of a field using fields_get method to
+        get the string depending of the user lang
+
+        @param source_obj: Model that contains the field
+        @type source_obj: RecordSet
+        @param field: Database name of the field
+        @type field: str or unicode
+
+        @returns: String of the field shown in the views
+        @rtype: str
+        """
+        description = source_obj.fields_get([field])
+        description = description and description.get(field, {})
+        description = description and description.get('string', '') or ''
+        return description.encode('utf-8', 'ignore')
+
+    @api.model
+    def prepare_many2one_info(self, ids, n_obj, field, vals):
+        obj = self.env[n_obj]
         message = '<p>'
 
         last_value = self.get_last_value(
-            cr, uid, ids, obj._name, field, obj._columns[field]._type, context)
-        model_obj = self.pool.get(obj._columns[field]._obj)
-        model_brw = model_obj.browse(cr, uid, vals[field], context=context)
+            ids, obj._name, field, obj._fields[field].type)
+        model_obj = self.env[obj._fields[field].comodel_name]
+        model_brw = model_obj.browse(vals[field])
         new_value = model_brw.name_get()
         new_value = new_value and new_value[0][1]
 
         if not (last_value == new_value) and any((new_value, last_value)):
-            message = u'<li><b>%s<b>: %s → %s</li>' % \
-                (obj._columns[field].string,
-                 last_value,
-                 new_value)
+            message = '<li><b>%s<b>: %s → %s</li>' % \
+                (self.get_string_by_field(obj, field),
+                 self.get_encode_value(last_value),
+                 self.get_encode_value(new_value))
         return message
 
-    def prepare_simple_info(self, cr, uid, ids, n_obj, field,
-                            vals, context=None):
-        context = context or {}
-        obj = self.pool.get(n_obj)
+    @staticmethod
+    def get_encode_value(value):
+        """Encode string values to avoid unicode errors
+        @param value: Any object to try encode the value
+        @type value: str bool date
+        """
+        val = value
+        if isinstance(value, (unicode)):
+            val = value.encode('utf-8', 'ignore')
+        return val
+
+    @api.model
+    def prepare_simple_info(self, ids, n_obj, field,
+                            vals):
+        obj = self.env[n_obj]
         message = '<p>'
         last_value = self.get_last_value(
-            cr, uid, ids, obj._name, field, obj._columns[field]._type, context)
+            ids, obj._name, field, obj._fields[field].type)
 
-        if (not (unicode(last_value) == unicode(vals[field]))
-                and any((last_value, vals[field]))):
-            message = u'<li><b>%s<b>: %s → %s</li>' % \
-                (obj._columns[field].string,
-                 last_value,
-                 vals[field])
+        last_value = obj._fields[field].type == 'selection' and \
+            self.get_selection_value(obj, field, last_value) or last_value
+        new_value = obj._fields[field].type == 'selection' and \
+            self.get_selection_value(obj, field, vals[field]) or vals[field]
+        last_value = self.get_encode_value(last_value)
+        new_value = self.get_encode_value(new_value)
+
+        message = ((last_value != new_value) and
+                   any((last_value, vals[field]))) and \
+            '<li><b>%s<b>: %s → %s</li>' % \
+            (self.get_string_by_field(obj, field), last_value,
+             new_value) or '<p>'
         return message
 
     # pylint: disable=W0106
-    def write(self, cr, uid, ids, vals, context=None):
-        context = context or {}
-        for idx in ids:
+    @api.multi
+    def write(self, vals):
+        for idx in self:
             body = '<ul>'
-            message = False
+            message = ''
             for field in vals:
-
-                if self._columns[field]._type in ('one2many', 'many2many'):
-                    is_many = self._columns[field]._type == 'many2many'
+                if self._fields[field].type in ('one2many', 'many2many'):
+                    is_many = self._fields[field].type == 'many2many'
 
                     last_value = is_many and self.get_last_value(
-                        cr, uid, idx, self._name, field, 'many2many', context)
-                    field_str = self._columns[field].string
-                    n_obj = self._columns[field]._obj
+                        idx.id, self._name, field, 'many2many')
+                    field_str = self.get_string_by_field(self, field)
+                    n_obj = self._fields[field].comodel_name
                     message = self.prepare_many_info(
-                        cr, uid, idx, vals[field], field_str, n_obj,
-                        last_value, context)
+                        idx.id, vals[field], field_str, n_obj,
+                        last_value)
                     body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (
-                        body, field_str, message)
+                        body, field_str, message) or body
 
-                elif self._columns[field]._type == 'many2one':
-                    message = self.prepare_many2one_info(cr, uid, idx,
+                elif self._fields[field].type == 'many2one':
+                    message = self.prepare_many2one_info(idx.id,
                                                          self._name,
                                                          field,
-                                                         vals,
-                                                         context)
+                                                         vals)
                     body = '%s\n%s' % (body, message)
 
-                elif 'many' not in self._columns[field]._type:
+                elif 'many' not in self._fields[field].type:
                     message = self.prepare_simple_info(
-                        cr, uid, idx, self._name, field, vals, context)
+                        idx.id, self._name, field, vals)
                     body = '%s\n%s' % (body, message)
 
             body = body and '%s\n</ul>' % body
             if body and message:
-                self.message_post(cr, uid, [idx], body, _('Changes in Fields'))
-        res = super(MessagePostShowAll, self).write(cr, uid, ids, vals,
-                                                    context=context)
+                idx.message_post(body, _('Changes in Fields'))
+        res = super(MessagePostShowAll, self).write(vals)
         return res

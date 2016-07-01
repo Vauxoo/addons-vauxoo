@@ -36,48 +36,65 @@ class TestUserStory(TransactionCase):
             'use_tasks': True,
         })
         # Try that a user without user story group cannot create an user story
-        self.assertRaises(except_orm, self.story.create, cr, user_test_id,
-                          {
-                              'name': 'User Story Test',
-                              'owner_id': user_test_id,
-                              'project_id': project_id,
-                              # Adding user story group to the user created
-                              # previously
-                              'accep_crit_ids': [(0, 0,
-                                                  {'name': 'Criterial Test 1',
-                                                   'scenario': 'Test 1'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 2',
-                                                   'scenario': 'Test 2'}),
-                                                 (0, 0,
-                                                  {'name': 'Criterial Test 3',
-                                                   'scenario': 'Test 3'}),
-                                                 ]
-                          })
+        self.assertRaises(except_orm, self.story.create, cr, user_test_id, {
+            'name': 'User Story Test',
+            'owner_id': user_test_id,
+            'project_id': project_id,
+            # Adding user story group to the user created
+            # previously
+            'accep_crit_ids': [
+                (0, 0, {
+                    'name': 'Criterial Test 1',
+                    'scenario': 'Test 1',
+                    'sequence_ac': 1}),
+                (0, 0, {
+                    'name': 'Criterial Test 2',
+                    'scenario': 'Test 2',
+                    'sequence_ac': 2}),
+                (0, 0, {
+                    'name': 'Criterial Test 3',
+                    'scenario': 'Test 3',
+                    'sequence_ac': 3}),
+            ]})
         # Adding user story group to the user created previously
         self.user.write(cr, SUPERUSER_ID, [user_test_id], {
             'groups_id': [(4, us_manager_group.id)]
         })
         # Try that a user with user story group can create a user story,  this
         # group must allow create user story without problems
-        self.assertTrue(self.story.create(cr, user_test_id, {
+        us_create = self.story.create(cr, user_test_id, {
             'name': 'User Story Test',
             'owner_id': user_test_id,
             'project_id': project_id,
-            'accep_crit_ids': [(0, 0,
-                                {'name': 'Criterial Test 1',
-                                 'scenario': 'Test 1'}),
-                               (0, 0,
-                                {'name': 'Criterial Test 2',
-                                 'scenario': 'Test 2'}),
-                               (0, 0,
-                                {'name': 'Criterial Test 3',
-                                 'scenario': 'Test 3'}),
-                               ]
-
-        }, self.context),
+            'accep_crit_ids': [
+                (0, 0, {
+                    'name': 'Criterial Test 1',
+                    'scenario': 'Test 1',
+                    'sequence_ac': 1}),
+                (0, 0, {
+                    'name': 'Criterial Test 2',
+                    'scenario': 'Test 2',
+                    'sequence_ac': 2}),
+                (0, 0, {
+                    'name': 'Criterial Test 3',
+                    'scenario': 'Test 3',
+                    'sequence_ac': 3}),
+            ]
+        }, self.context)
+        self.assertTrue(
+            us_create,
             "An user with user story group manager cannot create an"
             " user story")
+        # Test sequence acceptability criteria
+        # You create the context manually
+        context_ac = self.context.copy()
+        us_ac_ids = self.story.browse(cr, user_test_id, us_create)
+        ac_l_v = [[us_create, ac.id, False] for ac in us_ac_ids.accep_crit_ids]
+        context_ac.update({'accep_crit_ids': ac_l_v})
+        seq_ac = self.criterial._get_default_sequence(cr,
+                                                      user_test_id,
+                                                      context_ac)
+        self.assertEqual(seq_ac, 4, 'Sequence should be equal 4')
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_write_method(self):
@@ -101,12 +118,18 @@ class TestUserStory(TransactionCase):
             'owner_id': user_test_id,
             'project_id': project_id,
             'accep_crit_ids': [
-                (0, 0, {'name': 'Criterial Test 1',
-                        'scenario': 'Test 1'}),
-                (0, 0, {'name': 'Criterial Test 2',
-                        'scenario': 'Test 2'}),
-                (0, 0, {'name': 'Criterial Test 3',
-                        'scenario': 'Test 3'}),
+                (0, 0, {
+                    'name': 'Criterial Test 1',
+                    'scenario': 'Test 1',
+                    'sequence_ac': 1}),
+                (0, 0, {
+                    'name': 'Criterial Test 2',
+                    'scenario': 'Test 2',
+                    'sequence_ac': 2}),
+                (0, 0, {
+                    'name': 'Criterial Test 3',
+                    'scenario': 'Test 3',
+                    'sequence_ac': 3}),
             ]})
         # Try that a user without user story group cannot write an user story
         self.assertRaises(except_orm, self.story.write, cr,
@@ -120,9 +143,10 @@ class TestUserStory(TransactionCase):
         })
         # Try that a user with user story group can write a user story,  this
         # group must allow create user story without problems
-        self.assertTrue(self.story.write(cr, user_test_id, [story_id], {
-            'name': 'User Story Test Changed',
-        }, self.context),
+        self.assertTrue(
+            self.story.write(cr, user_test_id, [story_id], {
+                'name': 'User Story Test Changed',
+                }, self.context),
             "An user with user story group manager cannot write an user story")
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
@@ -147,12 +171,18 @@ class TestUserStory(TransactionCase):
             'owner_id': user_test_id,
             'project_id': project_id,
             'accep_crit_ids': [
-                (0, 0, {'name': 'Criterial Test 1',
-                        'scenario': 'Test 1'}),
-                (0, 0, {'name': 'Criterial Test 2',
-                        'scenario': 'Test 2'}),
-                (0, 0, {'name': 'Criterial Test 3',
-                        'scenario': 'Test 3'}),
+                (0, 0, {
+                    'name': 'Criterial Test 1',
+                    'scenario': 'Test 1',
+                    'sequence_ac': 1}),
+                (0, 0, {
+                    'name': 'Criterial Test 2',
+                    'scenario': 'Test 2',
+                    'sequence_ac': 2}),
+                (0, 0, {
+                    'name': 'Criterial Test 3',
+                    'scenario': 'Test 3',
+                    'sequence_ac': 3}),
             ]})
         # Try that a user without user story group cannot remove an user story
         self.assertRaises(except_orm, self.story.unlink,
@@ -189,12 +219,18 @@ class TestUserStory(TransactionCase):
             'owner_id': user_test_id,
             'project_id': project_id,
             'accep_crit_ids': [
-                (0, 0, {'name': 'Criterial Test 1',
-                        'scenario': 'Test 1'}),
-                (0, 0, {'name': 'Criterial Test 2',
-                        'scenario': 'Test 2'}),
-                (0, 0, {'name': 'Criterial Test 3',
-                        'scenario': 'Test 3'}),
+                (0, 0, {
+                    'name': 'Criterial Test 1',
+                    'scenario': 'Test 1',
+                    'sequence_ac': 1}),
+                (0, 0, {
+                    'name': 'Criterial Test 2',
+                    'scenario': 'Test 2',
+                    'sequence_ac': 2}),
+                (0, 0, {
+                    'name': 'Criterial Test 3',
+                    'scenario': 'Test 3',
+                    'sequence_ac': 3}),
             ]})
         # Try that a user without user story group cannot copy an user story
         self.assertRaises(except_orm, self.story.copy, cr,

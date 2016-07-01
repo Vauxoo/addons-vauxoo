@@ -38,6 +38,7 @@
         "analytic",
         "account_move_line_base_tax",
         "account_cancel",
+        "base_action_rule",
     ],
     "demo": [
         "demo/account_voucher_tax_demo.xml"
@@ -45,7 +46,8 @@
     "data": [
         "account_tax_view.xml",
         "account_voucher_tax_view.xml",
-        "security/ir.model.access.csv"
+        "security/ir.model.access.csv",
+        "data/ir_actions_server.xml",
     ],
     "test": [
         "test/account_voucher_taxes.yml",

@@ -88,8 +88,9 @@
               <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('approved','=',True)]}" placeholder="Add a description here ..." widget="html"/>
               <h1><label for="accep_crit_ids" string="4.- Acceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1" context="{'accep_crit_ids': accep_crit_ids}">
-                <tree string="Acceptability Criteria" editable="bottom" default_order="sequence_ac">
-                  <field name="sequence_ac"/>
+                <tree string="Acceptability Criteria" editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="sequence_ac" string="Seq"/>
                   <field name="name"/>
                   <field name="scenario"/>
                   <field name="accepted"/>
@@ -253,6 +254,7 @@
             <tree string="Acceptability Criteria">
                 <field name="id"/>
                 <field name="us_ac_numbers"/>
+                <field name="sequence_ac"/>
                 <field name="name"/>
                 <field name="scenario"/>
                 <field name="accep_crit_id"/>
@@ -281,6 +283,7 @@
                 <group string="Filter">
                     <field name="us_ac_numbers"/>
                     <field name="id"/>
+                    <field name="sequence_ac"/>
                     <field name="name"/>
                     <field name="scenario"/>
                     <field name="accep_crit_id"/>

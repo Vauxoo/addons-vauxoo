@@ -307,3 +307,16 @@ msgstr "Ayuda"
 #: model:account.tax,name:account_voucher_tax.account_voucher_tax_purchase_iva10_rete_isr
 msgid "WITHHOLDING ISR 10% - Test"
 msgstr "RETENCIÓN ISR 10% - Prueba"
+
+#. module: account_voucher_tax
+#: code:addons/account_voucher_tax/account_move_line.py:46
+#, python-format
+msgid "Rounding amount is too high  %s and payment bank %s"
+msgstr "Monto de redondeo es muy grande  %s y el pago es por  %s"
+
+#. module: account_voucher_tax
+#: code:addons/account_voucher_tax/account_move_line.py:45
+#, python-format
+msgid "Warning!"
+msgstr "Advertencia!"
+

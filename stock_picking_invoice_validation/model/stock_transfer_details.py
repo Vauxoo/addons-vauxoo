@@ -17,59 +17,54 @@ class StockTansferDetails(models.TransientModel):
 
     @api.multi
     def get_chec_inv_pick(self):
-        key = "stock.check_inv_pick"
-        check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='check')
+        check_inv_pick = self.env.user.company_id.check_invoice
         for record in self:
             record.check_inv_pick = check_inv_pick
     invoice_id = fields.Many2one(
         'account.invoice', string='Invoice to validate')
     picking_type_code = fields.Char(
         string='Picking Type Code', related='picking_id.picking_type_code')
-    check_inv_pick = fields.Char(
+    check_inv_pick = fields.Boolean(
         "Check invoice vs picking", compute=get_chec_inv_pick)
 
     @api.multi
     def do_detailed_transfer(self):
-        key = "stock.check_inv_pick"
-        check_inv_pick = self.env["ir.config_parameter"].get_param(
-            key, default='check')
-        if not check_inv_pick == 'check':
+        check_inv_pick = self.env.user.company_id.check_invoice
+        if not check_inv_pick:
             res = super(StockTansferDetails, self).do_detailed_transfer()
             return res
         for transfer in self:
-            if transfer.picking_type_code == 'outgoing' and \
-                    transfer.picking_id.check_invoice == 'check':
-                invoice = transfer.invoice_id
-                old_invoice = self.env['stock.picking'].search(
-                    [('picking_type_code', '=', 'outgoing'),
-                     ('invoice_id', '=', invoice.id)])
-                if old_invoice:
-                    msg = _(
-                        'You cannot transfer the current picking, '
-                        'because the invoice is already registered with the '
-                        'picking %s') % (transfer.picking_id.name)
-                    raise exceptions.Warning(
-                        ('Warning!'), msg)
-                if len(transfer.item_ids) == len(invoice.invoice_line):
-                    lines = [(line.product_id, line.quantity)
-                             for line in invoice.invoice_line]
-                    moves = [(move.product_id, move.quantity)
-                             for move in transfer.item_ids]
-                    if lines != moves:
-                        raise exceptions.Warning(
-                            _('Warning!'),
-                            _('Incorrect Invoice, '
-                              'products and quantities are different '
-                              'between moves and invoice lines.'))
-                    else:
-                        transfer.picking_id.invoice_id = invoice.id
-                        res = super(
-                            StockTansferDetails, self).do_detailed_transfer()
-                        return res
-                else:
-                    raise exceptions.Warning(
-                        _('Warning!'), _('Incorrect Invoice'))
-            else:
+            if transfer.picking_type_code != 'outgoing' or \
+                    transfer.picking_id.check_invoice is False:
                 res = super(StockTansferDetails, self).do_detailed_transfer()
                 return res
+            invoice = transfer.invoice_id
+            old_invoice = self.env['stock.picking'].search(
+                [('picking_type_code', '=', 'outgoing'),
+                 ('invoice_id', '=', invoice.id)])
+            if old_invoice:
+                msg = _(
+                    'You cannot transfer the current picking, '
+                    'because the invoice is already registered with the '
+                    'picking %s') % (transfer.picking_id.name)
+                raise exceptions.Warning(
+                    _('Warning!'), msg)
+            tran_dict = {}
+            for item in transfer.item_ids:
+                qty = tran_dict.get(item.product_id.id, 0) + item.quantity
+                tran_dict.update({item.product_id.id: qty})
+            inv_dict = {}
+            for item in invoice.invoice_line.filtered(
+                    lambda r: r.product_id.type in ('consu', 'product')):
+                qty = inv_dict.get(item.product_id.id, 0) + item.quantity
+                inv_dict.update({item.product_id.id: qty})
+            if inv_dict != tran_dict:
+                raise exceptions.Warning(
+                    _('Warning!'),
+                    _('Incorrect Invoice, '
+                      'products and quantities are different '
+                      'between moves and invoice lines.'))
+            transfer.picking_id.invoice_id = invoice.id
+            res = super(
+                StockTansferDetails, self).do_detailed_transfer()
+            return res

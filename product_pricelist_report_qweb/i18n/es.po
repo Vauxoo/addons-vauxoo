@@ -51,6 +51,11 @@ msgid "Exp. Marg. Sale (%)"
 msgstr "Exp. Marg. Sale (%)"
 
 #. module: product_pricelist_report_qweb
+#: help:product.price_list,products_with_price:0
+msgid "If this field is active, only will to add the products that have price."
+msgstr "Si se activa este campo, solo se mostrarán los productos que tengan precio en el reporte."
+
+#. module: product_pricelist_report_qweb
 #: help:product.price_list,only_prod_pricelist:0
 msgid "If you active this field the products that are not in pricelist will have in the report the price in zero"
 msgstr "Si se activa este campo los productos que no están el la lista de precios tendrán un 0 en el reporte"
@@ -62,8 +67,13 @@ msgstr "Márgenes"
 
 #. module: product_pricelist_report_qweb
 #: field:product.price_list,only_prod_pricelist:0
-msgid "Only products in  pricelist"
+msgid "Only products in pricelist"
 msgstr "Solo productos en la lista de precios"
+
+#. module: product_pricelist_report_qweb
+#: field:product.price_list,products_with_price:0
+msgid "Only products with price"
+msgstr "Solo productos con precio"
 
 #. module: product_pricelist_report_qweb
 #: view:product.price_list:product_pricelist_report_qweb.view_product_price_list

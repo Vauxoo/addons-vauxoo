@@ -38,10 +38,11 @@ class MrpProduction(models.Model):
         self.ensure_one()
         msg = ''
         if not self.routing_id:
-            msg_journal = _('Please set a Journal in BoM: {bom} to book '
-                            'Production Cost Journal Entries\n')
-            if not self.bom_id.journal_id:
-                msg += msg_journal.format(bom=self.bom_id.name)
+            msg_journal = _(
+                'Please set a Journal in Product Category: {cat} to book '
+                'Production Cost Journal Entries\n')
+            if not self.product_id.categ_id.property_stock_journal:
+                msg += msg_journal.format(cat=self.product_id.categ_id.name)
             if msg:
                 raise UserError(msg)
             return True
@@ -141,7 +142,7 @@ class MrpProduction(models.Model):
         am_obj = self.env['account.move']
         date = fields.Date.context_today(self)
         journal_id = self.routing_id and self.routing_id.journal_id or \
-            self.bom_id.journal_id
+            self.product_id.categ_id.property_stock_journal
         vals = {
             'journal_id': journal_id.id,
             'period_id': ap_obj.with_context(ctx).find(date)[:1].id,

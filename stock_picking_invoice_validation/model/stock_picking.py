@@ -16,10 +16,5 @@ class StockPicking(models.Model):
 
     invoice_id = fields.Many2one(
         string="Verified Invoice", comodel_name='account.invoice',
-        ondelete='set null',
-        readonly=True,)
-    check_invoice = fields.Selection(
-        [('check', 'Check'),
-         ('no_check', 'No Check')],
-        readonly=True,
-        default="no_check")
+        ondelete='set null', readonly=True,)
+    check_invoice = fields.Boolean(readonly=True, default=False)

@@ -33,7 +33,9 @@
     "depends": [
         "stock"
     ],
-    "demo": [],
+    "demo": [
+        'demo/stock_location_demo.xml',
+    ],
     "data": [
         "view/stock_view.xml",
     ],

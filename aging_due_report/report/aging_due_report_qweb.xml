@@ -71,7 +71,7 @@
                        </tr>
                     </table>
                     <t t-foreach="objects" t-as="o">
-                      <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%" id="table_body">
+                      <table class="table_column_border table_title_bg_color" width="100%" id="table_body">
                         <t t-foreach="o.currency_ids" t-as="c_obj">
                             <tr>
                                 <th width="12%" class="ITEMSTITLELEFT">TIN</th>
@@ -145,23 +145,42 @@
                                 </th>
                             </tr>
                             <t t-foreach="c_obj.partner_ids" t-as="p_obj">
-                                <tr>
-                                    <td class="ITEMSLEFT">
-                                        <span t-esc="(p_obj.partner_id.vat and p_obj.partner_id.vat[2:] or '').upper()"/>
-                                    </td>
-                                    <td class="ITEMSLEFT">
-                                        <b><span t-esc="p_obj.partner_id.name"/></b>
-                                    </td>
-                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.not_due, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span01, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span02, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span03, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span04, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span05, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.residual, digits=2, grouping=True)"/></td>
-                                </tr>
+                                <t t-if='p_obj_parity == "even"'>
+                                    <tr class="table_alter_color_row1">
+                                        <td class="ITEMSLEFT">
+                                            <span t-esc="(p_obj.partner_id.vat and p_obj.partner_id.vat[2:] or '').upper()"/>
+                                        </td>
+                                        <td class="ITEMSLEFT">
+                                            <b><span t-esc="p_obj.partner_id.name"/></b>
+                                        </td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.not_due, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span01, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span02, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span03, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span04, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span05, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.residual, digits=2, grouping=True)"/></td>
+                                    </tr>
+                                </t>
+                                <t t-if='p_obj_parity == "odd"'>
+                                    <tr class="table_alter_color_row2">
+                                        <td class="ITEMSLEFT">
+                                            <span t-esc="(p_obj.partner_id.vat and p_obj.partner_id.vat[2:] or '').upper()"/>
+                                        </td>
+                                        <td class="ITEMSLEFT">
+                                            <b><span t-esc="p_obj.partner_id.name"/></b>
+                                        </td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.not_due, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span01, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span02, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span03, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span04, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.span05, digits=2, grouping=True)"/></td>
+                                        <td class="ITEMSRIGHT"><span t-esc="formatLang(p_obj.residual, digits=2, grouping=True)"/></td>
+                                    </tr>
+                                </t>
                             </t>
-                            <tr>
+                            <tr class="panel strong">
                                 <td class="ITEMSLEFT">
                                 </td>
                                 <td class="ITEMSRIGHT"><span t-esc="'TOTAL'"/></td>
@@ -172,9 +191,6 @@
                                 <td class="ITEMSRIGHT"><span t-esc="formatLang(c_obj.span04, digits=2, grouping=True)"/></td>
                                 <td class="ITEMSRIGHT"><span t-esc="formatLang(c_obj.span05, digits=2, grouping=True)"/></td>
                                 <td class="ITEMSRIGHT"><span t-esc="formatLang(c_obj.residual, digits=2, grouping=True)"/></td>
-                            </tr>
-                            <tr>
-                                <td/>
                             </tr>
                         </t>
                       </table>

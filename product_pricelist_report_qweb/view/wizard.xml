@@ -20,6 +20,9 @@
                     <group>
                         <field name="only_prod_pricelist"/>
                     </group>
+                    <group>
+                        <field name="products_with_price"/>
+                    </group>
                 </xpath>
                 <xpath expr="//field[@name='qty1']" position="attributes">
                     <attribute name="attrs">{'readonly': ['|',('margin_sale','=',True),('margin_cost','=',True)],'invisible': ['|',('margin_sale','=',True),('margin_cost','=',True)]}</attribute>
