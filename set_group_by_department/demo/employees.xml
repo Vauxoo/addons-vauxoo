@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!--Users-->
+        <record model="res.users" id="user_employee_1" context="{'no_reset_password': True}">
+            <field name="name">Peter Partner Manager User</field>
+            <field name="login">peter@company.com</field>
+            <field name="email">peter@company.com</field>
+            <field name="company_id"
+                eval="ref('base.main_company')"/>
+            <field name="company_ids"
+                eval="[(4, ref('base.main_company'))]"/>
+            <field name="groups_id"
+                eval="[(4, ref('base.group_hr_manager'))]"/>
+        </record>
+
+        <record model="res.users" id="user_employee_2" context="{'no_reset_password': True}">
+            <field name="name">Maria White User</field>
+            <field name="login">maria@company.com</field>
+            <field name="company_id"
+                eval="ref('base.main_company')"/>
+            <field name="company_ids"
+                eval="[(4, ref('base.main_company'))]"/>
+            <field name="groups_id"
+                eval="[(4, ref('base.group_hr_user'))]"/>
+        </record>
+
+        <record model="res.users" id="user_employee_3" context="{'no_reset_password': True}">
+            <field name="name">Nina Anders User</field>
+            <field name="login">nina@company.com</field>
+            <field name="company_id"
+                eval="ref('base.main_company')"/>
+            <field name="company_ids"
+                eval="[(4, ref('base.main_company'))]"/>
+            <field name="groups_id"
+                eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!--Employees-->
+        <record id="employee_1" model="hr.employee">
+            <field name="name">Peter Parker</field>
+            <field name="user_id" ref="user_employee_1"/>
+            <field name="department_id" ref="hr.dep_management"/>
+            <field name="job_id" ref="hr.job_ceo"/>
+            <field name="category_ids" eval="[(6, 0, [ref('hr.employee_category_2')])]"/>
+            <field name="work_location">Grand-Road</field>
+            <field name="work_phone">+3289810000</field>
+            <field name="work_email">peter@company.com</field>
+        </record>
+
+        <record id="employee_2" model="hr.employee">
+            <field name="name">Maria White</field>
+            <field name="user_id" ref="user_employee_2"/>
+            <field name="department_id" ref="hr.dep_management"/>
+            <field name="job_id" ref="hr.job_ceo"/>
+            <field name="category_ids" eval="[(6, 0, [ref('hr.employee_category_2')])]"/>
+            <field name="work_location">Grand-Road</field>
+            <field name="work_phone">+320021111</field>
+        </record>
+
+        <record id="employee_3" model="hr.employee">
+            <field name="name">Nina Anders</field>
+            <field name="department_id" ref="hr.dep_management"/>
+            <field name="job_id" ref="hr.job_ceo"/>
+            <field name="category_ids" eval="[(6, 0, [ref('hr.employee_category_2')])]"/>
+            <field name="work_location">Grand-Road</field>
+            <field name="work_phone">+323350000</field>
+            <field name="work_email">nina@company.com</field>
+        </record>
+
+        <record id="employee_4" model="hr.employee">
+            <field name="name">Julia Roberts</field>
+            <field name="department_id" ref="hr.dep_management"/>
+            <field name="job_id" ref="hr.job_ceo"/>
+            <field name="category_ids" eval="[(6, 0, [ref('hr.employee_category_2')])]"/>
+            <field name="work_location">Grand-Road</field>
+            <field name="work_phone">+323205555</field>
+            <field name="work_email">julia@company.com</field>
+        </record>
+
+        <record id="employee_5" model="hr.employee">
+            <field name="name">Joseph Smith</field>
+            <field name="department_id" ref="hr.dep_management"/>
+            <field name="job_id" ref="hr.job_ceo"/>
+            <field name="category_ids" eval="[(6, 0, [ref('hr.employee_category_2')])]"/>
+            <field name="work_location">Grand-Road</field>
+            <field name="work_phone">+323205555</field>
+        </record>
+    </data>
+</openerp>
+

@@ -37,22 +37,24 @@
                                     </td>
                                 </tr>
                                 <tr t-foreach="c['products']" t-as="p">
-                                    <td>
-                                        <t t-if="not p.get('code')">
-                                            <span t-esc="p['name']"/>
-                                        </t>
-                                        <t t-if="p.get('code')">
-                                            [<span t-esc="p['code']"/>] <span t-esc="p['name']"/>
-                                        </t>
-                                    </td>
-                                    <td style="text-align:right;" t-if="titles.has_key('qty1')"><strong t-esc="formatLang(p['qty1'] or 0, digits=2, grouping=3)"/></td>
-                                    <td style="text-align:right;" t-if="titles.has_key('qty2')"><strong t-esc="formatLang(p['qty2'] or 0, digits=2, grouping=3)"/></td>
-                                    <td style="text-align:right;" t-if="titles.has_key('qty3')"><strong t-esc="formatLang(p['qty3'] or 0, digits=2, grouping=3)"/></td>
-                                    <td style="text-align:right;" t-if="titles.has_key('qty4')"><strong t-esc="formatLang(p['qty4'] or 0, digits=2, grouping=3)"/></td>
-                                    <td style="text-align:right;" t-if="titles.has_key('qty5')"><strong t-esc="formatLang(p['qty5'] or 0, digits=2, grouping=3)"/></td>
-                                    <td style="text-align:right;" t-if="titles.has_key('cost')"><strong t-esc="formatLang(p['cost'] or 0, digits=2, grouping=3)"/></td>
-                                    <td style="text-align:right;" t-if="titles.has_key('margin_cost')"><strong t-esc="formatLang(p['margin_cost'] or 0, digits=2, grouping=3)"/></td>
-                                    <td style="text-align:right;" t-if="titles.has_key('margin_sale')"><strong t-esc="formatLang(p['margin_sale'] or 0, digits=2, grouping=3)"/></td>
+                                    <t t-if="not data['form'].get('products_with_price', False) or (data['form'].get('products_with_price', False) and p['qty1'])">
+                                        <td>
+                                            <t t-if="not p.get('code')">
+                                                <span t-esc="p['name']"/>
+                                            </t>
+                                            <t t-if="p.get('code')">
+                                                [<span t-esc="p['code']"/>] <span t-esc="p['name']"/>
+                                            </t>
+                                        </td>
+                                        <td style="text-align:right;" t-if="titles.has_key('qty1')"><strong t-esc="formatLang(p['qty1'] or 0, digits=2, grouping=3)"/></td>
+                                        <td style="text-align:right;" t-if="titles.has_key('qty2')"><strong t-esc="formatLang(p['qty2'] or 0, digits=2, grouping=3)"/></td>
+                                        <td style="text-align:right;" t-if="titles.has_key('qty3')"><strong t-esc="formatLang(p['qty3'] or 0, digits=2, grouping=3)"/></td>
+                                        <td style="text-align:right;" t-if="titles.has_key('qty4')"><strong t-esc="formatLang(p['qty4'] or 0, digits=2, grouping=3)"/></td>
+                                        <td style="text-align:right;" t-if="titles.has_key('qty5')"><strong t-esc="formatLang(p['qty5'] or 0, digits=2, grouping=3)"/></td>
+                                        <td style="text-align:right;" t-if="titles.has_key('cost')"><strong t-esc="formatLang(p['cost'] or 0, digits=2, grouping=3)"/></td>
+                                        <td style="text-align:right;" t-if="titles.has_key('margin_cost')"><strong t-esc="formatLang(p['margin_cost'] or 0, digits=2, grouping=3)"/></td>
+                                        <td style="text-align:right;" t-if="titles.has_key('margin_sale')"><strong t-esc="formatLang(p['margin_sale'] or 0, digits=2, grouping=3)"/></td>
+                                    </t>
                                 </tr>
                             </t>
                         </tbody>

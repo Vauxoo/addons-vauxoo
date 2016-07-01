@@ -164,7 +164,7 @@ class StockLandedCost(models.Model):
             'product_id': product_brw.id,
         }
 
-        name = '{name}: {memo} - AVG'
+        name = u'{name}: {memo} - AVG'
 
         if diff < 0:
             name = name.format(
@@ -328,7 +328,7 @@ class StockLandedCost(models.Model):
         # NOTE: knowing how many products that were affected, COGS was to
         # change, by this landed cost is not really necessary
 
-        name = '{name}: COGS - {memo}'
+        name = u'{name}: COGS - {memo}'
         if diff > 0:
             name = name.format(
                 name=product_brw.name, memo='[+]')
@@ -513,6 +513,13 @@ class StockLandedCost(models.Model):
 
             cost.write(
                 {'state': 'done', 'account_move_id': move_id})
+            
+            # Post the account move if the journal's auto post true
+            move_obj = self.env['account.move'].browse(move_id)
+            if move_obj.journal_id.entry_posted:
+                move_obj.post()
+                move_obj.validate()
+                
         return True
 
     @api.v7

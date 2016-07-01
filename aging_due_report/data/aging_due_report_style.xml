@@ -1,109 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data>
-		<template id="aging_due_report.style_aging_due_report">
+    <data>
+        <template id="aging_due_report.style_aging_due_report">
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #DFDFDE; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td,
-  .table_all_border > tbody > tr > th,
-  .table_all_border > tbody > tr > td,
-  .table_all_border > tfoot > tr > th,
-  .table_all_border > tfoot > tr > td {
-    border: 1px solid #DFDFDE; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #DFDFDE; }
 
 .table_title_bg_color {
-  border-collapse: collapse; }
-  .table_title_bg_color > thead > tr > th,
-  .table_title_bg_color > tbody > tr > th,
-  .table_title_bg_color > tfoot > tr > th {
-    border-bottom: 1px solid #DFDFDE;
-    border-top: 1px solid #DFDFDE;
-    background-color: #A41D35;
-    font-size: 12;
-    color: white; }
+  border-collapse: collapse;
+  border-bottom: 1px solid #DFDFDE;
+  border-top: 1px solid #DFDFDE;
+  background-color: #A41D35;
+  font-size: 12;
+  color: white; }
 
 .table_title {
   border-collapse: collapse;
-  width: 100%; }
-  .table_title > thead > tr > th,
-  .table_title > tbody > tr > th,
-  .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #DFDFDE;
-    font-size: 12;
-    color: white; }
+  width: 100%;
+  border-bottom: 2px solid #DFDFDE;
+  font-size: 12;
+  color: white; }
 
 .table_row_border {
   border-collapse: collapse;
-  width: 100%; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td,
-  .table_row_border > tbody > tr > th,
-  .table_row_border > tbody > tr > td,
-  .table_row_border > tfoot > tr > th,
-  .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #DFDFDE; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td {
-    border-bottom-width: 1px; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .table_column_border {
   border-collapse: collapse;
-  }
-  .table_column_border > thead > tr > td,
-  .table_column_border > tbody > tr > td,
-  .table_column_border > tfoot > tr > td {
-    border: 1px solid #DFDFDE;
-    border-width: 0 1px; }
-  .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
-  .table_column_border > tbody > tr > td:first-child,
-  .table_column_border > tbody > tr td + td,
-  .table_column_border > tfoot > tr > td:first-child,
-  .table_column_border > tfoot > tr td + td {
-    border-left: 0; }
-  .table_column_border > thead > tr > td:last-child,
-  .table_column_border > tbody > tr > td:last-child,
-  .table_column_border > tfoot > tr > td:last-child {
-    padding-right: 0;
-    border-right: 0; }
+  border: 1px solid #DFDFDE;
+  border-width: 0 1px; }
 
-.table_alter_color_row {
-  border-collapse: collapse; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
-    background-color: gainsboro ; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
-    background-color: whitesmoke; }
-
-.table_alter_color_column {
+.table_alter_color_row1 {
   border-collapse: collapse;
-  width: 100%; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+1) {
-    background-color: gainsboro; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+2) {
-    background-color: whitesmoke; }
+  background-color: gainsboro; }
+
+.table_alter_color_row2 {
+  border-collapse: collapse;
+  background-color: lightgray; }
+
+.table_alter_color_column1 {
+  border-collapse: collapse;
+  background-color: gainsboro; }
+
+.table_alter_color_columns2 {
+  border-collapse: collapse;
+  background-color: lightgray; }
 
 .table_only_border_top {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_top > tbody
-  > tr {
-    border-top: 1px solid #DFDFDE; }
+  width: 100%;
+  border-top: 1px solid #DFDFDE; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_bottom > tbody
-  > tr {
-    border-bottom: 1px solid #DFDFDE; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .panel {
   padding: 8px 8px;
@@ -211,7 +164,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -269,7 +222,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -292,35 +245,35 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
  .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -343,106 +296,58 @@ color: black; }
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td,
-  .table_all_border > tbody > tr > th,
-  .table_all_border > tbody > tr > td,
-  .table_all_border > tfoot > tr > th,
-  .table_all_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #1A1A1A; }
+  border: 1px solid #DFDFDE; }
 
 .table_title_bg_color {
-  border-collapse: collapse; }
-  .table_title_bg_color > thead > tr > th,
-  .table_title_bg_color > tbody > tr > th,
-  .table_title_bg_color > tfoot > tr > th {
-    /*border-bottom: 1px solid #1A1A1A;
-    border-top: 1px solid #1A1A1A;*/
-    border: 0.5px solid #FFFFFF;
-    background-color: #A41D35;
-    font-size: 12;
-    color: white; }
+  border-collapse: collapse;
+  border-bottom: 1px solid #DFDFDE;
+  border-top: 1px solid #DFDFDE;
+  background-color: #A41D35;
+  font-size: 12;
+  color: white; }
 
 .table_title {
   border-collapse: collapse;
-  width: 100%; }
-  .table_title > thead > tr > th,
-  .table_title > tbody > tr > th,
-  .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #1A1A1A;
-    font-size: 12;
-    color: white; }
+  width: 100%;
+  border-bottom: 2px solid #DFDFDE;
+  font-size: 12;
+  color: white; }
 
 .table_row_border {
   border-collapse: collapse;
-  width: 100%; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td,
-  .table_row_border > tbody > tr > th,
-  .table_row_border > tbody > tr > td,
-  .table_row_border > tfoot > tr > th,
-  .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #1A1A1A; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td {
-    border-bottom-width: 1px; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .table_column_border {
   border-collapse: collapse;
-  }
-  .table_column_border > thead > tr > td,
-  .table_column_border > tbody > tr > td,
-  .table_column_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A;
+    border: 1px solid #DFDFDE;
     border-width: 0 1px; }
-  .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
-  .table_column_border > tbody > tr > td:first-child,
-  .table_column_border > tbody > tr td + td,
-  .table_column_border > tfoot > tr > td:first-child,
-  .table_column_border > tfoot > tr td + td {
-    border-left: 0; }
-  .table_column_border > thead > tr > td:last-child,
-  .table_column_border > tbody > tr > td:last-child,
-  .table_column_border > tfoot > tr > td:last-child {
-    padding-right: 0;
-    border-right: 0; }
 
-.table_alter_color_row {
-  border-collapse: collapse; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
-    background-color: white ; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
-    background-color: white; }
-
-.table_alter_color_column {
+.table_alter_color_row1 {
   border-collapse: collapse;
-  width: 100%; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+1) {
-    background-color: gainsboro; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+2) {
-    background-color: whitesmoke; }
+  background-color: gainsboro; }
+
+.table_alter_color_row2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
+
+.table_alter_color_column1 {
+  border-collapse: collapse;
+  background-color: gainsboro; }
+
+.table_alter_color_columns2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
 
 .table_only_border_top {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_top > tbody
-  > tr {
-    border-top: 1px solid #1A1A1A; }
+  width: 100%;
+  border-top: 1px solid #DFDFDE; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_bottom > tbody
-  > tr {
-    border-bottom: 1px solid #1A1A1A; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .panel {
   padding: 8px 8px;
@@ -550,7 +455,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -608,7 +513,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -631,21 +536,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -653,7 +558,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -661,7 +566,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -675,14 +580,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .ITEMBOLD{
   background-color: lightgrey;
   font-weight: bold;
@@ -695,105 +600,58 @@ color: black; }
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td,
-  .table_all_border > tbody > tr > th,
-  .table_all_border > tbody > tr > td,
-  .table_all_border > tfoot > tr > th,
-  .table_all_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #1A1A1A; }
+  border: 1px solid #DFDFDE; }
 
 .table_title_bg_color {
-  border-collapse: collapse; }
-  .table_title_bg_color > thead > tr > th,
-  .table_title_bg_color > tbody > tr > th,
-  .table_title_bg_color > tfoot > tr > th {
-    border-bottom: 1px solid #1A1A1A;
-    border-top: 1px solid #1A1A1A;
-    background-color: #A41D35;
-    font-size: 12;
-    color: white; }
+  border-collapse: collapse;
+  border-bottom: 1px solid #DFDFDE;
+  border-top: 1px solid #DFDFDE;
+  background-color: #A41D35;
+  font-size: 12;
+  color: white; }
 
 .table_title {
   border-collapse: collapse;
-  width: 100%; }
-  .table_title > thead > tr > th,
-  .table_title > tbody > tr > th,
-  .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #1A1A1A;
-    font-size: 12;
-    color: white; }
+  width: 100%;
+  border-bottom: 2px solid #DFDFDE;
+  font-size: 12;
+  color: white; }
 
 .table_row_border {
   border-collapse: collapse;
-  width: 100%; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td,
-  .table_row_border > tbody > tr > th,
-  .table_row_border > tbody > tr > td,
-  .table_row_border > tfoot > tr > th,
-  .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #1A1A1A; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td {
-    border-bottom-width: 1px; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .table_column_border {
   border-collapse: collapse;
-  }
-  .table_column_border > thead > tr > td,
-  .table_column_border > tbody > tr > td,
-  .table_column_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A;
+    border: 1px solid #DFDFDE;
     border-width: 0 1px; }
-  .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
-  .table_column_border > tbody > tr > td:first-child,
-  .table_column_border > tbody > tr td + td,
-  .table_column_border > tfoot > tr > td:first-child,
-  .table_column_border > tfoot > tr td + td {
-    border-left: 0; }
-  .table_column_border > thead > tr > td:last-child,
-  .table_column_border > tbody > tr > td:last-child,
-  .table_column_border > tfoot > tr > td:last-child {
-    padding-right: 0;
-    border-right: 0; }
 
-.table_alter_color_row {
-  border-collapse: collapse; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
-    background-color: white ; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
-    background-color: white; }
-
-.table_alter_color_column {
+.table_alter_color_row1 {
   border-collapse: collapse;
-  width: 100%; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+1) {
-    background-color: gainsboro; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+2) {
-    background-color: whitesmoke; }
+  background-color: gainsboro; }
+
+.table_alter_color_row2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
+
+.table_alter_color_column1 {
+  border-collapse: collapse;
+  background-color: gainsboro; }
+
+.table_alter_color_columns2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
 
 .table_only_border_top {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_top > tbody
-  > tr {
-    border-top: 1px solid #1A1A1A; }
+  width: 100%;
+  border-top: 1px solid #DFDFDE; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_bottom > tbody
-  > tr {
-    border-bottom: 1px solid #1A1A1A; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .panel {
   padding: 8px 8px;
@@ -901,7 +759,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -959,7 +817,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -982,21 +840,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -1004,7 +862,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -1012,7 +870,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1027,14 +885,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .CUSTOMEROTHER {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1049,104 +907,57 @@ color: black; }
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #DFDFDE; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td,
-  .table_all_border > tbody > tr > th,
-  .table_all_border > tbody > tr > td,
-  .table_all_border > tfoot > tr > th,
-  .table_all_border > tfoot > tr > td {
-    border: 1px solid #DFDFDE; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #DFDFDE; }
 
 .table_title_bg_color {
-  border-collapse: collapse; }
-  .table_title_bg_color > thead > tr > th,
-  .table_title_bg_color > tbody > tr > th,
-  .table_title_bg_color > tfoot > tr > th {
-    border-bottom: 1px solid #DFDFDE;
-    border-top: 1px solid #DFDFDE;
-    background-color: #A41D35;
-    font-size: 12;
-    color: white; }
+  border-collapse: collapse;
+  border-bottom: 1px solid #DFDFDE;
+  border-top: 1px solid #DFDFDE;
+  background-color: #A41D35;
+  font-size: 12;
+  color: white; }
 
 .table_title {
   border-collapse: collapse;
-  width: 100%; }
-  .table_title > thead > tr > th,
-  .table_title > tbody > tr > th,
-  .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #DFDFDE;
-    font-size: 12;
-    color: white; }
+  width: 100%;
+  border-bottom: 2px solid #DFDFDE;
+  font-size: 12;
+  color: white; }
 
 .table_row_border {
   border-collapse: collapse;
-  width: 100%; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td,
-  .table_row_border > tbody > tr > th,
-  .table_row_border > tbody > tr > td,
-  .table_row_border > tfoot > tr > th,
-  .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #DFDFDE; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td {
-    border-bottom-width: 1px; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .table_column_border {
   border-collapse: collapse;
-  }
-  .table_column_border > thead > tr > td,
-  .table_column_border > tbody > tr > td,
-  .table_column_border > tfoot > tr > td {
     border: 1px solid #DFDFDE;
     border-width: 0 1px; }
-  .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
-  .table_column_border > tbody > tr > td:first-child,
-  .table_column_border > tbody > tr td + td,
-  .table_column_border > tfoot > tr > td:first-child,
-  .table_column_border > tfoot > tr td + td {
-    border-left: 0; }
-  .table_column_border > thead > tr > td:last-child,
-  .table_column_border > tbody > tr > td:last-child,
-  .table_column_border > tfoot > tr > td:last-child {
-    padding-right: 0;
-    border-right: 0; }
 
-.table_alter_color_row {
-  border-collapse: collapse; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
-    background-color: gainsboro ; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
-    background-color: whitesmoke; }
-
-.table_alter_color_column {
+.table_alter_color_row1 {
   border-collapse: collapse;
-  width: 100%; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+1) {
-    background-color: gainsboro; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+2) {
-    background-color: whitesmoke; }
+  background-color: gainsboro; }
+
+.table_alter_color_row2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
+
+.table_alter_color_column1 {
+  border-collapse: collapse;
+  background-color: gainsboro; }
+
+.table_alter_color_columns2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
 
 .table_only_border_top {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_top > tbody
-  > tr {
-    border-top: 1px solid #DFDFDE; }
+  width: 100%;
+  border-top: 1px solid #DFDFDE; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_bottom > tbody
-  > tr {
-    border-bottom: 1px solid #DFDFDE; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .panel {
   padding: 8px 8px;
@@ -1254,7 +1065,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -1312,7 +1123,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -1335,35 +1146,35 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 11;
  color: black;
  }
- 
+
  .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1386,106 +1197,58 @@ color: black; }
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td,
-  .table_all_border > tbody > tr > th,
-  .table_all_border > tbody > tr > td,
-  .table_all_border > tfoot > tr > th,
-  .table_all_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #1A1A1A; }
+  border: 1px solid #DFDFDE; }
 
 .table_title_bg_color {
-  border-collapse: collapse; }
-  .table_title_bg_color > thead > tr > th,
-  .table_title_bg_color > tbody > tr > th,
-  .table_title_bg_color > tfoot > tr > th {
-    /*border-bottom: 1px solid #1A1A1A;
-    border-top: 1px solid #1A1A1A;*/
-    border: 0.5px solid #FFFFFF;
-    background-color: #A41D35;
-    font-size: 12;
-    color: white; }
+  border-collapse: collapse;
+  border-bottom: 1px solid #DFDFDE;
+  border-top: 1px solid #DFDFDE;
+  background-color: #A41D35;
+  font-size: 12;
+  color: white; }
 
 .table_title {
   border-collapse: collapse;
-  width: 100%; }
-  .table_title > thead > tr > th,
-  .table_title > tbody > tr > th,
-  .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #1A1A1A;
-    font-size: 12;
-    color: white; }
+  width: 100%;
+  border-bottom: 2px solid #DFDFDE;
+  font-size: 12;
+  color: white; }
 
 .table_row_border {
   border-collapse: collapse;
-  width: 100%; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td,
-  .table_row_border > tbody > tr > th,
-  .table_row_border > tbody > tr > td,
-  .table_row_border > tfoot > tr > th,
-  .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #1A1A1A; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td {
-    border-bottom-width: 1px; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .table_column_border {
   border-collapse: collapse;
-  }
-  .table_column_border > thead > tr > td,
-  .table_column_border > tbody > tr > td,
-  .table_column_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A;
+    border: 1px solid #DFDFDE;
     border-width: 0 1px; }
-  .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
-  .table_column_border > tbody > tr > td:first-child,
-  .table_column_border > tbody > tr td + td,
-  .table_column_border > tfoot > tr > td:first-child,
-  .table_column_border > tfoot > tr td + td {
-    border-left: 0; }
-  .table_column_border > thead > tr > td:last-child,
-  .table_column_border > tbody > tr > td:last-child,
-  .table_column_border > tfoot > tr > td:last-child {
-    padding-right: 0;
-    border-right: 0; }
 
-.table_alter_color_row {
-  border-collapse: collapse; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
-    background-color: white ; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
-    background-color: white; }
-
-.table_alter_color_column {
+.table_alter_color_row1 {
   border-collapse: collapse;
-  width: 100%; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+1) {
-    background-color: gainsboro; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+2) {
-    background-color: whitesmoke; }
+  background-color: gainsboro; }
+
+.table_alter_color_row2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
+
+.table_alter_color_column1 {
+  border-collapse: collapse;
+  background-color: gainsboro; }
+
+.table_alter_color_columns2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
 
 .table_only_border_top {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_top > tbody
-  > tr {
-    border-top: 1px solid #1A1A1A; }
+  width: 100%;
+  border-top: 1px solid #DFDFDE; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_bottom > tbody
-  > tr {
-    border-bottom: 1px solid #1A1A1A; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .panel {
   padding: 8px 8px;
@@ -1593,7 +1356,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -1651,7 +1414,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -1674,21 +1437,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -1696,7 +1459,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -1704,7 +1467,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -1718,14 +1481,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .ITEMBOLD{
   background-color: lightgrey;
   font-weight: bold;
@@ -1738,105 +1501,58 @@ color: black; }
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td,
-  .table_all_border > tbody > tr > th,
-  .table_all_border > tbody > tr > td,
-  .table_all_border > tfoot > tr > th,
-  .table_all_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A; }
-  .table_all_border > thead > tr > th,
-  .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #1A1A1A; }
+  border: 1px solid #DFDFDE; }
 
 .table_title_bg_color {
-  border-collapse: collapse; }
-  .table_title_bg_color > thead > tr > th,
-  .table_title_bg_color > tbody > tr > th,
-  .table_title_bg_color > tfoot > tr > th {
-    border-bottom: 1px solid #1A1A1A;
-    border-top: 1px solid #1A1A1A;
-    background-color: #A41D35;
-    font-size: 12;
-    color: white; }
+  border-collapse: collapse;
+  border-bottom: 1px solid #DFDFDE;
+  border-top: 1px solid #DFDFDE;
+  background-color: #A41D35;
+  font-size: 12;
+  color: white; }
 
 .table_title {
   border-collapse: collapse;
-  width: 100%; }
-  .table_title > thead > tr > th,
-  .table_title > tbody > tr > th,
-  .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #1A1A1A;
-    font-size: 12;
-    color: white; }
+  width: 100%;
+  border-bottom: 2px solid #DFDFDE;
+  font-size: 12;
+  color: white; }
 
 .table_row_border {
   border-collapse: collapse;
-  width: 100%; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td,
-  .table_row_border > tbody > tr > th,
-  .table_row_border > tbody > tr > td,
-  .table_row_border > tfoot > tr > th,
-  .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #1A1A1A; }
-  .table_row_border > thead > tr > th,
-  .table_row_border > thead > tr > td {
-    border-bottom-width: 1px; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .table_column_border {
   border-collapse: collapse;
-  }
-  .table_column_border > thead > tr > td,
-  .table_column_border > tbody > tr > td,
-  .table_column_border > tfoot > tr > td {
-    border: 1px solid #1A1A1A;
+    border: 1px solid #DFDFDE;
     border-width: 0 1px; }
-  .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
-  .table_column_border > tbody > tr > td:first-child,
-  .table_column_border > tbody > tr td + td,
-  .table_column_border > tfoot > tr > td:first-child,
-  .table_column_border > tfoot > tr td + td {
-    border-left: 0; }
-  .table_column_border > thead > tr > td:last-child,
-  .table_column_border > tbody > tr > td:last-child,
-  .table_column_border > tfoot > tr > td:last-child {
-    padding-right: 0;
-    border-right: 0; }
 
-.table_alter_color_row {
-  border-collapse: collapse; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
-    background-color: white ; }
-  .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
-    background-color: white; }
-
-.table_alter_color_column {
+.table_alter_color_row1 {
   border-collapse: collapse;
-  width: 100%; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+1) {
-    background-color: gainsboro; }
-  .table_alter_color_column > tbody
-  > tr
-  > td:nth-child(2n+2) {
-    background-color: whitesmoke; }
+  background-color: gainsboro; }
+
+.table_alter_color_row2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
+
+.table_alter_color_column1 {
+  border-collapse: collapse;
+  background-color: gainsboro; }
+
+.table_alter_color_columns2 {
+  border-collapse: collapse;
+  background-color: whitesmoke; }
 
 .table_only_border_top {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_top > tbody
-  > tr {
-    border-top: 1px solid #1A1A1A; }
+  width: 100%;
+  border-top: 1px solid #DFDFDE; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
-  width: 100%; }
-  .table_only_border_bottom > tbody
-  > tr {
-    border-bottom: 1px solid #1A1A1A; }
+  width: 100%;
+  border-bottom: 1px solid #DFDFDE; }
 
 .panel {
   padding: 8px 8px;
@@ -1944,7 +1660,7 @@ th {
   font-size: 10; }
 
 strong{
-  font-size: 14; 
+  font-size: 14;
   font-weight: bold;
 }
 
@@ -2002,7 +1718,7 @@ font-weight: bold; }
   font-size:6;
 }
 
-table.fixed { 
+table.fixed {
 table-layout:fixed;
 width:33%;
 word-break:break-all;
@@ -2025,21 +1741,21 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-  
+
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 14;
  color: white;
  }
- 
+
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
@@ -2047,7 +1763,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
@@ -2055,7 +1771,7 @@ color: black; }
  color: black;
  border-color: white;
  }
- 
+
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -2070,14 +1786,14 @@ color: black; }
  font-size: 12;
  color: black;
  }
- 
+
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
  font-size: 12;
  color: black;
  }
- 
+
  .CUSTOMEROTHER {
  text-align: right;
  font-family: Helvetica-Oblique;
@@ -2086,5 +1802,5 @@ color: black; }
  }
 </template>
 
-	</data>
+    </data>
 </openerp>

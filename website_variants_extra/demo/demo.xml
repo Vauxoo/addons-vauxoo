@@ -55,6 +55,66 @@
             <field name="attribute_id" ref="product_attribute_watts"/>
             <field name="value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_watts_2')])]"/>
         </record>
+        <record id="product_product_5ba" model="product.product">
+            <field name="default_code">B3424a</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_cover_color_1'),ref('product_attribute_charger_1')])]"/>
+        </record>
+        <record id="product_product_5bb" model="product.product">
+            <field name="default_code">B3425</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_cover_color_2'),ref('product_attribute_charger_1')])]"/>
+        </record>
+        <record id="product_product_5bc" model="product.product">
+            <field name="default_code">B3426</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_cover_color_3'),ref('product_attribute_charger_1')])]"/>
+        </record>
+        <record id="product_product_5bd" model="product.product">
+            <field name="default_code">B3427</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_2'), ref('product_attribute_cover_color_1'),ref('product_attribute_charger_1')])]"/>
+        </record>
+        <record id="product_product_5be" model="product.product">
+            <field name="default_code">B3428</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_2'), ref('product_attribute_cover_color_2'),ref('product_attribute_charger_1')])]"/>
+        </record>
+        <record id="product_product_5bf" model="product.product">
+            <field name="default_code">B3429</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_2'), ref('product_attribute_cover_color_3'),ref('product_attribute_charger_1')])]"/>
+        </record>
+        <record id="product_product_5bg" model="product.product">
+            <field name="default_code">B3430</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_cover_color_1'),ref('product_attribute_charger_2')])]"/>
+        </record>
+        <record id="product_product_5bh" model="product.product">
+            <field name="default_code">B3431</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_cover_color_2'),ref('product_attribute_charger_2')])]"/>
+        </record>
+        <record id="product_product_5bi" model="product.product">
+            <field name="default_code">B3432</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_1'), ref('product_attribute_cover_color_3'),ref('product_attribute_charger_2')])]"/>
+        </record>
+        <record id="product_product_5bj" model="product.product">
+            <field name="default_code">B3433</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_2'), ref('product_attribute_cover_color_1'),ref('product_attribute_charger_2')])]"/>
+        </record>
+        <record id="product_product_5bk" model="product.product">
+            <field name="default_code">B3434</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_2'), ref('product_attribute_cover_color_2'),ref('product_attribute_charger_2')])]"/>
+        </record>
+        <record id="product_product_5bl" model="product.product">
+            <field name="default_code">B3435</field>
+            <field name="product_tmpl_id" ref="product.product_product_5b_product_template"/>
+            <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_watts_2'), ref('product_attribute_cover_color_3'),ref('product_attribute_charger_2')])]"/>
+        </record>
         <record id="product_rate_comment_1" model="mail.message">
             <field name="model">product.template</field>
             <field name="rating">5</field>

@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </xpath>
-		</template>
+    </template>
 
         <!-- template that add share product icons -->
         <template id="product_share" inherit_id="website_product_filters.remove_search_on_product" name="Product Share">

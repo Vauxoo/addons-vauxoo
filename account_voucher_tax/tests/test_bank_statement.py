@@ -1,5 +1,6 @@
 # coding: utf-8
 from openerp.addons.account_voucher_tax.tests.common import TestTaxCommon
+from openerp.exceptions import Warning as UserError
 import time
 
 
@@ -509,3 +510,57 @@ class TestPaymentTax(TestTaxCommon):
                 checked_line += 1
                 continue
         self.assertEquals(checked_line, 2)
+
+    def test_validate_rounding_high(self):
+        """Tests to validate when amount rounding is too high"""
+        cr, uid = self.cr, self.uid
+        invoice_id = self.account_invoice_model.create(cr, uid, {
+            'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_supplier_journal_id,
+            'reference_type': 'none',
+            'name': 'invoice to supplier',
+            'account_id': self.account_payable_id,
+            'type': 'in_invoice',
+            'date_invoice': time.strftime('%Y') + '-06-01',
+            'currency_id': self.currency_usd_id,
+            'check_total': 100
+        })
+        self.account_invoice_line_model.create(cr, uid, {
+            'product_id': self.product_id,
+            'quantity': 1,
+            'price_unit': 100,
+            'invoice_id': invoice_id,
+            'name': 'product that cost 100'})
+
+        # validate invoice
+        self.registry('account.invoice').signal_workflow(
+            cr, uid, [invoice_id], 'invoice_open')
+        invoice_record = self.account_invoice_model.browse(
+            cr, uid, [invoice_id])
+
+        # we search aml with account payable
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
+                break
+        bank_stmt_id = self.acc_bank_stmt_model.create(cr, uid, {
+            'journal_id': self.bank_journal_usd_id,
+            'date': time.strftime('%Y') + '-07-01',
+        })
+
+        bank_stmt_line_id = self.acc_bank_stmt_line_model.create(cr, uid, {
+            'name': 'payment',
+            'statement_id': bank_stmt_id,
+            'partner_id': self.partner_agrolait_id,
+            'amount': -100,
+            'date': time.strftime('%Y') + '-07-01'})
+
+        val = {
+            'debit': 1454.45,
+            'counterpart_move_line_id': line_id.id,
+            'name': line_id.name}
+
+        msg = 'Rounding amount is too high'
+        with self.assertRaisesRegexp(UserError, msg):
+            self.acc_bank_stmt_line_model.process_reconciliation(
+                cr, uid, bank_stmt_line_id, [val])

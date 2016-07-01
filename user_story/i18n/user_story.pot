@@ -678,3 +678,13 @@ msgstr ""
 #: view:user.story:0
 msgid "Sprint"
 msgstr ""
+
+#. module: user_story
+#: view:user.story:user_story.view_userstory_form
+msgid "Seq"
+msgstr ""
+
+#. module: user_story
+#: field:acceptability.criteria,sequence_ac:0
+msgid "Sequence"
+msgstr ""

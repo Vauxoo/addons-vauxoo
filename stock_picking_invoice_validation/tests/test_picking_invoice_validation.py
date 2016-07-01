@@ -8,10 +8,9 @@
 #    coded by: hugo@vauxoo.com
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
+from datetime import datetime, date, timedelta
 from openerp.tests.common import TransactionCase
-from datetime import date
 from openerp import exceptions
-from datetime import datetime, timedelta
 
 
 class TestStockPickingInvoiceValidation(TransactionCase):
@@ -83,7 +82,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
             'company_id': self.env.user.company_id.id,
             'partner_id': self.china_export.id,
             'order_policy': 'manual',
-            'check_invoice': 'check',
+            'check_invoice': True,
             'picking_policy': 'direct',
             'warehouse_id': self.warehouse.id,
         })
@@ -226,7 +225,7 @@ class TestStockPickingInvoiceValidation(TransactionCase):
             'company_id': self.env.user.company_id.id,
             'partner_id': self.china_export.id,
             'order_policy': 'manual',
-            'check_invoice': 'check',
+            'check_invoice': True,
             'picking_policy': 'direct',
             'warehouse_id': self.warehouse.id,
         })
