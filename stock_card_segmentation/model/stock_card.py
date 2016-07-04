@@ -247,14 +247,12 @@ class StockCardProduct(models.TransientModel):
                     vals['%s_accum_var' % sgmnt] = 0.0
         else:
             vals['average'] = (
-                vals['product_qty'] and
-                vals['inventory_valuation'] / vals['product_qty'] or
-                vals['average'])
+                vals['inventory_valuation'] / vals['product_qty'] if
+                vals['product_qty'] else vals['average'])
             for sgmnt in SEGMENTATION:
                 vals[sgmnt] = (
-                    vals['product_qty'] and
-                    vals['%s_total' % sgmnt] / vals['product_qty'] or
-                    vals[sgmnt])
+                    vals['%s_total' % sgmnt] / vals['product_qty'] if
+                    vals['product_qty'] else vals[sgmnt])
         return True
 
     def _pre_get_average_by_move(self, row, vals):
