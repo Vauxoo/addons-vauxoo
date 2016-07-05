@@ -432,13 +432,8 @@ class CommissionPayment(osv.Model):
                 for dcto_id in day_id.disc_ids:
                     # Se busca que el baremo tenga un rango para el valor de
                     # descuento en producto
-                    if (dcto - dcto_id.porc_disc) <= 0.01:
+                    if dcto <= dcto_id.porc_disc:
                         bardctdsc = dcto_id.porc_disc
-                        if bardctdsc == 0.0:
-                            # cuando el descuento en baremo es cero (0) no
-                            # aparece reflejado, forzamos a que sea un cero (0)
-                            # string.
-                            bardctdsc = 0.0
                         bar_dcto_comm = dcto_id.porc_com
                         no_dcto = False
                         break
@@ -495,7 +490,8 @@ class CommissionPayment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            date = aml_brw.rec_aml.date_last_payment
+            date = aml_brw.rec_aml.date_last_payment or \
+                aml_brw.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
@@ -688,6 +684,7 @@ class CommissionPayment(osv.Model):
                                             inv_lin.quantity), 2)
                     else:
                         price_unit = inv_lin.price_unit
+                    dcto = 0.0
                     if list_price:
                         dcto = round((list_price - price_unit) * 100 /
                                      list_price, 1)
