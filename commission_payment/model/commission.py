@@ -432,13 +432,8 @@ class CommissionPayment(osv.Model):
                 for dcto_id in day_id.disc_ids:
                     # Se busca que el baremo tenga un rango para el valor de
                     # descuento en producto
-                    if (dcto - dcto_id.porc_disc) <= 0.01:
+                    if dcto <= dcto_id.porc_disc:
                         bardctdsc = dcto_id.porc_disc
-                        if bardctdsc == 0.0:
-                            # cuando el descuento en baremo es cero (0) no
-                            # aparece reflejado, forzamos a que sea un cero (0)
-                            # string.
-                            bardctdsc = 0.0
                         bar_dcto_comm = dcto_id.porc_com
                         no_dcto = False
                         break
