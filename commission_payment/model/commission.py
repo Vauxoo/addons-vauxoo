@@ -495,7 +495,8 @@ class CommissionPayment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            date = aml_brw.rec_aml.date_last_payment
+            date = aml_brw.rec_aml.date_last_payment or \
+                aml_brw.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
@@ -688,6 +689,7 @@ class CommissionPayment(osv.Model):
                                             inv_lin.quantity), 2)
                     else:
                         price_unit = inv_lin.price_unit
+                    dcto = 0.0
                     if list_price:
                         dcto = round((list_price - price_unit) * 100 /
                                      list_price, 1)
