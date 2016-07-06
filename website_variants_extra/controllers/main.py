@@ -18,7 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.addons.web.http import Controller, route, request, SUPERUSER_ID
+from openerp.addons.web.http import Controller, route, request
+from openerp import SUPERUSER_ID
 
 
 class DownloadableBrochure(Controller):
