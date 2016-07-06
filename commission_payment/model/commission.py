@@ -488,12 +488,10 @@ class CommissionPayment(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
-        date = False
+        date = aml_brw.date
         if comm_brw.commission_policy_date_end == 'last_payment_date':
             date = aml_brw.rec_aml.date_last_payment or \
-                aml_brw.date_last_payment
-        elif comm_brw.commission_policy_date_end == 'date_on_payment':
-            date = aml_brw.date
+                aml_brw.date_last_payment or date
         return date
 
     def _get_commission_saleman(self, cr, uid, ids, salesman_brw,
