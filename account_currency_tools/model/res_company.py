@@ -67,4 +67,9 @@ class ResCompany(osv.Model):
             'account.journal', 'Posting Journal',
             domain=("[('type','=','general')]"),
             required=False),
+        'check_non_multicurrency_account': fields.boolean(
+            'Check Non-Multicurrency Account',
+            help="Check Accounts that were not set as multicurrency, "
+            "i.e., they were not set with a secondary currency, "
+            "but were involved in multicurrency transactions"),
     }
