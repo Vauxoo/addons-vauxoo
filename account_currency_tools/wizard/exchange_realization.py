@@ -423,7 +423,8 @@ class ForeignExchangeRealization(osv.osv_memory):
                 aml.state <> 'draft' AND
                 am.state IN (%(states)s) AND
                 aml.company_id = %(company_id)d AND
-                aa.id BETWEEN %(parent_left)d AND %(parent_right)d AND
+                aa.parent_left >= %(parent_left)d AND
+                aa.parent_right <= %(parent_right)d AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id
         ''' % args
