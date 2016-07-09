@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-		<template id="authorized_service_providers" page="True" name="Authorized Service Providers">
+        <template id="authorized_service_providers" page="True" name="Authorized Service Providers">
             <t t-call="website.layout">
               <div id="wrap">
                 <section class="vx_wrapper_white">
@@ -51,7 +51,7 @@
                        </div>
                     </div>
                 </t>
-                </div>   
+                </div>
             </div>
         </template>
     </data>

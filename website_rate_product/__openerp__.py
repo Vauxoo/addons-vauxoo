@@ -10,7 +10,8 @@
         "website_sale"
     ],
     "demo": [
-        "demo/rating_demo.xml"
+        "demo/rating_demo.xml",
+        "demo/website_settings.yml",
     ],
     "data": [
         "views/layout.xml",
