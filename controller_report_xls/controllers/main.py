@@ -54,8 +54,8 @@ def is_integer(value):
         return False
 
 
-def is_formatted_number(value):
-    set_sign = set([',', '.', '-'])
+def is_formatted_number(value, thousands_sep, decimal_point):
+    set_sign = set([thousands_sep, decimal_point, '-'])
     set_val = set(list(value))
     if set_val == set():
         return False
@@ -70,10 +70,8 @@ def is_formatted_number(value):
     elif '-' in set_val and not value[0] == '-':
         return False
 
-    # /!\ NOTE: Assumption. ',' is thousands separator
-    # /!\ NOTE: Assumption. '.' is decimal separator
-    if value.count(',') > 0:
-        value = value.replace(',', '')
+    if value.count(thousands_sep) > 0:
+        value = value.replace(thousands_sep, '')
     if is_integer(value):
         return True
     elif is_float(value):
@@ -82,8 +80,11 @@ def is_formatted_number(value):
     return False
 
 
-def unformat_number(value):
-    if not is_formatted_number(value):
+def unformat_number(value, lang_sep):
+    thousands_sep = lang_sep.get('thousands_sep', ',')
+    decimal_point = lang_sep.get('decimal_point', '.')
+
+    if not is_formatted_number(value, thousands_sep, decimal_point):
         return value
 
     set_val = set(list(value))
@@ -92,10 +93,8 @@ def unformat_number(value):
         sign = -1
         value = value.replace('-', '')
 
-    # /!\ NOTE: Assumption. ',' is thousands separator
-    # /!\ NOTE: Assumption. '.' is decimal separator
-    if value.count(',') > 0:
-        value = value.replace(',', '')
+    if value.count(thousands_sep) > 0:
+        value = value.replace(thousands_sep, '')
 
     if is_integer(value):
         value = int(value)
@@ -105,7 +104,7 @@ def unformat_number(value):
     return sign * value
 
 
-def string_to_number(value, style=None):
+def string_to_number(value, lang_sep, style=None):
     '''
     Features:
         - brute force conversion of thousands separated value into float
@@ -123,7 +122,7 @@ def string_to_number(value, style=None):
         value = float(value)
         # TODO: Call style change
     else:
-        value = unformat_number(value)
+        value = unformat_number(value, lang_sep)
 
     return value
 
@@ -159,7 +158,8 @@ def get_odoo_style(html, style, node):
     return style
 
 
-def write_tables_to_excel(sheet, row, col, tables, html, table_styles):
+def write_tables_to_excel(sheet, row, col, tables, html, table_styles,
+                          lang_sep):
     for table in tables:
         table_styles = get_odoo_style(html, table_styles, table)
         headers = table.xpath("thead")
@@ -171,7 +171,7 @@ def write_tables_to_excel(sheet, row, col, tables, html, table_styles):
                 rows = header.xpath("tr")
                 if rows:
                     row = write_rows_to_excel(sheet, row, col, rows,
-                                              html, head_style)
+                                              html, head_style, lang_sep)
         bodies = table.xpath("tbody")
         if not bodies:
             bodies = table.xpath("table_body")
@@ -181,17 +181,17 @@ def write_tables_to_excel(sheet, row, col, tables, html, table_styles):
                 rows = body.xpath("tr")
                 if rows:
                     row = write_rows_to_excel(sheet, row, col, rows,
-                                              html, body_style)
+                                              html, body_style, lang_sep)
         if not headers and not bodies:
             rows = table.xpath("tr")
             if rows:
                 row = write_rows_to_excel(sheet, row, col, rows,
-                                          html, table_styles)
+                                          html, table_styles, lang_sep)
         row += 1
     return row
 
 
-def write_rows_to_excel(sheet, row, col, nodes, html, styles):
+def write_rows_to_excel(sheet, row, col, nodes, html, styles, lang_sep):
     for tr in nodes:
         new_styles = get_odoo_style(html, styles, tr)
         rowspan = 0
@@ -204,26 +204,27 @@ def write_rows_to_excel(sheet, row, col, nodes, html, styles):
             continue
         if cols:
             row = write_cols_to_excel(sheet, row, col, rowspan, cols,
-                                      html, new_styles)
+                                      html, new_styles, lang_sep)
         row += rowspan + 1
     return row
 
 
-def write_cols_to_excel(sheet, row, col, rowspan, nodes, html, styles):
+def write_cols_to_excel(sheet, row, col, rowspan, nodes, html, styles,
+                        lang_sep):
     for td in nodes:
         new_styles = get_odoo_style(html, styles, td)
         # Check tables in column
         tables = td.xpath("table")
         if tables:
             row = write_tables_to_excel(sheet, row, col, tables,
-                                        html, new_styles)
+                                        html, new_styles, lang_sep)
         else:
             new_text = ""
             colspan = 0
             if td.attrib.get('colspan', False):
                 colspan = int(td.attrib.get('colspan')) - 1
             text = text_adapt(" ".join([x for x in td.itertext()]))
-            new_text = string_to_number(text)
+            new_text = string_to_number(text, lang_sep)
             cell_styles = css2excel(new_styles)
             sheet.write_merge(row, row+rowspan,
                               col, col+colspan,
@@ -238,7 +239,13 @@ def text_adapt(text):
     return new_text.replace("; ", ";").replace(": ", ":").strip()
 
 
-def get_xls(html):
+def get_xls(html, lang_sep=None):
+    if lang_sep is None:
+        # Asume lang = en_US
+        lang_sep = {
+            'decimal_point': '.',
+            'thousands_sep': ',',
+        }
     wb = xlwt.Workbook(style_compression=2)
     ws = wb.add_sheet('Sheet 1')
     parser = etree.HTMLParser()
@@ -252,18 +259,34 @@ def get_xls(html):
     # Check header tables
     tables = root.xpath("//div[@class=\"header\"]/table")
     if tables:
-        row = write_tables_to_excel(ws, row, col, tables, html, table_styles)
+        row = write_tables_to_excel(ws, row, col, tables, html, table_styles,
+                                    lang_sep)
     # Check page tables
     tables = root.xpath("//div[@class=\"page\"]/table")
     if tables:
-        row = write_tables_to_excel(ws, row, col, tables, html, table_styles)
+        row = write_tables_to_excel(ws, row, col, tables, html, table_styles,
+                                    lang_sep)
     # Check footer tables
     tables = root.xpath("//div[@class=\"footer\"]/table")
     if tables:
-        row = write_tables_to_excel(ws, row, col, tables, html, table_styles)
+        row = write_tables_to_excel(ws, row, col, tables, html, table_styles,
+                                    lang_sep)
     stream = StringIO.StringIO()
     wb.save(stream)
     return stream.getvalue()
+
+
+def get_lang_sep(request, context):
+    """Get Decimal & Thousands separators on Language being used"""
+    lang_obj = request.registry['res.lang']
+    lang = context.get('lang', 'en_US')
+    cur, uid = request.cr, request.uid
+    lang_ids = lang_obj.search(cur, uid, [('code', '=', lang)])
+    lang_brw = lang_obj.browse(cur, uid, lang_ids[0])
+    return {
+        'decimal_point': lang_brw.decimal_point,
+        'thousands_sep': lang_brw.thousands_sep,
+    }
 
 
 class ReportController(main.ReportController):
@@ -337,7 +360,7 @@ class ReportController(main.ReportController):
 
         html = report_obj.get_html(cr, uid, docids, reportname,
                                    data=options_data, context=context)
-        xls_stream = get_xls(html)
+        xls_stream = get_xls(html, get_lang_sep(request, context))
         xlshttpheaders = [('Content-Type', 'application/vnd.ms-excel'),
                           ('Content-Length', len(xls_stream)),
                           ]
