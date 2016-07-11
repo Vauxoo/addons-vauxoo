@@ -151,27 +151,6 @@ def text_adapt(text):
     return new_text.replace("; ", ";").replace(": ", ":").strip()
 
 
-def write_cell_to_excel(sheet, row, rowspan, col, colspan, node, styles):
-    # Should implement if column have many classes with different styles,
-    # but write_rich_text doesn't support write to multiple rows and columns
-    # taken from rowspan and colspan
-    cell_styles = css2excel(styles)
-    rich_text = []
-    for line in node.iter():
-        text = text_adapt(" ".join([x for x in line.itertext()]))
-        try:
-            new_text = float(text)
-        except ValueError:
-            new_text = text
-        new_style = get_odoo_style(styles, line)
-        if new_text:
-            rich_text.append(new_text)
-            text_style = css2excel(new_style)
-            rich_text.append(text_style)
-    sheet.write_rich_text(row, col, tuple(rich_text), cell_styles)
-    return True
-
-
 def get_xls(html):
     wb = xlwt.Workbook(style_compression=2)
     ws = wb.add_sheet('Sheet 1')
