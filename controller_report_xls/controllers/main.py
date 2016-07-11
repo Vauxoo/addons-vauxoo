@@ -59,9 +59,7 @@ def is_formatted_number(value, thousands_sep, decimal_point):
     set_val = set(list(value))
     if set_val == set():
         return False
-    elif any([val.isalpha() for val in set_val]):
-        return False
-    elif any([val.isspace() for val in set_val]):
+    elif any([val.isalpha() or val.isspace() for val in set_val]):
         return False
     elif not all([val.isdigit() for val in set_val - set_sign]):
         return False
