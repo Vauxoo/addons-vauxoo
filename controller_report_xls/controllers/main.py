@@ -115,16 +115,7 @@ def string_to_number(value, lang_sep, style=None):
         - take the decimal separator from res.lang
         - change style in cell to currency if currency symbol available
     '''
-    if is_integer(value):
-        value = int(value)
-        # TODO: Call style change
-    elif is_float(value):
-        value = float(value)
-        # TODO: Call style change
-    else:
-        value = unformat_number(value, lang_sep)
-
-    return value
+    return unformat_number(value, lang_sep)
 
 
 def get_css_style(csstext, style):
