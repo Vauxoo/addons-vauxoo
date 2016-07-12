@@ -23,6 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+from __future__ import division
 from xlwt import XFStyle, Borders, Pattern, Font, Alignment
 
 WEB_COLORS = {
@@ -247,13 +248,13 @@ XLWT_COLORS = [
 def color_distance(rgb1, rgb2):
     # Adapted from Colour metric by Thiadmer Riemersma,
     # http://www.compuphase.com/cmetric.htm
-    rmean = (rgb1[0] + rgb2[0]) / 2
+    rmean = (rgb1[0] + rgb2[0]) // 2
     rgbr = rgb1[0] - rgb2[0]
     rgbg = rgb1[1] - rgb2[1]
     rgbb = rgb1[2] - rgb2[2]
-    distance = (((512 + rmean) * rgbr * rgbr) / 256)
+    distance = (((512 + rmean) * rgbr * rgbr) // 256)
     distance += 4 * rgbg * rgbg
-    distance += (((767 - rmean) * rgbb * rgbb) / 256)
+    distance += (((767 - rmean) * rgbb * rgbb) // 256)
     return distance
 
 
