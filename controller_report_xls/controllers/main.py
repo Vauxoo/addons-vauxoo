@@ -37,9 +37,7 @@ def is_formatted_number(value, thousands_sep, decimal_point):
     set_sign = set([thousands_sep, decimal_point, '-'])
     set_val = set(list(value))
     is_text = False
-    if set_val == set():
-        is_text = True
-    elif any([val.isalpha() or val.isspace() for val in set_val]):
+    if any([val.isalpha() or val.isspace() for val in set_val]):
         is_text = True
     elif not all([val.isdigit() for val in set_val - set_sign]):
         is_text = True
