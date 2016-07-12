@@ -57,16 +57,20 @@ def is_integer(value):
 def is_formatted_number(value, thousands_sep, decimal_point):
     set_sign = set([thousands_sep, decimal_point, '-'])
     set_val = set(list(value))
+    is_text = False
     if set_val == set():
-        return False
+        is_text = True
     elif any([val.isalpha() or val.isspace() for val in set_val]):
-        return False
+        is_text = True
     elif not all([val.isdigit() for val in set_val - set_sign]):
-        return False
+        is_text = True
     elif value.count('-') > 1:
-        return False
+        is_text = True
     elif '-' in set_val and not value[0] == '-':
-        return False
+        is_text = True
+
+    if is_text:
+        return value
 
     if value.count(thousands_sep) > 0:
         value = value.replace(thousands_sep, '')
