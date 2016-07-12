@@ -70,7 +70,7 @@ def is_formatted_number(value, thousands_sep, decimal_point):
         is_text = True
 
     if is_text:
-        return value
+        return False
 
     if value.count(thousands_sep) > 0:
         value = value.replace(thousands_sep, '')
