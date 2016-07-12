@@ -269,11 +269,11 @@ def get_xls(html, lang_sep=None):
     return stream.getvalue()
 
 
-def get_lang_sep(request, context):
+def get_lang_sep(req, context):
     """Get Decimal & Thousands separators on Language being used"""
-    lang_obj = request.registry['res.lang']
+    lang_obj = req.registry['res.lang']
     lang = context.get('lang', 'en_US')
-    cur, uid = request.cr, request.uid
+    cur, uid = req.cr, req.uid
     lang_ids = lang_obj.search(cur, uid, [('code', '=', lang)])
     lang_brw = lang_obj.browse(cur, uid, lang_ids[0])
     return {
