@@ -107,8 +107,7 @@ def unformat_number(value, lang_sep):
 
 
 def string_to_number(value, lang_sep, style=None):
-    '''
-    Features:
+    """Features:
         - brute force conversion of thousands separated value into float
 
         TODO:
@@ -116,7 +115,7 @@ def string_to_number(value, lang_sep, style=None):
         - take the thousands separator from res.lang
         - take the decimal separator from res.lang
         - change style in cell to currency if currency symbol available
-    '''
+    """
     return unformat_number(value, lang_sep)
 
 
