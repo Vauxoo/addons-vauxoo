@@ -70,6 +70,8 @@ def is_formatted_number(value, thousands_sep, decimal_point):
 
     if value.count(thousands_sep) > 0:
         value = value.replace(thousands_sep, '')
+    if decimal_point in value:
+        value = value.replace(decimal_point, '.')
     if is_integer(value):
         return True
     elif is_float(value):
@@ -93,6 +95,8 @@ def unformat_number(value, lang_sep):
 
     if value.count(thousands_sep) > 0:
         value = value.replace(thousands_sep, '')
+    if decimal_point in value:
+        value = value.replace(decimal_point, '.')
 
     if is_integer(value):
         value = int(value)
