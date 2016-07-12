@@ -21,8 +21,8 @@ class TestController(TransactionCase):
             'decimal_point': ',',
             'thousands_sep': '.',
         }
-        self.value_en_US = u'-7,777,777.77'
-        self.value_es_ES = u'-7.777.777,77'
+        self.value_en_us = u'-7,777,777.77'
+        self.value_es_es = u'-7.777.777,77'
         self.value_text = u'a-7.777.777,77'
         self.result = -7777777.77
 
