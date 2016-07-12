@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Copyright 2016 Vauxoo
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
