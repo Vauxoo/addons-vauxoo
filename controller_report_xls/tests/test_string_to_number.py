@@ -36,6 +36,6 @@ class TestController(TransactionCase):
 
     def test_string_to_number_text(self):
         res = string_to_number(self.value_text, self.lang_es_ES)
-        self.assertEqual(res, self.result, 'Result not expected for es_ES')
+        self.assertEqual(res, self.value_text, 'Result not expected for es_ES')
         res = string_to_number(self.value_text, self.lang_en_US)
-        self.assertEqual(res, self.result, 'Result not expected for en_US')
+        self.assertEqual(res, self.value_text, 'Result not expected for en_US')
