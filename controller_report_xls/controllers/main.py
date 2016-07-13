@@ -40,7 +40,7 @@ def is_number(value):
         return False
 
 
-def is_string(value, thousands_sep, decimal_point):
+def is_string(value, thousands_sep=',', decimal_point='.'):
     """Tries to determine if value is not a numeric value, i.e. int or float"""
     set_sign = set([thousands_sep, decimal_point, '-'])
     set_val = set(list(value))
@@ -52,13 +52,15 @@ def is_string(value, thousands_sep, decimal_point):
         is_text = True
     elif value.count('-') > 1:
         is_text = True
+    elif value.count(decimal_point) > 1:
+        is_text = True
     elif '-' in set_val and not value[0] == '-':
         is_text = True
 
     return is_text
 
 
-def is_formatted_number(value, thousands_sep, decimal_point):
+def is_formatted_number(value, thousands_sep=',', decimal_point='.'):
     res = True
     if is_string(value, thousands_sep, decimal_point):
         res = False
