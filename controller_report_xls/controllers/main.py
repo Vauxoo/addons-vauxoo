@@ -1,27 +1,6 @@
 # -*- coding: utf-8 -*-
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
-#    All Rights Reserved
-# #############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>
-#    Planified by: Humberto Arocha <hbto@vauxoo.com>
-#    Audited by: Humberto Arocha <hbto@vauxoo.com>
-#############################################################################
-#    This program is free software: you can redistribute it and/or modify it
-#    under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or (at your
-#    option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-###############################################################################
+# Copyright 2016 Vauxoo
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request  # pylint: disable=F0401
@@ -38,7 +17,22 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-def is_float(value):
+def get_value(value):
+    """Returns a value in its proper intended type:
+        if value is '-77' it will return -77 of type integer
+        if value is '-77.7' it will return -77.7 of type float
+        if value is '-7.7.-' it will return '-7.7.-' of type string"""
+    try:
+        return int(value)
+    except ValueError:
+        try:
+            return float(value)
+        except ValueError:
+            return value
+
+
+def is_number(value):
+    """Tries to determine if value is a numeric value"""
     try:
         float(value)
         return True
@@ -46,41 +40,52 @@ def is_float(value):
         return False
 
 
-def is_integer(value):
-    try:
-        int(value)
-        return True
-    except ValueError:
-        return False
-
-
-def is_formatted_number(value, thousands_sep, decimal_point):
+def is_string(value, thousands_sep=',', decimal_point='.'):
+    """Tries to determine if value is not a numeric value, i.e. int or float"""
     set_sign = set([thousands_sep, decimal_point, '-'])
     set_val = set(list(value))
-    if set_val == set():
-        return False
-    elif any([val.isalpha() or val.isspace() for val in set_val]):
-        return False
+
+    is_text = False
+    if any([val.isalpha() or val.isspace() for val in set_val]):
+        is_text = True
     elif not all([val.isdigit() for val in set_val - set_sign]):
-        return False
+        is_text = True
     elif value.count('-') > 1:
-        return False
+        is_text = True
+    elif value.count(decimal_point) > 1:
+        is_text = True
     elif '-' in set_val and not value[0] == '-':
-        return False
+        is_text = True
 
-    if value.count(thousands_sep) > 0:
+    return is_text
+
+
+def is_formatted_number(value, thousands_sep=',', decimal_point='.'):
+    """Determines if value string was previously a float or integer and was
+    converted into a formatted number"""
+    res = True
+    if is_string(value, thousands_sep, decimal_point):
+        res = False
+    else:
         value = value.replace(thousands_sep, '')
-    if decimal_point in value:
         value = value.replace(decimal_point, '.')
-    if is_integer(value):
-        return True
-    elif is_float(value):
-        return True
-
-    return False
+        res = is_number(value)
+    return res
 
 
 def unformat_number(value, lang_sep):
+    """Converts a formatted number into a integer, firstly, or a float,
+    otherwise it will return original value provided by taking into account
+    language separators provided, i.e.,
+    for en_US, thousands_separator = ',' and decimal_point = '.' then
+        if value is '-7,777.7' it will return -7777.7 of type float
+        if value is '-77' it will return -77 of type integer
+        if value is '-7.7.-' it will return '-7.7.-' of type string
+    for es_ES, thousands_separator = '.' and decimal_point = ',' then
+        if value is '-7.777,7' it will return -7777.7 of type float
+        if value is '-77' it will return -77 of type integer
+        if value is '-7,7.-' it will return '-7,7.-' of type string"""
+
     thousands_sep = lang_sep.get('thousands_sep', ',')
     decimal_point = lang_sep.get('decimal_point', '.')
 
@@ -93,30 +98,18 @@ def unformat_number(value, lang_sep):
         sign = -1
         value = value.replace('-', '')
 
-    if value.count(thousands_sep) > 0:
-        value = value.replace(thousands_sep, '')
-    if decimal_point in value:
-        value = value.replace(decimal_point, '.')
-
-    if is_integer(value):
-        value = int(value)
-    elif is_float(value):
-        value = float(value)
-
-    return sign * value
+    value = value.replace(thousands_sep, '')
+    value = value.replace(decimal_point, '.')
+    return sign * get_value(value)
 
 
 def string_to_number(value, lang_sep, style=None):
-    '''
-    Features:
+    """Features:
         - brute force conversion of thousands separated value into float
 
         TODO:
-        - converted thousands separated value by char into float
-        - take the thousands separator from res.lang
-        - take the decimal separator from res.lang
         - change style in cell to currency if currency symbol available
-    '''
+    """
     return unformat_number(value, lang_sep)
 
 
@@ -233,6 +226,10 @@ def text_adapt(text):
 
 
 def get_xls(html, lang_sep=None):
+    """Takes and HTML string and converts it into an XLS stream,
+    by trying to properly convert the tables, rows and cells into a meaningful
+    Worksheet.
+    """
     if lang_sep is None:
         # Asume lang = en_US
         lang_sep = {
@@ -269,11 +266,11 @@ def get_xls(html, lang_sep=None):
     return stream.getvalue()
 
 
-def get_lang_sep(request, context):
+def get_lang_sep(req, context):
     """Get Decimal & Thousands separators on Language being used"""
-    lang_obj = request.registry['res.lang']
+    lang_obj = req.registry['res.lang']
     lang = context.get('lang', 'en_US')
-    cur, uid = request.cr, request.uid
+    cur, uid = req.cr, req.uid
     lang_ids = lang_obj.search(cur, uid, [('code', '=', lang)])
     lang_brw = lang_obj.browse(cur, uid, lang_ids[0])
     return {
@@ -329,6 +326,10 @@ class ReportController(main.ReportController):
         '/report/<path:converter>/<reportname>/<docids>',
     ], type='http', auth='user', website=True)
     def report_routes(self, reportname, docids=None, converter=None, **data):
+        """Intercepts original method from report module by using a key in context
+        sticked when print a report from a wizard ('xls_report') if True this
+        method will return a XLS File otherwise it will return the customary
+        PDF File"""
         report_obj = request.registry['report']
         cr, uid, context = request.cr, request.uid, request.context
         origin_docids = docids
