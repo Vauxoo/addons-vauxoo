@@ -2,7 +2,8 @@
 
 from openerp.tests.common import TransactionCase
 from openerp.addons.controller_report_xls.controllers.main \
-    import string_to_number
+    import string_to_number, get_value, is_number, is_string, \
+    is_formatted_number
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -25,6 +26,40 @@ class TestController(TransactionCase):
         self.value_es_es = u'-7.777.777,77'
         self.value_text = u'a-7.777.777,77'
         self.result = -7777777.77
+
+    def test_get_value(self):
+        res = get_value('-77')
+        self.assertEqual(res, -77, 'Expected result -77')
+        res = get_value('-77.7')
+        self.assertEqual(res, -77.7, 'Expected result -77.7')
+        res = get_value('-7.7.-')
+        self.assertEqual(res, '-7.7.-', 'Expected result "-7.7.-"')
+
+    def test_is_number(self):
+        res = is_number('-77.7')
+        self.assertEqual(res, True, 'Expected result True')
+        res = is_number('-7.7.-')
+        self.assertEqual(res, False, 'Expected result False')
+
+    def test_is_string(self):
+        res = is_string('a -77.7')
+        self.assertEqual(res, True, 'Expected result True')
+        res = is_string('/-77.7?')
+        self.assertEqual(res, True, 'Expected result True')
+        res = is_string('-7.7.-')
+        self.assertEqual(res, True, 'Expected result True')
+        res = is_string('-7.7.')
+        self.assertEqual(res, True, 'Expected result True')
+        res = is_string('7-7')
+        self.assertEqual(res, True, 'Expected result True')
+        res = is_string('-77.7')
+        self.assertEqual(res, False, 'Expected result False')
+
+    def test_is_formatted_number(self):
+        res = is_formatted_number(self.value_text)
+        self.assertEqual(res, False, 'Expected result False')
+        res = is_formatted_number(self.value_en_us)
+        self.assertEqual(res, True, 'Expected result True')
 
     def test_string_to_number_en_US(self):
         res = string_to_number(self.value_en_us, self.lang_en_us)
