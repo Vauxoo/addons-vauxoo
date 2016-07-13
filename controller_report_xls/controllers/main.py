@@ -17,7 +17,22 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-def is_float(value):
+def get_value(value):
+    """Returns a value in its proper intended type:
+        if value is '-77' it will return -77 of type integer
+        if value is '-77.7' it will return -77.7 of type float
+        if value is '-7.7.-' it will return '-7.7-' of type string"""
+    try:
+        return int(value)
+    except ValueError:
+        try:
+            return float(value)
+        except ValueError:
+            return value
+
+
+def is_number(value):
+    """Tries to determine if value is a numeric value"""
     try:
         float(value)
         return True
@@ -25,17 +40,11 @@ def is_float(value):
         return False
 
 
-def is_integer(value):
-    try:
-        int(value)
-        return True
-    except ValueError:
-        return False
-
-
-def is_formatted_number(value, thousands_sep, decimal_point):
+def is_string(value, thousands_sep, decimal_point):
+    """Tries to determine if value is not a numeric value, i.e. int or float"""
     set_sign = set([thousands_sep, decimal_point, '-'])
     set_val = set(list(value))
+
     is_text = False
     if any([val.isalpha() or val.isspace() for val in set_val]):
         is_text = True
@@ -46,19 +55,18 @@ def is_formatted_number(value, thousands_sep, decimal_point):
     elif '-' in set_val and not value[0] == '-':
         is_text = True
 
-    if is_text:
-        return False
+    return is_text
 
-    if value.count(thousands_sep) > 0:
+
+def is_formatted_number(value, thousands_sep, decimal_point):
+    res = True
+    if is_string(value, thousands_sep, decimal_point):
+        res = False
+    else:
         value = value.replace(thousands_sep, '')
-    if decimal_point in value:
         value = value.replace(decimal_point, '.')
-    if is_integer(value):
-        return True
-    elif is_float(value):
-        return True
-
-    return False
+        res = is_number(value)
+    return res
 
 
 def unformat_number(value, lang_sep):
@@ -74,17 +82,9 @@ def unformat_number(value, lang_sep):
         sign = -1
         value = value.replace('-', '')
 
-    if value.count(thousands_sep) > 0:
-        value = value.replace(thousands_sep, '')
-    if decimal_point in value:
-        value = value.replace(decimal_point, '.')
-
-    if is_integer(value):
-        value = int(value)
-    elif is_float(value):
-        value = float(value)
-
-    return sign * value
+    value = value.replace(thousands_sep, '')
+    value = value.replace(decimal_point, '.')
+    return sign * get_value(value)
 
 
 def string_to_number(value, lang_sep, style=None):
