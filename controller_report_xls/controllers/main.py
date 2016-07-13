@@ -21,7 +21,7 @@ def get_value(value):
     """Returns a value in its proper intended type:
         if value is '-77' it will return -77 of type integer
         if value is '-77.7' it will return -77.7 of type float
-        if value is '-7.7.-' it will return '-7.7-' of type string"""
+        if value is '-7.7.-' it will return '-7.7.-' of type string"""
     try:
         return int(value)
     except ValueError:
@@ -61,6 +61,8 @@ def is_string(value, thousands_sep=',', decimal_point='.'):
 
 
 def is_formatted_number(value, thousands_sep=',', decimal_point='.'):
+    """Determines if value string was previously a float or integer and was
+    converted into a formatted number"""
     res = True
     if is_string(value, thousands_sep, decimal_point):
         res = False
@@ -72,6 +74,18 @@ def is_formatted_number(value, thousands_sep=',', decimal_point='.'):
 
 
 def unformat_number(value, lang_sep):
+    """Converts a formatted number into a integer, firstly, or a float,
+    otherwise it will return original value provided by taking into account
+    language separators provided, i.e.,
+    for en_US, thousands_separator = ',' and decimal_point = '.' then
+        if value is '-7,777.7' it will return -7777.7 of type float
+        if value is '-77' it will return -77 of type integer
+        if value is '-7.7.-' it will return '-7.7.-' of type string
+    for es_ES, thousands_separator = '.' and decimal_point = ',' then
+        if value is '-7.777,7' it will return -7777.7 of type float
+        if value is '-77' it will return -77 of type integer
+        if value is '-7,7.-' it will return '-7,7.-' of type string"""
+
     thousands_sep = lang_sep.get('thousands_sep', ',')
     decimal_point = lang_sep.get('decimal_point', '.')
 
@@ -94,9 +108,6 @@ def string_to_number(value, lang_sep, style=None):
         - brute force conversion of thousands separated value into float
 
         TODO:
-        - converted thousands separated value by char into float
-        - take the thousands separator from res.lang
-        - take the decimal separator from res.lang
         - change style in cell to currency if currency symbol available
     """
     return unformat_number(value, lang_sep)
@@ -215,6 +226,10 @@ def text_adapt(text):
 
 
 def get_xls(html, lang_sep=None):
+    """Takes and HTML string and converts it into an XLS stream,
+    by trying to properly convert the tables, rows and cells into a meaningful
+    Worksheet.
+    """
     if lang_sep is None:
         # Asume lang = en_US
         lang_sep = {
@@ -311,6 +326,10 @@ class ReportController(main.ReportController):
         '/report/<path:converter>/<reportname>/<docids>',
     ], type='http', auth='user', website=True)
     def report_routes(self, reportname, docids=None, converter=None, **data):
+        """Intercepts original method from report module by using a key in context
+        sticked when print a report from a wizard ('xls_report') if True this
+        method will return a XLS File otherwise it will return the customary
+        PDF File"""
         report_obj = request.registry['report']
         cr, uid, context = request.cr, request.uid, request.context
         origin_docids = docids
