@@ -393,7 +393,8 @@ class ForeignExchangeRealization(osv.osv_memory):
                 am.state IN (%(states)s) AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.currency_id
-        ''' % args
+        '''
+        query = cr.mogrify(query, args)
         cr.execute(query)
         res = cr.dictfetchall()
         return res
@@ -415,7 +416,8 @@ class ForeignExchangeRealization(osv.osv_memory):
                 am.state IN (%(states)s) AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id, aml.currency_id
-        ''' % args
+        '''
+        query = cr.mogrify(query, args)
         cr.execute(query)
         res = cr.dictfetchall()
         return res
@@ -438,7 +440,8 @@ class ForeignExchangeRealization(osv.osv_memory):
                 aa.parent_right <= %(parent_right)d AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id
-        ''' % args
+        '''
+        query = cr.mogrify(query, args)
         cr.execute(query)
         res = cr.fetchall()
         if res:
