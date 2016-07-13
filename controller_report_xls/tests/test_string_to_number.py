@@ -3,8 +3,11 @@
 from openerp.tests.common import TransactionCase
 from openerp.addons.controller_report_xls.controllers.main \
     import string_to_number, get_value, is_number, is_string, \
-    is_formatted_number
+    is_formatted_number, get_xls
 import logging
+import tempfile
+import os
+import xlrd
 
 _logger = logging.getLogger(__name__)
 
@@ -26,6 +29,48 @@ class TestController(TransactionCase):
         self.value_es_es = u'-7.777.777,77'
         self.value_text = u'a-7.777.777,77'
         self.result = -7777777.77
+        self.html_snippet = '''
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <title>Vauxoo</title>
+                </head>
+                <body class="container">
+                    <div class="header">
+                        <table id="table_header">
+                            <tr>
+                                <td>Vauxoo</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="page">
+                        <table id="table_body">
+                            <thead>
+                                <tr>
+                                    <td>CODE</td>
+                                    <td>ACCOUNT</td>
+                                    <td>BALANCE</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>x2000</td>
+                                    <td>Creditors - (Vx_Afr)</td>
+                                    <td>%s</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="footer">
+                        <table>
+                            <tr>
+                                <td>Vauxoo&#39;s Footer</td>
+                            </tr>
+                        </table>
+                    </div>
+                </body>
+            </html>
+        '''
 
     def test_get_value(self):
         res = get_value('-77')
@@ -74,3 +119,40 @@ class TestController(TransactionCase):
         self.assertEqual(res, self.value_text, 'Result not expected for es_ES')
         res = string_to_number(self.value_text, self.lang_en_us)
         self.assertEqual(res, self.value_text, 'Result not expected for en_US')
+
+    def test_get_xls_es_es(self):
+        xls_stream = get_xls(
+            self.html_snippet % self.value_es_es, self.lang_es_es)
+        fileno, fname = tempfile.mkstemp('.xls', 'controller.xls')
+        with open(fname, "wb") as fobj:
+            fobj.write(xls_stream)
+        os.close(fileno)
+        book = xlrd.open_workbook(fname)
+        sh = book.sheet_by_index(0)
+        self.assertEquals(sh.cell(0, 0).value, 'Vauxoo', 'Should be Vauxoo')
+        self.assertEquals(sh.cell(3, 2).value, self.result, 'Wrong Value')
+
+    def test_get_xls_en_us(self):
+        xls_stream = get_xls(
+            self.html_snippet % self.value_en_us)
+        fileno, fname = tempfile.mkstemp('.xls', 'controller.xls')
+        with open(fname, "wb") as fobj:
+            fobj.write(xls_stream)
+        os.close(fileno)
+        book = xlrd.open_workbook(fname)
+        sh = book.sheet_by_index(0)
+        self.assertEquals(sh.cell(0, 0).value, 'Vauxoo', 'Should be Vauxoo')
+        self.assertEquals(sh.cell(3, 2).value, self.result, 'Wrong Value')
+
+    def test_get_xls_wrong(self):
+        xls_stream = get_xls(
+            self.html_snippet % self.value_en_us, self.lang_es_es)
+        fileno, fname = tempfile.mkstemp('.xls', 'controller.xls')
+        with open(fname, "wb") as fobj:
+            fobj.write(xls_stream)
+        os.close(fileno)
+        book = xlrd.open_workbook(fname)
+        sh = book.sheet_by_index(0)
+        self.assertEquals(sh.cell(0, 0).value, 'Vauxoo', 'Should be Vauxoo')
+        self.assertNotEquals(sh.cell(3, 2).value, self.result, 'Wrong Value')
+        self.assertEquals(sh.cell(3, 2).value, self.value_en_us, 'Wrong Value')
