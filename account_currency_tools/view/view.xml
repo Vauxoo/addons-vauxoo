@@ -9,6 +9,7 @@
                 <xpath expr="//group[@name='account_grp']" position="after">
                     <group name="account_act" string="Accounts for Redirection of Exchange Rate Difference">
                         <field name='journal_id'/>
+                        <field name='check_non_multicurrency_account'/>
                         <field name='bank_gain_exchange_account_id'/>
                         <field name='bank_loss_exchange_account_id'/>
                         <field name='rec_gain_exchange_account_id'/>

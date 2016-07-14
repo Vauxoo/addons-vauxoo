@@ -181,6 +181,9 @@ class ForeignExchangeRealization(osv.osv_memory):
                  rc_brw.journal_id.id})
 
         res['value'].update({'currency_id': cur_id})
+        res['value'].update(
+            {'check_non_multicurrency_account':
+             rc_brw.check_non_multicurrency_account})
         res['value'].update({'root_id': root_id and root_id[0]})
         return res
 
@@ -289,6 +292,14 @@ class ForeignExchangeRealization(osv.osv_memory):
             readonly=True,
             string='Company Currency',
             help="This is currency used to post Exchange Rate Difference"),
+        'check_non_multicurrency_account': fields.related(
+            'company_id', 'check_non_multicurrency_account',
+            type='boolean',
+            readonly=True,
+            string='Check Non-Multicurrency Account',
+            help="Check Accounts that were not set as multicurrency, "
+            "i.e., they were not set with a secondary currency, "
+            "but were involved in multicurrency transactions"),
         'period_ids': fields.many2many(
             'account.period', 'act_period_acc_rel',
             'period_id', 'act_id', 'Affected Periods',
@@ -382,7 +393,8 @@ class ForeignExchangeRealization(osv.osv_memory):
                 am.state IN (%(states)s) AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.currency_id
-        ''' % args
+        '''
+        query = cr.mogrify(query, args)
         cr.execute(query)
         res = cr.dictfetchall()
         return res
@@ -404,7 +416,8 @@ class ForeignExchangeRealization(osv.osv_memory):
                 am.state IN (%(states)s) AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id, aml.currency_id
-        ''' % args
+        '''
+        query = cr.mogrify(query, args)
         cr.execute(query)
         res = cr.dictfetchall()
         return res
@@ -423,10 +436,12 @@ class ForeignExchangeRealization(osv.osv_memory):
                 aml.state <> 'draft' AND
                 am.state IN (%(states)s) AND
                 aml.company_id = %(company_id)d AND
-                aa.id BETWEEN %(parent_left)d AND %(parent_right)d AND
+                aa.parent_left >= %(parent_left)d AND
+                aa.parent_right <= %(parent_right)d AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id
-        ''' % args
+        '''
+        query = cr.mogrify(query, args)
         cr.execute(query)
         res = cr.fetchall()
         if res:
@@ -477,9 +492,10 @@ class ForeignExchangeRealization(osv.osv_memory):
             ])
 
         # Searching for other accounts that could be used as multicurrency
-        args = self.get_params(cr, uid, ids, account_type, fieldname,
-                               context=context)
-        res += self.get_accounts_from_aml(cr, uid, args, context=context)
+        if wzd_brw.check_non_multicurrency_account:
+            args = self.get_params(
+                cr, uid, ids, account_type, fieldname, context=context)
+            res += self.get_accounts_from_aml(cr, uid, args, context=context)
         res = list(set(res))
 
         if res:
