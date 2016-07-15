@@ -1,5 +1,6 @@
-[![Build Status](http://runbot.odoo.com/logo.png)](http://runbot.vauxoo.com/runbot/)
 [![Build Status](https://travis-ci.org/Vauxoo/addons-vauxoo.svg)](https://travis-ci.org/Vauxoo/addons-vauxoo)
+[![Updates](https://pyup.io/repos/github/vauxoo/addons-vauxoo/shield.svg)](https://pyup.io/repos/github/vauxoo/addons-vauxoo/)
+
 
 Vauxoo modules for Odoo
 ===
