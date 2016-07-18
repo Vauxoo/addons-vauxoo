@@ -89,7 +89,7 @@ msgstr "En développement"
 #. module: product_lifecycle
 #: help:product.product,replace_to_product_id:0
 msgid "Informative field. The product that is replaced by the current one. The current product is the new product for the product in this field"
-msgstr "Champs informatif. Cet article va remplacer l’article actuel."
+msgstr "Champs informatif. Cet article va remplacer l’article actuel"
 
 #. module: product_lifecycle
 #: field:replacement.product,__last_update:0
@@ -131,9 +131,9 @@ msgid "NOTE: If the purchase line is red it means that\n"
 "                        If you want to purchase a not obsolete product you\n"
 "                        can use the Replace Obsolete Product button."
 msgstr "NOTE: Si la ligne d’achat est rouge, cela signifie que\n"
-"tttl’ordre d’achat a un article obsolète.\n"
-"tttSi vous voulez acheter un article non obsolète, vous\n"
-"tttpouvez utiliser le bouton Remplacer l’article obsolète."
+"                        l’ordre d’achat a un article obsolète.\n"
+"                        Si vous voulez acheter un article non obsolète, vous\n"
+"                        pouvez utiliser le bouton Remplacer l’article obsolète."
 
 #. module: product_lifecycle
 #: view:replacement.product:product_lifecycle.replacement_product_form_view
@@ -313,18 +313,18 @@ msgstr "The replacement line obsolete product must be a obsolete product"
 #: code:addons/product_lifecycle/wizard/replacement_product.py:124
 #, python-format
 msgid "The replacement line replace product can not be a obsolete product"
-msgstr "La ligne de remplacement d’article ne peux pas contenir un article obsolète."
+msgstr "La ligne de remplacement d’article ne peux pas contenir un article obsolète"
 
 #. module: product_lifecycle
 #: help:product.product,replaced_by_product_id:0
 msgid "The replacement product for the current product. The current product is a obsolete product and the product in this field is the new product that make the replacement"
-msgstr "L’article de remplacement pour l’article actuel. L’article actuel est un article obsolète et l’article dans ce champs est le nouvel article qui le remplace."
+msgstr "L’article de remplacement pour l’article actuel. L’article actuel est un article obsolète et l’article dans ce champs est le nouvel article qui le remplace"
 
 #. module: product_lifecycle
 #: code:addons/product_lifecycle/wizard/replacement_product.py:64
 #, python-format
 msgid "There is not obsolete products to replace"
-msgstr "Il n’y a pas d’article obsolète à remplacer."
+msgstr "Il n’y a pas d’article obsolète à remplacer"
 
 #. module: product_lifecycle
 #: code:addons/product_lifecycle/wizard/replacement_product.py:81
