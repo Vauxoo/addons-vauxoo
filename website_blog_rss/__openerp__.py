@@ -4,8 +4,8 @@
     'category': 'website',
     'summary': 'This module enables RSS on Blog',
     'website': 'http://vauxoo.com',
-    'version': '8.0.0.1.6',
-    'author': 'Vauxoo',
+    'version': '8.0.0.2.0',
+    'author': 'Vauxoo, Tecnativa',
     'license': 'AGPL-3',
     'depends': [
         'website_blog',
