@@ -344,6 +344,7 @@
                                         on_change='onchange_company_id(company_id)'
                                         readonly="1"/>
                                     <field name="currency_id"/>
+                                    <field name='check_non_multicurrency_account'/>
                                 </group>
                             </page>
                         </notebook>

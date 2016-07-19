@@ -8,5 +8,5 @@ Service Centers' page.
 
 + For in order to install this module download this repo
 
-- https://github.com/JayVora-SerpentCS/SerpentCS_Contributions-v8.git
-  and install the `website_product_brand` module.
+- https://github.com/Vauxoo/product-attribute.git
+  and install the `product_brand` module.

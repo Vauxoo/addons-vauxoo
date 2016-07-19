@@ -8,7 +8,8 @@
     'author': 'Vauxoo',
     'license': 'AGPL-3',
     'depends': [
-        'website_product_brand',
+        'website',
+        'product_brand',
     ],
     'data': [
         'views/layout.xml',
