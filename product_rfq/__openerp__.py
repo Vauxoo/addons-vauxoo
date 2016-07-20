@@ -27,7 +27,7 @@
 ###############################################################################
 {
     "name": "Product RFQ",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Custom",
     "website": "http://vauxoo.com",

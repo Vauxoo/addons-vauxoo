@@ -21,7 +21,7 @@
 ##########################################################################
 {
     "name": "Fields Active, Company And Sequence For Model Ir_actions_report_xml",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Generic",
     "website": "http://www.vauxoo.com/",
