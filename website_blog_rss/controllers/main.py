@@ -1,6 +1,6 @@
 # coding: utf-8
-import openerp
 import datetime
+import openerp
 from openerp.addons.web import http
 from openerp.addons.web.http import request
 
@@ -24,8 +24,9 @@ class WebsiteBlogRSS(http.Controller):
         ), context=context)
 
     # TODO Rewrite this method to be generic and innheritable for any model
-    @http.route('/blog_rss.xml', type='http', auth="public", website=True)
-    def rss_xml_index(self):
+    @http.route(['/blog_rss.xml', "/blog/<model('blog.blog'):blog>/rss.xml"],
+                type='http', auth="public", website=True)
+    def rss_xml_index(self, blog=False):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
         ira = request.registry['ir.attachment']
         iuv = request.registry['ir.ui.view']
@@ -33,7 +34,11 @@ class WebsiteBlogRSS(http.Controller):
         blog_obj = request.registry['blog.blog']
         config_obj = request.registry['ir.config_parameter']
 
-        blog_ids = blog_obj.search(cr, uid, [], context=context)
+        try:
+            blog_ids = blog.ids
+        except AttributeError:
+            blog_ids = blog_obj.search(cr, uid, [], context=context)
+
         user_brw = user_obj.browse(cr, uid, [uid], context=context)
         blog_post_obj = request.registry['blog.post']
         mimetype = 'application/xml;charset=utf-8'
@@ -62,11 +67,11 @@ class WebsiteBlogRSS(http.Controller):
             pages = 0
             first_page = None
             values = {}
-            post_ids = blog_post_obj.search(cr, uid, [
-                ('website_published', '=', True)])
-            if post_ids:
-                values['posts'] = blog_post_obj.browse(cr, uid, post_ids,
-                                                       context)
+            post_domain = [('website_published', '=', True)]
+            if blog_ids:
+                post_domain += [("blog_id", "in", blog_ids)]
+            post_ids = blog_post_obj.search(cr, uid, post_domain)
+            values['posts'] = blog_post_obj.browse(cr, uid, post_ids, context)
             if blog_ids:
                 blog = blog_obj.browse(cr, uid, blog_ids, context=context)[0]
                 values['blog'] = blog
