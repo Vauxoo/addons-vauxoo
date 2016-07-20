@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Search by Last Modification User, Date Modified, Date Created",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",

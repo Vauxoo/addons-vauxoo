@@ -30,7 +30,7 @@
 # retencion_iva, base_vat_ve  ver si se puede eliminar esta dependencia
 {
     "name": "Voucher Paid support report",
-    "version": "0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules/Accounting",
     "website": "http://vauxoo.com",
