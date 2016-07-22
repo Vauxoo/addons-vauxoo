@@ -30,6 +30,11 @@ class StockMove(models.Model):
             cr, uid, ids, sgmnt, context=context)
         return res
 
+    @api.v8  # pylint: disable=W0404
+    def action_done(self):
+        return StockMove.action_done(self._model, self._cr, self._uid,
+                                     self._ids, context=self._context)
+
     @api.v7
     def product_segmentation_fetch_before_done(
             self, cr, uid, ids, context=None):
