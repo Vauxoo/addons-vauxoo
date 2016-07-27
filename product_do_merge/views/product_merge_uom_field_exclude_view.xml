@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+
+        <!-- Fiscal Year -->
+        <record id="view_product_merge_uom_field_exclude_form" model="ir.ui.view">
+            <field name="name">product.merge.uom.field.exclude.form</field>
+            <field name="model">product.merge.uom.field.exclude</field>
+            <field name="arch" type="xml">
+                <form string="Exclude UoM from Product Merge">
+                    <group>
+                        <field name="field_id"/>
+                        <field name="name"/>
+                        <field name="model_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_product_merge_uom_field_exclude_tree" model="ir.ui.view">
+            <field name="name">product.merge.uom.field.exclude.tree</field>
+            <field name="model">product.merge.uom.field.exclude</field>
+            <field name="arch" type="xml">
+                <tree string="Exclude UoM from Product Merge">
+                    <field name="field_id"/>
+                    <field name="name"/>
+                    <field name="model_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_product_merge_uom_field_exclude_search" model="ir.ui.view">
+            <field name="name">product.merge.uom.field.exclude.search</field>
+            <field name="model">product.merge.uom.field.exclude</field>
+            <field name="arch" type="xml">
+                <search string="Search Exclude UoM from Product Merge">
+                    <field name="field_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_product_merge_uom_field_exclude" model="ir.actions.act_window">
+            <field name="name">Exclude UoM from Product Merge</field>
+            <field name="res_model">product.merge.uom.field.exclude</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem parent="base.next_id_9"
+                  name="Excluded UoM fields in Product Merge"
+                  id="menu_product_merge_uom_field_exclude"
+                  action="action_product_merge_uom_field_exclude"/>
+
+</data>
+</openerp>

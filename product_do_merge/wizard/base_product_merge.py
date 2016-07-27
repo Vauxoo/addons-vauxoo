@@ -54,10 +54,10 @@ class MergeProductLine(models.TransientModel):
 class MergeProductAutomatic(models.TransientModel):
     _name = 'base.product.merge.automatic.wizard'
 
-    group_by_name_template = fields.Boolean('Nombre')
-    group_by_default_code = fields.Boolean('Referencia')
-    group_by_categ_id = fields.Boolean('Categoria')
-    group_by_uom_id = fields.Boolean('Unidad de medida')
+    group_by_name_template = fields.Boolean('Name')
+    group_by_default_code = fields.Boolean('Reference')
+    group_by_categ_id = fields.Boolean('Category')
+    group_by_uom_id = fields.Boolean('Unit of Measure')
     state = fields.Selection([('option', 'Option'),
                               ('selection', 'Selection'),
                               ('finished', 'Finished')],
@@ -78,11 +78,11 @@ class MergeProductAutomatic(models.TransientModel):
     line_ids = fields.One2many('base.product.merge.line',
                                'wizard_id', 'Lines')
     dst_product_id = fields.Many2one('product.product',
-                                     string='Destination Contact')
+                                     string='Destination Product')
     product_ids = fields.Many2many(
         'product.product', 'product_rel', 'product_merge_id',
         'product_id', string="Products to merge")
-    maximum_group = fields.Integer("Maximum of Group of Contacts")
+    maximum_group = fields.Integer("Maximum of Group of Products")
 
     def get_fk_on(self, cr, table, tables=None):
         tables = tables and tuple(tables) or []
@@ -106,6 +106,27 @@ class MergeProductAutomatic(models.TransientModel):
         """
         return cr.execute(query, (table, tables and where or '',))
 
+    def _exclude_uom_field(self, cr, uid, table, uom_fields, context=None):
+        if context is None:
+            context = {}
+        ir_model_obj = self.pool['ir.model']
+        model_ids = ir_model_obj.search(cr, uid, [], context=context)
+        model_table = {}
+        for ir_model in ir_model_obj.browse(cr, uid, model_ids,
+                                            context=context):
+            model_table[ir_model.model.replace('.', '_')] = ir_model.model
+
+        if table not in model_table.keys():
+            return uom_fields
+
+        for uom_field in uom_fields:
+            if self.pool['product.merge.uom.field.exclude'].search(
+                cr, uid, [('field_id.model', '=', model_table[table]),
+                          ('field_id.name', '=', str(uom_field))],
+                    context=context):
+                uom_fields.remove(uom_field)
+        return uom_fields
+
     def _update_foreign_keys(self, cr, uid, src_products, dst_product,
                              model=None, context=None):
         if model:
@@ -124,7 +145,6 @@ class MergeProductAutomatic(models.TransientModel):
             self.get_fk_on(cr, 'product_uom')
             product_bad = []
             record = []
-            flag = []
             uos_table = {}
             for table, column in cr.fetchall():
                 if table in uos_table:
@@ -208,6 +228,9 @@ class MergeProductAutomatic(models.TransientModel):
                         # Validation with flag
                         for match in cr.dictfetchall():
                             uos_field = uos_table.get(table)
+                            uos_field = self._exclude_uom_field(cr, uid,
+                                                                table,
+                                                                uos_field)
                             uos_id = [match.get(i)
                                       for i in uos_field
                                       if match.get(i, False)]
@@ -215,53 +238,54 @@ class MergeProductAutomatic(models.TransientModel):
                                     for i in uos_id]):
                                 continue
                             else:
-                                flag.append(False)
-                        # Handle exception for the flag validation
-                        if False in flag:
-                            raise osv.except_osv(_('Error!'), _(
-                                """You must verify the units of measurement in which
-                                the products do you wish to merge already have
-                                operations.
-                                """))
-                        else:
-                            cr.execute(query, (product_ids,))
-                            for match in cr.dictfetchall():
-                                uos_field = uos_table.get(table)
-                                uos_id = [match.get(i)
-                                          for i in uos_field
-                                          if match.get(i, False)]
-                                if all([(i in uom_ids and True or False)
-                                        for i in uos_id]):
-                                    query = '''UPDATE "%(table)s"
-                                               SET %(column)s = %%s
-                                               WHERE id=%%s''' % query_dic
-                                    cr.execute(query,
-                                               (dst_product.id,
-                                                match.get('id'),))
-                                    if column == proxy._parent_name and \
-                                            table == 'product_product':
-                                        query = """
-                            WITH RECURSIVE cycle(id, product_id)
-                            AS (SELECT id, product_id
-                                FROM product_product
-                                UNION
-                                    SELECT  cycle.id,
-                                            product_product.parent_id
-                                    FROM product_product, cycle
-                                    WHERE product_product.id = cycle.parent_id
-                                          AND cycle.id != cycle.parent_id
-                            )
-                            SELECT id FROM cycle
-                            WHERE id = parent_id AND id = %s
-                                        """
-                                        cr.execute(query, (dst_product.id,))
-                                        if cr.fetchall():
-                                            cr.execute(
-                                                "ROLLBACK TO SAVEPOINT "
-                                                "recursive_product_savepoint")
-                                else:
-                                    product_bad.append(
-                                        match.get(query_dic.get('column')))
+                                uos_field_names = ', '.join(uos_field)
+                                raise osv.except_osv(_('Error!'), _(
+                                    """Table %s contains a record where one of
+                                    the values in the UoM fields (%s) has a
+                                    dimension different than the dimension
+                                    of the base UoM in the product.
+                                    Please verify the operation or exclude
+                                    the field from the merge criteria.
+                                    """) % (table, uos_field_names))
+
+                        cr.execute(query, (product_ids,))
+                        for match in cr.dictfetchall():
+                            uos_field = uos_table.get(table)
+                            uos_id = [match.get(i)
+                                      for i in uos_field
+                                      if match.get(i, False)]
+                            if all([(i in uom_ids and True or False)
+                                    for i in uos_id]):
+                                query = '''UPDATE "%(table)s"
+                                           SET %(column)s = %%s
+                                           WHERE id=%%s''' % query_dic
+                                cr.execute(query,
+                                           (dst_product.id,
+                                            match.get('id'),))
+                                if column == proxy._parent_name and \
+                                        table == 'product_product':
+                                    query = """
+                        WITH RECURSIVE cycle(id, product_id)
+                        AS (SELECT id, product_id
+                            FROM product_product
+                            UNION
+                                SELECT  cycle.id,
+                                        product_product.parent_id
+                                FROM product_product, cycle
+                                WHERE product_product.id = cycle.parent_id
+                                      AND cycle.id != cycle.parent_id
+                        )
+                        SELECT id FROM cycle
+                        WHERE id = parent_id AND id = %s
+                                    """
+                                    cr.execute(query, (dst_product.id,))
+                                    if cr.fetchall():
+                                        cr.execute(
+                                            "ROLLBACK TO SAVEPOINT "
+                                            "recursive_product_savepoint")
+                            else:
+                                product_bad.append(
+                                    match.get(query_dic.get('column')))
             return product_bad
 
     def _update_foreign_keys_modify(self, cr, uid, src_products,

@@ -33,8 +33,10 @@
     ],
     "demo": [],
     "data": [
+        "security/ir.model.access.csv",
         "security/res_groups.xml",
-        "wizard/base_product_merge_view.xml"
+        "wizard/base_product_merge_view.xml",
+        "views/product_merge_uom_field_exclude_view.xml"
     ],
     "test": [],
     "js": [],
