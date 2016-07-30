@@ -26,7 +26,7 @@ class ResCompany(osv.Model):
     _inherit = "res.company"
     _description = 'Companies'
 
-    _columns = {
+    _columns = {  # pylint: disable=W8105
         'bank_gain_exchange_account_id': fields.many2one(
             'account.account', 'Bank Gain Account',
             domain=('[("type", "!=", "view")]'),

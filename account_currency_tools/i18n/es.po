@@ -26,7 +26,7 @@ msgstr "Account"
 #. module: account_currency_tools
 #: model:ir.model,name:account_currency_tools.model_account_period
 msgid "Account period"
-msgstr "Período Contable"
+msgstr "Período contable"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
@@ -45,7 +45,7 @@ msgid ""
 "secondary currency, but were involved in multicurrency transactions will "
 "appear here"
 msgstr ""
-"Las Cuentas que no son multi-moneda, esto es, no fueron configuradas con una "
+"Las cuentas que no son multi-moneda, esto es, no fueron configuradas con una "
 "moneda secundaria, pero que estuvieron involucradas en transacciones multi-"
 "moneda aparecerán aquí"
 
@@ -336,7 +336,7 @@ msgstr "Ir al panel de configuración"
 #: field:foreign.exchange.realization,id:0
 #: field:foreign.exchange.realization.line,id:0
 msgid "ID"
-msgstr "Id"
+msgstr "ID"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
@@ -480,7 +480,7 @@ msgstr "Otra Información"
 #: selection:foreign.exchange.realization.line,type:0
 #, python-format
 msgid "Payable"
-msgstr "A Pagar"
+msgstr "A pagar"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
@@ -564,7 +564,7 @@ msgstr "Asiento Contable de Realización"
 #: selection:foreign.exchange.realization.line,type:0
 #, python-format
 msgid "Receivable"
-msgstr "A Cobrar"
+msgstr "A cobrar"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
@@ -685,7 +685,7 @@ msgid ""
 "computations), liquidity for bank & cash"
 msgstr ""
 "El 'tipo interno' se usa para funcionalidad disponible en distintos tipos de "
-"cuentas:  a Cobrar/a Pagar son para cuentas de clientes (para cálculos de "
+"cuentas: a Cobrar/a Pagar son para cuentas de clientes (para cálculos de "
 "débito/crédito), liquidez para banco y caja"
 
 #. module: account_currency_tools
