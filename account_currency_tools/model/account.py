@@ -24,7 +24,7 @@ from openerp.osv import fields, osv
 
 class AccountPeriod(osv.osv):
     _inherit = "account.period"
-    _columns = {
+    _columns = {  # pylint: disable=W8105
         'move_id': fields.many2one(
             'account.move',
             'Realization Journal Entry',
