@@ -76,21 +76,14 @@ class WarehouseUser(models.Model):
         return res
 
     @api.model
-    def fields_view_get(self, view_id=None, view_type='form',
-                        toolbar=False, submenu=False):
-        """ Can view only the ones for for the warehouse
+    def check_access_rights(self, operation, raise_exception=True):
+        """ Filter the stock.pickings related to the current user
         """
-        res = super(WarehouseUser, self).fields_view_get(
-            view_id=view_id, view_type=view_type,
-            toolbar=toolbar, submenu=submenu)
-
-        warehouse = self.env.user.default_section_id.warehouse_id
-
-        print ' ------ field_view_get', warehouse
-        # import pdb
-        # pdb.set_trace()
-
-        return res
+        if self.env.user.id == SUPERUSER_ID:
+            return
+        ids = self.browse(self.get_from_my_warehouses())
+        self = self & ids
+        return super(WarehouseUser, self).check_access_rights(operation)
 
 
 class StockPickingType(models.Model):
@@ -98,7 +91,8 @@ class StockPickingType(models.Model):
     _name = "stock.picking.type"
     _inherit = ['stock.picking.type', 'warehouse.user']
 
-class StockPicking(models.Model):
 
-    _name = "stock.picking"
-    _inherit = ['stock.picking', 'warehouse.user']
+# class StockPicking(models.Model):
+
+#     _name = "stock.picking"
+#     _inherit = ['stock.picking', 'warehouse.user']
