@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+        <record id="res_partner_23" model="res.partner">
+            <field name="name">VX for Account Currency Tools</field>
+            <field eval="[(6,0,[ref('base.res_partner_category_4')])]" name="category_id"/>
+            <field name="supplier">1</field>
+            <field eval="1" name="customer"/>
+            <field name="is_company">1</field>
+             <field name="type">default</field>
+            <field name="street">3rd Floor, Room 3-C,</field>
+            <field name="street2">Carretera Panamericana, Km 1, Urb. Delgado Chalbaud</field>
+            <field name="city">Caracas</field>
+            <field name="zip">1090</field>
+            <field name="email">vx@yourcompany.example.com</field>
+            <field name="phone">+58 212 681 0538</field>
+            <field name="country_id" ref="base.ve"/>
+        </record>
 
         <!--
         Accounts
@@ -62,7 +77,6 @@
 
         <record id="period_0" model="account.period">
             <field eval="'00/'+'%s' %(datetime.now().year-1)" name="code"/>
-            <field eval="'X Opening Period '+'%s' %(datetime.now().year-1)" name="name"/>
             <field eval="True" name="special"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-01-01'" name="date_start"/>
@@ -71,7 +85,6 @@
         </record>
         <record id="period_1" model="account.period">
             <field eval="'01/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 01/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-01-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-01-31'" name="date_stop"/>
@@ -79,7 +92,6 @@
         </record>
         <record id="period_2" model="account.period">
             <field eval="'02/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 02/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-02-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-02-28'" name="date_stop"/>
@@ -87,7 +99,6 @@
         </record>
         <record id="period_3" model="account.period">
             <field eval="'03/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 03/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-03-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-03-31'" name="date_stop"/>
@@ -95,7 +106,6 @@
         </record>
         <record id="period_4" model="account.period">
             <field eval="'04/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 04/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-04-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-04-30'" name="date_stop"/>
@@ -103,7 +113,6 @@
         </record>
         <record id="period_5" model="account.period">
             <field eval="'05/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 05/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-05-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-05-31'" name="date_stop"/>
@@ -111,7 +120,6 @@
         </record>
         <record id="period_6" model="account.period">
             <field eval="'06/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 06/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-06-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-06-30'" name="date_stop"/>
@@ -119,7 +127,6 @@
         </record>
         <record id="period_7" model="account.period">
             <field eval="'07/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 07/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-07-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-07-31'" name="date_stop"/>
@@ -127,7 +134,6 @@
         </record>
         <record id="period_8" model="account.period">
             <field eval="'08/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 08/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-08-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-08-31'" name="date_stop"/>
@@ -135,7 +141,6 @@
         </record>
         <record id="period_9" model="account.period">
             <field eval="'09/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 09/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-09-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-09-30'" name="date_stop"/>
@@ -143,7 +148,6 @@
         </record>
         <record id="period_10" model="account.period">
             <field eval="'10/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 10/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-10-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-10-31'" name="date_stop"/>
@@ -151,7 +155,6 @@
         </record>
         <record id="period_11" model="account.period">
             <field eval="'11/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 11/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-11-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-11-30'" name="date_stop"/>
@@ -159,7 +162,6 @@
         </record>
         <record id="period_12" model="account.period">
             <field eval="'12/'+'%s' %(datetime.now().year-1)" name="name"/>
-            <field eval="'X 12/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-12-01'" name="date_start"/>
             <field eval="'%s' %(datetime.now().year-1)+'-12-31'" name="date_stop"/>
@@ -216,7 +218,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-05'"/>
             <field name="name">Receivable from Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">1500.0</field>
             <field name="credit">0.0</field>
@@ -230,7 +232,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-05'"/>
             <field name="name">Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.a_sale"/>
             <field name="debit">0.0</field>
             <field name="credit">1500.0</field>
@@ -251,7 +253,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Bank Payment USD</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">2000.0</field>
             <field name="credit">0.0</field>
@@ -265,7 +267,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">0.0</field>
             <field name="credit">2000.0</field>
@@ -279,7 +281,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">500.0</field>
             <field name="credit">0.0</field>
@@ -293,7 +295,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.income_fx_income"/>
             <field name="debit">0.0</field>
             <field name="credit">500.0</field>
@@ -314,7 +316,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-17'"/>
             <field name="name">Receivable from Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">2000.0</field>
             <field name="credit">0.0</field>
@@ -328,7 +330,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-17'"/>
             <field name="name">Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.a_sale"/>
             <field name="debit">0.0</field>
             <field name="credit">2000.0</field>
@@ -349,7 +351,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-22'"/>
             <field name="name">Bank Payment USD</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">1000.0</field>
             <field name="credit">0.0</field>
@@ -363,7 +365,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-22'"/>
             <field name="name">Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">0.0</field>
             <field name="credit">1000.0</field>
@@ -384,7 +386,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-25'"/>
             <field name="name">Payable from Product Purchase</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.a_expense"/>
             <field name="debit">1800.0</field>
             <field name="credit">0.0</field>
@@ -398,7 +400,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-25'"/>
             <field name="name">Product Purchase</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_pay_usd"/>
             <field name="debit">0.0</field>
             <field name="credit">1800.0</field>
@@ -419,7 +421,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Bank Payment USD</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_pay_usd"/>
             <field name="debit">1600.0</field>
             <field name="credit">0.0</field>
@@ -433,7 +435,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">0.0</field>
             <field name="credit">1600.0</field>
@@ -447,7 +449,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="a_pay_usd"/>
             <field name="debit">200.0</field>
             <field name="credit">0.0</field>
@@ -461,7 +463,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="res_partner_23"/>
             <field name="account_id" ref="account.income_fx_income"/>
             <field name="debit">0.0</field>
             <field name="credit">200.0</field>

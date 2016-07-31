@@ -21,7 +21,7 @@
 # #########################################################################
 {
     "name": "supplier_invoice_number_unique",
-    "version": "1.6",
+    "version": "8.0.0.1.6",
     "author": "Vauxoo",
     "category": "Accouting",
     "website": "http://www.vauxoo.com/",
