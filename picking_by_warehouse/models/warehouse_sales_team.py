@@ -27,7 +27,6 @@ class WarehouseUser(models.Model):
     will be filtered taking into account your setted sales team.
     """
 
-    _auto = False
     _name = "warehouse.user"
 
     @api.multi
