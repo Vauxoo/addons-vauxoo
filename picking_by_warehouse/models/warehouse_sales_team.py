@@ -85,6 +85,16 @@ class WarehouseUser(models.Model):
         self = self & ids
         return super(WarehouseUser, self).check_access_rights(operation)
 
+    @api.multi
+    def read(self, fields, load='_classic_read'):
+        """ Overwrite read method to only return the sub group of records that
+        match with the user warehouses.
+        """
+        res = super(WarehouseUser, self).read(fields, load='_classic_read')
+        ids = self.get_from_my_warehouses()
+        res2 = [item for item in res if item.get('id', False) in ids]
+        return res2
+
 
 class StockPickingType(models.Model):
 
