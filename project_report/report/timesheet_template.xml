@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <template id="ts_by_dates" name="By Dates">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr> <td colspan="3"> <h3>Timesheet consumed by dates</h3></td> </tr>
+            <tr class="text-center"> <td> Month </td> <td> Total Hours</td> <td> Billable Hours</td> </tr>
+            </thead>
+            <tbody>
+            <t t-foreach="records.get('resume_month')" t-as="resume">
+                <tr class="by_account">
+                    <td class="text-left">
+                        <span t-esc="'%s (%s)' % (resume.get('date'), resume.get('date_count'))"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-esc="round(resume.get('unit_amount'), 2)"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
+                    </td>
+                </tr>
+            </t>
+            </tbody>
+            <tfoot>
+                <tr class="text-center">
+                    <td class="text-right">Totals</td>
+                    <td><span t-esc="round(records.get('total_ts_by_month'))"/></td>
+                    <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
+                </tr>
+            </tfoot>
+        </table>
+    </template>
+    <template id="ts_by_analytic" name="By Analytic">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <td colspan="3"> <h3>Timesheet consumed by analytic account</h3> </td>
+            </tr>
+            <tr class="text-center">
+                <td> Account </td>
+                <td> Total Hours</td>
+                <td> Billable Hours</td>
+            </tr>
+            </thead>
+            <tbody>
+            <t t-foreach="records.get('resume')" t-as="resume">
+                <tr class="text-center">
+                    <td class="text-left">
+                        <span t-esc="'%s (%s)' % (resume.get('account_id')[1].split('/')[-1], resume.get('account_id_count'))"/>
+                    </td>
+                    <td>
+                        <span t-esc="round(resume.get('unit_amount') or 0.00, 2)"/>
+                    </td>
+                    <td>
+                        <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
+                    </td>
+                </tr>
+            </t>
+            </tbody>
+            <tfoot>
+                <tr class="text-center">
+                    <td class="text-right">Totals</td>
+                    <td><span t-esc="round(records.get('total_ts_by_month'))"/></td>
+                    <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
+                </tr>
+            </tfoot>
+        </table>
+    </template>
+    <template id="ts_by_user" name="By User">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <td colspan="3"> <h3>Timesheet consumed by User</h3> </td>
+            </tr>
+            <tr class="text-center">
+                <td class="text-left"> User </td>
+                <td> Total Hours</td>
+                <td> Billable Hours</td>
+            </tr>
+            </thead>
+            <tbody>
+            <t t-foreach="records.get('resume_user')" t-as="resume">
+                <tr class="text-center">
+                    <td class="text-left">
+                        <span t-esc="'%s (%s)' % (resume.get('user_id')[1].split('/')[-1], resume.get('user_id_count'))"/>
+                    </td>
+                    <td>
+                        <span t-esc="round(resume.get('unit_amount') or 0.00, 2)"/>
+                    </td>
+                    <td>
+                        <span t-esc="resume.get('invoiceables_hours') or 0.00"/>
+                    </td>
+                </tr>
+            </t>
+            </tbody>
+            <tfoot>
+            <tr class="text-center">
+                <td class="text-right">Totals</td>
+                <td><span t-esc="round(records.get('total_ts_by_month'))"/></td>
+                <td><span t-esc="records.get('total_ts_bill_by_month')"/></td>
+            </tr>
+            </tfoot>
+        </table>
+    </template>
+    <template id="timesheets" name="Timesheet Report for Customers">
+        <div class="col-xs-12">
+            <div class="col-xs-12">
+                <h2>Resumed Timesheet Report</h2>
+                <strong>Filter Name:</strong> <span t-esc="o.filter_id.name"/>
+            </div>
+            <div class="col-xs-12">
+                <div t-raw="o.cts2html"/>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <t t-call="project_report.ts_by_dates"/>
+        </div>
+        <div class="col-xs-12">
+            <t t-call="project_report.ts_by_analytic"/>
+        </div>
+        <div class="col-xs-12">
+            <t t-call="project_report.ts_by_user"/>
+        </div>
+    </template>
+    <template id="table_invoices" name="Invoices">
+        <table class="table no-brake text-center table-striped table-bordered">
+            <thead>
+                <tr class="text-left">
+                    <td colspan="7"><h3>Status of invoices until today in the project</h3></td>
+                </tr>
+                <tr class="title">
+                <td>Period</td>
+                <td>Number</td>
+                <td>Total</td>
+                <td>Tax</td>
+                <td>Total</td>
+                <td>Pending</td>
+                <td>Currency</td>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="records.get('periods')" t-as="period">
+                    <t t-foreach="records.get('invoices')" t-as="invoice">
+                        <tr>
+                            <t t-if="invoice.period_id.id == period.get('period_id')[0]">
+                                <td><span t-esc="period.get('period_id')[1]"/></td>
+                                <td><span t-esc="invoice.number"/></td>
+                                <td><span t-esc="invoice.amount_untaxed"/></td>
+                                <td><span t-esc="invoice.amount_tax"/></td>
+                                <td><span t-esc="invoice.amount_total"/></td>
+                                <td><span t-esc="invoice.residual"/></td>
+                                <td><span t-esc="invoice.currency_id.name"/></td>
+                            </t>
+                        </tr>
+                    </t>
+                </t>
+            </tbody>
+            <tfoot>
+                <t t-foreach="records.get('total_invoices')" t-as="currency">
+                    <tr>
+                        <td><span t-raw="currency.get('currency_id')[1]"></span></td>
+                        <t t-if="currency.get('currency_id')[0] == records.get('total_invoices')[0].get('currency_id')[0]">
+                            <td t-att-rowspan="len(records.get('total_invoices'))"></td>
+                        </t>
+                        <td><span t-esc="currency.get('amount_untaxed')"/></td>
+                        <td><span t-esc="currency.get('amount_tax')"/></td>
+                        <td><span t-esc="currency.get('amount_total')"/></td>
+                        <td><span t-esc="currency.get('residual')"/></td>
+                        <t t-if="currency.get('currency_id')[0] == records.get('total_invoices')[0].get('currency_id')[0]">
+                            <td t-att-rowspan="len(records.get('total_invoices'))"></td>
+                        </t>
+                    </tr>
+                </t>
+            </tfoot>
+        </table>
+    </template>
+
+    <template id="invoices">
+        <t t-if="records.get('invoices')">
+        <div class="col-xs-12">
+            <div class="col-xs-12">
+                <h2>Resume of economical status</h2>
+                <strong>Filter Name: </strong> <span t-esc="o.filter_invoice_id.name"/>
+            </div>
+            <div class="col-xs-12">
+                <div t-raw="o.ci2html"/>
+            </div>
+            <div class="col-xs-12">
+                 <t t-call="project_report.table_invoices"/>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <h3>Amounts Resumed</h3>
+            <t t-set="total_train" t-value="0"/>
+            <t t-set="total_cons" t-value="0"/>
+            <t t-set="total_lic" t-value="0"/>
+            <t t-set="total_others" t-value="0"/>
+            <t t-foreach="records.get('resume_product')" t-as="il">
+                <t t-set="total_train" t-value="records.get('resume_product')[il].get('total_train')+total_train"/>
+                <t t-set="total_cons" t-value="records.get('resume_product')[il].get('total_cons')+total_cons"/>
+                <t t-set="total_lic" t-value="records.get('resume_product')[il].get('total_lic')+total_lic"/>
+                <t t-set="total_others" t-value="records.get('resume_product')[il].get('total_others')+total_others"/>
+                <div class="col-xs-12">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                        <td>
+                            <h4>
+                                <strong>Total Amounts in Currency </strong>
+                                <u t-esc="il"/>
+                            </h4>
+                        </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>
+                                <ul>
+                                    <li><span><b>Training: </b><span t-esc="records.get('resume_product')[il].get('training')"/></span></li>
+                                    <li><span><b>Consultancy: </b><span t-esc="records.get('resume_product')[il].get('consultancy')"/></span></li>
+                                    <li><span><b>Enterprises: </b><span t-esc="records.get('resume_product')[il].get('enterprises')"/></span></li>
+                                    <li><span><b>Others: </b><span t-esc="records.get('resume_product')[il].get('others')"/></span></li>
+                                    <li><span><b>Total: </b><span t-esc="records.get('resume_product')[il].get('total')"/></span></li>
+                                    <li><span><b>Total in <u t-esc="o.currency_id.name"></u>: </b><span t-esc="records.get('resume_product')[il].get('total_in_control')"/></span></li>
+                                    <li><span><b>Conversion Rate: </b><span t-esc="records.get('resume_product')[il].get('conversion_rate')"/></span></li>
+                                 </ul>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                    <td>
+                        <h3>
+                            <strong>Resumed amounts in </strong>
+                            <u t-esc="o.currency_id.name"/>
+                        </h3>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                        <h4>Total Invoiced</h4>
+                    </td>
+                    <td>
+                        <h4>Totals Timesheet</h4>
+                    </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                    <td>
+                        <ul>
+                            <li><b>Training: </b><span t-esc="total_train"/></li>
+                            <li><b>Consultancy: </b><span t-esc="total_cons"/></li>
+                            <li><b>Enterprises: </b><span t-esc="total_lic"/></li>
+                            <li><b>Others: </b><span t-esc="total_others"/></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li><b>Billable: </b><span t-esc="records.get('resumed_numbers')['pending']"/></li>
+                            <li><b>Pending <sub>Billables - Billed</sub>: </b><span t-esc="records.get('resumed_numbers')['pending'] - total_cons"/></li>
+                        </ul>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </t>
+    </template>
+    <template id="issues">
+        <t t-if="records.get('issues')">
+        <div class="col-xs-12">
+                <div class="col-xs-12">
+                    <h3>Issues.</h3>
+                    <strong>Filter Name: </strong> <span t-esc="o.filter_issue_id.name"/>
+                </div>
+                <div class="col-xs-12">
+                    <div t-raw="o.ciss2html"/>
+                </div>
+                <section>
+                <div class="col-xs-12">
+                <table class="table text-left table-striped table-bordered">
+                    <thead>
+                    <tr class="title">
+                        <td colspan="3">Status of issues until today in the project.</td>
+                    </tr>
+                    <tr>
+                        <td> Analytic Account </td>
+                        <td class="text-center"> Qty </td>
+                        <td> Status </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <t t-foreach="records.get('issues')" t-as="issue">
+                        <tr>
+                            <td>
+                                <span t-esc="issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.'"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="issue.get('analytic_account_id_count')"/>
+                            </td>
+                            <td>
+                                <ul class="list-group">
+                                <t t-foreach="issue.get('children_by_stage')" t-as="stage">
+                                    <li class="list-group-item">
+                                        <span class="badge" t-esc="stage.get('stage_id_count')"/>
+                                        <t t-esc="stage.get('stage_id')[1]"/>
+                                    </li>
+                                </t>
+                                </ul>
+                            </td>
+                        </tr>
+                    </t>
+                    </tbody>
+                </table>
+                </div>
+            </section>
+        </div>
+        </t>
+    </template>
+    <template id="user_stories">
+        <div class="col-xs-12">
+        <t t-if="records.get('user_stories')">
+            <div class="endpage">
+            <div class="col-xs-12">
+                <h3> User Stories. </h3>
+                <strong>Filter Name:</strong> <span t-esc="o.filter_hu_id.name"/>
+                <div class="row">
+                    <t t-raw="o.comment_hu"/>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <table class="table text-center table-striped table-bordered">
+                    <thead>
+                    <tr class="title">
+                        <td colspan="7">Status of User Stories until today in the project.</td>
+                    </tr>
+                    <tr class="title">
+                        <td>ID</td>
+                        <td>Title</td>
+                        <td>Asked By</td>
+                        <td>Planned</td>
+                        <td>Effective</td>
+                        <td>Invoiceable</td>
+                        <td>Status</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <t t-foreach="records.get('user_stories')" t-as="hu">
+                        <tr>
+                            <td>
+                                <span t-esc="hu.id"/>
+                            </td>
+                            <td>
+                                <span t-esc="hu.name"/>
+                            </td>
+                            <td>
+                                <span t-esc="hu.owner_id.name"/>
+                            </td>
+                            <td>
+                                <span t-esc="hu.planned_hours"/>
+                            </td>
+                            <td>
+                                <span t-esc="hu.effective_hours"/>
+                            </td>
+                            <td>
+                                <span t-esc="hu.invoiceable_hours"/>
+                            </td>
+                            <td>
+                                <span t-esc="hu.state"/>
+                            </td>
+                        </tr>
+                    </t>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </t>
+        </div>
+    </template>
+    <template id="details">
+        <t t-if="o.show_details">
+            <div class="col-xs-12">
+            <h2>Detailed Report</h2>
+            <t t-foreach="records.get('data')" t-as="res">
+                <table class="text-center table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="10">
+                                <h3>Analytic Account: <small t-esc="res"/></h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Issue</th>
+                            <th>User Story</th>
+                            <th>Invoice</th>
+                            <th>User</th>
+                            <th class="text-left">Description</th>
+                            <th>Date</th>
+                            <th>Duration</th>
+                            <th>Bill</th>
+                            <th>Billable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <t t-foreach="records.get('data')[res]" t-as="rec">
+                        <tr t-att-class="not rec.get('to_invoice') and 'danger' or rec.get('to_invoice').id == 1 and 'warning' or rec.get('to_invoice').id == 5 and 'success' or 'info'">
+                            <td>
+                                <span t-esc="rec.get('id')"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('issue')"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('task_id').userstory_id and rec.get('task_id').userstory_id.id or 'Na'"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('invoice_id') or 'N-I'"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('author')"/>
+                            </td>
+                            <td class="text-left">
+                                <span t-esc="'%s: %s' % (rec.get('task_id') and rec.get('task_id').id, rec.get('description'))"/>
+                            </td>
+                            <td>
+                                <span t-esc="time.strftime('%d/%m/%y', time.strptime(rec.get('date'),'%Y-%m-%d'))"/>
+                            </td>
+                            <td>
+                                <span t-esc="round(rec.get('duration'), 2)"/>
+                            </td>
+                            <td>
+                                <t t-esc="rec.get('to_invoice') and rec.get('to_invoice').name or 'No Setted'"/>
+                            </td>
+                            <td>
+                                <span t-esc="rec.get('invoiceables_hours')"/>
+                            </td>
+                        </tr>
+                    </t>
+                    </tbody>
+                </table>
+            </t>
+            </div>
+        </t>
+    </template>
+    <template id="timesheet_vauxoo_report">
+        <t t-call="project_report.external_layout">
+            <div class="page">
+                <div class="container">
+                    <t t-set="records" t-value="get_records(o)"/>
+                    <t t-call="project_report.timesheets"/>
+                    <t t-call="project_report.invoices"/>
+                    <t t-call="project_report.issues"/>
+                    <t t-call="project_report.user_stories"/>
+                    <t t-call="project_report.details"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="timesheet_report_vauxoo">
+        <t t-call="report.html_container">
+            <t t-foreach="doc_ids" t-as="doc_id">
+                <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'project_report.timesheet_vauxoo_report')"/>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

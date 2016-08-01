@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <!--<record id="email_reports_base" model="email.template">-->
+            <!--<field name="name">Project Status Report</field>-->
+            <!--<field name="email_from">${(object.user_id.email or ''|safe)}</field>-->
+            <!--<field name="subject">${(object.title|safe)}</field>-->
+            <!--<field name="model_id" ref="hr_timesheet_reports.model_hr_timesheet_reports_base"/>-->
+            <!--<field name="auto_delete" eval="True"/>-->
+            <!--<field name="report_template" ref="hr_timesheet_reports_base"/>-->
+            <!--<field name="lang">${object.partner_id.lang}</field>-->
+            <!--<field name="body_html"><![CDATA[-->
+<!--<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">-->
+
+    <!--<p>Hello ${object.partner_id.name},</p>-->
+
+    <!--<p>Here is your project report ${object.name}</p>-->
+
+    <!--<p style="border-left: 1px solid #8e0000; margin-left: 30px;">-->
+    <!--</p>-->
+
+    <!--<p>If you have any question, do not hesitate to contact us.</p>-->
+    <!--<p>Thank you for choosing ${object.company_id.name or 'us'} as your IT suplier!</p>-->
+<!--</div>-->
+            <!--]]></field>-->
+        <!--</record>-->
+    </data>
+</openerp>

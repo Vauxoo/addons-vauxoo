@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="project_report.layout_html" inherit_id="report.layout">
+            <xpath expr="//style" position="after">
+                <link href="/project_report/static/src/css/layout.css" rel="stylesheet"/>
+            </xpath>
+        </template>
+
+        <template id="project_report.layout_pdf" inherit_id="report.layout">
+            <xpath expr="//style" position="after">
+                <link href="/project_report/static/src/css/layout.css" rel="stylesheet"/>
+            </xpath>
+        </template>
+
+        <template id="project_report.minimal_layout" inherit_id="report.minimal_layout">
+            <xpath expr="//style" position="after">
+                <link href="/project_report/static/src/css/layout.css" rel="stylesheet"/>
+            </xpath>
+        </template>
+        <template id="project_report.external_layout_header">
+            <div class="header vauxoo border-bottom">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img class="img img-responsive" t-if="company.logo" src="https://s3.amazonaws.com/s3.vauxoo.com/logo.png" style="max-width: 175px;"/>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5 class="text-center" t-field="o.name"/>
+                    </div>
+                 </div>
+             </div>
+        </template>
+        <template id="project_report.external_layout_footer">
+            <t t-set="website" t-value="env['website'].search([])[0]"></t>
+            <div class="footer" style="border-top: 1px solid #ccc; padding-top: 10px;">
+            <div class="row">
+                <div class="col-xs-3">
+                    <img class="img img-responsive" t-if="company.logo" src="https://s3.amazonaws.com/s3.vauxoo.com/odoo_gold_partner_rgb.png" style="max-width: 125px;"/>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <t t-if="company.custom_footer">
+                        <span t-raw="company.rml_footer"/>
+                    </t>
+                </div>
+                <div class="col-xs-3">
+                    <div class="text-right">
+                        <ul class="list-inline hidden-md hidden-lg hidden-sm">
+                            <li>Page:</li>
+                            <li><span class="page"/></li>
+                            <li>/</li>
+                            <li><span class="topage"/></li>
+                        </ul>
+                    </div>
+                </div>
+           </div>
+           </div>
+        </template>
+        <template id="external_layout">
+            <!-- Multicompany -->
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <t t-set="website" t-value="env['website'].search([])[0]"></t>
+            <t t-call="project_report.external_layout_header"/>
+            <t t-raw="0" />
+            <t t-call="project_report.external_layout_footer"/>
+        </template>
+    </data>
+</openerp>

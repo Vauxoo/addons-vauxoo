@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record id="view_set_invoice_form" model="ir.ui.view">
+            <field name="name">Timesheet Report</field>
+            <field name="model">set.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Line" version="7.0">
+                    <label for="total_timesheet"/>
+                    <field name="total_timesheet" class="oe_inline" readonly="True"/> Hours for
+                    <field name="total_money" class="oe_inline" readonly="True"/>
+                    <field name="currency_id" class="oe_inline" readonly="True"/>
+                    <footer>
+                        <button class="oe_highlight" string="Apply"
+                            type="object" name="set_invoice"/> or
+                        <button class="oe_link" string="Cancel"
+                            type="special" name="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_set_invoice"
+            name="Set Invoice"
+            src_model="hr.analytic.timesheet"
+            res_model="set.invoice"
+            view_type="form" view_mode="form"
+            key2="client_action_multi" target="new"
+            groups="base.group_partner_manager"/>
+    </data>
+</openerp>

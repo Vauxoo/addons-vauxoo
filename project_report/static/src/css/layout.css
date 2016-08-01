@@ -1,0 +1,24 @@
+.vauxoo .img-responsive {
+    margin: 0 auto;
+}
+
+.vauxoo .header {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom:  1px solid #ccc;
+}
+
+@media print {
+    .vauxoo .col-xs-12 ul, .vauxoo .col-xs-12 ol {
+        line-height: 1.2em !important;
+        margin-left: 1.5em !important;
+    }
+}
+
+tfoot {
+    font-weight: bold;
+}
+
+.no-brake tfoot {
+    display: table-row-group
+}
