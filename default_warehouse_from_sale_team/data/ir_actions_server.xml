@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+        <data noupdate="1">
+
+            <record id="server_action_update_users_sales_teams" model="ir.actions.server">
+                <field name="name">Update users after create/update sales teams</field>
+                <field name="model_id" model="ir.model" search="[('model', '=', 'crm.case.section')]"/>
+                <field name="state">code</field>
+                <field name="code">obj.update_users_sales_teams()</field>
+            </record>
+
+        </data>
+</openerp>
