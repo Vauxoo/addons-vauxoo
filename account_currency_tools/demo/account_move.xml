@@ -76,7 +76,7 @@
         -->
 
         <record id="period_0" model="account.period">
-            <field eval="'00/'+'%s' %(datetime.now().year-1)" name="code"/>
+            <field eval="'00/'+'%s' %(datetime.now().year-1)" name="name"/>
             <field eval="True" name="special"/>
             <field name="fiscalyear_id" ref="data_fiscalyear"/>
             <field eval="'%s' %(datetime.now().year-1)+'-01-01'" name="date_start"/>
