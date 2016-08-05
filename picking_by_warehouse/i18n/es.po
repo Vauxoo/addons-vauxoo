@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* picking_by_warehouse
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-15 20:09+0000\n"
+"PO-Revision-Date: 2016-06-15 20:09+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: picking_by_warehouse
+#: field:warehouse.user,display_name:0
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: picking_by_warehouse
+#: field:warehouse.user,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: picking_by_warehouse
+#: field:warehouse.user,__last_update:0
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: picking_by_warehouse
+#: model:ir.model,name:picking_by_warehouse.model_crm_case_section
+msgid "Sales Teams"
+msgstr "Equipos de ventas"
+
+#. module: picking_by_warehouse
+#: model:ir.model,name:picking_by_warehouse.model_stock_picking_type
+msgid "The picking type determines the picking view"
+msgstr "El tipo de albarán determina la vista de albarán"
+
+#. module: picking_by_warehouse
+#: field:crm.case.section,warehouse_id:0
+msgid "Warehouse"
+msgstr "Almacén"
+
