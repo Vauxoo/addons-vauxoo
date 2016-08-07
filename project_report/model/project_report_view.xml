@@ -52,91 +52,105 @@
                         <field name="state" widget="statusbar" clickable="True"/>
                     </header>
                     <sheet>
-                        <h1><field name="name"/></h1>
-                        <h3><field name="partner_id"/></h3>
-                        <separator string="Timesheet Section"/>
-                        <label for="filter_id"/>
-                        <field name="filter_id" required="1"/>
-                        <button class="oe_link" string="Timesheets with this filter"
-                            type="object" name="go_to_timesheet"/>
-                        <label for="show_details"/>
-                        <field name="show_details"/>
-                        <notebook>
-                            <page string="Timesheet Comments">
-                                <field name="cts2html" nolabel="1" widget="html"/>
-                            </page>
-                            <page string="Edit Online">
-                                <field name="comment_timesheet" nolabel="1"/>
-                            </page>
-                        </notebook>
-                        <separator string="Invoices Section"/>
-                        <label for="filter_invoice_id"/>
-                        <field name="filter_invoice_id"
-                               />
-                        <button class="oe_link"
-                            string="Invoices on this filter"
-                            type="object" name="go_to_invoices"/>
-                        <notebook>
-                            <page string="Invoice Information">
-                                <field name="ci2html" nolabel="1" widget="html"/>
-                            </page>
-                            <page string="Edit Online">
-                                <field name="comment_invoices" nolabel="1"/>
-                            </page>
-                            <page string="Technical Information">
-                                <group>
-                                    <field name="prod_cons_ids" widget="many2many_tags"/>
-                                    <button class="oe_link" string="Invoice Lines with this products"
-                                        type="object" name="go_to_cons_lines"
-                                        context="{'ts_report_id': context.get('active_ids')}"/>
+                        <div class="oe_title oe_left">
+                            <h1><field name="name"/></h1>
+                            <field name="partner_id"/>
+                        </div>
+                        <div class="oe_right oe_button_box" name="buttons">
+                            <button class="oe_stat_button"
+                                    icon="fa-tasks"
+                                    id="timesheet_button"
+                                    type="object"
+                                    name="go_to_timesheet">
+
+                                <field string="Timesheets" name="sum" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button"
+                                    id="invoice_button"
+                                    icon="fa-pencil-square-o"
+                                    string="Invoices"
+                                    type="object"
+                                    name="go_to_invoices"/>
+                            <button class="oe_stat_button"
+                                    id="issue_button"
+                                    icon="fa-bug"
+                                    string="Issues"
+                                    type="object"
+                                    name="go_to_issues"/>
+                            <button class="oe_stat_button"
+                                    string="User Stories"
+                                    icon="fa-pencil"
+                                    type="object"
+                                    name="go_to_hu"/>
+                            <button class="oe_stat_button"
+                                    string="Invoice Lines"
+                                    icon="fa-book"
+                                    type="object"
+                                    name="go_to_cons_lines"
+                                    context="{'ts_report_id': context.get('active_ids')}"/>
+                        </div>
+                        <group colspan="6">
+                            <group>
+                                <notebook>
+                                    <page string="Timesheet Annotations">
+                                        <field name="cts2html" nolabel="1" widget="html"/>
+                                    </page>
+                                    <page string="Edit Online">
+                                        <field name="comment_timesheet" nolabel="1"/>
+                                    </page>
+                                </notebook>
+                                <newline/>
+                                <notebook>
+                                    <page string="Invoice Annotations">
+                                        <field name="ci2html" nolabel="1" widget="html"/>
+                                    </page>
+                                    <page string="Edit Online">
+                                        <field name="comment_invoices" nolabel="1"/>
+                                    </page>
+                                </notebook>
+                                <newline/>
+                                <notebook>
+                                    <page string="Issues Annotation">
+                                        <field name="ciss2html" nolabel="1" widget="html"/>
+                                    </page>
+                                    <page string="Edit Online">
+                                        <field name="comment_issues" nolabel="1"/>
+                                    </page>
+                                </notebook>
+                                <newline/>
+                                <notebook>
+                                    <page string="User Stories Annotation">
+                                        <field name="chu2html" nolabel="1" widget="html"/>
+                                    </page>
+                                    <page string="Edit Online">
+                                        <field name="comment_hu" nolabel="1"/>
+                                    </page>
+                                </notebook>
+                            </group>
+                            <group>
+                                <group string="Filters">
+                                    <field name="filter_id" required="1"/>
+                                    <field name="filter_hu_id"/>
+                                    <field name="filter_issue_id"/>
+                                    <field name="filter_invoice_id"/>
                                 </group>
-                            </page>
-                        </notebook>
-                        <separator string="Issues Section"/>
-                        <label for="filter_issue_id"/>
-                        <field name="filter_issue_id"/>
-                        <button class="oe_link" string="Issues on this filter"
-                            type="object" name="go_to_issues"/>
-                        <notebook>
-                            <page string="Comment Issues">
-                                <field name="ciss2html" nolabel="1" widget="html"/>
-                            </page>
-                            <page string="Edit Online">
-                                <field name="comment_issues" nolabel="1"/>
-                            </page>
-                        </notebook>
-                        <separator string="User Stories Section"/>
-                        <label for="filter_hu_id"/>
-                        <field name="filter_hu_id"/>
-                        <button class="oe_link" string="User Stories on this filter"
-                                type="object" name="go_to_hu"/>
-                        <notebook>
-                            <page string="Comments User Stories">
-                                <field name="chu2html" nolabel="1" widget="html"/>
-                            </page>
-                            <page string="Edit Online">
-                                <field name="comment_hu" nolabel="1"/>
-                            </page>
-                        </notebook>
-                        <group string="Technical Information">
-                            <notebook>
-                                <page string="Basic Information">
-                                    <group>
-                                        <field class="oe_inline" name="product_id"
-                                            domain="[('type','=', 'service')]"
-                                            groups="base.group_user"/>
-                                        <field class="oe_inline" name="currency_id" groups="base.group_user"/>
-                                        <field name="user_id" groups="base.group_user"/>
-                                        <field name="company_id" groups="base.group_multi_company" readonly="1"/>
-                                    </group>
-                                </page>
-                                <page string="Product Information">
-                                    <group>
-                                        <field name="prod_ent_ids" widget="many2many_tags"/>
-                                        <field name="prod_train_ids" widget="many2many_tags"/>
-                                    </group>
-                                </page>
-                            </notebook>
+                                <newline/>
+                                <group string="Monetary">
+                                    <field name="sum_inv"/>
+                                    <field name="prod_cons_ids" widget="many2many_tags"/>
+                                    <field class="oe_inline" name="product_id" domain="[('type','=', 'service')]" groups="base.group_user"/>
+                                    <field class="oe_inline" name="currency_id" groups="base.group_user"/>
+                                    <field name="user_id" groups="base.group_user"/>
+                                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                                    <field name="prod_ent_ids" widget="many2many_tags"/>
+                                    <field name="prod_train_ids" widget="many2many_tags"/>
+                                    <field name="contract_ids" widget="many2many_tags"/>
+                                </group>
+                                <newline/>
+                                <group string="Print Options">
+                                    <field name="show_details"/>
+                                </group>
+                            </group>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -146,11 +160,39 @@
                 </form>
             </field>
         </record>
+        <record id="view_reports_base_kanban" model="ir.ui.view">
+            <field name="name">Timesheet Report Kanban</field>
+            <field name="model">project.report</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="sum"/>
+                    <field name="sum_inv"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_vignette oe_semantic_html_override">
+                                <div class="oe_kanban_details">
+                                    <h4 class="oe_partner_heading"><a type="open"><field name="name"/></a></h4>
+                                    <div class="oe_kanban_partner_categories"/>
+                                    <div class="oe_kanban_partner_links"/>
+                                    <ul>
+                                        <li><field name="sum"/></li>
+                                        <li><field name="sum_inv"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
         <record model="ir.actions.act_window" id="action_hr_report_base_tree">
             <field name="name">Timesheet Report</field>
             <field name="res_model">project.report</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
         </record>
         <menuitem name="Timesheet report"
                   id="menu_hr_report_base"

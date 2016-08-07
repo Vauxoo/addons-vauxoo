@@ -20,6 +20,40 @@ class HrTimesheetReportsBase(models.Model):
         self.ciss2html = rst2html.html.rst2html(self.comment_issues)
         self.chu2html = rst2html.html.rst2html(self.comment_hu)
 
+    @api.depends('partner_id')
+    def _get_possibles_contracts(self):
+        # TODO: Test should validate the consistency of this domain or fix
+        # the domain properly instead.
+        for record in self:
+            partner = record.partner_id
+            if not partner:
+                continue
+
+            # I did not exclude the states cancelled and or other because all
+            # the system allow load timesheets there, then exclude the into
+            # the report can bring errors in the timesheet.
+            domain = [
+                ('partner_id', '!=', False),
+                '|', ('partner_id', '=', partner.commercial_partner_id.id),
+                ('partner_id', 'child_of', partner.commercial_partner_id.id)
+            ]
+
+            contracts = self.env['account.analytic.account']
+            record.contract_ids = contracts.search(domain)
+
+    @api.depends('filter_id',
+                 'filter_id.domain')
+    def _get_records(self):
+        for record in self:
+            timesheet = record.env['hr.analytic.timesheet']
+            if not record.filter_id:
+                continue
+            timesheets = timesheet.search(safe_eval(record.filter_id.domain))
+            record.records = timesheets
+            record.sum = sum(line.unit_amount for line in timesheets)
+            record.sum_inv = \
+                sum(line.invoiceables_hours for line in timesheets)
+
     name = fields.Char('Report Title')
     comment_invoices = fields.Text(
         'Comment about Invoices',
@@ -50,8 +84,13 @@ class HrTimesheetReportsBase(models.Model):
         'res.users', 'Responsible',
         help='Owner of the report, generally the person that create it.')
     partner_id = fields.Many2one(
-        'res.partner', 'Contact',
+        'res.partner', 'Contact', required=True,
         help='Contact which you will send this report.')
+    contract_ids = fields.Many2many(
+        'account.analytic.account', 'cont_report_timesheet_rel1', 'account_id',
+        string='Computed Contract',
+        compute='_get_possibles_contracts',
+        help='Possibles contract to be charged to this user.')
     filter_hu_id = fields.Many2one(
         'ir.filters', 'User Stories',
         domain=[('model_id', '=', 'user.story')],
@@ -79,9 +118,18 @@ class HrTimesheetReportsBase(models.Model):
         help="Filter should be by date, group_by is ignored, the model which "
              "the filter should belong to is timesheet.")
     show_details = fields.Boolean('Show Detailed Timesheets')
-    # records = fields.Text('Records', compute='_get_print_data',)
+    records = fields.Many2many(
+        'hr.analytic.timesheet', 'report_timesheet_rel1', 'report_id',
+        compute='_get_records',
+        help='Reords to be used to make this report.')
+    sum = fields.Float(compute='_get_records')
+    sum_inv = fields.Float(compute='_get_records')
     state = fields.Selection(
-        [('draft', 'Draft'), ('sent', 'Sent')], 'Status',
+        [('draft', 'Draft'),
+         ('sent', 'Sent'),
+         ('done', 'Done'),
+         ('cancel', 'Cancelled')],
+        'Status',
         help='Message sent already to customer (it will block edition)')
     company_id = fields.Many2one(
         'res.company', 'Company', help='Company which this report belongs to')
@@ -95,7 +143,7 @@ class HrTimesheetReportsBase(models.Model):
         'product.product', 'prod_report_timesheet_rel1', 'report_id',
         'prod_ent_id', 'Products for Enterprises',
         help="All lines on invoices the have this product will be ignored as "
-             "Effectivally Invoiced time already invoiced")
+             "Effectively Invoiced time already invoiced")
     prod_train_ids = fields.Many2many(
         'product.product', 'prod_report_timesheet_rel2', 'report_id',
         'prod_train_id', 'Products for Training',
@@ -111,70 +159,6 @@ class HrTimesheetReportsBase(models.Model):
     def do_report(self):
         return self.env['report'].get_action(
             'hr_timesheet_reports.', 'timesheet_report_vauxoo')
-
-    # def go_to_timesheet(self, cr, uid, ids, context=None):
-    #     if context is None:
-    #         context = {}
-    #     report = self.browse(cr, uid, ids, context=context)[0]
-    #     context.update({
-    #         'ts_report_id': ids[0],
-    #     })
-    #     return {'type': 'ir.actions.act_window',
-    #             'res_model': 'hr.analytic.timesheet',
-    #             'name': 'Timesheet Activities Reported',
-    #             'view_type': 'form',
-    #             'view_mode': 'tree,form',
-    #             'domain': report.filter_id.domain,
-    #             'context': context,
-    #             }
-
-    # def go_to_invoices(self, cr, uid, ids, context=None):
-    #     if context is None:
-    #         context = {}
-    #     report = self.browse(cr, uid, ids, context=context)[0]
-    #     context.update({
-    #         'ts_report_id': ids[0],
-    #     })
-    #     return {'type': 'ir.actions.act_window',
-    #             'res_model': 'account.invoice',
-    #             'name': 'Invoices Reported',
-    #             'view_type': 'form',
-    #             'view_mode': 'tree,form',
-    #             'domain': report.filter_invoice_id.domain,
-    #             'context': context,
-    #             }
-
-    # def go_to_issues(self, cr, uid, ids, context=None):
-    #     if context is None:
-    #         context = {}
-    #     report = self.browse(cr, uid, ids, context=context)[0]
-    #     context.update({
-    #         'ts_report_id': ids[0],
-    #     })
-    #     return {'type': 'ir.actions.act_window',
-    #             'res_model': 'project.issue',
-    #             'name': 'Issues Reported',
-    #             'view_type': 'form',
-    #             'view_mode': 'tree,form',
-    #             'domain': report.filter_issue_id.domain,
-    #             'context': context,
-    #             }
-
-    # def go_to_hu(self, cr, uid, ids, context=None):
-    #     if context is None:
-    #         context = {}
-    #     report = self.browse(cr, uid, ids, context=context)[0]
-    #     context.update({
-    #         'ts_report_id': ids[0],
-    #     })
-    #     return {'type': 'ir.actions.act_window',
-    #             'res_model': 'user.story',
-    #             'name': 'User Stories Reported',
-    #             'view_type': 'form',
-    #             'view_mode': 'tree,form',
-    #             'domain': report.filter_hu_id.domain,
-    #             'context': context,
-    #             }
 
     def clean_timesheet(self, cr, uid, ids, context=None):
         """To be sure all timesheet lines are at least setted as billable
