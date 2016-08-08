@@ -6,16 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-21 23:32+0000\n"
-"PO-Revision-Date: 2015-10-21 18:33-0600\n"
+"POT-Creation-Date: 2016-08-08 21:45+0000\n"
+"PO-Revision-Date: 2016-08-09 09:33-0500\n"
 "Last-Translator: OscarAlca <oszckar@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"Language: es_PA\n"
-"X-Generator: Poedit 1.7.6\n"
+"Language: es\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. module: website_authorized_service_centers
 #: view:product.brand:website_authorized_service_centers.prioduct_brand_service_form_view
@@ -29,13 +28,13 @@ msgstr "Partners autorizados"
 
 #. module: website_authorized_service_centers
 #: view:website:website_authorized_service_centers.authorized_service_providers
-msgid "Here you will find our certified service providers for all the brands we sell."
-msgstr "Aquí encontrarás nuestros centros de servicios autorizados para todas las marcas que vendemos."
+msgid "Autorized Service Centers"
+msgstr "Centros de Servicio Autorizados"
 
 #. module: website_authorized_service_centers
 #: view:website:website_authorized_service_centers.authorized_service_providers
-msgid "The best service providers"
-msgstr "Los mejores centros de servicio"
+msgid "Here you will find our certified service providers for all the brands we sell. Useful for customers that own products of this brands that require support."
+msgstr "Aquí el listado de los servicios autorizados de las marcas que vendemos. Útil para clientes que poseen productos de estas marcas que necesiten soporte."
 
 #. module: website_authorized_service_centers
 #: view:product.brand:website_authorized_service_centers.prioduct_brand_service_form_view
