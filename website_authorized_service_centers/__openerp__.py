@@ -17,7 +17,7 @@
         'views/authorized_service_centers.xml',
     ],
     'demo': [
-
+        'demo/brands_and_partners_demo.xml',
     ],
     'qweb': [
 
