@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+        <data noupdate="1">
+
+            <record id="automated_action_update_users_sales_teams" model="base.action.rule">
+                <field name="name">Update users after create/update sales teams</field>
+                <field name="model_id" model="ir.model" search="[('model', '=', 'crm.case.section')]"/>
+                <field name="active">1</field>
+                <field name="sequence">5</field>
+                <field name="kind">on_create_or_write</field>
+                <field name="server_action_ids" eval="[(6, 0, [ref('default_warehouse_from_sale_team.server_action_update_users_sales_teams')])]"/>
+            </record>
+
+        </data>
+    </openerp>
