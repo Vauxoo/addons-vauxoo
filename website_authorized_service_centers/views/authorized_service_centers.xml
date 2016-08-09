@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <template id="authorized_service_providers" page="True" name="Authorized Service Providers">
+        <template id="authorized_service_providers" name="Authorized Service Providers" page="True">
             <t t-call="website.layout">
-              <div id="wrap">
-                <section class="vx_wrapper_white">
-                    <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 mt16">
-                            <h2>The best service providers</h2>
-                            <p>Here you will find our certified service providers for all the brands we sell.</p>
+                <div id="wrap">
+                    <section class="vx_wrapper_white">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 mt16">
+                                    <h2>Autorized Service Centers</h2>
+                                    <p>Here you will find our certified service providers for all the brands we sell. Useful for customers that own products of this brands that require support.</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                </section>
-                <section class="mt16 mb16">
-                  <div class="container">
-                    <t t-set="providers" t-value="env['product.brand'].search([], order='name desc')"/>
-                    <t t-foreach="providers" t-as="provider">
-                        <t t-call="website_authorized_service_centers.authorized_centers"/>
-
-                    </t>
-                  </div>
-                </section>
-              </div>
+                    </section>
+                    <section class="mt16 mb16">
+                        <div class="container">
+                            <t t-set="providers" t-value="env['product.brand'].search([('authorized_partner_ids', '!=', False)], order='name desc')"/>
+                            <t t-as="provider" t-foreach="providers">
+                                <t t-call="website_authorized_service_centers.authorized_centers"/>
+                            </t>
+                        </div>
+                    </section>
+                </div>
             </t>
         </template>
-
         <template id="authorized_centers" name="Authorized Centers">
-
-            <div class="container authorized_scenters" style="margin-top: 20px; margin-bottom: 20px;">
+            <div class="container authorized_scenters">
                 <div class="row panel">
-                    <div class="col-md-4 bg_blur">
+                    <div class="col-md-2 col-xs-12 bg_blur">
                         <a t-att-href="provider.url">
-                            <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail picture hidden-xs" height="90"/>
-                            <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob" height="90"/>
+                            <img class="img img-responsive shadow" t-att-src="website.image_url(provider, 'logo')"/>
                         </a>
                     </div>
-                <t t-foreach="provider.authorized_partner_ids" t-as="partner">
-                    <div class="col-md-8  col-xs-12">
-                        <a href="partner.website">
-                           <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail picture hidden-xs"/>
-                           <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob"/>
-                        </a>
-                       <div class="header">
-                            <h1><t t-esc="partner.name"/></h1>
-                            <h4><t t-esc="partner.street"/></h4>
-                            <h4><t t-esc="partner.phone"/></h4>
-                            <h4><t t-esc="partner.email"/></h4>
-                       </div>
+                    <div class="col-md-10 col-xs-12 left-border">
+                        <t t-as="partner" t-foreach="provider.authorized_partner_ids">
+                            <div class="col-md-12 col-xs-12">
+                                <h3>
+                                    <t t-esc="partner.name"/>
+                                </h3>
+                                <h4>
+                                    <t t-esc="partner.street"/>
+                                </h4>
+                                <h4>
+                                    <t t-esc="partner.phone"/>
+                                </h4>
+                                <h4>
+                                    <t t-esc="partner.email"/>
+                                </h4>
+                                <a t-att-href="partner.website">
+                                    <h4>
+                                        <t t-esc="partner.website"/>
+                                    </h4>
+                                </a>
+                            </div>
+                        </t>
                     </div>
-                </t>
                 </div>
             </div>
         </template>
