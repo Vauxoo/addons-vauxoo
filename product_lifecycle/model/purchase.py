@@ -31,11 +31,11 @@ class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
     obsolete = fields.Boolean(
-        compute='_check_product_line',
+        compute='_compute_check_product_line',
         help='Boolean indicate if the purchase line has a obsolete product')
 
     @api.depends('product_id')
-    def _check_product_line(self):
+    def _compute_check_product_line(self):
         """ If product in line is a obsolete product then set the line as
         obsolete True, in other case set to False.
         """
@@ -84,10 +84,10 @@ class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     lines_count = fields.Integer(
-        compute='_count_pol', string='Purchase Lines Count')
+        compute='_compute_count_pol', string='Purchase Lines Count')
 
     @api.depends()
-    def _count_pol(self):
+    def _compute_count_pol(self):
         """return the quantity of purchase order lines in the purchase order.
         """
         for purchase in self:

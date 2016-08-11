@@ -23,9 +23,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
+import time
+
 from openerp.tests import common
 from openerp.exceptions import ValidationError
-import time
 
 
 class TestProductLifecycle(common.TransactionCase):
