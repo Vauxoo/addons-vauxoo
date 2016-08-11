@@ -18,7 +18,7 @@ class DefaultPickingType(models.Model):
         if sale_team_warehouse_id:
             pick_type_id = picking_type_obj.search(
                 [('code', '=', 'incoming'),
-                 ('warehouse_id', '=', sale_team_warehouse_id.id)])
+                 ('warehouse_id', '=', sale_team_warehouse_id.id)], limit=1)
             res.update({'picking_type_id': pick_type_id.id})
 
         return res
