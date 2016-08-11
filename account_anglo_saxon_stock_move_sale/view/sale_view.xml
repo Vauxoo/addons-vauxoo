@@ -14,6 +14,7 @@
                         name="view_accrual"
                         class="oe_stat_button"
                         icon="fa-truck"
+                        groups="account.group_account_user"
                         />
                 </div>
             </xpath>
