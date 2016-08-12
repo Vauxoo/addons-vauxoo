@@ -9,6 +9,11 @@ class DefaultPickingType(models.Model):
 
     @api.model
     def default_get(self, fields_list):
+        """This  method is added to get by default the picking type depending
+        of the sale team warehouse in models where picking type is required
+        instead warehouse like purchase order and purchase requisition
+        returning the first picking type that match with the warehouse
+        of the sale team """
         user_obj = self.env['res.users']
         picking_type_obj = self.env['stock.picking.type']
 
