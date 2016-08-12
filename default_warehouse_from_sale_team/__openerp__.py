@@ -14,6 +14,7 @@
         'sale_stock',
         'sales_team',
         'base_action_rule',
+        'purchase_requisition',
     ],
     'test': [
     ],
