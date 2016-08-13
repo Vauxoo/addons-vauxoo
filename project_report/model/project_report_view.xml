@@ -25,6 +25,25 @@
                 </tree>
             </field>
         </record>
+        <record id="view_reports_base_search" model="ir.ui.view">
+            <field name="name">Timesheet Report Search</field>
+            <field name="model">project.report</field>
+            <field name="arch" type="xml">
+                <search string="Salesteams Search">
+                    <field name="name"/>
+                    <field name="filter_id"/>
+                    <field name="filter_invoice_id"/>
+                    <field name="filter_issue_id"/>
+                    <field name="filter_hu_id"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="State" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
         <record id="view_reports_base_form" model="ir.ui.view">
             <field name="name">Timesheet Report</field>
             <field name="model">project.report</field>
@@ -175,6 +194,12 @@
                     <field name="sum_inv"/>
                     <field name="us_planned"/>
                     <field name="us_worked"/>
+                    <field name="us_total"/>
+                    <field name="us_progress"/>
+                    <field name="issue_total"/>
+                    <field name="issue_progress"/>
+                    <field name="task_total"/>
+                    <field name="task_progress"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click oe_kanban_crm_salesteams">
@@ -198,12 +223,24 @@
                                     <div class="oe_center">
                                         <field name="sum_inv"
                                                widget="gauge"
-                                               style="width:130px; height: 100px; cursor: pointer;"
+                                               style="width:110px; height: 100px; cursor: pointer;"
                                                options="{'max_field': 'sum'}">Invoiced</field>
                                         <field name="us_worked"
                                                widget="gauge"
-                                               style="width:130px; height: 100px; cursor: pointer;"
-                                               options="{'max_field': 'us_planned'}">Worked</field>
+                                               style="width:110px; height: 100px; cursor: pointer;"
+                                               options="{'max_field': 'us_planned'}">US Worked</field>
+                                        <field name="us_progress"
+                                               widget="gauge"
+                                               style="width:100px; height: 100px; cursor: pointer;"
+                                               options="{'max_field': 'us_total'}">US Progress</field>
+                                        <field name="issue_progress"
+                                               widget="gauge"
+                                               style="width:10px; height: 100px; cursor: pointer;"
+                                               options="{'max_field': 'issue_total'}">Issues</field>
+                                        <field name="task_progress"
+                                               widget="gauge"
+                                               style="width:100px; height: 100px; cursor: pointer;"
+                                               options="{'max_field': 'task_total'}">Tasks</field>
                                     </div>
                                     <div class="oe_center oe_salesteams_help"
                                          style="color:#bbbbbb;">
@@ -216,16 +253,17 @@
                 </kanban>
             </field>
         </record>
-        <record model="ir.actions.act_window" id="action_hr_report_base_tree">
+        <record model="ir.actions.act_window" id="action_report_base_tree">
             <field name="name">Timesheet Report</field>
             <field name="res_model">project.report</field>
             <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_reports_base_search"/>
             <field name="view_mode">kanban,tree,form</field>
         </record>
         <menuitem name="Timesheet report"
                   id="menu_hr_report_base"
                   parent="base.menu_project_report"
-                  action="action_hr_report_base_tree"
+                  action="action_report_base_tree"
                   sequence='100'/>
     </data>
 </openerp>

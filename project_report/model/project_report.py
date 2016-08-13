@@ -57,6 +57,11 @@ class HrTimesheetReportsBase(models.Model):
             record.us_planned = 150.0
             record.us_invoiceable = 100.0
             record.us_total = 5.0
+            record.us_progress = 1.0
+            record.issue_total = 5.0
+            record.issue_progress = 2.0
+            record.task_total = 5.0
+            record.task_progress = 2.0
 
     name = fields.Char('Report Title')
     color = fields.Integer()
@@ -132,7 +137,12 @@ class HrTimesheetReportsBase(models.Model):
     us_planned = fields.Float(compute='_get_records')
     us_worked = fields.Float(compute='_get_records')
     us_invoiceable = fields.Float(compute='_get_records')
+    us_progress = fields.Float(compute='_get_records')
     us_total = fields.Float(compute='_get_records')
+    issue_total = fields.Float(compute='_get_records')
+    issue_progress = fields.Float(compute='_get_records')
+    task_total = fields.Float(compute='_get_records')
+    task_progress = fields.Float(compute='_get_records')
     state = fields.Selection(
         [('draft', 'Draft'),
          ('sent', 'Sent'),
