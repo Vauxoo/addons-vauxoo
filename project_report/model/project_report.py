@@ -53,8 +53,13 @@ class HrTimesheetReportsBase(models.Model):
             record.sum = sum(line.unit_amount for line in timesheets)
             record.sum_inv = \
                 sum(line.invoiceables_hours for line in timesheets)
+            record.us_worked = 130.0
+            record.us_planned = 150.0
+            record.us_invoiceable = 100.0
+            record.us_total = 5.0
 
     name = fields.Char('Report Title')
+    color = fields.Integer()
     comment_invoices = fields.Text(
         'Comment about Invoices',
         help="It will appear just above list of invoices.")
@@ -121,9 +126,13 @@ class HrTimesheetReportsBase(models.Model):
     records = fields.Many2many(
         'hr.analytic.timesheet', 'report_timesheet_rel1', 'report_id',
         compute='_get_records',
-        help='Reords to be used to make this report.')
+        help='Records to be used to make this report.')
     sum = fields.Float(compute='_get_records')
     sum_inv = fields.Float(compute='_get_records')
+    us_planned = fields.Float(compute='_get_records')
+    us_worked = fields.Float(compute='_get_records')
+    us_invoiceable = fields.Float(compute='_get_records')
+    us_total = fields.Float(compute='_get_records')
     state = fields.Selection(
         [('draft', 'Draft'),
          ('sent', 'Sent'),

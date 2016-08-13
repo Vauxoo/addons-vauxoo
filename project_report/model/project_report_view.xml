@@ -8,8 +8,6 @@
             report_type="qweb-pdf"
             file="project_report.status"
             name="project_report.status"/>
-
-
         <record id="view_reports_base_tree" model="ir.ui.view">
             <field name="name">Timesheet Report</field>
             <field name="model">project.report</field>
@@ -137,6 +135,10 @@
                                 <newline/>
                                 <group string="Monetary">
                                     <field name="sum_inv"/>
+                                    <field name="us_planned"/>
+                                    <field name="us_worked"/>
+                                    <field name="us_invoiceable"/>
+                                    <field name="us_total"/>
                                     <field name="prod_cons_ids" widget="many2many_tags"/>
                                     <field class="oe_inline" name="product_id" domain="[('type','=', 'service')]" groups="base.group_user"/>
                                     <field class="oe_inline" name="currency_id" groups="base.group_user"/>
@@ -167,22 +169,48 @@
                 <kanban>
                     <field name="name"/>
                     <field name="partner_id"/>
+                    <field name="contract_ids"/>
                     <field name="sum"/>
+                    <field name="color"/>
                     <field name="sum_inv"/>
+                    <field name="us_planned"/>
+                    <field name="us_worked"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_vignette oe_semantic_html_override">
-                                <div class="oe_kanban_details">
-                                    <h4 class="oe_partner_heading"><a type="open"><field name="name"/></a></h4>
-                                    <div class="oe_kanban_partner_categories"/>
-                                    <div class="oe_kanban_partner_links"/>
-                                    <ul>
-                                        <li><field name="sum"/></li>
-                                        <li><field name="sum_inv"/></li>
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click oe_kanban_crm_salesteams">
+                                <div class="oe_dropdown_toggle oe_dropdown_kanban" groups="base.group_sale_manager">
+                                    <span class="oe_e">í</span>
+                                    <ul class="oe_dropdown_menu">
+                                        <li t-if="widget.view.is_action_enabled('edit')"><a type="edit">Report Settings</a></li>
+                                        <li t-if="widget.view.is_action_enabled('delete')"><a type="delete">Delete</a></li>
+                                        <li t-if="widget.view.is_action_enabled('edit')"><ul class="oe_kanban_colorpicker" data-field="color"/></li>
                                     </ul>
                                 </div>
+                                <div class="oe_kanban_content">
+                                    <h4 class="oe_partner_heading oe_center">
+                                        <a type="open"><field name="name"/></a>
+                                    </h4>
+                                    <div class="oe_clear"/>
+                                    <div class="oe_kanban_partner_categories"/>
+                                    <div class="oe_kanban_partner_links"/>
+                                    <field name="contract_ids"/>
+                                    <div class="oe_clear"/>
+                                    <div class="oe_center">
+                                        <field name="sum_inv"
+                                               widget="gauge"
+                                               style="width:130px; height: 100px; cursor: pointer;"
+                                               options="{'max_field': 'sum'}">Invoiced</field>
+                                        <field name="us_worked"
+                                               widget="gauge"
+                                               style="width:130px; height: 100px; cursor: pointer;"
+                                               options="{'max_field': 'us_planned'}">Worked</field>
+                                    </div>
+                                    <div class="oe_center oe_salesteams_help"
+                                         style="color:#bbbbbb;">
+                                        <br/>TODO: Proper help
+                                    </div>
+                                </div>
                             </div>
-
                         </t>
                     </templates>
                 </kanban>
