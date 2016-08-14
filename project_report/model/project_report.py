@@ -42,17 +42,38 @@ class HrTimesheetReportsBase(models.Model):
             record.contract_ids = contracts.search(domain)
 
     @api.depends('filter_id',
-                 'filter_id.domain')
+                 'filter_id.domain',
+                 'filter_hu_id',
+                 'filter_hu_id.domain',
+                 'filter_issue_id',
+                 'filter_issue_id.domain',
+                 'filter_invoice_id',
+                 'filter_invoice_id.domain')
     def _get_records(self):
         for record in self:
             timesheet = record.env['hr.analytic.timesheet']
+            issues = record.env['project.issue']
+            stories = record.env['user.story']
+            invoices = record.env['account.invoice']
             if not record.filter_id:
                 continue
             timesheets = timesheet.search(safe_eval(record.filter_id.domain))
-            record.records = timesheets
+            if record.filter_issue_id:
+                issues = issues.search(
+                    safe_eval(record.filter_issue_id.domain))
+            if record.filter_hu_id:
+                stories = stories.search(
+                    safe_eval(record.filter_hu_id.domain))
+            if record.filter_invoice_id:
+                invoices = invoices.search(
+                    safe_eval(record.filter_invoice_id.domain))
+            record.record_ids = timesheets
+            record.issue_ids = issues
+            record.story_ids = stories
+            record.invoice_ids = invoices
             record.sum = sum(line.unit_amount for line in timesheets)
-            record.sum_inv = \
-                sum(line.invoiceables_hours for line in timesheets)
+            record.sum_inv = sum(
+                line.invoiceables_hours for line in timesheets)
             record.us_worked = 130.0
             record.us_planned = 150.0
             record.us_invoiceable = 100.0
@@ -128,10 +149,22 @@ class HrTimesheetReportsBase(models.Model):
         help="Filter should be by date, group_by is ignored, the model which "
              "the filter should belong to is timesheet.")
     show_details = fields.Boolean('Show Detailed Timesheets')
-    records = fields.Many2many(
+    record_ids = fields.Many2many(
         'hr.analytic.timesheet', 'report_timesheet_rel1', 'report_id',
         compute='_get_records',
         help='Records to be used to make this report.')
+    issue_ids = fields.Many2many(
+        'project.issue', 'report_issue_timesheet_rel1', 'report_id',
+        compute='_get_records',
+        help='Issues.')
+    story_ids = fields.Many2many(
+        'user.story', 'report_invoice_story_rel1', 'report_id',
+        compute='_get_records',
+        help='Issues.')
+    invoice_ids = fields.Many2many(
+        'account.invoice', 'report_invoice_rel1', 'report_id',
+        compute='_get_records',
+        help='Issues.')
     sum = fields.Float(compute='_get_records')
     sum_inv = fields.Float(compute='_get_records')
     us_planned = fields.Float(compute='_get_records')

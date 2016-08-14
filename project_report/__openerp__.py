@@ -16,6 +16,7 @@
     ],
     "demo": [],
     "data": [
+        "security/ir.model.access.csv",
         "report/layout.xml",
         "report/timesheet_template.xml",
         "model/project_report_view.xml",

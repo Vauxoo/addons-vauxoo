@@ -1,3 +1,4 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_report_project_manager","project.report","model_project_report","project.group_project_manager",1,1,1,1
+"access_report_project_manager","project.report","model_project_report","project.group_project_manager",1,1,1,0
+"access_report_project_user","project.report","model_project_report","project.group_project_user",1,1,0,0
 "access_report_project_portal","project.report","model_project_report","base.group_portal",1,0,0,0

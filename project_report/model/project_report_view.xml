@@ -221,13 +221,9 @@
                                     <field name="contract_ids"/>
                                     <div class="oe_clear"/>
                                     <div class="oe_center">
-                                        <field name="sum_inv"
-                                               widget="gauge"
-                                               style="width:110px; height: 100px; cursor: pointer;"
-                                               options="{'max_field': 'sum'}">Invoiced</field>
                                         <field name="us_worked"
                                                widget="gauge"
-                                               style="width:110px; height: 100px; cursor: pointer;"
+                                               style="width:100px; height: 100px; cursor: pointer;"
                                                options="{'max_field': 'us_planned'}">US Worked</field>
                                         <field name="us_progress"
                                                widget="gauge"
@@ -241,6 +237,10 @@
                                                widget="gauge"
                                                style="width:100px; height: 100px; cursor: pointer;"
                                                options="{'max_field': 'task_total'}">Tasks</field>
+                                        <field name="sum_inv"
+                                               widget="gauge"
+                                               style="width:100px; height: 100px; cursor: pointer;"
+                                               options="{'max_field': 'sum'}">Invoiced</field>
                                     </div>
                                     <div class="oe_center oe_salesteams_help"
                                          style="color:#bbbbbb;">
@@ -260,7 +260,7 @@
             <field name="search_view_id" ref="view_reports_base_search"/>
             <field name="view_mode">kanban,tree,form</field>
         </record>
-        <menuitem name="Timesheet report"
+        <menuitem name="Project Status"
                   id="menu_hr_report_base"
                   parent="base.menu_project_report"
                   action="action_report_base_tree"
