@@ -154,3 +154,37 @@ msgid "You can not set %s sale team as default because the user do not belongs t
 msgstr "No puedes agregar a %s como el equipo de ventas por defecto porque el usuario no pertenece a dicho equipo de ventas.\n"
 "Por favor vaya al menú Ventas > Ventas > Equipos de Ventas si desea agregar el usuario al equipo de ventas"
 
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_journal
+msgid "Access to all Journal"
+msgstr "Acceso a todos los Diarios"
+
+#. module: default_warehouse_from_sale_team
+#: help:crm.case.section,journal_team_ids:0
+msgid "Choose the Journals that user with this sale team can see"
+msgstr "Selecciona los diarios que el usuario con este equipo de ventas puede ver"
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,journal_team_ids:0
+msgid "Journal's sales teams"
+msgstr "Diarios de equipo de ventas"
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Journals"
+msgstr "Diarios"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
+msgid "Limited access to Journal (filtered by sale teams)"
+msgstr "Acceso limitado a diarios(Filtrados por equipo de ventas)"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_journal
+msgid "Not matter sales teams will leave the user to see all the Journal"
+msgstr "No importa el equipo de ventas le permitirá ver todos los diarios"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
+msgid "View only the Journal which warehouses match with the user sales teams default warehouses"
+msgstr "Ver solo el diario que coincide con el equipo de venta del usuario"

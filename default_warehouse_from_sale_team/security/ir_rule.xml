@@ -30,5 +30,19 @@
                 <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_warehouse_sp')])]"/>
             </record>
 
+            <!-- account.journal -->
+            <record id="rule_default_warehouse_journal" model="ir.rule">
+                <field name="name">Limited access to journal (filtered by sale teams)</field>
+                <field name="model_id" search="[('model','=','account.journal')]" model="ir.model"/>
+                <field name="domain_force">[('id', 'in', [journal.id  for team in user.sale_team_ids for journal in team.journal_team_ids])]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_limited_default_warehouse_journal')])]"/>
+            </record>
+            <record id="rule_default_warehouse_journal_all" model="ir.rule">
+                <field name="name">Access to all journal</field>
+                <field name="model_id" search="[('model','=','account.journal')]" model="ir.model"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_journal')])]"/>
+            </record>
+
         </data>
     </openerp>

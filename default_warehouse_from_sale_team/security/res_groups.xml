@@ -30,5 +30,15 @@
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
 
+            <record id="group_limited_default_warehouse_journal" model="res.groups">
+                <field name="name">Limited access to Journal (filtered by sale teams)</field>
+                <field name="comment">View only the Journal which warehouses match with the user sales teams default warehouses</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+            <record id="group_manager_default_journal" model="res.groups">
+                <field name="name">Access to all Journal</field>
+                <field name="comment">Not matter sales teams will leave the user to see all the Journal</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
         </data>
     </openerp>
