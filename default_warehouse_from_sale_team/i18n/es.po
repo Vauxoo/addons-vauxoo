@@ -162,7 +162,7 @@ msgstr "Acceso a todos los Diarios"
 #. module: default_warehouse_from_sale_team
 #: help:crm.case.section,journal_team_ids:0
 msgid "Choose the Journals that user with this sale team can see"
-msgstr "Selecciona los diarios que el usuario con este equipo de ventas  puede ver"
+msgstr "Selecciona los diarios que el usuario con este equipo de ventas puede ver"
 
 #. module: default_warehouse_from_sale_team
 #: field:crm.case.section,journal_team_ids:0
