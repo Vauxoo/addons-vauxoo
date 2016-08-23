@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="service_center_partner_1" model="res.partner">
+            <field name="name">Tecnotek S.A.</field>
+            <field name="phone">+507 279-8400</field>
+            <field name="street">Vía Ricardo J. Alfaro Plaza Multimax Local 8</field>
+        </record>
+        <record id="service_center_partner_2" model="res.partner">
+            <field name="name">Grupo Sigma</field>
+            <field name="phone">+507 203-3979</field>
+            <field name="street">Bethania, Ave. Ricardo J. Alfaro, Plaza León</field>
+        </record>
+        <record id="service_center_partner_3" model="res.partner">
+            <field name="name">Fast Service Center</field>
+            <field name="phone">+507 388-3878 y +507 388-3879</field>
+            <field name="email">fastservicecenter@gmail.com</field>
+        </record>
+        <record id="service_center_partner_4" model="res.partner">
+            <field name="name">Computer Place Corp.</field>
+            <field name="phone">+507 260-0050, +507 392-0060 y +507 264-4966</field>
+            <field name="street">La Alameda, Calle Octavio De Icaza, Edif. Raquelita </field>
+        </record>
+        <record id="service_center_partner_5" model="res.partner">
+            <field name="name">Canon</field>
+            <field name="phone">+507 279-0265</field>
+            <field name="email">oficompu@cwpanama.net</field>
+            <field name="website">cwpanama.net</field>
+            <field name="street">Vía Ricardo J. Alfaro, Centro comercial Alhambra, local 20A</field>
+        </record>
+        <record id="service_center_partner_6" model="res.partner">
+            <field name="name">Canon Panama</field>
+            <field name="phone">+507 279-8900</field>
+        </record>
+        <record id="service_center_partner_7" model="res.partner">
+            <field name="name">Oteima Corp.</field>
+            <field name="phone">+507 775-8060, +507 996-0181, +507 998-7869</field>
+        </record>
+        <record id="service_center_partner_8" model="res.partner">
+            <field name="name">Servicentro Tecnológico S.A. (SERTESA)</field>
+            <field name="phone">+507 449-4206 y +507 449-4207</field>
+        </record>
+        <record id="service_center_partner_9" model="res.partner">
+            <field name="name">Unisistemas</field>
+            <field name="phone">Teléfono: +507 236-1005</field>
+            <field name="street">Ave. Ricardo J. Alfaro, Edificio Tesa Telecomunicaciones</field>
+        </record>
+        <record id="service_center_partner_11" model="res.partner">
+            <field name="name">ECCSA</field>
+            <field name="phone">+507 222-2292, +1 800 507-1264 y +1 800 507-1786</field>
+            <field name="street">Avenida 6 Sur Santa Elena</field>
+        </record>
+        <record id="service_center_partner_12" model="res.partner">
+            <field name="name">Netser Group, Panama</field>
+            <field name="phone">+507 394-9414</field>
+            <field name="street">Calle Broberg, Albrook Office Center, Planta Baja, Local 8</field>
+        </record>
+        <record id="service_center_partner_12b" model="res.partner">
+            <field name="name">Prinjet</field>
+            <field name="phone">+507 214-8364 y +507 214-8365</field>
+            <field name="email">postventas@printjetpanama.com</field>
+            <field name="website">printjetpanama.com</field>
+            <field name="street">Calle Benito Reyes Testa, Duplex N°4, San Francisco, entre Calle 50 y 76 este.</field>
+        </record>
+        <record id="service_center_partner_13" model="res.partner">
+            <field name="name">Micronet</field>
+            <field name="phone"> +507 229-6595 y +507 261-7848</field>
+            <field name="street">Ave. Simón Bolívar</field>
+        </record>
+        <record id="service_center_partner_14" model="res.partner">
+            <field name="name">GBM</field>
+            <field name="phone">+507 378-4800</field>
+            <field name="street">Costa del Este</field>
+        </record>
+        <record id="service_center_partner_15" model="res.partner">
+            <field name="name">Digital On</field>
+            <field name="phone">391-8970</field>
+        </record>
+        <record id="service_center_partner_16" model="res.partner">
+            <field name="name">Microsoft Call Center</field>
+            <field name="phone">+507 210-3000</field>
+            <field name="website">microsoft.com</field>
+        </record>
+        <record id="service_center_partner_17" model="res.partner">
+            <field name="name">SEINCA</field>
+            <field name="phone">+507 390-8620 y +507 390-8626</field>
+            <field name="street">Plaza Mirage, Ave. Ricardo J. Alfaro, (Tumba Muertos), Local No. A5</field>
+        </record>
+        <record id="service_center_partner_18" model="res.partner">
+            <field name="name">Grupo Proessa</field>
+            <field name="phone">+507 394-5400</field>
+            <field name="street">Calle 62 D Oeste</field>
+        </record>
+        <record id="service_center_partner_19" model="res.partner">
+            <field name="name">Altronic Panama</field>
+            <field name="phone">+507 265-4500 y +507 265-4510</field>
+            <field name="email">info@altronic.com.pa</field>
+            <field name="website">altronic.com.pa</field>
+        </record>
+        <record id="brand_acer1" model="product.brand">
+            <field name="name">Acer</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/acer.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_1')])]"/>
+        </record>
+        <record id="brand_AOC" model="product.brand">
+            <field name="name">AOC</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/aoc.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_2')])]"/>
+        </record>
+        <record id="brand_viewsonic" model="product.brand">
+            <field name="name">ViewSonic</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/viewsonic.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_2')])]"/>
+        </record>
+        <record id="brand_asium" model="product.brand">
+            <field name="name">Asium</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/asium.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_3')])]"/>
+        </record>
+        <record id="brand_quo" model="product.brand">
+            <field name="name">Quo</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/quo.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_3')])]"/>
+        </record>
+        <record id="brand_brother" model="product.brand">
+            <field name="name">Brother</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/brother.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_4')])]"/>
+        </record>
+        <record id="brand_canon" model="product.brand">
+            <field name="name">Canon</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/canon.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_5'), ref('service_center_partner_6'), ref('service_center_partner_7'), ref('service_center_partner_8')])]"/>
+        </record>
+        <record id="brand_D_link" model="product.brand">
+            <field name="name">D-Link</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/dlink.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_9')])]"/>
+        </record>
+        <record id="brand_dell" model="product.brand">
+            <field name="name">Dell</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/dell.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_11')])]"/>
+        </record>
+        <record id="brand_epson" model="product.brand">
+            <field name="name">Epson</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/epson.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_1')])]"/>
+        </record>
+        <record id="brand_hp" model="product.brand">
+            <field name="name">HP</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/hp.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_12'), ref('service_center_partner_12b')])]"/>
+        </record>
+        <record id="brand_kaspersky" model="product.brand">
+            <field name="name">Kaspersky</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/kaspersky.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_13')])]"/>
+        </record>
+        <record id="brand_bitdefender" model="product.brand">
+            <field name="name">Bitdefender</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/bitdefender.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_13')])]"/>
+        </record>
+        <record id="brand_lenovo" model="product.brand">
+            <field name="name">Lenovo</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/lenovo.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_14')])]"/>
+        </record>
+        <record id="brand_lg" model="product.brand">
+            <field name="name">LG</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/lg.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_15')])]"/>
+        </record>
+        <record id="brand_microsoft" model="product.brand">
+            <field name="name">Microsoft</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/microsoft.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_16')])]"/>
+        </record>
+        <record id="brand_samsung" model="product.brand">
+            <field name="name">Samsung</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/samsung.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_17')])]"/>
+        </record>
+        <record id="brand_sony" model="product.brand">
+            <field name="name">Sony</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/sony.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_18')])]"/>
+        </record>
+        <record id="brand_toshiba" model="product.brand">
+            <field name="name">Toshiba</field>
+            <field name="logo" type="base64" file="website_authorized_service_centers/static/img/toshiba.png"/>
+            <field name="authorized_partner_ids" eval="[(6,0,[ref('service_center_partner_19')])]"/>
+        </record>
+    </data>
+</openerp>

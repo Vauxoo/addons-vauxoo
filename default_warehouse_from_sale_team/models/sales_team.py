@@ -12,6 +12,48 @@ class InheritedCrmSaseSection(models.Model):
                                         help='In this field can be '
                                         'defined a default warehouse for '
                                         'the related users to the sales team.')
+    journal_team_ids = fields.Many2many(
+        'account.journal', 'journal_section_rel', 'journal_id', 'section_id',
+        string="Journal's sales teams",
+        help="Choose the Journals that user with this sale team can see")
+
+    @api.multi
+    def update_users_sales_teams(self):
+        """ This method will review the users every time a sale team is create
+        / write to:
+
+        - if add a member and this one has not default sale team then set the
+          current team as the new default sale team
+        - if remove a member of the sale team and this one has as default the
+          current sale team then will update the user to set default sale teams
+          to False
+        - if they are just added or remove from the sale team we need to make
+          a dummy write in order to update the user sales_team_wh_ids and this
+          way the filtering rule will works to show the records only related to
+          the real user current sale teams configured warehouses.
+        """
+        for team in self:
+
+            # Add default team to users without default
+            wo_default_team = team.member_ids.filtered(
+                lambda user: not user.default_section_id)
+            for user in wo_default_team:
+                user.write({'default_section_id': team.id})
+
+            # Remove default team for users that are not longer in the current
+            # team
+            default_current_team = self.env['res.users'].search(
+                [('default_section_id', '=', team.id)])
+            remove_default_team = default_current_team - team.member_ids
+            for user in remove_default_team:
+                user.write({'default_section_id': False})
+
+            # Dummy write to update the m2m user.sale_teams in order to be
+            # capable of rendering the ir.rules properly.
+            for member in team.member_ids:
+                member.write({})
+
+        return True
 
 
 class WarehouseDefault(models.Model):
@@ -20,7 +62,6 @@ class WarehouseDefault(models.Model):
     setted into the sales team.
     """
 
-    _auto = False
     _name = "default.warehouse"
 
     @api.model
@@ -47,9 +88,3 @@ class WarehouseDefault(models.Model):
                 {name: warehouse_id for name in names_list
                  if defaults.get(name)})
         return defaults
-
-
-class SaleOrder(models.Model):
-
-    _name = "sale.order"
-    _inherit = ['sale.order', 'default.warehouse']
