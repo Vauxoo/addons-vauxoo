@@ -86,7 +86,7 @@ class WarehouseDefault(models.Model):
         return defaults
 
     @api.multi
-    def read(self, fields=None, load='_classic_read'):
+    def ___read(self, fields=None, load='_classic_read'):
         """This method is overwrite because we need to propagate SUPERUSER_ID
         when picking are chained in another warehouse without access to read"""
         if self.env['ir.model.access'].check_groups(
