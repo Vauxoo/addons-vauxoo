@@ -16,7 +16,7 @@
                     </section>
                     <section class="mt16 mb16">
                         <div class="container">
-                            <t t-set="providers" t-value="env['product.brand'].search([('authorized_partner_ids', '!=', False)], order='name desc')"/>
+                            <t t-set="providers" t-value="env['product.brand'].sudo().search([('authorized_partner_ids', '!=', False)], order='name desc')"/>
                             <t t-as="provider" t-foreach="providers">
                                 <t t-call="website_authorized_service_centers.authorized_centers"/>
                             </t>
