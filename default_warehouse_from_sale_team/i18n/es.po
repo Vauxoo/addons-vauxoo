@@ -182,7 +182,7 @@ msgstr "Acceso limitado a diarios(Filtrados por equipo de ventas)"
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_journal
 msgid "Not matter sales teams will leave the user to see all the Journal"
-msgstr "No importa el equipo de ventas le permitirá ver todos los diarios  "
+msgstr "No importa el equipo de ventas le permitirá ver todos los diarios"
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
