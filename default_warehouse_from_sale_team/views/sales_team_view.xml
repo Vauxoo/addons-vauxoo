@@ -10,6 +10,11 @@
                 <xpath expr="//field[@name='parent_id']" position="after">
                     <field name="default_warehouse" />
                 </xpath>
+                <xpath expr="//page[@string='Team Members']" position="after">
+                    <page string="Journals">
+                        <field name="journal_team_ids"/>
+                    </page>
+                </xpath>
             </field>
         </record>
 

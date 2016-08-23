@@ -12,6 +12,10 @@ class InheritedCrmSaseSection(models.Model):
                                         help='In this field can be '
                                         'defined a default warehouse for '
                                         'the related users to the sales team.')
+    journal_team_ids = fields.Many2many(
+        'account.journal', 'journal_section_rel', 'journal_id', 'section_id',
+        string="Journal's sales teams",
+        help="Choose the Journals that user with this sale team can see")
 
     @api.multi
     def update_users_sales_teams(self):
