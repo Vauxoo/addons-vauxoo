@@ -16,6 +16,7 @@
                             ('stock_landed_cost_id', '=', False),
                         ]"
                         attrs="{'readonly': [('state','!=','draft')]}"
+                        context="{'default_type':'in_invoice', 'type':'in_invoice', 'journal_type': 'purchase'}"
                         />
                     <field
                         name="move_ids"
