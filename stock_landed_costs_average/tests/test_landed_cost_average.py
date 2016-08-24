@@ -77,7 +77,7 @@ class TestLandedCostAverage(TestStockLandedCommon):
         invoice_01_id = po_01_id.invoice_ids[0].copy()
         invoice_01_id.write({
             'invoice_line': [(0, 0, {
-                'name': '#{0} Cost Product for {1}'.format(
+                'name': '#%s Cost Product for %s' % (
                     str(self.product_freight_id.id), str(invoice_01_id.id)),
                 'product_id': self.product_freight_id.id
             })]

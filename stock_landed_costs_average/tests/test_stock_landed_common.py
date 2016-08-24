@@ -73,8 +73,8 @@ class TestStockLandedCommon(TransactionCase):
             'location_id': self.ref('stock.stock_location_stock'),
             'pricelist_id': self.ref('purchase.list0'),
             'order_line': [(0, 0, {
-                'name': "{0} (qty={1}, cost={2})".format(self.product_id.name,
-                                                         qty, cost),
+                'name': "%s (qty=%s, cost=%s)" % (
+                    self.product_id.name, qty, cost),
                 'product_id': self.product_id.id,
                 'price_unit': cost,
                 'product_qty': qty,
@@ -93,7 +93,7 @@ class TestStockLandedCommon(TransactionCase):
         price = vals['cost']
         sale_order_id = self.sale_order.create({
             'partner_id': self.customer_id.id,
-            'client_order_ref': "Sale Order (qty={0}, price={1})".format(
+            'client_order_ref': "Sale Order (qty=%s, price=%s)" % (
                 str(qty), str(price)),
             'order_policy': 'manual',
             'order_line': [(0, 0, {

@@ -58,12 +58,9 @@ class ProductProduct(models.Model):
             _logger.info(msglog, str(tmpl_id), str(total), str(counter))
             cr.execute('''
                 UPDATE product_template
-                SET material_cost = {material_cost}
-                WHERE id = {id}
-                    '''.format(
-                material_cost=std_price,
-                id=tmpl_id,
-            ))
+                SET material_cost = %(material_cost)s
+                WHERE id = %(id)s
+                       ''', {'material_cost': std_price, 'id': tmpl_id, })
         return True
 
     def _update_material_cost_on_zero_segmentation(
@@ -289,7 +286,7 @@ class ProductTemplate(models.Model):
                 product_id.write(sgmnts_dict)
             subject = "Segments updated. "
             body = 'Segments were written CHECK AFTERWARDS.'\
-                '{0}'.format(str(sgmnts_dict))
+                '%s' % str(sgmnts_dict)
 
         if not vals.get('threshold_reached', False):
             if not log_only:
@@ -298,13 +295,13 @@ class ProductTemplate(models.Model):
             body += ""
         else:
             subject += 'I cowardly did not update cost, Standard new\n'
-            body += "Price is {comp_th:.2f}% less than old price\n"\
-                "new {new} old {old} \n"\
-                "(current max allowed is {max_th})\n"\
-                .format(old=vals['current_price'],
-                        new=new_price['standard_price'],
-                        comp_th=vals['computed_th'],
-                        max_th=vals['current_bottom_th'])
+            body += "Price is %(comp_th).2f%% less than old price\n"\
+                "new %(new)s old %(old)s \n"\
+                "(current max allowed is %(max_th)s)\n" % dict(
+                    old=vals['current_price'],
+                    new=new_price['standard_price'],
+                    comp_th=vals['computed_th'],
+                    max_th=vals['current_bottom_th'])
         product_id.message_post(body=body, subject=subject)
         return new_price['standard_price']
 

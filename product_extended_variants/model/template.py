@@ -140,9 +140,9 @@ class ProductTemplate(models.Model):
                     qty = prod_variant.qty_available
                     if qty:
                         # Accounting Entries
-                        ref = '[{code}] {name}'.\
-                            format(code=prod_variant.default_code,
-                                   name=prod_variant.name)
+                        ref = '[%(code)s] %(name)s' % dict(
+                            code=prod_variant.default_code,
+                            name=prod_variant.name)
                         move_vals = {
                             'journal_id': datas['stock_journal'],
                             'company_id': location.company_id.id,

@@ -49,20 +49,20 @@ class StockCardProduct(models.TransientModel):
         return self.action_view_moves()
 
     def _get_quant_values(self, move_id, col='', inner='', where=''):
-        self._cr.execute(
-            '''
-            SELECT
-                COALESCE(cost, 0.0) AS cost,
-                COALESCE(qty, 0.0) AS qty,
-                propagated_from_id AS antiquant
-                {col}
-            FROM stock_quant_move_rel AS sqm_rel
-            INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
-            {inner}
-            WHERE sqm_rel.move_id = {move_id}
-            {where}
-            '''.format(move_id=move_id, col=col, inner=inner, where=where)
-        )
+        query = ('''
+                 SELECT
+                     COALESCE(cost, 0.0) AS cost,
+                     COALESCE(qty, 0.0) AS qty,
+                     propagated_from_id AS antiquant
+                     %(col)s
+                 FROM stock_quant_move_rel AS sqm_rel
+                 INNER JOIN stock_quant AS sq ON sq.id = sqm_rel.quant_id
+                 %(inner)s
+                 WHERE sqm_rel.move_id = %(move_id)s
+                 %(where)s
+                 ''') % dict(move_id=move_id,
+                             col=col, inner=inner, where=where)
+        self._cr.execute(query)
         return self._cr.dictfetchall()
 
     def _get_price_on_consumed(self, row, vals, qntval):

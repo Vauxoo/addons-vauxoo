@@ -73,22 +73,25 @@ class WizardPrice(models.Model):
         count = 0
         total = len(product_ids)
         _logger.info(
-            'Cron Job will compute {length} products'.format(length=total))
-        msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}  \n'
-        msglog2 = 'Updated correctly: [{prod_id}]  from {old} to {new} {count}/{total}  \n'  # noqa
+            'Cron Job will compute %(length)s products', dict(length=total))
+        msglog = 'Computing cost for product:'\
+            ' [%(prod_id)s]. %(count)s/%(total)s  \n'
+        msglog2 = 'Updated correctly: [%(prod_id)s]  '\
+            'from %(old)s to %(new)s %(count)s/%(total)s  \n'
         IDENTIFIER = str(time.time())
         WHEN = time.ctime()
-        logfname = '/tmp/update_cost_err{identifier}.log'.format(identifier=IDENTIFIER)  # noqa
-        logfull = '/tmp/update_cost_fine{identifier}.log'.format(identifier=IDENTIFIER)  # noqa
+        logfname = '/tmp/update_cost_err%(identifier)s.log' % dict(
+            identifier=IDENTIFIER)
+        logfull = '/tmp/update_cost_fine%(identifier)s.log' % dict(
+            identifier=IDENTIFIER)
         products = product_obj.browse(cr, uid, product_ids, context=context)
         for product in products:
             count += 1
             try:
                 # Due to this is a huge batch process it is better use a nw
                 # curso to avoid blocking process.
-                _logger.info(msglog.format(prod_id=product.id,
-                                           total=total,
-                                           count=count))
+                _logger.info(msglog, dict(prod_id=product.id,
+                                          total=total, count=count))
                 new = 'Never Setted'
                 if not product.cost_method == 'standard':
                     new = 'Ignored Because product is not set as Standard'
@@ -104,7 +107,7 @@ class WizardPrice(models.Model):
                     old = product.standard_price
                     self.compute_from_bom(cr, uid, [price_id], context=context)
                     new = product.standard_price
-                    msg_ok = msglog2.format(prod_id=product.id,
+                    msg_ok = msglog2 % dict(prod_id=product.id,
                                             total=total,
                                             old=old,
                                             new=new,
@@ -112,11 +115,12 @@ class WizardPrice(models.Model):
                     _logger.info(msg_ok)
                     if old > new:
                         # TODO: show qty_on_hand
-                        msg_err = 'name: - {name} - There is onhand:- ID: [{prod}] - Old: - {old} - New: - {new}\n'  # noqa
-                        msg_err_save = msg_err.format(prod=product.id,
-                                                      name=product.name,
-                                                      new=new,
-                                                      old=old)
+                        msg_err = 'name: - %(name)s - '\
+                            'There is onhand:- ID: [%(prod)s] - '\
+                            'Old: - %(old)s - New: - %(new)s\n'
+                        msg_err_save = msg_err % dict(
+                            prod=product.id, name=product.name,
+                            new=new, old=old)
                         _logger.error(msg_err_save)
                         with open(logfname, 'a') as errored_log:
                             errored_log.write(msg_err_save)
@@ -158,18 +162,18 @@ class WizardPrice(models.Model):
         user = self.pool.get('res.users').browse(cr, uid, uid, context)
         std_bottom_threshold = user.company_id.std_price_neg_threshold
         product_ids = self._get_products(cr, uid, ids, context=context)
-        message = 'Old price {old}, New price {new}'
+        message = 'Old price %(old)s, New price %(new)s'
         context['message'] = ''
         count = 0
         total = len(product_ids)
         _logger.info(
-            'Cron Job will compute {length} products'.format(length=total))
+            'Cron Job will compute %(length)s products', dict(length=total))
         msglog = 'Computing cost for product: [{prod_id}]. {count}/{total}'
         for product in product_ids:
             prod_brw = product_obj.browse(cr, uid, product)
             count += 1
             _logger.info(
-                msglog.format(prod_id=product, total=total, count=count))
+                msglog, dict(prod_id=product, total=total, count=count))
 
             if product_obj.fetch_product_bom_states(
                     cr, uid, product, state='obsolete', context=context):
@@ -214,7 +218,7 @@ class WizardPrice(models.Model):
             except Exception as msg:  # pylint: disable=W0703
                 new = msg
 
-            context['message'] = message.format(old=old, new=new)
+            context['message'] = message % dict(old=old, new=new)
             self._post_message(cr, uid, ids, context=context)
         # /!\ TODO: Write log for products that were ignored
         return True

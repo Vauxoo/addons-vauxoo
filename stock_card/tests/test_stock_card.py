@@ -98,8 +98,8 @@ class TestStockCard(TransactionCase):
 
         qty = self.scp.get_qty(self.product_id.id)
         self.assertEqual(qty, 4,
-                         'Current Stock for {0} MUST BE 4 units'.
-                         format(self.product_id.name))
+                         'Current Stock for %s MUST BE 4 units' %
+                         self.product_id.name)
 
         scp_id = self.scp.create({
             'product_id': self.product_id.id

@@ -106,7 +106,7 @@ class AccountInvoice(models.Model):
                     except orm.except_orm:
                         message = (
                             "Reconciliation was not possible with "
-                            "Journal Items [{values}]".format(
+                            "Journal Items [%(values)s]" % dict(
                                 values=", ".join([str(idx) for idx in val])))
                         _logger.exception(message)
 
