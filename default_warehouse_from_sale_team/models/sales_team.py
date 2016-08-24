@@ -94,12 +94,11 @@ class WarehouseDefault(models.Model):
              load='_classic_read'):
         """This method is overwrite because we need to propagate SUPERUSER_ID
         when picking are chained in another warehouse without access to read"""
-        if self.pool.get('ir.model.access').check_groups(
+        if self.pool.get('res.users').has_group(
             cr, user, 'default_warehouse_from_sale_team.'
                 'group_limited_default_warehouse_sp'):
-            return super(WarehouseDefault, self).read(
-                cr, SUPERUSER_ID, ids, fields=fields, context=context,
-                load=load)
+            # we need to change to SUPERUSER_ID to allow access to read
+            user = SUPERUSER_ID
         return super(WarehouseDefault, self).read(
             cr, user, ids, fields=fields, context=context, load=load)
 
@@ -107,8 +106,8 @@ class WarehouseDefault(models.Model):
     def read(self, fields=None, load='_classic_read'):
         """This method is overwrite because we need to propagate SUPERUSER_ID
         when picking are chained in another warehouse without access to read"""
-        if self.env['ir.model.access'].check_groups(
-            'default_warehouse_from_sale_team.'
-                'group_limited_default_warehouse_sp'):
-            return super(WarehouseDefault, self.sudo()).read(fields, load)
+        if self.env.user.has_group('default_warehouse_from_sale_team.'
+                                   'group_limited_default_warehouse_sp'):
+            # we need to change to SUPERUSER_ID to allow access to read
+            self = self.sudo()
         return super(WarehouseDefault, self).read(fields, load)
