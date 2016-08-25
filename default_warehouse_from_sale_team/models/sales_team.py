@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from openerp import api, fields, models
-
+from openerp import SUPERUSER_ID
 
 class InheritedCrmSaseSection(models.Model):
 
@@ -88,3 +88,26 @@ class WarehouseDefault(models.Model):
                 {name: warehouse_id for name in names_list
                  if defaults.get(name)})
         return defaults
+
+    @api.v7
+    def read(self, cr, user, ids, fields=None, context=None,
+             load='_classic_read'):
+        """This method is overwrite because we need to propagate SUPERUSER_ID
+        when picking are chained in another warehouse without access to read"""
+        if self.pool.get('res.users').has_group(
+            cr, user, 'default_warehouse_from_sale_team.'
+                'group_limited_default_warehouse_sp'):
+            # we need to change to SUPERUSER_ID to allow access to read
+            user = SUPERUSER_ID
+        return super(WarehouseDefault, self).read(
+            cr, user, ids, fields=fields, context=context, load=load)
+
+    @api.v8
+    def read(self, fields=None, load='_classic_read'):
+        """This method is overwrite because we need to propagate SUPERUSER_ID
+        when picking are chained in another warehouse without access to read"""
+        if self.env.user.has_group('default_warehouse_from_sale_team.'
+                                   'group_limited_default_warehouse_sp'):
+            # we need to change to SUPERUSER_ID to allow access to read
+            self = self.sudo()
+        return super(WarehouseDefault, self).read(fields, load)
