@@ -27,6 +27,17 @@ msgid "Title"
 msgstr ""
 
 #. module: user_story
+#: code:addons/user_story/model/user_story.py:364
+#: code:addons/user_story/model/user_story.py:386
+#, python-format
+msgid "<html><div>\n"
+"                 <h2>%(usname)s</h2>\n"
+"                 <p>The user %(user)s has approved the user Story\n"
+"                 <a href=\"%(link)s\">See what we are talking about here</a>\n"
+"                 </div></html>"
+msgstr ""
+
+#. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_started
 msgid "Task started"
 msgstr ""
@@ -40,6 +51,11 @@ msgstr ""
 #. module: user_story
 #: view:user.story:0
 msgid "Progress"
+msgstr ""
+
+#: code:addons/user_story/model/user_story.py:81
+#, python-format
+msgid " %(criteria)s on User Story %(hu)s"
 msgstr ""
 
 #. module: user_story

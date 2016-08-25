@@ -43,6 +43,11 @@ msgstr "Agrupar por ..."
 msgid "Progress"
 msgstr "Progreso"
 
+#: code:addons/user_story/model/user_story.py:81
+#, python-format
+msgid " %(criteria)s on User Story %(hu)s"
+msgstr " %(criteria)s en la Historia de Usuario %(hu)s"
+
 #. module: user_story
 #: help:acceptability.criteria,project_id:0
 msgid "User Story Project"
@@ -83,6 +88,21 @@ msgstr "Verifique si este criterio aplica"
 #: view:user.story:0 field:user.story,priority_level:0
 msgid "Priority Level"
 msgstr "Nivel de Prioridad"
+
+#. module: user_story
+#: code:addons/user_story/model/user_story.py:364
+#: code:addons/user_story/model/user_story.py:386
+#, python-format
+msgid "<html><div>\n"
+"                 <h2>%(usname)s</h2>\n"
+"                 <p>The user %(user)s has approved the user Story\n"
+"                 <a href=\"%(link)s\">See what we are talking about here</a>\n"
+"                 </div></html>"
+msgstr "<html><div>\n"
+"                 <h2>%(usname)s</h2>\n"
+"                 <p>El usuario %(user)s ha aprobado la Historia de usuario\n"
+"                 <a href=\"%(link)s\">Vea de lo que estamos hablando aquí</a>\n"
+"                 </div></html>"
 
 #. module: user_story
 #: view:acceptability.criteria:0
@@ -294,7 +314,7 @@ msgstr "Escenario 2.2"
 #. module: user_story
 #: view:acceptability.criteria:0
 msgid "In Development"
-msgstr "En Desarollo"
+msgstr "En Desarrollo"
 
 #. module: user_story
 #: view:user.story:0
