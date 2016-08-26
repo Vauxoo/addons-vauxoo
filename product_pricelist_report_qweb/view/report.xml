@@ -14,9 +14,6 @@
             string="Pricelist"
             report_type="qweb-pdf"
             multi="True"
-            attachment_use="0"
-            attachment=""
-            menu="False"
             />
 
         <!--
