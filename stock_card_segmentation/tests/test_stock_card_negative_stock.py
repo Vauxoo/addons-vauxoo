@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 
+
 class TestStockCardNegativeStock(TransactionCase):
 
     def setUp(self):

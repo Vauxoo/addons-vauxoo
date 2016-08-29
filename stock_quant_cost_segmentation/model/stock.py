@@ -383,7 +383,7 @@ class StockQuant(models.Model):
                 ORDER BY sq.in_date DESC
                 LIMIT 1
             """) % dict(product_id=move.product_id.id,
-                         exclude_ids=exclude_ids)
+                        exclude_ids=exclude_ids)
             cr.execute(query2)
 
             res = cr.dictfetchone()
