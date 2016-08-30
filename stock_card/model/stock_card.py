@@ -154,7 +154,8 @@ class StockCardProduct(models.TransientModel):
         move_id = row['move_id']
         move_brw = sm_obj.browse(move_id)
         # NOTE: Identify the originating move_id of returning move
-        origin_id = move_brw.origin_returned_move_id.id
+        origin_id = move_brw.origin_returned_move_id or move_brw.move_dest_id
+        origin_id = origin_id.id
         # NOTE: Falling back to average in case customer return is
         # orphan, i.e., return was created from scratch
         old_average = (
@@ -227,10 +228,10 @@ class StockCardProduct(models.TransientModel):
         if dst in ('supplier',):
             self._get_price_on_supplier_return(row, vals, qntval)
 
-        if src in ('supplier', 'production', 'inventory', 'transit'):
+        if src in ('supplier', 'production', 'inventory', ):
             self._get_price_on_supplied(row, vals, qntval)
 
-        if src in ('customer',):
+        if src in ('customer', 'transit'):
             self._get_price_on_customer_return(row, vals, qntval)
 
         self._get_move_average(row, vals)
