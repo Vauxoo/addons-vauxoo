@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ############ Credits ########################################################
 #    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -59,54 +59,56 @@ PURCHASE_STATES = [
 
 QUERY_LINE_MOVE = '''
 SELECT DISTINCT ol.id
-FROM {ttype}_order_line AS ol
+FROM %(ttype)s_order_line AS ol
 INNER JOIN
-    stock_move AS sm ON sm.{ttype}_line_id = ol.id
+    stock_move AS sm ON sm.%(ttype)s_line_id = ol.id
 WHERE
     sm.state IN ('done')
-    AND (sm.date BETWEEN '{date_start}' AND '{date_stop}')
-    AND sm.company_id = {company_id}
+    AND (sm.date BETWEEN %(date_start)s AND %(date_stop)s)
+    AND sm.company_id = %(company_id)s
 '''
 
 QUERY_LINE_INVOICE = '''
 SELECT DISTINCT ol.id
-FROM {ttype}_order_line AS ol
+FROM %(ttype)s_order_line AS ol
 INNER JOIN
-    {ttype}_order_line_invoice_rel AS olir ON olir.order_line_id = ol.order_id
+    %(ttype)s_order_line_invoice_rel AS olir
+    ON olir.order_line_id = ol.order_id
 INNER JOIN
     account_invoice_line AS ail ON ail.id = olir.invoice_id
 INNER JOIN
     account_invoice AS ai ON ai.id = ail.invoice_id
 WHERE
     ai.state IN ('open', 'paid')
-    AND (ai.date_invoice BETWEEN '{date_start}' AND '{date_stop}')
-    AND ai.company_id = {company_id}
+    AND (ai.date_invoice BETWEEN %(date_start)s AND %(date_stop)s)
+    AND ai.company_id = %(company_id)s
 '''
 
 QUERY_MOVE = '''
 SELECT DISTINCT order_id
-FROM {ttype}_order_line AS ol
+FROM %(ttype)s_order_line AS ol
 INNER JOIN
-    stock_move AS sm ON sm.{ttype}_line_id = ol.id
+    stock_move AS sm ON sm.%(ttype)s_line_id = ol.id
 WHERE
     sm.state IN ('done')
-    AND (sm.date BETWEEN '{date_start}' AND '{date_stop}')
-    AND sm.company_id = {company_id}
+    AND (sm.date BETWEEN %(date_start)s AND %(date_stop)s)
+    AND sm.company_id = %(company_id)s
 '''
 
 QUERY_INVOICE = '''
 SELECT DISTINCT order_id
-FROM {ttype}_order_line AS ol
+FROM %(ttype)s_order_line AS ol
 INNER JOIN
-    {ttype}_order_line_invoice_rel AS olir ON olir.order_line_id = ol.order_id
+    %(ttype)s_order_line_invoice_rel AS olir ON
+    olir.order_line_id = ol.order_id
 INNER JOIN
     account_invoice_line AS ail ON ail.id = olir.invoice_id
 INNER JOIN
     account_invoice AS ai ON ai.id = ail.invoice_id
 WHERE
     ai.state IN ('open', 'paid')
-    AND (ai.date_invoice BETWEEN '{date_start}' AND '{date_stop}')
-    AND ai.company_id = {company_id}
+    AND (ai.date_invoice BETWEEN %(date_start)s AND %(date_stop)s)
+    AND ai.company_id = %(company_id)s
 '''
 
 
@@ -377,13 +379,14 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_LINE_MOVE.format(
-            ttype=ttype,
-            company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.date_start,
-            date_stop=wzd_brw.date_stop,
-        )
-        cr.execute(query)
+        query = QUERY_LINE_MOVE % dict(ttype=ttype,
+                                       company_id='%(company_id)s',
+                                       date_start='%(date_start)s',
+                                       date_stop='%(date_stop)s')
+        cr.execute(query,
+                   {'company_id': wzd_brw.company_id.id,
+                    'date_start': wzd_brw.date_start,
+                    'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
         res = [val[0] for val in res]
         return set(res)
@@ -394,13 +397,14 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_LINE_INVOICE.format(
-            ttype=ttype,
-            company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.date_start,
-            date_stop=wzd_brw.date_stop,
-        )
-        cr.execute(query)
+        query = QUERY_LINE_INVOICE % dict(ttype=ttype,
+                                          company_id='%(company_id)s',
+                                          date_start='%(date_start)s',
+                                          date_stop='%(date_stop)s')
+        cr.execute(query,
+                   {'company_id': wzd_brw.company_id.id,
+                    'date_start': wzd_brw.date_start,
+                    'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
         res = [val[0] for val in res]
         return set(res)
@@ -411,13 +415,14 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_MOVE.format(
-            ttype=ttype,
-            company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.date_start,
-            date_stop=wzd_brw.date_stop,
-        )
-        cr.execute(query)
+        query = QUERY_MOVE % dict(ttype=ttype,
+                                  company_id='%(company_id)s',
+                                  date_start='%(date_start)s',
+                                  date_stop='%(date_stop)s')
+        cr.execute(query,
+                   {'company_id': wzd_brw.company_id.id,
+                    'date_start': wzd_brw.date_start,
+                    'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
         res = [val[0] for val in res]
         return set(res)
@@ -428,13 +433,14 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_INVOICE.format(
-            ttype=ttype,
-            company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.date_start,
-            date_stop=wzd_brw.date_stop,
-        )
-        cr.execute(query)
+        query = QUERY_INVOICE % dict(ttype=ttype,
+                                     company_id='%(company_id)s',
+                                     date_start='%(date_start)s',
+                                     date_stop='%(date_stop)s')
+        cr.execute(query,
+                   {'company_id': wzd_brw.company_id.id,
+                    'date_start': wzd_brw.date_start,
+                    'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
         res = [val[0] for val in res]
         return set(res)

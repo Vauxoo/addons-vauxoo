@@ -354,21 +354,21 @@ class StockQuant(models.Model):
                 SELECT sq.id AS id, sq.propagated_from_id AS from_id
                 FROM stock_quant AS sq
                 WHERE
-                    product_id = {product_id}
+                    product_id = %(product_id)s
                     AND sq.propagated_from_id IS NOT NULL
-            """.format(product_id=move.product_id.id)
-            cr.execute(query1)
+            """
+            cr.execute(query1, {'product_id': move.product_id.id})
             for val in cr.fetchall():
                 exclude_ids += list(val)
 
             if exclude_ids:
                 exclude_ids = ', '.join(str(ex_ids) for ex_ids in exclude_ids)
-                exclude_ids = ' AND sq.id NOT IN ({exclude_ids})'.format(
+                exclude_ids = ' AND sq.id NOT IN (%(exclude_ids)s)' % dict(
                     exclude_ids=exclude_ids)
             else:
                 exclude_ids = ''
 
-            query2 = """
+            query2 = ("""
                 SELECT
                     sq.id,
                     sq.material_cost,
@@ -377,14 +377,13 @@ class StockQuant(models.Model):
                     sq.subcontracting_cost
                 FROM stock_quant AS sq
                 WHERE
-                    product_id = {product_id}
+                    product_id = %(product_id)s
                     AND qty > 0.0
-                    {exclude_ids}
+                    %(exclude_ids)s
                 ORDER BY sq.in_date DESC
                 LIMIT 1
-            """.format(
-                product_id=move.product_id.id,
-                exclude_ids=exclude_ids)
+            """) % dict(product_id=move.product_id.id,
+                        exclude_ids=exclude_ids)
             cr.execute(query2)
 
             res = cr.dictfetchone()

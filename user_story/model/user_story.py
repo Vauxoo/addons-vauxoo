@@ -79,8 +79,8 @@ class UserStory(osv.Model):
                         context)
                     hu = self.browse(cr, uid, ids[0], context=context)
                     subject = _('Acceptance criteria accepted') + _(
-                        u' {criteria} on User Story {hu}')
-                    subject = subject.format(
+                        u' %(criteria)s on User Story %(hu)s')
+                    subject = subject % dict(
                         criteria=criteria[1][:30], hu=hu.id)
                     followers = self.read(cr, uid, ids[0], [
                         'message_follower_ids'])['message_follower_ids']
@@ -356,13 +356,13 @@ class UserStory(osv.Model):
         """
         usname = self.browse(cr, uid, ids).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        link = '#id={i}&view_type=form&model=user.story'.format(i=ids)
+        link = '#id=%(i)s&view_type=form&model=user.story' % dict(i=ids)
         return _(u'''<html><div>
-                 <h2>{usname}</h2>
-                 <p>The user {user} has approved the user Story
-                 <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username,
-                                         link=link))
+                 <h2>%(usname)s</h2>
+                 <p>The user %(user)s has approved the user Story
+                 <a href="%(link)s">See what we are talking about here</a>
+                 </div></html>''' % dict(usname=usname,
+                                         user=username, link=link))
 
     def do_disapproval(self, cr, uid, ids, context=None):
         """TODO: Think about this project this is the reverse.
@@ -378,13 +378,13 @@ class UserStory(osv.Model):
     def get_body_approval(self, cr, uid, i, context=None):
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
+        link = '#id=%(i)s&view_type=form&model=user.story' % dict(i=i)
         return _(u'''<html><div>
-                 <h2>{usname}</h2>
-                 <p>The user {user} has approved the user Story
-                 <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username,
-                                         link=link))
+                 <h2>%(usname)s</h2>
+                 <p>The user %(user)s has approved the user Story
+                 <a href="%(link)s">See what we are talking about here</a>
+                 </div></html>''' % dict(usname=usname,
+                                         user=username, link=link))
 
     def do_approval(self, cr, uid, ids, context=None):
         context = context or {}
@@ -403,7 +403,7 @@ class UserStory(osv.Model):
                 'model': 'user.story',
                 'res_id': i,
                 'subject':
-                (u'{name} Approved the User Story with id {number}'.format(
+                (u'%(name)s Approved the User Story with id %(number)s' % dict(
                     number=i, name=user.name)),
                 'body_html': body,
                 'recipient_ids': [(6, 0, followers)],
@@ -472,7 +472,7 @@ class UserStoryDifficulty(osv.Model):
 class AcceptabilityCriteria(osv.Model):
     _name = 'acceptability.criteria'
     _description = 'Acceptability Criteria'
-    _order="sequence"
+    _order = "sequence"
 
     def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
         """This method is as the method of the sensitive store tuple for the
@@ -492,8 +492,8 @@ class AcceptabilityCriteria(osv.Model):
         answers in the do_disaproval method.
         """
         model_brw = self.browse(cr, uid, ids[0])
-        link = '#id={i}&view_type=form&model=user.story'.\
-            format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
+        link = '#id=%(i)s&view_type=form&model=user.story' % dict(
+            i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
         return link
 
     def approve(self, cr, uid, ids, context=None):

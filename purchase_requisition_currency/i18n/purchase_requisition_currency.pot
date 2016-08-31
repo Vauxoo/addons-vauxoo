@@ -28,7 +28,7 @@ msgstr ""
 #. module: purchase_requisition_currency
 #: code:addons/purchase_requisition_currency/model/purchase_requisition.py:86
 #, python-format
-msgid "This operation can be done because there's not exist a pricelist with the same purchase requisition currency. ({pl} != {pr})"
+msgid "This operation can be done because there's not exist a pricelist with the same purchase requisition currency. (%(pl)s != %(pr)s"
 msgstr ""
 
 #. module: purchase_requisition_currency

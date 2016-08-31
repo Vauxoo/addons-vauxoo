@@ -100,10 +100,13 @@ class ProductTemplate(models.Model):
                                   context=context)
         product_brw = self.browse(cr, uid, product_id)
         # noqa
-        diff_acc_id = product_brw.property_account_creditor_price_difference and \
+        diff_acc_id = product_brw.\
+            property_account_creditor_price_difference and \
             product_brw.property_account_creditor_price_difference.id or \
-            product_brw.categ_id.property_account_creditor_price_difference_categ and \
-            product_brw.categ_id.property_account_creditor_price_difference_categ.id or \
+            product_brw.categ_id.\
+            property_account_creditor_price_difference_categ and \
+            product_brw.categ_id.\
+            property_account_creditor_price_difference_categ.id or \
             False
 
         res.update({'property_difference_price_account_id': diff_acc_id})
@@ -140,9 +143,9 @@ class ProductTemplate(models.Model):
                     qty = prod_variant.qty_available
                     if qty:
                         # Accounting Entries
-                        ref = '[{code}] {name}'.\
-                            format(code=prod_variant.default_code,
-                                   name=prod_variant.name)
+                        ref = '[%(code)s] %(name)s' % dict(
+                            code=prod_variant.default_code,
+                            name=prod_variant.name)
                         move_vals = {
                             'journal_id': datas['stock_journal'],
                             'company_id': location.company_id.id,

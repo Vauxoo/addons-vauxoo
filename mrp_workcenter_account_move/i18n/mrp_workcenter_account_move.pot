@@ -24,28 +24,28 @@ msgstr ""
 #. module: mrp_workcenter_account_move
 #: code:addons/mrp_workcenter_account_move/model/mrp.py:31
 #, python-format
-msgid "Add Cycle Analytical Account on Worcenter: {wc}\n"
+msgid "Add Cycle Analytical Account on Worcenter: %(wc)s\n"
 ""
 msgstr ""
 
 #. module: mrp_workcenter_account_move
 #: code:addons/mrp_workcenter_account_move/model/mrp.py:34
 #, python-format
-msgid "Add Financial Account on Location: {location} For product: {product}\n"
+msgid "Add Financial Account on Location: %(location)s For product: %(product)s\n"
 ""
 msgstr ""
 
 #. module: mrp_workcenter_account_move
 #: code:addons/mrp_workcenter_account_move/model/mrp.py:29
 #, python-format
-msgid "Add Financial Account on Worcenter: {wc}\n"
+msgid "Add Financial Account on Worcenter: %(wc)s\n"
 ""
 msgstr ""
 
 #. module: mrp_workcenter_account_move
 #: code:addons/mrp_workcenter_account_move/model/mrp.py:30
 #, python-format
-msgid "Add Hour Analytical Account on Worcenter: {wc}\n"
+msgid "Add Hour Analytical Account on Worcenter: %(wc)s\n"
 ""
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 #. module: mrp_workcenter_account_move
 #: code:addons/mrp_workcenter_account_move/model/mrp.py:32
 #, python-format
-msgid "Please set a Journal in Routing: {routing} to book Production Cost Journal Entries\n"
+msgid "Please set a Journal in Routing: %(routing)s to book Production Cost Journal Entries\n"
 ""
 msgstr ""
 

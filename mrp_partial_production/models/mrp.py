@@ -73,9 +73,9 @@ class MrpProduction(models.Model):
                              FROM stock_move AS m
                              LEFT OUTER JOIN stock_quant AS q ON
                                              q.reservation_id=m.id
-                             WHERE m.raw_material_production_id = {prod_id}
+                             WHERE m.raw_material_production_id = %(prod_id)s
                              GROUP BY m.product_id;
-                             '''.format(prod_id=record.id))
+                             ''', {'prod_id': record.id})
             result = {i.get('product_id'): i.get('total') or 0
                       for i in self._cr.dictfetchall()}
             product_uom_qty = uom_obj._compute_qty(record.product_uom.id,
