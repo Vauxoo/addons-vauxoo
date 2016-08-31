@@ -379,10 +379,12 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_LINE_MOVE
+        query = QUERY_LINE_MOVE % dict(ttype=ttype,
+                                       company_id='%(company_id)s',
+                                       date_start='%(date_start)s',
+                                       date_stop='%(date_stop)s')
         cr.execute(query,
-                   {'ttype': ttype,
-                    'company_id': wzd_brw.company_id.id,
+                   {'company_id': wzd_brw.company_id.id,
                     'date_start': wzd_brw.date_start,
                     'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
@@ -395,10 +397,12 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_LINE_INVOICE
+        query = QUERY_LINE_INVOICE % dict(ttype=ttype,
+                                          company_id='%(company_id)s',
+                                          date_start='%(date_start)s',
+                                          date_stop='%(date_stop)s')
         cr.execute(query,
-                   {'ttype': ttype,
-                    'company_id': wzd_brw.company_id.id,
+                   {'company_id': wzd_brw.company_id.id,
                     'date_start': wzd_brw.date_start,
                     'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
@@ -411,10 +415,12 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_MOVE
+        query = QUERY_MOVE % dict(ttype=ttype,
+                                  company_id='%(company_id)s',
+                                  date_start='%(date_start)s',
+                                  date_stop='%(date_stop)s')
         cr.execute(query,
-                   {'ttype': ttype,
-                    'company_id': wzd_brw.company_id.id,
+                   {'company_id': wzd_brw.company_id.id,
                     'date_start': wzd_brw.date_start,
                     'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
@@ -427,10 +433,12 @@ class StockAccrualWizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY_INVOICE
+        query = QUERY_INVOICE % dict(ttype=ttype,
+                                     company_id='%(company_id)s',
+                                     date_start='%(date_start)s',
+                                     date_stop='%(date_stop)s')
         cr.execute(query,
-                   {'ttype': ttype,
-                    'company_id': wzd_brw.company_id.id,
+                   {'company_id': wzd_brw.company_id.id,
                     'date_start': wzd_brw.date_start,
                     'date_stop': wzd_brw.date_stop, })
         res = cr.fetchall()
