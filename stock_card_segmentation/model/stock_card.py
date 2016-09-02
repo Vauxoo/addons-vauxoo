@@ -191,7 +191,8 @@ class StockCardProduct(models.TransientModel):
         sm_obj = self.env['stock.move']
         move_id = row['move_id']
         move_brw = sm_obj.browse(move_id)
-        origin_id = move_brw.origin_returned_move_id.id
+        origin_id = move_brw.origin_returned_move_id or move_brw.move_dest_id
+        origin_id = origin_id.id
         old_average = (
             vals['move_dict'].get(origin_id) and
             vals['move_dict'][origin_id]['average'] or vals['average'])
