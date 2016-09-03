@@ -109,12 +109,20 @@ class StockMove(models.Model):
 class StockQuant(models.Model):
     _inherit = "stock.quant"
 
-    @api.depends('material_cost', 'production_cost', 'landed_cost',
-                 'subcontracting_cost')
-    def _compute_segmentation(self):
-        for record in self:
-            record.segmentation_cost = sum([
-                getattr(record, fn) for fn in SEGMENTATION_COST])
+    @api.multi
+    def write(self, vals):
+        res = super(StockQuant, self).write(vals)
+        if not set(SEGMENTATION_COST).issubset(set(vals)):
+            return res
+        # TODO: Validate sql injection from SEGMENTATION_COST variable
+        # Because other module could add a monkey patch with sql injection
+        sum_query = ' + '.join(["COALESCE(%s, 0)" % field_name
+                                for field_name in SEGMENTATION_COST])
+        # NOTE: Cache is too slow to manage many records from computed field
+        query = "UPDATE stock_quant SET segmentation_cost = (" + sum_query + \
+            ") WHERE id IN %s"
+        self.env.cr.execute(query, (tuple(self.ids),))
+        return res
 
     material_cost = fields.Float(
         string='Material Cost',
@@ -129,8 +137,7 @@ class StockQuant(models.Model):
         string='Landed Cost',
         digits=dp.get_precision('Account'))
     segmentation_cost = fields.Float(
-        string='Actual Cost', store=True, readonly=True,
-        compute='_compute_segmentation',
+        string='Actual Cost', readonly=True,
         digits=dp.get_precision('Account'),
         help=("Provides the actual cost for this transaction. "
               "It is computed from the sum of the segmentation costs: "
