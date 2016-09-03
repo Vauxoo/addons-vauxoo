@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_procurement_rule_stock_propagate_transfer_inherit" model="ir.ui.view">
+            <field name="name">procurement.rule.stock.propagate.transfer.inherit</field>
+            <field name="model">procurement.rule</field>
+            <field name="inherit_id" ref="procurement.view_procurement_rule_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='group_id']" position="after">
+                    <field name="propagate_transfer"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
