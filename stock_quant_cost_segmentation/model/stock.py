@@ -109,10 +109,18 @@ class StockMove(models.Model):
 class StockQuant(models.Model):
     _inherit = "stock.quant"
 
+    @api.model
+    def create(self, vals):
+        segmentation_cost = sum([
+            getattr(self, field_name) for field_name in SEGMENTATION_COST])
+        vals.update({'segmentation_cost': segmentation_cost})
+        return super(StockQuant, self).create(vals)
+
     @api.multi
     def write(self, vals):
         res = super(StockQuant, self).write(vals)
-        if not set(SEGMENTATION_COST).issubset(set(vals)):
+        if not set(SEGMENTATION_COST).issubset(set(vals)) or \
+           not self.env.context.get('force_segmentation_cost'):
             return res
         # TODO: Validate sql injection from SEGMENTATION_COST variable
         # Because other module could add a monkey patch with sql injection
