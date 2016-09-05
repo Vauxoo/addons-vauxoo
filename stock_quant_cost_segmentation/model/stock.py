@@ -130,6 +130,8 @@ class StockQuant(models.Model):
         query = "UPDATE stock_quant SET segmentation_cost = (" + sum_query + \
             ") WHERE id IN %s"
         self.env.cr.execute(query, (tuple(self.ids),))
+        # Force reset value of cache variable record.segmentation_cost
+        self.invalidate_cache(['segmentation_cost'])
         return res
 
     material_cost = fields.Float(
