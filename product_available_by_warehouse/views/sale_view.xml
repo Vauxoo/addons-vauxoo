@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record id="view_order_form_show_availability" model="ir.ui.view">
+        <field name="name">sale.order.form.show.availability</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="before">
+                <field name="show_message" attrs="{'invisible': [('state','not in',('draft'))]}"
+                    on_change="onchange_show_message(show_message, product_id)"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_uos_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id, 'show_message': show_message}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</openerp>
