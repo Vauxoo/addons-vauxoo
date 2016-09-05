@@ -119,7 +119,7 @@ class StockQuant(models.Model):
     @api.multi
     def write(self, vals):
         res = super(StockQuant, self).write(vals)
-        if not (set(SEGMENTATION_COST).issubset(set(vals)) or
+        if not (set(vals) & set(SEGMENTATION_COST) or
                 self.env.context.get('force_segmentation_cost')):
             return res
         # TODO: Validate sql injection from SEGMENTATION_COST variable
