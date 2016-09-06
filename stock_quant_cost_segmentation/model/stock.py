@@ -119,8 +119,9 @@ class StockQuant(models.Model):
     @api.multi
     def write(self, vals):
         res = super(StockQuant, self).write(vals)
-        if not (set(vals) & set(SEGMENTATION_COST) or
-                self.env.context.get('force_segmentation_cost')):
+        bool_eval = not (set(vals) & set(SEGMENTATION_COST) or
+                         self.env.context.get('force_segmentation_cost'))
+        if bool_eval or not self.ids:
             return res
         # TODO: Validate sql injection from SEGMENTATION_COST variable
         # Because other module could add a monkey patch with sql injection
