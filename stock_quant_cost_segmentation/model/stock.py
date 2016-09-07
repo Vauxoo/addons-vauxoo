@@ -113,7 +113,8 @@ class StockQuant(models.Model):
     def create(self, vals):
         vals.update(
             {'segmentation_cost': sum(
-                [vals.get(field_name, 0) for field_name in SEGMENTATION_COST])})
+                [vals.get(field_name) or 0
+                 for field_name in SEGMENTATION_COST])})
         return super(StockQuant, self).create(vals)
 
     @api.multi
