@@ -111,9 +111,9 @@ class StockQuant(models.Model):
 
     @api.model
     def create(self, vals):
-        segmentation_cost = sum([
-            getattr(self, field_name) for field_name in SEGMENTATION_COST])
-        vals.update({'segmentation_cost': segmentation_cost})
+        vals.update(
+            {'segmentation_cost': sum(
+                [vals.get(field_name, 0) for field_name in SEGMENTATION_COST])})
         return super(StockQuant, self).create(vals)
 
     @api.multi
