@@ -37,8 +37,8 @@ class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
     def _get_asset_category_policy(self, cr, uid, account, context=None):
-        """ Extension point to obtain analytic policy for an account """
-        return account.user_type.asset_policy
+        """ Extension point to obtain asset policy for an account """
+        return account.sudo().user_type.asset_policy
 
     @api.multi
     def _check_asset_category_required(self):
