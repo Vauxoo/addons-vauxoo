@@ -111,7 +111,7 @@ class TestAvgCosts(TransactionCase):
             product_ids=False, recursive=True, real_time_accounting=False,
             template_ids=[template_id.id], test=True)
         self.assertEqual(str(res),
-                         '{{{0}: 75.0}}'.format(str(template_id.id)))
+                         '{%s: 75.0}' % str(template_id.id))
 
     def test_03_write_real_cost_product_price_using_wizard(self):
         template_id = self.prod_e_id.product_tmpl_id

@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 
+
 class TestStockCardNegativeStock(TransactionCase):
 
     def setUp(self):
@@ -89,7 +90,7 @@ class TestStockCardNegativeStock(TransactionCase):
         price = vals['cost']
         sale_order_id = self.sale_order.create({
             'partner_id': self.env.ref('base.res_partner_12').id,
-            'client_order_ref': "Sale Order (qty={0}, price={1})".format(
+            'client_order_ref': "Sale Order (qty=%s, price=%s)" % (
                 str(qty), str(price)),
             'order_policy': 'manual',
             'order_line': [(0, 0, {

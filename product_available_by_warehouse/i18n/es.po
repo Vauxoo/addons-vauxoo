@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_available_by_warehouse
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-10 18:30+0000\n"
+"PO-Revision-Date: 2016-08-10 18:30+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_available_by_warehouse
+#: code:addons/product_available_by_warehouse/models/sale.py:60
+#, python-format
+msgid "- %s . Quantity: %.2f \n"
+""
+msgstr "- %s . Cantidad: %.2f \n"
+""
+
+#. module: product_available_by_warehouse
+#: code:addons/product_available_by_warehouse/models/sale.py:45
+#: code:addons/product_available_by_warehouse/tests/test_product_available.py:64
+#, python-format
+msgid "Forecast Quantity by Warehouse"
+msgstr "Cantidad Prevista por Almacén"
+
+#. module: product_available_by_warehouse
+#: selection:sale.order.line,show_message:0
+msgid "Forecast quantity by warehouse"
+msgstr "Cantidad prevista por almacén"
+
+#. module: product_available_by_warehouse
+#: code:addons/product_available_by_warehouse/models/sale.py:46
+#: code:addons/product_available_by_warehouse/tests/test_product_available.py:75
+#, python-format
+msgid "Incoming Quantity by Warehouse"
+msgstr "Cantidad entrante por almacén"
+
+#. module: product_available_by_warehouse
+#: selection:sale.order.line,show_message:0
+msgid "Incoming quantity by warehouse"
+msgstr "Cantidad entrante por almacén"
+
+#. module: product_available_by_warehouse
+#: selection:sale.order.line,show_message:0
+msgid "On hand quantity by warehouse"
+msgstr "Disponibiliad inmediata por almacén"
+
+#. module: product_available_by_warehouse
+#: code:addons/product_available_by_warehouse/models/sale.py:47
+#: code:addons/product_available_by_warehouse/tests/test_product_available.py:86
+#, python-format
+msgid "Outgoing Quantity by Warehouse"
+msgstr "Cantidad Saliente por Almacén"
+
+#. module: product_available_by_warehouse
+#: selection:sale.order.line,show_message:0
+msgid "Outgoing quantity by warehouse"
+msgstr "Cantidad saliente por almacén"
+
+#. module: product_available_by_warehouse
+#: model:ir.model,name:product_available_by_warehouse.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_available_by_warehouse
+#: code:addons/product_available_by_warehouse/models/sale.py:44
+#: code:addons/product_available_by_warehouse/tests/test_product_available.py:53
+#, python-format
+msgid "Product available by Warehouse"
+msgstr "Disponibilidad inmediata por Almacén"
+
+#. module: product_available_by_warehouse
+#: model:ir.model,name:product_available_by_warehouse.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea pedido de venta"
+
+#. module: product_available_by_warehouse
+#: field:sale.order.line,show_message:0
+msgid "Show Message"
+msgstr "Mostrar mensaje"
+
+#. module: product_available_by_warehouse
+#: view:sale.order:product_available_by_warehouse.view_order_form_show_availability
+msgid "{'partner_id':parent.partner_id, 'quantity':product_uos_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id, 'show_message': show_message}"
+msgstr "{'partner_id':parent.partner_id, 'quantity':product_uos_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id, 'show_message': show_message}"
+

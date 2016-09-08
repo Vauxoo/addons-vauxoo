@@ -39,10 +39,10 @@ class MrpProduction(models.Model):
         msg = ''
         if not self.routing_id:
             msg_journal = _(
-                'Please set a Journal in Product Category: {cat} to book '
+                'Please set a Journal in Product Category: %(cat)s to book '
                 'Production Cost Journal Entries\n')
             if not self.product_id.categ_id.property_stock_journal:
-                msg += msg_journal.format(cat=self.product_id.categ_id.name)
+                msg += msg_journal % dict(cat=self.product_id.categ_id.name)
             if msg:
                 raise UserError(msg)
             return True
@@ -50,22 +50,22 @@ class MrpProduction(models.Model):
         company_brw = self.env.user.company_id
         require_workcenter_analytic = company_brw.require_workcenter_analytic
 
-        msg_financial = _('Add Financial Account on Worcenter: {wc}\n')
-        msg_hour = _('Add Hour Analytical Account on Worcenter: {wc}\n')
-        msg_cycle = _('Add Cycle Analytical Account on Worcenter: {wc}\n')
-        msg_journal = _('Please set a Journal in Routing: {routing} to book '
+        msg_financial = _('Add Financial Account on Worcenter: %(wc)s\n')
+        msg_hour = _('Add Hour Analytical Account on Worcenter: %(wc)s\n')
+        msg_cycle = _('Add Cycle Analytical Account on Worcenter: %(wc)s\n')
+        msg_journal = _('Please set a Journal in Routing: %(routing)s to book '
                         'Production Cost Journal Entries\n')
-        msg_location = _('Add Financial Account on Location: {location} '
-                         'For product: {product}\n')
+        msg_location = _('Add Financial Account on Location: %(location)s '
+                         'For product: %(product)s\n')
 
         if not self.product_id.property_stock_production.\
                 valuation_in_account_id:
-            msg += msg_location.format(
+            msg += msg_location % dict(
                 location=self.product_id.property_stock_production.name,
                 product=self.product_id.name,)
 
         if not self.routing_id.journal_id:
-            msg += msg_journal.format(routing=self.routing_id.name)
+            msg += msg_journal % dict(routing=self.routing_id.name)
 
         for line in self.workcenter_lines:
             wc = line.workcenter_id
@@ -74,18 +74,18 @@ class MrpProduction(models.Model):
 
             if any([hour_cost, cycle_cost]):
                 if not wc.costs_general_account_id:
-                    msg += msg_financial.format(wc=wc.name)
+                    msg += msg_financial % dict(wc=wc.name)
 
             if not require_workcenter_analytic:
                 continue
 
             if hour_cost:
                 if not wc.costs_hour_account_id:
-                    msg += msg_hour.format(wc=wc.name)
+                    msg += msg_hour % dict(wc=wc.name)
 
             if cycle_cost:
                 if not wc.costs_cycle_account_id:
-                    msg += msg_cycle.format(wc=wc.name)
+                    msg += msg_cycle % dict(wc=wc.name)
         if msg:
             raise UserError(msg)
 

@@ -164,11 +164,12 @@ class StockLandedCost(models.Model):
             'product_id': product_brw.id,
         }
 
-        name = u'{name}: {memo} - AVG'
+        name = u'%(name)s: %(memo)s - AVG'
 
         if diff < 0:
-            name = name.format(
-                name=product_brw.name, memo=_('Losses on Inventory Deviation'))
+            name = name % dict(
+                name=product_brw.name,
+                memo=_('Losses on Inventory Deviation'))
             debit_line = dict(
                 base_line,
                 name=name,
@@ -180,8 +181,9 @@ class StockLandedCost(models.Model):
                 account_id=valuation_account_id,
                 credit=-diff,)
         else:
-            name = name.format(
-                name=product_brw.name, memo=_('Gains on Inventory Deviation'))
+            name = name % dict(
+                name=product_brw.name,
+                memo=_('Gains on Inventory Deviation'))
             debit_line = dict(
                 base_line,
                 name=name,
@@ -328,10 +330,9 @@ class StockLandedCost(models.Model):
         # NOTE: knowing how many products that were affected, COGS was to
         # change, by this landed cost is not really necessary
 
-        name = u'{name}: COGS - {memo}'
+        name = u'%(name)s: COGS - %(memo)s'
         if diff > 0:
-            name = name.format(
-                name=product_brw.name, memo='[+]')
+            name = name % dict(name=product_brw.name, memo='[+]')
             debit_line = dict(
                 base_line,
                 name=name,
@@ -345,8 +346,7 @@ class StockLandedCost(models.Model):
         else:
             # /!\ NOTE: be careful when making reversions on landed costs or
             # negative landed costs
-            name = name.format(
-                name=product_brw.name, memo='[-]')
+            name = name % dict(name=product_brw.name, memo='[-]')
             debit_line = dict(
                 base_line,
                 name=name,
@@ -513,13 +513,13 @@ class StockLandedCost(models.Model):
 
             cost.write(
                 {'state': 'done', 'account_move_id': move_id})
-            
+
             # Post the account move if the journal's auto post true
             move_obj = self.env['account.move'].browse(move_id)
             if move_obj.journal_id.entry_posted:
                 move_obj.post()
                 move_obj.validate()
-                
+
         return True
 
     @api.v7

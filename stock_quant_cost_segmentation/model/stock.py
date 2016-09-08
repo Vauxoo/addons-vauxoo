@@ -109,12 +109,32 @@ class StockMove(models.Model):
 class StockQuant(models.Model):
     _inherit = "stock.quant"
 
-    @api.depends('material_cost', 'production_cost', 'landed_cost',
-                 'subcontracting_cost')
-    def _compute_segmentation(self):
-        for record in self:
-            record.segmentation_cost = sum([
-                getattr(record, fn) for fn in SEGMENTATION_COST])
+    @api.model
+    def create(self, vals):
+        vals.update(
+            {'segmentation_cost': sum(
+                [vals.get(field_name) or 0
+                 for field_name in SEGMENTATION_COST])})
+        return super(StockQuant, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        res = super(StockQuant, self).write(vals)
+        bool_eval = not (set(vals) & set(SEGMENTATION_COST) or
+                         self.env.context.get('force_segmentation_cost'))
+        if bool_eval or not self.ids:
+            return res
+        # TODO: Validate sql injection from SEGMENTATION_COST variable
+        # Because other module could add a monkey patch with sql injection
+        sum_query = ' + '.join(["COALESCE(%s, 0)" % field_name
+                                for field_name in SEGMENTATION_COST])
+        # NOTE: Cache is too slow to manage many records from computed field
+        query = "UPDATE stock_quant SET segmentation_cost = (" + sum_query + \
+            ") WHERE id IN %s"
+        self.env.cr.execute(query, (tuple(self.ids),))
+        # Force reset value of cache variable record.segmentation_cost
+        self.invalidate_cache(['segmentation_cost'])
+        return res
 
     material_cost = fields.Float(
         string='Material Cost',
@@ -129,8 +149,7 @@ class StockQuant(models.Model):
         string='Landed Cost',
         digits=dp.get_precision('Account'))
     segmentation_cost = fields.Float(
-        string='Actual Cost', store=True, readonly=True,
-        compute='_compute_segmentation',
+        string='Actual Cost', readonly=True,
         digits=dp.get_precision('Account'),
         help=("Provides the actual cost for this transaction. "
               "It is computed from the sum of the segmentation costs: "
@@ -354,21 +373,21 @@ class StockQuant(models.Model):
                 SELECT sq.id AS id, sq.propagated_from_id AS from_id
                 FROM stock_quant AS sq
                 WHERE
-                    product_id = {product_id}
+                    product_id = %(product_id)s
                     AND sq.propagated_from_id IS NOT NULL
-            """.format(product_id=move.product_id.id)
-            cr.execute(query1)
+            """
+            cr.execute(query1, {'product_id': move.product_id.id})
             for val in cr.fetchall():
                 exclude_ids += list(val)
 
             if exclude_ids:
                 exclude_ids = ', '.join(str(ex_ids) for ex_ids in exclude_ids)
-                exclude_ids = ' AND sq.id NOT IN ({exclude_ids})'.format(
+                exclude_ids = ' AND sq.id NOT IN (%(exclude_ids)s)' % dict(
                     exclude_ids=exclude_ids)
             else:
                 exclude_ids = ''
 
-            query2 = """
+            query2 = ("""
                 SELECT
                     sq.id,
                     sq.material_cost,
@@ -377,14 +396,13 @@ class StockQuant(models.Model):
                     sq.subcontracting_cost
                 FROM stock_quant AS sq
                 WHERE
-                    product_id = {product_id}
+                    product_id = %(product_id)s
                     AND qty > 0.0
-                    {exclude_ids}
+                    %(exclude_ids)s
                 ORDER BY sq.in_date DESC
                 LIMIT 1
-            """.format(
-                product_id=move.product_id.id,
-                exclude_ids=exclude_ids)
+            """) % dict(product_id=move.product_id.id,
+                        exclude_ids=exclude_ids)
             cr.execute(query2)
 
             res = cr.dictfetchone()

@@ -87,30 +87,26 @@ class TestStockCardProductReturns(TransactionCase):
             self.assertEqual(0, float_compare(expected['avg'],
                                               succeed['average'],
                                               precision_rounding=1),
-                             "Average Cost current={0} expected={1} is not "
-                             "the expected: {2}".
-                             format(succeed['average'],
-                                    expected['avg'], expected))
+                             "Average Cost current=%s expected=%s is not "
+                             "the expected: %s" % (succeed['average'],
+                                                   expected['avg'], expected))
 
             self.assertEqual(expected['cost'],
                              succeed['cost_unit'],
-                             "Unit Cost current={0} expected={1} is not "
-                             "the expected: {2}".
-                             format(succeed['cost_unit'],
-                                    expected['cost'], expected))
+                             "Unit Cost current=%s expected=%s is not "
+                             "the expected: %s" % (succeed['cost_unit'],
+                                                   expected['cost'], expected))
 
             self.assertEqual(0, float_compare(expected['inv_val'],
                                               succeed['inventory_valuation'],
                                               precision_rounding=1),
-                             "Inventory Value current={0} expected={1} is not "
-                             "match: {2}".
-                             format(succeed['inventory_valuation'],
-                                    expected['inv_val'], expected))
+                             "Inventory Value current=%s expected=%s is not "
+                             "match: %s" % (succeed['inventory_valuation'],
+                                            expected['inv_val'], expected))
 
             self.assertEqual(0, float_compare(expected['mov_val'],
                                               succeed['move_valuation'],
                                               precision_rounding=1),
-                             "Movement Value current={0} expected={1} is not "
-                             "match: {2}".
-                             format(succeed['move_valuation'],
-                                    expected['mov_val'], expected))
+                             "Movement Value current=%s expected=%s is not "
+                             "match: %s" % (succeed['move_valuation'],
+                                            expected['mov_val'], expected))

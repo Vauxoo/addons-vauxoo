@@ -166,7 +166,7 @@ class StockPicking(models.Model):
         res = str()
         if isinstance(lines, list):
             res = '\n'.join([
-                "- {product} {qty} {uom}".format(
+                "- %(product)s %(qty)s %(uom)s" % dict(
                     product=line[0].name,
                     qty=line[2],
                     uom=line[1].name)
@@ -175,14 +175,14 @@ class StockPicking(models.Model):
             model = str(lines._model)
             if model == 'stock.move':
                 res = '\n'.join([
-                    "- {product} {qty} {uom}".format(
+                    "- %(product)s %(qty)s %(uom)s" % dict(
                         product=line.product_id.name,
                         qty=line.product_uom_qty,
                         uom=line.product_uom.name)
                     for line in lines])
             elif model == 'purchase.order.line':
                 res = '\n'.join([
-                    "- {product} {qty} {uom}".format(
+                    "- %(product)s %(qty)s %(uom)s" % dict(
                         product=line.product_id.name,
                         qty=line.product_qty,
                         uom=line.product_uom.name)

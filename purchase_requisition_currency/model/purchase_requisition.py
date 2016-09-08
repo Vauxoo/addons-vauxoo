@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ############ Credits ########################################################
 #    Coded by: Katherine Zaoral <kathy@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -82,6 +82,6 @@ class PurchaseRequisition(osv.Model):
                             _('Invalid Procedure!'),
                             _('This operation can be done because there\'s not'
                               ' exist a pricelist with the same purchase'
-                              ' requisition currency. ({pl} != {pr})'.format(
-                                  **currency)))
+                              ' requisition currency. (%(pl)s != %(pr)s' %
+                              currency))
         return res

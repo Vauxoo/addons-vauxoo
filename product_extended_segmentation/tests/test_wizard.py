@@ -57,8 +57,8 @@ class TestWizard(TransactionCase):
     def check_default_cost(self, product_id, value):
         wizard_id = self.create_wizard(product_id)[0]
         cost = self.get_product_cost(wizard_id.info_field, product_id.id)
-        self.assertEqual(cost, value, 'Default wizard value for {0} '
-                         'should be {1}'.format(product_id.name, value))
+        self.assertEqual(cost, value, 'Default wizard value for %s '
+                         'should be %s' % (product_id.name, value))
 
     def test_00_test_wizard_defaults(self):
         wizard_id = self.create_wizard(self.template_d_id)[0]
@@ -70,14 +70,14 @@ class TestWizard(TransactionCase):
         wizard_id = self.create_wizard(self.template_d_id)[0]
         info_field = wizard_id.onchange_recursive(True)['value']['info_field']
         self.assertEqual(info_field,
-                         '{{{0}: 35.0}}'.format(str(self.template_d_id.id)))
+                         '{%s: 35.0}' % str(self.template_d_id.id))
 
         info_field = wizard_id.with_context({
             'active_id': self.producto_d_id.id,
             'active_model': self.producto_d_id._name,
         }).onchange_recursive(True)['value']['info_field']
         self.assertEqual(info_field,
-                         '{{{0}: 35.0}}'.format(str(self.producto_d_id.id)))
+                         '{%s: 35.0}' % str(self.producto_d_id.id))
 
     def test_01_test_threshold_no_update(self):
         msg_error = 'Bottom cost threshold must be positive'
@@ -105,8 +105,8 @@ class TestWizard(TransactionCase):
         # ==== PRODUCT E
         # ============================
         self.assertEqual(self.producto_e_id.standard_price, 80,
-                         'Standard Price for {0} should be {1}'.
-                         format(self.producto_e_id.name, 80))
+                         'Standard Price for %s should be %s' % (
+                             self.producto_e_id.name, 80))
         wizard_id = self.create_wizard(
             self.template_e_id, recursive=True, update_avg_costs=True)
         wizard_id.compute_from_bom()
@@ -169,8 +169,8 @@ class TestWizard(TransactionCase):
             self.producto_e_id.message_ids[0].subject,
             '.*Segments NOT updated. Cost updated correctly.*')
         self.assertEqual(self.producto_e_id.standard_price, new_price,
-                         'There is not threshold, price MUST be up to {0}'.
-                         format(new_price))
+                         'There is not threshold, price MUST be up to %s' %
+                         new_price)
 
     def test_03_use_product_variant_wizard_with_lesser_new_price(self):
         current_price = self.producto_e_id.standard_price
@@ -188,5 +188,5 @@ class TestWizard(TransactionCase):
             self.producto_e_id.message_ids[0].subject,
             '.*Segments NOT updated. I cowardly did not update cost.*')
         self.assertEqual(self.producto_e_id.standard_price, current_price,
-                         'There is not TOP threshold, price MUST keep to {0}'.
-                         format(current_price))
+                         'There is not TOP threshold, price MUST keep to %s' %
+                         current_price)

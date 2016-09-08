@@ -61,13 +61,12 @@ class StockPartialPicking(osv.osv_memory):
             # TODO: We shall set a condition somewhere
             if not sm_brw:
                 do_raise = True
-                msg_raise += _(u'{product} is being received '
-                               '[{ordered} {wz_uom}] and was created from '
-                               'scratch.\n'.format(
+                msg_raise += _(u'%(product)s is being received '
+                               '[%(ordered)s %(wz_uom)s] and was created from '
+                               'scratch.\n' % dict(
                                    product=wizard_line.name,
                                    ordered=wizard_line.quantity,
-                                   wz_uom=line_uom.name,
-                               ))
+                                   wz_uom=line_uom.name,))
                 continue
 
             # Check if this line is coming from a purchase_line_id
@@ -94,22 +93,20 @@ class StockPartialPicking(osv.osv_memory):
             defect = pol_brw.qty_delivered + qty < 0
             if excess:
                 do_raise = True
-                msg_raise += _(u'For {product}, it was ordered '
-                               '[{ordered} {uom}]'
-                               ' received [{received} {uom}] receiving '
-                               '[{receiving} {wz_uom}].\n'.format(
+                msg_raise += _(u'For %(product)s, it was ordered '
+                               '[%(ordered)s %(uom)s]'
+                               ' received [%(received)s %(uom)s] receiving '
+                               '[%(receiving)s %(wz_uom)s].\n' % dict(
                                    product=sm_brw.name,
                                    ordered=pol_brw.product_qty,
                                    uom=pol_uom_id.name,
                                    received=pol_brw.qty_delivered,
-                                   receiving=qty,
-                                   wz_uom=line_uom.name,
-                               ))
+                                   receiving=qty, wz_uom=line_uom.name,))
             if defect:
                 do_raise = True
-                msg_raise += _(u'For {product}, it was received '
-                               '[{received} {uom}] returning '
-                               '[{receiving} {wz_uom}].\n'.format(
+                msg_raise += _(u'For %(product)s, it was received '
+                               '[%(received)s %(uom)s] returning '
+                               '[%(receiving)s %(wz_uom)s].\n' % dict(
                                    product=sm_brw.name,
                                    uom=pol_uom_id.name,
                                    received=pol_brw.qty_delivered,

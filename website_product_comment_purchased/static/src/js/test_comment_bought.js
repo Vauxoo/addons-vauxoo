@@ -60,9 +60,9 @@
             },
             {
                 title:     "search bose",
-                element:   'form:has(input[name="search"]) a.a-submit',
+                element:   'form #btn-search:visible',
                 onload: function() {
-                    $('input[name="search"]').val("bose");
+                    $('input[name="search"]:visible').val("bose");
                 }
             },
             {
