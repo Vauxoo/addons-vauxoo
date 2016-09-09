@@ -30,6 +30,7 @@
     "license": "",
     "depends": [
         "stock",
+        "delivery",
     ],
     "demo": [
         'demo/product_demo.xml',
