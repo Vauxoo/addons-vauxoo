@@ -21,6 +21,7 @@
 #
 ##############################################################################
 
+from openerp import SUPERUSER_ID
 from openerp.osv import osv
 from openerp.tools.translate import _
 
@@ -29,7 +30,7 @@ class AccountMoveLine(osv.osv):
     _inherit = "account.move.line"
 
     def _check_analytic_required(self, cr, uid, ids, context=None):
-        for aml_brw in self.browse(cr, uid, ids, context=context):
+        for aml_brw in self.browse(cr, SUPERUSER_ID, ids, context=context):
             account_brw = aml_brw.account_id
             analytic_brw = aml_brw.analytic_account_id
             if account_brw.user_type.analytic_policy == 'always' and not \
