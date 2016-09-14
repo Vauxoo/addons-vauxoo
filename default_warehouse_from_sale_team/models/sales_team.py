@@ -16,6 +16,10 @@ class InheritedCrmSaseSection(models.Model):
         'account.journal', 'journal_section_rel', 'journal_id', 'section_id',
         string="Journal's sales teams",
         help="Choose the Journals that user with this sale team can see")
+    pricelist_team_ids = fields.Many2many(
+        'product.pricelist', 'pricelist_section_rel', 'pricelist_id',
+        'section_id', string="Pricelist's sales teams",
+        help="Choose the Pricelist that user with this sale team can see")
 
     @api.multi
     def update_users_sales_teams(self):

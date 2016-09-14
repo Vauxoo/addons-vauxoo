@@ -14,6 +14,9 @@
                     <page string="Journals">
                         <field name="journal_team_ids"/>
                     </page>
+                    <page string="Pricelists">
+                        <field name="pricelist_team_ids"/>
+                    </page>
                 </xpath>
             </field>
         </record>

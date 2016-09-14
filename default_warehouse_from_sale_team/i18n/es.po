@@ -188,3 +188,38 @@ msgstr "No importa el equipo de ventas le permitirá ver todos los diarios"
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
 msgid "View only the Journal which warehouses match with the user sales teams default warehouses"
 msgstr "Ver solo el diario que coincide con el equipo de venta del usuario"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_product_pricelist
+msgid "Access to all Pricelist"
+msgstr "Acceso a todas las Listas de precios"
+
+#. module: default_warehouse_from_sale_team
+#: help:crm.case.section,pricelist_team_ids:0
+msgid "Choose the Pricelist that user with this sale team can see"
+msgstr "Selecciona las Listas de precios que el usuario con este equipo de ventas puede ver"
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,pricelist_team_ids:0
+msgid "Pricelist's sales teams"
+msgstr "Listas de precios de equipo de ventas"
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Pricelists"
+msgstr "Listas de precios"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_product_pricelist
+msgid "Limited access to Pricelist (filtered by sale teams)"
+msgstr "Acceso limitado a Listas de precios (filtrados por equipo de ventas)"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_product_pricelist
+msgid "Not matter sales teams will leave the user to see all the Pricelists"
+msgstr "No importa el equipo de ventas le permitirá ver todas las Listas de precios"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_product_pricelist
+msgid "View only the Pricelist which warehouses match with the user sales teams default warehouses"
+msgstr "Ver solo la Lista de precios que coincide con el equipo de venta del usuario"
