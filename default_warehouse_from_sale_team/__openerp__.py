@@ -15,6 +15,7 @@
         'sales_team',
         'base_action_rule',
         'purchase_requisition',
+        'warning',
     ],
     'test': [
     ],
