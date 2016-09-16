@@ -16,6 +16,10 @@ class InheritedCrmSaseSection(models.Model):
         'account.journal', 'journal_section_rel', 'journal_id', 'section_id',
         string="Journal's sales teams",
         help="Choose the Journals that user with this sale team can see")
+    journal_stock_id = fields.Many2one(
+        'account.journal', 'Journal stock valuation',
+        help='It indicates journal to be used when move line is created with'
+        'the warehouse of this sale team')
 
     @api.multi
     def update_users_sales_teams(self):
