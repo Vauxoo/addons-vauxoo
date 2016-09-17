@@ -3,6 +3,7 @@
 from openerp import api, fields, models
 from openerp import SUPERUSER_ID
 
+
 class InheritedCrmSaseSection(models.Model):
 
     _inherit = "crm.case.section"
@@ -12,6 +13,14 @@ class InheritedCrmSaseSection(models.Model):
                                         help='In this field can be '
                                         'defined a default warehouse for '
                                         'the related users to the sales team.')
+    default_sale_pricelist = fields.Many2one(
+        'product.pricelist', string='Default Sale Pricelist',
+        help='In this field can be defined a default sale pricelist for the '
+        'related users to the sales team.')
+    default_purchase_pricelist = fields.Many2one(
+        'product.pricelist', string='Default Purchase Pricelist',
+        help='In this field can be defined a default purchase pricelist for '
+        'the related users to the sales team.')
     journal_team_ids = fields.Many2many(
         'account.journal', 'journal_section_rel', 'journal_id', 'section_id',
         string="Journal's sales teams",

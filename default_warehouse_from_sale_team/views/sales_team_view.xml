@@ -9,6 +9,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='parent_id']" position="after">
                     <field name="default_warehouse" />
+                    <field name="default_sale_pricelist" />
+                    <field name="default_purchase_pricelist" />
                 </xpath>
                 <xpath expr="//page[@string='Team Members']" position="after">
                     <page string="Journals">
