@@ -7,8 +7,11 @@
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='vat']" position="after">
-                    <field name="country_code" class="oe_inline" label=""/>
-                    <field name="vat_without_country" placeholder="e.g. ABC123456T1B" class="oe_inline"/>
+                    <label for="vat"/>
+                    <div name="vat_info" class="o_row">
+                        <field name="country_code" class="oe_inline" nolabel="1"/>
+                        <field name="vat_without_country" placeholder="e.g. ABC123456T1B" class="oe_inline" nolabel="1"/>
+                    </div>
                 </xpath>
                 <xpath expr="//field[@name='vat']" position="attributes">
                     <attribute name="invisible">1</attribute>
