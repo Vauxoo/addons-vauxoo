@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from openerp import api, fields, models
-from openerp import SUPERUSER_ID
+from openerp import SUPERUSER_ID, _, api, fields, models
+from openerp.exceptions import ValidationError
 
 
 class InheritedCrmSaseSection(models.Model):
@@ -29,6 +29,45 @@ class InheritedCrmSaseSection(models.Model):
         'product.pricelist', 'pricelist_section_rel', 'pricelist_id',
         'section_id', string="Pricelist's sales teams",
         help="Choose the Pricelist that user with this sale team can see")
+
+    @api.constrains('default_sale_pricelist')
+    def _check_default_sale_pricelist(self):
+        """ Can only set the default sale pricelist if the pricelist is in
+        pricelist_team_ids.
+        Can only set default sale pricelist of purchase type.
+        """
+        if self.default_sale_pricelist and\
+                self.default_sale_pricelist.type != 'sale':
+            raise ValidationError(_(
+                'You can not set %s as default sale pricelist because it does'
+                ' not sale type.') % (self.default_sale_pricelist.name))
+
+        if self.default_sale_pricelist and \
+           self.default_sale_pricelist not in self.pricelist_team_ids:
+            raise ValidationError(_(
+                'You can not set %s pricelist as default because it does not'
+                ' belongs to the pricelist available in sale team.')
+                % (self.default_sale_pricelist.name))
+
+    @api.constrains('default_purchase_pricelist')
+    def _check_default_purchase_pricelist(self):
+        """ Can only set the default purchase pricelist if the pricelist is in
+        pricelist_team_ids.
+        Can only set default purchase pricelist of purchase type.
+        """
+        if self.default_purchase_pricelist and\
+                self.default_purchase_pricelist.type != 'purchase':
+            raise ValidationError(_(
+                'You can not set %s as default purchase pricelist because it'
+                ' does not purchase type.')
+                % (self.default_purchase_pricelist.name))
+
+        if self.default_purchase_pricelist and \
+           self.default_purchase_pricelist not in self.pricelist_team_ids:
+            raise ValidationError(_(
+                'You can not set %s pricelist as default because it does not'
+                ' belongs to the pricelist available in sale team.')
+                % (self.default_purchase_pricelist.name))
 
     @api.multi
     def update_users_sales_teams(self):

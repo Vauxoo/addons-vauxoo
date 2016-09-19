@@ -34,18 +34,45 @@ class PurchaseOrder(models.Model):
     _name = 'purchase.order'
     _inherit = ['purchase.order', 'default.picking.type']
 
+    def get_pricelist(self, picking_type_id):
+        dict = {}
+        picking_type_obj = self.env['stock.picking.type']
+        warehouse_id = picking_type_obj.browse(picking_type_id).warehouse_id.id
+        sale_team = self.env['crm.case.section'].search(
+            [('default_warehouse', '=', warehouse_id)], limit=1)
+        pricelist_purchase_ids = sale_team.pricelist_team_ids.filtered(
+            lambda pricelist: pricelist.type == 'purchase')
+        pricelist = sale_team.default_purchase_pricelist or\
+            pricelist_purchase_ids and pricelist_purchase_ids[0]
+        if pricelist:
+            dict['pricelist_id'] = pricelist.id
+            dict['domain'] = {'pricelist_id': [
+                ('id', 'in', [
+                    pric.id for pric in sale_team.pricelist_team_ids if
+                    pric.type == 'purchase'])]}
+        return dict
+
     @api.multi
-    def onchange_partner_id(self, partner_id):
-        """Change pricelist depending on user sale team.
+    def onchange_partner_id(self, partner_id, picking_type_id=False):
+        """Change pricelist depending on warehouse in picking_type_id.
         """
         res = super(PurchaseOrder, self).onchange_partner_id(partner_id)
-        res_users_obj = self.env['res.users']
-        user_brw = res_users_obj.browse(self._uid)
-        sale_team_user = user_brw.default_section_id
-        pricelist = sale_team_user.default_purchase_pricelist or\
-            sale_team_user.pricelist_team_ids and\
-            sale_team_user.pricelist_team_ids[0]
-        res['value']['pricelist_id'] = pricelist.id if pricelist else False
+        pricelist_dict = self.get_pricelist(picking_type_id)
+        if pricelist_dict:
+            res['value']['pricelist_id'] = pricelist_dict['pricelist_id']
+            res['domain'] = pricelist_dict['domain']
+        return res
+
+    @api.multi
+    def onchange_picking_type_id(self, picking_type_id):
+        """Change pricelist depending on warehouse in picking_type_id.
+        It must consult the sale team that has default warehouse
+        the warehouse in purchase order"""
+        res = super(PurchaseOrder, self).onchange_partner_id(picking_type_id)
+        pricelist_dict = self.get_pricelist(picking_type_id)
+        if pricelist_dict:
+            res['value']['pricelist_id'] = pricelist_dict['pricelist_id']
+            res['domain'] = pricelist_dict['domain']
         return res
 
 

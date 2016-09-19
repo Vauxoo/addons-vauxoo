@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+        <record id="view_purchase_form_default_warehouse" model="ir.ui.view">
+            <field name="name">purchase.form.default.warehouse</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="on_change">onchange_partner_id(partner_id, picking_type_id)</attribute>
+                </xpath>
+           </field>
+        </record>
+
+    </data>
+</openerp>
