@@ -7,8 +7,8 @@
 #    info Vauxoo (info@vauxoo.com)
 #    coded by: Luis Torres <luis_t@vauxoo.com>
 ############################################################################
-from openerp.tests import common
 from datetime import date, timedelta, datetime
+from openerp.tests import common
 
 
 class TestSaleDueDate(common.TransactionCase):
@@ -34,13 +34,13 @@ class TestSaleDueDate(common.TransactionCase):
         })
 
     def test_update_days(self):
-        'Test update the value in ir.config_parameter, to 5 days'
+        """Test update the value in ir.config_parameter, to 5 days"""
         self.env['sale.config.settings'].create({
             'days_due_date_sale': 5}).execute()
         self.assertEquals(5, int(self.conf.value), 'The value was not updated')
 
     def test_check_due_date_by_default(self):
-        'Test to check that date due is fill by default and is correct'
+        """Test to check that date due is fill by default and is correct"""
         self.test_update_days()
         sale = self.sale.copy()
         self.assertEquals(
