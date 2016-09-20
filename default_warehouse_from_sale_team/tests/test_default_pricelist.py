@@ -10,7 +10,8 @@ class TestDefaultPricelist(TransactionCase):
         self.test_user = self.env['res.users'].create({
             'name': 'User Test', 'login': 'user_test',
             'password': '123456', 'email': 'user_test@email.com',
-            'sel_groups_9_45_10': 9, 'sel_groups_61_62': 61})
+            'sel_groups_9_45_10': 9, 'sel_groups_61_62': 61,
+            'sel_groups_59_60': 59})
         self.limited_group = self.env.ref(
             'default_warehouse_from_sale_team.'
             'group_limited_default_product_pricelist')
