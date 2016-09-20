@@ -24,16 +24,11 @@ class SaleOrder(models.Model):
                     pric.type == 'sale'])]}
         return dict
 
-    @api.multi
-    def onchange_partner_id(self, partner_id, warehouse_id=False):
-        """Change pricelist depending on user sale team.
-        """
-        res = super(SaleOrder, self).onchange_partner_id(partner_id)
-        pricelist_dict = self.get_pricelist(warehouse_id)
+    @api.onchange("partner_id", "warehouse_id")
+    def onchange_to_get_pricelist(self):
+        pricelist_dict = self.get_pricelist(self.warehouse_id)
         if pricelist_dict:
-            res['value']['pricelist_id'] = pricelist_dict['pricelist_id']
-            res['domain'] = pricelist_dict['domain']
-        return res
+            self.pricelist_id = pricelist_dict['pricelist_id']
 
     @api.multi
     def onchange_warehouse_id(self, warehouse_id):

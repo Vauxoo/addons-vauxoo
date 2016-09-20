@@ -247,18 +247,6 @@ msgid "In this field can be defined a default purchase pricelist for the related
 msgstr ""
 
 #. module: default_warehouse_from_sale_team
-#: code:addons/default_warehouse_from_sale_team/models/sales_team.py:60
-#, python-format
-msgid "You can not set %s as default purchase pricelist because it does not purchase type."
-msgstr ""
-
-#. module: default_warehouse_from_sale_team
-#: code:addons/default_warehouse_from_sale_team/models/sales_team.py:41
-#, python-format
-msgid "You can not set %s as default sale pricelist because it does not sale type."
-msgstr ""
-
-#. module: default_warehouse_from_sale_team
 #: code:addons/default_warehouse_from_sale_team/models/sales_team.py:47
 #: code:addons/default_warehouse_from_sale_team/models/sales_team.py:67
 #, python-format

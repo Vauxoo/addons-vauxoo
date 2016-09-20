@@ -15,10 +15,12 @@ class InheritedCrmSaseSection(models.Model):
                                         'the related users to the sales team.')
     default_sale_pricelist = fields.Many2one(
         'product.pricelist', string='Default Sale Pricelist',
+        domain=[('type', '=', 'sale')],
         help='In this field can be defined a default sale pricelist for the '
         'related users to the sales team.')
     default_purchase_pricelist = fields.Many2one(
         'product.pricelist', string='Default Purchase Pricelist',
+        domain=[('type', '=', 'purchase')],
         help='In this field can be defined a default purchase pricelist for '
         'the related users to the sales team.')
     journal_team_ids = fields.Many2many(
@@ -34,14 +36,7 @@ class InheritedCrmSaseSection(models.Model):
     def _check_default_sale_pricelist(self):
         """ Can only set the default sale pricelist if the pricelist is in
         pricelist_team_ids.
-        Can only set default sale pricelist of purchase type.
         """
-        if self.default_sale_pricelist and\
-                self.default_sale_pricelist.type != 'sale':
-            raise ValidationError(_(
-                'You can not set %s as default sale pricelist because it does'
-                ' not sale type.') % (self.default_sale_pricelist.name))
-
         if self.default_sale_pricelist and \
            self.default_sale_pricelist not in self.pricelist_team_ids:
             raise ValidationError(_(
@@ -53,15 +48,7 @@ class InheritedCrmSaseSection(models.Model):
     def _check_default_purchase_pricelist(self):
         """ Can only set the default purchase pricelist if the pricelist is in
         pricelist_team_ids.
-        Can only set default purchase pricelist of purchase type.
         """
-        if self.default_purchase_pricelist and\
-                self.default_purchase_pricelist.type != 'purchase':
-            raise ValidationError(_(
-                'You can not set %s as default purchase pricelist because it'
-                ' does not purchase type.')
-                % (self.default_purchase_pricelist.name))
-
         if self.default_purchase_pricelist and \
            self.default_purchase_pricelist not in self.pricelist_team_ids:
             raise ValidationError(_(
