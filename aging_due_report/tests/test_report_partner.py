@@ -23,15 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.addons.aging_due_report.tests.common import TestAgingCommon
-from openerp.addons.controller_report_xls.controllers.main import get_xls
 import logging
-from openerp import workflow
-import openerp
 import base64
 import os
-import xlrd
 import tempfile
+import xlrd
+import openerp
+from openerp import workflow
+from openerp.addons.aging_due_report.tests.common import TestAgingCommon
+from openerp.addons.controller_report_xls.controllers.main import get_xls
 
 _logger = logging.getLogger(__name__)
 

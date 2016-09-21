@@ -45,9 +45,11 @@ class SaleOrderLine(models.Model):
             product_qty_by_wh = product.\
                 get_product_available_by_warehouse()[product.id][colname]
         for warehouse, product_qty in product_qty_by_wh:
-            if product_qty > 0.0 and \
-                    colname in ['qty_available', 'virtual_available']:
-                route_ids += [warehouse.delivery_route_id.id]
+            # TODO: uncomment until figure out a better way to choice only
+            # the routes with availability
+            # if product_qty > 0.0 and \
+            #         colname in ['qty_available', 'virtual_available']:
+            #     route_ids += [warehouse.delivery_route_id.id]
             warning_msgs += _("- %s . Quantity: %.2f \n" %
                               (warehouse.name, product_qty))
         res = {}
@@ -91,6 +93,6 @@ class SaleOrderLine(models.Model):
             # update domain
             if 'domain' in result:
                 domain = res.get('domain', {})
-                domain['route_id'] = result['domain'].get('route_ids', [])
+                domain['route_id'] = result['domain'].get('route_id', [])
                 res.update({'domain': domain})
         return res
