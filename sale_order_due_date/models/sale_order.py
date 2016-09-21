@@ -7,8 +7,8 @@
 #    info Vauxoo (info@vauxoo.com)
 #    coded by: Luis Torres <luis_t@vauxoo.com>
 ############################################################################
-from openerp import models, fields, api
 from datetime import date, timedelta
+from openerp import models, fields, api
 
 
 class SaleOrder(models.Model):
