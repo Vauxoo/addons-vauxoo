@@ -82,22 +82,42 @@
                                         <t t-if="o.result_selection =='supplier'">PAYMENTS</t>
                                     </th>
                                     <th width="6.25%" class="ITEMSTITLERIGHT">BALANCE</th>
-                                    <th width="6.25%" class="ITEMSTITLERIGHT">NOT DUE</th>
-                                    <th width="6.25%" class="ITEMSTITLERIGHT">
-                                        <span t-esc='o.period_length * 0 + 1'/> to <span t-esc='o.period_length * 1'/> DAYS
-                                    </th>
-                                    <th width="6.25%" class="ITEMSTITLERIGHT">
-                                        <span t-esc='o.period_length * 1 + 1'/> to <span t-esc='o.period_length * 2'/> DAYS
-                                    </th>
-                                    <th width="6.25%" class="ITEMSTITLERIGHT">
-                                        <span t-esc='o.period_length * 2 + 1'/> to <span t-esc='o.period_length * 3'/> DAYS
-                                    </th>
-                                    <th width="6.25%" class="ITEMSTITLERIGHT">
-                                        <span t-esc='o.period_length * 3 + 1'/> to <span t-esc='o.period_length * 4'/> DAYS
-                                    </th>
-                                    <th width="6.25%" class="ITEMSTITLERIGHT">
-                                        +<span t-esc='o.period_length * 4 + 1'/> DAYS
-                                    </th>
+                                    <t t-if="o.direction == 'past'">
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">NOT DUE</th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            <span t-esc='o.period_length * 0 + 1'/> to <span t-esc='o.period_length * 1'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            <span t-esc='o.period_length * 1 + 1'/> to <span t-esc='o.period_length * 2'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            <span t-esc='o.period_length * 2 + 1'/> to <span t-esc='o.period_length * 3'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            <span t-esc='o.period_length * 3 + 1'/> to <span t-esc='o.period_length * 4'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            +<span t-esc='o.period_length * 4 + 1'/> DAYS
+                                        </th>
+                                    </t>
+                                    <t t-if="o.direction == 'future'">
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">DUE</th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            <span t-esc='o.period_length * 0'/> to -<span t-esc='o.period_length * 1 - 1'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            -<span t-esc='o.period_length * 1'/> to -<span t-esc='o.period_length * 2 - 1'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            -<span t-esc='o.period_length * 2'/> to -<span t-esc='o.period_length * 3 - 1'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            -<span t-esc='o.period_length * 3'/> to -<span t-esc='o.period_length * 4 - 1'/> DAYS
+                                        </th>
+                                        <th width="6.25%" class="ITEMSTITLERIGHT">
+                                            -<span t-esc='o.period_length * 4'/> DAYS
+                                        </th>
+                                    </t>
                                 </tr>
                                 <t t-foreach="p_obj.document_ids" t-as="doc">
                                     <t t-if='doc_parity == "even"'>
@@ -111,36 +131,71 @@
                                             <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.total) or '0.00'"/></td>
                                             <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.payment) or '0.00'"/></td>
                                             <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.residual) or '0.00'"/></td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &lt; 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 0 and int(doc.due_days) &lt; o.period_length * 1 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 1 and int(doc.due_days) &lt; o.period_length * 2 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 2 and int(doc.due_days) &lt; o.period_length * 3 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 3 and int(doc.due_days) &lt; o.period_length * 4 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 4">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
+                                            <t t-if="o.direction == 'past'">
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt; 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 0 and int(doc.due_days) &lt; o.period_length * 1 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 1 and int(doc.due_days) &lt; o.period_length * 2 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 2 and int(doc.due_days) &lt; o.period_length * 3 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 3 and int(doc.due_days) &lt; o.period_length * 4 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 4">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                            </t>
+                                            <t t-if="o.direction =='future'">
+                                                <t t-set="period_length" t-value="-1 * o.period_length"/>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt;= 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 0 and int(doc.due_days) &gt; period_length * 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 1 and int(doc.due_days) &gt; period_length * 2">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 2 and int(doc.due_days) &gt; period_length * 3">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 3 and int(doc.due_days) &gt; period_length * 4">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 4">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                            </t>
                                         </tr>
                                     </t>
                                     <t t-if='doc_parity == "odd"'>
@@ -154,50 +209,85 @@
                                             <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.total) or '0.00'"/></td>
                                             <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.payment) or '0.00'"/></td>
                                             <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.residual) or '0.00'"/></td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &lt; 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 0 and int(doc.due_days) &lt; o.period_length * 1 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 1 and int(doc.due_days) &lt; o.period_length * 2 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 2 and int(doc.due_days) &lt; o.period_length * 3 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 3 and int(doc.due_days) &lt; o.period_length * 4 + 1">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
-                                            <td class="ITEMSRIGHT">
-                                                <span t-if="int(doc.due_days) &gt; o.period_length * 4">
-                                                    <t t-esc="formatLang(doc.residual) or '0.00'"/>
-                                                </span>
-                                            </td>
+                                            <t t-if="o.direction == 'past'">
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt; 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 0 and int(doc.due_days) &lt; o.period_length * 1 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 1 and int(doc.due_days) &lt; o.period_length * 2 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 2 and int(doc.due_days) &lt; o.period_length * 3 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 3 and int(doc.due_days) &lt; o.period_length * 4 + 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt; o.period_length * 4">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                            </t>
+                                            <t t-if="o.direction =='future'">
+                                                <t t-set="period_length" t-value="-1 * o.period_length"/>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &gt;= 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 0 and int(doc.due_days) &gt; period_length * 1">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 1 and int(doc.due_days) &gt; period_length * 2">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 2 and int(doc.due_days) &gt; period_length * 3">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 3 and int(doc.due_days) &gt; period_length * 4">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="ITEMSRIGHT">
+                                                    <span t-if="int(doc.due_days) &lt;= period_length * 4">
+                                                        <t t-esc="formatLang(doc.residual) or '0.00'"/>
+                                                    </span>
+                                                </td>
+                                            </t>
                                         </tr>
                                     </t>
                                 </t>
                                 <tr class="panel strong">
-                                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;"><span t-esc="'TOTAL'"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.total)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.payment)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.residual)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.not_due, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.span01, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.span02, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.span03, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.span04, digits=2, grouping=True)"/></td>
-                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.span05, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey; font-size: 11px;"><span t-esc="'TOTAL'"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.total)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.payment)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.residual)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.not_due, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.span01, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.span02, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.span03, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.span04, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey; font-size: 11px;"><span t-esc="formatLang(p_obj.span05, digits=2, grouping=True)"/></td>
                                 </tr>
                             </tbody>
                           </t>
