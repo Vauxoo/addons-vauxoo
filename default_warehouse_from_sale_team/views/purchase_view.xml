@@ -2,13 +2,16 @@
 <openerp>
     <data>
 
-        <record id="view_purchase_form_default_warehouse" model="ir.ui.view">
-            <field name="name">purchase.form.default.warehouse</field>
+        <record id="view_purchase_form_onchange_partner" model="ir.ui.view">
+            <field name="name">purchase.form.onchange.partner</field>
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="attributes">
-                    <attribute name="on_change">onchange_partner_id(partner_id, picking_type_id)</attribute>
+                    <attribute name="on_change" eval="1"/>
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                    <attribute name="on_change" eval="1"/>
                 </xpath>
            </field>
         </record>

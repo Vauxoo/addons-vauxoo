@@ -50,31 +50,49 @@ class PurchaseOrder(models.Model):
                 ('id', 'in', [
                     pric.id for pric in sale_team.pricelist_team_ids if
                     pric.type == 'purchase'])]}
+        else:
+            dict['domain'] = {
+                'pricelist_id':
+                [('id', 'in', [pric.id for pric in
+                               self.env['product.pricelist'].search(
+                                   [('type', '=', 'purchase')])])]}
         return dict
 
-    @api.multi
-    def onchange_partner_id(self, partner_id, picking_type_id=False):
-        """Change pricelist depending on warehouse in picking_type_id.
+    @api.onchange('partner_id')
+    @api.depends('picking_type_id')
+    def get_pricelist_from_partner_id(self):
+        """Change pricelist depending on user sale team. It must consult the
+        sale team that has default warehouse the warehouse in picking_type_id.
         """
-        res = super(PurchaseOrder, self).onchange_partner_id(partner_id)
-        pricelist_dict = self.get_pricelist(picking_type_id)
-        if pricelist_dict:
-            res['value']['pricelist_id'] = pricelist_dict['pricelist_id']
-            res['domain'] = pricelist_dict['domain']
-        return res
+        res = self.onchange_partner_id(self.partner_id.id)
+        if type(res) is dict and 'value' in res:
+            for field, value in res.get('value').items():
+                if hasattr(self, field):
+                    setattr(self, field, value)
+        pricelist_dict = self.get_pricelist(self.picking_type_id.id)
+        if 'pricelist_id' in pricelist_dict:
+            self.pricelist_id = pricelist_dict['pricelist_id']
+        return {'domain': pricelist_dict['domain']}
 
-    @api.multi
-    def onchange_picking_type_id(self, picking_type_id):
+    @api.onchange('picking_type_id')
+    @api.depends('partner_id')
+    def get_pricelist_from_picking_type_id(self):
         """Change pricelist depending on warehouse in picking_type_id.
         It must consult the sale team that has default warehouse
-        the warehouse in purchase order"""
-        res = super(PurchaseOrder, self).onchange_partner_id(picking_type_id)
-        pricelist_dict = self.get_pricelist(picking_type_id)
-        if pricelist_dict:
-            res['value']['pricelist_id'] = pricelist_dict['pricelist_id']
-            res['domain'] = pricelist_dict['domain']
-        return res
-
+        the warehouse in purchase order
+        """
+        res = self.onchange_picking_type_id(self.picking_type_id.id)
+        if type(res) is dict and 'value' in res:
+            for field, value in res.get('value').items():
+                if hasattr(self, field):
+                    setattr(self, field, value)
+        pricelist_dict = self.get_pricelist(self.picking_type_id.id)
+        if 'pricelist_id' in pricelist_dict:
+            self.pricelist_id = pricelist_dict['pricelist_id']
+        else:
+            self.pricelist_id = self.partner_id.property_product_pricelist.id\
+                if self.partner_id else False
+        return {'domain': pricelist_dict['domain']}
 
 class PurchaseRequisition(models.Model):
 
