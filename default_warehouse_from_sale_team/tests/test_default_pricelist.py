@@ -11,7 +11,8 @@ class TestDefaultPricelist(TransactionCase):
             'name': 'User Test', 'login': 'user_test',
             'password': '123456', 'email': 'user_test@email.com',
             'sel_groups_9_45_10': 9, 'sel_groups_61_62': 61,
-            'sel_groups_59_60': 59})
+            'sel_groups_59_60': 59, 'sel_groups_50_51': 51,
+            'sel_groups_46_47': 47})
         self.limited_group = self.env.ref(
             'default_warehouse_from_sale_team.'
             'group_limited_default_product_pricelist')
@@ -58,19 +59,15 @@ class TestDefaultPricelist(TransactionCase):
         self.sale_team.write({
             'pricelist_team_ids': [(6, 0, [self.pricelist_sale.id,
                                            self.pricelist_purchase.id]), ]})
-        self.assertEqual(self.test_user.default_section_id, self.sale_team)
 
         sale_order = self.env['sale.order'].sudo(
             self.test_user).create(self.dict_vals_sale)
 
-        pricelist_oc_partner = sale_order.onchange_partner_id(
-            sale_order.partner_id.id,
-            sale_order.warehouse_id.id)['value']['pricelist_id']
-        self.assertEqual(pricelist_oc_partner, self.pricelist_sale.id)
+        sale_order.get_pricelist_from_partner_id()
+        self.assertEqual(sale_order.pricelist_id, self.pricelist_sale)
 
-        pricelist_oc_warehouse = sale_order.onchange_warehouse_id(
-            sale_order.warehouse_id.id)['value']['pricelist_id']
-        self.assertEqual(pricelist_oc_warehouse, self.pricelist_sale.id)
+        sale_order.get_pricelist_from_warehouse_id()
+        self.assertEqual(sale_order.pricelist_id, self.pricelist_sale)
 
     def test_20_sale_with_pricelist_default(self):
         """In this test we are probing that sale order is created with
@@ -85,14 +82,11 @@ class TestDefaultPricelist(TransactionCase):
         sale_order = self.env['sale.order'].sudo(
             self.test_user).create(self.dict_vals_sale)
 
-        pricelist_oc_partner = sale_order.onchange_partner_id(
-            sale_order.partner_id.id,
-            sale_order.warehouse_id.id)['value']['pricelist_id']
-        self.assertEqual(pricelist_oc_partner, self.pricelist_def_sale.id)
+        sale_order.get_pricelist_from_partner_id()
+        self.assertEqual(sale_order.pricelist_id, self.pricelist_def_sale)
 
-        pricelist_oc_warehouse = sale_order.onchange_warehouse_id(
-            sale_order.warehouse_id.id)['value']['pricelist_id']
-        self.assertEqual(pricelist_oc_warehouse, self.pricelist_def_sale.id)
+        sale_order.get_pricelist_from_warehouse_id()
+        self.assertEqual(sale_order.pricelist_id, self.pricelist_def_sale)
 
     def test_30_purchase_with_pricelist_default(self):
         """In this test we are probing that purchase order is created with
@@ -105,21 +99,18 @@ class TestDefaultPricelist(TransactionCase):
             'default_purchase_pricelist': self.pricelist_def_purchase.id})
         dict_vals = {
             'partner_id': self.partner_purchase.id,
-            'pricelist_id': self.env['purchase.order'].sudo(
-                self.test_user).onchange_partner_id(
-                    self.partner_purchase.id)['value']['pricelist_id'],
+            'pricelist_id': self.ref('product.list0'),
             'picking_type_id': self.env.ref('stock.picking_type_in').id,
             'location_id': self.env.ref('stock.stock_location_stock').id,
         }
 
         purchase_order = self.env['purchase.order'].sudo(
             self.test_user).create(dict_vals)
-        pricelist_oc_partner = purchase_order.onchange_partner_id(
-            purchase_order.partner_id.id,
-            purchase_order.picking_type_id.id)['value']['pricelist_id']
-        self.assertEqual(pricelist_oc_partner, self.pricelist_def_purchase.id)
 
-        pricelist_oc_picking_type = purchase_order.onchange_picking_type_id(
-            purchase_order.picking_type_id.id)['value']['pricelist_id']
-        self.assertEqual(pricelist_oc_picking_type,
-                         self.pricelist_def_purchase.id)
+        purchase_order.get_pricelist_from_partner_id()
+        self.assertEqual(purchase_order.pricelist_id,
+                         self.pricelist_def_purchase)
+
+        purchase_order.get_pricelist_from_picking_type_id()
+        self.assertEqual(purchase_order.pricelist_id,
+                         self.pricelist_def_purchase)
