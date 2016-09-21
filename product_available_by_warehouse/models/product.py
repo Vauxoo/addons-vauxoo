@@ -26,7 +26,7 @@ class ProductProduct(models.Model):
             outgoing_qty = []
             for warehouse in self.env['stock.warehouse'].sudo().search([]):
                 ctx.update({'warehouse': warehouse.id, 'location': False})
-                product_qty = product.with_context(ctx).\
+                product_qty = product.sudo().with_context(ctx).\
                     _product_available()[product.id]
                 qty_available += [(warehouse, product_qty['qty_available'])]
                 virtual_available += [
