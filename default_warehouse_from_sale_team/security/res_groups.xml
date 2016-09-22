@@ -40,5 +40,17 @@
                 <field name="comment">Not matter sales teams will leave the user to see all the Journal</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
+
+            <!-- product.pricelist -->
+            <record id="group_limited_default_product_pricelist" model="res.groups">
+                <field name="name">Limited access to Pricelist (filtered by sale teams)</field>
+                <field name="comment">View only the Pricelist which warehouses match with the user sales teams default warehouses</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+            <record id="group_manager_default_product_pricelist" model="res.groups">
+                <field name="name">Access to all Pricelist</field>
+                <field name="comment">Not matter sales teams will leave the user to see all the Pricelists</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
         </data>
     </openerp>

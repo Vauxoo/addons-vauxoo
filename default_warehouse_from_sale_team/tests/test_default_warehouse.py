@@ -92,6 +92,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
             'name': 'Tests Main Sale Order',
             'company_id': self.company.id,
             'partner_id': self.partner.id,
+            'pricelist_id': self.ref('product.list0'),
         })
         sale_brw1 = self.sale_obj.browse(self.cr, self.uid, sale)
         demo_user.write({'default_section_id': sales_team.id})
@@ -100,6 +101,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
             'name': 'Tests Sales Team Sale Order',
             'company_id': self.company.id,
             'partner_id': self.partner.id,
+            'pricelist_id': self.ref('product.list0'),
         })
         sale_brw2 = self.sale_obj.browse(self.cr, self.uid, sale)
         self.assertEqual(sale_brw1.warehouse_id.id, main_wh.id,

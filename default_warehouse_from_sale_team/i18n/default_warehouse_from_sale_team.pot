@@ -154,3 +154,101 @@ msgid "You can not set %s sale team as default because the user do not belongs t
 "Please go to Sales > Sales > Sales Teams menu if you will like to add this user to the sales team"
 msgstr ""
 
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_journal
+msgid "Access to all Journal"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: help:crm.case.section,journal_team_ids:0
+msgid "Choose the Journals that user with this sale team can see"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,journal_team_ids:0
+msgid "Journal's sales teams"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Journals"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
+msgid "Limited access to Journal (filtered by sale teams)"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_journal
+msgid "Not matter sales teams will leave the user to see all the Journal"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
+msgid "View only the Journal which warehouses match with the user sales teams default warehouses"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_product_pricelist
+msgid "Access to all Pricelist"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: help:crm.case.section,pricelist_team_ids:0
+msgid "Choose the Pricelist that user with this sale team can see"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,pricelist_team_ids:0
+msgid "Pricelist's sales teams"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Pricelists"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_product_pricelist
+msgid "Limited access to Pricelist (filtered by sale teams)"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_product_pricelist
+msgid "Not matter sales teams will leave the user to see all the Pricelists"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_product_pricelist
+msgid "View only the Pricelist which warehouses match with the user sales teams default warehouses"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,default_sale_pricelist:0
+#: model:ir.module.category,name:default_warehouse_from_sale_team.default_warehouse_module
+msgid "Default Sale Pricelist"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: help:crm.case.section,default_sale_pricelist:0
+msgid "In this field can be defined a default sale pricelist for the related users to the sales team."
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,default_purchase_pricelist:0
+#: model:ir.module.category,name:default_warehouse_from_sale_team.default_warehouse_module
+msgid "Default Purchase Pricelist"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: help:crm.case.section,default_purchase_pricelist:0
+msgid "In this field can be defined a default purchase pricelist for the related users to the sales team."
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: code:addons/default_warehouse_from_sale_team/models/sales_team.py:47
+#: code:addons/default_warehouse_from_sale_team/models/sales_team.py:67
+#, python-format
+msgid "You can not set %s pricelist as default because it does not belongs to the pricelist available in sale team."
+msgstr ""

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+        <record id="view_sale_order_form_onchange_partner" model="ir.ui.view">
+            <field name="name">sale.order.form.onchange.partner</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="on_change" eval="1"/>
+                </xpath>
+           </field>
+        </record>
+
+        <record id="view_sale_order_form_onchange_warehouse" model="ir.ui.view">
+            <field name="name">sale.order.form.onchange.warehouse</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='warehouse_id']" position="attributes">
+                    <attribute name="on_change" eval="1"/>
+                </xpath>
+           </field>
+        </record>
+
+    </data>
+</openerp>

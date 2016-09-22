@@ -65,5 +65,19 @@
                 <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_warehouse_sp')])]"/>
             </record>
 
+            <!-- product.pricelist -->
+            <record id="rule_default_product_pricelist" model="ir.rule">
+                <field name="name">Limited access to pricelist (filtered by sale teams)</field>
+                <field name="model_id" search="[('model','=','product.pricelist')]" model="ir.model"/>
+                <field name="domain_force">[('id', 'in', [pricelist.id  for team in user.sale_team_ids for pricelist in team.pricelist_team_ids])]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_limited_default_product_pricelist')])]"/>
+            </record>
+            <record id="rule_default_product_pricelist_all" model="ir.rule">
+                <field name="name">Access to all pricelist</field>
+                <field name="model_id" search="[('model','=','product.pricelist')]" model="ir.model"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_product_pricelist')])]"/>
+            </record>
+
         </data>
     </openerp>
