@@ -7,14 +7,15 @@
             <field name="model">crm.case.section</field>
             <field name="inherit_id" ref="sales_team.crm_case_section_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='parent_id']" position="after">
-                    <field name="default_warehouse" />
-                    <field name="journal_stock_id" />
-                </xpath>
                 <xpath expr="//page[@string='Team Members']" position="after">
                     <page string="Settings warehouse from sale team">
-                        <group name="configutation">
-                            <field name="default_warehouse" widget="selection" modifiers="{}"/>
+                        <group>
+                            <group name="conf_warehouse">
+                                <field name="default_warehouse" widget="selection" modifiers="{}"/>
+                            </group>
+                            <group name="conf_journal">
+                                <field name="journal_stock_id" widget="selection" modifiers="{}"/>
+                            </group>
                         </group>
                         <separator string="Journal's sale team"/>
                         <field name="journal_team_ids"/>
