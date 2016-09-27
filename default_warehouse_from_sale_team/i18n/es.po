@@ -188,3 +188,18 @@ msgstr "No importa el equipo de ventas le permitirá ver todos los diarios"
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
 msgid "View only the Journal which warehouses match with the user sales teams default warehouses"
 msgstr "Ver solo el diario que coincide con el equipo de venta del usuario"
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Settings warehouse from sale team"
+msgstr "Configuración de almacén para equipo de ventas"
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,journal_stock_id:0
+msgid "Journal stock valuation"
+msgstr "Diario para valoración de existencias"
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Journal's sale team"
+msgstr "Diarios de equipo de ventas"
