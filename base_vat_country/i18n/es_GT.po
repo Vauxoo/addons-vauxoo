@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * base_vat_country
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-19 23:41+0000\n"
+"PO-Revision-Date: 2016-09-19 23:41+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_vat_country
+#: model:ir.model.fields,help:base_vat_country.field_res_company_country_code
+msgid "Added the country code in partner, to complete the NIF."
+msgstr "Agrega el código del país para completar el NIT."
+
+#. module: base_vat_country
+#: model:ir.model.fields,field_description:base_vat_country.field_res_company_vat_without_country
+#: model:ir.model.fields,field_description:base_vat_country.field_res_partner_vat_without_country
+msgid "TIN"
+msgstr "NIT"

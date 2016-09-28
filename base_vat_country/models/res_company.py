@@ -14,16 +14,15 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     vat_without_country = fields.Char(
-        'TIN', help='Tax Identification Number. You no set the prefix of '
-        'country.', related='partner_id.vat_without_country')
+        'TIN', related='partner_id.vat_without_country',
+        help='Tax Identification Number. You no set the country prefix.')
     country_code = fields.Char(
-        'Country Code', help='Added the country code in partner',
+        help='Added the country code in partner, to complete the NIF.',
         readonly=True, related='country_id.code', size=2)
 
-    @api.onchange('vat_without_country', 'country_id')
-    def onchange_date(self):
+    @api.onchange('vat_without_country', 'country_code')
+    def onchange_vat_wo_country(self):
         if self.vat_without_country:
-            self.vat = (self.country_id and self.country_id.code or '  ') +\
-                self.vat_without_country
+            self.vat = (self.country_code or '  ') + self.vat_without_country
         else:
             self.vat = ''
