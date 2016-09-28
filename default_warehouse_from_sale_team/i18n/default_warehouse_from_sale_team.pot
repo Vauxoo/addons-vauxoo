@@ -154,3 +154,17 @@ msgid "You can not set %s sale team as default because the user do not belongs t
 "Please go to Sales > Sales > Sales Teams menu if you will like to add this user to the sales team"
 msgstr ""
 
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Settings warehouse from sale team"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.case.section,journal_stock_id:0
+msgid "Journal stock valuation"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Journal's sale team"
+msgstr ""
