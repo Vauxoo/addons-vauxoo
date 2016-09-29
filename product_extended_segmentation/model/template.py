@@ -19,10 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
 from openerp import api, models
 from openerp.addons.product import _common
 from openerp.tools import float_is_zero
-import logging
 _logger = logging.getLogger(__name__)
 SEGMENTATION_COST = [
     'landed_cost',
@@ -275,6 +275,11 @@ class ProductTemplate(models.Model):
         if prod_model == 'product.template':
             product_id = product_id.product_variant_ids
         if not product_id:
+            return False
+        if product_id.cost_method != 'standard':
+            subject = 'I cowardly did not update cost.'
+            body = 'Ignored Because product is not set as Standard'
+            product_id.message_post(body=body, subject=subject)
             return False
 
         # Just writting segments to be consistent with segmentation

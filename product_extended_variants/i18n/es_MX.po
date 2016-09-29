@@ -15,37 +15,3 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: product_extended_variants
-#: code:addons/product_extended_variants/wizard/wizard_price.py:234
-#: code:addons/product_extended_variants/wizard/wizard_price.py:256
-#, python-format
-msgid "Active ID is not set in Context."
-msgstr "ID Activo no está establecido en el Contexto"
-
-#. module: product_extended_variants
-#: model:ir.model,name:product_extended_variants.model_wizard_price
-msgid "Compute price wizard"
-msgstr "Asistente para cálculo de precio"
-
-#. module: product_extended_variants
-#: model:ir.model,name:product_extended_variants.model_product_product
-msgid "Product"
-msgstr "Producto"
-
-#. module: product_extended_variants
-#: model:ir.model,name:product_extended_variants.model_product_template
-msgid "Product Template"
-msgstr "Plantilla de Producto"
-
-#. module: product_extended_variants
-#: view:product.product:product_extended_variants.product_extend_form_view
-msgid "Recompute price from BoM"
-msgstr "Recalcular precio a partir del LdM"
-
-#. module: product_extended_variants
-#: code:addons/product_extended_variants/model/template.py:169
-#: code:addons/product_extended_variants/model/template.py:176
-#, python-format
-msgid "Standard Price changed"
-msgstr "Precio Estándar cambiado"
-
