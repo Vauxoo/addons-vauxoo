@@ -140,7 +140,7 @@ msgstr "Movimientos de Inventario"
 #. module: stock_card
 #: model:product.template,name:stock_card.product01_product_template
 msgid "Targus Laptop 16\" Bag"
-msgstr "Bolso Targus Laptop 16''"
+msgstr "Bolso Targus Laptop 16\""
 
 #. module: stock_card
 #: field:stock.card.move,cost_unit:0

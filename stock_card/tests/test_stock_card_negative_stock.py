@@ -19,11 +19,11 @@
 #
 ##############################################################################
 import logging
+from datetime import datetime, timedelta
 from tabulate import tabulate
 import pandas as pd
 
 from openerp.tests.common import TransactionCase
-from datetime import datetime, timedelta
 
 _logger = logging.getLogger(__name__)
 
