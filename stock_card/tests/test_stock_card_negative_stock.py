@@ -18,24 +18,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import logging
 from datetime import datetime, timedelta
-from tabulate import tabulate
-import pandas as pd
-
+import logging
 from openerp.tests.common import TransactionCase
-
 _logger = logging.getLogger(__name__)
 
 try:
-  import pandas
+    import pandas as pd
 except ImportError:
-  _logger.debug('Cannot `import pandas`.')
+    _logger.debug('Cannot `import pandas`.')
 
 try:
-  import tabulate
+    from tabulate import tabulate
 except ImportError:
-  _logger.debug('Cannot `import tabulate`.')
+    _logger.debug('Cannot `import tabulate`.')
+
 
 class TestStockCardNegativeStock(TransactionCase):
 
