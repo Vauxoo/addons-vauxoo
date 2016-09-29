@@ -18,9 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from datetime import datetime, timedelta
 from openerp.tests.common import TransactionCase
 from openerp.tools.float_utils import float_compare
-from datetime import datetime, timedelta
 
 
 class TestStockCardProductReturns(TransactionCase):
