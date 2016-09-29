@@ -27,6 +27,15 @@ from openerp.tests.common import TransactionCase
 
 _logger = logging.getLogger(__name__)
 
+try:
+  import pandas
+except ImportError:
+  _logger.debug('Cannot `import pandas`.')
+
+try:
+  import tabulate
+except ImportError:
+  _logger.debug('Cannot `import tabulate`.')
 
 class TestStockCardNegativeStock(TransactionCase):
 
