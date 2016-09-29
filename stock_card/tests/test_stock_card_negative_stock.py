@@ -18,8 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
+from tabulate import tabulate
+import pandas as pd
+
 from openerp.tests.common import TransactionCase
 from datetime import datetime, timedelta
+
+_logger = logging.getLogger(__name__)
 
 
 class TestStockCardNegativeStock(TransactionCase):
@@ -177,6 +183,15 @@ class TestStockCardNegativeStock(TransactionCase):
                 self.create_sale_order(qty=qty, price=costprice)
 
         card_lines = self.get_stock_valuations()
+
+        df = pd.DataFrame(card_lines)
+        tbl_sc = tabulate(df, headers='keys', tablefmt='psql')
+        _logger.info('Gotten Stock Card \n%s', tbl_sc)
+
+        df = pd.DataFrame(self.inv_ids)
+        tbl_sc = tabulate(df, headers='keys', tablefmt='psql')
+        _logger.info('Expected Stock Card \n%s', tbl_sc)
+
         self.assertEqual(len(self.inv_ids), len(card_lines),
                          "Both lists should have the same length(=12)")
         for expected, succeded in zip(self.inv_ids, card_lines):
