@@ -52,7 +52,7 @@ with the user sale teams default_warehouse. To accomplish this I:
 
 To add more models use it simple do this:
 
-1. inherit the class that you want to set the field warehouse_id::
+1. Inherit the class that you want to set the field warehouse_id::
 
     class SomeClass(models.Model):
         _name = 'some.class'
@@ -61,8 +61,8 @@ To add more models use it simple do this:
         'this object will belong to')
 
 2. Create two ir.rule to filter stock.picking and stock.picking.type taking
-into account the current user warehouses. When a user is part of warehouse
-teams will be able to access only the records related to that warehouses::
+   into account the current user warehouses. When a user is part of warehouse
+   teams will be able to access only the records related to that warehouses::
 
     <record id="rule_group_model" model="ir.rule">
         <field name="name">Limited access to model (filtered by sales teams)</field>
@@ -77,12 +77,12 @@ teams will be able to access only the records related to that warehouses::
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
 
-3. Don't forget depends of this module adding it to the list into `__openerp__.py`
+3. Don't forget depends of this module adding it to the list into `__openerp__.py`::
 
-The default value from this field will be the warehouse setted in the section
-If the user is not related to a sales team or not warehouse setted on the
-section the default warehouse will be set using the default behavior of the
-system which is assign the main warehouse.
+    The default value from this field will be the warehouse setted in the section.
+    If the user is not related to a sales team or not warehouse setted on the
+    section the default warehouse will be set using the default behavior of the
+    system which is assign the main warehouse.
 
 Bug Tracker
 ===========

@@ -12,6 +12,9 @@
     'version': '8.0.2.0.0',
     'depends': [
         'sale_stock',
+        #  TODO: Remove "delivery" if the following issue is fixed
+        #  https://github.com/odoo/odoo/pull/13458
+        'delivery',
         'sales_team',
         'base_action_rule',
         'purchase_requisition',
@@ -26,6 +29,7 @@
         'security/ir_rule.xml',
         'data/ir_actions_server.xml',
         'data/base_action_rule.xml',
+        'demo/stock_demo.xml',
     ],
     'demo': [
     ],
