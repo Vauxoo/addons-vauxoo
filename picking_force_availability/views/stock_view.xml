@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_stock_inherit_picking_force_assign">
+            <field name="name">view.stock.inherit.picking.force.assign</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='force_assign']" position="attributes">
+                    <attribute name="groups">picking_force_availability.res_group_force_assign</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
