@@ -114,7 +114,7 @@ class WizardPrice(models.Model):
             new_cron.update({
                 'name': cron_name,
                 'nextcall': fields.datetime.now(),
-                'args': "[{elements}]".format(elements=str(plist)),  # noqa
+                'args': '[%(elements)s]' % dict(elements=str(plist)),
             })
             created = cron_obj.create(cr, uid, new_cron)
             cron_job_ids.append(created)
@@ -164,9 +164,9 @@ class WizardPrice(models.Model):
         msglog2 = 'Updated correctly: [%(prod_id)s]  from %(old)s to %(new)s %(count)s/%(total)s  \n'  # noqa
         identifier_time = str(time.time())
         when_time = time.ctime()
-        logfname = '/tmp/update_cost_err{identifier}.log'.format(
+        logfname = '/tmp/update_cost_err%(identifier)s.log' % dict(
             identifier=identifier_time)
-        logfull = '/tmp/update_cost_fine{identifier}.log'.format(
+        logfull = '/tmp/update_cost_fine%(identifier)s.log' % dict(
             identifier=identifier_time)
         products = product_obj.browse(cr, uid, product_ids, context=context)
         for product in products:
@@ -209,7 +209,7 @@ class WizardPrice(models.Model):
                 if old > new:
                     # TODO: show qty_on_hand
                     msg_err = 'name: - {name} - There is onhand:- ID: [{prod}] - Old: - {old} - New: - {new}\n'  # noqa
-                    msg_err_save = msg_err.format(
+                    msg_err_save = msg_err % dict(
                         prod=product.id, name=product.name, new=new, old=old)
                     _logger.error(msg_err_save)
                     with open(logfname, 'a') as errored_log:
