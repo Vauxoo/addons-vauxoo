@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
+    <data noupdate="1">
+        <record model="ir.sequence.type" id="seq_type_order_line">
+            <field name="name">Purchase Order Line code</field>
+            <field name="code">purchase.order.line</field>
+        </record>
+        <record model="ir.sequence" id="seq_payment_term">
+            <field name="name">Purchase Order Line code</field>
+            <field name="code">purchase.order.line</field>
+        </record>
+    </data>
     <data>
 
         <!-- purchase order line tree -->

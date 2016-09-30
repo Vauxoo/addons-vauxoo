@@ -54,14 +54,6 @@ class PurchaseOrderLine(models.Model):
     sequence = fields.Integer(
         string='Sequence',
         help="Gives the sequence of this line when displaying the"
-             " purchase order.")
-
-    @api.model
-    def default_get(self, fields_list):
-        """Overwrite the default value of the sequence field taking into account
-        the current number of lines in the purchase order. If is not call from
-        the purchase order will use the default value.
-        """
-        res = super(PurchaseOrderLine, self).default_get(fields_list)
-        res.update({'sequence': len(self._context.get('order_line', [])) + 1})
-        return res
+             " purchase order.",
+        default=lambda self: self.env['ir.sequence'].get(
+            'purchase.order.line'))
