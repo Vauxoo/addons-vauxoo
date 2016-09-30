@@ -165,7 +165,7 @@ class TestWizardUpdateStandardPrice(TransactionCase):
             'active_ids': self.prod.ids,
         }).create({'new_price': new_price})
         wizard_id.change_price()
-        ref = '[{code}] {name}' % dict(
+        ref = '[%(code)s] %(name)s' % dict(
             code=self.prod.default_code, name=self.prod.name)
         move = self.move_obj.search([('ref', '=', ref)])
         self.assertTrue(move.ids, 'Movement not created.')
