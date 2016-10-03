@@ -32,11 +32,12 @@ class PurchaseOrder(models.Model):
 
     _inherit = 'purchase.order'
 
-    @api.one
+    @api.multi
     @api.constrains('order_line')
     def _check_order_lines_sequence(self):
         """check that the sequence is unique per purchase order line.
         """
+        self.ensure_one()
         all_sequences = self.order_line.mapped('sequence')
         sequences = list(set(all_sequences))
         if len(all_sequences) != len(sequences):
