@@ -17,9 +17,17 @@
         'demo/demo.xml',
     ],
     "data": [
+        'security/ir.model.access.csv',
         'view/view.xml',
         'view/wizard.xml',
     ],
     "installable": True,
     "auto_install": False,
+    'external_dependencies': {
+        'bin': [],
+        'python': [
+            'tabulate',
+            'pandas',
+        ],
+    }
 }
