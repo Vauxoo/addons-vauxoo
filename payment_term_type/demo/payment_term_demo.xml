@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
-    	<!--Payment term Cash-->
-    	<record id="payment_term_cash" model="account.payment.term">
+        <!--Payment term Cash-->
+        <record id="payment_term_cash" model="account.payment.term">
             <field name="active" eval='1'/>
             <field name="name">Payment Term Cash</field>
         </record>
@@ -16,8 +16,8 @@
             <field name="active" eval='1'/>
             <field name="name">Payment Term credit</field>
         </record>
-        <record id="payment_term_credit_line_procent" model="account.payment.term.line">
-            <field name="value">procent</field>
+        <record id="payment_term_credit_line_percent" model="account.payment.term.line">
+            <field name="value">percent</field>
             <field name="payment_id" ref="payment_term_credit"/>
         </record>
         <record id="payment_term_credit_line_balance" model="account.payment.term.line">
