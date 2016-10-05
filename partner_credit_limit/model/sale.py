@@ -24,4 +24,9 @@ class SaleOrder(models.Model):
                         'has late payments or has exceeded the credit limit.'
                         '\nPlease cover the late payment or check credit limit'
                         '\nCreadit Limit : %s') % (so.partner_id.credit_limit)
-                raise exceptions.Warning(('Warning!'), msg)
+                raise exceptions.Warning(_('Warning!'), msg)
+
+    @api.multi
+    def action_confirm(self):
+        self.check_limit()
+        return super(SaleOrder, self).action_confirm()
