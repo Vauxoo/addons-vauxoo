@@ -1,8 +1,8 @@
 # coding: utf-8
 # Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from openerp import models, fields, api
 from datetime import timedelta
+from openerp import models, fields, api
 
 
 class ResPartner(models.Model):
@@ -52,8 +52,9 @@ class ResPartner(models.Model):
             moveline_obj = self.env['account.move.line']
             movelines = moveline_obj.search(
                 [('partner_id', '=', partner.id),
-                 ('account_id.type', '=', 'receivable'),
-                 ('state', '!=', 'draft'), ('reconcile_id', '=', False)])
+                 ('account_id.internal_type', '=', 'receivable'),
+                 ('move_id.state', '!=', 'draft'),
+                 ('reconciled', '=', False)])
             # credit = 0.0
             debit_maturity, credit_maturity = 0.0, 0.0
             for line in movelines:

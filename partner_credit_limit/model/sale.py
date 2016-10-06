@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
     @api.multi
     def check_limit(self):
         for so in self:
-            if so.payment_term.payment_type != 'credit':
+            if so.payment_term_id.payment_type != 'credit':
                 return True
             allowed_sale = self.env['res.partner'].with_context(
                 {'new_amount': so.amount_total,

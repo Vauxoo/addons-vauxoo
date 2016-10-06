@@ -12,7 +12,7 @@ class AccontInvoice(models.Model):
     @api.multi
     def check_limit_credit(self):
         for invoice in self:
-            if invoice.payment_term.payment_type != 'credit':
+            if invoice.payment_term_id.payment_type != 'credit':
                 return True
             allowed_sale = self.env['res.partner'].with_context(
                 {'new_amount': invoice.amount_total,
