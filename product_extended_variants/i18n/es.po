@@ -20,7 +20,7 @@ msgstr ""
 #: code:addons/product_extended_variants/wizard/wizard_price.py:256
 #, python-format
 msgid "Active ID is not set in Context."
-msgstr "ID Activo no está establecido en el Contexto"
+msgstr "El ID activo no se encuentrá en el context."
 
 #. module: product_extended_variants
 #: model:ir.model,name:product_extended_variants.model_wizard_price

@@ -1,56 +1,245 @@
-<head>
+<html>
+ <head>
   <style>
-      .backgrounds{background-color:#fff;color:#a41d35}
+   .backgrounds{background-color:#fff;color:#a41d35}
   </style>
-</head>
-<section class="oe_container">
- <div class="oe_row oe_spaced">
-  <h2 class="oe_slogan">
-   Product extension to track sales and purchases from variants
-  </h2>
-  <p class="oe_mt32">
-   Product extension. This module adds:
-* Computes standard price from the BoM of the product with a button on the
-* product variant based
-on the materials in the BoM and the work centers.  It can create the
-necessary accounting entries when necessary.
-  </p>
- </div>
-</section>
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <div class="oe_span6">
-            <h2 class="oe_slogan">Do you need help?</h2>
-            <h3 class="oe_slogan">
-                Let's offer you the best services!
-            </h3>
-            <p class="oe_mt32 text-center">
-                Contact us by our official channels.
-            </p>
-            <div class="oe_spaced">
-                <ul class="text-center list-inline">
-                    <li>
-                        <a href="https://facebook.com/vauxoo" Target="_blank"><i class="fa fa-facebook-square fa-xs backgrounds"></i></a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/vauxoo" Target="_blank" ><i class="fa fa-twitter-square fa-xs backgrounds"></i></a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/company/vauxoo" Target="_blank"><i class="fa fa-linkedin-square fa-xs backgrounds"></i></a>
-                    </li>
-                    <li>
-                        <a title="Contact us" data-toggle="tooltip" data-placement="left" Target="_blank" href="https://www.vauxoo.com/page/website.contactus"><i class="fa fa-envelope-square fa-xs backgrounds"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="oe_span6">
-            <div class="oe_demo oe_picture oe_screenshot">
-                <a href="https://www.vauxoo.com"  target="_blank"r>
-                    <img src="https://s3.amazonaws.com/s3.vauxoo.com/description_logo.png" width="200" height="auto">
-                </a>
-                <div class="oe_demo_footer oe_centeralign">Meet Us</div>
-            </div>
-        </div>
+ </head>
+ <body>
+  <section class="oe_container" id="description">
+   <object data="https://img.shields.io/badge/licence-LGPL--3-blue.svg" type="image/svg+xml">
+    License: LGPL-3
+   </object>
+   <div class="section oe_span12" id="product-extension-to-track-sales-and-purchases-from-variants">
+    <h2 class="oe_slogan">
+     <a class="toc-backref" href="#id1">
+      Product extension to track sales and purchases from variants
+     </a>
+    </h2>
+    <p class="oe_mt32">
+     This module adds:
+    </p>
+    <p class="oe_mt32">
+     Computes standard price from the BoM of the product with a button on
+the product variant based on the materials in the BoM and the work centers.
+It can create the necessary accounting entries when necessary.
+    </p>
+    <p class="oe_mt32">
+     <strong>
+      Initial Case
+     </strong>
+    </p>
+    <img alt="product_extended_variants/static/src/img/initial.png" class="oe_picture oe_screenshot" src="product_extended_variants/static/src/img/initial.png"/>
+    <p class="oe_mt32">
+     <strong>
+      Recursive Case
+     </strong>
+    </p>
+    <img alt="product_extended_variants/static/src/img/recursive.png" class="oe_picture oe_screenshot" src="product_extended_variants/static/src/img/recursive.png"/>
+    <p class="oe_mt32">
+     <strong>
+      Not Recursive Case
+     </strong>
+    </p>
+    <img alt="product_extended_variants/static/src/img/no_recursive.png" class="oe_picture oe_screenshot" src="product_extended_variants/static/src/img/no_recursive.png"/>
+    <div class="contents topic" id="contents">
+     <p class="oe_mt32">
+      Contents
+     </p>
+     <ul class="simple">
+      <li>
+       <a class="reference internal" href="#product-extension-to-track-sales-and-purchases-from-variants" id="id1">
+        Product extension to track sales and purchases from variants
+       </a>
+      </li>
+      <li>
+       <a class="reference internal" href="#installation" id="id2">
+        Installation
+       </a>
+      </li>
+      <li>
+       <a class="reference internal" href="#configuration" id="id3">
+        Configuration
+       </a>
+      </li>
+      <li>
+       <a class="reference internal" href="#bug-tracker" id="id4">
+        Bug Tracker
+       </a>
+      </li>
+      <li>
+       <a class="reference internal" href="#credits" id="id5">
+        Credits
+       </a>
+      </li>
+      <li>
+       <a class="reference internal" href="#maintainer" id="id6">
+        Maintainer
+       </a>
+      </li>
+     </ul>
     </div>
-</section>
+   </div>
+   <div class="section oe_span12" id="installation">
+    <h1>
+     <a class="toc-backref" href="#id2">
+      Installation
+     </a>
+    </h1>
+    <p class="oe_mt32">
+     To install this module, you need to:
+    </p>
+    <ul class="simple">
+     <li>
+      Not special pre-installation is required, just install as a regular Odoo
+module:
+      <ul>
+       <li>
+        Download this module from
+        <a class="reference external" href="https://github.com/vauxoo/addons-vauxoo">
+         Vauxoo/addons-vauxoo
+        </a>
+       </li>
+       <li>
+        Add the repository folder into your odoo addons-path.
+       </li>
+       <li>
+        Go to
+        <code class="docutils literal">
+         Settings &gt; Module list
+        </code>
+        search for the current name and click in
+        <code class="docutils literal">
+         Install
+        </code>
+        button.
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </div>
+   <div class="section oe_span12" id="configuration">
+    <h1>
+     <a class="toc-backref" href="#id3">
+      Configuration
+     </a>
+    </h1>
+    <p class="oe_mt32">
+     To configure this module, you need to:
+    </p>
+    <ul class="simple">
+     <li>
+      There is not special configuration for this module.
+     </li>
+    </ul>
+   </div>
+   <div class="section oe_span12" id="bug-tracker">
+    <h1>
+     <a class="toc-backref" href="#id4">
+      Bug Tracker
+     </a>
+    </h1>
+    <p class="oe_mt32">
+     Bugs are tracked on
+     <a class="reference external" href="https://github.com/Vauxoo/addons-vauxoo/issues">
+      GitHub Issues
+     </a>
+     .
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us smashing it by providing a detailed and
+welcomed feedback
+     <a class="reference external" href="https://github.com/Vauxoo/addons-vauxoo/issues/new?body=module:%20l10n_mx_pos%0Aversion:%208.0.2.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">
+      here
+     </a>
+    </p>
+   </div>
+   <div class="section oe_span12" id="credits">
+    <h1>
+     <a class="toc-backref" href="#id5">
+      Credits
+     </a>
+    </h1>
+    <p class="oe_mt32">
+     <strong>
+      Contributors
+     </strong>
+    </p>
+    <ul class="simple">
+     <li>
+      Humberto Arocha &lt;
+      <a class="reference external" href="mailto:hbto@vauxoo.com">
+       hbto@vauxoo.com
+      </a>
+      &gt;
+     </li>
+     <li>
+      Nhomar Hernandez &lt;
+      <a class="reference external" href="mailto:nhomar@vauxoo.com">
+       nhomar@vauxoo.com
+      </a>
+      &gt;
+     </li>
+     <li>
+      Luis Torres &lt;
+      <a class="reference external" href="mailto:luis_t@vauxoo.com">
+       luis_t@vauxoo.com
+      </a>
+      &gt;
+     </li>
+    </ul>
+   </div>
+  </section>
+  <section class="oe_container">
+   <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+     <h2 class="oe_slogan">
+      Do you need help?
+     </h2>
+     <h3 class="oe_slogan">
+      Let's offer you the best services!
+     </h3>
+     <p class="oe_mt32 text-center">
+      Contact us by our official channels.
+     </p>
+     <div class="oe_spaced">
+      <ul class="text-center list-inline">
+       <li>
+        <a href="https://facebook.com/vauxoo" target="_blank">
+         <i class="fa fa-facebook-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+       <li>
+        <a href="https://twitter.com/vauxoo" target="_blank">
+         <i class="fa fa-twitter-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+       <li>
+        <a href="https://www.linkedin.com/company/vauxoo" target="_blank">
+         <i class="fa fa-linkedin-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+       <li>
+        <a data-placement="left" data-toggle="tooltip" href="https://www.vauxoo.com/page/website.contactus" target="_blank" title="Contact us">
+         <i class="fa fa-envelope-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <div class="oe_span6">
+     <div class="oe_demo oe_picture oe_screenshot">
+      <a href="https://www.vauxoo.com" r="" target="_blank">
+       <img height="auto" src="https://s3.amazonaws.com/s3.vauxoo.com/description_logo.png" width="200"/>
+      </a>
+      <div class="oe_demo_footer oe_centeralign">
+       Meet Us
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+ </body>
+</html>
