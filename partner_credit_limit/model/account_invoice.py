@@ -26,4 +26,4 @@ class AccontInvoice(models.Model):
                         '\nPlease cover the late payment or check credit limit'
                         '\nCreadit'
                         ' Limit : %s') % (invoice.partner_id.credit_limit)
-                raise exceptions.Warning(_('Warning!'), msg)
+                raise exceptions.Warning(msg)
