@@ -35,6 +35,7 @@ class TestAvgCosts(TransactionCase):
         self.product = self.env['product.product']
         self.prod_template = self.env['product.template']
         self.wizard = self.env['wizard.price']
+        self.message = self.env['mail.message']
         self.company_id = self.env.user.company_id
         self.prod_a_id = self.env.ref(
             'product_extended_segmentation.producto_a')
@@ -142,3 +143,23 @@ class TestAvgCosts(TransactionCase):
         self.assertNotEqual(old_values['production_cost'],
                             template_id.production_cost,
                             "production_cost have been written wrongly")
+
+    def test_04_write_product_average_cost_message(self):
+        """Verify that if product cost method is not standard, show message in
+        product that did not update cost."""
+        template_id = self.prod_e_id.product_tmpl_id
+        self.prod_d_id.write({
+            'cost_method': 'average',
+        })
+        self.env['product.template'].with_context({
+            'active_model': 'product.template',
+            'active_id': template_id.id,
+            'active_ids': template_id.ids,
+        }).compute_price(
+            product_ids=False, recursive=True, real_time_accounting=True,
+            template_ids=[template_id.id], test=False)
+        msj = self.message.search([('res_id', '=', self.prod_d_id.id),
+                                   ('model', '=', 'product.product')])
+        msj = msj.filtered(
+            lambda r: r.subject == 'I cowardly did not update cost.')
+        self.assertTrue(msj.ids, 'Message not found in product.')
