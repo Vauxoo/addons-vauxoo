@@ -34,7 +34,8 @@
     ],
     "demo": [],
     "data": [
-        "security/ir.model.access.csv"
+        "data/ir_action_server.xml",
+        "view/ir_model_view.xml",
     ],
     "test": [],
     "js": [],
