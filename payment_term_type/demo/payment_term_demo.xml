@@ -6,10 +6,6 @@
             <field name="active" eval='1'/>
             <field name="name">Payment Term Cash</field>
         </record>
-        <record id="payment_term_cash_line_balance" model="account.payment.term.line">
-            <field name="value">balance</field>
-            <field name="payment_id" ref="payment_term_cash"/>
-        </record>
 
         <!--Payment term Credit-->
         <record id="payment_term_credit" model="account.payment.term">
@@ -18,10 +14,6 @@
         </record>
         <record id="payment_term_credit_line_percent" model="account.payment.term.line">
             <field name="value">percent</field>
-            <field name="payment_id" ref="payment_term_credit"/>
-        </record>
-        <record id="payment_term_credit_line_balance" model="account.payment.term.line">
-            <field name="value">balance</field>
             <field name="payment_id" ref="payment_term_credit"/>
         </record>
     </data>

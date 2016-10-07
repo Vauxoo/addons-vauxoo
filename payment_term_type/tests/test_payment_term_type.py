@@ -10,9 +10,6 @@ class TestPaymentTermType(TransactionCase):
         payment terms line to compute
     """
 
-    def setUp(self):
-        super(TestPaymentTermType, self).setUp()
-
     def test_payment_term_type_cash(self):
         """This test validate payment type in cash
         """
