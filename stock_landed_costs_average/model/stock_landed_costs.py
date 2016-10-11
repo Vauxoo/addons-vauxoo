@@ -30,36 +30,37 @@ class StockLandedCost(models.Model):
         copy=False,
     )
 
+    def lcost_from_inv_line(self, inv_line):
+        """Returns a dictionary to create a Landed Cost Line object, based on
+        data obtained from the Invoice Line passed as argument"""
+        invoice = inv_line.invoice_id
+        company_currency = invoice.company_id.currency_id
+        currency = invoice.currency_id.with_context(date=invoice.date_invoice)
+        price_subtotal = currency.compute(
+            inv_line.price_subtotal, company_currency)
+        return {
+            'name': inv_line.name,
+            'account_id': inv_line.account_id and
+            inv_line.account_id.id,
+            'product_id': inv_line.product_id and
+            inv_line.product_id.id,
+            'price_unit': price_subtotal,
+            'split_method': 'by_quantity',
+        }
+
     @api.onchange('invoice_ids')
     def onchange_invoice_ids(self):
         for lc_brw in self:
             lc_brw.update({'cost_lines': [(6, False, {})]})
             cost_lines = []
             for inv_brw in lc_brw.invoice_ids:
-                company_currency = inv_brw.company_id.currency_id
-                diff_currency = inv_brw.currency_id != company_currency
-                if diff_currency:
-                    currency = inv_brw.currency_id.with_context(
-                        date=inv_brw.date_invoice)
                 for ail_brw in inv_brw.invoice_line:
                     if not ail_brw.product_id:
                         continue
                     if not ail_brw.product_id.landed_cost_ok:
                         continue
-                    if diff_currency:
-                        price_subtotal = currency.compute(
-                            ail_brw.price_subtotal, company_currency)
-                    else:
-                        price_subtotal = ail_brw.price_subtotal
-                    cost_lines.append((0, False, {
-                        'name': ail_brw.name,
-                        'account_id': ail_brw.account_id and
-                        ail_brw.account_id.id,
-                        'product_id': ail_brw.product_id and
-                        ail_brw.product_id.id,
-                        'price_unit': price_subtotal,
-                        'split_method': 'by_quantity',
-                    }))
+                    cost_lines.append(
+                        (0, False, self.lcost_from_inv_line(ail_brw)))
             if cost_lines:
                 lc_brw.update({'cost_lines': cost_lines})
 
