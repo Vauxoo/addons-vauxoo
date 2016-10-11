@@ -1,7 +1,6 @@
 # coding: utf-8
 
-from openerp import api, fields, models
-from openerp import SUPERUSER_ID
+from openerp import SUPERUSER_ID, api, fields, models
 
 
 class InheritedCrmSaseSection(models.Model):
@@ -13,9 +12,8 @@ class InheritedCrmSaseSection(models.Model):
                                         help='In this field can be '
                                         'defined a default warehouse for '
                                         'the related users to the sales team.')
-    journal_team_ids = fields.Many2many(
-        'account.journal', 'journal_section_rel', 'journal_id', 'section_id',
-        string="Journal's sales teams",
+    journal_team_ids = fields.One2many(
+        'account.journal', 'section_id', string="Journal's sales teams",
         help="Choose the Journals that user with this sale team can see")
     journal_stock_id = fields.Many2one(
         'account.journal', 'Journal stock valuation',
