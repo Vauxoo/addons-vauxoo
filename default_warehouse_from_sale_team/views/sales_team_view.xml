@@ -18,7 +18,7 @@
                             </group>
                         </group>
                         <separator string="Journal's sale team"/>
-                        <field name="journal_team_ids"/>
+                        <field name="journal_team_ids" domain="[('section_id', '=', False)]" widget='many2many'/>
                     </page>
                 </xpath>
             </field>
