@@ -7,5 +7,11 @@
             <field name="signal">order_confirm</field>
             <field name="condition">check_limit()</field>
         </record>
+        <record id="sale.trans_sent_router" model="workflow.transition">
+            <field name="act_from" ref="sale.act_sent"/>
+            <field name="act_to" ref="sale.act_router"/>
+            <field name="signal">order_confirm</field>
+            <field name="condition">check_limit()</field>
+        </record>
     </data>
 </openerp>
