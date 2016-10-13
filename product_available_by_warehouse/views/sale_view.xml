@@ -16,6 +16,21 @@
             </xpath>
         </field>
     </record>
-
+    <record id="view_order_tree_show_availability" model="ir.ui.view">
+        <field name="name">"view.order.tree.show.availability"</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form//field[@name='name']" position="before">
+                <field name="product_stock_quants_ids" nolabel="1" colspan="2">
+                    <tree create="false" edit="false" delete="false">
+                        <field name="location_id"/>
+                        <field name="stock_state"/>
+                        <field name="qty"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
     </data>
 </openerp>

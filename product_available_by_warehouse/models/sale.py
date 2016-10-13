@@ -96,3 +96,11 @@ class SaleOrderLine(models.Model):
                 domain['route_id'] = result['domain'].get('route_id', [])
                 res.update({'domain': domain})
         return res
+
+
+class WarehouseQty(models.Model):
+    _name = 'warehouse.qty'
+
+    product_id = fields.Many2one('product.product', 'Product')
+    warehouse_id = fields.Many2one('stock.warehouse', 'Warehouse')
+    qty = fields.Float('Quantity')
