@@ -14,7 +14,7 @@
                                 <field name="default_warehouse" widget="selection" modifiers="{}"/>
                             </group>
                             <group name="conf_journal">
-                                <field name="journal_stock_id" widget="selection" modifiers="{}"/>
+                                <field name="journal_stock_id" modifiers="{}"/>
                             </group>
                         </group>
                         <separator string="Journal's sale team"/>
