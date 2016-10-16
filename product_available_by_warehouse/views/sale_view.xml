@@ -7,28 +7,50 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_stock.view_order_form_inherit" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
-                <field name="show_message" attrs="{'invisible': [('state','not in',('draft'))]}"
-                    on_change="onchange_show_message(show_message, product_id)"/>
-            </xpath>
-            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
-                <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_uos_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id, 'show_message': show_message}</attribute>
-            </xpath>
-        </field>
-    </record>
-    <record id="view_order_tree_show_availability" model="ir.ui.view">
-        <field name="name">"view.order.tree.show.availability"</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_stock.product_normal_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/form//field[@name='name']" position="before">
-                <field name="product_stock_quants_ids" nolabel="1" colspan="2">
-                    <tree create="false" edit="false" delete="false">
-                        <field name="location_id"/>
-                        <field name="stock_state"/>
-                        <field name="qty"/>
-                    </tree>
-                </field>
+            <xpath expr="//field[@name='order_line']/form//label[@for='name']" position="replace"/>
+            <xpath expr="//field[@name='order_line']/form//field[@name='name']" position="replace">
+                <group>
+                    <group>
+                        <label for="name"/>
+                        <field nolabel="1" name="name" style="line-height:30px;"/>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Forecast">
+                                <field name="forecast_ids">
+                                    <tree create="false" edit="false" delete="false">
+                                        <field name="warehouse_id"/>
+                                        <field name="qty"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="On hand">
+                                <field name="on_hand_ids">
+                                    <tree create="false" edit="false" delete="false">
+                                        <field name="warehouse_id"/>
+                                        <field name="qty"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Incoming">
+                                <field name="incoming_ids">
+                                    <tree create="false" edit="false" delete="false">
+                                        <field name="warehouse_id"/>
+                                        <field name="qty"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Outgoing">
+                                <field name="outgoing_ids">
+                                    <tree create="false" edit="false" delete="false">
+                                        <field name="warehouse_id"/>
+                                        <field name="qty"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </group>
             </xpath>
         </field>
     </record>
