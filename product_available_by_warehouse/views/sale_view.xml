@@ -10,10 +10,10 @@
             <xpath expr="//field[@name='order_line']/form//label[@for='name']" position="replace"/>
             <xpath expr="//field[@name='order_line']/form//field[@name='name']" position="replace">
                 <group>
-                    <group>
-                        <label for="name"/>
-                        <field nolabel="1" name="name" style="line-height:30px;"/>
-                    </group>
+                    <div>
+                        <label for="name" style="font-weight:bold"/>
+                        <field name="name" style="line-height:30px;"/>
+                    </div>
                     <group>
                         <notebook>
                             <page string="Forecast">
