@@ -1,6 +1,7 @@
 # coding: utf-8
 
-from openerp import SUPERUSER_ID, api, fields, models
+from openerp import _, SUPERUSER_ID, api, fields, models
+from openerp.exceptions import ValidationError
 
 
 class InheritedCrmSaseSection(models.Model):
@@ -19,6 +20,20 @@ class InheritedCrmSaseSection(models.Model):
         'account.journal', 'Journal stock valuation',
         help='It indicates journal to be used when move line is created with'
         'the warehouse of this sale team')
+
+    @api.constrains('default_warehouse')
+    def _unique_default_warehouse(self):
+        """Validate that does not exist more that one sale team with the same
+        default_warehouse
+        """
+        old_sale_team = self.search([
+            ('default_warehouse', '=', self.default_warehouse.id),
+            ('id', '!=', self.id)])
+        if old_sale_team:
+            raise ValidationError(_(
+                '%s already is assigned as default warehouse to %s'
+                ' sale team')
+                % (self.default_warehouse.name, old_sale_team.name))
 
     @api.multi
     def update_users_sales_teams(self):

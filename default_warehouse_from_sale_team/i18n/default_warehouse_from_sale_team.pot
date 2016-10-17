@@ -168,3 +168,9 @@ msgstr ""
 #: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Journal's sale team"
 msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: code:addons/default_warehouse_from_sale_team/models/sales_team.py:33
+#, python-format
+msgid "%s already is assigned as default warehouse to %s sale team"
+msgstr ""
