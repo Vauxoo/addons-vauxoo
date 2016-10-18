@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
                 msg = _('Can not confirm the Sale Order because Partner '
                         'has late payments or has exceeded the credit limit.'
                         '\nPlease cover the late payment or check credit limit'
-                        '\nCreadit Limit : %s') % (so.partner_id.credit_limit)
+                        '\nCredit Limit : %s') % (so.partner_id.credit_limit)
                 raise exceptions.Warning(msg)
 
     @api.multi

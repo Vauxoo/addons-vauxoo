@@ -24,6 +24,6 @@ class AccontInvoice(models.Model):
                 msg = _('Can not validate the Invoice because Partner '
                         'has late payments or has exceeded the credit limit.'
                         '\nPlease cover the late payment or check credit limit'
-                        '\nCreadit'
+                        '\nCredit'
                         ' Limit : %s') % (invoice.partner_id.credit_limit)
                 raise exceptions.Warning(msg)
