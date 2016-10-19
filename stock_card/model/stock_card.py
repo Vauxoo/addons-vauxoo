@@ -15,6 +15,7 @@ class StockCardProduct(models.TransientModel):
     _name = 'stock.card.product'
     _rec_name = 'product_id'
     product_id = fields.Many2one('product.product', string='Product')
+    location_id = fields.Many2one('stock.location', string='Location')
     stock_card_move_ids = fields.One2many(
         'stock.card.move', 'stock_card_product_id', 'Product Moves')
 
@@ -46,7 +47,8 @@ class StockCardProduct(models.TransientModel):
                 self.product_id.cost_method in ('average', 'real')):
             return True
         self.stock_card_move_ids.unlink()
-        self.create_stock_card_lines(self.product_id.id)
+        location_ids = self.location_id.id,
+        self.create_stock_card_lines(self.product_id.id, location_ids)
         return self.action_view_moves()
 
     def _get_quant_values(self, move_id, col='', inner='', where=''):
@@ -329,7 +331,6 @@ class StockCardProduct(models.TransientModel):
         return vals
 
     def create_stock_card_lines(self, product_id, locations_ids=None):
-        # locations_ids = (994,)
         scm_obj = self.env['stock.card.move']
         vals = self._stock_card_move_get(product_id, locations_ids)
         for row in vals['move_ids']:

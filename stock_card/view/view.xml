@@ -13,6 +13,12 @@
                         <h1>
                             <field name="product_id" required="1"/>
                         </h1>
+                        <h1>
+                            <label for="location_id"/>
+                        </h1>
+                        <h1>
+                            <field name="location_id"/>
+                        </h1>
                         <footer>
                             <button
                                 name="stock_card_move_get"
