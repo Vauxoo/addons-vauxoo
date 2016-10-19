@@ -9,9 +9,9 @@
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
 
+from datetime import datetime, timedelta
 from openerp.tests.common import TransactionCase
 from openerp import exceptions
-from datetime import datetime, timedelta
 
 
 class TestCreditLimits(TransactionCase):
