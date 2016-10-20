@@ -14,10 +14,15 @@ class StockCard(models.TransientModel):
 class StockCardProduct(models.TransientModel):
     _name = 'stock.card.product'
     _rec_name = 'product_id'
-    product_id = fields.Many2one('product.product', string='Product')
-    location_id = fields.Many2one('stock.location', string='Location')
+    product_id = fields.Many2one('product.product', string='Product',
+                                 help='Gets the average price from the '
+                                 'warehouse products')
+    warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse',
+                                   help='Gets the average price from the '
+                                   'warehouse products')
     stock_card_move_ids = fields.One2many(
-        'stock.card.move', 'stock_card_product_id', 'Product Moves')
+        'stock.card.move', 'stock_card_product_id', 'Product Moves',
+        help='Product movements')
 
     def _get_fieldnames(self):
         return {
@@ -41,13 +46,25 @@ class StockCardProduct(models.TransientModel):
         product_obj.sudo().browse(product_id).write(field2write)
 
     @api.multi
+    def get_locations(self, warehouse):
+        """ Returns location ids of location that are contained in warehouse
+        :param warehouse: browse record (stock.warehouse)
+        """
+        loc_obj = self.env["stock.location"]
+        locations = loc_obj.search(
+            [('parent_left', '<=', warehouse.view_location_id.parent_right),
+             ('parent_left', '>=', warehouse.view_location_id.parent_left)]).\
+            filtered(lambda r: r.usage != 'view').mapped('id')
+        return locations and tuple(locations) or False
+
+    @api.multi
     def stock_card_move_get(self):
         self.ensure_one()
         if not (self.product_id.valuation == 'real_time' and
                 self.product_id.cost_method in ('average', 'real')):
             return True
         self.stock_card_move_ids.unlink()
-        location_ids = self.location_id.id,
+        location_ids = self.get_locations(self.warehouse_id)
         self.create_stock_card_lines(self.product_id.id, location_ids)
         return self.action_view_moves()
 
