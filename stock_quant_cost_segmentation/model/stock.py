@@ -218,6 +218,20 @@ class StockQuant(models.Model):
             ;''')
         _logger.info('Material Cost equal to Cost on Quant has been set')
 
+        _logger.info('Setting Material Cost = to Cost - Segmentation on Quant')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET material_cost = cost - (
+                landed_cost + production_cost + subcontracting_cost)
+            WHERE
+                cost != 0
+                AND material_cost = 0
+                AND (landed_cost + production_cost + subcontracting_cost) != 0
+                AND cost > (
+                    landed_cost + production_cost + subcontracting_cost)
+            ;''')
+        _logger.info('Material = Cost - Segmentation on Quant has been set')
+
         _logger.info('Updating Segmentation Cost with sum of Segmentation')
         self._cr.execute('''
             UPDATE stock_quant
