@@ -1,4 +1,4 @@
-pandas >= 0.16.2
+pandas == 0.18.0
 cssutils >= 1.0.1
 xlrd == 1.0.0
 tabulate == 0.7.5
