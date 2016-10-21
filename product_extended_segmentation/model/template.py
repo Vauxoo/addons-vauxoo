@@ -395,6 +395,7 @@ class ProductTemplate(models.Model):
             new_price)
         return res
 
+
 class StockCardProduct(models.TransientModel):
     _inherit = 'stock.card.product'
 
@@ -436,7 +437,6 @@ class StockCardProduct(models.TransientModel):
             except OperationalError:
                 # /!\ NOTE: logging the product with the error
                 product_brw._cr.rollback()
-		_logger.info(
+                _logger.info(
                     'Update failed at Product: [%s]', str(product_brw.id))
         return True
-
