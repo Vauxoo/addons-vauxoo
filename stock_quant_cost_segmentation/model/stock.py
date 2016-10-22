@@ -1,12 +1,14 @@
 # coding: utf-8
 
+from __future__ import division
+from datetime import datetime
+import logging
+
 from openerp import models, fields, api
 from openerp import SUPERUSER_ID
 from openerp.tools.float_utils import float_compare, float_round, float_is_zero
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from datetime import datetime
 import openerp.addons.decimal_precision as dp
-import logging
 
 _logger = logging.getLogger(__name__)
 
@@ -31,7 +33,7 @@ class StockMove(models.Model):
         return res
 
     @api.v8  # pylint: disable=W0404
-    def action_done(self):
+    def action_done(self):  # pylint: disable=E0102
         return StockMove.action_done(self._model, self._cr, self._uid,
                                      self._ids, context=self._context)
 
@@ -108,6 +110,25 @@ class StockMove(models.Model):
 
 class StockQuant(models.Model):
     _inherit = "stock.quant"
+    _sql_query_quants_not_fix = '''
+        SELECT
+        COUNT(sq.id)
+        FROM stock_quant AS sq
+        INNER JOIN product_product AS pp ON sq.product_id = pp.id
+        INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+        INNER JOIN ir_property AS ip1 ON (
+        ip1.res_id = 'product.template,' || pt.id::text
+        AND ip1.name = 'cost_method')
+        LEFT JOIN ir_property AS ip2 ON (
+        ip2.res_id = 'product.template,' || pt.id::text
+        AND ip2.name = 'standard_price')
+        WHERE
+        sq.material_cost = 0
+        AND sq.landed_cost = 0
+        AND sq.production_cost = 0
+        AND sq.subcontracting_cost = 0
+        -- AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
+        ;'''
 
     @api.model
     def create(self, vals):
@@ -218,6 +239,20 @@ class StockQuant(models.Model):
             ;''')
         _logger.info('Material Cost equal to Cost on Quant has been set')
 
+        _logger.info('Setting Material Cost = to Cost - Segmentation on Quant')
+        self._cr.execute('''
+            UPDATE stock_quant
+            SET material_cost = cost - (
+                landed_cost + production_cost + subcontracting_cost)
+            WHERE
+                cost != 0
+                AND material_cost = 0
+                AND (landed_cost + production_cost + subcontracting_cost) != 0
+                AND cost > (
+                    landed_cost + production_cost + subcontracting_cost)
+            ;''')
+        _logger.info('Material = Cost - Segmentation on Quant has been set')
+
         _logger.info('Updating Segmentation Cost with sum of Segmentation')
         self._cr.execute('''
             UPDATE stock_quant
@@ -232,25 +267,7 @@ class StockQuant(models.Model):
             ;''')
         _logger.info('Segmentation Cost has been updated')
 
-        self._cr.execute('''
-            SELECT
-            COUNT(sq.id)
-            FROM stock_quant AS sq
-            INNER JOIN product_product AS pp ON sq.product_id = pp.id
-            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
-            INNER JOIN ir_property AS ip1 ON (
-            ip1.res_id = 'product.template,' || pt.id::text
-            AND ip1.name = 'cost_method')
-            LEFT JOIN ir_property AS ip2 ON (
-            ip2.res_id = 'product.template,' || pt.id::text
-            AND ip2.name = 'standard_price')
-            WHERE
-            sq.material_cost = 0
-            AND sq.landed_cost = 0
-            AND sq.production_cost = 0
-            AND sq.subcontracting_cost = 0
-            -- AND ip1.value_text = 'standard'  -- APPLY ONLY ON STANDARD
-            ;''')
+        self._cr.execute(self._sql_query_quants_not_fix)
         res = self._cr.fetchone()
         _logger.info('%s quants not fixed', str(int(res[0])))
 

@@ -22,5 +22,26 @@ self.update_material_cost_on_zero_segmentation(cr, uid, [])
             </field>
         </record>
 
+        <record model="ir.actions.server" id="update_product_segmentation_from_stock_card">
+            <field name="name">Update Segmentation on Average Product from Stock Card</field>
+            <field name="model_id" eval="ref('product.model_product_product')"/>
+            <field name="state">code</field>
+            <field name="condition"></field>
+            <field name="sequence">5</field>
+            <field name="code">
+# Available locals:
+#  - time, datetime, dateutil: Python libraries
+#  - env: Odoo Environement
+#  - model: Model of the record on which the action is triggered
+#  - object: Record on which the action is triggered if there is one, otherwise None
+#  - workflow: Workflow engine
+#  - Warning: Warning Exception to use with raise
+# To return an action, assign: action = {...}
+
+scp_obj = env['stock.card.product']
+scp_obj._update_product_segmentation_from_stock_card()
+            </field>
+        </record>
+
     </data>
 </openerp>

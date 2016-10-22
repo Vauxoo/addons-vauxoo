@@ -28,11 +28,25 @@ from openerp.exceptions import ValidationError
 from openerp.tools.translate import _
 
 
+class PurchaseRequisition(models.Model):
+
+    _inherit = 'purchase.requisition'
+
+    @api.model
+    def _prepare_purchase_order_line(
+            self, requisition, requisition_line, purchase_id, supplier):
+        res = super(PurchaseRequisition, self)._prepare_purchase_order_line(
+            requisition, requisition_line, purchase_id, supplier)
+        purchase = self.env['purchase.order'].browse(purchase_id)
+        next_sequence = len(purchase.order_line) + 1
+        res.update({'sequence': next_sequence})
+        return res
+
+
 class PurchaseOrder(models.Model):
 
     _inherit = 'purchase.order'
 
-    @api.one
     @api.constrains('order_line')
     def _check_order_lines_sequence(self):
         """check that the sequence is unique per purchase order line.
