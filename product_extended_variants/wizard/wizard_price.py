@@ -208,7 +208,7 @@ class WizardPrice(models.Model):
                 _logger.info(msg_ok)
                 if old > new:
                     # TODO: show qty_on_hand
-                    msg_err = 'name: - {name} - There is onhand:- ID: [{prod}] - Old: - {old} - New: - {new}\n'  # noqa
+                    msg_err = 'name: - %(name)s - There is onhand:- ID: [%(prod)s] - Old: - %(old)s - New: - %(new)s\n'  # noqa
                     msg_err_save = msg_err % dict(
                         prod=product.id, name=product.name, new=new, old=old)
                     _logger.error(msg_err_save)
