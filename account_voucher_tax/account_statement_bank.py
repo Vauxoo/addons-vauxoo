@@ -124,33 +124,35 @@ class AccountBankStatementLine(osv.osv):
         if context is None:
             context = {}
 
+        context_2 = context.copy()
         move_line_obj = self.pool.get('account.move.line')
         move_obj = self.pool.get('account.move')
 
-        st_line = self.browse(cr, uid, id, context=context)
+        st_line = self.browse(cr, uid, id, context=context_2)
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
         statement_currency_line = st_line.currency_id.id or False
         st_line_currency_rate = st_line.currency_id and\
             (st_line.amount_currency / st_line.amount) or False
 
-        context['date'] = st_line.date
-        context['st_line_currency_rate'] = st_line_currency_rate
+        context_2['date'] = st_line.date
+        context_2['st_line_currency_rate'] = st_line_currency_rate
 
         vals_move = {
             'date': time.strftime('%Y-%m-%d'),
             'period_id': st_line.statement_id.period_id.id,
             'journal_id': st_line.statement_id.journal_id.id,
         }
-        move_id_old = move_obj.create(cr, uid, vals_move, context)
+        move_id_old = move_obj.create(cr, uid, vals_move, context_2)
 
-        self._get_factor_type(cr, uid, st_line.amount, False, context=context)
+        self._get_factor_type(cr, uid, st_line.amount, False,
+                              context=context_2)
         type = 'sale'
         if st_line.amount < 0:
             type = 'payment'
 
         self._check_moves_to_concile(
-            cr, uid, id, mv_line_dicts, context=context)
+            cr, uid, id, mv_line_dicts, context=context_2)
 
         move_line_rec_ids = self.create_move_line_tax_payment(
             cr, uid, mv_line_dicts, st_line.partner_id.id,
@@ -158,10 +160,10 @@ class AccountBankStatementLine(osv.osv):
             st_line.statement_id.journal_id.id,
             st_line.date, type, st_line.statement_id, company_currency,
             statement_currency, move_id=move_id_old,
-            statement_currency_line=statement_currency_line, context=context)
+            statement_currency_line=statement_currency_line, context=context_2)
 
         res = super(AccountBankStatementLine, self).process_reconciliation(
-            cr, uid, id, mv_line_dicts, context=context)
+            cr, uid, id, mv_line_dicts, context=context_2)
 
         move_line_obj.write(cr, uid, move_line_rec_ids[0],
                             {'move_id': st_line.journal_entry_id.id,
