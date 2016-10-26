@@ -8,6 +8,12 @@
                 <form string="Stock Card Product">
                     <sheet string="Stock Card Product">
                         <h1>
+                            <label for="warehouse_id"/>
+                        </h1>
+                        <h1>
+                            <field name="warehouse_id"/>
+                        </h1>
+                        <h1>
                             <label for="product_id"/>
                         </h1>
                         <h1>

@@ -42,8 +42,8 @@ class StockCardProduct(models.TransientModel):
         )
         return res
 
-    def _get_default_params(self):
-        res = super(StockCardProduct, self)._get_default_params()
+    def _get_default_params(self, product_id, locations_ids=None):
+        res = super(StockCardProduct, self)._get_default_params(product_id, locations_ids)
         res.update({}.fromkeys(SEGMENTATION, 0.0))
         res.update({}.fromkeys(
             ['%s_total' % sgmnt for sgmnt in SEGMENTATION], 0.0))
@@ -194,6 +194,8 @@ class StockCardProduct(models.TransientModel):
         origin_id = move_brw.origin_returned_move_id or move_brw.move_dest_id
         origin_id = origin_id.id
         old_average = (
+            vals.get('global_val') and vals['global_val'].get(origin_id) and
+            vals['global_val'][origin_id]['average'] or
             vals['move_dict'].get(origin_id) and
             vals['move_dict'][origin_id]['average'] or vals['average'])
         vals['move_valuation'] = sum(
@@ -201,6 +203,8 @@ class StockCardProduct(models.TransientModel):
 
         for sgmnt in SEGMENTATION:
             old_average = (
+                vals.get('global_val') and vals['global_val'].get(origin_id) and
+                vals['global_val'][origin_id][sgmnt] or
                 vals['move_dict'].get(origin_id) and
                 vals['move_dict'][origin_id][sgmnt] or
                 vals[sgmnt])
