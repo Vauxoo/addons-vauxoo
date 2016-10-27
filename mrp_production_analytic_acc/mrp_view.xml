@@ -28,7 +28,7 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/group/group/field[@name='move_lines']/tree[@string='Products to Consume']/field[@name='product_uom']" position="after">
+                <xpath expr="//field[@name='move_lines']/tree//field[@name='product_uom']" position="after">
                     <field name="analytic_acc" colspan="2" groups="analytic.group_analytic_accounting"/>
                 </xpath>
             </field>
