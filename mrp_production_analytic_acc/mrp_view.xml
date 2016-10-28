@@ -28,7 +28,7 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/group/group/field[@name='move_lines']/tree[@string='Products to Consume']/field[@name='product_uom']" position="after">
+                <xpath expr="//field[@name='move_lines']/tree//field[@name='product_uom']" position="after">
                     <field name="analytic_acc" colspan="2" groups="analytic.group_analytic_accounting"/>
                 </xpath>
             </field>
@@ -38,7 +38,7 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/group/group/field[@name='move_lines2']/tree[@string='Consumed Products']/field[@name='product_uom']" position="after">
+                <xpath expr="//field[@name='move_lines2']/tree//field[@name='product_uom']" position="after">
                     <field name="analytic_acc" colspan="2" groups="analytic.group_analytic_accounting"/>
                 </xpath>
             </field>
@@ -48,7 +48,7 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/group/group/field[@name='move_created_ids']/tree[@string='Products to Finish']/field[@name='product_uom']" position="after">
+                <xpath expr="//field[@name='move_created_ids']/tree//field[@name='product_uom']" position="after">
                     <field name="analytic_acc" colspan="2" groups="analytic.group_analytic_accounting"/>
                 </xpath>
             </field>
@@ -58,7 +58,7 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/group/group/field[@name='move_created_ids2']/tree[@string='Finished Products']/field[@name='product_id']" position="after">
+                <xpath expr="//field[@name='move_created_ids2']/tree//field[@name='product_id']" position="after">
                     <field name="analytic_acc" colspan="2" groups="analytic.group_analytic_accounting"/>
                 </xpath>
             </field>
