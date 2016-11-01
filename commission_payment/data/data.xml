@@ -1,0 +1,11 @@
+ <openerp>
+     <data noupdate="1">
+
+         <!-- Added Track on commission.payment object -->
+         <function model="ir.model" name="_add_write_patch_model">
+             <function eval="[[('model', '=', 'commission.payment')]]" model="ir.model" name="search"/>
+         </function>
+
+     </data>
+ </openerp>
+

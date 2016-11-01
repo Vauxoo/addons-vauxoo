@@ -72,7 +72,7 @@ class CommissionPayment(osv.Model):
     """
 
     _name = 'commission.payment'
-    _inherit = ['mail.thread', 'message.post.show.all']
+    _inherit = ['mail.thread']
     _description = __doc__
 
     def _get_default_company(self, cr, uid, context=None):
