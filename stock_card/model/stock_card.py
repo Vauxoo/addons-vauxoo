@@ -51,6 +51,8 @@ class StockCardProduct(models.TransientModel):
         :param warehouse: browse record (stock.warehouse)
         """
         loc_obj = self.env["stock.location"]
+        if not warehouse:
+            return False
         locations = loc_obj.search(
             [('parent_left', '<=', warehouse.view_location_id.parent_right),
              ('parent_left', '>=', warehouse.view_location_id.parent_left)]).\
