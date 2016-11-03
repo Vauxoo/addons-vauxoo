@@ -44,7 +44,7 @@ class MessagePostTestLine(osv.Model):
 class MessagePostTest(osv.Model):
 
     _name = 'message.post.test'
-    _inherit = ['message.post.show.all']
+    _inherit = ['mail.thread']
 
     # pylint: disable=W8105
     _columns = {
@@ -64,7 +64,7 @@ class MessagePostTest(osv.Model):
 class MessagePostTestNewApi(models.Model):
 
     _name = 'message.post.test.new.api'
-    _inherit = ['message.post.show.all']
+    _inherit = ['mail.thread']
 
     name = newfields.Char('Name')
     user_id = newfields.Many2one('res.users', 'User')

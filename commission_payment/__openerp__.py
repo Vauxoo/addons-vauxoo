@@ -52,6 +52,7 @@
         "report/layouts.xml",
         "report/template.xml",
         "data/report_paperformat.xml",
+        "data/data.xml",
         "view/commission_report.xml",
         "view/commission_view.xml",
         "view/account_view.xml",
