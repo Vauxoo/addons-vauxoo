@@ -1,9 +1,12 @@
 # coding: utf-8
+
+from __future__ import division
+import datetime
+import logging
+
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
-import datetime
 from openerp.tools.translate import _
-import logging
 
 _logger = logging.getLogger(__name__)
 
@@ -895,8 +898,8 @@ class CommissionPayment(osv.Model):
                 'baremo_comm': bar_dcto_comm,
                 'commission': comm_line,
                 'commission_currency': commission_currency,
-                'currency_id': inv_brw.currency_id and inv_brw.currency_id.id
-                or inv_brw.company_id.currency_id.id,
+                'currency_id': inv_brw.currency_id and
+                inv_brw.currency_id.id or inv_brw.company_id.currency_id.id,
             }, context=context)
 
         return True
@@ -963,8 +966,8 @@ class CommissionPayment(osv.Model):
                 'baremo_comm': bar_dcto_comm,
                 'commission': 0.0,
                 'commission_currency': None,
-                'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
-                or aml_brw.company_id.currency_id.id,
+                'currency_id': aml_brw.currency_id and
+                aml_brw.currency_id.id or aml_brw.company_id.currency_id.id,
             }, context=context)
 
         return True
@@ -1430,8 +1433,8 @@ class CommissionLines(osv.Model):
             'baremo_comm': bar_dcto_comm,
             'commission': comm_line,
             'commission_currency': commission_currency,
-            'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
-            or aml_brw.company_id.currency_id.id,
+            'currency_id': aml_brw.currency_id and aml_brw.currency_id.id or
+            aml_brw.company_id.currency_id.id,
         })
         return True
 
