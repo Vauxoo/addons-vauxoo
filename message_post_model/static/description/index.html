@@ -1,76 +1,67 @@
+<!DOCTYPE html>
+<html>
 <head>
-  <style>
-      .backgrounds{background-color:#fff;color:#a41d35}
-  </style>
+    <title>Message Post Log</title>
+    <meta charset="utf-8" />
 </head>
-<section class="oe_container">
- <div class="oe_row oe_spaced">
-  <h2 class="oe_slogan">
-   Message Post Log
-  </h2>
-  <p class="oe_mt32">
-    This module adds an extended log in your model that appears in the mail.message
-    for each change made in the fields unlike the traditional way in wich Odoo did.
-  </p>
-    <strong>
-    Features
-    </strong>
-  <p class="oe_mt32">
-    The extended log is added to your model's module in the following way:
-  </p>
-  <p>
-        _name = "account.invoice"
-  </p>
-  <p>
-        _inherit = ['account.invoice', 'message.post.show.all']
-  </p>
-    Also, if you need it, there is a testing module called message_post_test to
-    prove the funtionality.
-  </p>
-  <p class="oe_mt32">
-    Requirements:
-  </p>
-  <ul>
-    <li>
-      Go to https://github.com/Vauxoo/addons-vauxoo and download the repo in order to install message_post_model and message_post_test modules.
-    </li>
-  </ul>
- </div>
-</section>
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <div class="oe_span6">
-            <h2 class="oe_slogan">Do you need help?</h2>
-            <h3 class="oe_slogan">
-                Let's offer you the best services!
-            </h3>
-            <p class="oe_mt32 text-center">
-                Contact us by our official channels.
-            </p>
-            <div class="oe_spaced">
-                <ul class="text-center list-inline">
-                    <li>
-                        <a href="https://facebook.com/vauxoo" Target="_blank"><i class="fa fa-facebook-square fa-xs backgrounds"></i></a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/vauxoo" Target="_blank" ><i class="fa fa-twitter-square fa-xs backgrounds"></i></a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/company/vauxoo" Target="_blank"><i class="fa fa-linkedin-square fa-xs backgrounds"></i></a>
-                    </li>
-                    <li>
-                        <a title="Contact us" data-toggle="tooltip" data-placement="left" Target="_blank" href="https://www.vauxoo.com/page/website.contactus"><i class="fa fa-envelope-square fa-xs backgrounds"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="oe_span6">
-            <div class="oe_demo oe_picture oe_screenshot">
-                <a href="https://www.vauxoo.com"  target="_blank"r>
-                    <img src="https://s3.amazonaws.com/s3.vauxoo.com/description_logo.png" width="200" height="auto">
-                </a>
-                <div class="oe_demo_footer oe_centeralign">Meet Us</div>
-            </div>
-        </div>
-    </div>
-</section>
+<body>
+    <h1>Message Post Log</h1>
+    <p>This module adds an extended log in any model with inheritance over an object that create the field message_ids(mail.message) for each change made in the fields of the model unlike the traditional way in wich Odoo did.</p>
+    <section id="features">
+        <h2>Features</h2>
+        <p>We add two server action to add o remove the feature in the model, with this you do not requiere modify the code directly at least that you model does not have a direct relation with mail.message</p>
+        <p>In the ir.model object we added three new fields:</p>
+        <blockquote>
+            <ul>
+                <li>
+                    <img src="https://drive.google.com/uc?export=view&amp;id=0B2kzKLGF6ZvLRFYwcTBYT2ZUQ1E" style="width: 800px; max-width: 100%; height: auto" />
+                </li>
+                <li>Tracked: A boolean to indicate if the model has the track activated</li>
+                <li>Exclude Fields: A many2many field to indicate if you want to exclude of the track some fields related with the model</li>
+                <li>Exclude External Fields: A string to specify fields(database name) that does not have a direct relation with the object. This fields must be separaten by (,) without spaces among them. E.g product_uom_qty,product_uos_qty,name</li>
+            </ul>
+        </blockquote>
+        <ul>
+            <li>To add the track:
+                <img src="https://drive.google.com/uc?export=view&amp;id=0B2kzKLGF6ZvLSWhKOTZFVzRack0" style="width: 800px; max-width: 100%; height: auto" />
+            </li>
+            <li>
+                <dl>
+                    <dt>To remove it:</dt>
+                    <dd>
+                        <img src="https://drive.google.com/uc?export=view&amp;id=0B2kzKLGF6ZvLZ1k5dEpBQUpDVUk" style="width: 800px; max-width: 100%; height: auto" />
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <p>At the moment to add the track over the object in each change that a record has, a message is left in the log</p>
+        <img src="https://drive.google.com/uc?export=view&amp;id=0B2kzKLGF6ZvLdkY3aUpNWWJLYjA" style="width: 800px; max-width: 100%; height: auto" />
+        <p>If you want to exclude some fields of the model to avoid left a message if these fields are changed you can use the field "Exclude Fields" explained previously</p>
+        <img src="https://drive.google.com/uc?export=view&amp;id=0B2kzKLGF6ZvLaUtPUnMxNE9LMDA" style="width: 800px; max-width: 100%; height: auto" />
+        <p>In some case you will need to exclude fields that does not have a direct relation of the main model(The quantity in a line of an order) and these do not apper in the Exclude Fields(many2many with domain). For these fields exist the "Exclude External fields", where you will can specify this fields separate by (,) without spaces among them</p>
+        <img src="https://drive.google.com/uc?export=view&amp;id=0B2kzKLGF6ZvLbUxtQlBhdTItekU" style="width: 800px; max-width: 100%; height: auto" />
+        <p>Also, if you need it, there is a testing module called message_post_test to prove the funtionality.</p>
+    </section>
+    <section id="requirements">
+        <h2>Requirements:</h2>
+        <ul>
+            <li>Go to <a href="https://github.com/Vauxoo/addons-vauxoo">https://github.com/Vauxoo/addons-vauxoo</a> and download the repo in order to install message_post_model and message_post_test modules.</li>
+        </ul>
+    </section>
+    <section id="contributors">
+        <h2>Contributors</h2>
+        <ul>
+            <li>José Morales &lt;<a href="mailto:jose@vauxoo.com">jose@vauxoo.com</a>&gt;</li>
+        </ul>
+    </section>
+    <section id="maintainer">
+        <h2>Maintainer</h2>
+    <a href="https://vauxoo.com">
+            <img src="https://www.vauxoo.com/logo.png" alt="Vauxoo" />
+        </a>
+        <p>This module is maintained by Vauxoo.</p>
+        <p>A latinamerican company that provides training, coaching, development and implementation of enterprise management sytems and bases its entire operation strategy in the use of Open Source Software and its main product is odoo.</p>
+        <p>To contribute to this module, please visit <a href="http://www.vauxoo.com">http://www.vauxoo.com</a>.</p>
+    </section>
+</body>
+</html>
