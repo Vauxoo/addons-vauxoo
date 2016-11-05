@@ -24,5 +24,15 @@
             </field>
         </record>
 
+       <record model="ir.ui.view" id="view_ir_sequence_sale_team">
+            <field name="name">view.ir.sequence.sale.team</field>
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="section_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
