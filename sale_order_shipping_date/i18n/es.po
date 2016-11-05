@@ -1,0 +1,89 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_order_shipping_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-02 03:32+0000\n"
+"PO-Revision-Date: 2016-11-02 03:32+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_shipping_date
+#: help:sale.order,shipping_date:0
+msgid "Date by which the products are sure to be delivered. In contrast to commitment date, not only is taken into account the product lead time, but also the resupply delay, the delivery lead time from supplier and the manufacturing delay"
+msgstr "Fecha en la que los productos estarán seguros de ser entregados. En contraste con la fecha de compromiso, no sólo se tiene en cuenta el plazo de entrega del producto, sino también el tiempo previsto de reabastecimiento, el plazo de entrega del proveedor y el tiempo previsto de fabricación"
+
+#. module: sale_order_shipping_date
+#: selection:stock.warehouse.orderpoint,lead_type:0
+msgid "Day(s) to get the products"
+msgstr "Día(s) para obtener los productos"
+
+#. module: sale_order_shipping_date
+#: selection:stock.warehouse.orderpoint,lead_type:0
+msgid "Day(s) to purchase"
+msgstr "Día(s) de espera para comprar"
+
+#. module: sale_order_shipping_date
+#: field:stock.warehouse.orderpoint,lead_days:0
+msgid "Lead Time"
+msgstr "Tiempo Previsto"
+
+#. module: sale_order_shipping_date
+#: field:stock.warehouse.orderpoint,lead_type:0
+msgid "Lead Type"
+msgstr "Tipo de Previsión"
+
+#. module: sale_order_shipping_date
+#: model:ir.model,name:sale_order_shipping_date.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr "Regla de inventario mínimo"
+
+#. module: sale_order_shipping_date
+#: help:stock.warehouse.orderpoint,lead_days:0
+msgid "Number of days after the orderpoint is triggered to receive the products or to order to the vendor"
+msgstr "Número de días antes de que el punto de pedido sea generado para recibir los productos o para pedirlos al proveedor"
+
+#. module: sale_order_shipping_date
+#: model:ir.model,name:sale_order_shipping_date.model_procurement_order
+msgid "Procurement"
+msgstr "Abastecimiento"
+
+#. module: sale_order_shipping_date
+#: model:ir.model,name:sale_order_shipping_date.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: sale_order_shipping_date
+#: model:ir.model,name:sale_order_shipping_date.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_order_shipping_date
+#: model:ir.model,name:sale_order_shipping_date.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea pedido de venta"
+
+#. module: sale_order_shipping_date
+#: code:addons/sale_order_shipping_date/models/sale.py:73
+#: code:addons/sale_order_shipping_date/tests/test_shipping_date.py:227
+#, python-format
+msgid "The date requested by the customer is sooner than the shipping date. You may be unable to honor the customer's request."
+msgstr "La fecha solicitada por el cliente es mucho antes que la fecha de totalidad. Es posible que no pueda cumplir con la solicitud del cliente."
+
+#. module: sale_order_shipping_date
+#: field:sale.order,shipping_date:0
+msgid "shipping Date"
+msgstr "Fecha de Totalidad"
+
+#. module: sale_order_shipping_date
+#: view:sale.order:sale_order_shipping_date.view_sale_orderfor
+msgid "onchange_requested_date(requested_date, shipping_date)"
+msgstr "onchange_requested_date(requested_date, shipping_date)"
+
