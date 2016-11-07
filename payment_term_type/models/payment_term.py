@@ -57,4 +57,16 @@ class AccountPaymentTerm(models.Model):
     payment_type = fields.Selection(
         [('credit', _('Credit')),
          ('cash', _('Cash'))],
-        string="Payment Type", compute='_compute_payment_type')
+        string="Payment Type", compute='_compute_payment_type',
+        help="Consult the Payment Terms in accounting settings: ( Based on "
+        "quantity of payments or Based on date of payments ) \n "
+        "-Credit: The payment term will be credit type when the payments "
+        "are covered in just two ore more exhibitions (partialities) or \n"
+        "when the payments are covered in just one or more "
+        "exhibitions, but the payments will be done in a different "
+        "day that the sale order confirmation day.\n"
+        "-Cash: The payment term will be cash type when the payments "
+        "have been covered in just one exhibition. without matter the date of "
+        "payment or when the payments have been covered in just "
+        "one exhibition, in the same day that the  sale order be confirmed."
+    )
