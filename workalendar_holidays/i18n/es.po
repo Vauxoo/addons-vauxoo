@@ -1,0 +1,160 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* workalendar_holidays
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-07 17:06+0000\n"
+"PO-Revision-Date: 2016-11-07 17:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: workalendar_holidays
+#: view:wizard.workalendar.holiday.import:workalendar_holidays.view_workalendar_holiday_import
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,country_group_id:0
+msgid "Continent"
+msgstr "Continente"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,country_id:0
+msgid "Country"
+msgstr "País"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: workalendar_holidays
+#: selection:wizard.workalendar.holiday.import,interval_type:0
+msgid "Day(s)"
+msgstr "Día(s)"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,display_name:0
+msgid "Display Name"
+msgstr "Nombre a Mostrar"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,end_date:0
+msgid "End Date"
+msgstr "Fecha Fin"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: workalendar_holidays
+#: view:wizard.workalendar.holiday.import:workalendar_holidays.view_workalendar_holiday_import
+msgid "Import"
+msgstr "Importar"
+
+#. module: workalendar_holidays
+#: model:ir.actions.act_window,name:workalendar_holidays.action_workalendar_holiday_import
+msgid "Import Holidays"
+msgstr "Importar Días Feriados"
+
+#. module: workalendar_holidays
+#: view:wizard.workalendar.holiday.import:workalendar_holidays.view_workalendar_holiday_import
+msgid "Import Public Holidays from"
+msgstr "Import Días Feriados desde"
+
+#. module: workalendar_holidays
+#: view:wizard.workalendar.holiday.import:workalendar_holidays.view_workalendar_holiday_import
+#: field:wizard.workalendar.holiday.import,interval_number:0
+msgid "Interval"
+msgstr "Intervalo"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,__last_update:0
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,write_uid:0
+msgid "Last Updated by"
+msgstr "Última Modificación por"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,write_date:0
+msgid "Last Updated on"
+msgstr "Última Modificación el"
+
+#. module: workalendar_holidays
+#: view:wizard.workalendar.holiday.import:workalendar_holidays.view_workalendar_holiday_import
+msgid "Localization"
+msgstr "Ubicación"
+
+#. module: workalendar_holidays
+#: selection:wizard.workalendar.holiday.import,interval_type:0
+msgid "Month(s)"
+msgstr "Mes(es)"
+
+#. module: workalendar_holidays
+#: model:ir.model,name:workalendar_holidays.model_resource_calendar
+msgid "Resource Calendar"
+msgstr "Horario de Trabajo"
+
+#. module: workalendar_holidays
+#: code:addons/workalendar_holidays/wizards/workalendar_holiday_import.py:87
+#, python-format
+msgid "Sorry, no support for %s continent"
+msgstr "Lo siento, no se encontraron resultados para %s "
+
+#. module: workalendar_holidays
+#: code:addons/workalendar_holidays/wizards/workalendar_holiday_import.py:102
+#, python-format
+msgid "Sorry, no support for country: %s"
+msgstr "Lo siento, no se encontraron resultados para %s "
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,start_date:0
+msgid "Start Date"
+msgstr "Fecha Inicio"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,interval_type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: workalendar_holidays
+#: selection:wizard.workalendar.holiday.import,interval_type:0
+msgid "Week(s)"
+msgstr "Semana(s)"
+
+#. module: workalendar_holidays
+#: field:wizard.workalendar.holiday.import,calendar_id:0
+msgid "Work Time"
+msgstr "Horario de Trabajo"
+
+#. module: workalendar_holidays
+#: selection:wizard.workalendar.holiday.import,interval_type:0
+msgid "Year(s)"
+msgstr "Año(s)"
+
+#. module: workalendar_holidays
+#: view:wizard.workalendar.holiday.import:workalendar_holidays.view_workalendar_holiday_import
+msgid "or"
+msgstr "ó"
+
+#. module: workalendar_holidays
+#: view:wizard.workalendar.holiday.import:workalendar_holidays.view_workalendar_holiday_import
+msgid "until"
+msgstr "hasta"
+
