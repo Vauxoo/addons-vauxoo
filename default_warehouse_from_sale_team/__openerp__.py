@@ -30,8 +30,8 @@
         'security/ir_rule.xml',
         'data/ir_actions_server.xml',
         'data/base_action_rule.xml',
-        'demo/stock_demo.xml',
     ],
     'demo': [
+        'demo/stock_demo.xml',
     ],
 }
