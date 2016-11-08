@@ -105,7 +105,7 @@ class WarehouseDefault(models.Model):
         return super(WarehouseDefault, self).read(
             cr, user, ids, fields=fields_list, context=context, load=load)
 
-    # pylint: disable=funtion-redefined
+    # pylint: disable=E0102
     # this comment is for avoid error to travis by different apis
     @api.v8
     def read(self, fields_list=None, load='_classic_read'):
