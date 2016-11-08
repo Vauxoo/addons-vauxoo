@@ -10,7 +10,7 @@
 ############################################################################
 
 import logging
-
+import pytz
 from dateutil.relativedelta import relativedelta
 from openerp import _, api, fields, models
 from openerp.exceptions import ValidationError
@@ -104,6 +104,7 @@ class WorkalendarHolidayImport(models.TransientModel):
 
     @api.multi
     def holiday_import(self):
+        tz = self._context.get('tz') and pytz.timezone(self._context.get('tz'))
         for wiz in self:
             leaves = self.env['resource.calendar.leaves']
             work_time = wiz.calendar_id
@@ -121,8 +122,9 @@ class WorkalendarHolidayImport(models.TransientModel):
             for holiday_date, holiday_name in public_holidays:
                 utc_dt = fields.Datetime.from_string(
                     fields.Datetime.to_string(holiday_date))
-                user_dt = fields.Datetime.context_timestamp(
-                    self, utc_dt)
+                user_dt = tz and fields.Datetime.context_timestamp(
+                    self, utc_dt).astimezone(tz) or \
+                    fields.Datetime.context_timestamp(self, utc_dt)
                 datetime_from = utc_dt - \
                     relativedelta(seconds=user_dt.utcoffset().total_seconds())
                 datetime_to = datetime_from + relativedelta(days=1) - \
