@@ -1,20 +1,13 @@
-# -*- coding: utf-8 -*-
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: hugo@vauxoo.com
-#    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
-############################################################################
+# coding: utf-8
+# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "Partner Credit Limit",
-    "version": "8.0.0.1.0",
+    "version": "9.0.0.1.0",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "depends": [
         "account",
         "sale",
@@ -22,7 +15,6 @@
     "demo": [],
     "data": [
         "view/invoice_workflow.xml",
-        "view/sale_order_view.xml",
         "view/partner_view.xml",
     ],
     "installable": True,

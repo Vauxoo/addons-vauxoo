@@ -1,35 +1,28 @@
-# -*- coding: utf-8 -*-
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: hugo@vauxoo.com
-#    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
-############################################################################
+# coding: utf-8
+# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp.tests.common import TransactionCase
-from openerp import exceptions
 from datetime import datetime, timedelta
+from openerp import exceptions
+from . import common
 
 
-class TestSalesCreditLimits(TransactionCase):
+class TestSalesCreditLimits(common.TestCommon):
     """This test Validate credit limit, late pyaments and credit
         overloaded.
     """
     def setUp(self):
         super(TestSalesCreditLimits, self).setUp()
-        self.account_invoice = self.env['account.invoice']
+        self._load('account', 'test', 'account_minimal_test.xml')
         self.sale_order = self.env['sale.order']
         self.sale_order_line = self.env['sale.order.line']
-        self.account_invoice_line = self.env['account.invoice.line']
         self.payment_term_credit = self.env.ref(
             'account.account_payment_term_advance')
 
         self.partner_china = self.env.ref("base.res_partner_3")
         self.journal_id = self.env.ref("account.bank_journal")
         self.account_id = self.env.ref("account.a_recv")
+        self.account_sale_id = self.env.ref("account.a_sale")
         self.product_id = self.env.ref("product.product_product_6")
 
     def test_credit_limit_overloaded(self):
@@ -44,10 +37,10 @@ class TestSalesCreditLimits(TransactionCase):
         # sale order with amount total of 600.00
         sale_id = self.sale_order.create(
             {'partner_id': self.partner_china.id,
-             'payment_term': self.payment_term_credit.id})
+             'payment_term_id': self.payment_term_credit.id})
         self.sale_order_line.create(
             {'product_id': self.product_id.id,
-             'product_uos_qty': 1,
+             'product_uom_qty': 1,
              'price_unit': 600,
              'order_id': sale_id.id,
              'name': 'product that cost 100', })
@@ -56,7 +49,7 @@ class TestSalesCreditLimits(TransactionCase):
         # credit_limit = 500
         # amount_total = 600
         with self.assertRaises(exceptions.Warning):
-            sale_id.action_button_confirm()
+            sale_id.action_confirm()
 
     def test_partner_with_late_payments(self):
         """This test validate that the partner has not late payments
@@ -73,10 +66,11 @@ class TestSalesCreditLimits(TransactionCase):
              'account_id': self.account_id.id,
              'date_invoice': (datetime.now() - timedelta(days=2)).
                 strftime("%Y-%m-%d"),
-             'payment_term': self.payment_term_credit.id,
+             'payment_term_id': self.payment_term_credit.id,
              'journal_id': self.journal_id.id, })
         self.account_invoice_line.create(
             {'product_id': self.product_id.id,
+             'account_id': self.account_sale_id.id,
              'quantity': 4,
              'price_unit': 100,
              'invoice_id': invoice_id.id,
@@ -91,10 +85,10 @@ class TestSalesCreditLimits(TransactionCase):
         # sale order with amount total of 600.00
         sale_id = self.sale_order.create(
             {'partner_id': self.partner_china.id,
-             'payment_term': self.payment_term_credit.id})
+             'payment_term_id': self.payment_term_credit.id})
         self.sale_order_line.create(
             {'product_id': self.product_id.id,
-             'product_uos_qty': 1,
+             'product_uom_qty': 1,
              'price_unit': 200,
              'order_id': sale_id.id,
              'name': 'product that cost 100', })
@@ -102,4 +96,4 @@ class TestSalesCreditLimits(TransactionCase):
         # couse there are late payments
         # since the invoice 1 was validate with curent day minus 2 days
         with self.assertRaises(exceptions.Warning):
-            sale_id.action_button_confirm()
+            sale_id.action_confirm()

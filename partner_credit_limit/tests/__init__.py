@@ -1,11 +1,6 @@
-# -*- coding: utf-8 -*-
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: hugo@vauxoo.com
-#    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
-############################################################################
-from . import test_invoice_credit_limit, test_sale_credit_limit
+# coding: utf-8
+# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+from . import common
+from . import test_invoice_credit_limit
+from . import test_sale_credit_limit
