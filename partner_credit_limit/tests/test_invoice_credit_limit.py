@@ -1,33 +1,26 @@
-# -*- coding: utf-8 -*-
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: hugo@vauxoo.com
-#    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
-############################################################################
+# coding: utf-8
+# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp.tests.common import TransactionCase
-from openerp import exceptions
 from datetime import datetime, timedelta
+from openerp import exceptions
+from . import common
 
 
-class TestCreditLimits(TransactionCase):
+class TestCreditLimits(common.TestCommon):
     """This test Validate credit limit, late pyaments and credit
         overloaded.
     """
     def setUp(self):
         super(TestCreditLimits, self).setUp()
-        self.account_invoice = self.env['account.invoice']
-        self.account_invoice_line = self.env['account.invoice.line']
+        self._load('account', 'test', 'account_minimal_test.xml')
         self.payment_term_credit = self.env.ref(
             'account.account_payment_term_advance')
 
         self.partner_china = self.env.ref("base.res_partner_3")
         self.journal_id = self.env.ref("account.bank_journal")
         self.account_id = self.env.ref("account.a_recv")
+        self.account_sale_id = self.env.ref("account.a_sale")
         self.product_id = self.env.ref("product.product_product_6")
 
     def test_credit_limit_overloaded(self):
@@ -43,10 +36,11 @@ class TestCreditLimits(TransactionCase):
         invoice_id = self.account_invoice.create(
             {'partner_id': self.partner_china.id,
              'account_id': self.account_id.id,
-             'payment_term': self.payment_term_credit.id,
+             'payment_term_id': self.payment_term_credit.id,
              'journal_id': self.journal_id.id, })
         self.account_invoice_line.create(
             {'product_id': self.product_id.id,
+             'account_id': self.account_sale_id.id,
              'quantity': 6,
              'price_unit': 100,
              'invoice_id': invoice_id.id,
@@ -75,10 +69,11 @@ class TestCreditLimits(TransactionCase):
              'account_id': self.account_id.id,
              'date_invoice': (
                  datetime.now() - timedelta(days=2)).strftime("%Y-%m-%d"),
-             'payment_term': self.payment_term_credit.id,
+             'payment_term_id': self.payment_term_credit.id,
              'journal_id': self.journal_id.id, })
         self.account_invoice_line.create(
             {'product_id': self.product_id.id,
+             'account_id': self.account_sale_id.id,
              'quantity': 4,
              'price_unit': 100,
              'invoice_id': invoice_id.id,
@@ -94,10 +89,11 @@ class TestCreditLimits(TransactionCase):
         invoice_id2 = self.account_invoice.create(
             {'partner_id': self.partner_china.id,
              'account_id': self.account_id.id,
-             'payment_term': self.payment_term_credit.id,
+             'payment_term_id': self.payment_term_credit.id,
              'journal_id': self.journal_id.id, })
         self.account_invoice_line.create(
             {'product_id': self.product_id.id,
+             'account_id': self.account_sale_id.id,
              'quantity': 2,
              'price_unit': 100,
              'invoice_id': invoice_id2.id,
