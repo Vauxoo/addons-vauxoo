@@ -6,32 +6,34 @@
             <field name="res_model">account.move.line</field>
             <field name="context">{'search_default_partner_id': [active_id], 'default_partner_id': active_id}</field>
             <field name="domain">[
-                ('account_id.type', '=', 'receivable'),
-                ('state', '!=', 'draft'), ('reconcile_id', '=', False),
+                ('account_id.internal_type', '=', 'receivable'),
+                ('move_id.state', '!=', 'draft'), ('reconciled', '=', False),
                 ('date_maturity','&lt;',time.strftime('%Y-%m-%d %H:%M:%S'))
             ]</field>
         </record>
+
         <record id="view_category_property_form" model="ir.ui.view">
             <field name="name">partner.over.credit.limit.form.inherit</field>
             <field name="model">res.partner</field>
             <field name="type">form</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
             <field name="groups_id" eval="[(4, ref('account.group_account_manager'))]"/>
             <field name="arch" type="xml">
-                <field name="credit_limit" position="before">
-                    <field name="credit_overloaded" invisible='1'/>
-                    <field name="overdue_credit" invisible='1'/>
-                    <field name="allowed_sale"/>
-                    <field name="grace_payment_days"/>
-                </field>
-                <xpath expr="//div[@name='buttons']" position="inside">
+                <div name="button_box" position="inside">
                     <button
                         type="action" class="oe_stat_button"
                         name="%(partner_credit_limit.action_account_moves_late_payments)d"
                         icon="fa-list"
                         string="Late Payments">
                     </button>
-                </xpath>
+                </div>
+                <field name="credit" position="after">
+                    <field name="credit_limit"/>
+                    <field name="credit_overloaded" invisible='1'/>
+                    <field name="overdue_credit" invisible='1'/>
+                    <field name="allowed_sale"/>
+                    <field name="grace_payment_days"/>
+                </field>
             </field>
         </record>
     </data>

@@ -25,7 +25,7 @@ msgstr "Venta a crédito permitida"
 #, python-format
 msgid "Can not confirm the Sale Order because Partner has late payments or has exceeded the credit limit.\n"
 "Please cover the late payment or check credit limit\n"
-"Creadit Limit : %s"
+"Credit Limit : %s"
 msgstr "No se puede confirmar la orden de venta por que el cliente tiene pagos atrasados o tiene un límite de crédito excedido.\n"
 "Por favor cubrir los pagos atrasados o revisar el límite de crédito.\n"
 "Límite de Crédito : %s"
@@ -35,7 +35,7 @@ msgstr "No se puede confirmar la orden de venta por que el cliente tiene pagos a
 #, python-format
 msgid "Can not validate the Invoice because Partner has late payments or has exceeded the credit limit.\n"
 "Please cover the late payment or check credit limit\n"
-"Creadit Limit : %s"
+"Credit Limit : %s"
 msgstr "No se puede validar la Factura porque el cliente tiene pagos atrasados o tiene un límite de crédito excedido.\n"
 "Por favor cubrir los pagos atrasados o revisar el límite de crédito.\n"
 "Límite de Crédito : %s"
