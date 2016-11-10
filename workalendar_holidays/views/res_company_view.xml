@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="res_company_work_time_inherit" model="ir.ui.view">
+            <field name="name">res.company.work.time.inherit</field>
+            <field name="model">res.company</field>
+            <field name="priority">50</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='logistics_grp']" position="inside">
+                    <field name="logistic_calendar_id" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

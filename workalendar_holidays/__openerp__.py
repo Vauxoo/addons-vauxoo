@@ -28,6 +28,7 @@
     "license": "AGPL-3",
     "depends": [
         "resource",
+        "procurement",
     ],
     "external_dependencies": {
         'python': ['workalendar']
@@ -36,6 +37,7 @@
     "data": [
         "data/res_country_data.xml",
         "wizards/workalendar_holiday_import.xml",
+        "views/res_company_view.xml",
     ],
     "test": [],
     "js": [],
