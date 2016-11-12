@@ -62,6 +62,8 @@ class WizardPrice(models.Model):
         parents = set([r[0] for r in result if r[0] is not None])
         children = set([r[1] for r in result if r[1] is not None])
         root = list(parents - children)
+        if not root:
+            return []
 
         cr.execute('''
             SELECT DISTINCT id

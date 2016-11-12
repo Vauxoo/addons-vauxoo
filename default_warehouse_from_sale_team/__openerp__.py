@@ -24,13 +24,14 @@
     'data': [
         'views/sales_team_view.xml',
         'views/res_users_view.xml',
+        'views/stock_view.xml',
         'security/ir.model.access.csv',
         'security/res_groups.xml',
         'security/ir_rule.xml',
         'data/ir_actions_server.xml',
         'data/base_action_rule.xml',
-        'demo/stock_demo.xml',
     ],
     'demo': [
+        'demo/stock_demo.xml',
     ],
 }

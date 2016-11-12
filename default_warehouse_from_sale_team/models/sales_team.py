@@ -105,6 +105,8 @@ class WarehouseDefault(models.Model):
         return super(WarehouseDefault, self).read(
             cr, user, ids, fields=fields_list, context=context, load=load)
 
+    # pylint: disable=function-redefined
+    # this comment is for avoid error to travis by different apis
     @api.v8
     def read(self, fields_list=None, load='_classic_read'):
         """This method is overwrite because we need to propagate SUPERUSER_ID
@@ -114,3 +116,23 @@ class WarehouseDefault(models.Model):
             # we need to change to SUPERUSER_ID to allow access to read
             self = self.sudo()
         return super(WarehouseDefault, self).read(fields_list, load)
+
+    @api.model
+    def create(self, vals):
+        sequence_obj = self.env['ir.sequence']
+        pick_type_obj = self.env['stock.picking.type']
+        if vals.get('warehouse_id', 'picking_type_id'):
+            code = self._name
+            if code == 'purchase.requisition':
+                code = 'purchase.order.requisition'
+            pick_warehouse_id = pick_type_obj.browse(
+                vals.get('picking_type_id')).warehouse_id.id
+            warehouse_id = vals.get('warehouse_id', pick_warehouse_id)
+            section_id = self.env['crm.case.section'].search(
+                [('default_warehouse', '=', warehouse_id)], limit=1)
+            sequence_id = sequence_obj.search(
+                [('section_id', '=', section_id.id),
+                 ('code', '=', code)], limit=1)
+            if sequence_id:
+                vals['name'] = sequence_obj.get_id(sequence_id.id, 'id')
+        return super(WarehouseDefault, self).create(vals)

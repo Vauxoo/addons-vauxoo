@@ -28,7 +28,11 @@ class StockQuant(models.Model):
             StockQuant, self)._get_accounting_data_for_valuation(move)
 
         sale_team = self.env['crm.case.section'].search(
-            [('default_warehouse', '=', move.warehouse_id.id)], limit=1)
+            [('default_warehouse',
+              '=',
+              move.warehouse_id.id if move.warehouse_id
+              else move.picking_type_id.warehouse_id.id)],
+            limit=1)
 
         if sale_team.journal_stock_id:
             journal_id = sale_team.journal_stock_id.id
