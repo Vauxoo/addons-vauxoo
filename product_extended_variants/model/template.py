@@ -102,8 +102,9 @@ class ProductTemplate(models.Model):
                     sl.id
                 FROM stock_quant sq
                 INNER JOIN stock_location sl ON sl.id = sq.location_id
+                INNER JOIN product_product pp ON pp.id = sq.product_id
                 WHERE
-                    sq.product_id = %s
+                    pp.product_tmpl_id = %s
                     AND sl.usage = 'internal'
                     AND sl.company_id = %s
                 ;""", (rec_id, user_company_id))
