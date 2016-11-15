@@ -88,7 +88,8 @@ class WarehouseDefault(models.Model):
                  ('ttype', '=', 'many2one')])
             names_list = list(set([field.name for field in fields_data]))
             defaults.update(
-                {name: warehouse_id for name in names_list})
+                {name: warehouse_id for name in names_list
+                 if defaults.get(name)})
         return defaults
 
     @api.v7
