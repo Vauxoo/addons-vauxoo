@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <!-- this demo data is the same found in odoo-9.0/addons/account/test/account_minimal_test.xml -->
+        <record id="a_pay" model="account.account">
+            <field name="code">X1111</field>
+            <field name="name">Creditors - (test)</field>
+            <field eval="True" name="reconcile"/>
+            <field name="user_type_id" ref="account.data_account_type_payable"/>
+        </record>
+        <record id="a_expense" model="account.account">
+            <field name="code">X2120</field>
+            <field name="name">Expenses (datetime invoices test)</field>
+            <field name="user_type_id" ref="account.data_account_type_expenses"/>
+            <field name="tag_ids" eval="[(6,0,[ref('account.account_tag_operating')])]"/>
+        </record>
+        <record id="expenses_journal" model="account.journal">
+            <field name="name">Vendor Bills - Test</field>
+            <field name="code">TEXJ</field>
+            <field name="type">purchase</field>
+            <field name="default_debit_account_id" ref="a_expense"/>
+            <field name="default_credit_account_id" ref="a_expense"/>
+            <field name="refund_sequence" eval="True"/>
+        </record>
+        <record id="invoice_1" model="account.invoice">
+            <field name="date_due" eval="time.strftime('%Y')+'-01-30'"/>
+            <field name="journal_id" ref="expenses_journal"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="reference_type">none</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">draft</field>
+            <field name="type">in_invoice</field>
+            <field name="account_id" ref="a_pay"/>
+            <field eval="0" name="reconciled"/>
+            <field name="date_invoice" eval="time.strftime('%Y')+'-01-01'"/>
+            <field eval="14.0" name="amount_untaxed"/>
+            <field eval="14.0" name="amount_total"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+        </record>
+        <record id="invoice_1_line_1" model="account.invoice.line">
+            <field name="invoice_id" ref="invoice_1"/>
+            <field name="account_id" ref="a_expense"/>
+            <field name="price_unit" eval="10.0" />
+            <field name="price_subtotal" eval="10.0" />
+            <field name="company_id" ref="base.main_company"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="quantity" eval="1.0" />
+            <field name="name">Toner Cartridge</field>
+        </record>
+    </data>
+</openerp>
