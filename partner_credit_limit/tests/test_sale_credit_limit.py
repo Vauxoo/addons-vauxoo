@@ -26,11 +26,14 @@ class TestSalesCreditLimits(TransactionCase):
         self.account_invoice_line = self.env['account.invoice.line']
         self.payment_term_credit = self.env.ref(
             'account.account_payment_term_advance')
+        self.pricelist = self.env.ref('product.list0')
 
         self.partner_china = self.env.ref("base.res_partner_3")
         self.journal_id = self.env.ref("account.bank_journal")
         self.account_id = self.env.ref("account.a_recv")
         self.product_id = self.env.ref("product.product_product_6")
+        self.mxn_currency = self.env.ref('base.MXN')
+        self.eur_currency = self.env.ref('base.EUR')
 
     def test_credit_limit_overloaded(self):
         """This test validate the partner has credit overloaded
@@ -55,6 +58,37 @@ class TestSalesCreditLimits(TransactionCase):
         # credit limit exceded
         # credit_limit = 500
         # amount_total = 600
+        with self.assertRaises(exceptions.Warning):
+            sale_id.action_button_confirm()
+
+    def test_credit_limit_overloaded_with_diferent_currency(self):
+        """This test validate when sale exceeds the credit limit because it is
+        in a different currency of sale company currency, therefore, conversion
+        must be done
+        """
+        # set credit limit in 600
+        self.partner_china.credit_limit = 600.00
+
+        # sale order with amount total of 600.00, the same of partner credit
+        # limit, but when conversion is done, this amount must exceeds partner
+        # credit limit
+        sale_id = self.sale_order.create(
+            {'partner_id': self.partner_china.id,
+             'pricelist_id': self.pricelist.id,
+             'payment_term': self.payment_term_credit.id})
+        self.sale_order_line.create(
+            {'product_id': self.product_id.id,
+             'product_uos_qty': 1,
+             'price_unit': 600,
+             'order_id': sale_id.id,
+             'name': 'product that cost 100', })
+
+        sale_id.company_id.write({'currency_id': self.mxn_currency.id})
+        # Sale currency must be EUR and company currency must be MXN
+        self.assertNotEqual(sale_id.currency_id,
+                            sale_id.company_id.currency_id)
+        # should not confirm sale order
+        # credit limit exceded when conversion is done from EUR to MXN
         with self.assertRaises(exceptions.Warning):
             sale_id.action_button_confirm()
 
