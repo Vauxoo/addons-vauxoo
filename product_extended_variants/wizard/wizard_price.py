@@ -50,17 +50,27 @@ class WizardPrice(models.Model):
         """
         cr.execute('''
             SELECT
-            DISTINCT mb.product_id AS pp1,
-                     mbl.product_id AS pp2
+            DISTINCT mb.product_tmpl_id AS pp1,
+                    pp.product_tmpl_id AS pp2
             FROM mrp_bom AS mb
             INNER JOIN mrp_bom_line as mbl ON mbl.bom_id = mb.id
-            WHERE mb.product_id IS NOT NULL AND mb.active = True;
+            INNER JOIN product_product as pp ON pp.id = mbl.product_id
+            WHERE mb.active = True
+            ORDER BY pp1;
                 ''')
         result = cr.fetchall()
         parents = set([r[0] for r in result if r[0] is not None])
         children = set([r[1] for r in result if r[1] is not None])
         root = list(parents - children)
-        return root
+        if not root:
+            return []
+
+        cr.execute('''
+            SELECT DISTINCT id
+            FROM product_product
+            WHERE product_tmpl_id IN %s''', (tuple(root),))
+        root = cr.fetchall()
+        return list(set(res[0] for res in root))
 
     def execute_cron_splited(self, cr, uid, ids=None, number=10, context=None):
         """TODO: Separate in some more readable methods.
@@ -208,7 +218,7 @@ class WizardPrice(models.Model):
                 _logger.info(msg_ok)
                 if old > new:
                     # TODO: show qty_on_hand
-                    msg_err = 'name: - {name} - There is onhand:- ID: [{prod}] - Old: - {old} - New: - {new}\n'  # noqa
+                    msg_err = 'name: - %(name)s - There is onhand:- ID: [%(prod)s] - Old: - %(old)s - New: - %(new)s\n'  # noqa
                     msg_err_save = msg_err % dict(
                         prod=product.id, name=product.name, new=new, old=old)
                     _logger.error(msg_err_save)

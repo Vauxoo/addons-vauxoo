@@ -85,26 +85,33 @@ class ProductTemplate(models.Model):
     def do_change_standard_price(self, cr, uid, ids, new_price, context=None):
         """ Changes the Standard Price of Product and creates an account move
         accordingly."""
-        location_obj = self.pool.get('stock.location')
         move_obj = self.pool.get('account.move')
         move_line_obj = self.pool.get('account.move.line')
         if context is None:
             context = {}
         user_company_id = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.id
-        loc_ids = location_obj.search(cr, uid,
-                                      [('usage', '=', 'internal'),
-                                       ('company_id', '=', user_company_id)])
         for rec_id in ids:
             datas = self.get_product_accounts(cr, uid, rec_id, context=context)
             diff = self.browse(
                 cr, uid, rec_id, context=context).standard_price - new_price
             if not diff:
                 continue
-            for location in location_obj.browse(cr, uid, loc_ids,
-                                                context=context):
+            cr.execute("""
+                SELECT DISTINCT
+                    sl.id
+                FROM stock_quant sq
+                INNER JOIN stock_location sl ON sl.id = sq.location_id
+                INNER JOIN product_product pp ON pp.id = sq.product_id
+                WHERE
+                    pp.product_tmpl_id = %s
+                    AND sl.usage = 'internal'
+                    AND sl.company_id = %s
+                ;""", (rec_id, user_company_id))
+            loc_ids = [val[0] for val in cr.fetchall()]
+            for location_id in loc_ids:
                 contextc = context.copy()
-                contextc.update({'location': location.id,
+                contextc.update({'location': location_id,
                                  'compute_child': False})
                 product = self.browse(cr, uid, rec_id, context=contextc)
 
@@ -117,7 +124,7 @@ class ProductTemplate(models.Model):
                         code=prod_variant.default_code, name=prod_variant.name)
                     move_vals = {
                         'journal_id': datas['stock_journal'],
-                        'company_id': location.company_id.id,
+                        'company_id': user_company_id,
                         'ref': ref,
                     }
                     move_id = move_obj.create(

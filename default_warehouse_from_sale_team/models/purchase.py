@@ -6,6 +6,7 @@ from openerp import models, api
 class DefaultPickingType(models.Model):
 
     _name = 'default.picking.type'
+    _inherit = ['default.warehouse']
 
     @api.model
     def default_get(self, fields_list):

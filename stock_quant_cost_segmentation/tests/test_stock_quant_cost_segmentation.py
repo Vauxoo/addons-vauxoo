@@ -63,23 +63,7 @@ class TestsStockQuantCostSegmentation(TestStockCommon):
 
     def test_04_quants_segmentation_initialization(self):
         self.quant.initializing_quant_segmentation()
-        self.cr.execute('''
-            SELECT
-            COUNT(sq.id)
-            FROM stock_quant AS sq
-            INNER JOIN product_product AS pp ON sq.product_id = pp.id
-            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
-            INNER JOIN ir_property AS ip1 ON (
-            ip1.res_id = 'product.template,' || pt.id::text
-            AND ip1.name = 'cost_method')
-            LEFT JOIN ir_property AS ip2 ON (
-            ip2.res_id = 'product.template,' || pt.id::text
-            AND ip2.name = 'standard_price')
-            WHERE
-            sq.material_cost = 0
-            AND sq.landed_cost = 0
-            AND sq.production_cost = 0
-            AND sq.subcontracting_cost = 0;''')
+        self.cr.execute(self.quant._sql_query_quants_not_fix)
         res = self.cr.fetchone()
         quants_qty = int(res[0])
         self.assertEquals(quants_qty, 0, "Quant haven't fixed")

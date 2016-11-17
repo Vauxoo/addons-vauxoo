@@ -2,9 +2,9 @@
 <openerp>
     <data noupdate="1">
 
-           <record model="ir.actions.server" id="update_material_cost_on_zero_segmentation">
-            <field name="name">Update Material Cost on Zero Segmentation</field>
-            <field name="model_id" eval="ref('product.model_product_product')"/>
+       <record id="add_track_ir_model" model="ir.actions.server">
+            <field name="name">Add Tracking</field>
+            <field name="model_id" eval="ref('base.model_ir_model')"/>
             <field name="state">code</field>
             <field name="condition"></field>
             <field name="sequence">5</field>
@@ -17,14 +17,13 @@
 #  - workflow: Workflow engine
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
-
-self.update_material_cost_on_zero_segmentation(cr, uid, [])
+self._add_write_patch_model(cr, uid, context.get('active_ids'))
             </field>
         </record>
 
-        <record model="ir.actions.server" id="update_product_segmentation_from_stock_card">
-            <field name="name">Update Segmentation on Average Product from Stock Card</field>
-            <field name="model_id" eval="ref('product.model_product_product')"/>
+       <record id="remove_track_ir_model" model="ir.actions.server">
+            <field name="name">Remove Tracking</field>
+            <field name="model_id" eval="ref('base.model_ir_model')"/>
             <field name="state">code</field>
             <field name="condition"></field>
             <field name="sequence">5</field>
@@ -37,11 +36,15 @@ self.update_material_cost_on_zero_segmentation(cr, uid, [])
 #  - workflow: Workflow engine
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
-
-scp_obj = env['stock.card.product']
-scp_obj._update_product_segmentation_from_stock_card()
+self._remove_patch_model(cr, uid, context.get('active_ids'))
             </field>
         </record>
+
+        <!-- Creating then buttons in More Button -->
+
+        <function model="ir.actions.server"
+            name="create_action"
+            eval="[[ref('add_track_ir_model'), ref('remove_track_ir_model')]]"/>
 
     </data>
 </openerp>

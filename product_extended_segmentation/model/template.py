@@ -22,6 +22,7 @@
 from __future__ import division
 
 import logging
+from psycopg2 import OperationalError
 from openerp import api, models
 from openerp.addons.product import _common
 from openerp.tools import float_is_zero
@@ -393,3 +394,49 @@ class ProductTemplate(models.Model):
         res = super(ProductTemplate, self).do_change_standard_price(
             new_price)
         return res
+
+
+class StockCardProduct(models.TransientModel):
+    _inherit = 'stock.card.product'
+
+    def _update_product_segmentation_from_stock_card(self):
+        _logger.info('Update Segmentation on Average Product from Stock Card')
+        msglog = 'Computing segmentation fields for product: [%s]. %s/%s'
+
+        product_obj = self.env['product.product']
+        count = 0
+
+        product_brws = product_obj.search([('cost_method', '=', 'average')])
+        total = len(product_brws)
+        _logger.info('Cron Job will compute %s products', total)
+
+        for product_brw in product_brws:
+
+            count += 1
+            _logger.info(msglog, str(product_brw.id), str(total), str(count))
+
+            vals = self._stock_card_move_get(product_brw.id)
+            avg_fn = self.get_average(vals)
+            vals.clear()
+
+            if not any(avg_fn):
+                continue
+
+            vals2wrt = {}
+            for key, val in avg_fn.iteritems():
+                if key == 'average':
+                    continue
+                vals2wrt['%s_cost' % key] = val
+            avg_fn.clear()
+
+            product_brw.write(vals2wrt)
+            vals2wrt.clear()
+
+            try:
+                product_brw._cr.commit()
+            except OperationalError:
+                # /!\ NOTE: logging the product with the error
+                product_brw._cr.rollback()
+                _logger.info(
+                    'Update failed at Product: [%s]', str(product_brw.id))
+        return True

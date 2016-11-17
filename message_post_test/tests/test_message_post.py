@@ -14,26 +14,30 @@ class TestMessagePost(TransactionCase):
         self.message = self.env['mail.message']
         self.trans = self.env['ir.translation']
 
+    def get_string_by_field(self, source_obj, field):
+        desc = source_obj.fields_get([field])
+        desc = desc and desc.get(field, {})
+        desc = desc and desc.get('string', '') or ''
+        return desc.encode('utf-8', 'ignore')
+
     def test_01_log_git_flow_message_test(self):
         """Testing the messages in the test model
         """
         i = 0
         for main_model, line_model in self.test_models:
             i += 1
+            ir_model = self.env['ir.model'].\
+                search([('model', '=', main_model)])
+            ir_model._add_write_patch_model()
             message_test = self.env[main_model]
+
             message_test_line = self.env[line_model]
-            user_id_field = message_test.get_string_by_field(message_test,
-                                                             'user_id')
-            number_field = message_test.get_string_by_field(message_test,
-                                                            'number')
-            line_ids_field = message_test.get_string_by_field(message_test,
-                                                              'line_ids')
-            user_ids_field = message_test.get_string_by_field(message_test,
-                                                              'user_ids')
-            check_field = message_test.get_string_by_field(message_test,
-                                                           'check')
-            select_field = message_test.get_string_by_field(message_test,
-                                                            'select')
+            user_id_field = self.get_string_by_field(message_test, 'user_id')
+            number_field = self.get_string_by_field(message_test, 'number')
+            line_ids_field = self.get_string_by_field(message_test, 'line_ids')
+            user_ids_field = self.get_string_by_field(message_test, 'user_ids')
+            check_field = self.get_string_by_field(message_test, 'check')
+            select_field = self.get_string_by_field(message_test, 'select')
             user_1 = self.user.create({'name': 'Test 1',
                                        'login': 'test%s' % str(1 + i)}).id
             user_2 = self.user.create({'name': 'Test 2 ó%á',
@@ -133,6 +137,23 @@ class TestMessagePost(TransactionCase):
             self.assertGreaterEqual(len(message_ids),
                                     1,
                                     "The last changes were not registred")
+            ir_model._remove_patch_model()
+            # Added new lines and modifitying simples fields
+            message_test_id.write({
+                'number': 200,
+                })
+
+            message_ids = self.message.search(
+                [
+                    ('res_id', '=', message_test_id.id),
+                    ('model', '=', main_model),
+                    ('body', 'ilike', '%' + number_field + '%'),
+                    ('body', 'ilike', '%' + '200' + '%'),
+                ])
+
+            self.assertGreaterEqual(len(message_ids),
+                                    0,
+                                    "The last change was registred")
 
     def test_02_log_git_flow_message_lang_test(self):
         """Testing the message with another lang configured
