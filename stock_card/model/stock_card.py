@@ -183,8 +183,11 @@ class StockCardProduct(models.TransientModel):
         old_average = (
             vals['move_dict'].get(origin_id) and
             vals['move_dict'][origin_id]['average'] or vals['average'])
+        # /!\ NOTE: Normalize this computation
         vals['move_valuation'] = sum(
-            [old_average * qnt['qty'] for qnt in qntval])
+            [old_average * qnt['qty'] for qnt in qntval] +
+            [dquant.cost * move_brw.product_qty
+             for dquant in move_brw.discrete_ids])
         return True
 
     def _get_move_average(self, row, vals):

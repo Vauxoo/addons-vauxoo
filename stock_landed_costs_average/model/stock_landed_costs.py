@@ -31,6 +31,16 @@ class StockLandedCost(models.Model):
         copy=False,
     )
 
+    @api.model
+    def _get_discrete_values(self, line_id, diff):
+        return {'move_id': line_id.move_id.id, 'cost': diff}
+
+    @api.model
+    def create_discrete_quant(self, line_id, diff):
+        discrete_obj = self.env['stock.discrete']
+        vals = self._get_discrete_values(line_id, diff)
+        discrete_obj.create(vals)
+
     def lcost_from_inv_line(self, inv_line):
         """Returns a dictionary to create a Landed Cost Line object, based on
         data obtained from the Invoice Line passed as argument"""
@@ -428,6 +438,11 @@ class StockLandedCost(models.Model):
                        ln.move_id.location_id.usage != 'internal')
             for line in val_gen:
 
+                create = False
+                if line.move_id.location_id.usage not in (
+                        'supplier', 'inventory', 'production'):
+                    create = True
+
                 product_id = line.product_id
 
                 if product_id.id not in acc_prod:
@@ -452,11 +467,14 @@ class StockLandedCost(models.Model):
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
                 quants = [quant for quant in line.move_id.quant_ids]
-                for quant in quants:
-                    if quant.id not in quant_dict:
-                        quant_dict[quant.id] = quant.cost + diff
-                    else:
-                        quant_dict[quant.id] += diff
+                if not create:
+                    for quant in quants:
+                        if quant.id not in quant_dict:
+                            quant_dict[quant.id] = quant.cost + diff
+                        else:
+                            quant_dict[quant.id] += diff
+                else:
+                    self.create_discrete_quant(line, diff)
 
                 # TODO: To be replaced by a new API filtered feature
                 qty_out = sum(

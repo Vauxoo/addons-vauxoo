@@ -24,6 +24,12 @@ class StockLandedCostLines(models.Model):
 class StockLandedCost(models.Model):
     _inherit = 'stock.landed.cost'
 
+    @api.model
+    def _get_discrete_values(self, line_id, diff):
+        res = super(StockLandedCost, self)._get_discrete_values(line_id, diff)
+        res['segmentation_cost'] = line_id.cost_line_id.segmentation_cost
+        return res
+
     @api.multi
     def button_validate(self):
         self.ensure_one()
@@ -51,9 +57,17 @@ class StockLandedCost(models.Model):
                         line.move_id.location_id.usage == 'internal':
                     continue
 
+                create = False
+                if line.move_id.location_id.usage not in (
+                        'supplier', 'inventory', 'production'):
+                    create = True
+
                 segment = line.cost_line_id.segmentation_cost
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
+
+                if create:
+                    continue
 
                 for quant in line.move_id.quant_ids:
                     if quant.id not in quant_dict:
