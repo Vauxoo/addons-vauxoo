@@ -10,7 +10,7 @@
             string="Salespeople Commission Payment"
             report_type="qweb-pdf"
             multi="True"
-            attachment_use="0"
+            attachment_use="False"
             attachment=""
             menu="True"/>
 
