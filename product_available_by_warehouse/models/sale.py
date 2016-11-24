@@ -42,7 +42,9 @@ class SaleOrderLine(models.Model):
         product_qty_by_wh = []
         route_ids = []
         if colname in titles:
-            product_qty_by_wh = product.\
+            ctx = ((colname == 'qty_available') and
+                   {'qty_available': True} or {})
+            product_qty_by_wh = product.with_context(ctx).\
                 get_product_available_by_warehouse()[product.id][colname]
         for warehouse, product_qty in product_qty_by_wh:
             # TODO: uncomment until figure out a better way to choice only

@@ -40,3 +40,11 @@ class ProductProduct(models.Model):
                 'outgoing_qty': outgoing_qty,
             }
         return res
+
+    @api.multi
+    def _get_domain_locations(self):
+        res = super(ProductProduct, self)._get_domain_locations()
+        if self._context.get('qty_available', False):
+            for domain in res:
+                domain.insert(0, ('location_id.usage', '=', 'internal'))
+        return res
