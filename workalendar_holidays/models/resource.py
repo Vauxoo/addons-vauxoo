@@ -98,6 +98,12 @@ class ResourceCalendar(models.Model):
 
     @api.multi
     def compute_working_days(self, days, start_dt):
+        """ Get datetime taking account only the working days from calendar
+
+        :param days: days to add or subtract to the starting date
+        :param start_dt: date when begin working days count
+        :return datetime: working day
+        """
         self.ensure_one()
         day_date = start_dt.date()
         end_dt = start_dt
