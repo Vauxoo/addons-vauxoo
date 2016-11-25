@@ -23,12 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # #############################################################################
-
-from openerp.osv import osv, fields
-
-from openerp.addons import decimal_precision as dp
+from __future__ import division
 
 import itertools
+from openerp.osv import osv, fields
+from openerp.addons import decimal_precision as dp
 
 
 class AccountVoucher(osv.Model):
@@ -129,53 +128,40 @@ class AccountVoucher(osv.Model):
         amount_tax_currency = 0.0
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             context.update({'amount_voucher': voucher.amount or 0.0})
-
             for line in voucher.line_ids:
-
                 if not line.amount:
                     continue
-
                 factor = self.get_percent_pay_vs_invoice(
                     cr, uid, line.amount_original, line.amount,
                     context=context)
-
                 move = line.move_line_id
                 mv_line_dicts = [{
                     'counterpart_move_line_id': move.id,
                     'credit': move.debit,
                     'debit': move.credit,
                     'name': move.name}]
-
                 bank_statement_line_obj._get_factor_type(
                     cr, uid, False, voucher.type, context=context)
-
                 context['journal_special'] = voucher.journal_id.special_journal
-
                 dict_tax = bank_statement_line_obj._get_move_line_tax(
                     cr, uid, mv_line_dicts, context=context)
-
                 for move_line_tax_dict in dict_tax:
-
                     line_tax_id = move_line_tax_dict.get('tax_id')
-                    amount_base_secondary =\
-                        line_tax_id.amount and\
-                        line.amount_original / (1 + line_tax_id.amount) or\
-                        move_line_tax_dict.get('amount_base_secondary')
-                    account_tax_voucher =\
-                        move_line_tax_dict.get('account_tax_voucher')
-                    account_tax_collected =\
-                        move_line_tax_dict.get('account_tax_collected')
+                    amount_base_secondary = (
+                        line_tax_id.amount and
+                        line.amount_original / (1 + line_tax_id.amount) or
+                        move_line_tax_dict.get('amount_base_secondary'))
+                    account_tax_voucher = move_line_tax_dict.get(
+                        'account_tax_voucher')
+                    account_tax_collected = move_line_tax_dict.get(
+                        'account_tax_collected')
                     amount_total_tax = move_line_tax_dict.get('amount', 0)
-
                     move_line_rec = []
-
                     context['date'] = voucher.date
                     reference_amount = amount_total_tax * abs(factor)
-
                     statement_currency_line = False
                     if current_currency != line.currency_id.id:
                         statement_currency_line = line.currency_id.id
-
                     if (current_currency != company_currency or
                             statement_currency_line):
                         amount_tax_currency += cur_obj.compute(
@@ -186,7 +172,6 @@ class AccountVoucher(osv.Model):
                     else:
                         amount_tax_currency += round(
                             reference_amount, round_val)
-
                     move_lines_tax = self._preparate_move_line_tax(
                         cr, uid, account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
@@ -211,7 +196,6 @@ class AccountVoucher(osv.Model):
                             voucher, company_currency,
                             current_currency, context=context)
                     move_reconcile_id.append(move_rec_exch[1])
-
             if voucher.journal_id.special_journal:
                 move_line_writeoff_tax = self.writeoff_move_line_tax_get(
                     cr, uid, voucher, amount_tax_currency, move_id,
@@ -335,8 +319,8 @@ class AccountVoucher(osv.Model):
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
 
-        reference_currency_id = statement_currency_line or\
-            reference_currency_id
+        reference_currency_id = (
+            statement_currency_line or reference_currency_id)
 
         amount_base, tax_secondary = self._get_base_amount_tax_secondary(
             cr, uid, line_tax, amount_base_tax * factor, reference_amount,
@@ -401,8 +385,14 @@ class AccountVoucher(osv.Model):
         else:
             if reference_amount < 0:
                 debit_line_vals.pop('analytic_account_id')
+                debit_line_vals.update({
+                    'tax_id_secondary': tax_secondary,
+                    'amount_base': abs(amount_base)})
             else:
                 credit_line_vals.pop('analytic_account_id')
+                credit_line_vals.update({
+                    'amount_base': abs(amount_base),
+                    'tax_id_secondary': tax_secondary})
 
         if not amount_tax_unround:
             credit_line_vals.pop('amount_tax_unround')
@@ -469,16 +459,17 @@ class AccountVoucher(osv.Model):
 
         return [debit_line_vals, credit_line_vals]
 
-    def _get_base_amount_tax_secondary(self, cr, uid, line_tax,
-                                       amount_base_tax, reference_amount,
-                                       context=None):
+    def _get_base_amount_tax_secondary(
+            self, cr, uid, line_tax, amount_base_tax, reference_amount,
+            context=None):
         amount_base = 0
         tax_secondary = False
-        if line_tax and line_tax.tax_category_id\
-                and line_tax.tax_category_id.name in \
-                ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'):
-            amount_base = line_tax.amount and\
-                reference_amount / line_tax.amount or amount_base_tax
+        if all([line_tax, line_tax.tax_category_id,
+               line_tax.tax_category_id.name in (
+                   'IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART')]):
+            amount_base = (line_tax.amount and
+                           reference_amount / line_tax.amount or
+                           amount_base_tax)
             tax_secondary = line_tax.id
         return [amount_base, tax_secondary]
 

@@ -24,6 +24,7 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
+from openerp.exceptions import ValidationError
 from openerp.tools.translate import _
 
 
@@ -35,12 +36,13 @@ class AccountMoveLine(osv.Model):
                                     'without amount tax'),
         'tax_id_secondary': fields.many2one('account.tax', 'Tax Secondary',
                                             help='Tax used for this move'),
-        'not_move_diot': fields.boolean('Not Consider in Diot', help='If'
-                                        ' this field is active, although of this item have data for DIOT,'
-                                        ' not be considered.'),
+        'not_move_diot': fields.boolean(
+            'Not Consider in Diot', help='If this field is active, although '
+            'of this item have data for DIOT, not be considered.'),
     }
 
-    def onchange_tax_secondary(self, cr, uid, ids, account_id=False, context=None):
+    def onchange_tax_secondary(
+            self, cr, uid, ids, account_id=False, context=None):
         acc_tax_obj = self.pool.get('account.tax')
         tax_acc = acc_tax_obj.search(cr, uid, [
             ('account_paid_voucher_id', '=', account_id)], context=context)
@@ -49,7 +51,8 @@ class AccountMoveLine(osv.Model):
         else:
             return {'value': {}}
 
-    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+    def write(self, cr, uid, ids, vals, context=None, check=True,
+              update_check=True):
         if context is None:
             context = {}
         if not ids:
@@ -57,22 +60,24 @@ class AccountMoveLine(osv.Model):
         if isinstance(ids, (int, long)):
             ids = [ids]
 
-        res = super(AccountMoveLine, self).write(cr, uid, ids, vals,
-                                                 context=context, check=check, update_check=update_check)
+        res = super(AccountMoveLine, self).write(
+            cr, uid, ids, vals, context=context, check=check,
+            update_check=update_check)
         for line in self.browse(cr, uid, ids, context=context):
-            if line.tax_id_secondary and line.tax_id_secondary.type_tax_use == 'purchase':
-                cat_tax = line.tax_id_secondary.tax_category_id
-                if cat_tax and cat_tax.name in ('IVA', 'IVA-EXENTO') and line.amount_base <= 0 and\
-                        not line.not_move_diot:
-                    raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need '
-                                                          'have a value in the amount base.'))
-                elif cat_tax and cat_tax.name == 'IVA-RET' and line.credit <= 0 and\
-                        not line.not_move_diot:
-                    raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need '
-                                                          'have a value in the credit.'))
+            if (not line.tax_id_secondary or
+                    line.tax_id_secondary.type_tax_use != 'purchase'):
+                continue
+            cat_tax = line.tax_id_secondary.tax_category_id
+            if all([cat_tax, cat_tax.name == 'IVA-RET', line.credit <= 0,
+                    not line.not_move_diot]):
+                raise ValidationError(_(
+                    'The lines with tax of purchase, need have a value '
+                    'in the credit. \nTax: %s' % line.tax_id_secondary.name))
         return res
 
-    def onchange_account_id(self, cr, uid, ids, account_id=False, partner_id=False, context=None):
+    def onchange_account_id(
+            self, cr, uid, ids, account_id=False, partner_id=False,
+            context=None):
         res = super(AccountMoveLine, self).onchange_account_id(
             cr, uid, ids, account_id, partner_id, context=context)
         acc_tax_obj = self.pool.get('account.tax')
@@ -115,8 +120,8 @@ class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
 
     def line_get_convert(self, cr, uid, value, part, date, context=None):
-        res = super(AccountInvoice, self).line_get_convert(cr, uid, value, part,
-                                                           date, context=context)
+        res = super(AccountInvoice, self).line_get_convert(
+            cr, uid, value, part, date, context=context)
         res.update({
             'amount_base': value.get('amount_base', False),
             'tax_id_secondary': value.get('tax_id_secondary', False),
