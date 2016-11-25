@@ -20,15 +20,41 @@ Installation
 - Then, just install as a regular Odoo module:
 
   - Download this module from `Vauxoo/addons-vauxoo
-    <https://github.com/Vauxoo/addons-vauxoo>`_
+    <https://github.com/Vauxoo/addons-vauxoo/workalendar_holidays>`_
   - Add the repository folder into your odoo addons-path.
   - Go to ``Settings > Module list`` search for the current name and click in
-    ``Install`` button.
+    *Install* button.
+
+Usage
+=====
+
+* Select at Working Time in ``Settings > Technical > Working Time`` then click on More press *Import Holidays*
+
+  .. image:: https://cloud.githubusercontent.com/assets/5335402/19224986/3e82d8c0-8e57-11e6-8533-a683abb0fa10.png
+
+* Fill *Import Holidays* wizard giving it a geographic location, then press *Import*
+
+  .. image:: https://cloud.githubusercontent.com/assets/5335402/19224988/4295431c-8e57-11e6-8c7a-374816f84037.png
+
+* If localization is `available <https://github.com/novafloss/workalendar#available-calendars>`_  in *Workalendar* module then will be imported the holidays successfully
+
+  .. image:: https://cloud.githubusercontent.com/assets/5335402/19224991/4741febe-8e57-11e6-962b-991faa2a66de.png
+
+**For developers:** This module can be used as a helper to recompute planned dates to just working days. To see more about it, please check function `compute_working_days <https://github.com/Vauxoo/addons-vauxoo/blob/8.0/workalendar_holidays/models/resource.py#L100>`_. Example:
+
+   ::
+
+     delay = -1 * (procurement.rule_id.delay or 0)
+     date_expected = work_time.compute_working_days(delay, start_dt)
 
 Known issues / Roadmap
 ======================
 
+* When you run the *Import Holiday* wizard your Odoo user must have configured
+  the same time zone as the client computer from which it is being accessed,
+  in order to have the hours of the holidays correctly established.
 * Not tested yet in a multi-company environment
+
 
 Bug Tracker
 ===========
