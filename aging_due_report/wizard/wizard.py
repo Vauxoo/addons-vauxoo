@@ -113,6 +113,7 @@ class AccountAgingWizardPartner(models.TransientModel):
                  'document_ids.payment', 'document_ids.total')
     def _get_amount(self):
         field_sum = ['residual', 'payment', 'total', 'not_due']
+        field_sum2 = ['residual', 'payment', 'total']
         field_spans = ['span01', 'span02', 'span03', 'span04', 'span05']
         field_names = field_spans + field_sum
         for record in self:
@@ -123,9 +124,8 @@ class AccountAgingWizardPartner(models.TransientModel):
             for fn in field_names:
                 res[fn] = 0.0
             for doc in record.document_ids:
-                for fsum in field_sum:
-                    if fsum != 'not_due':
-                        res[fsum] += doc.read([fsum])[0][fsum]
+                for fsum in field_sum2:
+                    res[fsum] += doc.read([fsum])[0][fsum]
                 if not direction and doc.due_days > 0 \
                         or direction and doc.due_days <= 0:
                     res['not_due'] += doc.residual
@@ -302,14 +302,14 @@ class AccountAgingPartnerWizard(models.TransientModel):
 
         moves_invoice_ids = [aawd_brw.invoice_id.move_id.id
                              for aawp_brw in wzd_brw.partner_ids
-                             for aawd_brw in aawp_brw.document_ids
-                             if aawd_brw.invoice_id]
+                             for aawd_brw in aawp_brw.document_ids.filtered(
+                                 lambda r: r.invoice_id)]
 
         items_invoice_ids = [
             aml_brw.id for aawp_brw in wzd_brw.partner_ids
-            for aawd_brw in aawp_brw.document_ids
-            for aml_brw in aawd_brw.invoice_id.payment_ids
-            if aawd_brw.invoice_id]
+            for aawd_brw in aawp_brw.document_ids.filtered(
+                lambda r: r.invoice_id)
+            for aml_brw in aawd_brw.invoice_id.payment_ids]
 
         args = [
             ('reconcile_id', '=', False),
@@ -347,26 +347,27 @@ class AccountAgingPartnerWizard(models.TransientModel):
                 # TODO: This process can be improve by using the approach reach
                 # in commission_payment
                 date_due = [amx_brw.date_maturity or amx_brw.date
-                            for amx_brw in aml_lines
-                            if amx_brw.journal_id.type in ('sale', 'purchase')]
+                            for amx_brw in aml_lines.filtered(
+                                lambda r: r.journal_id.type in (
+                                    'sale', 'purchase'))]
                 date_due = (date_due and min(date_due) or
                             min([amy_brw.date_maturity or amy_brw.date
                                  for amy_brw in aml_lines]))
                 date_emission = [amz_brw.date
-                                 for amz_brw in aml_lines
-                                 if amz_brw.journal_id.type in (
-                                     'sale', 'purchase')]
+                                 for amz_brw in aml_lines.filtered(
+                                     lambda r: r.journal_id.type in (
+                                         'sale', 'purchase'))]
                 date_emission = (date_emission and min(date_emission) or
                                  min([amw_brw.date
                                       for amw_brw in aml_lines]))
                 aml_id = [amv_brw.id
-                          for amv_brw in aml_lines
-                          if (amv_brw.journal_id.type in (
-                              'sale', 'purchase') and
-                              amv_brw.date == date_emission)]
-                aml_id = (aml_id or [
-                    amu_brw.id for amu_brw in aml_lines
-                    if amu_brw.date == date_emission])
+                          for amv_brw in aml_lines.filtered(
+                              lambda r: r.journal_id.type in (
+                                  'sale', 'purchase') and
+                              r.date == date_emission)]
+                aml_id = aml_id or [
+                    amu_brw.id for amu_brw in aml_lines.filtered(
+                        lambda r: r.date == date_emission)]
 
                 doc = {
                     'partner_id': partner_id[0],
@@ -445,9 +446,9 @@ class AccountAgingPartnerWizard(models.TransientModel):
     def _get_aml(self, aml_ids, inv_type='out_invoice', currency_id=None):
         aml_obj = self.env['account.move.line']
         res = 0.0
-        sign = 1 if inv_type == 'out_invoice' else -1
         if not aml_ids:
             return res
+        sign = 1 if inv_type == 'out_invoice' else -1
         if currency_id:
             aml_gen = (
                 aml_brw.amount_currency * sign
@@ -464,8 +465,7 @@ class AccountAgingPartnerWizard(models.TransientModel):
         return res
 
     @api.multi
-    def _get_invoice_by_partner(self, partner_ids,
-                                inv_type='out_invoice'):
+    def _get_invoice_by_partner(self, partner_ids, inv_type='out_invoice'):
         """return a dictionary of dictionaries.
             { partner_id: { values and invoice list } }
         """
@@ -478,7 +478,7 @@ class AccountAgingPartnerWizard(models.TransientModel):
             [('partner_id', 'child_of', partner_ids),
              ('type', '=', inv_type),
              ('residual', '!=', 0),
-             ('state', 'not in', ('cancel', 'draft'))]))
+             ('state', 'not in', ('cancel', 'draft', 'paid'))]))
         if not invoices:
             return res
 
@@ -495,11 +495,11 @@ class AccountAgingPartnerWizard(models.TransientModel):
                 continue
 
             date_due = [amx_brw.date_maturity
-                        for amx_brw in invoice.move_id.line_id
-                        if amx_brw.account_id.type in (
-                            'receivable', 'payable')]
-            date_due = date_due and min(date_due)
-            date_due = date_due or invoice.date_due or invoice.date_invoice
+                        for amx_brw in invoice.move_id.line_id.filtered(
+                            lambda r: r.account_id.type in (
+                                'receivable', 'payable'))]
+            date_due = date_due and min(
+                date_due) or invoice.date_due or invoice.date_invoice
 
             res.append({
                 'invoice_id': invoice.id,
