@@ -434,14 +434,11 @@ class StockCardProduct(models.TransientModel):
                 AND sm.product_id = %s
                 '''
         if locations_ids:
-            query += '''
+            query += self._cr.mogrify('''
                 AND (sl_src.id IN %s or sl_dst.id IN %s)
-            '''
+            ''', (locations_ids, locations_ids))
         query += '''ORDER BY sm.date'''
-        if locations_ids:
-            self._cr.execute(query, (product_id, locations_ids, locations_ids))
-        else:
-            self._cr.execute(query, (product_id,))
+        self._cr.execute(query, (product_id,))
         return self._cr.dictfetchall()
 
 
