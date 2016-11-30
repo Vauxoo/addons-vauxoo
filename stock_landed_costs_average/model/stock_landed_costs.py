@@ -438,11 +438,6 @@ class StockLandedCost(models.Model):
                        ln.move_id.location_id.usage != 'internal')
             for line in val_gen:
 
-                create = False
-                if line.move_id.location_id.usage not in (
-                        'supplier', 'inventory', 'production'):
-                    create = True
-
                 product_id = line.product_id
 
                 if product_id.id not in acc_prod:
@@ -467,7 +462,8 @@ class StockLandedCost(models.Model):
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
                 quants = [quant for quant in line.move_id.quant_ids]
-                if not create:
+                if line.move_id.location_id.usage in (
+                        'supplier', 'inventory', 'production'):
                     for quant in quants:
                         if quant.id not in quant_dict:
                             quant_dict[quant.id] = quant.cost + diff
