@@ -246,8 +246,7 @@ class StockCardProduct(models.TransientModel):
                 [old_average * qnt['qty'] for qnt in qntval] +
                 [dquant.cost * move_brw.product_qty
                  for dquant in move_brw.discrete_ids
-                 if dquant.segmentation_cost == '%s_cost' % sgmnt
-                 ])
+                 if dquant.segmentation_cost == '%s_cost' % sgmnt])
 
         return True
 
