@@ -3,7 +3,7 @@
 #                        Osval Reyes <osval@vauxoo.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import _, api, exceptions, fields, models, SUPERUSER_ID
+from odoo import _, api, exceptions, fields, models, SUPERUSER_ID
 
 
 class AccountConfigSettings(models.TransientModel):
