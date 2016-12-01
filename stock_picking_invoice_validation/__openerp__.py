@@ -28,5 +28,5 @@
         "view/res_company.xml",
         "view/sale_order_view.xml",
     ],
-    "installable": True,
+    "installable": False,
 }

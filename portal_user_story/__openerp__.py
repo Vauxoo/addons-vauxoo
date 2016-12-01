@@ -46,5 +46,5 @@
         'view/portal_view.xml',
     ],
     "images": [],
-    "installable": True,
+    "installable": False,
 }

@@ -30,5 +30,5 @@
     "category": "Generic Modules/Inventory Control",
     "data": ['view/product_view.xml',
              'data/update_price_data.xml'],
-    "installable": True
+    "installable": False
 }

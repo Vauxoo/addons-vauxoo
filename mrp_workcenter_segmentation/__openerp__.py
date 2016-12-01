@@ -17,6 +17,6 @@
         'view/view.xml',
         'view/wizard.xml',
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }

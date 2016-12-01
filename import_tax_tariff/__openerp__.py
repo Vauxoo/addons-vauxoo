@@ -39,6 +39,6 @@
     "demo": [],
     "test": [],
     "images": [],
-    "installable": True,
+    "installable": False,
     "application": True,
 }

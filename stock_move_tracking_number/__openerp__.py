@@ -28,5 +28,5 @@
     "demo": [],
     "test": [],
     "qweb": [],
-    "installable": True,
+    "installable": False,
 }

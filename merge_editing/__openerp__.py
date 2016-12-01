@@ -38,7 +38,7 @@
         'security/ir.model.access.csv',
         'merge_editing_view.xml',
     ],
-    'installable': True,
+    "installable": False,
     'application': True,
     'auto_install': False,
 }

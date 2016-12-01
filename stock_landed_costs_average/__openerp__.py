@@ -22,6 +22,6 @@
         "view/stock_landed_costs.xml",
         "view/account_invoice.xml",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }
