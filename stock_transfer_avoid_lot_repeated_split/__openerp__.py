@@ -40,5 +40,5 @@
     "demo": [
         "demo/stock_production_lot.xml",
     ],
-    "installable": True,
+    "installable": False,
 }

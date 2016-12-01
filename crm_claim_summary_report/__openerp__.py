@@ -38,6 +38,6 @@
         'reports/claim_summary_report_layouts.xml',
         'reports/claim_summary_report.xml',
     ],
-    'installable': True,
+    "installable": False,
     'auto_install': False,
 }

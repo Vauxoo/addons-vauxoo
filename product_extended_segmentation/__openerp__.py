@@ -42,5 +42,5 @@
         'view/company.xml',
         'data/data.xml',
     ],
-    "installable": True
+    "installable": False
 }

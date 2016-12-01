@@ -15,6 +15,6 @@
     ],
     "test": [],
     "qweb": [],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }

@@ -40,5 +40,5 @@
         "security/procurement_cancel.xml",
         "wizard/procurement_cancel_view.xml",
     ],
-    "installable": True,
+    "installable": False,
 }
