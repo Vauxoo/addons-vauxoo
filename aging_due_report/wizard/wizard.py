@@ -112,10 +112,9 @@ class AccountAgingWizardPartner(models.TransientModel):
     @api.depends('document_ids', 'document_ids.residual',
                  'document_ids.payment', 'document_ids.total')
     def _get_amount(self):
-        field_sum = ['residual', 'payment', 'total', 'not_due']
-        field_sum2 = ['residual', 'payment', 'total']
+        field_sum = ['residual', 'payment', 'total']
         field_spans = ['span01', 'span02', 'span03', 'span04', 'span05']
-        field_names = field_spans + field_sum
+        field_names = field_spans + field_sum + ['not_due']
         for record in self:
             res = {}
             direction = record.aaw_id.direction == 'past'
@@ -124,7 +123,7 @@ class AccountAgingWizardPartner(models.TransientModel):
             for fn in field_names:
                 res[fn] = 0.0
             for doc in record.document_ids:
-                for fsum in field_sum2:
+                for fsum in field_sum:
                     res[fsum] += doc.read([fsum])[0][fsum]
                 if not direction and doc.due_days > 0 \
                         or direction and doc.due_days <= 0:
