@@ -1,8 +1,8 @@
-<openerp>
+<odoo>
     <data>
         <record id="group_invoice_hide_datetime" model="res.groups">
             <field name="name">Date field on invoice creation</field>
         </record>
     </data>
-</openerp>
+</odoo>
 
