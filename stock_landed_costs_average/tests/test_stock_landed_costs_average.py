@@ -27,6 +27,9 @@ class TestsLandedCosts(TestStockCommon):
             'stock.picking_type_internal')
         self.invoice_id = self.env.ref(
             'stock_landed_costs_average.invoice_landing_costs_average_1')
+        sl_obj = self.env['stock.location']
+        self.transit = sl_obj.search([('usage', '=', 'transit')], limit=1).id
+        self.scp_obj = self.env['stock.card.product']
 
     def create_product(self, values):
         default = dict(
@@ -228,7 +231,7 @@ class TestsLandedCosts(TestStockCommon):
         self.picking_type_id = self.picking_type_internal
         self.create_picking()
         self.location_id = self.stock_location
-        self.location_dest_id = self.stock_location
+        self.location_dest_id = self.transit
         self.move_maquila = self.create_average_move(qty)
         self.confirm_picking()
         return True
@@ -275,15 +278,24 @@ class TestsLandedCosts(TestStockCommon):
 
         # Buy new products (Another importation)
         self.create_picking_avg_importation(10, 120)
-        self.assert_average_product_avg(135.0)
+        self.assert_average_product_avg(130.0)
         self.assert_average_product_cost(120.0)
         # No landed costs have been applied because that is no longer the case
 
         # Return Produts from Maquila
         self.picking_id = picking_maquila_id
         self.return_picking_maquila()
-        self.assert_average_product_avg(135.0)
+        # /!\ NOTE: Per stock card value should be 135.0 but as no landed cost
+        # has been applied the value in the product's standard_price field
+        # keeps being 130.0
+        self.assert_average_product_avg(130.0)
         self.assert_average_product_cost(150.0)
+
+        card_lines = self.scp_obj._stock_card_move_get(
+            self.product_average.id)['res']
+        self.assertEquals(
+            card_lines[-1]['average'], 135.0,
+            'Average should have been 135.0')
 
         # Apply Landed Costs to Maquila
         self.create_landed_cost()
@@ -291,8 +303,19 @@ class TestsLandedCosts(TestStockCommon):
         self.assign_landing_invoice()
         self.change_landing_costs(800.0)
         self.validate_landed_cost()
+
+        card_lines = self.scp_obj._stock_card_move_get(
+            self.product_average.id)['res']
+
         self.assert_average_product_avg(175.0)
-        self.assert_average_product_cost(310.0)
+        self.assertEquals(
+            card_lines[-1]['cost_unit'], 310.0,
+            'Average should have been 310.0')
+
+        # /!\ NOTE: average assertion is being made based on quants that is not
+        # longer true because `stock.discrete` has now being implemented. that
+        # is the reason this value does not change after landed cost
+        self.assert_average_product_cost(150.0)
 
         return True
 
