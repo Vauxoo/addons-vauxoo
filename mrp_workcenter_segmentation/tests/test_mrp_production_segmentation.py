@@ -43,6 +43,7 @@ class TestMrpProduction(TransactionCase):
     def test_10_approve_begin_consumpt_finish_mrp_production(self):
         # This method approve a mrp production.
         quant_obj = self.env['stock.quant']
+        quant_obj.initializing_quant_segmentation()
         location_obj = self.env['stock.location']
         location_brw = location_obj.search([('name', '=', 'Production')])
         location_brw.write({'valuation_in_account_id': self.wip_account,

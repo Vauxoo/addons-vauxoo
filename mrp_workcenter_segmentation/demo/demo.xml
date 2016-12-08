@@ -65,17 +65,39 @@
             <field name="product_qty">3.0</field>
             <field name="location_id" ref="stock.stock_location_14"/>
         </record>
-        <record id="stock_inventory_line_3" model="stock.inventory.line">
-            <field name="product_id" ref="prod_c_avg_realtime"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
-            <field name="inventory_id" ref="mrp_workcenter_segmentation.stock_inventory"/>
-            <field name="product_qty">2.0</field>
-            <field name="location_id" ref="stock.stock_location_14"/>
-        </record>
 
         <function model="stock.inventory" name="action_done">
             <function eval="[[('id', '=', ref('mrp_workcenter_segmentation.stock_inventory'))]]" model="stock.inventory" name="search"/>
         </function>
+
+        <record id="pick_01" model="stock.picking">
+            <field name="name">pick_01</field>
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="move_01_pick_01" model="stock.move">
+            <field name="origin">pick_01</field>
+            <field name="picking_id" ref="pick_01"/>
+            <field name="name">pick_01</field>
+            <field name="location_id" ref="stock.location_inventory"/>
+            <field name="location_dest_id" ref="stock.stock_location_14"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">40</field>
+            <field name="product_uom_qty">2</field>
+            <field name="product_id" ref="prod_c_avg_realtime"/>
+        </record>
+        <function model="stock.picking" name="action_assign" >
+            <value model="stock.picking" eval="obj(ref('pick_01')).mapped('id')"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details" >
+            <value model="stock.picking" eval="obj(ref('pick_01')).mapped('id')"/>
+        </function>
+        <record model="stock.transfer_details" id="td_01">
+            <field name="picking_id" ref="pick_01"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_01')]]"/>
 
         <record id="routing_segmentation_d_product" model="mrp.routing">
             <field name="name">ROUTING_SEGMENTATION_D_PRODUCT</field>
