@@ -299,15 +299,13 @@ class AccountAgingPartnerWizard(models.TransientModel):
         aml_obj = self.env['account.move.line']
         company_id = wzd_brw.company_id.id
 
-        moves_invoice_ids = [aawd_brw.invoice_id.move_id.id
-                             for aawp_brw in wzd_brw.partner_ids
-                             for aawd_brw in aawp_brw.document_ids.filtered(
-                                 lambda r: r.invoice_id)]
+        moves_invoice_ids = [
+            aawd_brw.invoice_id.move_id.id for aawp_brw in wzd_brw.partner_ids
+            for aawd_brw in aawp_brw.document_ids.filtered('invoice_id')]
 
         items_invoice_ids = [
             aml_brw.id for aawp_brw in wzd_brw.partner_ids
-            for aawd_brw in aawp_brw.document_ids.filtered(
-                lambda r: r.invoice_id)
+            for aawd_brw in aawp_brw.document_ids.filtered('invoice_id')
             for aml_brw in aawd_brw.invoice_id.payment_ids]
 
         args = [
