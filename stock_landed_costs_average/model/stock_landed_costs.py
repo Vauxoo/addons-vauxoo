@@ -461,10 +461,9 @@ class StockLandedCost(models.Model):
 
                 per_unit = line.final_cost / line.quantity
                 diff = per_unit - line.former_cost_per_unit
-                quants = [quant for quant in line.move_id.quant_ids]
                 if line.move_id.location_id.usage in (
                         'supplier', 'inventory', 'production'):
-                    for quant in quants:
+                    for quant in line.move_id.quant_ids:
                         if quant.id not in quant_dict:
                             quant_dict[quant.id] = quant.cost + diff
                         else:
