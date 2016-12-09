@@ -91,62 +91,72 @@ class StockCardProduct(models.TransientModel):
         vals['move_valuation'] = 0.0
         for sgmnt in SEGMENTATION:
             vals['%s_valuation' % sgmnt] = 0.0
+        self._get_price_on_consumed_quant_iter(product_qty, row, vals, qntval)
+        return True
 
+    def _get_price_on_consumed_quant_iter(
+            self, product_qty, row, vals, qntval):
         for qnt in qntval:
             if qnt['qty'] < 0:
                 continue
 
-            residual = 0
             prior_qty = product_qty
 
             if product_qty > 0:
-                if product_qty + vals['direction'] * qnt['qty'] >= 0:
-                    if not vals['rewind']:
-                        vals['move_valuation'] += vals['average'] * qnt['qty']
-                        for sgmnt in SEGMENTATION:
-                            vals['%s_valuation' % sgmnt] += \
-                                vals[sgmnt] * qnt['qty']
-                    else:
-                        vals['move_valuation'] += \
-                            vals['prior_average'] * qnt['qty']
-                        for sgmnt in SEGMENTATION:
-                            vals['%s_valuation' % sgmnt] += \
-                                vals['prior_avg_%s' % sgmnt] * qnt['qty']
-                else:  # product_qty + qnt < 0
-                    if not vals['rewind']:
-                        vals['move_valuation'] += vals['average'] * qnt['qty']
-                        for sgmnt in SEGMENTATION:
-                            vals['%s_valuation' % sgmnt] += \
-                                vals[sgmnt] * qnt['qty']
-                    else:  # rewind
-                        residual = qnt['qty'] - product_qty
-
-                        vals['move_valuation'] += \
-                            vals['prior_average'] * prior_qty
-                        for sgmnt in SEGMENTATION:
-                            vals['%s_valuation' % sgmnt] += \
-                                vals['prior_avg_%s' % sgmnt] * prior_qty
-
-                        vals['move_valuation'] += \
-                            vals['future_average'] * residual
-                        for sgmnt in SEGMENTATION:
-                            vals['%s_valuation' % sgmnt] += \
-                                vals['future_%s' % sgmnt] * residual
-
+                self._get_price_on_consumed_quant_pstv(
+                    product_qty, prior_qty, vals, qnt)
             else:  # product_qty < 0
-                if not vals['rewind']:
-                    vals['move_valuation'] += vals['average'] * qnt['qty']
-                    for sgmnt in SEGMENTATION:
-                        vals['%s_valuation' % sgmnt] += \
-                            vals[sgmnt] * qnt['qty']
-                else:
-                    vals['move_valuation'] += \
-                        vals['future_average'] * qnt['qty']
-                    for sgmnt in SEGMENTATION:
-                        vals['%s_valuation' % sgmnt] += \
-                            vals['future_%s' % sgmnt] * qnt['qty']
-
+                self._get_price_on_consumed_quant_ngtv(product_qty, vals, qnt)
             product_qty += vals['direction'] * qnt['qty']
+
+        return True
+
+    def _get_price_on_consumed_quant_pstv(
+            self, product_qty, prior_qty, vals, qnt):
+        if product_qty + vals['direction'] * qnt['qty'] >= 0:
+            if not vals['rewind']:
+                vals['move_valuation'] += vals['average'] * qnt['qty']
+                for sgmnt in SEGMENTATION:
+                    vals['%s_valuation' % sgmnt] += \
+                        vals[sgmnt] * qnt['qty']
+            else:
+                vals['move_valuation'] += \
+                    vals['prior_average'] * qnt['qty']
+                for sgmnt in SEGMENTATION:
+                    vals['%s_valuation' % sgmnt] += \
+                        vals['prior_avg_%s' % sgmnt] * qnt['qty']
+        else:  # product_qty + qnt < 0
+            if not vals['rewind']:
+                vals['move_valuation'] += vals['average'] * qnt['qty']
+                for sgmnt in SEGMENTATION:
+                    vals['%s_valuation' % sgmnt] += \
+                        vals[sgmnt] * qnt['qty']
+            else:  # rewind
+                residual = qnt['qty'] - product_qty
+
+                vals['move_valuation'] += (
+                    vals['prior_average'] * prior_qty +
+                    vals['future_average'] * residual)
+                for sgmnt in SEGMENTATION:
+                    vals['%s_valuation' % sgmnt] += (
+                        vals['prior_avg_%s' % sgmnt] * prior_qty +
+                        vals['future_%s' % sgmnt] * residual)
+
+        return True
+
+    def _get_price_on_consumed_quant_ngtv(
+            self, product_qty, vals, qnt):
+        if not vals['rewind']:
+            vals['move_valuation'] += vals['average'] * qnt['qty']
+            for sgmnt in SEGMENTATION:
+                vals['%s_valuation' % sgmnt] += \
+                    vals[sgmnt] * qnt['qty']
+        else:
+            vals['move_valuation'] += \
+                vals['future_average'] * qnt['qty']
+            for sgmnt in SEGMENTATION:
+                vals['%s_valuation' % sgmnt] += \
+                    vals['future_%s' % sgmnt] * qnt['qty']
 
         return True
 
