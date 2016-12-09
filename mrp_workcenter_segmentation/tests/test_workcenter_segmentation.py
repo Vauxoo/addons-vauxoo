@@ -16,6 +16,8 @@ class TestWorkcenterSegmentation(TransactionCase):
         super(TestWorkcenterSegmentation, self).setUp()
         # Define required global variables.
         self.account_stock_valuation = self.ref('account.stk')
+        self.slc = self.env['stock.landed.cost']
+        self.slc_id = self.env.ref('mrp_workcenter_segmentation.slc_01')
         self.account_cost = self.ref(
             'mrp_workcenter_account_move.rev_production_cost_account')
         self.account_deviation = self.ref(
@@ -86,6 +88,10 @@ class TestWorkcenterSegmentation(TransactionCase):
         return res
 
     def test_01_check_workcenters_segments(self):
+        self.slc_id.compute_landed_cost()
+        self.slc_id.button_validate()
+        self.assertTrue(self.slc_id.state != 'draft')
+
         self.produce_product(self.mrp_production_d, [1, 2])
         segments_costs = self.mrp_production_d.\
             get_workcenter_segmentation_amount()
