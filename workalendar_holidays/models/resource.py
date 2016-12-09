@@ -69,7 +69,7 @@ class ResourceCalendar(models.Model):
         previous_day = isinstance(res, list) and res[0] or res
         for calendar in self:
             previous_day = calendar.is_holiday(previous_day) and \
-                calendar.get_next_day(previous_day) or previous_day
+                calendar.get_previous_day(previous_day) or previous_day
         return previous_day
 
     @api.multi
@@ -82,7 +82,6 @@ class ResourceCalendar(models.Model):
         :param date day_date: current day as a date
         :return date: next day of calendar, or just next day
         """
-
         res = super(ResourceCalendar, self).get_next_day(day_date)
         # TODO: figure out why this function return list instead date
         next_day = isinstance(res, list) and res[0] or res
@@ -98,6 +97,12 @@ class ResourceCalendar(models.Model):
 
     @api.multi
     def compute_working_days(self, days, start_dt):
+        """ Get datetime taking account only the working days from calendar
+
+        :param days: days to add or subtract to the starting date
+        :param start_dt: date when begin working days count
+        :return datetime: working day
+        """
         self.ensure_one()
         day_date = start_dt.date()
         end_dt = start_dt
