@@ -1,1 +1,4 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_stock_discrete_manager,stock.quant manager,model_stock_discrete,stock.group_stock_manager,1,1,1,0
+access_stock_discrete_user,stock.quant user,model_stock_discrete,stock.group_stock_user,1,0,0,0
+access_stock_discrete_all,stock.quant all users,model_stock_discrete,base.group_user,1,0,0,0
