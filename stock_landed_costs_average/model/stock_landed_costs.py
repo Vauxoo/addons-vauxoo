@@ -733,7 +733,7 @@ class ProductProduct(models.Model):
             if diff:
                 move_id = self._create_account_move(acc_prod[product_id.id])
                 slc_obj._create_deviation_accounting_entries(
-                    move_id, product_id.id, diff, acc_prod)
+                    move_id.id, product_id.id, diff, acc_prod)
 
             # WRITE STANDARD PRICE
             vals2wrt = {}
