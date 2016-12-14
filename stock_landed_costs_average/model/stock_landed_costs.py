@@ -699,3 +699,53 @@ class StockLandedCost(models.Model):
         return self._create_landed_account_move_line(
             line, move_id, credit_account_id, debit_account_id, qty_out,
             already_out_account_id)
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    @api.multi
+    def update_product_average_from_stock_card(self):
+        scp_obj = self.env['stock.card.product']
+        slc_obj = self.env['stock.landed.cost']
+        stock_card_move_get = scp_obj._stock_card_move_get
+        acc_prod = {}
+        for product_id in self:
+            if not (product_id.cost_method == 'average' and
+                    product_id.valuation == 'real_time'):
+                continue
+
+            acc_prod[product_id.id] = \
+                product_id.product_tmpl_id.get_product_accounts()
+
+            first_card = stock_card_move_get(product_id.id)
+            avg_fn = self.get_average(first_card)
+            ini_avg = product_id.standard_price
+            prod_qty = first_card['product_qty']
+
+            # COMPUTE DEVIATION
+            # /!\ NOTE:
+            # - ini_avg: is the average initially written in product
+            # - fst_avg: is the average initially computed with stock card
+            fst_avg = avg_fn['average']
+            diff = (fst_avg - ini_avg) * prod_qty
+            if diff:
+                move_id = self._create_account_move(acc_prod)
+                slc_obj._create_deviation_accounting_entries(
+                    move_id, product_id.id, diff, acc_prod)
+
+            # WRITE STANDARD PRICE
+            vals2wrt = {}
+            for key, val in avg_fn.iteritems():
+                if key == 'average':
+                    vals2wrt['standard_price'] = val
+                    continue
+                vals2wrt['%s_cost' % key] = val
+            product_id.write(vals2wrt)
+
+        return True
+
+    def _create_account_move(self, datas):
+        return self.env['account.move'].create({
+            'journal_id': datas['stock_journal'],
+        })
