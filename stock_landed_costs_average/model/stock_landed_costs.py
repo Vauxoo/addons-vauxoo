@@ -708,6 +708,7 @@ class ProductProduct(models.Model):
     def update_product_average_from_stock_card(self):
         scp_obj = self.env['stock.card.product']
         slc_obj = self.env['stock.landed.cost']
+        pt_obj = self.env['product.template']
         stock_card_move_get = scp_obj._stock_card_move_get
         acc_prod = {}
         for product_id in self:
@@ -716,10 +717,10 @@ class ProductProduct(models.Model):
                 continue
 
             acc_prod[product_id.id] = \
-                product_id.product_tmpl_id.get_product_accounts()
+                pt_obj.get_product_accounts(product_id.product_tmpl_id.id)
 
             first_card = stock_card_move_get(product_id.id)
-            avg_fn = self.get_average(first_card)
+            avg_fn = scp_obj.get_average(first_card)
             ini_avg = product_id.standard_price
             prod_qty = first_card['product_qty']
 
@@ -730,7 +731,7 @@ class ProductProduct(models.Model):
             fst_avg = avg_fn['average']
             diff = (fst_avg - ini_avg) * prod_qty
             if diff:
-                move_id = self._create_account_move(acc_prod)
+                move_id = self._create_account_move(acc_prod[product_id.id])
                 slc_obj._create_deviation_accounting_entries(
                     move_id, product_id.id, diff, acc_prod)
 
