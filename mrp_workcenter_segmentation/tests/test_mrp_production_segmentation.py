@@ -20,6 +20,12 @@ class TestMrpProduction(TransactionCase):
     # Pseudo-constructor method of the setUp test.
     def setUp(self):
         super(TestMrpProduction, self).setUp()
+        self.quant_obj = self.env['stock.quant']
+        self.quant_obj.initializing_quant_segmentation()
+        self.slc = self.env['stock.landed.cost']
+        self.slc_id = self.env.ref('mrp_workcenter_segmentation.slc_01')
+        self.slc_id.compute_landed_cost()
+        self.slc_id.button_validate()
         # Define required global variables.
         self.account_stock_valuation = self.ref('account.stk')
         self.account_cost = self.ref(
@@ -41,8 +47,8 @@ class TestMrpProduction(TransactionCase):
 
     # Test methods.
     def test_10_approve_begin_consumpt_finish_mrp_production(self):
+        self.assertTrue(self.slc_id.state != 'draft')
         # This method approve a mrp production.
-        quant_obj = self.env['stock.quant']
         location_obj = self.env['stock.location']
         location_brw = location_obj.search([('name', '=', 'Production')])
         location_brw.write({'valuation_in_account_id': self.wip_account,
@@ -111,7 +117,7 @@ class TestMrpProduction(TransactionCase):
         self.assertEqual((wip_debit, wip_credit),
                          (300, 300), "Work in Process is wrong")
 
-        quant_brw = quant_obj.search(
+        quant_brw = self.quant_obj.search(
             [('product_id', '=', self.mrp_production_d.product_id.id)])
         self.assertEqual(
             sum([qnt.qty for qnt in quant_brw]), 3,
@@ -187,7 +193,7 @@ class TestMrpProduction(TransactionCase):
         self.assertEqual((wip_debit, wip_credit),
                          (170, 170), "Work in Process is wrong")
 
-        quant_brw = quant_obj.search(
+        quant_brw = self.quant_obj.search(
             [('product_id', '=', self.mrp_production_e.product_id.id)])
         self.assertEqual(quant_brw.cost, 150, "Cost on Quant is wrong")
         self.assertEqual(

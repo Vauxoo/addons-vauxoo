@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import division
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning as UserError
 import openerp.addons.decimal_precision as dp
@@ -127,7 +128,7 @@ class StockLandedCost(models.Model):
 
         for move in move_ids:
             total_cost = 0.0
-            total_qty = move.product_qty
+
             weight = move.product_id and \
                 move.product_id.weight * move.product_qty
             volume = move.product_id and \
@@ -370,11 +371,10 @@ class StockLandedCost(models.Model):
         method equal to average
         """
         dct = dict(dct or {})
-        scp_obj = self.env['stock.card.product']
         if not dct:
             return True
-        for product_id in dct.keys():
-            field2write = dct[product_id]
+        scp_obj = self.env['stock.card.product']
+        for product_id, field2write in dct.items():
             scp_obj.write_standard_price(product_id, field2write)
         return True
 
@@ -477,7 +477,7 @@ class StockLandedCost(models.Model):
             # to landing costs
             to_cogs = {}
             for prod_id in prod_dict:
-                to_cogs[prod_id] = zip(
+                to_cogs[prod_id] = zip(  # pylint: disable=W1637
                     first_lines[prod_id], last_lines[prod_id])
             for prod_id in to_cogs:
                 fst_avg = 0.0

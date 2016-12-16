@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import division
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
 

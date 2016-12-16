@@ -16,6 +16,7 @@
     "data": [
         'view/view.xml',
         'view/wizard.xml',
+        'security/ir.model.access.csv',
     ],
     "installable": True,
     "auto_install": False,
