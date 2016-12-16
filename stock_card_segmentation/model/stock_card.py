@@ -40,6 +40,10 @@ class StockCardProduct(models.TransientModel):
             landed=vals['landed'],
             production=vals['production'],
             subcontracting=vals['subcontracting'],
+            material_valuation=vals['material_valuation'],
+            landed_valuation=vals['landed_valuation'],
+            production_valuation=vals['production_valuation'],
+            subcontracting_valuation=vals['subcontracting_valuation'],
         )
         return res
 
@@ -205,8 +209,22 @@ class StockCardProduct(models.TransientModel):
         move_brw = sm_obj.browse(move_id)
         origin_id = move_brw.origin_returned_move_id or move_brw.move_dest_id
         origin_id = origin_id.id
+
+        if vals.get('global_val') and not origin_id:
+            # /!\ NOTE: There is no origin and this Conditional Statement
+            # applies only on Stock Card per Warehouse. We will fall-back for
+            # the value in the Global Stock Card thus copying original values
+            vals['move_valuation'] = \
+                vals['global_val'][move_id]['move_valuation']
+
+            for sgmnt in SEGMENTATION:
+                vals['%s_valuation' % sgmnt] = \
+                    vals['global_val'][move_id]['%s_valuation' % sgmnt]
+            return True
+
         old_average = (
-            vals.get('global_val') and vals['global_val'].get(origin_id) and
+            vals.get('global_val') and
+            vals['global_val'].get(origin_id) and
             vals['global_val'][origin_id]['average'] or
             vals['move_dict'].get(origin_id) and
             vals['move_dict'][origin_id]['average'] or vals['average'])
@@ -219,8 +237,7 @@ class StockCardProduct(models.TransientModel):
                 vals['global_val'].get(origin_id) and
                 vals['global_val'][origin_id][sgmnt] or
                 vals['move_dict'].get(origin_id) and
-                vals['move_dict'][origin_id][sgmnt] or
-                vals[sgmnt])
+                vals['move_dict'][origin_id][sgmnt] or vals[sgmnt])
 
             vals['%s_valuation' % sgmnt] = sum(
                 [old_average * qnt['qty'] for qnt in qntval])
