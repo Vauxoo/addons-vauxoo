@@ -405,6 +405,7 @@ class StockCardProduct(models.TransientModel):
         return action
 
     def _stock_card_move_history_get(self, product_id, locations_ids=None):
+        product_obj = self.env['product.product']
         query = '''
             SELECT distinct
                 sm.id AS move_id, sm.date, sm.product_id, prod.product_tmpl_id,
@@ -440,6 +441,12 @@ class StockCardProduct(models.TransientModel):
             query += self._cr.mogrify('''
                 AND (sl_src.id IN %s or sl_dst.id IN %s)
             ''', (locations_ids, locations_ids))
+
+        date = product_obj.browse(product_id).date_stock_card_border
+        if date:
+            query += self._cr.mogrify('''AND sm.date >= %s
+                                      ''', (date,))
+
         query += '''ORDER BY sm.date'''
         self._cr.execute(query, (product_id,))
         return self._cr.dictfetchall()
