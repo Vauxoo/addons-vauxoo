@@ -170,7 +170,7 @@ msgstr ""
 #: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:396
 #, python-format
 msgid "Only draft landed costs can be validated"
-msgstr "Solo Costos en Destino en borrador se pueden validar"
+msgstr "Solo costos en destino en borrador se pueden validar"
 
 #. module: stock_landed_costs_average
 #: code:addons/stock_landed_costs_average/model/stock_landed_costs.py:215

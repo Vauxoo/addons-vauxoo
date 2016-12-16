@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import division
 from openerp.addons.stock.tests.common import TestStockCommon
 
 

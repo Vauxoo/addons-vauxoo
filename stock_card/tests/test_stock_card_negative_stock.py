@@ -116,10 +116,10 @@ class TestStockCardNegativeStock(TransactionCase):
 
             for move_id in picking_id.move_lines:
                 self.wizard_item.create({
-                    'transfer_id': wizard_id.id,
                     'product_id': move_id.product_id.id,
-                    'quantity': move_id.product_qty,
+                    'transfer_id': wizard_id.id,
                     'sourceloc_id': move_id.location_id.id,
+                    'quantity': move_id.product_qty,
                     'destinationloc_id': move_id.location_dest_id.id,
                     'product_uom_id': move_id.product_uom.id,
                 })

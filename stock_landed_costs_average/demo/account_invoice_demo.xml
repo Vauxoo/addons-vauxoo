@@ -40,7 +40,7 @@
             <field name="property_stock_account_output" ref="account.o_income"/>
         </record>
         <record id="service_standard_periodic_landed_cost_2" model="product.product">
-            <field name="name">Landed Costs Service (Ensurance)</field>
+            <field name="name">Landed Costs Service (Insurance)</field>
             <field name="cost_method">standard</field>
             <field name="valuation">manual_periodic</field>
             <field name="landed_cost_ok">1</field>

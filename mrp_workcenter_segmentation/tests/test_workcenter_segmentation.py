@@ -5,8 +5,8 @@
 # coded by: karen@vauxoo.com
 # planned by: hbto@vauxoo.com
 
-from openerp.tests.common import TransactionCase
 from collections import namedtuple
+from openerp.tests.common import TransactionCase
 
 
 class TestWorkcenterSegmentation(TransactionCase):

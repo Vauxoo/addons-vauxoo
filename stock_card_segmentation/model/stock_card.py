@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from __future__ import division
 from openerp import models, fields
 import openerp.addons.decimal_precision as dp
 SEGMENTATION = ['material', 'landed', 'production', 'subcontracting']
@@ -43,7 +44,8 @@ class StockCardProduct(models.TransientModel):
         return res
 
     def _get_default_params(self, product_id, locations_ids=None):
-        res = super(StockCardProduct, self)._get_default_params(product_id, locations_ids)
+        res = super(StockCardProduct, self)._get_default_params(
+            product_id, locations_ids)
         res.update({}.fromkeys(SEGMENTATION, 0.0))
         res.update({}.fromkeys(
             ['%s_total' % sgmnt for sgmnt in SEGMENTATION], 0.0))
@@ -203,7 +205,8 @@ class StockCardProduct(models.TransientModel):
 
         for sgmnt in SEGMENTATION:
             old_average = (
-                vals.get('global_val') and vals['global_val'].get(origin_id) and
+                vals.get('global_val') and
+                vals['global_val'].get(origin_id) and
                 vals['global_val'][origin_id][sgmnt] or
                 vals['move_dict'].get(origin_id) and
                 vals['move_dict'][origin_id][sgmnt] or

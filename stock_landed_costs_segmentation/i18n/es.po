@@ -32,13 +32,13 @@ msgstr "Costo de Material"
 #: code:addons/stock_landed_costs_segmentation/model/stock_landed_costs.py:35
 #, python-format
 msgid "Only draft landed costs can be validated"
-msgstr "Solo Costes en Destinos en estado Borrador pueden ser Validados"
+msgstr "Solo costes en cestinos en estado borrador pueden ser validados"
 
 #. module: stock_landed_costs_segmentation
 #: code:addons/stock_landed_costs_segmentation/model/stock_landed_costs.py:45
 #, python-format
 msgid "Please fill the segmentation field in Cost Lines"
-msgstr "Por favor, llene el campo Segmentación en líneas de costos"
+msgstr "Por favor, llene el campo segmentación en Líneas de Costos"
 
 #. module: stock_landed_costs_segmentation
 #: selection:stock.landed.cost.lines,segmentation_cost:0

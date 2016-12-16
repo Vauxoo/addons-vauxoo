@@ -299,7 +299,8 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _stock_card_move_get_avg(self, product_id, vals, locations_ids=None):
-        vals['move_ids'] = self._stock_card_move_history_get(product_id, locations_ids)
+        vals['move_ids'] = self._stock_card_move_history_get(
+            product_id, locations_ids)
         vals['queue'] = vals['move_ids'][:]
         while vals['queue']:
 
@@ -331,7 +332,8 @@ class StockCardProduct(models.TransientModel):
             vals = self._stock_card_move_get(product_id)
             values = {}
             for row in vals['move_ids']:
-                values.update({row['move_id']: vals['lines'][row['move_id']]})
+                values.update(
+                    {row['move_id']: vals['lines'][row['move_id']].copy()})
             res['global_val'] = values
         return res
 

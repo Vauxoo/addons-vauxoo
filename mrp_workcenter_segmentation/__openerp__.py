@@ -14,6 +14,7 @@
         'demo/demo.xml',
     ],
     "data": [
+        'security/ir.model.access.csv',
         'view/view.xml',
         'view/wizard.xml',
     ],
