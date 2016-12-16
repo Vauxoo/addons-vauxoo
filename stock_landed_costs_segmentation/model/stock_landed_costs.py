@@ -47,7 +47,8 @@ class StockLandedCost(models.Model):
 
             quant_dict = {}
             for line in cost.valuation_adjustment_lines:
-                if not line.move_id:
+                if not line.move_id or \
+                        line.move_id.location_id.usage == 'internal':
                     continue
 
                 segment = line.cost_line_id.segmentation_cost
