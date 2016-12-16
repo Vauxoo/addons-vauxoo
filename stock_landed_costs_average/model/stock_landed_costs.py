@@ -422,6 +422,7 @@ class StockLandedCost(models.Model):
             prod_qty = {}
             acc_prod = {}
             quant_dict = {}
+            # TODO: To be replaced by a new API filtered feature
             val_gen = (ln for ln in cost.valuation_adjustment_lines
                        if ln.move_id and
                        ln.move_id.location_id.usage != 'internal')
@@ -457,6 +458,7 @@ class StockLandedCost(models.Model):
                     else:
                         quant_dict[quant.id] += diff
 
+                # TODO: To be replaced by a new API filtered feature
                 qty_out = sum(
                     [quant.qty
                      for quant in line.move_id.quant_ids

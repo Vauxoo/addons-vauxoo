@@ -45,7 +45,7 @@
             <field name="name">stock.card.move.tree</field>
             <field name="model">stock.card.move</field>
             <field name="arch" type="xml">
-                <tree string="Stock Card Move">
+                <tree string="Stock Card Move" colors="blue:qty&gt;0">
                     <field name="date"/>
                     <field name="move_id"/>
                     <field name="cost_unit"/>
