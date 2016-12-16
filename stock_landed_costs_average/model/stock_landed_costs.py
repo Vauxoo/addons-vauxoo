@@ -134,12 +134,12 @@ class StockLandedCost(models.Model):
             volume = move.product_id and \
                 move.product_id.volume * move.product_qty
             for quant in move.quant_ids:
-                total_cost += quant.cost
+                total_cost += quant.cost * quant.qty
             vals = dict(
                 product_id=move.product_id.id,
                 move_id=move.id,
                 quantity=move.product_uom_qty,
-                former_cost=total_cost * total_qty,
+                former_cost=total_cost,
                 weight=weight,
                 volume=volume)
             lines.append(vals)
@@ -413,7 +413,8 @@ class StockLandedCost(models.Model):
             acc_prod = {}
             quant_dict = {}
             for line in cost.valuation_adjustment_lines:
-                if not line.move_id:
+                if not line.move_id or \
+                        line.move_id.location_id.usage == 'internal':
                     continue
                 product_id = line.product_id
 
