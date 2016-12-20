@@ -177,17 +177,20 @@ class StockCardProduct(models.TransientModel):
         current_quants = set(move_id.quant_ids.ids)
         origin_quants = set(origin_id.quant_ids.ids)
         quants_exists = current_quants.issubset(origin_quants)
-        if quants_exists:
+        if quants_exists and vals['product_qty'] > 0:
             vals['move_valuation'] = sum(
                 [qnt['cost'] * qnt['qty'] for qnt in qntval])
+            for sgmnt in SEGMENTATION:
+                vals['%s_valuation' % sgmnt] = sum(
+                    [qnt['%s_cost' % sgmnt] * qnt['qty'] for qnt in qntval])
         # / ! \ This is missing when current move's quants are partially
         # located in origin's quants, so it's taking average cost temporarily
         else:
             vals['move_valuation'] = sum(
                 [vals['average'] * qnt['qty'] for qnt in qntval])
-        for sgmnt in SEGMENTATION:
-            vals['%s_valuation' % sgmnt] = sum(
-                [qnt['%s_cost' % sgmnt] * qnt['qty'] for qnt in qntval])
+            for sgmnt in SEGMENTATION:
+                vals['%s_valuation' % sgmnt] = sum(
+                    [vals[sgmnt] * qnt['qty'] for qnt in qntval])
 
         return True
 
