@@ -94,6 +94,11 @@
                         <div>Stock Card</div>
                     </button>
                 </xpath>
+                <xpath expr="//group[@name='inventory']" position="after">
+                    <group name='stock_card' groups="stock.group_stock_manager" string="Stock Card Info" attrs="{'invisible':['|', ('type','=','service'), ('cost_method','!=','average')]}">
+                        <field name="date_stock_card_border"/>
+                    </group>
+                </xpath>
             </field>
         </record>
     </data>
