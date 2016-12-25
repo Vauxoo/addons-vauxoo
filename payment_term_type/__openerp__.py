@@ -19,6 +19,6 @@
         'views/account_payment_type_view.xml',
     ],
     'test': [],
-    'installable': True,
+    "installable": False,
     'auto_install': False,
 }

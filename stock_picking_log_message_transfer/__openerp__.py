@@ -40,5 +40,5 @@
         "demo/sale_order.xml",
         "demo/transfer_details.xml",
     ],
-    "installable": True,
+    "installable": False,
 }

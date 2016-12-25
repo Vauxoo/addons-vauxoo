@@ -19,6 +19,7 @@ Contributors
 
 * Jorge Naranjo (jorge_nr@vauxoo.com)
 * Luis Torres <luis_t@vauxoo.com>
+* Osval Reyes <osval@vauxoo.com>
 
 Maintainer
 ----------
@@ -35,4 +36,3 @@ sytems and bases its entire operation strategy in the use
 of Open Source Software and its main product is odoo.
 
 To contribute to this module, please visit http://www.vauxoo.com.
-

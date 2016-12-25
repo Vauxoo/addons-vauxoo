@@ -30,5 +30,5 @@
     "data": [
         'view/product_view.xml',
     ],
-    "installable": True
+    "installable": False
 }

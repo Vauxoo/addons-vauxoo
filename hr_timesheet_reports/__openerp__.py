@@ -22,5 +22,5 @@
         "model/hr_timesheet_reports_email.xml",
         "wizard/set_invoice_view.xml",
     ],
-    "installable": True,
+    "installable": False,
 }

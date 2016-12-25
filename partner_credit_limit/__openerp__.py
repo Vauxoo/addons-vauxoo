@@ -17,5 +17,5 @@
         "view/invoice_workflow.xml",
         "view/partner_view.xml",
     ],
-    "installable": True,
+    "installable": False,
 }

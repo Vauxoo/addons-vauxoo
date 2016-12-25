@@ -39,6 +39,6 @@
         'views/procurement_rule_view.xml'
     ],
     'test': [],
-    'installable': True,
+    "installable": False,
     'auto_install': False,
 }

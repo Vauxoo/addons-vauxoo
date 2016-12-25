@@ -5,8 +5,8 @@
 
 from datetime import datetime, timedelta
 import time
-from openerp import _, api, fields, models, tools
-from openerp.exceptions import Warning as UserError
+from odoo import _, api, fields, models, tools
+from odoo.exceptions import Warning as UserError
 from pytz import timezone
 import pytz
 

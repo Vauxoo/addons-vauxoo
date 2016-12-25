@@ -23,6 +23,6 @@
         "static/src/xml/rate.xml",
         "static/src/xml/mail.xml",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }
