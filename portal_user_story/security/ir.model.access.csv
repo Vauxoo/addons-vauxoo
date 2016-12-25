@@ -1,5 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_user_story_portal","user.story.portal","user_story.model_user_story","base.group_portal",1,1,1,0
-"access_acceptability_criteria_portal","acceptability.criteria.portal","user_story.model_acceptability_criteria","base.group_portal",1,1,1,0
-"access_user_story_priority","user.story.priority.portal","user_story.model_user_story_priority","base.group_portal",1,0,0,0
-"access_user_story_difficulty_user","user.story.difficulty.user","user_story.model_user_story_difficulty","base.group_portal",1,0,0,0

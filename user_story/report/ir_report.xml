@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<openerp>
-    <data>
-        <report id="report_user_story" string="User Story" model="user.story" name="user.story.report" report_type="sxw" file="user_story/report/user_story_report.sxw" header="False"/>
-                
-        <report id="report_user_story_with_task" string="User Story With Task" model="user.story" name="user.story.report.with.task" report_type="sxw" file="user_story/report/user_story_with_task_report.sxw" header="False"/>
-    </data>
-</openerp>

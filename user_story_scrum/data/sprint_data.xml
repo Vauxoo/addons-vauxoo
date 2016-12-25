@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<openerp>
-  <data noupdate="1">
-      <function model="user.story" name="update_sprint_user_story" eval="[1]"/>
-</data>
-</openerp>
