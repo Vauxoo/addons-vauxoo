@@ -15,6 +15,6 @@
         'data/sprint_data.xml',
         'view/sprint_filter_view.xml',
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }

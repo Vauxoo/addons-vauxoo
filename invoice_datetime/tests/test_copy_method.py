@@ -2,8 +2,8 @@
 # Copyright 2016 Vauxoo
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
 import time
+from odoo.tests.common import TransactionCase
 
 
 class TestInvoiceDatetimeCopy(TransactionCase):
@@ -20,7 +20,7 @@ class TestInvoiceDatetimeCopy(TransactionCase):
         """Test to verify that the copy method works fine
         """
         self.assertEqual(self.invoice_id.state, 'draft')
-        self.invoice_id.signal_workflow('invoice_open')
+        self.invoice_id.action_invoice_open()
         self.assertEqual(self.invoice_id.date,
                          "%s-01-01" % time.strftime('%Y'))
         self.assertEqual(self.invoice_id.date_invoice_tz, False)

@@ -25,7 +25,7 @@
         'views/two_validations_invoice_view.xml',
     ],
     'test': [],
-    'installable': True,
+    "installable": False,
     'auto_install': False,
     'images': [],
 }

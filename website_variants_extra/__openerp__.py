@@ -24,5 +24,5 @@
         "views/report_layout.xml",
     ],
     "test": [],
-    "installable": True,
+    "installable": False,
 }
