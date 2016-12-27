@@ -1,12 +1,21 @@
+# Stock Account Unfuck
 Currently, Odoo considers that all inventory leaves for products with Costing
 Method equal to `average` must be booked at current Price Cost.
 
 Chances that the Costing Price (average) changes are when products are incoming
 from Suppliers.
 
-According to Official Documentation the reason this is done is explained here (URL)
+According to Official Documentation the reason this is done is explained [here](https://www.odoo.com/documentation/user/9.0/accounting/others/inventory/avg_price_valuation.html#purchase-return-use-cas://www.odoo.com/documentation/user/9.0/accounting/others/inventory/avg_price_valuation.html#purchase-return-use-case)
 
-[[Here goes an example of Odoo's Purchase Returns]]
+## Odoo's Approach on Purchase Returns
+
+|        Date         | Transaction | Unit Cost | Average | Move Qty | Inv. Qty | Move Val. | Inv. Val. |
+| :-----------------: | :---------: | --------: | ------: | -------: | -------: | --------: | --------: |
+| 12/20/2016 04:53:50 | Purchase 01 | 32.00     | 32.00   | 10       | 10       | 320.00    | 320.00    |
+| 12/20/2016 05:08:49 | Purchase 02 | 48.00     | 40.00   | 10       | 20       | 480.00    | 800.00    |
+| 12/20/2016 05:10:14 | Sale 01     | 40.00     | 40.00   | -16      | 4        | -640.00   | 160.00    |
+| 12/20/2016 05:10:56 | Sale 02     | 40.00     | 40.00   | -2       | 2        | -80.00    |  80.00    |
+| **12/20/2016 05:12:19** | **Pur. 01 Ret** | **40.00**     | **40.00**   | **-2**       | **0**        | **-80.00**    |   **0.00**    |
 
 Looking at that rationale it is a feasible and acceptable solution that proves
 a point.
