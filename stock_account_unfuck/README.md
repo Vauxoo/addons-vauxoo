@@ -103,32 +103,32 @@ creating profits or losses because the original value was less or greater.
 | **12/22/2016** | **Sale 01 Ret** |  **40.00**    |  **40.00**  |   **6**      | **14**       |  **240.00**   |  **560.00**   |
 
 As we can see Sale 01 Delivery was booked as follows:
-| | Debit | Credit |
-|:---|---:|---:|
-|Stock Out|192.00||
-|Inventory Valuation||192.00|
+|                   |  Debit | Credit |
+| :---------------- | -----: | -----: |
+|Stock Out          |  192.00|        |
+|Inventory Valuation|        |  192.00|
 
 Sale 01 Invoice was booked as followed:
-| | Debit | Credit |
-|:---|---:|---:|
-|Receivable|250.00||
-|Income||250.00|
-|CoGS|192.00||
-|Stock Out||192.00|
+|                   |  Debit | Credit |
+| :---------------- | -----: | -----: |
+|Receivable         |  250.00|        |
+|Income             |        |  250.00|
+|CoGS               |  192.00|        |
+|Stock Out          |        |  192.00|
 
 Returns - Delivery & Invoice - were booked as follows:
-| | Debit | Credit |
-|:---|---:|---:|
-|Inventory Valuation|240.00||
-|Stock Out||240.00|
+|                   |  Debit | Credit |
+| :---------------- | -----: | -----: |
+|Inventory Valuation|  240.00|        |
+|Stock Out          |        |  240.00|
 
 Sale 01 Invoice was booked as followed:
-| | Debit | Credit |
-|:---|---:|---:|
-|Income|250.00||
-|Receivable||250.00|
-|Stock Out|240.00||
-|CoGS||240.00|
+|                   |  Debit | Credit |
+| :---------------- | -----: | -----: |
+|Income             |  250.00|        |
+|Receivable         |        |  250.00|
+|Stock Out          |  240.00|        |
+|CoGS               |        |  240.00|
 
 As we can see, there is a net increase on Inventory Valuation and the CoGS is
 greater than that expected to be refunded by the Return
