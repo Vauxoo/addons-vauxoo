@@ -103,13 +103,13 @@ creating profits or losses because the original value was less or greater.
 | **12/22/2016** | **Sale 01 Ret** |  **40.00**    |  **40.00**  |   **6**      | **14**       |  **240.00**   |  **560.00**   |
 
 As we can see Sale 01 Delivery was booked as follows:
-|                   |  Debit | Credit |
+| Account           |  Debit | Credit |
 | :---------------- | -----: | -----: |
 |Stock Out          |  192.00|        |
 |Inventory Valuation|        |  192.00|
 
 Sale 01 Invoice was booked as followed:
-|                   |  Debit | Credit |
+| Account           |  Debit | Credit |
 | :---------------- | -----: | -----: |
 |Receivable         |  250.00|        |
 |Income             |        |  250.00|
@@ -117,13 +117,13 @@ Sale 01 Invoice was booked as followed:
 |Stock Out          |        |  192.00|
 
 Returns - Delivery & Invoice - were booked as follows:
-|                   |  Debit | Credit |
+| Account           |  Debit | Credit |
 | :---------------- | -----: | -----: |
 |Inventory Valuation|  240.00|        |
 |Stock Out          |        |  240.00|
 
 Sale 01 Invoice was booked as followed:
-|                   |  Debit | Credit |
+| Account           |  Debit | Credit |
 | :---------------- | -----: | -----: |
 |Income             |  250.00|        |
 |Receivable         |        |  250.00|
