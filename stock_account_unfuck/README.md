@@ -9,16 +9,42 @@ According to Official Documentation the reason this is done is explained [here](
 
 ## Odoo's Approach on Purchase Returns
 
-|        Date         | Transaction | Unit Cost | Average | Move Qty | Inv. Qty | Move Val. | Inv. Val. |
-| :-----------------: | :---------: | --------: | ------: | -------: | -------: | --------: | --------: |
-| 12/20/2016 04:53:50 | Purchase 01 | 32.00     | 32.00   | 10       | 10       | 320.00    | 320.00    |
-| 12/20/2016 05:08:49 | Purchase 02 | 48.00     | 40.00   | 10       | 20       | 480.00    | 800.00    |
-| 12/20/2016 05:10:14 | Sale 01     | 40.00     | 40.00   | -16      | 4        | -640.00   | 160.00    |
-| 12/20/2016 05:10:56 | Sale 02     | 40.00     | 40.00   | -2       | 2        | -80.00    |  80.00    |
-| **12/20/2016 05:12:19** | **Pur. 01 Ret** | **40.00**     | **40.00**   | **-2**       | **0**        | **-80.00**    |   **0.00**    |
+|    Date    | Transaction | Unit Cost | Average | Move Qty | Inv. Qty | Move Val. | Inv. Val. |
+| :--------: | :---------: | --------: | ------: | -------: | -------: | --------: | --------: |
+| 12/15/2016 | Purchase 01 | 32.00     | 32.00   | 10       | 10       | 320.00    | 320.00    |
+| 12/17/2016 | Purchase 02 | 48.00     | 40.00   | 10       | 20       | 480.00    | 800.00    |
+| 12/19/2016 | Sale 01     | 40.00     | 40.00   | -16      | 4        | -640.00   | 160.00    |
+| 12/21/2016 | Sale 02     | 40.00     | 40.00   | -2       | 2        | -80.00    |  80.00    |
+| **12/23/2016** | **Pur. 01 Ret** | **40.00**     | **40.00**   | **-2**       | **0**        | **-80.00**    |   **0.00**    |
 
 Looking at that rationale it is a feasible and acceptable solution that proves
 a point.
+
+If this is not done this way and returns are done at cost price of transaction we could end up
+with either of two cases:
+
+### Overvalued Inventory with no merchandise
+|    Date    | Transaction | Unit Cost | Average | Move Qty | Inv. Qty | Move Val. | Inv. Val. |
+| :--------: | :---------: | --------: | ------: | -------: | -------: | --------: | --------: |
+| 12/15/2016 | Purchase 01 | 32.00     | 32.00   | 10       | 10       | 320.00    | 320.00    |
+| 12/17/2016 | Purchase 02 | 48.00     | 40.00   | 10       | 20       | 480.00    | 800.00    |
+| 12/19/2016 | Sale 01     | 40.00     | 40.00   | -16      | 4        | -640.00   | 160.00    |
+| 12/21/2016 | Sale 02     | 40.00     | 40.00   | -2       | 2        | -80.00    |  80.00    |
+| **12/23/2016** | **Pur. 01 Ret** | **32.00**     | **-**       | **-2**       | **0**        | **-64.00**    |  **16.00**    |
+
+> It is to be noticed that under normal circumstances `Purchase 01 Return` can
+> only be performed if the merchandise sold to the customer is first returned
+> and then the supplier return can be fulfill as usual. Odoo will complain
+> because there is no Quant available to be returned.
+
+### Undervalued Inventory with no merchandise
+|    Date    | Transaction | Unit Cost | Average | Move Qty | Inv. Qty | Move Val. | Inv. Val. |
+| :--------: | :---------: | --------: | ------: | -------: | -------: | --------: | --------: |
+| 12/15/2016 | Purchase 01 | 32.00     | 32.00   | 10       | 10       | 320.00    | 320.00    |
+| 12/17/2016 | Purchase 02 | 48.00     | 40.00   | 10       | 20       | 480.00    | 800.00    |
+| 12/19/2016 | Sale 01     | 40.00     | 40.00   | -16      | 4        | -640.00   | 160.00    |
+| 12/21/2016 | Sale 02     | 40.00     | 40.00   | -2       | 2        | -80.00    |  80.00    |
+| **12/23/2016** | **Pur. 02 Ret** | **48.00**     | **-**       | **-2**       | **0**        | **-96.00**    | **-16.00**    |
 
 However, for the following case the inventory that leaves cannot be recorded at
 average cost because that implies an increase/decrease of inventory without
