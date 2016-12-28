@@ -91,6 +91,8 @@ class ProductTemplate(models.Model):
             context = {}
         user_company_id = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.id
+        make_journal_entry = self.pool.get('res.users').browse(
+            cr, uid, uid, context=context).company_id.make_journal_entry
         for rec_id in ids:
             datas = self.get_product_accounts(cr, uid, rec_id, context=context)
             diff = self.browse(
@@ -117,7 +119,7 @@ class ProductTemplate(models.Model):
 
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
-                    if not qty:
+                    if not qty or make_journal_entry:
                         continue
                     # Accounting Entries
                     ref = '[%(code)s] %(name)s' % dict(

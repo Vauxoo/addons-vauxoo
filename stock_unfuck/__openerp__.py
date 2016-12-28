@@ -29,13 +29,14 @@
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "stock",
+        "stock_account",
     ],
     "demo": [
         'demo/product_demo.xml',
         'demo/stock_demo.xml',
     ],
     "data": [
+        'views/res_config_view.xml',
     ],
     "test": [],
     "js": [],
