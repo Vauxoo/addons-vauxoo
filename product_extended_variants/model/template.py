@@ -119,7 +119,7 @@ class ProductTemplate(models.Model):
 
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
-                    if not qty or make_journal_entry:
+                    if not qty or not make_journal_entry:
                         continue
                     # Accounting Entries
                     ref = '[%(code)s] %(name)s' % dict(
