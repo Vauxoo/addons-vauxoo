@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="product_01_victrola" model="product.product">
            <field name="name">VX Victrola</field>
            <field name="type">product</field>
