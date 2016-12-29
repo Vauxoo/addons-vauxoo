@@ -29,6 +29,7 @@
                 'product_extended'],
     "category": "Generic Modules/Inventory Control",
     "data": ['view/product_view.xml',
+             'view/res_config_view.xml',
              'data/update_price_data.xml'],
     "installable": True
 }
