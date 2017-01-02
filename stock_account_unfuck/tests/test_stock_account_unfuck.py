@@ -29,5 +29,5 @@ class TestStockCard(TransactionCase):
              ('account_id', '=', val_id.id)])
         debit = sum([aml.debit for aml in aml_ids])
         credit = sum([aml.credit for aml in aml_ids])
-        self.assertEqual(debit, 4200.0, "Expected Debit: 4300.0")
+        self.assertEqual(debit, 4300.0, "Expected Debit: 4300.0")
         self.assertEqual(credit, 4299.99, "Expected Debit: 4299.99")
