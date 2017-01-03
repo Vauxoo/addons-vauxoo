@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+        <record id="view_stock_config_make_journal_entry" model="ir.ui.view">
+            <field name="name">stock.config.make.journal.entry</field>
+            <field name="model">stock.config.settings</field>
+            <field name="inherit_id" ref="stock_account.view_stock_config_settings_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='module_stock_landed_costs']" position="after">
+                    <div>
+                        <field name="make_journal_entry" class="oe_inline"/>
+                        <label for="make_journal_entry"/>
+                        <field name="company_id" invisible="1"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
