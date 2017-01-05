@@ -7,7 +7,7 @@
 #    info Vauxoo (info@vauxoo.com)
 #    coded by: Luis Torres <luis_t@vauxoo.com>
 ############################################################################
-from openerp import models, api, fields
+from odoo import models, api, fields
 
 
 class ResCompany(models.Model):
