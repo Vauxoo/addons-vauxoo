@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
+    <data noupdate="0">
+        <record id="base.res_partner_23" model="res.partner">
+            <field name="credit_limit">1000000000</field>
+        </record>
+    </data>
     <data noupdate="1">
         <record id="product_01_victrola" model="product.product">
            <field name="name">VX Victrola</field>
@@ -41,7 +46,7 @@
         <record id="sau_so_01" model="sale.order">
             <field name="name">sau_so_01</field>
             <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="base.res_partner_23"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="order_policy">picking</field>
@@ -69,7 +74,7 @@
         <record id="sau_so_02" model="sale.order">
             <field name="name">sau_so_02</field>
             <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="base.res_partner_23"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="order_policy">picking</field>
@@ -124,7 +129,7 @@
         <record id="sau_so_03" model="sale.order">
             <field name="name">sau_so_03</field>
             <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="base.res_partner_23"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="order_policy">picking</field>
@@ -151,7 +156,7 @@
 
         <record id="pick_01_sau_so_01" model="stock.picking">
             <field name="name">pick_01_sau_so_01</field>
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="base.res_partner_23"/>
             <field name="move_type">one</field>
             <field name="priority">1</field>
             <field name="picking_type_id" ref="stock.picking_type_internal"/>
