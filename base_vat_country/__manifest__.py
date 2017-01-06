@@ -9,7 +9,7 @@
 ############################################################################
 {
     "name": "Base VAT Country",
-    "version": "9.0.0.1.0",
+    "version": "10.0.0.1.0",
     "author": "Vauxoo",
     "category": "Customization",
     "website": "http://www.vauxoo.com/",
@@ -26,6 +26,5 @@
     "js": [],
     "css": [],
     "qweb": [],
-    "installable": False,
-    "auto_install": False
+    "installable": True,
 }

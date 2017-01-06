@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="0">
         <record id="view_compant_inherit_vat_without_country" model="ir.ui.view">
             <field name="name">view.company.inherit.vat.without.country</field>
@@ -19,4 +19,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>
