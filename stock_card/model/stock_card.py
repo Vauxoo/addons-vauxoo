@@ -138,7 +138,6 @@ class StockCardProduct(models.TransientModel):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
         move_id = sm_obj.browse(row['move_id'])
-        product_id = self.env['product.product'].browse(row['product_id'])
         # Cost is the one record in the stock_move, cost in the
         # quant record includes other segmentation cost: landed_cost,
         # material_cost, production_cost, subcontracting_cost
@@ -148,15 +147,9 @@ class StockCardProduct(models.TransientModel):
         current_quants = set(move_id.quant_ids.ids)
         origin_quants = set(origin_id.quant_ids.ids)
         quants_exists = current_quants.issubset(origin_quants)
-        price = 0
-        if quants_exists:
-            price = move_id.price_unit
-        elif product_id.cost_method == 'average' and not quants_exists:
-            price = vals['average']
-        # / ! \ This is missing when current move's quants are partially
-        # located in origin's quants, so it's taking average cost temporarily
-        else:
-            price = vals['average']
+        price = vals['average']
+        if quants_exists and vals['product_qty'] > 0:
+            price = origin_id.price_unit
         vals['move_valuation'] = sum([price * qnt['qty'] for qnt in qntval])
         return True
 
