@@ -164,6 +164,8 @@ class StockLandedCost(models.Model):
         base_line = {
             'move_id': move_id,
             'product_id': product_brw.id,
+            'debit': 0.0,
+            'credit': 0.0,
         }
 
         name = u'%(name)s: %(memo)s - AVG'
@@ -253,6 +255,8 @@ class StockLandedCost(models.Model):
             'move_id': move_id,
             'product_id': line.product_id.id,
             'quantity': line.quantity,
+            'debit': 0.0,
+            'credit': 0.0,
         }
         debit_line = dict(base_line)
         credit_line = dict(base_line)
@@ -334,6 +338,8 @@ class StockLandedCost(models.Model):
         base_line = {
             'move_id': move_id,
             'product_id': product_brw.id,
+            'debit': 0.0,
+            'credit': 0.0,
         }
         # Create COGS account move lines for products that were sold prior to
         # applying landing costs
@@ -619,6 +625,8 @@ class StockLandedCost(models.Model):
             'move_id': move_id,
             'product_id': line.product_id.id,
             'quantity': line.quantity,
+            'debit': 0.0,
+            'credit': 0.0,
         }
         debit_line = dict(base_line, account_id=debit_account_id)
         credit_line = dict(base_line, account_id=credit_account_id)
