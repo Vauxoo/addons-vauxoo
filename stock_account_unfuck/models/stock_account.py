@@ -9,7 +9,6 @@ class StockQuant(models.Model):
         context = dict(context or {})
         dst = move.location_dest_id.usage
         src = move.location_id.usage
-        signal = 1 if dst == 'internal' else -1
         val_amount = 0
 
         if dst in ('customer', 'production', 'inventory', 'transit'):
@@ -21,7 +20,7 @@ class StockQuant(models.Model):
                 # found
                 origin_id = move.origin_returned_move_id
                 val_amount = origin_id and origin_id.price_unit or \
-                        move.product_id.standard_price
+                    move.product_id.standard_price
             else:
                 # /!\ NOTE: We will use average price if no merchandise is left
                 # after Purchase Return
@@ -40,9 +39,9 @@ class StockQuant(models.Model):
             # TODO:
             origin_id = move.origin_returned_move_id or move.move_dest_id
             val_amount = origin_id and origin_id.price_unit or \
-                    move.product_id.standard_price
+                move.product_id.standard_price
 
-        return signal * val_amount
+        return val_amount
 
     def _prepare_account_move_line(
             self, cr, uid, move, qty, cost, credit_account_id,
@@ -62,9 +61,9 @@ class StockQuant(models.Model):
         if not context.get('force_val_amount') and \
                 move.product_id.cost_method == 'average':
             val_amount = self._get_avg_valuation_by_move(
-                    cr, uid, move, context=context)
+                cr, uid, move, context=context)
             val_amount = currency_obj.round(
-                    cr, uid, move.company_id.currency_id, val_amount * qty)
+                cr, uid, move.company_id.currency_id, val_amount * qty)
             res[0][2]['debit'] = val_amount > 0 and val_amount or 0
             res[0][2]['credit'] = val_amount < 0 and -val_amount or 0
             res[1][2]['credit'] = val_amount > 0 and val_amount or 0
