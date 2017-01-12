@@ -54,13 +54,19 @@ class StockQuant(models.Model):
         res = super(StockQuant, self)._prepare_account_move_line(
             cr, uid, move, qty, cost, credit_account_id, debit_account_id,
             context)
+
+        # /!\ NOTE: From odoo/addons/stock_account/stock_account.py
+        # _prepare_account_move_line method returns a list with the following
+        # footprint: res = [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
+        # thus debit_line_vals = res[0][2] and credit_line_vals = res[1][2]
         if not context.get('force_val_amount') and \
                 move.product_id.cost_method == 'average':
             val_amount = self._get_avg_valuation_by_move(
                     cr, uid, move, context=context)
             val_amount = currency_obj.round(
                     cr, uid, move.company_id.currency_id, val_amount * qty)
-            for line in res:
-                line[2]['debit'] = val_amount > 0 and val_amount or 0
-                line[2]['credit'] = val_amount < 0 and -val_amount or 0
+            res[0][2]['debit'] = val_amount > 0 and val_amount or 0
+            res[0][2]['credit'] = val_amount < 0 and -val_amount or 0
+            res[1][2]['credit'] = val_amount > 0 and val_amount or 0
+            res[1][2]['debit'] = val_amount < 0 and -val_amount or 0
         return res
