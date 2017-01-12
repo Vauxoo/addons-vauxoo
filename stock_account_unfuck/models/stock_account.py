@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import api, models
+from openerp import models
 
 
 class StockQuant(models.Model):
@@ -38,8 +38,13 @@ class StockQuant(models.Model):
         elif src in ('customer', 'transit'):
             # TODO:
             origin_id = move.origin_returned_move_id or move.move_dest_id
-            val_amount = origin_id and origin_id.price_unit or \
-                move.product_id.standard_price
+            init_date = move.product_id.date_stock_account_border
+            if init_date and origin_id and origin_id.date >= init_date:
+                val_amount = origin_id.price_unit
+            elif not init_date and origin_id:
+                val_amount = origin_id.price_unit
+            else:
+                val_amount = move.product_id.standard_price
 
         return val_amount
 
@@ -64,8 +69,8 @@ class StockQuant(models.Model):
                 cr, uid, move, context=context)
             val_amount = currency_obj.round(
                 cr, uid, move.company_id.currency_id, val_amount * qty)
-            res[0][2]['debit'] = val_amount > 0 and val_amount or 0
-            res[0][2]['credit'] = val_amount < 0 and -val_amount or 0
-            res[1][2]['credit'] = val_amount > 0 and val_amount or 0
-            res[1][2]['debit'] = val_amount < 0 and -val_amount or 0
+            res[0][2]['debit'] = val_amount if val_amount > 0 else 0
+            res[0][2]['credit'] = -val_amount if val_amount < 0 else 0
+            res[1][2]['credit'] = val_amount if val_amount > 0 else 0
+            res[1][2]['debit'] = -val_amount if val_amount < 0 else 0
         return res

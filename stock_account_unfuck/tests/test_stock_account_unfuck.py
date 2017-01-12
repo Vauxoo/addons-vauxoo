@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from copy import deepcopy
+from datetime import datetime
 from openerp.tests.common import TransactionCase
 
 
@@ -63,6 +65,18 @@ class TestStockCard(TransactionCase):
             '15': {
                 'act': 'sale', 'xml': True, 'xml_id': "sau_so_ut_04",
                 'avg': 270, 'qty': 6, 'debit': 6730, 'credit': 5109.99, },
+        }
+
+        self.res_border = {
+            '13': {
+                'act': 'purchase', 'border': True, 'xml_id': "sau_po_ut_05",
+                'avg': 280, 'qty': 6, 'debit': 5980, 'credit': 4299.99, },
+            '14': {
+                'act': 'sale-ret', 'qty-ret': 3, 'xml_id': "sau_so_ut_03",
+                'avg': 280, 'qty': 9, 'debit': 6820, 'credit': 4299.99, },
+            '15': {
+                'act': 'sale', 'xml': True, 'xml_id': "sau_so_ut_04",
+                'avg': 280, 'qty': 6, 'debit': 6820, 'credit': 5139.99, },
         }
 
     def process_picking(self, sp_brws):
@@ -174,6 +188,57 @@ class TestStockCard(TransactionCase):
     def test_01_accounting_booking(self):
         for index in range(1, 16):
             res = self.res["%02d" % index]
+            self.return_transaction(res)
+
+            aml_ids = self.aml_obj.search(
+                [('product_id', '=', self.radiogram_id.id),
+                 ('account_id', '=', self.val_id.id)])
+
+            debit = sum([aml.debit for aml in aml_ids])
+            credit = sum([aml.credit for aml in aml_ids])
+
+            self.assertEqual(
+                debit, res["debit"],
+                "operation: %02d - expected debit %s" % (
+                    index, res["debit"]))
+            self.assertEqual(
+                credit, res["credit"],
+                "operation: %02d - expected credit %s" % (
+                    index, res["credit"]))
+        return
+
+    def test_02_average_border_date(self):
+        res_border = deepcopy(self.res)
+        res_border.update(self.res_border)
+        for index in range(1, 16):
+            res = res_border["%02d" % index]
+            if res.get('border'):
+                date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                self.radiogram_id.write({'date_stock_account_border': date})
+            self.return_transaction(res)
+
+            self.assertEqual(
+                round(self.radiogram_id.standard_price, 2), res["avg"],
+                "operation: %02d - expected average - cost price is %s" % (
+                    index, res["avg"]))
+            self.assertEqual(
+                round(self.radiogram_id.qty_available, 2), res["qty"],
+                "Operation: %02d - Qty Available should be %s" % (
+                    index, res["qty"]))
+        return
+
+    def test_02_booking_border_date(self):
+        res_border = deepcopy(self.res)
+        res_border.update(self.res_border)
+        for index in range(1, 16):
+            res = self.res["%02d" % index]
+            # /!\ NOTE: Future anyone who wants to ask for this `IF` statement
+            # in here. It was set because the data we want to test is dependant
+            # on that `key`. And it can be set on the fly be reusing previous
+            # demo data
+            if res.get('border'):
+                date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                self.radiogram_id.write({'date_stock_account_border': date})
             self.return_transaction(res)
 
             aml_ids = self.aml_obj.search(

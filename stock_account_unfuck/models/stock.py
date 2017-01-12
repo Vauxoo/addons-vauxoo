@@ -22,9 +22,27 @@ class StockMove(models.Model):
             if (qty_available + move.product_qty * signal) == 0:
                 continue
             orig = move.origin_returned_move_id or move.move_dest_id
-            average_valuation_price = sum(
-                [quant.qty * (orig.price_unit if orig else quant.cost)
-                 for quant in move.reserved_quant_ids])
+            init_date = move.product_id.date_stock_account_border
+            if orig and init_date and orig.date >= init_date:
+                average_valuation_price = sum(
+                    [quant.qty * orig.price_unit
+                     for quant in move.reserved_quant_ids])
+            elif orig and init_date and init_date > orig.date and signal == 1:
+                average_valuation_price = sum(
+                    [quant.qty * move.product_id.standard_price
+                     for quant in move.reserved_quant_ids])
+            elif orig and init_date and init_date > orig.date and signal == -1:
+                average_valuation_price = sum(
+                    [quant.qty * orig.price_unit
+                     for quant in move.reserved_quant_ids])
+            elif orig and not init_date:
+                average_valuation_price = sum(
+                    [quant.qty * orig.price_unit
+                     for quant in move.reserved_quant_ids])
+            else:
+                average_valuation_price = sum(
+                    [quant.qty * quant.cost
+                     for quant in move.reserved_quant_ids])
             amount_unit = move.product_id.standard_price
             new_std_price = (
                 (amount_unit * qty_available) +
