@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from openerp.tests.common import TransactionCase
 from datetime import datetime, timedelta
+from openerp.tests.common import TransactionCase
 from openerp.tools.safe_eval import safe_eval
 
 
@@ -46,12 +46,12 @@ class TestStockLandedCommon(TransactionCase):
 
         for move_id in picking_id.move_lines:
             self.wizard_item.create({
-                'transfer_id': wizard_id.id,
+                'product_uom_id': move_id.product_uom.id,
                 'product_id': move_id.product_id.id,
                 'quantity': move_id.product_qty,
                 'sourceloc_id': move_id.location_id.id,
                 'destinationloc_id': move_id.location_dest_id.id,
-                'product_uom_id': move_id.product_uom.id,
+                'transfer_id': wizard_id.id,
             })
 
         wizard_id.do_detailed_transfer()
@@ -69,16 +69,16 @@ class TestStockLandedCommon(TransactionCase):
         qty = vals['qty']
         cost = vals['cost']
         purchase_order_id = self.purchase_order.create({
-            'partner_id': self.supplier_id.id,
             'location_id': self.ref('stock.stock_location_stock'),
+            'partner_id': self.supplier_id.id,
             'pricelist_id': self.ref('purchase.list0'),
             'order_line': [(0, 0, {
                 'name': "%s (qty=%s, cost=%s)" % (
                     self.product_id.name, qty, cost),
-                'product_id': self.product_id.id,
                 'price_unit': cost,
-                'product_qty': qty,
+                'product_id': self.product_id.id,
                 'date_planned': datetime.now().strftime('%Y-%m-%d'),
+                'product_qty': qty,
             })]
         })
 

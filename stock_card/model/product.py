@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, api
+import logging
+from openerp import models, api, fields
+_logger = logging.getLogger(__name__)
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
+
+    date_stock_card_border = fields.Datetime(string='Stock Card Border Date')
 
     @api.multi
     def stock_card_move_get(self):

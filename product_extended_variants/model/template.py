@@ -91,6 +91,8 @@ class ProductTemplate(models.Model):
             context = {}
         user_company_id = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.id
+        make_journal_entry = self.pool.get('res.users').browse(
+            cr, uid, uid, context=context).company_id.make_journal_entry
         for rec_id in ids:
             datas = self.get_product_accounts(cr, uid, rec_id, context=context)
             diff = self.browse(
@@ -117,7 +119,8 @@ class ProductTemplate(models.Model):
 
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
-                    if prod_variant.cost_method != 'standard' or not qty:
+                    if (prod_variant.cost_method != 'standard' and not
+                            make_journal_entry or not qty):
                         continue
                     # Accounting Entries
                     ref = '[%(code)s] %(name)s' % dict(
@@ -148,14 +151,17 @@ class ProductTemplate(models.Model):
                         'debit': amount_diff,
                         'ref': ref,
                         'credit': 0,
-                        'move_id': move_id, }, context=context)
+                        'move_id': move_id,
+                        'product_id': prod_variant.id,
+                    }, context=context)
                     move_line_obj.create(cr, uid, {
                         'name': _('Standard Price changed'),
                         'account_id': credit_account_id,
                         'debit': 0,
                         'ref': ref,
                         'credit': amount_diff,
-                        'move_id': move_id
+                        'move_id': move_id,
+                        'product_id': prod_variant.id,
                     }, context=context)
             self.write(cr, uid, rec_id, {'standard_price': new_price})
         return True

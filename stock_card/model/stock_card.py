@@ -138,7 +138,6 @@ class StockCardProduct(models.TransientModel):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
         sm_obj = self.env['stock.move']
         move_id = sm_obj.browse(row['move_id'])
-        product_id = self.env['product.product'].browse(row['product_id'])
         # Cost is the one record in the stock_move, cost in the
         # quant record includes other segmentation cost: landed_cost,
         # material_cost, production_cost, subcontracting_cost
@@ -148,15 +147,9 @@ class StockCardProduct(models.TransientModel):
         current_quants = set(move_id.quant_ids.ids)
         origin_quants = set(origin_id.quant_ids.ids)
         quants_exists = current_quants.issubset(origin_quants)
-        price = 0
-        if quants_exists:
-            price = move_id.price_unit
-        elif product_id.cost_method == 'average' and not quants_exists:
-            price = vals['average']
-        # / ! \ This is missing when current move's quants are partially
-        # located in origin's quants, so it's taking average cost temporarily
-        else:
-            price = vals['average']
+        price = vals['average']
+        if quants_exists and vals['product_qty'] > 0:
+            price = origin_id.price_unit
         vals['move_valuation'] = sum([price * qnt['qty'] for qnt in qntval])
         return True
 
@@ -299,7 +292,8 @@ class StockCardProduct(models.TransientModel):
         return True
 
     def _stock_card_move_get_avg(self, product_id, vals, locations_ids=None):
-        vals['move_ids'] = self._stock_card_move_history_get(product_id, locations_ids)
+        vals['move_ids'] = self._stock_card_move_history_get(
+            product_id, locations_ids)
         vals['queue'] = vals['move_ids'][:]
         while vals['queue']:
 
@@ -331,7 +325,8 @@ class StockCardProduct(models.TransientModel):
             vals = self._stock_card_move_get(product_id)
             values = {}
             for row in vals['move_ids']:
-                values.update({row['move_id']: vals['lines'][row['move_id']]})
+                values.update(
+                    {row['move_id']: vals['lines'][row['move_id']].copy()})
             res['global_val'] = values
         return res
 
@@ -400,6 +395,7 @@ class StockCardProduct(models.TransientModel):
         return action
 
     def _stock_card_move_history_get(self, product_id, locations_ids=None):
+        product_obj = self.env['product.product']
         query = '''
             SELECT distinct
                 sm.id AS move_id, sm.date, sm.product_id, prod.product_tmpl_id,
@@ -432,14 +428,17 @@ class StockCardProduct(models.TransientModel):
                 AND sm.product_id = %s
                 '''
         if locations_ids:
-            query += '''
+            query += self._cr.mogrify('''
                 AND (sl_src.id IN %s or sl_dst.id IN %s)
-            '''
+            ''', (locations_ids, locations_ids))
+
+        date = product_obj.browse(product_id).date_stock_card_border
+        if date:
+            query += self._cr.mogrify('''AND sm.date >= %s
+                                      ''', (date,))
+
         query += '''ORDER BY sm.date'''
-        if locations_ids:
-            self._cr.execute(query, (product_id, locations_ids, locations_ids))
-        else:
-            self._cr.execute(query, (product_id,))
+        self._cr.execute(query, (product_id,))
         return self._cr.dictfetchall()
 
 

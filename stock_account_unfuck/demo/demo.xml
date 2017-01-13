@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="base.res_partner_23" model="res.partner">
+            <field name="credit_limit">1000000000</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="product_01_victrola" model="product.product">
+           <field name="name">VX Victrola</field>
+           <field name="type">product</field>
+           <field name="cost_method">average</field>
+           <field name="valuation">real_time</field>
+           <field name="standard_price">20</field>
+           <field name="property_stock_account_input" ref="account.o_expense"/>
+           <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <record id="sau_po_01" model="purchase.order">
+            <field name="name">sau_po_01</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_01_line_01" model="purchase.order.line">
+            <field name="name">sau_po_01_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="product_qty">10</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="sau_po_01"/>
+        </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="sau_po_01"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="sau_po_01"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('sau_po_01')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('sau_po_01')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_01">
+            <field name="picking_id" model="purchase.order" eval="obj(ref('sau_po_01')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_01')]]"/>
+
+        <record id="sau_so_01" model="sale.order">
+            <field name="name">sau_so_01</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_01_line_01" model="sale.order.line">
+            <field name="name">sau_so_01_line_01</field>
+            <field name="order_id" ref="sau_so_01"/>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="product_uom_qty">4</field>
+            <field name="price_unit">100</field>
+        </record>
+        <workflow action="order_confirm" model="sale.order" ref="sau_so_01"/>
+        <workflow action="manual_invoice" model="sale.order" ref="sau_so_01" uid="base.user_root"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('sau_so_01')).picking_ids[0].id]" model="sale.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('sau_so_01')).picking_ids[0].id]" model="sale.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_02">
+            <field name="picking_id" model="sale.order" eval="obj(ref('sau_so_01')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_02')]]"/>
+
+        <record id="sau_so_02" model="sale.order">
+            <field name="name">sau_so_02</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_02_line_01" model="sale.order.line">
+            <field name="name">sau_so_02_line_01</field>
+            <field name="order_id" ref="sau_so_02"/>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="product_uom_qty">5</field>
+            <field name="price_unit">100</field>
+        </record>
+        <workflow action="order_confirm" model="sale.order" ref="sau_so_02"/>
+        <workflow action="manual_invoice" model="sale.order" ref="sau_so_02" uid="base.user_root"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('sau_so_02')).picking_ids[0].id]" model="sale.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('sau_so_02')).picking_ids[0].id]" model="sale.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_03">
+            <field name="picking_id" model="sale.order" eval="obj(ref('sau_so_02')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_03')]]"/>
+
+        <record id="sau_po_02" model="purchase.order">
+            <field name="name">sau_po_02</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_02_line_01" model="purchase.order.line">
+            <field name="name">sau_po_02_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="product_qty">3</field>
+            <field name="price_unit">300</field>
+            <field name="order_id" ref="sau_po_02"/>
+        </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="sau_po_02"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="sau_po_02"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('sau_po_02')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('sau_po_02')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_04">
+            <field name="picking_id" model="purchase.order" eval="obj(ref('sau_po_02')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_04')]]"/>
+
+        <record id="sau_so_03" model="sale.order">
+            <field name="name">sau_so_03</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_03_line_01" model="sale.order.line">
+            <field name="name">sau_so_03_line_01</field>
+            <field name="order_id" ref="sau_so_03"/>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="product_uom_qty">3</field>
+            <field name="price_unit">250</field>
+        </record>
+        <workflow action="order_confirm" model="sale.order" ref="sau_so_03"/>
+        <workflow action="manual_invoice" model="sale.order" ref="sau_so_03" uid="base.user_root"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('sau_so_03')).picking_ids[0].id]" model="sale.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('sau_so_03')).picking_ids[0].id]" model="sale.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_05">
+            <field name="picking_id" model="sale.order" eval="obj(ref('sau_so_03')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_05')]]"/>
+
+        <record id="pick_01_sau_so_01" model="stock.picking">
+            <field name="name">pick_01_sau_so_01</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="move_01_pick_01" model="stock.move">
+            <field name="origin">pick_01_sau_so_01</field>
+            <field name="picking_id" ref="pick_01_sau_so_01"/>
+            <field name="name">pick_01_sau_so_01</field>
+            <field name="location_id" ref="stock.stock_location_customers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">0</field>
+            <field name="product_uom_qty">1</field>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="origin_returned_move_id" eval="obj(ref('sau_so_01')).picking_ids[0].move_lines[0].id" model="sale.order"/>
+        </record>
+        <function model="stock.picking" name="action_assign" >
+            <value model="stock.picking" eval="obj(ref('pick_01_sau_so_01')).mapped('id')"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details" >
+            <value model="stock.picking" eval="obj(ref('pick_01_sau_so_01')).mapped('id')"/>
+        </function>
+        <record model="stock.transfer_details" id="td_06">
+            <field name="picking_id" ref="pick_01_sau_so_01"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_06')]]"/>
+
+        <record id="sau_po_03" model="purchase.order">
+            <field name="name">sau_po_03</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_03_line_01" model="purchase.order.line">
+            <field name="name">sau_po_03_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="product_qty">5</field>
+            <field name="price_unit">220</field>
+            <field name="order_id" ref="sau_po_03"/>
+        </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="sau_po_03"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="sau_po_03"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('sau_po_03')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('sau_po_03')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_07">
+            <field name="picking_id" model="purchase.order" eval="obj(ref('sau_po_03')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_07')]]"/>
+
+        <record id="sau_po_04" model="purchase.order">
+            <field name="name">sau_po_04</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_04_line_01" model="purchase.order.line">
+            <field name="name">sau_po_04_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="product_qty">3</field>
+            <field name="price_unit">400</field>
+            <field name="order_id" ref="sau_po_04"/>
+        </record>
+        <workflow action="purchase_confirm" model="purchase.order" ref="sau_po_04"/>
+        <workflow action="purchase_approve" model="purchase.order" ref="sau_po_04"/>
+        <function model="stock.picking" name="action_assign">
+            <value eval="[obj(ref('sau_po_04')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details">
+            <value eval="[obj(ref('sau_po_04')).picking_ids[0].id]" model="purchase.order"/>
+        </function>
+        <record model="stock.transfer_details" id="td_08">
+            <field name="picking_id" model="purchase.order" eval="obj(ref('sau_po_04')).picking_ids[0].id"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_08')]]"/>
+
+        <!-- This Dummy Picking is created in order to make some time between pickings -->
+        <record id="pick_dummy_01" model="stock.picking">
+            <field name="name">dummy_01</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="note">This Dummy Picking is created in order to make some time between pickings</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="pickline_dummy_01" model="stock.move">
+            <field name="origin">pickline_dummy_01</field>
+            <field name="picking_id" ref="pick_dummy_01"/>
+            <field name="name">pickline_dummy_01</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">0</field>
+            <field name="product_uom_qty">22</field>
+            <field name="product_id" ref="product_01_victrola"/>
+        </record>
+
+        <!-- This Dummy Picking is created in order to make some time between pickings -->
+        <record id="pick_dummy_02" model="stock.picking">
+            <field name="name">dummy_02</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="note">This Dummy Picking is created in order to make some time between pickings</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="pickline_dummy_02" model="stock.move">
+            <field name="origin">pickline_dummy_02</field>
+            <field name="picking_id" ref="pick_dummy_02"/>
+            <field name="name">pickline_dummy_02</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">0</field>
+            <field name="product_uom_qty">22</field>
+            <field name="product_id" ref="product_01_victrola"/>
+        </record>
+
+        <record id="pick_02_sau_po_03" model="stock.picking">
+            <field name="name">pick_02_sau_po_03</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="move_02_sau_po_03" model="stock.move">
+            <field name="origin">pick_02_sau_po_03</field>
+            <field name="picking_id" ref="pick_02_sau_po_03"/>
+            <field name="name">pick_02_sau_po_03</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">0</field>
+            <field name="product_uom_qty">5</field>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="origin_returned_move_id" eval="obj(ref('sau_po_03')).picking_ids[0].move_lines[0].id" model="purchase.order"/>
+        </record>
+        <function model="stock.picking" name="action_assign" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_03')).mapped('id')"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_03')).mapped('id')"/>
+        </function>
+        <record model="stock.transfer_details" id="td_09">
+            <field name="picking_id" ref="pick_02_sau_po_03"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_09')]]"/>
+
+        <record id="pick_02_sau_po_02" model="stock.picking">
+            <field name="name">pick_02_sau_po_02</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="move_02_sau_po_02" model="stock.move">
+            <field name="origin">pick_02_sau_po_02</field>
+            <field name="picking_id" ref="pick_02_sau_po_02"/>
+            <field name="name">pick_02_sau_po_02</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">0</field>
+            <field name="product_uom_qty">1</field>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="origin_returned_move_id" eval="obj(ref('sau_po_02')).picking_ids[0].move_lines[0].id" model="purchase.order"/>
+        </record>
+        <function model="stock.picking" name="action_assign" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_02')).mapped('id')"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_02')).mapped('id')"/>
+        </function>
+        <record model="stock.transfer_details" id="td_10">
+            <field name="picking_id" ref="pick_02_sau_po_02"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_10')]]"/>
+
+        <record id="pick_02_sau_po_01" model="stock.picking">
+            <field name="name">pick_02_sau_po_01</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="move_02_sau_po_01" model="stock.move">
+            <field name="origin">pick_02_sau_po_01</field>
+            <field name="picking_id" ref="pick_02_sau_po_01"/>
+            <field name="name">pick_02_sau_po_01</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">0</field>
+            <field name="product_uom_qty">1</field>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="origin_returned_move_id" eval="obj(ref('sau_po_01')).picking_ids[0].move_lines[0].id" model="purchase.order"/>
+        </record>
+        <function model="stock.picking" name="action_assign" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_01')).mapped('id')"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_01')).mapped('id')"/>
+        </function>
+        <record model="stock.transfer_details" id="td_11">
+            <field name="picking_id" ref="pick_02_sau_po_01"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_11')]]"/>
+
+        <record id="pick_02_sau_po_04" model="stock.picking">
+            <field name="name">pick_02_sau_po_04</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="move_type">one</field>
+            <field name="priority">1</field>
+            <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        </record>
+        <record id="move_02_sau_po_04" model="stock.move">
+            <field name="origin">pick_02_sau_po_04</field>
+            <field name="picking_id" ref="pick_02_sau_po_04"/>
+            <field name="name">pick_02_sau_po_04</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="price_unit">0</field>
+            <field name="product_uom_qty">3</field>
+            <field name="product_id" ref="product_01_victrola"/>
+            <field name="origin_returned_move_id" eval="obj(ref('sau_po_04')).picking_ids[0].move_lines[0].id" model="purchase.order"/>
+        </record>
+        <function model="stock.picking" name="action_assign" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_04')).mapped('id')"/>
+        </function>
+        <function model="stock.picking" name="do_enter_transfer_details" >
+            <value model="stock.picking" eval="obj(ref('pick_02_sau_po_04')).mapped('id')"/>
+        </function>
+        <record model="stock.transfer_details" id="td_12">
+            <field name="picking_id" ref="pick_02_sau_po_04"/>
+        </record>
+        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_12')]]"/>
+    </data>
+</openerp>
