@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- THIS DATA IS FOR UNIT TEST PURPOSES -->
+        <!-- If you are in need of changing/modifying this data -->
+        <!-- Please Keep updated with the data demo for VX Victrola -->
+        <record id="product_02_radiogram" model="product.product">
+           <field name="name">VX Radiogram</field>
+           <field name="type">product</field>
+           <field name="cost_method">average</field>
+           <field name="valuation">real_time</field>
+           <field name="standard_price">20</field>
+           <field name="property_stock_account_input" ref="account.o_expense"/>
+           <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <!-- 01 - Purchase Order Order 01 -->
+        <record id="sau_po_ut_01" model="purchase.order">
+            <field name="name">sau_po_ut_01</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_ut_01_line_01" model="purchase.order.line">
+            <field name="name">sau_po_ut_01_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_qty">10</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="sau_po_ut_01"/>
+        </record>
+
+        <!-- 02 - Sale Order 01 -->
+        <record id="sau_so_ut_01" model="sale.order">
+            <field name="name">sau_so_ut_01</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_ut_01_line_01" model="sale.order.line">
+            <field name="name">sau_so_ut_01_line_01</field>
+            <field name="order_id" ref="sau_so_ut_01"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_uom_qty">4</field>
+            <field name="price_unit">100</field>
+        </record>
+
+        <!-- 03 - Sale Order 02 -->
+        <record id="sau_so_ut_02" model="sale.order">
+            <field name="name">sau_so_ut_02</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_ut_02_line_01" model="sale.order.line">
+            <field name="name">sau_so_ut_02_line_01</field>
+            <field name="order_id" ref="sau_so_ut_02"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_uom_qty">5</field>
+            <field name="price_unit">100</field>
+        </record>
+
+        <!-- 04 - Purchase Order Order 02 -->
+        <record id="sau_po_ut_02" model="purchase.order">
+            <field name="name">sau_po_ut_02</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_ut_02_line_01" model="purchase.order.line">
+            <field name="name">sau_po_ut_02_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_qty">3</field>
+            <field name="price_unit">300</field>
+            <field name="order_id" ref="sau_po_ut_02"/>
+        </record>
+
+        <!-- 05 - Sale Order 03 -->
+        <record id="sau_so_ut_03" model="sale.order">
+            <field name="name">sau_so_ut_03</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_ut_03_line_01" model="sale.order.line">
+            <field name="name">sau_so_ut_03_line_01</field>
+            <field name="order_id" ref="sau_so_ut_03"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_uom_qty">3</field>
+            <field name="price_unit">250</field>
+        </record>
+
+        <!-- 06 - Return Sale Order 01 - One Unit -->
+
+        <!-- 07 - Purchase Order 03 -->
+        <record id="sau_po_ut_03" model="purchase.order">
+            <field name="name">sau_po_ut_03</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_ut_03_line_01" model="purchase.order.line">
+            <field name="name">sau_po_ut_03_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_qty">5</field>
+            <field name="price_unit">220</field>
+            <field name="order_id" ref="sau_po_ut_03"/>
+        </record>
+
+        <!-- 08 - Purchase Order 04 -->
+        <record id="sau_po_ut_04" model="purchase.order">
+            <field name="name">sau_po_ut_04</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_ut_04_line_01" model="purchase.order.line">
+            <field name="name">sau_po_ut_04_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_qty">3</field>
+            <field name="price_unit">400</field>
+            <field name="order_id" ref="sau_po_ut_04"/>
+        </record>
+
+        <!-- 09 - Return Purchase Order 03 -->
+
+        <!-- 10 - Return Purchase Order 02 -->
+
+        <!-- 11 - Return Purchase Order 01 -->
+
+        <!-- 12 - Return Purchase Order 04 -->
+
+
+        <!-- 13 - Purchase Order 05 -->
+        <record id="sau_po_ut_05" model="purchase.order">
+            <field name="name">sau_po_ut_05</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_ut_05_line_01" model="purchase.order.line">
+            <field name="name">sau_po_ut_05_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_qty">6</field>
+            <field name="price_unit">280</field>
+            <field name="order_id" ref="sau_po_ut_05"/>
+        </record>
+
+        <!-- 14 - Return Sale Order 03 - Whole Sale -->
+
+        <!-- 15 - Sale Order 04 -->
+        <record id="sau_so_ut_04" model="sale.order">
+            <field name="name">sau_so_ut_04</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_ut_04_line_01" model="sale.order.line">
+            <field name="name">sau_so_ut_04_line_01</field>
+            <field name="order_id" ref="sau_so_ut_04"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_uom_qty">3</field>
+            <field name="price_unit">250</field>
+        </record>
+
+    </data>
+</openerp>
