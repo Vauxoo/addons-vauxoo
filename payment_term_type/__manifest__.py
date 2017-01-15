@@ -4,8 +4,8 @@
 
 {
     'name': 'Payment Terms Type',
-    'version': '9.0.0.1.0',
-    'author': 'Tiny SPRL, Vauxoo',
+    'version': '10.0.0.1.0',
+    'author': 'Vauxoo',
     'category': '',
     'license': 'LGPL-3',
     'depends': [
@@ -19,6 +19,5 @@
         'views/account_payment_type_view.xml',
     ],
     'test': [],
-    "installable": False,
-    'auto_install': False,
+    "installable": True,
 }
