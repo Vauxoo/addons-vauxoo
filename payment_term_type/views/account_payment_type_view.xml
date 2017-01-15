@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record model="ir.ui.view" id="view_account_payment_term_type">
@@ -17,7 +17,7 @@
         <record id="view_account_config_settings_payment_type" model="ir.ui.view">
             <field name="name">account.config.setting.payment.type</field>
             <field name="model">account.config.settings</field>
-            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="inherit_id" ref="account.account_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div/field[@name='module_account_batch_deposit']/.." position="after">
                     <div name='payment_type'>
@@ -29,4 +29,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>
