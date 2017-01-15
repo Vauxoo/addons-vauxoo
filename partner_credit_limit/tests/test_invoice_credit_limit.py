@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
-from openerp import exceptions
+from odoo import exceptions
 from . import common
 
 

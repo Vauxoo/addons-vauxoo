@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="0">
         <!--Payment term Cash-->
         <record id="payment_term_cash" model="account.payment.term">
@@ -17,4 +17,4 @@
             <field name="payment_id" ref="payment_term_credit"/>
         </record>
     </data>
-</openerp>
+</odoo>
