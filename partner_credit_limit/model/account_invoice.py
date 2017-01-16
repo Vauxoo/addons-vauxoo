@@ -27,3 +27,15 @@ class AccontInvoice(models.Model):
                         '\nCredit'
                         ' Limit : %s') % (invoice.partner_id.credit_limit)
                 raise exceptions.Warning(msg)
+
+    @api.multi
+    def action_invoice_proforma2(self):
+        self.check_limit_credit()
+        res = super(AccontInvoice, self).action_invoice_proforma2()
+        return res
+
+    @api.multi
+    def action_invoice_open(self):
+        self.check_limit_credit()
+        res = super(AccontInvoice, self).action_invoice_open()
+        return res

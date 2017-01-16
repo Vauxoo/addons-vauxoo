@@ -50,8 +50,9 @@ class TestCreditLimits(common.TestCommon):
         # credit limit exceded
         # credit_limit = 500
         # amount_total = 600
+        print invoice_id.state
         with self.assertRaises(exceptions.Warning):
-            invoice_id.signal_workflow('invoice_open')
+            invoice_id.action_invoice_open()
 
     def test_partner_with_late_payments(self):
         """This test validate that the partner has not late payments
@@ -79,7 +80,7 @@ class TestCreditLimits(common.TestCommon):
              'invoice_id': invoice_id.id,
              'name': 'product that cost 100', })
         # Validate the invoice.
-        invoice_id.signal_workflow('invoice_open')
+        invoice_id.action_invoice_open()
 
         # At this moment there are late paymets since the invoice
         # was validate one day before
@@ -101,4 +102,4 @@ class TestCreditLimits(common.TestCommon):
         # Validate the invoice, should fail, couse there are late payments
         # since the invoice 1 was validate with curent day minus 2 days
         with self.assertRaises(exceptions.Warning):
-            invoice_id2.signal_workflow('invoice_open')
+            invoice_id2.action_invoice_open()
