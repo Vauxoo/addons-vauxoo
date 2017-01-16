@@ -76,7 +76,7 @@ class TestSalesCreditLimits(common.TestCommon):
              'invoice_id': invoice_id.id,
              'name': 'product that cost 100', })
         # Validate the invoice.
-        invoice_id.signal_workflow('invoice_open')
+        invoice_id.action_invoice_open()
 
         # At this moment there are late paymets since the invoice
         # was validate one day before
