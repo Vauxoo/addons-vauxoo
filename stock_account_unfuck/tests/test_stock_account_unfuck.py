@@ -62,14 +62,27 @@ class TestStockCard(TransactionCase):
                 'avg': 270, 'qty': 9, 'debit': 6730, 'credit': 4299.99, },
             '15': {
                 'act': 'sale', 'xml': True, 'xml_id': "sau_so_ut_04",
-                'avg': 270, 'qty': 3, 'debit': 6730, 'credit': 5109.99, },
+                'avg': 270, 'qty': 6, 'debit': 6730, 'credit': 5109.99, },
         }
+
+    def process_picking(self, sp_brws):
+        sp_brws.action_confirm()
+        sp_brws.action_assign()
+        while sp_brws.filtered(lambda x: x.state == 'assigned'):
+            sp_brw = sp_brws.filtered(lambda x: x.state == 'assigned')
+            std_brw = self.std_obj.create({'picking_id': sp_brw.id})
+            std_brw.do_detailed_transfer()
+        return
 
     def do_sale_return(self, record):
         xml_id = record['xml_id']
         so_id = self.ref("stock_account_unfuck.%s" % xml_id)
         so_brw = self.so_obj.browse(so_id)
-        active_id = so_brw.picking_ids[0].id
+        active_id = so_brw.picking_ids.filtered(
+            lambda x: x.picking_type_code == 'outgoing').id
+        src_pck = so_brw.picking_ids.filtered(
+            lambda x: x.location_id.name == 'Stock')
+        src_loc_id = src_pck.location_id.id
         ctx = {'active_id': active_id, 'active_ids': [active_id]}
         field_names = ['product_return_moves', 'move_dest_exists']
         res = self.srp_obj.with_context(ctx).default_get(field_names)
@@ -86,11 +99,9 @@ class TestStockCard(TransactionCase):
         srp_brw.write(values)
         sp_id = srp_brw.with_context(ctx)._create_returns()[0]
         sp_brw = self.sp_obj.browse(sp_id)
+        sp_brw.move_lines.write({'location_dest_id': src_loc_id})
 
-        sp_brw.action_assign()
-        sp_brw.do_enter_transfer_details()
-        std_brw = self.std_obj.create({'picking_id': sp_id})
-        std_brw.do_detailed_transfer()
+        self.process_picking(sp_brw)
         return
 
     def do_sale(self, xml_id):
@@ -98,10 +109,7 @@ class TestStockCard(TransactionCase):
         so_brw = self.so_obj.browse(so_id)
         so_brw.signal_workflow('order_confirm')
         so_brw.signal_workflow('manual_invoice')
-        so_brw.picking_ids.action_assign()
-        so_brw.picking_ids.do_enter_transfer_details()
-        std_brw = self.std_obj.create({'picking_id': so_brw.picking_ids.id})
-        std_brw.do_detailed_transfer()
+        self.process_picking(so_brw.picking_ids)
         return
 
     def do_purchase_return(self, record):
@@ -126,10 +134,7 @@ class TestStockCard(TransactionCase):
         sp_id = srp_brw.with_context(ctx)._create_returns()[0]
         sp_brw = self.sp_obj.browse(sp_id)
 
-        sp_brw.action_assign()
-        sp_brw.do_enter_transfer_details()
-        std_brw = self.std_obj.create({'picking_id': sp_id})
-        std_brw.do_detailed_transfer()
+        self.process_picking(sp_brw)
         return
 
     def do_purchase(self, xml_id):
@@ -137,10 +142,7 @@ class TestStockCard(TransactionCase):
         po_brw = self.po_obj.browse(po_id)
         po_brw.signal_workflow('purchase_confirm')
         po_brw.signal_workflow('purchase_approve')
-        po_brw.picking_ids.action_assign()
-        po_brw.picking_ids.do_enter_transfer_details()
-        std_brw = self.std_obj.create({'picking_id': po_brw.picking_ids.id})
-        std_brw.do_detailed_transfer()
+        self.process_picking(po_brw.picking_ids)
         return
 
     def return_transaction(self, record):
@@ -163,6 +165,10 @@ class TestStockCard(TransactionCase):
                 round(self.radiogram_id.standard_price, 2), res["avg"],
                 "operation: %02d - expected average - cost price is %s" % (
                     index, res["avg"]))
+            self.assertEqual(
+                round(self.radiogram_id.qty_available, 2), res["qty"],
+                "Operation: %02d - Qty Available should be %s" % (
+                    index, res["qty"]))
         return
 
     def test_01_accounting_booking(self):
@@ -186,4 +192,3 @@ class TestStockCard(TransactionCase):
                 "operation: %02d - expected credit %s" % (
                     index, res["credit"]))
         return
-
