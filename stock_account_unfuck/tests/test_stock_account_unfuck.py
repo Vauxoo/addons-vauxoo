@@ -8,11 +8,9 @@ class TestStockCard(TransactionCase):
     def setUp(self):
         super(TestStockCard, self).setUp()
         self.aml_obj = self.env['account.move.line']
-        self.victrola_id = self.env.ref(
-            'stock_account_unfuck.product_01_victrola')
         self.radiogram_id = self.env.ref(
             'stock_account_unfuck.product_02_radiogram')
-        self.val_id = self.victrola_id.\
+        self.val_id = self.radiogram_id.\
             categ_id.property_stock_valuation_account_id
         self.std_obj = self.env['stock.transfer_details']
         self.srp_obj = self.env['stock.return.picking']
@@ -189,22 +187,3 @@ class TestStockCard(TransactionCase):
                     index, res["credit"]))
         return
 
-    def test_00_logistic_test(self):
-        """ Testing Logistic Values on VX Victrola."""
-        self.assertEqual(
-            self.victrola_id.standard_price, 270.0,
-            "Expected Average - Cost Price is 270.0")
-
-        self.assertEqual(
-            self.victrola_id.qty_available, 6,
-            "Quantity Available for Victrola should be 6")
-
-    def test_01_accounting_test(self):
-        """ Testing Accounting Valuation on VX Victrola."""
-        aml_ids = self.aml_obj.search(
-            [('product_id', '=', self.victrola_id.id),
-             ('account_id', '=', self.val_id.id)])
-        debit = sum([aml.debit for aml in aml_ids])
-        credit = sum([aml.credit for aml in aml_ids])
-        self.assertEqual(debit, 6730.0, "Expected Debit: 6730.0")
-        self.assertEqual(credit, 5109.99, "Expected Debit: 5109.99")
