@@ -27,6 +27,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 import time
+from datetime import date
 from openerp.tests.common import TransactionCase
 
 
@@ -132,8 +133,9 @@ class TestCommission(TransactionCase):
         cp_brw = self.cp_model.browse(cur, uid, cp_id)
         cp_brw.action_draft()
 
-        cp_brw.date_start = time.strftime('%Y')+'-01-01'
-        cp_brw.date_stop = time.strftime('%Y')+'-01-31'
+        month = str((date.today().month % 12) + 1)
+        cp_brw.date_start = time.strftime('%Y') + '-' + month + '-01'
+        cp_brw.date_stop = time.strftime('%Y') + '-' + month + '-28'
         cp_brw.unknown_salespeople = True
 
         aml_ids = [self.ref('commission_payment.aml_rec_debit')]

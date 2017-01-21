@@ -177,7 +177,7 @@
         <record id="account_move_00" model="account.move">
             <field name="journal_id" ref="account.sales_journal"/>
             <field name="period_id" ref="account.period_1"/>
-            <field name="date" eval="time.strftime('%Y')+'-01-01'"/>
+            <field name="date" eval="time.strftime('%Y')+'-'+str((int(time.strftime('%m'))%12)+1)+'-01'"/>
         </record>
         <record id="aml_rec_debit" model="account.move.line">
             <field name="name">Receivable - Debit</field>
@@ -200,7 +200,7 @@
         <record id="account_move_01" model="account.move">
             <field name="journal_id" ref="account.bank_journal"/>
             <field name="period_id" ref="account.period_1"/>
-            <field name="date" eval="time.strftime('%Y')+'-01-30'"/>
+            <field name="date" eval="time.strftime('%Y')+'-'+str((int(time.strftime('%m'))%12)+1)+'-27'"/>
         </record>
         <record id="aml_bnk_debit" model="account.move.line">
             <field name="name">Bank</field>
