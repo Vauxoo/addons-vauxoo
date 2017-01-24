@@ -10,6 +10,13 @@ class TestPaymentTermType(TransactionCase):
         payment terms line to compute
     """
 
+    def setUp(self):
+        """Seudo-constructor method"""
+        super(TestPaymentTermType, self).setUp()
+        self.company = self.env.ref('base.main_company')
+        self.config_obj = self.env['account.config.settings']
+        self.pay_term_obj = self.env['account.payment.term']
+
     def test_payment_term_type_cash(self):
         """This test validate payment type in cash
         """
@@ -27,3 +34,49 @@ class TestPaymentTermType(TransactionCase):
         self.assertEqual(
             self.payment_term_credit.payment_type, 'credit',
             'Payment term should be in credit')
+
+    def _create_config_setting(self, pay_type):
+        """Create a specific account configuration."""
+        values = {
+            'company_id': self.company.id,
+            'payment_type': pay_type,
+        }
+        return self.config_obj.create(values)
+
+    def _create_payment_term(self):
+        """Creates a test payment term."""
+        values = {
+            'company_id': self.company.id,
+            'name': 'Test payment term',
+        }
+        return self.pay_term_obj.create(values)
+
+    def test_01_payment_term_type_bqp_cash(self):
+        """This test validates that payment type is equal to cash if payment
+        terms is based on quantity of payments and exists only one record.
+        """
+        self._create_config_setting('bqp')
+        pay_term_id = self._create_payment_term()
+        self.assertEqual(
+            pay_term_id.payment_type, 'cash', 'Unexpected value.'
+        )
+
+    def test_02_payment_term_type_bqp_credit(self):
+        """This test validates that payment type is equal to credit if payment
+        terms is based on quantity of payments and exists two or more records.
+        """
+        self._create_config_setting('bqp')
+        pay_term_id = self._create_payment_term()
+        pay_term_id.write({
+            "line_ids": [
+                (0, 0, {
+                    'value': 'percent',
+                    'value_amount': 0.0,
+                    'days': 0,
+                    'sequence': 1,
+                })
+            ]
+        })
+        self.assertEqual(
+            pay_term_id.payment_type, 'credit', 'Unexpected value.'
+        )
