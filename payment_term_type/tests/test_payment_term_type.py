@@ -80,3 +80,30 @@ class TestPaymentTermType(TransactionCase):
         self.assertEqual(
             pay_term_id.payment_type, 'credit', 'Unexpected value.'
         )
+
+    def test_03_payment_term_type_bdp_cash(self):
+        """This test validates that payment type is equal to cash if payment
+        terms is based on date of payments and days equal to 0
+        """
+        self._create_config_setting('bdp')
+        pay_term_id = self._create_payment_term()
+        self.assertEqual(
+            pay_term_id.payment_type, 'cash', 'Unexpected value.'
+        )
+
+    def test_04_payment_term_type_bdp_credit(self):
+        """This test validates that payment type is equal to credit if payment
+        terms is based on date of payments and days is greater than 0
+        """
+        self._create_config_setting('bdp')
+        pay_term_id = self._create_payment_term()
+        pay_term_id.write({
+            "line_ids": [
+                (0, 0, {
+                    'value': 'percent',
+                    'value_amount': 0.0,
+                    'days': 15,
+                    'sequence': 1,
+                })
+            ]
+        })
