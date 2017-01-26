@@ -57,7 +57,9 @@ class TestPaymentTermType(TransactionCase):
         self._create_config_setting('bqp')
         pay_term_id = self._create_payment_term()
         self.assertEqual(
-            pay_term_id.payment_type, 'cash', 'Unexpected value.'
+            pay_term_id.payment_type,
+            'cash',
+            'The expected payment type should be cash.'
         )
 
     def test_02_payment_term_type_bqp_credit(self):
@@ -77,7 +79,9 @@ class TestPaymentTermType(TransactionCase):
             ]
         })
         self.assertEqual(
-            pay_term_id.payment_type, 'credit', 'Unexpected value.'
+            pay_term_id.payment_type,
+            'credit',
+            'The expected payment type should be credit.'
         )
 
     def test_03_payment_term_type_bdp_cash(self):
@@ -87,7 +91,9 @@ class TestPaymentTermType(TransactionCase):
         self._create_config_setting('bdp')
         pay_term_id = self._create_payment_term()
         self.assertEqual(
-            pay_term_id.payment_type, 'cash', 'Unexpected value.'
+            pay_term_id.payment_type,
+            'cash',
+            'The expected payment type should be cash.'
         )
 
     def test_04_payment_term_type_bdp_credit(self):
@@ -107,5 +113,7 @@ class TestPaymentTermType(TransactionCase):
             ]
         })
         self.assertEqual(
-            pay_term_id.payment_type, 'credit', 'Unexpected value.'
+            pay_term_id.payment_type,
+            'credit',
+            'The expected payment type should be credit.'
         )
