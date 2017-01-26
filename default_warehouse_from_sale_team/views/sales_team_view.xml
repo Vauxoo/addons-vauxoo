@@ -7,11 +7,32 @@
             <field name="model">crm.case.section</field>
             <field name="inherit_id" ref="sales_team.crm_case_section_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='parent_id']" position="after">
-                    <field name="default_warehouse" />
+                <xpath expr="//page[@string='Team Members']" position="after">
+                    <page string="Settings warehouse from sale team">
+                        <group>
+                            <group name="conf_warehouse">
+                                <field name="default_warehouse" widget="selection" modifiers="{}"/>
+                            </group>
+                            <group name="conf_journal">
+                                <field name="journal_stock_id" modifiers="{}"/>
+                            </group>
+                        </group>
+                        <separator string="Journal's sale team"/>
+                        <field name="journal_team_ids" domain="[('section_id', '=', False)]" widget='many2many'/>
+                    </page>
                 </xpath>
             </field>
         </record>
 
+       <record model="ir.ui.view" id="view_ir_sequence_sale_team">
+            <field name="name">view.ir.sequence.sale.team</field>
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="section_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
