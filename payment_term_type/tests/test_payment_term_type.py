@@ -34,28 +34,18 @@ class TestPaymentTermType(TransactionCase):
             self.payment_term_credit.payment_type, 'credit',
             'Payment term should be in credit')
 
-    def _create_config_setting(self, pay_type):
-        """Create a specific account configuration."""
-        values = {
-            'company_id': self.company.id,
-            'payment_type': pay_type,
-        }
-        return self.config_obj.create(values)
-
-    def _create_payment_term(self):
-        """Creates a test payment term."""
-        values = {
-            'company_id': self.company.id,
-            'name': 'Test payment term',
-        }
-        return self.pay_term_obj.create(values)
-
     def test_01_payment_term_type_bqp_cash(self):
         """This test validates that payment type is equal to cash if payment
         terms is based on quantity of payments and exists only one record.
         """
-        self._create_config_setting('bqp')
-        pay_term_id = self._create_payment_term()
+        self.config_obj.create({
+            'company_id': self.company.id,
+            'payment_type': 'bqp',
+        })
+        pay_term_id = self.pay_term_obj.create({
+            'company_id': self.company.id,
+            'name': 'Test payment term',
+        })
         self.assertEqual(
             pay_term_id.payment_type,
             'cash',
@@ -66,8 +56,14 @@ class TestPaymentTermType(TransactionCase):
         """This test validates that payment type is equal to credit if payment
         terms is based on quantity of payments and exists two or more records.
         """
-        self._create_config_setting('bqp')
-        pay_term_id = self._create_payment_term()
+        self.config_obj.create({
+            'company_id': self.company.id,
+            'payment_type': 'bqp',
+        })
+        pay_term_id = self.pay_term_obj.create({
+            'company_id': self.company.id,
+            'name': 'Test payment term',
+        })
         pay_term_id.write({
             "line_ids": [
                 (0, 0, {
@@ -88,8 +84,14 @@ class TestPaymentTermType(TransactionCase):
         """This test validates that payment type is equal to cash if payment
         terms is based on date of payments and days equal to 0
         """
-        self._create_config_setting('bdp')
-        pay_term_id = self._create_payment_term()
+        self.config_obj.create({
+            'company_id': self.company.id,
+            'payment_type': 'bdp',
+        })
+        pay_term_id = self.pay_term_obj.create({
+            'company_id': self.company.id,
+            'name': 'Test payment term',
+        })
         self.assertEqual(
             pay_term_id.payment_type,
             'cash',
@@ -100,8 +102,14 @@ class TestPaymentTermType(TransactionCase):
         """This test validates that payment type is equal to credit if payment
         terms is based on date of payments and days is greater than 0
         """
-        self._create_config_setting('bdp')
-        pay_term_id = self._create_payment_term()
+        self.config_obj.create({
+            'company_id': self.company.id,
+            'payment_type': 'bdp',
+        })
+        pay_term_id = self.pay_term_obj.create({
+            'company_id': self.company.id,
+            'name': 'Test payment term',
+        })
         pay_term_id.write({
             "line_ids": [
                 (0, 0, {
