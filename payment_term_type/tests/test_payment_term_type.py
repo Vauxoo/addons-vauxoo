@@ -106,3 +106,6 @@ class TestPaymentTermType(TransactionCase):
                 })
             ]
         })
+        self.assertEqual(
+            pay_term_id.payment_type, 'credit', 'Unexpected value.'
+        )
