@@ -10,12 +10,12 @@
             string="Salespeople Commission Payment"
             report_type="qweb-pdf"
             multi="True"
-            attachment_use="0"
             attachment=""
             menu="True"/>
 
         <record id="comm_salespeople_report" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="commission_payment.paperformat_us_double_letter"/>
+            <field name="attachment_use" eval="False"/>
         </record>
     </data>
 </openerp>

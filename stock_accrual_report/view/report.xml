@@ -10,10 +10,13 @@
             string="Stock Accrual Report"
             report_type="qweb-pdf"
             multi="True"
-            attachment_use="False"
             attachment=""
             menu="False"
             />
+
+        <record id="stock_accrual_report_id" model="ir.actions.report.xml">
+            <field name="attachment_use" eval="False"/>
+        </record>
     </data>
 </openerp>
 
