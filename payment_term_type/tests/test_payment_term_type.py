@@ -11,7 +11,6 @@ class TestPaymentTermType(TransactionCase):
     """
 
     def setUp(self):
-        """Seudo-constructor method"""
         super(TestPaymentTermType, self).setUp()
         self.company = self.env.ref('base.main_company')
         self.config_obj = self.env['account.config.settings']
