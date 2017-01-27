@@ -2,16 +2,16 @@
 
 from openerp import api, fields, models
 
+# TODO MIGRATION
+# class InheritedCrmSaseSection(models.Model):
 
-class InheritedCrmSaseSection(models.Model):
+#     _inherit = "crm.case.section"
 
-    _inherit = "crm.case.section"
-
-    default_warehouse = fields.Many2one('stock.warehouse',
-                                        string='Default Warehouse',
-                                        help='In this field can be '
-                                        'defined a default warehouse for '
-                                        'the related users to the sales team.')
+#     default_warehouse = fields.Many2one('stock.warehouse',
+#                                         string='Default Warehouse',
+#                                         help='In this field can be '
+#                                         'defined a default warehouse for '
+#                                         'the related users to the sales team.')
 
 
 class WarehouseDefault(models.Model):
