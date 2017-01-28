@@ -32,7 +32,9 @@ class WarehouseDefault(models.Model):
                          self).default_get(fields_list)
         res_users_obj = self.env['res.users']
         user_brw = res_users_obj.browse(self._uid)
-        warehouse = user_brw.default_section_id.default_warehouse
+        # TODO MIGRATION
+        # warehouse = user_brw.default_section_id.default_warehouse
+        warehouse = self.env['stock.warehouse'].search([])[0]
         if warehouse:
             warehouse_id = warehouse.id
             model_obj = self.env['ir.model']
