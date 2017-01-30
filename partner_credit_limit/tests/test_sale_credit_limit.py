@@ -43,6 +43,7 @@ class TestSalesCreditLimits(common.TestCommon):
              'product_uom_qty': 1,
              'price_unit': 600,
              'order_id': sale_id.id,
+             'product_uom': self.product_id.uom_id.id,
              'name': 'product that cost 100', })
         # should not confirm sale order
         # credit limit exceded
@@ -91,6 +92,7 @@ class TestSalesCreditLimits(common.TestCommon):
              'product_uom_qty': 1,
              'price_unit': 200,
              'order_id': sale_id.id,
+             'product_uom': self.product_id.uom_id.id,
              'name': 'product that cost 100', })
         # should not confirm sale order should fail,
         # couse there are late payments
