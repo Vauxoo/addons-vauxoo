@@ -94,7 +94,6 @@ class ProductTemplate(models.Model):
         make_journal_entry = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.make_journal_entry
         for rec_id in ids:
-            datas = self.get_product_accounts(cr, uid, rec_id, context=context)
             diff = self.browse(
                 cr, uid, rec_id, context=context).standard_price - new_price
             if not diff:
@@ -116,6 +115,9 @@ class ProductTemplate(models.Model):
                 contextc.update({'location': location_id,
                                  'compute_child': False})
                 product = self.browse(cr, uid, rec_id, context=contextc)
+
+                datas = self.get_product_accounts(
+                    cr, uid, rec_id, context=contextc)
 
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
