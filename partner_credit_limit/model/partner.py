@@ -58,7 +58,8 @@ class ResPartner(models.Model):
             # credit = 0.0
             debit_maturity, credit_maturity = 0.0, 0.0
             for line in movelines:
-                if line.date_maturity and line.partner_id.grace_payment_days:
+                limit_day = line.date_maturity
+                if line.partner_id.grace_payment_days:
                     maturity = fields.Datetime.from_string(
                         line.date_maturity)
                     grace_payment_days = timedelta(
@@ -66,10 +67,6 @@ class ResPartner(models.Model):
                     limit_day = maturity + grace_payment_days
                     limit_day = limit_day.strftime("%Y-%m-%d")
 
-                elif line.date_maturity:
-                    limit_day = line.date_maturity
-                else:
-                    limit_day = fields.Date.today()
                 if limit_day <= fields.Date.today():
                     # credit and debit maturity sums all aml
                     # with late payments
