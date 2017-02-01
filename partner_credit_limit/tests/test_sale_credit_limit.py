@@ -52,6 +52,15 @@ class TestSalesCreditLimits(common.TestCommon):
         with self.assertRaises(exceptions.Warning):
             sale_id.action_confirm()
 
+        # CASE WHERE PARTNER HAVE CREDIT
+        # set credit limit in 500
+        self.partner_china.credit_limit = 700.00
+        self.assertTrue(self.partner_china.allowed_sale,
+                        "Allowed Sale should be True")
+        sale_id.action_confirm()
+        self.assertEqual(sale_id.state, 'sale',
+                         'State of the sales order must be in sale')
+
     def test_partner_with_late_payments(self):
         """This test validate that the partner has not late payments
 
