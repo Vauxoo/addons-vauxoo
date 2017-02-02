@@ -165,6 +165,11 @@ class AccountBankStatementLine(osv.osv):
         res = super(AccountBankStatementLine, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=context_2)
 
+        update_ok = st_line.journal_id.update_posted
+        if not update_ok:
+            st_line.journal_id.sudo().write({'update_posted': True})
+        move_obj.button_cancel(cr, uid, [move_id_old])
+        st_line.journal_id.sudo().write({'update_posted': update_ok})
         move_line_obj.write(cr, uid, move_line_rec_ids[0],
                             {'move_id': st_line.journal_entry_id.id,
                              'statement_id': st_line.statement_id.id})
@@ -173,11 +178,6 @@ class AccountBankStatementLine(osv.osv):
             if len(rec_ids) >= 2:
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
 
-        update_ok = st_line.journal_id.update_posted
-        if not update_ok:
-            st_line.journal_id.sudo().write({'update_posted': True})
-        move_obj.button_cancel(cr, uid, [move_id_old])
-        st_line.journal_id.sudo().write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
         return res
 
