@@ -32,7 +32,6 @@
     "license": "LGPL-3",
     "category": "product",
     "depends": [
-        "purchase_order_line_sequence",
         "purchase_incoming_qty",
         "sale_stock",
     ],
@@ -49,5 +48,5 @@
     ],
     "test": [],
     "qweb": [],
-    "installable": False,
+    "installable": True,
 }

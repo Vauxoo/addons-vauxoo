@@ -5,7 +5,7 @@
         <record id="product_template_incoming_qty_form" model="ir.ui.view">
             <field name="name">product.template.incoming.qty.form</field>
             <field name="model">product.template</field>
-            <field name="inherit_id" ref="stock.view_template_property_form"/>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='virtual_available']" position="before">
                     <label for="purchase_incoming_qty"/>
