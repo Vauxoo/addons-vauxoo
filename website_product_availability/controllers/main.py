@@ -1,13 +1,12 @@
 # coding: utf-8
-from openerp.http import request
-from openerp.addons.web import http
-from openerp.addons.website_sale.controllers.main import website_sale
-from openerp import SUPERUSER_ID
-
 import datetime
+from odoo.http import request
+from odoo import http
+from odoo.addons.website_sale.controllers.main import WebsiteSale
+from odoo import SUPERUSER_ID
 
 
-class WebsiteSaleInh(website_sale):
+class WebsiteSaleInh(WebsiteSale):
 
     def get_attribute_value_ids(self, product):
         cr, uid, context, pool = request.cr, SUPERUSER_ID, request.context,\
