@@ -16,7 +16,8 @@ class ResPartner(models.Model):
     vat_without_country = fields.Char(
         'TIN', help='Tax Identification Number. Fill it if the company is '
         'subjected to taxes. Used by the some of the legal statements. You no '
-        'set the country prefix.')
+        'set the country prefix.',
+        copy=False)
     country_code = fields.Char(
         help='Added the country code in partner, to complete the NIF.',
         related='country_id.code', size=2, readonly=True)
