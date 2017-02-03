@@ -13,7 +13,7 @@
                 <script type="text/javascript" src="/website_rate_product/static/src/js/mail_rate.js"></script>
             </xpath>
         </template>
-        <template id="assets_frontend_rating_less" name="Product rating frontend assets" inherit_id="website.theme">
+        <template id="assets_frontend_rating_less" name="Product rating frontend assets" inherit_id="website.theme_customize">
             <xpath expr='//link[@href="/website/static/src/css/website.css"]' position="after">
                 <link href="/website_rate_product/static/src/less/stars.less" rel="stylesheet" type="text/less"/>
             </xpath>
