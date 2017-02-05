@@ -79,20 +79,19 @@ class ProductProduct(models.Model):
             super(ProductProduct, product).write(values)
         return True
 
-    @api.cr_uid
-    def update_product_state(self, cr, uid):
+    @api.model
+    def update_product_state(self):
         """ Check the product state
             - if in end state but has not inventory then pass to obsolete.
             - if obsolete but with inventory pass to end of life.
         """
-        products = self.search(cr, uid, [])
-        products = self.browse(cr, uid, products)
+        products = self.search([])
 
-        end_product = products.search([]).filtered(
+        end_product = products.filtered(
             lambda product: product.state2 == 'obsolete' and (
                 product.qty_available or product.purchase_incoming_qty))
 
-        obsolete_product = products.search([]).filtered(
+        obsolete_product = products.filtered(
             lambda product: product.state2 == 'end' and not (
                 product.qty_available or product.purchase_incoming_qty))
 

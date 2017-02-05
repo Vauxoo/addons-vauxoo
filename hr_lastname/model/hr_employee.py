@@ -25,78 +25,58 @@
 #
 """File to inherit hr.employee and added fields to complete name
 """
-from openerp.osv import osv, fields
+from odoo import models, fields, api
 
 
-class HrEmployee(osv.Model):
+class HrEmployee(models.Model):
     """Inherit hr.employee to added fields to complete name
     """
     _inherit = 'hr.employee'
 
-    def _get_full_name(self, cr, uid, ids, fields_name, args, context=None):
+    @api.one
+    @api.depends('name', 'second_name', 'last_name', 'second_last_name')
+    def _get_full_name(self):
         """Method to concatenate last_name, second_last_name, name & second_name
         in a new field function
         """
-        if context is None:
-            context = {}
-        res = {}
-        for emp in self.browse(cr, uid, ids, context=context):
-            res[emp.id] = (emp.last_name or '') + ' ' + (
-                emp.second_last_name or '') + ' ' + (emp.name or '') + ' ' + (
-                emp.second_name or '')
-        return res
+        emp = self
+        emp.complete_name = (emp.last_name or '') + ' ' + (
+            emp.second_last_name or '') + ' ' + (emp.name or '') + ' ' + (
+            emp.second_name or '')
 
-    def _update_fill_name(self, cr, uid, ids, context=None):
-        """Method call function
-        """
-        return ids
+    @api.one
+    @api.depends('name', 'second_name')
+    def _get_full_first_name(self):
+        emp = self
+        emp.full_first_name = (emp.name or '') + ' ' + (emp.second_name or '')
 
-    def _get_full_first_name(self, cr, uid, ids, fields_name, args,
-                             context=None):
-        if context is None:
-            context = {}
-        res = {}
-        for emp in self.browse(cr, uid, ids, context=context):
-            res[emp.id] = (emp.name or '') + ' ' + (emp.second_name or '')
-        return res
-
-    def _get_full_last_name(self, cr, uid, ids, fields_name, args,
-                            context=None):
-        if context is None:
-            context = {}
-        res = {}
-        for emp in self.browse(cr, uid, ids, context=context):
-            res[emp.id] = (emp.last_name or '') + ' ' + (
+    @api.one
+    @api.depends('last_name', 'second_last_name')
+    def _get_full_last_name(self):
+        emp = self
+        emp.full_last_name = (emp.last_name or '') + ' ' + (
                 emp.second_last_name or '')
-        return res
 
-    _columns = {
-        'second_name': fields.char(
-            'Second Name', help='Second employee name'),
-        'last_name': fields.char(
-            'Last Name', help='Last employee name'),
-        'second_last_name': fields.char(
-            'Second Last Name', help='Second employee last name'),
-        'couple_last_name': fields.char(
-            'Couple Last Name', help='Last name of employee couple'),
-        'complete_name': fields.function(
-            _get_full_name, string='Full Name', type='char', store={
-                'hr.employee': (_update_fill_name, [
-                    'name', 'second_name', 'last_name', 'second_last_name'],
-                    50),
-            }, method=True, help='Full name of employee, conformed by: Last \
-            name + Second last name + Name + Second Name'),
-        'full_first_name': fields.function(
-            _get_full_first_name, string='Full First Name', type='char',
-            store={
-                'hr.employee': (
-                    _update_fill_name, ['name', 'second_name'], 50),
-            }, method=True, help='Full firs name of employee, conformed by: \
-            Name + Second Name'),
-        'full_last_name': fields.function(
-            _get_full_last_name, string='Full last Name', type='char', store={
-                'hr.employee': (_update_fill_name, [
-                    'last_name', 'second_last_name'], 50),
-            }, method=True, help='Full last name of employee, conformed by: \
-            Last name + Second last name'),
-    }
+    second_name = fields.Char(
+        'Second Name', help='Second employee name')
+    last_name = fields.Char(
+        'Last Name', help='Last employee name')
+    second_last_name = fields.Char(
+        'Second Last Name', help='Second employee last name')
+    couple_last_name = fields.Char(
+        'Couple Last Name', help='Last name of employee couple')
+    complete_name = fields.Char(
+        'Full Name',
+        compute='_get_full_name',
+        help='Full name of employee, conformed by: Last \
+        name + Second last name + Name + Second Name')
+    full_first_name = fields.Char(
+        'Full First Name',
+        compute='_get_full_first_name',
+        help='Full firs name of employee, conformed by: \
+        Name + Second Name')
+    full_last_name = fields.Char(
+        'Full last Name',
+        compute='_get_full_last_name',
+        help='Full last name of employee, conformed by: \
+        Last name + Second last name')
