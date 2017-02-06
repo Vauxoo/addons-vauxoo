@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<openerp>
+<odoo>
     <data>
     
         <record model="ir.ui.view" id="view_product_customer_code_form">
@@ -54,7 +54,8 @@
             </field>
         </record>
         
-         <menuitem action="action_product_customer_code_tree" id="menu_product_customer_code" sequence="50" parent="product.prod_config_main" groups="group_product_customer_code_manager"/>
+         <menuitem action="action_product_customer_code_tree" id="menu_product_customer_code" sequence="50"
+                   parent="sale.prod_config_main" groups="group_product_customer_code_manager"/>
 
     </data>
-</openerp>
+</odoo>

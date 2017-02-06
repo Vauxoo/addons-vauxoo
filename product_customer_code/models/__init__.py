@@ -6,7 +6,10 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: el_rodo_1 (rodo@vauxoo.com)
+#    Coded by: Rodo (rodo@vauxoo.com),Moy (moylop260@vauxoo.com)
+############################################################################
+#    Migrated to v10 by: Miguel Paraiso (miguel.paraiso@aselcis.com)
+#    Aselcis Consulting (http://www.aselcis.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,28 +26,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name": "Products Customer Code",
-    "version": "8.0.0.1.6",
-    "author": "Vauxoo",
-    "category": "Generic Modules/Product",
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": [
-        "base",
-        "product"
-    ],
-    "demo": [],
-    "data": [
-        "security/product_customer_code_security.xml",
-        "security/ir.model.access.csv",
-        "product_customer_code_view.xml",
-        "product_product_view.xml"
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": False,
-    "auto_install": False,
-}
+
+import product
+import product_customer_code

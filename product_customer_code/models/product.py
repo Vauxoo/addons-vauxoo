@@ -27,4 +27,31 @@
 #
 ##############################################################################
 
-import models
+from odoo import models, fields, api, _
+
+
+class ProductProduct(models.Model):
+    _inherit = "product.product"
+
+    product_customer_code_ids = fields.One2many('product.customer.code', 'product_id', 'Customer Codes')
+
+    @api.multi
+    def copy(self, default=None):
+        if not default:
+            default = {}
+        default['product_customer_code_ids'] = False
+        res = super(ProductProduct, self).copy(default=default)
+        return res
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        res = super(ProductProduct, self).name_search(name, args, operator, limit)
+        if not res:
+            partner_id = self._context.get('partner_id')
+            if partner_id:
+                prod_code = self.env['product.customer.code'].search([('product_code', '=', name),
+                                                                      ('partner_id', '=', partner_id)], limit=limit)
+                # TODO: Search for product customer name
+                if prod_code:
+                    res = prod_code.name_get()
+        return res
