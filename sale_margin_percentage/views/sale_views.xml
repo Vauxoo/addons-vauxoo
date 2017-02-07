@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="sale_margin_percentage_form" model="ir.ui.view">
+        <field name="name">sale.margin.pct.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="groups">base.group_system</attribute>
+            </xpath>
+            <xpath expr="//field[@name='margin']" position="after">
+                <field name="margin_percentage"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_margin_percentage_per_line_form" model="ir.ui.view">
+        <field name="name">sale.margin.pct.per.line.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                <attribute name="colors">red: margin_percentage &lt;= 0.0;yellow: margin_percentage &lt;= margin_threshold and margin_percentage &gt; 0.0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_margin_percentage_per_line_form2" model="ir.ui.view">
+        <field name="name">sale.margin.pct.per.line.form2</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="after">
+                <field name="margin_threshold" invisible="1" />
+                <field name="margin_percentage"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_margin_percentage_per_line_tree" model="ir.ui.view">
+        <field name="name">sale.margin.pct.per.line.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="after">
+                <field name="margin_threshold" invisible="1" />
+                <field name="margin_percentage" string="Margin %"/>
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>
