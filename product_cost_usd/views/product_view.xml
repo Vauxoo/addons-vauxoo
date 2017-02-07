@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_product_template_tann_inhrt" model="ir.ui.view">
+            <field name="name">product.template.inhrt.tanner</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="list_price" position="after">
+                    <field name="standard_price_usd" widget="monetary"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+
