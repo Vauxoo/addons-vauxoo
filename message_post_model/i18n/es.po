@@ -6,19 +6,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 19:11+0000\n"
-"PO-Revision-Date: 2016-05-25 22:09-0400\n"
-"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
-"Language-Team: Spanish <http://example.com/projects/addons-vauxoo/message_post_model/es/>\n"
-"Language: es\n"
+"POT-Creation-Date: 2016-10-07 18:02+0000\n"
+"PO-Revision-Date: 2016-10-07 13:08-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: \n"
 
 #. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:148
+#: code:addons/message_post_model/model/message_post.py:162
 #, python-format
 msgid ""
 "%s\n"
@@ -28,125 +26,95 @@ msgstr ""
 "<h3>Línea %s</h3>"
 
 #. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:100
+#: code:addons/message_post_model/model/message_post.py:108
 #, python-format
 msgid "Added"
 msgstr "Agregado"
 
 #. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:228
+#: code:addons/message_post_model/model/message_post.py:363
 #, python-format
 msgid "Changes in Fields"
 msgstr "Cambios en Campos"
 
 #. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:73
+#: code:addons/message_post_model/model/message_post.py:76
 #, python-format
 msgid "Created New Line"
 msgstr "Nueva Línea Creada"
 
 #. module: message_post_model
-#: field:message.post.show.all,create_uid:0
-msgid "Created by"
-msgstr "Creado por"
-
-#. module: message_post_model
-#: field:message.post.show.all,create_date:0
-msgid "Created on"
-msgstr "Creado el"
-
-#. module: message_post_model
-#: help:message.post.show.all,message_last_post:0
-msgid "Date of the last message posted on the record."
-msgstr "Fecha del último mensaje escrito en el documento."
-
-#. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:101
+#: code:addons/message_post_model/model/message_post.py:109
 #, python-format
 msgid "Deleted"
 msgstr "Borrado"
 
 #. module: message_post_model
-#: model:ir.model,name:message_post_model.model_message_post_show_all
-msgid "Email Thread"
-msgstr "Hilo de Correos"
+#: field:ir.model,exclude_fields_text:0
+msgid "Exclude External Fields"
+msgstr "Excluir Campos Externos"
 
 #. module: message_post_model
-#: field:message.post.show.all,message_follower_ids:0
-msgid "Followers"
-msgstr "Seguidores"
+#: field:ir.model,exclude_field_ids:0
+msgid "Excluded Fields"
+msgstr "Excluir Campos"
 
 #. module: message_post_model
-#: help:message.post.show.all,message_summary:0
-msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+#: help:ir.model,exclude_field_ids:0
+msgid "List of fields that you want to exclude of the traking"
+msgstr "Lista de campos que quieres excluir del seguimiento"
+
+#. module: message_post_model
+#: model:ir.model,name:message_post_model.model_ir_model
+msgid "Models"
+msgstr "Modelos"
+
+#. module: message_post_model
+#: help:ir.model,exclude_fields_text:0
+msgid ""
+"Name of the fields that you want to exclude but these does not have a directly relation with the model. \n"
+"This text must be the database field name separated by (,) without spaces. E.g. name,date,notes"
 msgstr ""
-"Contiene el sumario de Conversaciones (número de mensajes, ...). Este sumario está directamente en formato html con el fin de ser "
-"insertado en las vistas kanban."
+"Nombre de los campos que quieres excluir, pero estos no tienen una relación directa con el modelo. \n"
+"Este texto debe ser el nombre de los campos en la base de datos separado por coma (,) . E.g. name,date,notes"
 
 #. module: message_post_model
-#: field:message.post.show.all,id:0
-msgid "ID"
-msgstr "ID"
-
-#. module: message_post_model
-#: help:message.post.show.all,message_unread:0
-msgid "If checked new messages require your attention."
-msgstr "Si está marcado nuevos mensajes requieren de su atención."
-
-#. module: message_post_model
-#: field:message.post.show.all,message_is_follower:0
-msgid "Is a Follower"
-msgstr "Es un Seguidor"
-
-#. module: message_post_model
-#: field:message.post.show.all,message_last_post:0
-msgid "Last Message Date"
-msgstr "Fecha Último Mensaje"
-
-#. module: message_post_model
-#: field:message.post.show.all,write_uid:0
-msgid "Last Updated by"
-msgstr "Última Actualización por"
-
-#. module: message_post_model
-#: field:message.post.show.all,write_date:0
-msgid "Last Updated on"
-msgstr "Última Actualización el"
-
-#. module: message_post_model
-#: field:message.post.show.all,message_ids:0
-msgid "Messages"
-msgstr "Mensajes"
-
-#. module: message_post_model
-#: help:message.post.show.all,message_ids:0
-msgid "Messages and communication history"
-msgstr "Mensajes e historia de comunicación"
-
-#. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:75 code:addons/message_post_model/model/message_post.py:76
+#: code:addons/message_post_model/model/message_post.py:78
+#: code:addons/message_post_model/model/message_post.py:79
 #, python-format
 msgid "Removed Line"
 msgstr "Línea Removida"
 
 #. module: message_post_model
-#: field:message.post.show.all,message_summary:0
-msgid "Summary"
-msgstr "Sumario"
+#: help:ir.model,tracked:0
+msgid "This field identifies if the fields in this models are being tracked"
+msgstr "Este campo identifica si los campos en este modelos estan bajo seguimiento a sus cambios"
 
 #. module: message_post_model
-#: field:message.post.show.all,message_unread:0
-msgid "Unread Messages"
-msgstr "Mensajes no leídos"
+#: code:addons/message_post_model/model/message_post.py:377
+#, python-format
+msgid "This model does not have a relation with mail.message. For this feature work the model must have at least an inheritance with mail.thread"
+msgstr "Este modelo no tiene una relacion con mail.message. Para que este feature funcione debe tener al menos una herencia con mail.thread"
 
 #. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:74
+#: field:ir.model,tracked:0
+msgid "Tracked"
+msgstr "Seguido"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:77
 #, python-format
 msgid "Updated Line"
 msgstr "Línea Actualizada"
 
 #. module: message_post_model
-#: code:addons/message_post_model/model/message_post.py:77
+#: code:addons/message_post_model/model/message_post.py:376
+#, python-format
+msgid "Warning!"
+msgstr "Advertencia!"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:80
 #, python-format
 msgid "many2many"
 msgstr "many2many"

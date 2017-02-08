@@ -24,7 +24,7 @@
 ###############################################################################
 {
     "name": "Message Post Log",
-    "version": "10.0.0.0.6",
+    "version": "8.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
@@ -34,7 +34,8 @@
     ],
     "demo": [],
     "data": [
-        "security/ir.model.access.csv"
+        "data/ir_action_server.xml",
+        "view/ir_model_view.xml",
     ],
     "test": [],
     "js": [],
