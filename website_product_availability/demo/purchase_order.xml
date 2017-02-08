@@ -3,7 +3,7 @@
     <data noupdate="0">
         <record id="purchase_order_stock" model="purchase.order">
             <field name="partner_id" ref='base.res_partner_1'/>
-            <field name="pricelist_id" ref='purchase.list0'/>
+            <field name="pricelist_id" ref='product.list0'/>
             <field name="currency_id" ref='base.EUR'/>
             <field name="picking_type_id" ref='stock.chi_picking_type_in'/>
             <field name="date_order" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
@@ -28,7 +28,7 @@
             <field name="invoice_method">order</field>
             <field name="partner_id" ref="base.res_partner_21"/>
             <field name="currency_id" ref="base.EUR"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="pricelist_id" ref="product.list0"/>
             <field name="location_id" ref="stock.stock_location_company"/>
         </record>
 

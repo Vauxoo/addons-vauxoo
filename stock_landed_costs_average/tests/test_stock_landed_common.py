@@ -71,7 +71,7 @@ class TestStockLandedCommon(TransactionCase):
         purchase_order_id = self.purchase_order.create({
             'partner_id': self.supplier_id.id,
             'location_id': self.ref('stock.stock_location_stock'),
-            'pricelist_id': self.ref('purchase.list0'),
+            'pricelist_id': self.ref('product.list0'),
             'order_line': [(0, 0, {
                 'name': "{0} (qty={1}, cost={2})".format(self.product_id.name,
                                                          qty, cost),

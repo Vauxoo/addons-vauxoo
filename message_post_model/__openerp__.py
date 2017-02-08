@@ -24,7 +24,7 @@
 ###############################################################################
 {
     "name": "Message Post Log",
-    "version": "8.0.0.0.6",
+    "version": "10.0.0.0.6",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://vauxoo.com",
@@ -40,6 +40,6 @@
     "js": [],
     "css": [],
     "qweb": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False
 }

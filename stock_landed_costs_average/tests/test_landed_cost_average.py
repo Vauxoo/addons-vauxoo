@@ -13,7 +13,7 @@ class TestLandedCostAverage(TestStockLandedCommon):
         self.customer_location = self.env.ref('stock.stock_location_customers')
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
         self.supplier_id = self.env.ref('base.res_partner_13')
-        self.customer_id = self.env.ref('base.res_partner_23')
+        self.customer_id = self.env.ref('base.res_partner_18')
         self.product_id = self.env.ref(
             'stock_landed_costs_average.product_mouse')
         self.transactions = [

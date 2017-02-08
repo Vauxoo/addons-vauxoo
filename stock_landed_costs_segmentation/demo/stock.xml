@@ -4,16 +4,12 @@
         <record id="insurance_landed_cost_account" model="account.account">
             <field name="code">X200-vx-insurance-landed</field>
             <field name="name">INSURANCE COST</field>
-            <field ref="account.cli" name="parent_id"/>
-            <field name="type">other</field>
-            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="user_type_id" ref="account.data_account_type_expenses"/>
         </record>
         <record id="freight_landed_cost_account" model="account.account">
             <field name="code">X200-vx-frieght-landed</field>
             <field name="name">FREIGHT COST</field>
-            <field ref="account.cli" name="parent_id"/>
-            <field name="type">other</field>
-            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="user_type_id" ref="account.data_account_type_expenses"/>
         </record>
         <record id="product_std_01" model="product.product">
             <field name="name">VX Laptop Battery (std)</field>
@@ -24,8 +20,8 @@
             <field name="type">product</field>
             <field name="weight">1</field>
             <field name="volume">1</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="product_avg_01" model="product.product">
             <field name="name">VX Wireless Mouse (avg)</field>
@@ -36,8 +32,8 @@
             <field name="type">product</field>
             <field name="weight">1</field>
             <field name="volume">1</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="product_real_01" model="product.product">
             <field name="name">VX Keyboard (real)</field>
@@ -48,15 +44,14 @@
             <field name="type">product</field>
             <field name="weight">1</field>
             <field name="volume">1</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="po_01" model="purchase.order">
-            <field name="partner_id" ref="base.res_partner_23"/>
-            <field name="location_id" ref="stock.stock_location_stock"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
         </record>
         <record id="po_01_line_01" model="purchase.order.line">
+            <field name="product_uom" ref="product.product_uom_unit" />
             <field name="name">Standard Product</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
@@ -65,6 +60,7 @@
             <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
         </record>
         <record id="po_01_line_02" model="purchase.order.line">
+            <field name="product_uom" ref="product.product_uom_unit" />
             <field name="name">Average Product</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
@@ -73,6 +69,7 @@
             <field name="order_id" ref="stock_landed_costs_segmentation.po_01"/>
         </record>
         <record id="po_01_line_03" model="purchase.order.line">
+            <field name="product_uom" ref="product.product_uom_unit" />
             <field name="name">Real time Product</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
@@ -84,11 +81,12 @@
         <workflow action="purchase_approve" model="purchase.order" ref="stock_landed_costs_segmentation.po_01"/>
 
         <record id="po_02" model="purchase.order">
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="pricelist_id" ref="product.list0"/>
         </record>
         <record id="po_02_line_01" model="purchase.order.line">
+            <field name="product_uom" ref="product.product_uom_unit" />
             <field name="name">Standard Product</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_std_01"/>
@@ -97,6 +95,7 @@
             <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
         </record>
         <record id="po_02_line_02" model="purchase.order.line">
+            <field name="product_uom" ref="product.product_uom_unit" />
             <field name="name">Average Product</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_avg_01"/>
@@ -105,6 +104,7 @@
             <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
         </record>
         <record id="po_02_line_03" model="purchase.order.line">
+            <field name="product_uom" ref="product.product_uom_unit" />
             <field name="name">Real time Product</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="stock_landed_costs_segmentation.product_real_01"/>
@@ -112,7 +112,7 @@
             <field name="price_unit">100</field>
             <field name="order_id" ref="stock_landed_costs_segmentation.po_02"/>
         </record>
-        <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/>
-        <workflow action="purchase_approve" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/>
+        <!-- <workflow action="purchase_confirm" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/> -->
+        <!-- <workflow action="purchase_approve" model="purchase.order" ref="stock_landed_costs_segmentation.po_02"/> -->
     </data>
 </openerp>

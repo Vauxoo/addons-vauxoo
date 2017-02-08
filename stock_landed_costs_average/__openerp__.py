@@ -2,7 +2,7 @@
 
 {
     "name": "Landed Costs for Avarage Costing Method",
-    "version": "8.0.1.1.0",
+    "version": "10.0.1.1.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",
@@ -16,12 +16,12 @@
         "stock_card",
     ],
     "demo": [
-        "demo/account_invoice_demo.xml",
+        # "demo/account_invoice_demo.xml",
     ],
     "data": [
         "view/stock_landed_costs.xml",
         "view/account_invoice.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }

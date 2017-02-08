@@ -216,7 +216,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-05'"/>
             <field name="name">Receivable from Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">1500.0</field>
             <field name="credit">0.0</field>
@@ -230,7 +230,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-05'"/>
             <field name="name">Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.a_sale"/>
             <field name="debit">0.0</field>
             <field name="credit">1500.0</field>
@@ -251,7 +251,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Bank Payment USD</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">2000.0</field>
             <field name="credit">0.0</field>
@@ -265,7 +265,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">0.0</field>
             <field name="credit">2000.0</field>
@@ -279,7 +279,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">500.0</field>
             <field name="credit">0.0</field>
@@ -293,7 +293,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.income_fx_income"/>
             <field name="debit">0.0</field>
             <field name="credit">500.0</field>
@@ -314,7 +314,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-17'"/>
             <field name="name">Receivable from Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">2000.0</field>
             <field name="credit">0.0</field>
@@ -328,7 +328,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-17'"/>
             <field name="name">Product Sale</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.a_sale"/>
             <field name="debit">0.0</field>
             <field name="credit">2000.0</field>
@@ -349,7 +349,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-22'"/>
             <field name="name">Bank Payment USD</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">1000.0</field>
             <field name="credit">0.0</field>
@@ -363,7 +363,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-22'"/>
             <field name="name">Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_recv_usd"/>
             <field name="debit">0.0</field>
             <field name="credit">1000.0</field>
@@ -384,7 +384,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-25'"/>
             <field name="name">Payable from Product Purchase</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.a_expense"/>
             <field name="debit">1800.0</field>
             <field name="credit">0.0</field>
@@ -398,7 +398,7 @@
             <field name="period_id" ref="account.period_1"/>
             <field name="date" eval="time.strftime('%Y')+'-01-25'"/>
             <field name="name">Product Purchase</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_pay_usd"/>
             <field name="debit">0.0</field>
             <field name="credit">1800.0</field>
@@ -419,7 +419,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Bank Payment USD</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_pay_usd"/>
             <field name="debit">1600.0</field>
             <field name="credit">0.0</field>
@@ -433,7 +433,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">0.0</field>
             <field name="credit">1600.0</field>
@@ -447,7 +447,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="a_pay_usd"/>
             <field name="debit">200.0</field>
             <field name="credit">0.0</field>
@@ -461,7 +461,7 @@
             <field name="period_id" ref="account.period_2"/>
             <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Gain on Invoice Payment</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="account_id" ref="account.income_fx_income"/>
             <field name="debit">0.0</field>
             <field name="credit">200.0</field>

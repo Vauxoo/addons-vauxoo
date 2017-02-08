@@ -27,8 +27,8 @@
             <field name="cost_method">average</field>
             <field name="valuation">real_time</field>
             <field name="standard_price">10</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="producto_b" model="product.product">
             <field name="name">producto_b</field>
@@ -36,8 +36,8 @@
             <field name="cost_method">average</field>
             <field name="valuation">real_time</field>
             <field name="standard_price">20</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="producto_c" model="product.product">
             <field name="name">producto_c</field>
@@ -45,8 +45,8 @@
             <field name="cost_method">average</field>
             <field name="valuation">real_time</field>
             <field name="standard_price">30</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="producto_d" model="product.product">
             <field name="name">producto_d</field>
@@ -54,8 +54,8 @@
             <field name="cost_method">standard</field>
             <field name="valuation">real_time</field>
             <field name="standard_price">50</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="producto_e" model="product.product">
             <field name="name">producto_e</field>
@@ -63,8 +63,8 @@
             <field name="cost_method">standard</field>
             <field name="valuation">real_time</field>
             <field name="standard_price">80</field>
-            <field name="property_stock_account_input" ref="account.o_expense"/>
-            <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
 
         <!-- INITIALIZING INVENTORY FOR RAW MATERIAL -->
