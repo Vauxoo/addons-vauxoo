@@ -14,7 +14,7 @@
         "sale",
     ],
     "demo": [
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
     "data": [
         'view/view.xml',
