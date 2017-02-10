@@ -26,7 +26,7 @@
 
 {
     'name': 'Sale Order Dates Max',
-    'version': '8.0.0.1.0',
+    'version': '10.0.0.1.0',
     'author': 'Vauxoo',
     'category': '',
     'depends': [
@@ -38,6 +38,6 @@
     'data': [
     ],
     'test': [],
-    "installable": False,
+    "installable": True,
     'auto_install': False,
 }
