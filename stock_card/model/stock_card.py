@@ -5,6 +5,11 @@ from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
 from openerp.exceptions import Warning as UserError
 
+try:
+    import pandas as pd
+except ImportError:
+    _logger.debug('Cannot `import pandas`.')
+
 
 class StockCard(models.TransientModel):
     _name = 'stock.card'
@@ -343,6 +348,19 @@ class StockCardProduct(models.TransientModel):
         vals['res'] = res
 
         return vals
+
+    def get_stock_card_date_range(
+            self, product_id, date_start, date_stop=None, locations_ids=None):
+        vals = self._stock_card_move_get(product_id, locations_ids)
+        data = []
+        index = []
+        for row in vals['move_ids']:
+            data.append(vals['lines'][row['move_id']])
+            index.append(vals['lines'][row['move_id']]['date'])
+
+        df = pd.DataFrame(data, index=pd.to_datetime(index))
+
+        return df[date:date_stop or date].to_dict()
 
     def create_stock_card_lines(self, product_id, locations_ids=None):
         scm_obj = self.env['stock.card.move']
