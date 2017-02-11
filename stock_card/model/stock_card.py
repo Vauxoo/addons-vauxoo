@@ -1,9 +1,11 @@
 # coding: utf-8
 
 from __future__ import division
+import logging
 from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
 from openerp.exceptions import Warning as UserError
+_logger = logging.getLogger(__name__)
 
 try:
     import pandas as pd
@@ -349,8 +351,7 @@ class StockCardProduct(models.TransientModel):
 
         return vals
 
-    def get_stock_card_date_range(
-            self, product_id, date_start, date_stop=None, locations_ids=None):
+    def get_stock_card_date_range(self, product_id, locations_ids=None):
         vals = self._stock_card_move_get(product_id, locations_ids)
         data = []
         index = []
@@ -358,9 +359,7 @@ class StockCardProduct(models.TransientModel):
             data.append(vals['lines'][row['move_id']])
             index.append(vals['lines'][row['move_id']]['date'])
 
-        df = pd.DataFrame(data, index=pd.to_datetime(index))
-
-        return df[date:date_stop or date].to_dict()
+        return pd.DataFrame(data, index=index)
 
     def create_stock_card_lines(self, product_id, locations_ids=None):
         scm_obj = self.env['stock.card.move']
