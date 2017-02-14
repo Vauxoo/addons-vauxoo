@@ -21,7 +21,7 @@
 ###############################################################################
 {
     "name": "Workalendar Holidays",
-    "version": "8.0.1.7.0",
+    "version": "10.0.1.0.0",
     "author": "Vauxoo",
     "category": "resource",
     "website": "http://www.vauxoo.com/",
