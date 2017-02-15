@@ -29,7 +29,7 @@ class StockQuant(models.Model):
 
         warehouse_id = move.picking_id.picking_type_id.warehouse_id or\
             move.warehouse_id
-        sale_team = self.env['crm.case.section'].search(
+        sale_team = self.env['crm.team'].search(
             [('default_warehouse', '=', warehouse_id.id)], limit=1)
 
         if sale_team.journal_stock_id:

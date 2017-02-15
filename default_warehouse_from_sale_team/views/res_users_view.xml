@@ -5,9 +5,10 @@
        <record id="res_users_sale_teams" model="ir.ui.view">
             <field name="name">res.users.sale.teams</field>
             <field name="model">res.users</field>
-            <field name="inherit_id" ref="sales_team.res_user_form"/>
+            <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
-                <field name="default_section_id" position="after">
+                <field name="tz" position="after">
+                    <field name="sale_team_id"/>
                     <field name="sale_team_ids" widget="many2many_tags" readonly="1"/>
                 </field>
             </field>

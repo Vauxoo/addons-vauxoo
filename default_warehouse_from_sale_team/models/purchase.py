@@ -20,7 +20,7 @@ class DefaultPickingType(models.Model):
 
         res = super(DefaultPickingType, self).default_get(fields_list)
         user_id = user_obj.browse(self._uid)
-        sale_team_warehouse_id = user_id.default_section_id.default_warehouse
+        sale_team_warehouse_id = user_id.sale_team_id.default_warehouse
         if sale_team_warehouse_id:
             pick_type_id = picking_type_obj.search(
                 [('code', '=', 'incoming'),

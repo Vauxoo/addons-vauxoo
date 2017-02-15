@@ -36,7 +36,7 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: default_warehouse_from_sale_team
-#: field:crm.case.section,default_warehouse:0
+#: field:crm.team,default_warehouse:0
 #: model:ir.module.category,name:default_warehouse_from_sale_team.default_warehouse_module
 msgid "Default Warehouse"
 msgstr "Almacén por defecto"
@@ -52,7 +52,7 @@ msgid "ID"
 msgstr "ID"
 
 #. module: default_warehouse_from_sale_team
-#: help:crm.case.section,default_warehouse:0
+#: help:crm.team,default_warehouse:0
 msgid "In this field can be defined a default warehouse for the related users to the sales team."
 msgstr "En este campo se puede definir el almacén por defecto para los usuarios relacionados al equipo de ventas."
 
@@ -160,17 +160,17 @@ msgid "Access to all Journal"
 msgstr "Acceso a todos los Diarios"
 
 #. module: default_warehouse_from_sale_team
-#: help:crm.case.section,journal_team_ids:0
+#: help:crm.team,journal_team_ids:0
 msgid "Choose the Journals that user with this sale team can see"
 msgstr "Selecciona los diarios que el usuario con este equipo de ventas puede ver"
 
 #. module: default_warehouse_from_sale_team
-#: field:crm.case.section,journal_team_ids:0
+#: field:crm.team,journal_team_ids:0
 msgid "Journal's sales teams"
 msgstr "Diarios de equipo de ventas"
 
 #. module: default_warehouse_from_sale_team
-#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+#: view:crm.team:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Journals"
 msgstr "Diarios"
 
@@ -190,16 +190,16 @@ msgid "View only the Journal which warehouses match with the user sales teams de
 msgstr "Ver solo el diario que coincide con el equipo de venta del usuario"
 
 #. module: default_warehouse_from_sale_team
-#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+#: view:crm.team:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Settings warehouse from sale team"
 msgstr "Configuración de almacén para equipo de ventas"
 
 #. module: default_warehouse_from_sale_team
-#: field:crm.case.section,journal_stock_id:0
+#: field:crm.team,journal_stock_id:0
 msgid "Journal stock valuation"
 msgstr "Diario para valoración de existencias"
 
 #. module: default_warehouse_from_sale_team
-#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+#: view:crm.team:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Journal's sale team"
 msgstr "Diarios de equipo de ventas"

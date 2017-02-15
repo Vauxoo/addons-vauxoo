@@ -3,11 +3,11 @@
     <data>
 
        <record model="ir.ui.view" id="view_crm_case_section_form_inherit">
-            <field name="name">view.crm.case.section.form.inherit</field>
-            <field name="model">crm.case.section</field>
-            <field name="inherit_id" ref="sales_team.crm_case_section_view_form"/>
+            <field name="name">view.crm.team.form.inherit</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[@string='Team Members']" position="after">
+                <xpath expr="//page[@name='members']" position="after">
                     <page string="Settings warehouse from sale team">
                         <group>
                             <group name="conf_warehouse">

@@ -13,4 +13,4 @@ class IrSequence(models.Model):
 
     _inherit = "ir.sequence"
 
-    section_id = fields.Many2one('crm.case.section', string='Sale team')
+    section_id = fields.Many2one('crm.team', string='Sale team')

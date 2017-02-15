@@ -5,7 +5,7 @@ from openerp import SUPERUSER_ID, api, fields, models
 
 class InheritedCrmSaseSection(models.Model):
 
-    _inherit = "crm.case.section"
+    _inherit = "crm.team"
 
     default_warehouse = fields.Many2one('stock.warehouse',
                                         string='Default Warehouse',
@@ -39,17 +39,17 @@ class InheritedCrmSaseSection(models.Model):
 
             # Add default team to users without default
             wo_default_team = team.member_ids.filtered(
-                lambda user: not user.default_section_id)
+                lambda user: not user.sale_team_id)
             for user in wo_default_team:
-                user.write({'default_section_id': team.id})
+                user.write({'sale_team_id': team.id})
 
             # Remove default team for users that are not longer in the current
             # team
             default_current_team = self.env['res.users'].search(
-                [('default_section_id', '=', team.id)])
+                [('sale_team_id', '=', team.id)])
             remove_default_team = default_current_team - team.member_ids
             for user in remove_default_team:
-                user.write({'default_section_id': False})
+                user.write({'sale_team_id': False})
 
             # Dummy write to update the m2m user.sale_teams in order to be
             # capable of rendering the ir.rules properly.
@@ -76,7 +76,7 @@ class WarehouseDefault(models.Model):
                          self).default_get(fields_list)
         res_users_obj = self.env['res.users']
         user_brw = res_users_obj.browse(self._uid)
-        warehouse = user_brw.default_section_id.default_warehouse
+        warehouse = user_brw.sale_team_id.default_warehouse
         if warehouse:
             warehouse_id = warehouse.id
             model_obj = self.env['ir.model']
@@ -128,7 +128,7 @@ class WarehouseDefault(models.Model):
             pick_warehouse_id = pick_type_obj.browse(
                 vals.get('picking_type_id')).warehouse_id.id
             warehouse_id = vals.get('warehouse_id', pick_warehouse_id)
-            section_id = self.env['crm.case.section'].search(
+            section_id = self.env['crm.team'].search(
                 [('default_warehouse', '=', warehouse_id)], limit=1)
             sequence_id = sequence_obj.search(
                 [('section_id', '=', section_id.id),

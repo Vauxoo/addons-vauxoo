@@ -37,7 +37,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: default_warehouse_from_sale_team
-#: field:crm.case.section,default_warehouse:0
+#: field:crm.team,default_warehouse:0
 #: model:ir.module.category,name:default_warehouse_from_sale_team.default_warehouse_module
 msgid "Default Warehouse"
 msgstr ""
@@ -53,7 +53,7 @@ msgid "ID"
 msgstr ""
 
 #. module: default_warehouse_from_sale_team
-#: help:crm.case.section,default_warehouse:0
+#: help:crm.team,default_warehouse:0
 msgid "In this field can be defined a default warehouse for the related users to the sales team."
 msgstr ""
 
@@ -155,16 +155,16 @@ msgid "You can not set %s sale team as default because the user do not belongs t
 msgstr ""
 
 #. module: default_warehouse_from_sale_team
-#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+#: view:crm.team:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Settings warehouse from sale team"
 msgstr ""
 
 #. module: default_warehouse_from_sale_team
-#: field:crm.case.section,journal_stock_id:0
+#: field:crm.team,journal_stock_id:0
 msgid "Journal stock valuation"
 msgstr ""
 
 #. module: default_warehouse_from_sale_team
-#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+#: view:crm.team:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Journal's sale team"
 msgstr ""

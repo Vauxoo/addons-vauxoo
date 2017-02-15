@@ -7,7 +7,7 @@
                 <field name="code">TDW</field>
             </record>
 
-            <record model="crm.case.section" id="section_sales_default_team">
+            <record model="crm.team" id="section_sales_default_team">
                 <field name="name">Default Team</field>
                 <field name="code">DT</field>
                 <field name="default_warehouse" ref="stock_warehouse_default_team"/>
