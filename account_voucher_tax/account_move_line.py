@@ -38,8 +38,9 @@ class AccountMoveLine(models.Model):
                 move_line_amount_rounding = abs(move.debit + move.credit)
                 move_line_bank = move.move_id.line_id.filtered(
                     lambda dat: dat.account_id.type == 'liquidity')
-                move_line_bank_debit_credit = abs(
-                    move_line_bank.debit + move_line_bank.credit)
+                move_line_bank_debit_credit = sum(
+                    move_line_bank.mapped('debit') +
+                    move_line_bank.mapped('credit'))
                 if move_line_amount_rounding > move_line_bank_debit_credit:
                     raise exceptions.Warning(
                         _('Warning!'),
