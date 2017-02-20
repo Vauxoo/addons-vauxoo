@@ -193,7 +193,7 @@ class HrExpenseExpense(osv.Model):
             _get_payment_status, type='boolean',
             string = 'Expense Payment Status',
             store = {
-                _inherit: (lambda c, u, ids, cx: ids, ['aml_ids'], 50)
+                _inherit: (lambda self, c, u, ids, cx: ids, ['aml_ids'], 50)
             },),
 
 
