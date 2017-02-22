@@ -30,7 +30,7 @@
         </template>
 
         <template id="hide_comments" inherit_id="website_sale.product_comment" name="Hide comments for not logged users">
-            <xpath expr="//div[@class='css_editable_mode_hidden']" position="replace">
+            <xpath expr="//div" position="after">
                 <div class="css_editable_mode_hidden" t-if="user_id.login != 'public'">
                     <form id="comment" t-attf-action="/shop/product/comment/#{product.id}" method="POST">
                         <img class="img pull-left img-rounded" t-att-src="website.image_url(user_id.partner_id, 'image_small')" style="width: 50px; margin-right: 10px;"/>

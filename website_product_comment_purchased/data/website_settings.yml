@@ -1,10 +1,5 @@
 -
     website_product auto setted up to be installed on website
 -
-  !python {model: ir.ui.view}: |
-    self.write(cr, uid, [ref('website_sale.product_comment')], {'active': True}, context={'active_test': True})
--
-    Website_product_comment_purchased auto setted up to be installed on website
--
-  !python {model: ir.ui.view}: |
-    self.write(cr, uid, [ref('website_product_comment_purchased.discussion_purchased')], {'active': True}, context={'active_test': True})
+  !python {model: ir.ui.view, id: website_sale.product_comment}: |
+    self.with_context({'active_test': True}).write({'active': True})
