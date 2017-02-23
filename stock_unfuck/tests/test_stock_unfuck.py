@@ -8,8 +8,7 @@ class TestStockUnfuck(TransactionCase):
         super(TestStockUnfuck, self).setUp()
         self.move = self.env['stock.move']
         self.quant = self.env['stock.quant']
-        self.prod = self.env.ref('stock_unfuck.'
-                                 'product_product_19')
+        self.prod = self.env.ref('stock_unfuck.product_product_19')
         self.stock = self.env.ref('stock.stock_location_stock')
         self.production = self.env.ref('stock.location_production')
         self.supplier = self.env.ref('stock.location_production')
@@ -31,19 +30,16 @@ class TestStockUnfuck(TransactionCase):
         @return: New move created
         @rtpy: stock_move RecordSet
         """
-        values = self.move.onchange_product_id(prod_id=self.prod.id,
-                                               loc_id=src_location,
-                                               loc_dest_id=dest_loctation)
-        values = values.get('value')
-        uos_id = self.prod.uos_id and self.prod.uos_id.id or False
-        values.update({
-            'product_id': self.prod.id,
+        product = self.prod
+        values = {
+            'name': product.partner_ref,
+            'product_id': product.id,
+            'product_uom': product.uom_id.id,
+            # 'product_uos': product.uos_id and product.uos_id.id or False,
             'product_uom_qty': qty,
-            'product_uos_qty': self.move.
-                      onchange_quantity(self.prod.id, qty,
-                                        self.prod.uom_id.id,
-                                        uos_id)['value']
-                      ['product_uos_qty']})
+            'location_id': src_location,
+            'location_dest_id': dest_loctation,
+        }
         return self.move.create(values)
 
     def verify_locations_and_quantities(self, quants, quantities, locations):
@@ -69,8 +65,7 @@ class TestStockUnfuck(TransactionCase):
         locations
         """
         # Creating first move between stock and customer locations
-        move_brw = self.create_move(self.stock.id, self.customer.id,
-                                    4)
+        move_brw = self.create_move(self.stock.id, self.customer.id, 4)
 
         # Searching the current quant before to validate the firs move
         current_quant = self.quant.\

@@ -3,11 +3,12 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-# ############ Credits ########################################################
-#    Coded by: Jose Morales <jose@vauxoo.com>
-#    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
-#    Audited by: Jose Morales <jose@vauxoo.com>
-# #############################################################################
+###############################################################################
+#    Credits:
+#    Coded by: Yanina Aular <yani@vauxoo.com>
+#    Planified by: Gabriela Quilarque <gabriela@vauxoo.com>
+#    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
+###############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
 #    by the Free Software Foundation, either version 3 of the License, or
@@ -20,27 +21,20 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# ##############################################################################
+###############################################################################
+
 {
-    "name": "Stock Unfuck",
-    "version": "8.0.0.1.6",
+    "name": "Stock Picking Log Message Transfer",
+    "summary": "A message in log when the products are transfered",
+    "version": "10.0.1.0.0",
     "author": "Vauxoo",
-    "category": "",
     "website": "http://www.vauxoo.com/",
-    "license": "",
+    "license": "LGPL-3",
+    "category": "stock",
     "depends": [
         "stock",
+        "sale",
+        "purchase",
     ],
-    "demo": [
-        'demo/product_demo.xml',
-        'demo/stock_demo.xml',
-    ],
-    "data": [
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": False,
-    "auto_install": False,
+    "installable": True,
 }

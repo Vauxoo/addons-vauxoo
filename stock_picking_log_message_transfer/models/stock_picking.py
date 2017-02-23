@@ -23,4 +23,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import models
+from odoo import _, api, fields, models
+
+
+class StockPicking(models.Model):
+
+    _inherit = 'stock.picking'
+
+    @api.multi
+    def do_transfer(self):
+        """When the transfer was made, a message in log is displayed
+        """
+        for picking in self:
+            message = _("<b>Picking transfered</b>\n"
+                        "<ul><li><b>Date:</b> %s</li>\n"
+                        "</ul>\n") % \
+                (fields.datetime.now().
+                 strftime("%x %X"))
+            picking.message_post(body=message)
+        return super(StockPicking, self).do_transfer()
