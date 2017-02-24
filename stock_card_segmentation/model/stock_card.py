@@ -166,16 +166,18 @@ class StockCardProduct(models.TransientModel):
 
     def _get_price_on_supplier_return(self, row, vals, qntval):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
-        sm_obj = self.env['stock.move']
-        move_id = sm_obj.browse(row['move_id'])
         # Cost is the one record in the stock_move, cost in the
         # quant record includes other segmentation cost: landed_cost,
         # material_cost, production_cost, subcontracting_cost
         # Inventory Value has to be decreased by the amount of purchase
         # TODO: BEWARE price_unit needs to be normalised
-        origin_id = move_id.origin_returned_move_id
-        current_quants = set(move_id.quant_ids.ids)
-        origin_quants = set(origin_id.quant_ids.ids)
+        current_quants = set([qnt['quant_id'] for qnt in qntval])
+        origin_quants = set()
+        if row['origin_returned_move_id']:
+            origin_quants = set(
+                [qnt['quant_id']
+                 for qnt in self._get_quant_values(
+                     row['origin_returned_move_id'])])
         quants_exists = current_quants.issubset(origin_quants)
         if quants_exists and vals['product_qty'] > 0:
             vals['move_valuation'] = sum(
@@ -207,11 +209,7 @@ class StockCardProduct(models.TransientModel):
 
     def _get_price_on_customer_return(self, row, vals, qntval):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
-        sm_obj = self.env['stock.move']
-        move_id = row['move_id']
-        move_brw = sm_obj.browse(move_id)
-        origin_id = move_brw.origin_returned_move_id or move_brw.move_dest_id
-        origin_id = origin_id.id
+        origin_id = row['origin_returned_move_id'] or row['move_dest_id']
 
         if vals.get('global_val') and not origin_id:
             # /!\ NOTE: There is no origin and this Conditional Statement
