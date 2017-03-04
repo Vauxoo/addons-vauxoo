@@ -12,7 +12,7 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.constrains('standard_price_usd', 'seller_ids')
+    @api.constrains('standard_price_usd', 'seller_ids', 'type')
     def check_cost_and_price(self):
         """ Validate 'Cost in USD' usability.
 
