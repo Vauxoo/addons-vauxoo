@@ -151,10 +151,14 @@ class HrExpenseExpense(osv.Model):
                 rex[id_entrie] += [aml_brw.id]
         for id_item, aml_ids in rex.iteritems():
             exp_brw = self.browse(cr, uid, id_item, context=context)
-            if exp_brw.state == 'paid' and not aml_ids:
-                res[id_item] = True
-            elif exp_brw.state == 'paid' and aml_ids:
-                exp_brw.write({'state': 'process'})
+            if exp_brw.state == 'paid':
+                aml_ids = [aml for aml in aml_ids if not
+                           exp_brw.company_id.currency_id.is_zero(
+                               aml.amount_residual)]
+                if not aml_ids:
+                    res[id_item] = True
+                else:
+                    exp_brw.write({'state': 'process'})
             elif exp_brw.state == 'process' and not aml_ids:
                 res[id_item] = True
                 exp_brw.write({'state': 'paid'})
