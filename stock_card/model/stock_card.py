@@ -16,6 +16,111 @@ except ImportError:
 class StockCard(models.TransientModel):
     _name = 'stock.card'
     product_ids = fields.Many2many('product.product', string='Products')
+    stock_card_product_ids = fields.One2many(
+        'stock.card.product', 'stock_card_id', 'Product Stock Cards',
+        help='Product Stock Cards')
+
+    @api.multi
+    def action_view_moves(self):
+        """ Retrieve lines created by this Stock Card Wizard
+        """
+        self.ensure_one()
+        ctx = self._context.copy()
+
+        ir_model_obj = self.pool['ir.model.data']
+        model, action_id = ir_model_obj.get_object_reference(
+            self._cr, self._uid, 'stock_card',
+            'stock_card_product_tree_action')
+        action = self.pool[model].read(
+            self._cr, self._uid, action_id, context=self._context)
+        action['context'] = ctx
+        # compute the number of invoices to display
+        scm_ids = [scm_brw.id for scm_brw in self.stock_card_product_ids]
+        # choose the view_mode accordingly
+        if len(scm_ids) >= 1:
+            action['domain'] = "[('id','in',[" + ','.join(
+                [str(scm_id) for scm_id in scm_ids]
+            ) + "])]"
+        # else:
+        #     raise UserError(
+        #         _('Asked Product has not Moves to show'))
+        return action
+
+    @api.multi
+    def generate_report(self):
+        """ Retrieve Stock Card for products - Summary
+        """
+        self.ensure_one()
+        ctx = self._context.copy()
+        scp_obj = self.env['stock.card.product']
+        pp_obj = self.env['product.product']
+
+        # /!\ NOTE: Sudo to be invoke
+        for product in pp_obj.browse(ctx.get('active_ids')):
+            stock_valuation_account = \
+                product.categ_id.property_stock_valuation_account_id
+            stock_valuation_input = \
+                product.categ_id.property_stock_account_input_categ or \
+                product.property_stock_account_input
+            stock_valuation_output = \
+                product.categ_id.property_stock_account_output_categ or \
+                product.property_stock_account_output
+            stock_valuation_diff = \
+                product.categ_id.\
+                property_account_creditor_price_difference_categ or \
+                product.property_account_creditor_price_difference
+            if not (stock_valuation_account and stock_valuation_diff):
+                continue
+            self._cr.execute("""
+                SELECT  aml.account_id as account, sum(debit - credit)
+                FROM account_move_line aml
+                    JOIN account_period ap
+                    ON aml.period_id = ap.id
+                WHERE aml.account_id in %s
+                AND aml.product_id = %s
+                AND ap.special != True
+                GROUP BY aml.account_id
+                """, (
+                    (stock_valuation_account.id,
+                     stock_valuation_input.id,
+                     stock_valuation_output.id,
+                     stock_valuation_diff.id), product.id))
+            dat = self._cr.dictfetchall()
+            values = {}
+            for data in dat:
+                if data['account'] == stock_valuation_account.id:
+                    product_valuation = (
+                        product.qty_available * product.standard_price)
+                    product_acc_valuation = data and data['sum']
+                    percent = (
+                        ((product_valuation - product_acc_valuation) /
+                         product_acc_valuation) * 100.0
+                        if product_acc_valuation else 0.0)
+                    values.update({
+                        'acc_valuation': product_acc_valuation,
+                        'log_valuation': product_valuation,
+                        'acc_percent': percent})
+                if data['account'] == stock_valuation_input.id:
+                    values.update({'acc_input': data and data['sum']})
+                if data['account'] == stock_valuation_output.id:
+                    values.update({'acc_output': data and data['sum']})
+                if data['account'] == stock_valuation_diff.id:
+                    values.update({'acc_price_diff': data and data['sum']})
+
+            values.update({'stock_card_id': self.id, 'product_id': product.id})
+            scp_res = scp_obj._stock_card_move_get(product.id)
+            cost = scp_obj.get_average(scp_res)['average']
+            res = scp_res.get('res', [])
+            date = res[-1]['date'] if res else None
+            diff = product.standard_price - cost
+            values.update({
+                'cost': cost, 'diff': diff, 'date_stock_card': date,
+                'diff_qty': diff * product.qty_available
+            })
+            scp_obj.create(values)
+
+        action = self.action_view_moves()
+        return action
 
 
 class StockCardProduct(models.TransientModel):
@@ -30,6 +135,19 @@ class StockCardProduct(models.TransientModel):
     stock_card_move_ids = fields.One2many(
         'stock.card.move', 'stock_card_product_id', 'Product Moves',
         help='Product movements')
+    stock_card_id = fields.Many2one(
+        'stock.card', string='Stock Card',
+        help='Gets the average price from the warehouse products')
+    acc_input = fields.Float('Input Valuation')
+    acc_output = fields.Float('Output Valuation')
+    acc_percent = fields.Float('Acc. Val. Percentage Diff.')
+    acc_price_diff = fields.Float('Account Valuation Difference')
+    acc_valuation = fields.Float('Account Valuation')
+    cost = fields.Float()
+    date_stock_card = fields.Datetime('Stock Card Date')
+    diff = fields.Float('Difference')
+    diff_qty = fields.Float('Inventory Difference')
+    log_valuation = fields.Float('Logistical Valuation')
 
     def _get_fieldnames(self):
         return {

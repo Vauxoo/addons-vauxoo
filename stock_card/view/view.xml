@@ -31,11 +31,41 @@
             </field>
         </record>
 
+        <record id="stock_card_product_tree" model="ir.ui.view">
+            <field name="name">stock.card.product.tree</field>
+            <field name="model">stock.card.product</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Card Product">
+                    <field name="product_id" required="1"/>
+                    <field name="acc_input"/>
+                    <field name="acc_output"/>
+                    <field name="acc_percent"/>
+                    <field name="acc_price_diff"/>
+                    <field name="acc_valuation"/>
+                    <field name="log_valuation"/>
+                    <field name="cost"/>
+                    <field name="date_stock_card"/>
+                    <field name="diff"/>
+                    <field name="diff_qty"/>
+                </tree>
+            </field>
+        </record>
+
         <record id="stock_card_product_action" model="ir.actions.act_window">
             <field name="name">Stock Card Generate</field>
             <field name="res_model">stock.card.product</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="stock_card_product_tree_action" model="ir.actions.act_window">
+            <field name="name">Stock Card Generate</field>
+            <field name="res_model">stock.card.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
             <field name="target">inline</field>
@@ -101,5 +131,34 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_stock_card" model="ir.ui.view">
+              <field name="name">Stock Card</field>
+              <field name="model">stock.card</field>
+              <field name="arch" type="xml">
+                <form string="Stock Card">
+                    <group string="Products">
+                        <field name="product_ids"/>
+                        <field name="stock_card_product_ids"/>
+                    </group>
+                    <footer>
+                        <button name="generate_report" string="Generate Report"  type="object" class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+              </field>
+        </record>
+
+        <act_window id="action_stock_card"
+            key2="client_action_multi"
+            name="Stock Card"
+            res_model="stock.card"
+            src_model="product.product"
+            view_mode="form"
+            target="new"
+            view_type="form"
+            />
+
     </data>
 </openerp>
