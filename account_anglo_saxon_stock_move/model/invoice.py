@@ -23,7 +23,8 @@
 ##############################################################################
 
 from openerp.osv import osv, orm
-from openerp import models, api
+from openerp import models, api, _
+from openerp.exceptions import ValidationError
 
 import logging
 
@@ -100,9 +101,16 @@ class AccountInvoice(models.Model):
                 for val in res.values():
                     if not len(val) > 1:
                         continue
+                    if not ail_brw.product_id.categ_id.property_stock_journal:
+                        raise ValidationError(_(
+                            'The Stock Journal is missing on product category.'
+                        ))
                     try:
-                        aml_obj.reconcile_partial(cr, uid, val,
-                                                  context=context)
+                        aml_obj.reconcile_partial(
+                            cr, uid, val,
+                            writeoff_period_id=inv_brw.period_id.id,
+                            writeoff_journal_id=ail_brw.product_id.categ_id.property_stock_journal.id,  # noqa
+                            context=context)
                     except orm.except_orm:
                         message = (
                             "Reconciliation was not possible with "
