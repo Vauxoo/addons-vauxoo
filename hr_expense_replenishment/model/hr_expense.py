@@ -508,6 +508,13 @@ class HrExpenseExpense(osv.Model):
 
             vals = {'date': date_post, 'period_id': period_id}
             exp.account_move_id.write(vals)
+            update_ok = exp.account_move_id.journal_id.update_posted
+            if not update_ok:
+                exp.account_move_id.journal_id.sudo().write({'update_posted':
+                                                             True})
+            exp.account_move_id.button_cancel()
+            exp.account_move_id.journal_id.sudo().write({'update_posted':
+                                                         update_ok})
             aml_obj.write(cr, uid, x_aml_ids, vals)
             for line_pair in full_rec + [ff]:
                 if not line_pair:

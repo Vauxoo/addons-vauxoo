@@ -80,6 +80,7 @@ class StockCardProduct(models.TransientModel):
     def _get_quant_values(self, move_id, col='', inner='', where=''):
         query = ('''
                  SELECT
+                     sqm_rel.quant_id AS quant_id,
                      COALESCE(cost, 0.0) AS cost,
                      COALESCE(qty, 0.0) AS qty,
                      propagated_from_id AS antiquant
@@ -143,20 +144,24 @@ class StockCardProduct(models.TransientModel):
 
     def _get_price_on_supplier_return(self, row, vals, qntval):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
-        sm_obj = self.env['stock.move']
-        move_id = sm_obj.browse(row['move_id'])
         # Cost is the one record in the stock_move, cost in the
         # quant record includes other segmentation cost: landed_cost,
         # material_cost, production_cost, subcontracting_cost
         # Inventory Value has to be decreased by the amount of purchase
-        # TODO: BEWARE price_unit needs to be normalised
-        origin_id = move_id.origin_returned_move_id
-        current_quants = set(move_id.quant_ids.ids)
-        origin_quants = set(origin_id.quant_ids.ids)
+        current_quants = set([qnt['quant_id'] for qnt in qntval])
+        origin_quants = set()
+        if row['origin_returned_move_id']:
+            origin_quants = set(
+                [qnt['quant_id']
+                 for qnt in self._get_quant_values(
+                     row['origin_returned_move_id'])])
         quants_exists = current_quants.issubset(origin_quants)
-        price = vals['average']
-        if quants_exists and vals['product_qty'] > 0:
-            price = origin_id.price_unit
+        # TODO: BEWARE price_unit needs to be normalised
+        price = row['price_unit']
+        # / ! \ This is missing when current move's quants are partially
+        # located in origin's quants, so it's taking average cost temporarily
+        if not quants_exists:
+            price = vals['average']
         vals['move_valuation'] = sum([price * qnt['qty'] for qnt in qntval])
         return True
 
@@ -172,12 +177,8 @@ class StockCardProduct(models.TransientModel):
 
     def _get_price_on_customer_return(self, row, vals, qntval):
         vals['product_qty'] += (vals['direction'] * row['product_qty'])
-        sm_obj = self.env['stock.move']
-        move_id = row['move_id']
-        move_brw = sm_obj.browse(move_id)
         # NOTE: Identify the originating move_id of returning move
-        origin_id = move_brw.origin_returned_move_id or move_brw.move_dest_id
-        origin_id = origin_id.id
+        origin_id = row['origin_returned_move_id'] or row['move_dest_id']
         # NOTE: Falling back to average in case customer return is
         # orphan, i.e., return was created from scratch
         old_average = (
@@ -247,13 +248,13 @@ class StockCardProduct(models.TransientModel):
         if dst in ('customer', 'production', 'inventory', 'transit'):
             self._get_price_on_consumed(row, vals, qntval)
 
-        if dst in ('supplier',):
+        elif dst in ('supplier',):
             self._get_price_on_supplier_return(row, vals, qntval)
 
-        if src in ('supplier', 'production', 'inventory', ):
+        elif src in ('supplier', 'production', 'inventory', ):
             self._get_price_on_supplied(row, vals, qntval)
 
-        if src in ('customer', 'transit'):
+        elif src in ('customer', 'transit'):
             self._get_price_on_customer_return(row, vals, qntval)
 
         self._get_move_average(row, vals)
@@ -416,6 +417,9 @@ class StockCardProduct(models.TransientModel):
         query = '''
             SELECT distinct
                 sm.id AS move_id, sm.date, sm.product_id, prod.product_tmpl_id,
+                sm.origin_returned_move_id AS origin_returned_move_id,
+                sm.move_dest_id AS move_dest_id,
+                sm.price_unit AS price_unit,
                 sm.product_qty, sl_src.usage AS src_usage,
                 sl_dst.usage AS dst_usage,
                 ir_prop_cost.value_text AS cost_method,
