@@ -92,13 +92,15 @@ class StockCard(models.TransientModel):
                     product_valuation = (
                         product.qty_available * product.standard_price)
                     product_acc_valuation = data and data['sum']
+                    diff_stock_val = product_valuation - product_acc_valuation
                     percent = (
-                        ((product_valuation - product_acc_valuation) /
+                        ((diff_stock_val) /
                          product_acc_valuation) * 100.0
                         if product_acc_valuation else 0.0)
                     values.update({
                         'acc_valuation': product_acc_valuation,
                         'log_valuation': product_valuation,
+                        'diff_stock_val': diff_stock_val,
                         'perc_diff_val': percent})
                 if data['account'] == stock_valuation_input.id:
                     values.update({'acc_input': data and data['sum']})
@@ -159,6 +161,7 @@ class StockCardProduct(models.TransientModel):
     diff_qty = fields.Float('Qty Difference')
     diff_val = fields.Float('Valuation Difference')
     log_valuation = fields.Float('Logistical Valuation')
+    diff_stock_val = fields.Float('Stock Valuation Diff.')
     adjustment_journal_entry = fields.Many2one(
         'account.move',
         'Adjustment Journal Entry')
@@ -166,7 +169,7 @@ class StockCardProduct(models.TransientModel):
     @api.multi
     def create_val_diff_journal_entry(self):
         self.ensure_one()
-        diff = self.acc_valuation - self.log_valuation
+        diff = -self.diff_stock_val
         if not diff:
             return
         move_obj = self.env['account.move']

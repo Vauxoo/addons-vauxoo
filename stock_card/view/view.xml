@@ -47,6 +47,7 @@
                     <field name="acc_valuation"/>
                     <field name="log_valuation"/>
                     <field name="perc_diff_val"/>
+                    <field name="diff_stock_val"/>
                     <field name="acc_input"/>
                     <field name="acc_output"/>
                     <field name="acc_price_diff"/>
