@@ -99,7 +99,7 @@ class StockCard(models.TransientModel):
                     values.update({
                         'acc_valuation': product_acc_valuation,
                         'log_valuation': product_valuation,
-                        'acc_percent': percent})
+                        'perc_diff_val': percent})
                 if data['account'] == stock_valuation_input.id:
                     values.update({'acc_input': data and data['sum']})
                 if data['account'] == stock_valuation_output.id:
@@ -112,10 +112,17 @@ class StockCard(models.TransientModel):
             cost = scp_obj.get_average(scp_res)['average']
             res = scp_res.get('res', [])
             date = res[-1]['date'] if res else None
+            stock_card_qty = res[-1]['product_qty'] if res else 0.0
             diff = product.standard_price - cost
             values.update({
-                'cost': cost, 'diff': diff, 'date_stock_card': date,
-                'diff_qty': diff * product.qty_available
+                'stock_card_cost': cost,
+                'standard_price': product.standard_price,
+                'diff_cost': diff,
+                'date_stock_card': date,
+                'logistical_qty': product.qty_available,
+                'stock_card_qty': stock_card_qty,
+                'diff_qty': product.qty_available - stock_card_qty,
+                'diff_val': diff * product.qty_available,
             })
             scp_obj.create(values)
 
@@ -140,14 +147,76 @@ class StockCardProduct(models.TransientModel):
         help='Gets the average price from the warehouse products')
     acc_input = fields.Float('Input Valuation')
     acc_output = fields.Float('Output Valuation')
-    acc_percent = fields.Float('Acc. Val. Percentage Diff.')
-    acc_price_diff = fields.Float('Account Valuation Difference')
-    acc_valuation = fields.Float('Account Valuation')
-    cost = fields.Float()
+    perc_diff_val = fields.Float('Val. Percentage Diff.')
+    acc_price_diff = fields.Float('Account Price Difference Valuation')
+    acc_valuation = fields.Float('Accounting Valuation')
+    stock_card_cost = fields.Float('Stock Card Cost')
+    standard_price = fields.Float('Logistical Cost')
     date_stock_card = fields.Datetime('Stock Card Date')
-    diff = fields.Float('Difference')
-    diff_qty = fields.Float('Inventory Difference')
+    diff_cost = fields.Float('Cost Difference')
+    logistical_qty = fields.Float('Logistical Qty.')
+    stock_card_qty = fields.Float('Stock Card Qty.')
+    diff_qty = fields.Float('Qty Difference')
+    diff_val = fields.Float('Valuation Difference')
     log_valuation = fields.Float('Logistical Valuation')
+    adjustment_journal_entry = fields.Many2one(
+        'account.move',
+        'Adjustment Journal Entry')
+
+    @api.multi
+    def create_val_diff_journal_entry(self):
+        self.ensure_one()
+        diff = self.acc_valuation - self.log_valuation
+        if not diff:
+            return
+        move_obj = self.env['account.move']
+        tmpl_obj = self.pool['product.template']
+
+        ref = '[%(code)s] %(name)s' % dict(
+            code=self.product_id.default_code, name=self.product_id.name)
+
+        datas = tmpl_obj.get_product_accounts(
+            self._cr,
+            self._uid,
+            self.product_id.product_tmpl_id.id,
+        )
+
+        move_vals = {
+            'journal_id': datas['stock_journal'],
+            'company_id':
+            self.env['res.users'].browse(self._uid).company_id.id,
+            'ref': ref,
+        }
+
+        base_vals = {
+            'name': _('Stock Valuation Adjustment'),
+            'ref': ref,
+            'debit': 0,
+            'credit': 0,
+            'product_id': self.product_id.id,
+        }
+
+        diff_account = datas['property_difference_price_account_id']
+        val_account = datas['property_stock_valuation_account_id']
+
+        l1_vals = dict(
+            base_vals,
+            debit=diff if diff > 0 else 0,
+            credit=-diff if diff < 0 else 0,
+            account_id=diff_account,
+        )
+        l2_vals = dict(
+            base_vals,
+            debit=-diff if diff < 0 else 0,
+            credit=diff if diff > 0 else 0,
+            account_id=val_account,
+        )
+        move_vals.update({
+            'line_id': [(0, 0, l1_vals), (0, 0, l2_vals)]})
+        move_id = move_obj.create(move_vals)
+
+        self.write({'adjustment_journal_entry': move_id.id})
+        return None
 
     def _get_fieldnames(self):
         return {
