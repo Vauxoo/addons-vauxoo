@@ -52,11 +52,19 @@ class StockCard(models.TransientModel):
         """
         self.ensure_one()
         ctx = self._context.copy()
-        scp_obj = self.env['stock.card.product']
-        pp_obj = self.env['product.product']
+        if not self.product_ids and ctx.get('active_ids'):
+            self.write({'product_ids': [(4, ctx.get('active_ids'))]})
+        if not self.product_ids:
+            return
 
+        return self.stock_card_inquiry_get()
+
+    @api.multi
+    def stock_card_inquiry_get(self):
+        self.ensure_one()
+        scp_obj = self.env['stock.card.product']
         # /!\ NOTE: Sudo to be invoke
-        for product in pp_obj.browse(ctx.get('active_ids')):
+        for product in self.product_ids:
             stock_valuation_account = \
                 product.categ_id.property_stock_valuation_account_id
             stock_valuation_input = \

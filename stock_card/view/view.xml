@@ -74,10 +74,19 @@
         </record>
 
         <record id="stock_card_product_tree_action" model="ir.actions.act_window">
-            <field name="name">Stock Card Generate</field>
+            <field name="name">Stock Card Product</field>
             <field name="res_model">stock.card.product</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="stock_card_form_action" model="ir.actions.act_window">
+            <field name="name">Stock Card Inquiry</field>
+            <field name="res_model">stock.card</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
             <field name="target">inline</field>
@@ -120,6 +129,12 @@
             name="Generate Stock Card"
             parent="menu_stock_card_main"/>
 
+        <menuitem
+            id="menu_stock_card_inquiry_wizard"
+            action="stock_card_form_action"
+            name="Stock Card Inquiry"
+            parent="menu_stock_card_main"/>
+
         <record id="product_stock_card_form_view" model="ir.ui.view">
             <field name="name">product.product.stock.card.form</field>
             <field name="model">product.product</field>
@@ -136,6 +151,17 @@
                         <div>Stock Card</div>
                     </button>
                 </xpath>
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button
+                        class="oe_inline oe_stat_button"
+                        name="stock_card_inquiry_get"
+                        type="object"
+                        attrs="{'invisible':[('type', '=', 'service')]}"
+                        groups="stock.group_locations"
+                        icon="fa-history">
+                        <div>Stock Card Inquiry</div>
+                    </button>
+                </xpath>
                 <xpath expr="//group[@name='inventory']" position="after">
                     <group name='stock_card' groups="stock.group_stock_manager" string="Stock Card Info" attrs="{'invisible':['|', ('type','=','service'), ('cost_method','!=','average')]}">
                         <field name="date_stock_card_border"/>
@@ -149,11 +175,19 @@
               <field name="model">stock.card</field>
               <field name="arch" type="xml">
                 <form string="Stock Card">
-                    <footer>
-                        <button name="generate_report" string="Generate Report"  type="object" class="oe_highlight"  />
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
+                    <sheet string="Stock Card Product">
+                        <header>
+                            <button name="generate_report" string="Generate Report"  type="object" class="oe_highlight"  />
+                            or
+                            <button string="Cancel" class="oe_link" special="cancel" />
+                        </header>
+                        <h1>
+                            <label for="product_ids"/>
+                        </h1>
+                        <div>
+                            <field name="product_ids"/>
+                        </div>
+                    </sheet>
                 </form>
               </field>
         </record>
