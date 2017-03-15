@@ -36,6 +36,12 @@
             <field name="model">stock.card.product</field>
             <field name="arch" type="xml">
                 <tree string="Stock Card Product">
+                    <button
+                        name="update_inquiry"
+                        type="object"
+                        groups="stock.group_locations"
+                        icon="gtk-execute"
+                        />
                     <field name="product_id" required="1"/>
                     <field name="standard_price"/>
                     <field name="stock_card_cost"/>

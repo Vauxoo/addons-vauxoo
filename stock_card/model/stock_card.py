@@ -63,81 +63,90 @@ class StockCard(models.TransientModel):
     def stock_card_inquiry_get(self):
         self.ensure_one()
         scp_obj = self.env['stock.card.product']
+        self.stock_card_product_ids.unlink()
         # /!\ NOTE: Sudo to be invoke
         for product in self.product_ids:
-            stock_valuation_account = \
-                product.categ_id.property_stock_valuation_account_id
-            stock_valuation_input = \
-                product.categ_id.property_stock_account_input_categ or \
-                product.property_stock_account_input
-            stock_valuation_output = \
-                product.categ_id.property_stock_account_output_categ or \
-                product.property_stock_account_output
-            stock_valuation_diff = \
-                product.categ_id.\
-                property_account_creditor_price_difference_categ or \
-                product.property_account_creditor_price_difference
-            if not (stock_valuation_account and stock_valuation_diff):
+            values = self.stock_card_inquiry_product(product)
+            if not values:
                 continue
-            self._cr.execute("""
-                SELECT  aml.account_id as account, sum(debit - credit)
-                FROM account_move_line aml
-                    JOIN account_period ap
-                    ON aml.period_id = ap.id
-                WHERE aml.account_id in %s
-                AND aml.product_id = %s
-                AND ap.special != True
-                GROUP BY aml.account_id
-                """, (
-                    (stock_valuation_account.id,
-                     stock_valuation_input.id,
-                     stock_valuation_output.id,
-                     stock_valuation_diff.id), product.id))
-            dat = self._cr.dictfetchall()
-            values = {}
-            for data in dat:
-                if data['account'] == stock_valuation_account.id:
-                    product_valuation = (
-                        product.qty_available * product.standard_price)
-                    product_acc_valuation = data and data['sum']
-                    diff_stock_val = product_valuation - product_acc_valuation
-                    percent = (
-                        ((diff_stock_val) /
-                         product_acc_valuation) * 100.0
-                        if product_acc_valuation else 0.0)
-                    values.update({
-                        'acc_valuation': product_acc_valuation,
-                        'log_valuation': product_valuation,
-                        'diff_stock_val': diff_stock_val,
-                        'perc_diff_val': percent})
-                if data['account'] == stock_valuation_input.id:
-                    values.update({'acc_input': data and data['sum']})
-                if data['account'] == stock_valuation_output.id:
-                    values.update({'acc_output': data and data['sum']})
-                if data['account'] == stock_valuation_diff.id:
-                    values.update({'acc_price_diff': data and data['sum']})
-
-            values.update({'stock_card_id': self.id, 'product_id': product.id})
-            scp_res = scp_obj._stock_card_move_get(product.id)
-            cost = scp_obj.get_average(scp_res)['average']
-            res = scp_res.get('res', [])
-            date = res[-1]['date'] if res else None
-            stock_card_qty = res[-1]['product_qty'] if res else 0.0
-            diff = product.standard_price - cost
-            values.update({
-                'stock_card_cost': cost,
-                'standard_price': product.standard_price,
-                'diff_cost': diff,
-                'date_stock_card': date,
-                'logistical_qty': product.qty_available,
-                'stock_card_qty': stock_card_qty,
-                'diff_qty': product.qty_available - stock_card_qty,
-                'diff_val': diff * product.qty_available,
-            })
             scp_obj.create(values)
-
         action = self.action_view_moves()
         return action
+
+    @api.multi
+    def stock_card_inquiry_product(self, product):
+        scp_obj = self.env['stock.card.product']
+        stock_valuation_account = \
+            product.categ_id.property_stock_valuation_account_id
+        stock_valuation_input = \
+            product.categ_id.property_stock_account_input_categ or \
+            product.property_stock_account_input
+        stock_valuation_output = \
+            product.categ_id.property_stock_account_output_categ or \
+            product.property_stock_account_output
+        stock_valuation_diff = \
+            product.categ_id.\
+            property_account_creditor_price_difference_categ or \
+            product.property_account_creditor_price_difference
+        if not (stock_valuation_account and stock_valuation_diff):
+            return
+
+        self._cr.execute("""
+            SELECT  aml.account_id as account, sum(debit - credit)
+            FROM account_move_line aml
+                JOIN account_period ap
+                ON aml.period_id = ap.id
+            WHERE aml.account_id in %s
+            AND aml.product_id = %s
+            AND ap.special != True
+            GROUP BY aml.account_id
+            """, (
+                (stock_valuation_account.id,
+                    stock_valuation_input.id,
+                    stock_valuation_output.id,
+                    stock_valuation_diff.id), product.id))
+        dat = self._cr.dictfetchall()
+        values = {}
+        for data in dat:
+            if data['account'] == stock_valuation_account.id:
+                product_valuation = (
+                    product.qty_available * product.standard_price)
+                product_acc_valuation = data and data['sum']
+                diff_stock_val = product_valuation - product_acc_valuation
+                percent = (
+                    ((diff_stock_val) /
+                        product_acc_valuation) * 100.0
+                    if product_acc_valuation else 0.0)
+                values.update({
+                    'acc_valuation': product_acc_valuation,
+                    'log_valuation': product_valuation,
+                    'diff_stock_val': diff_stock_val,
+                    'perc_diff_val': percent})
+            if data['account'] == stock_valuation_input.id:
+                values.update({'acc_input': data and data['sum']})
+            if data['account'] == stock_valuation_output.id:
+                values.update({'acc_output': data and data['sum']})
+            if data['account'] == stock_valuation_diff.id:
+                values.update({'acc_price_diff': data and data['sum']})
+
+        values.update({'stock_card_id': self.id, 'product_id': product.id})
+        scp_res = scp_obj._stock_card_move_get(product.id)
+        cost = scp_obj.get_average(scp_res)['average']
+        res = scp_res.get('res', [])
+        date = res[-1]['date'] if res else None
+        stock_card_qty = res[-1]['product_qty'] if res else 0.0
+        diff = product.standard_price - cost
+        values.update({
+            'stock_card_cost': cost,
+            'standard_price': product.standard_price,
+            'diff_cost': diff,
+            'date_stock_card': date,
+            'logistical_qty': product.qty_available,
+            'stock_card_qty': stock_card_qty,
+            'diff_qty': product.qty_available - stock_card_qty,
+            'diff_val': diff * product.qty_available,
+        })
+        return values
 
 
 class StockCardProduct(models.TransientModel):
@@ -175,8 +184,18 @@ class StockCardProduct(models.TransientModel):
         'Adjustment Journal Entry')
 
     @api.multi
+    def update_inquiry(self):
+        sc_obj = self.env['stock.card']
+        values = sc_obj.stock_card_inquiry_product(self.product_id)
+        self.write(values)
+        return True
+
+    @api.multi
     def create_val_diff_journal_entry(self):
         self.ensure_one()
+        if self.adjustment_journal_entry:
+            # /|\ NOTE: Instead of skipping we could re-write the previous one
+            return
         diff = -self.diff_stock_val
         if not diff:
             return
@@ -227,6 +246,7 @@ class StockCardProduct(models.TransientModel):
         move_id = move_obj.create(move_vals)
 
         self.write({'adjustment_journal_entry': move_id.id})
+        self.update_inquiry()
         return None
 
     def _get_fieldnames(self):
