@@ -198,15 +198,5 @@
               </field>
         </record>
 
-        <act_window id="action_stock_card"
-            key2="client_action_multi"
-            name="Stock Card"
-            res_model="stock.card"
-            src_model="product.product"
-            view_mode="form"
-            target="new"
-            view_type="form"
-            />
-
     </data>
 </openerp>
