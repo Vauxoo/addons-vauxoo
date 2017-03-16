@@ -53,6 +53,7 @@
                                     groups="stock.group_locations"
                                     icon="gtk-go-forward"
                                     string='Create Adjustment Journal Entry'
+                                    confirm='Do you want to continue?'
                                     />
                             </group>
                         </div>
@@ -101,6 +102,7 @@
                         type="object"
                         groups="stock.group_locations"
                         icon="gtk-go-forward"
+                        confirm='Do you want to continue?'
                         />
                 </tree>
             </field>
