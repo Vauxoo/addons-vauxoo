@@ -19,6 +19,38 @@
                         <h1>
                             <field name="product_id" required="1"/>
                         </h1>
+                        <div>
+                            <button
+                                name="update_inquiry"
+                                type="object"
+                                groups="stock.group_locations"
+                                icon="gtk-execute"
+                                />
+                            <group>
+                                <field name="standard_price"/>
+                                <field name="stock_card_cost"/>
+                                <field name="diff_cost"/>
+                                <field name="logistical_qty"/>
+                                <field name="stock_card_qty"/>
+                                <field name="diff_qty"/>
+                                <field name="diff_val"/>
+                                <field name="log_valuation"/>
+                                <field name="acc_valuation"/>
+                                <field name="diff_stock_val"/>
+                                <field name="perc_diff_val"/>
+                                <field name="acc_input"/>
+                                <field name="acc_output"/>
+                                <field name="acc_price_diff"/>
+                                <field name="date_stock_card"/>
+                                <field name="adjustment_journal_entry"/>
+                            </group>
+                            <button
+                                name="create_val_diff_journal_entry"
+                                type="object"
+                                groups="stock.group_locations"
+                                icon="gtk-go-forward"
+                                />
+                        </div>
                         <footer>
                             <button
                                 name="stock_card_move_get"
@@ -52,8 +84,8 @@
                     <field name="diff_val"/>
                     <field name="acc_valuation"/>
                     <field name="log_valuation"/>
-                    <field name="perc_diff_val"/>
                     <field name="diff_stock_val"/>
+                    <field name="perc_diff_val"/>
                     <field name="acc_input"/>
                     <field name="acc_output"/>
                     <field name="acc_price_diff"/>

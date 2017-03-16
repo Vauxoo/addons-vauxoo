@@ -164,24 +164,55 @@ class StockCardProduct(models.TransientModel):
     stock_card_id = fields.Many2one(
         'stock.card', string='Stock Card',
         help='Gets the average price from the warehouse products')
-    acc_input = fields.Float('Input Valuation')
-    acc_output = fields.Float('Output Valuation')
-    perc_diff_val = fields.Float('Val. Percentage Diff.')
-    acc_price_diff = fields.Float('Account Price Difference Valuation')
-    acc_valuation = fields.Float('Accounting Valuation')
-    stock_card_cost = fields.Float('Stock Card Cost')
-    standard_price = fields.Float('Logistical Cost')
-    date_stock_card = fields.Datetime('Stock Card Date')
-    diff_cost = fields.Float('Cost Difference')
-    logistical_qty = fields.Float('Logistical Qty.')
-    stock_card_qty = fields.Float('Stock Card Qty.')
-    diff_qty = fields.Float('Qty Difference')
-    diff_val = fields.Float('Valuation Difference')
-    log_valuation = fields.Float('Logistical Valuation')
-    diff_stock_val = fields.Float('Stock Valuation Diff.')
+    standard_price = fields.Float(
+        'Logistical Cost',
+        help='Cost Price at Product Tab')
+    stock_card_cost = fields.Float(
+        'Stock Card Cost',
+        help='Product Cost as provided by Stock Card')
+    diff_cost = fields.Float(
+        'Cost Difference',
+        help='Logistical Cost - Stock Card Cost')
+    diff_val = fields.Float(
+        'Valuation Difference',
+        help='Cost Difference * Logistical Qty')
+    logistical_qty = fields.Float(
+        'Logistical Qty.',
+        help='Qty On Hand at Product Tab')
+    stock_card_qty = fields.Float(
+        'Stock Card Qty.',
+        help='Product Qty as provided by Stock Card')
+    diff_qty = fields.Float(
+        'Qty Difference',
+        help='Logistical Qty - Stock Card Qty')
+    log_valuation = fields.Float(
+        'Logistical Valuation',
+        help='Logistical Cost * Logistical Qty')
+    acc_valuation = fields.Float(
+        'Accounting Valuation',
+        help='Balance on Product Category Stock Valuation Account')
+    diff_stock_val = fields.Float(
+        'Stock Valuation Diff.',
+        help='Logistical Valuation - Accounting Valuation')
+    perc_diff_val = fields.Float(
+        'Val. Percentage Diff.',
+        help='Valuation Percentage Difference between Acc. and Log. Valuation')
+    acc_input = fields.Float(
+        'Input Valuation',
+        help='Balance on Product Category Stock Input Account')
+    acc_output = fields.Float(
+        'Output Valuation',
+        help='Balance on Product Category Stock Output Account')
+    acc_price_diff = fields.Float(
+        'Account Price Difference Valuation',
+        help='Balance on Product Category Price Difference Account')
+    date_stock_card = fields.Datetime(
+        'Stock Card Date',
+        help='Last Operation Date on Stock Card')
     adjustment_journal_entry = fields.Many2one(
         'account.move',
-        'Adjustment Journal Entry')
+        'Adjustment Journal Entry',
+        help='Journal Entry Created if Adjustment Valuation is requested')
 
     @api.multi
     def update_inquiry(self):
