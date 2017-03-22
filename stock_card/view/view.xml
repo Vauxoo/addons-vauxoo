@@ -19,6 +19,44 @@
                         <h1>
                             <field name="product_id" required="1"/>
                         </h1>
+                        <div>
+                            <field name="stock_card_id" invisible='1'/>
+                            <group attrs="{'invisible': [('stock_card_id','=',False)]}">
+                                <button
+                                    name="update_inquiry"
+                                    type="object"
+                                    groups="stock.group_locations"
+                                    icon="gtk-execute"
+                                    string='Update Audit'
+                                    />
+                                <newline/>
+                                <field readonly='1' name="standard_price"/>
+                                <field readonly='1' name="stock_card_cost"/>
+                                <field readonly='1' name="diff_cost"/>
+                                <field readonly='1' name="logistical_qty"/>
+                                <field readonly='1' name="stock_card_qty"/>
+                                <field readonly='1' name="diff_qty"/>
+                                <field readonly='1' name="diff_val"/>
+                                <field readonly='1' name="log_valuation"/>
+                                <field readonly='1' name="acc_valuation"/>
+                                <field readonly='1' name="diff_stock_val"/>
+                                <field readonly='1' name="perc_diff_val"/>
+                                <field readonly='1' name="acc_input"/>
+                                <field readonly='1' name="acc_output"/>
+                                <field readonly='1' name="acc_price_diff"/>
+                                <field readonly='1' name="date_stock_card"/>
+                                <field readonly='1' name="adjustment_journal_entry"/>
+                                <newline/>
+                                <button
+                                    name="create_val_diff_journal_entry"
+                                    type="object"
+                                    groups="stock.group_locations"
+                                    icon="gtk-go-forward"
+                                    string='Create Adjustment Journal Entry'
+                                    confirm='Do you want to continue?'
+                                    />
+                            </group>
+                        </div>
                         <footer>
                             <button
                                 name="stock_card_move_get"
@@ -31,9 +69,67 @@
             </field>
         </record>
 
+        <record id="stock_card_product_tree" model="ir.ui.view">
+            <field name="name">stock.card.product.tree</field>
+            <field name="model">stock.card.product</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Card Product">
+                    <button
+                        name="update_inquiry"
+                        type="object"
+                        groups="stock.group_locations"
+                        icon="gtk-execute"
+                        />
+                    <field name="product_id" required="1"/>
+                    <field name="standard_price"/>
+                    <field name="stock_card_cost"/>
+                    <field name="diff_cost"/>
+                    <field name="logistical_qty"/>
+                    <field name="stock_card_qty"/>
+                    <field name="diff_qty"/>
+                    <field name="diff_val"/>
+                    <field name="acc_valuation"/>
+                    <field name="log_valuation"/>
+                    <field name="diff_stock_val"/>
+                    <field name="perc_diff_val"/>
+                    <field name="acc_input"/>
+                    <field name="acc_output"/>
+                    <field name="acc_price_diff"/>
+                    <field name="date_stock_card"/>
+                    <field name="adjustment_journal_entry"/>
+                    <button
+                        name="create_val_diff_journal_entry"
+                        type="object"
+                        groups="stock.group_locations"
+                        icon="gtk-go-forward"
+                        confirm='Do you want to continue?'
+                        />
+                </tree>
+            </field>
+        </record>
+
         <record id="stock_card_product_action" model="ir.actions.act_window">
             <field name="name">Stock Card Generate</field>
             <field name="res_model">stock.card.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="stock_card_product_tree_action" model="ir.actions.act_window">
+            <field name="name">Stock Card Product</field>
+            <field name="res_model">stock.card.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="stock_card_form_action" model="ir.actions.act_window">
+            <field name="name">Stock Card Inquiry</field>
+            <field name="res_model">stock.card</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="domain">[]</field>
@@ -78,6 +174,12 @@
             name="Generate Stock Card"
             parent="menu_stock_card_main"/>
 
+        <menuitem
+            id="menu_stock_card_inquiry_wizard"
+            action="stock_card_form_action"
+            name="Stock Card Inquiry"
+            parent="menu_stock_card_main"/>
+
         <record id="product_stock_card_form_view" model="ir.ui.view">
             <field name="name">product.product.stock.card.form</field>
             <field name="model">product.product</field>
@@ -94,6 +196,17 @@
                         <div>Stock Card</div>
                     </button>
                 </xpath>
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button
+                        class="oe_inline oe_stat_button"
+                        name="stock_card_inquiry_get"
+                        type="object"
+                        attrs="{'invisible':[('type', '=', 'service')]}"
+                        groups="stock.group_locations"
+                        icon="fa-history">
+                        <div>Stock Card Inquiry</div>
+                    </button>
+                </xpath>
                 <xpath expr="//group[@name='inventory']" position="after">
                     <group name='stock_card' groups="stock.group_stock_manager" string="Stock Card Info" attrs="{'invisible':['|', ('type','=','service'), ('cost_method','!=','average')]}">
                         <field name="date_stock_card_border"/>
@@ -101,5 +214,28 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_stock_card" model="ir.ui.view">
+              <field name="name">Stock Card</field>
+              <field name="model">stock.card</field>
+              <field name="arch" type="xml">
+                <form string="Stock Card">
+                    <sheet string="Stock Card Product">
+                        <header>
+                            <button name="generate_report" string="Generate Report"  type="object" class="oe_highlight"  />
+                            or
+                            <button string="Cancel" class="oe_link" special="cancel" />
+                        </header>
+                        <h1>
+                            <label for="product_ids"/>
+                        </h1>
+                        <div>
+                            <field name="product_ids"/>
+                        </div>
+                    </sheet>
+                </form>
+              </field>
+        </record>
+
     </data>
 </openerp>
