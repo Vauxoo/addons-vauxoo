@@ -6,17 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-30 18:54+0000\n"
-"PO-Revision-Date: 2015-12-30 19:07+0000\n"
-"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
-"Language-Team: Spanish <http://example.com/projects/addons-"
-"vauxoo/stock_card/es/>\n"
-"Language: es\n"
+"POT-Creation-Date: 2017-03-21 21:43+0000\n"
+"PO-Revision-Date: 2017-03-21 21:43+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.2-dev\n"
+"Plural-Forms: \n"
+
+#. module: stock_card
+#: code:addons/stock_card/model/stock_card.py:412
+#, python-format
+msgid "Asked Product has not Moves to show"
+msgstr "El producto solicitado no tiene movimientos que/para mostrar"
 
 #. module: stock_card
 #: field:stock.card.move,average:0
@@ -45,7 +48,24 @@ msgstr "Fecha"
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
 msgid "Get Moves"
-msgstr "Obtener Movimiento"
+msgstr "Obtener Movimientos"
+
+#: field:stock.card,display_name:0
+#: field:stock.card.move,display_name:0
+#: field:stock.card.product,display_name:0
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: stock_card
+#: model:ir.ui.menu,name:stock_card.menu_stock_card_wizard
+msgid "Generate Stock Card"
+msgstr "Generar Tarjeta de Inventario"
+
+#. module: stock_card
+#: help:stock.card.product,product_id:0
+#: help:stock.card.product,warehouse_id:0
+msgid "Gets the average price from the warehouse products"
+msgstr "Obtener el precio promedio de los productos del almacén"
 
 #. module: stock_card
 #: field:stock.card,id:0
@@ -65,6 +85,13 @@ msgid "Inventory Valuation"
 msgstr "Valoración de Inventario"
 
 #. module: stock_card
+#: field:stock.card,__last_update:0
+#: field:stock.card.move,__last_update:0
+#: field:stock.card.product,__last_update:0
+msgid "Last Modified on"
+msgstr "Ultima modificación el"
+
+#. module: stock_card
 #: field:stock.card,write_uid:0
 #: field:stock.card.move,write_uid:0
 #: field:stock.card.product,write_uid:0
@@ -79,6 +106,16 @@ msgid "Last Updated on"
 msgstr "Actualizado el"
 
 #. module: stock_card
+#: field:product.product,purchase_line_warn_msg:0
+msgid "Message for Purchase Order Line"
+msgstr "Mensaje para la Línea de la Orden de Compra"
+
+#. module: stock_card
+#: field:product.product,sale_line_warn_msg:0
+msgid "Message for Sales Order Line"
+msgstr "Mensaje para la Línea de la Orden de Venta"
+
+#. module: stock_card
 #: field:stock.card.move,qty:0
 msgid "Move Quantity"
 msgstr "Cantidad Movida"
@@ -90,6 +127,7 @@ msgstr "Valoración de Movimiento"
 
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
+#: model:ir.model,name:stock_card.model_product_product
 #: field:stock.card.product,product_id:0
 msgid "Product"
 msgstr "Producto"
@@ -100,9 +138,30 @@ msgid "Product Moves"
 msgstr "Movimientos de Producto"
 
 #. module: stock_card
+#: help:stock.card.product,stock_card_move_ids:0
+msgid "Product movements"
+msgstr "Movimientos de Producto"
+
+#. module: stock_card
 #: field:stock.card,product_ids:0
 msgid "Products"
 msgstr "Productos"
+
+#. module: stock_card
+#: field:product.product,purchase_line_warn:0
+msgid "Purchase Order Line"
+msgstr "Línea de la Orden de Compra"
+
+#. module: stock_card
+#: field:product.product,sale_line_warn:0
+msgid "Sales Order Line"
+msgstr "Línea de la Orden de Venta"
+
+#. module: stock_card
+#: help:product.product,purchase_line_warn:0
+#: help:product.product,sale_line_warn:0
+msgid "Selecting the \"Warning\" option will notify user with the message, Selecting \"Blocking Message\" will throw an exception with the message and block the flow. The Message has to be written in the next field."
+msgstr "Si selecciona la opción \"Aviso\" se notificará a los usuarios con el mensaje, si selecciona \"Mensaje de bloqueo\" se lanzará una excepción con el mensaje y se bloqueará el flujo. El mensaje debe escribirse en el siguiente campo."
 
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
@@ -111,8 +170,24 @@ msgstr "Mostrar Movimientos"
 
 #. module: stock_card
 #: model:ir.ui.menu,name:stock_card.menu_stock_card_main
+#: view:product.product:stock_card.product_stock_card_form_view
 msgid "Stock Card"
 msgstr "Tarjeta de Inventario"
+
+#. module: stock_card
+#: field:product.product,date_stock_card_border:0
+msgid "Stock Card Border Date"
+msgstr "Fecha de Borde en tarjeta de inventario"
+
+#. module: stock_card
+#: model:ir.actions.act_window,name:stock_card.stock_card_product_action
+msgid "Stock Card Generate"
+msgstr "Generar Tarjeta de Inventario"
+
+#. module: stock_card
+#: view:product.product:stock_card.product_stock_card_form_view
+msgid "Stock Card Info"
+msgstr "Información de la Tarjeta de Inventario"
 
 #. module: stock_card
 #: model:ir.actions.act_window,name:stock_card.stock_card_move_action
@@ -146,3 +221,13 @@ msgstr "Bolso Targus Laptop 16\""
 #: field:stock.card.move,cost_unit:0
 msgid "Unit Cost"
 msgstr "Costo Unitario"
+
+#. module: stock_card
+#: model:product.template,name:stock_card.product02_product_template
+msgid "VX Headphones"
+msgstr "Audífonos VX"
+
+#. module: stock_card
+#: field:stock.card.product,warehouse_id:0
+msgid "Warehouse"
+msgstr "Almacén"
