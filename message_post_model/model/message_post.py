@@ -318,7 +318,7 @@ class IrModel(models.Model):
             """Added a message in the record with the details of the fields changed
             """
             model = self.env['ir.model'].\
-                search([('model', '=', str(self._model))])
+                search([('model', '=', str(self._name))])
 
             exclude_names = model.exclude_field_ids.mapped('name')
             exclude_names += model.exclude_fields_text and \
