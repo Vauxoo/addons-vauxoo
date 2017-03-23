@@ -28,13 +28,13 @@ msgstr "Valoración Contable"
 #. module: stock_card
 #: field:stock.card.product,adjustment_journal_entry:0
 msgid "Adjustment Journal Entry"
-msgstr "Entrada de Asiento Contable"
+msgstr "Asiento Contable de Ajuste"
 
 #. module: stock_card
 #: code:addons/stock_card/model/stock_card.py:661
 #, python-format
 msgid "Asked Product has not Moves to show"
-msgstr "El Producto solicitado no se a Movido para Mostrar"
+msgstr "El producto solicitado no tiene Movimientos para mostrar"
 
 #. module: stock_card
 #: field:stock.card.move,average:0
@@ -79,12 +79,12 @@ msgstr "Diferencia de Costo * Cantidad Logística"
 #. module: stock_card
 #: help:stock.card.product,standard_price:0
 msgid "Cost Price at Product Tab"
-msgstr "Precio de Costo en la Etiqueta del Producto"
+msgstr "Precio de Costo en la Pestaña del Producto"
 
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
 msgid "Create Adjustment Journal Entry"
-msgstr "Crear Entrada de Asiento Contable"
+msgstr "Crear Asiento Contable de Ajuste"
 
 #. module: stock_card
 #: field:stock.card,create_uid:0
@@ -163,7 +163,7 @@ msgstr "Valoración de Inventario"
 #. module: stock_card
 #: help:stock.card.product,adjustment_journal_entry:0
 msgid "Journal Entry Created if Adjustment Valuation is requested"
-msgstr "Entrada de Diario Contable Creada si se Solicita Valoración de Ajuste"
+msgstr "Asiento Contable Creado si se Solicita Valoración de Ajuste"
 
 #. module: stock_card
 #: field:stock.card,__last_update:0
@@ -219,12 +219,12 @@ msgstr "Cantidad Logística."
 #. module: stock_card
 #: field:stock.card.product,log_valuation:0
 msgid "Logistical Valuation"
-msgstr "Logistical Valuation"
+msgstr "Valoración Logística"
 
 #. module: stock_card
 #: help:stock.card.product,diff_stock_val:0
 msgid "Logistical Valuation - Accounting Valuation"
-msgstr "Valuación Logística - Valoración Contable"
+msgstr "Valoración Logística - Valoración Contable"
 
 #. module: stock_card
 #: field:product.product,purchase_line_warn_msg:0
@@ -302,7 +302,7 @@ msgstr "Diferencia de Cantidad"
 #. module: stock_card
 #: help:stock.card.product,logistical_qty:0
 msgid "Qty On Hand at Product Tab"
-msgstr "Cantidad en mano de Etiquetas de Producto"
+msgstr "Cantidad en mano de Ficha del Producto"
 
 #. module: stock_card
 #: field:product.product,sale_line_warn:0
@@ -336,12 +336,12 @@ msgstr "Fecha de Borde en tarjeta de inventario"
 #. module: stock_card
 #: field:stock.card.product,stock_card_cost:0
 msgid "Stock Card Cost"
-msgstr "Tarjeta de Inventario Costo"
+msgstr "Costo en Tarjeta de Inventario"
 
 #. module: stock_card
 #: field:stock.card.product,date_stock_card:0
 msgid "Stock Card Date"
-msgstr "Tarjeta de Inventario Fecha"
+msgstr "Fecha en Tarjeta de Inventario"
 
 #. module: stock_card
 #: model:ir.actions.act_window,name:stock_card.stock_card_product_action
@@ -383,7 +383,7 @@ msgstr "Asistente de Tarjetas de Inventario"
 
 #: field:stock.card.product,stock_card_qty:0
 msgid "Stock Card Qty."
-msgstr "Tarjeta de Inventario Cantidad."
+msgstr "Cantidad en Tarjeta de Inventario."
 
 #. module: stock_card
 #: field:stock.card.move,move_id:0
@@ -424,17 +424,17 @@ msgstr "Audífonos VX"
 #. module: stock_card
 #: field:stock.card.product,perc_diff_val:0
 msgid "Val. Percentage Diff."
-msgstr "Valorar Diferecia de Porcentaje."
+msgstr "Diferencia Porcentual de Valoración."
 
 #. module: stock_card
 #: field:stock.card.product,diff_val:0
 msgid "Valuation Difference"
-msgstr "Diferencia de Valuación"
+msgstr "Diferencia de Valoración"
 
 #. module: stock_card
 #: help:stock.card.product,perc_diff_val:0
 msgid "Valuation Percentage Difference between Acc. and Log. Valuation"
-msgstr "Difrencia de Valuación entre Valuación Contable y Logística"
+msgstr "Diferencia Porcentual de Valoración entre la Valoración Contable y Logística"
 
 #. module: stock_card
 #: field:stock.card.product,warehouse_id:0
