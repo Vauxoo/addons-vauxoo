@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<record model="ir.ui.view" id="view_account_invoice_form_by_validate">
+            <field name="name">account.invoice.double.validation</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='invoice_open']" position="after">
+                    <button name="by_validate" states="draft,proforma2" string="Set to validate" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@name='invoice_open']" position="attributes">
+                   <attribute name="groups">l10n_mx_facturae_double_validation.group_validator</attribute>
+                   <attribute name="states">proforma2,validate</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='state']" position="attributes">
+                  <attribute name="statusbar_visible">draft,validate,open,paid</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="act_by_validate" model="workflow.activity">
+            <field name="wkf_id" ref="account.wkf"/>
+            <field name="name">validate</field>
+            <field name="action">write({'state':'validate'})</field>
+            <field name="kind">function</field>
+        </record>
+
+        <record id="t_draft_validate" model="workflow.transition">
+            <field name="act_from" ref="account.act_draft"/>
+            <field name="act_to" ref="act_by_validate"/>
+            <field name="signal">by_validate</field>
+        </record>
+
+        <record id="t_validate_open" model="workflow.transition">
+            <field name="act_from" ref="act_by_validate"/>
+            <field name="act_to" ref="account.act_open"/>
+            <field name="signal">invoice_open</field>
+        </record>
+
+        <record id="inherit_view_account_invoice_by_validate_filter" model="ir.ui.view">
+            <field name="name">account.invoice.double.validation.filter</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter" />
+            <field name="arch" type="xml">
+               <!-- add your filtre at the end -->
+                <xpath expr="filter[@name='draft']" position="after">
+                    <filter name="validate" string="By Validate" domain="[('state','=','validate')]" help="Invoices by validate"/>
+                </xpath>
+                </field>
+            </record>
+
+    </data>
+</openerp>
