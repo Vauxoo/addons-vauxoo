@@ -113,9 +113,9 @@ class AccountVoucherTaxSat(models.Model):
         move_id = self.create_move_sat()
         self.write({'move_id': move_id.id})
 
-        amount_tax_sat = sum([
+        amount_tax_sat = round(sum([
             move_line_tax_sat.credit
-            for move_line_tax_sat in self.aml_ids])
+            for move_line_tax_sat in self.aml_ids]), 2)
 
         self.create_move_line_sat(self, amount_tax_sat)
 
