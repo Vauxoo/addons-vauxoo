@@ -6,22 +6,85 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-30 18:54+0000\n"
-"PO-Revision-Date: 2015-12-30 19:07+0000\n"
-"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
-"Language-Team: Spanish <http://example.com/projects/addons-"
-"vauxoo/stock_card/es/>\n"
-"Language: es\n"
+"POT-Creation-Date: 2017-03-22 21:16+0000\n"
+"PO-Revision-Date: 2017-03-22 21:16+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.2-dev\n"
+"Plural-Forms: \n"
+
+#. module: stock_card
+#: field:stock.card.product,acc_price_diff:0
+msgid "Account Price Difference Valuation"
+msgstr "Valoración Contable Diferencia de Precios"
+
+#. module: stock_card
+#: field:stock.card.product,acc_valuation:0
+msgid "Accounting Valuation"
+msgstr "Valoración Contable"
+
+#. module: stock_card
+#: field:stock.card.product,adjustment_journal_entry:0
+msgid "Adjustment Journal Entry"
+msgstr "Asiento Contable de Ajuste"
+
+#. module: stock_card
+#: code:addons/stock_card/model/stock_card.py:661
+#, python-format
+msgid "Asked Product has not Moves to show"
+msgstr "El producto solicitado no tiene Movimientos para mostrar"
 
 #. module: stock_card
 #: field:stock.card.move,average:0
 msgid "Average"
 msgstr "Promedio"
+
+#. module: stock_card
+#: help:stock.card.product,acc_price_diff:0
+msgid "Balance on Product Category Price Difference Account"
+msgstr "Balance en la Cuenta de Diferencia de Precio por Categoría de Producto"
+
+#. module: stock_card
+#: help:stock.card.product,acc_input:0
+msgid "Balance on Product Category Stock Input Account"
+msgstr "Balance en la Cuenta Categoría Productos en Inventario de Entrada"
+
+#. module: stock_card
+#: help:stock.card.product,acc_output:0
+msgid "Balance on Product Category Stock Output Account"
+msgstr "Balance en la Cuenta Categoría Productos en Inventario de Salida"
+
+#. module: stock_card
+#: help:stock.card.product,acc_valuation:0
+msgid "Balance on Product Category Stock Valuation Account"
+msgstr "Balance en la Cuenta Categoría Productos en Inventario de Valoración"
+
+#. module: stock_card
+#: view:stock.card:stock_card.view_stock_card
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_card
+#: field:stock.card.product,diff_cost:0
+msgid "Cost Difference"
+msgstr "Diferencia de Costo"
+
+#. module: stock_card
+#: help:stock.card.product,diff_val:0
+msgid "Cost Difference * Logistical Qty"
+msgstr "Diferencia de Costo * Cantidad Logística"
+
+#. module: stock_card
+#: help:stock.card.product,standard_price:0
+msgid "Cost Price at Product Tab"
+msgstr "Precio de Costo en la Pestaña del Producto"
+
+#. module: stock_card
+#: view:stock.card.product:stock_card.stock_card_product_form
+msgid "Create Adjustment Journal Entry"
+msgstr "Crear Asiento Contable de Ajuste"
 
 #. module: stock_card
 #: field:stock.card,create_uid:0
@@ -43,9 +106,37 @@ msgid "Date"
 msgstr "Fecha"
 
 #. module: stock_card
+#: field:stock.card,display_name:0
+#: field:stock.card.move,display_name:0
+#: field:stock.card.product,display_name:0
+msgid "Display Name"
+msgstr "Nombre a Mostrar"
+
+#. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
 msgid "Get Moves"
-msgstr "Obtener Movimiento"
+msgstr "Obtener Movimientos"
+
+#: view:stock.card.product:stock_card.stock_card_product_tree
+msgid "Do you want to continue?"
+msgstr "¿Deseas continuar?"
+
+#. module: stock_card
+#: view:stock.card:stock_card.view_stock_card
+msgid "Generate Report"
+msgstr "Generar Reporte"
+
+#. module: stock_card
+#: model:ir.ui.menu,name:stock_card.menu_stock_card_wizard
+msgid "Generate Stock Card"
+msgstr "Generar Tarjeta de Inventario"
+
+#. module: stock_card
+#: help:stock.card.product,product_id:0
+#: help:stock.card.product,stock_card_id:0
+#: help:stock.card.product,warehouse_id:0
+msgid "Gets the average price from the warehouse products"
+msgstr "Obtener el precio promedio de los productos del almacén"
 
 #. module: stock_card
 #: field:stock.card,id:0
@@ -53,6 +144,11 @@ msgstr "Obtener Movimiento"
 #: field:stock.card.product,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: stock_card
+#: field:stock.card.product,acc_input:0
+msgid "Input Valuation"
+msgstr "Valoración de Entrada"
 
 #. module: stock_card
 #: field:stock.card.move,product_qty:0
@@ -63,6 +159,23 @@ msgstr "Cantidad en Inventario"
 #: field:stock.card.move,inventory_valuation:0
 msgid "Inventory Valuation"
 msgstr "Valoración de Inventario"
+
+#. module: stock_card
+#: help:stock.card.product,adjustment_journal_entry:0
+msgid "Journal Entry Created if Adjustment Valuation is requested"
+msgstr "Asiento Contable Creado si se Solicita Valoración de Ajuste"
+
+#. module: stock_card
+#: field:stock.card,__last_update:0
+#: field:stock.card.move,__last_update:0
+#: field:stock.card.product,__last_update:0
+msgid "Last Modified on"
+msgstr "Ultima Modificación el"
+
+#. module: stock_card
+#: help:stock.card.product,date_stock_card:0
+msgid "Last Operation Date on Stock Card"
+msgstr "Ultima Fecha de Operación en Tarjeta de Inventario"
 
 #. module: stock_card
 #: field:stock.card,write_uid:0
@@ -79,6 +192,51 @@ msgid "Last Updated on"
 msgstr "Actualizado el"
 
 #. module: stock_card
+#: field:stock.card.product,standard_price:0
+msgid "Logistical Cost"
+msgstr "Costo Logístico"
+
+#. module: stock_card
+#: help:stock.card.product,log_valuation:0
+msgid "Logistical Cost * Logistical Qty"
+msgstr "Costo Logístico * Cantidad Logística"
+
+#. module: stock_card
+#: help:stock.card.product,diff_cost:0
+msgid "Logistical Cost - Stock Card Cost"
+msgstr "Costo Logístico - Costo en Tarjeta de Inventario"
+
+#. module: stock_card
+#: help:stock.card.product,diff_qty:0
+msgid "Logistical Qty - Stock Card Qty"
+msgstr "Cantidad Logística - Cantidad en Tarjeta de Inventario"
+
+#. module: stock_card
+#: field:stock.card.product,logistical_qty:0
+msgid "Logistical Qty."
+msgstr "Cantidad Logística."
+
+#. module: stock_card
+#: field:stock.card.product,log_valuation:0
+msgid "Logistical Valuation"
+msgstr "Valoración Logística"
+
+#. module: stock_card
+#: help:stock.card.product,diff_stock_val:0
+msgid "Logistical Valuation - Accounting Valuation"
+msgstr "Valoración Logística - Valoración Contable"
+
+#. module: stock_card
+#: field:product.product,purchase_line_warn_msg:0
+msgid "Message for Purchase Order Line"
+msgstr "Mensaje para la Línea de la Orden de Compra"
+
+#. module: stock_card
+#: field:product.product,sale_line_warn_msg:0
+msgid "Message for Sales Order Line"
+msgstr "Mensaje para la Línea de la Orden de Venta"
+
+#. module: stock_card
 #: field:stock.card.move,qty:0
 msgid "Move Quantity"
 msgstr "Cantidad Movida"
@@ -90,13 +248,40 @@ msgstr "Valoración de Movimiento"
 
 #. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
+#: field:stock.card.product,acc_output:0
+msgid "Output Valuation"
+msgstr "Valoración de Salida"
+
+#. module: stock_card
+#: model:ir.model,name:stock_card.model_product_product
 #: field:stock.card.product,product_id:0
 msgid "Product"
 msgstr "Producto"
 
 #. module: stock_card
+#: help:stock.card.product,stock_card_cost:0
+msgid "Product Cost as provided by Stock Card"
+msgstr "Costo del Producto según la Tarjeta de Inventario"
+
+#. module: stock_card
 #: field:stock.card.product,stock_card_move_ids:0
 msgid "Product Moves"
+msgstr "Movimientos de Producto"
+
+#. module: stock_card
+#: help:stock.card.product,stock_card_qty:0
+msgid "Product Qty as provided by Stock Card"
+msgstr "Cantidad del Producto según la Tarjeta de Inventario"
+
+#. module: stock_card
+#: field:stock.card,stock_card_product_ids:0
+#: help:stock.card,stock_card_product_ids:0
+msgid "Product Stock Cards"
+msgstr "Tarjeta de Inventario de Producto"
+
+#. module: stock_card
+#: help:stock.card.product,stock_card_move_ids:0
+msgid "Product movements"
 msgstr "Movimientos de Producto"
 
 #. module: stock_card
@@ -105,14 +290,75 @@ msgid "Products"
 msgstr "Productos"
 
 #. module: stock_card
+#: field:product.product,purchase_line_warn:0
+msgid "Purchase Order Line"
+msgstr "Línea de la Orden de Compra"
+
+#. module: stock_card
+#: field:stock.card.product,diff_qty:0
+msgid "Qty Difference"
+msgstr "Diferencia de Cantidad"
+
+#. module: stock_card
+#: help:stock.card.product,logistical_qty:0
+msgid "Qty On Hand at Product Tab"
+msgstr "Cantidad en mano de Ficha del Producto"
+
+#. module: stock_card
+#: field:product.product,sale_line_warn:0
+msgid "Sales Order Line"
+msgstr "Línea de la Orden de Venta"
+
+#. module: stock_card
+#: help:product.product,purchase_line_warn:0
+#: help:product.product,sale_line_warn:0
+msgid "Selecting the \"Warning\" option will notify user with the message, Selecting \"Blocking Message\" will throw an exception with the message and block the flow. The Message has to be written in the next field."
+msgstr "Si selecciona la opción \"Aviso\" se notificará a los usuarios con el mensaje, si selecciona \"Mensaje de bloqueo\" se lanzará una excepción con el mensaje y se bloqueará el flujo. El mensaje debe escribirse en el siguiente campo."
+
+#. module: stock_card
 #: view:stock.card.product:stock_card.stock_card_product_form
 msgid "Show Moves"
 msgstr "Mostrar Movimientos"
 
 #. module: stock_card
 #: model:ir.ui.menu,name:stock_card.menu_stock_card_main
+#: view:product.product:stock_card.product_stock_card_form_view
+#: view:stock.card:stock_card.view_stock_card
+#: field:stock.card.product,stock_card_id:0
 msgid "Stock Card"
 msgstr "Tarjeta de Inventario"
+
+#. module: stock_card
+#: field:product.product,date_stock_card_border:0
+msgid "Stock Card Border Date"
+msgstr "Fecha de Borde en tarjeta de inventario"
+
+#. module: stock_card
+#: field:stock.card.product,stock_card_cost:0
+msgid "Stock Card Cost"
+msgstr "Costo en Tarjeta de Inventario"
+
+#. module: stock_card
+#: field:stock.card.product,date_stock_card:0
+msgid "Stock Card Date"
+msgstr "Fecha en Tarjeta de Inventario"
+
+#. module: stock_card
+#: model:ir.actions.act_window,name:stock_card.stock_card_product_action
+msgid "Stock Card Generate"
+msgstr "Generar Tarjeta de Inventario"
+
+#. module: stock_card
+#: view:product.product:stock_card.product_stock_card_form_view
+msgid "Stock Card Info"
+msgstr "Información de Tarjeta de Inventario"
+
+#. module: stock_card
+#: model:ir.actions.act_window,name:stock_card.stock_card_form_action
+#: model:ir.ui.menu,name:stock_card.menu_stock_card_inquiry_wizard
+#: view:product.product:stock_card.product_stock_card_form_view
+msgid "Stock Card Inquiry"
+msgstr "Investigación Tarjeta de Inventario"
 
 #. module: stock_card
 #: model:ir.actions.act_window,name:stock_card.stock_card_move_action
@@ -121,8 +367,11 @@ msgid "Stock Card Move"
 msgstr "Movimiento en Tarjeta de Inventario"
 
 #. module: stock_card
+#: model:ir.actions.act_window,name:stock_card.stock_card_product_tree_action
+#: view:stock.card:stock_card.view_stock_card
 #: field:stock.card.move,stock_card_product_id:0
 #: view:stock.card.product:stock_card.stock_card_product_form
+#: view:stock.card.product:stock_card.stock_card_product_tree
 msgid "Stock Card Product"
 msgstr "Tarjeta de Inventario de Producto"
 
@@ -132,10 +381,25 @@ msgstr "Tarjeta de Inventario de Producto"
 msgid "Stock Card Wizard"
 msgstr "Asistente de Tarjetas de Inventario"
 
+#: field:stock.card.product,stock_card_qty:0
+msgid "Stock Card Qty."
+msgstr "Cantidad en Tarjeta de Inventario."
+
 #. module: stock_card
 #: field:stock.card.move,move_id:0
 msgid "Stock Moves"
 msgstr "Movimientos de Inventario"
+
+#. module: stock_card
+#: code:addons/stock_card/model/stock_card.py:253
+#, python-format
+msgid "Stock Valuation Adjustment"
+msgstr "Ajuste de Valoración de Inventario"
+
+#. module: stock_card
+#: field:stock.card.product,diff_stock_val:0
+msgid "Stock Valuation Diff."
+msgstr "Diferencia de Valoración de Inventario."
 
 #. module: stock_card
 #: model:product.template,name:stock_card.product01_product_template
@@ -146,3 +410,38 @@ msgstr "Bolso Targus Laptop 16\""
 #: field:stock.card.move,cost_unit:0
 msgid "Unit Cost"
 msgstr "Costo Unitario"
+
+#. module: stock_card
+#: view:stock.card.product:stock_card.stock_card_product_form
+msgid "Update Audit"
+msgstr "Actualizar Auditoría"
+
+#. module: stock_card
+#: model:product.template,name:stock_card.product02_product_template
+msgid "VX Headphones"
+msgstr "Audífonos VX"
+
+#. module: stock_card
+#: field:stock.card.product,perc_diff_val:0
+msgid "Val. Percentage Diff."
+msgstr "Diferencia Porcentual de Valoración."
+
+#. module: stock_card
+#: field:stock.card.product,diff_val:0
+msgid "Valuation Difference"
+msgstr "Diferencia de Valoración"
+
+#. module: stock_card
+#: help:stock.card.product,perc_diff_val:0
+msgid "Valuation Percentage Difference between Acc. and Log. Valuation"
+msgstr "Diferencia Porcentual de Valoración entre la Valoración Contable y Logística"
+
+#. module: stock_card
+#: field:stock.card.product,warehouse_id:0
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: stock_card
+#: view:stock.card:stock_card.view_stock_card
+msgid "or"
+msgstr "o"
