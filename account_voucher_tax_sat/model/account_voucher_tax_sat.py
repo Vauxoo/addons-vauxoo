@@ -113,9 +113,11 @@ class AccountVoucherTaxSat(models.Model):
         move_id = self.create_move_sat()
         self.write({'move_id': move_id.id})
 
-        amount_tax_sat = round(sum([
+        currency = self.company_id.currency_id.with_context(
+            date=fields.Date.context_today(self))
+        amount_tax_sat = currency.round(sum([
             move_line_tax_sat.credit
-            for move_line_tax_sat in self.aml_ids]), 2)
+            for move_line_tax_sat in self.aml_ids]))
 
         self.create_move_line_sat(self, amount_tax_sat)
 
