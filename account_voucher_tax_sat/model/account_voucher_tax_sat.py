@@ -130,7 +130,7 @@ class AccountVoucherTaxSat(models.Model):
                     'period_id': period_id.id,
                     'journal_id': self.journal_id.id,
                     'credit': 0.0,
-                    'debit': move_line_tax.credit,
+                    'debit': currency.round(move_line_tax.credit),
                     'amount_base': None,
                     'tax_id_secondary': None,
                     'not_move_diot': True,
@@ -154,6 +154,8 @@ class AccountVoucherTaxSat(models.Model):
         aml_obj = self.env['account.move.line']
         av_obj = self.env['account.voucher']
         period_obj = self.env['account.period']
+        currency = self.company_id.currency_id.with_context(
+            date=fields.Date.context_today(self))
         for move_line in self.aml_iva_ids:
             if move_line.tax_id_secondary:
                 amount_base, tax_secondary =\
@@ -167,7 +169,7 @@ class AccountVoucherTaxSat(models.Model):
                     'journal_id': self.journal_id.id,
                     'date': self.date,
                     'period_id': period_id.id,
-                    'debit': move_line.debit,
+                    'debit': currency.round(move_line.debit),
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
                     'account_id':
@@ -185,7 +187,7 @@ class AccountVoucherTaxSat(models.Model):
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
                     'account_id': move_line.account_id.id,
-                    'credit': move_line.debit,
+                    'credit': currency.round(move_line.debit),
                 }
                 for line_dt_cr in [move_line_dt, move_line_cr]:
                     aml_obj.create(line_dt_cr)
