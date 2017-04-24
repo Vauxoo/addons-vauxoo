@@ -459,17 +459,16 @@ class AccountVoucher(osv.Model):
 
         return [debit_line_vals, credit_line_vals]
 
-    def _get_base_amount_tax_secondary(
-            self, cr, uid, line_tax, amount_base_tax, reference_amount,
-            context=None):
+    def _get_base_amount_tax_secondary(self, cr, uid, line_tax,
+                                       amount_base_tax, reference_amount,
+                                       context=None):
         amount_base = 0
         tax_secondary = False
-        if all([line_tax, line_tax.tax_category_id,
-               line_tax.tax_category_id.name in (
-                   'IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART')]):
-            amount_base = (line_tax.amount and
-                           reference_amount / line_tax.amount or
-                           amount_base_tax)
+        if line_tax and line_tax.tax_category_id\
+                and line_tax.tax_category_id.name in \
+                ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'):
+            amount_base = line_tax.amount and\
+                reference_amount / line_tax.amount or amount_base_tax
             tax_secondary = line_tax.id
         return [amount_base, tax_secondary]
 
