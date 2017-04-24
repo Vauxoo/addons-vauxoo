@@ -21,13 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from __future__ import division
 
-import time
 from openerp.tools.translate import _
 from openerp.osv import osv
 from openerp.tools import float_compare
 import openerp
+import time
 
 
 class AccountBankStatementLine(osv.osv):
@@ -213,13 +212,14 @@ class AccountBankStatementLine(osv.osv):
                 line_tax_id = move_line_tax.get('tax_id')
                 # Cuando el impuesto (@tax_id) tiene @amount = 0 es un impuesto
                 # de compra 0% o EXENTO y necesitamos enviar el monto base
-                amount_base_secondary = (
-                    line_tax_id.amount and
-                    move_amount_counterpart[1] / (1 + line_tax_id.amount) or
-                    move_line_tax.get('amount_base_secondary'))
-                account_tax_voucher = move_line_tax.get('account_tax_voucher')
-                account_tax_collected = move_line_tax.get(
-                    'account_tax_collected')
+                amount_base_secondary =\
+                    line_tax_id.amount and\
+                    move_amount_counterpart[1] / (1 + line_tax_id.amount) or\
+                    move_line_tax.get('amount_base_secondary')
+                account_tax_voucher =\
+                    move_line_tax.get('account_tax_voucher')
+                account_tax_collected =\
+                    move_line_tax.get('account_tax_collected')
                 amount_total_tax = move_line_tax.get('amount', 0)
 
                 lines_tax = voucher_obj._preparate_move_line_tax(
