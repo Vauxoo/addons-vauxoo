@@ -68,8 +68,7 @@ class AccountMoveLine(osv.Model):
                     line.tax_id_secondary.type_tax_use != 'purchase'):
                 continue
             cat_tax = line.tax_id_secondary.tax_category_id
-            if all([cat_tax, cat_tax.name == 'IVA-RET', line.credit <= 0,
-                    not line.not_move_diot]):
+            if cat_tax and cat_tax.name == 'IVA-RET' and line.credit <= 0 and not line.not_move_diot:  # noqa
                 raise ValidationError(_(
                     'The lines with tax of purchase, need have a value '
                     'in the credit. \nTax: %s' % line.tax_id_secondary.name))
