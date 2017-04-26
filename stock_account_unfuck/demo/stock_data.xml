@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<openerp>
+     <data noupdate="1">
+        <!-- Warehouse -->
+         <record id="whr_test_a" model="stock.warehouse">
+             <field name="name">Warehouse A</field>
+             <field name="code">WA</field>
+         </record>
+         <record id="whr_test_b" model="stock.warehouse">
+             <field name="name">Warehouse B</field>
+             <field name="code">WB</field>
+         </record>
+
+        <!-- Sequence -->
+         <record id="seq_picking_type_a" model="ir.sequence">
+             <field name="name">Sequence Picking Type A</field>
+             <field name="prefix">P/TA/</field>
+             <field name="padding">5</field>
+             <field name="number_next">1</field>
+             <field name="number_increment">1</field>
+         </record>
+         <record id="seq_picking_type_b" model="ir.sequence">
+             <field name="name">Sequence Picking Type B</field>
+             <field name="prefix">P/TB/</field>
+             <field name="padding">5</field>
+             <field name="number_next">1</field>
+             <field name="number_increment">1</field>
+         </record>
+
+        <!-- Stock picking type -->
+         <record id="stock_picking_type_a_1" model="stock.picking.type">
+             <field name="name">Automatic output</field>
+             <field name="code">outgoing</field>
+             <field name="sequence_id" ref="seq_picking_type_b"/>
+             <field name="warehouse_id" ref="whr_test_b"/>
+             <field name="default_location_src_id" model="stock.location"
+                 search="[('name', 'ilike', 'Stock'), ('location_id.name', '=' , 'WB')]"/>
+             <field name="default_location_dest_id" ref="stock.stock_location_customers"/>
+             <field name="active" eval="True"/>
+         </record>
+         <record id="stock_picking_type_a_2" model="stock.picking.type">
+             <field name="name">Automatic transit</field>
+             <field name="code">incoming</field>
+             <field name="sequence_id" ref="seq_picking_type_b"/>
+             <field name="warehouse_id" ref="whr_test_b"/>
+             <field name="default_location_src_id" ref="stock.stock_location_inter_wh"/>
+             <field name="default_location_dest_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WB')]"/>
+             <field name="active" eval="True"/>
+         </record>
+        <record id="stock_picking_type_a_3" model="stock.picking.type">
+            <field name="name">Output to customer</field>
+            <field name="code">outgoing</field>
+            <field name="sequence_id" ref="seq_picking_type_a"/>
+            <field name="warehouse_id" ref="whr_test_a"/>
+            <field name="default_location_src_id" model="stock.location"
+            search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WA')]"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_inter_wh"/>
+            <field name="active" eval="True"/>
+        </record>
+
+         <!-- Stock Location Route-->
+         <record id="stock_location_route_a" model="stock.location.route">
+             <field name="name">WB Supply from WA</field>
+             <field name="product_selectable" eval="False"/>
+             <field name="product_categ_selectable" eval="False"/>
+             <field name="warehouse_selectable" eval="False"/>
+             <field name="sale_selectable" eval="True"/>
+         </record>
+
+        <!-- Pull Rules -->
+         <record id="pull_rule_a_1" model="procurement.rule">
+             <field name="name">Warehouse B: customer</field>
+             <field name="action">move</field>
+             <field name="procure_method">make_to_order</field>
+             <field name="route_id" ref="stock_location_route_a"/>
+             <field name="picking_type_id" ref="stock_picking_type_a_1"/>
+             <field name="location_id" ref="stock.stock_location_customers"/>
+             <field name="propagate" eval="True"/>
+             <field name="group_propagation_option">propagate</field>
+             <field name="warehouse_id" ref="whr_test_b"/>
+             <field name="location_src_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WB')]"/>
+             <field name="propagate_warehouse_id" ref="whr_test_b"/>
+         </record>
+         <record id="pull_rule_a_2" model="procurement.rule">
+             <field name="name">Warehouse B: transit</field>
+             <field name="action">move</field>
+             <field name="procure_method">make_to_order</field>
+             <field name="route_id" ref="stock_location_route_a"/>
+             <field name="picking_type_id" ref="stock_picking_type_a_2"/>
+             <field name="location_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WB')]"/>
+             <field name="propagate" eval="True"/>
+             <field name="group_propagation_option">propagate</field>
+             <field name="warehouse_id" ref="whr_test_b"/>
+             <field name="location_src_id" ref="stock.stock_location_inter_wh"/>
+             <field name="propagate_warehouse_id" ref="whr_test_b"/>
+         </record>
+         <record id="pull_rule_a_3" model="procurement.rule">
+             <field name="name">Warehouse A: stock</field>
+             <field name="action">move</field>
+             <field name="procure_method">make_to_stock</field>
+             <field name="route_id" ref="stock_location_route_a"/>
+             <field name="picking_type_id" ref="stock_picking_type_a_3"/>
+             <field name="location_id" ref="stock.stock_location_inter_wh"/>
+             <field name="propagate" eval="True"/>
+             <field name="group_propagation_option">propagate</field>
+             <field name="location_src_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WA')]"/>
+             <field name="propagate_warehouse_id" ref="whr_test_a"/>
+         </record>
+
+        <!-- Stock Location Route 2 -->
+         <record id="stock_location_route_b" model="stock.location.route">
+             <field name="name">PE WA - WB</field>
+             <field name="product_selectable" eval="False"/>
+             <field name="product_categ_selectable" eval="False"/>
+             <field name="warehouse_selectable" eval="False"/>
+             <field name="sale_selectable" eval="True"/>
+         </record>
+
+        <!-- Pull Rules -->
+         <record id="pull_rule_b_1" model="procurement.rule">
+             <field name="name">WA: purchase -> stock</field>
+             <field name="location_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WA')]"/>
+             <field name="warehouse_id" ref="whr_test_a"/>
+             <field name="route_id" ref="stock_location_route_b"/>
+             <field name="action">buy</field>
+             <field name="picking_type_id" model="stock.picking.type"
+                 search="[('name', '=', 'Receipts'), ('warehouse_id.code', '=' , 'WA')]"/>
+             <field name="group_propagation_option"></field>
+             <field name="propagate" eval="True"/>
+             <field name="propagate_warehouse_id" ref="whr_test_a"/>
+         </record>
+         <record id="pull_rule_b_2" model="procurement.rule">
+             <field name="name">WB: purchase -> stock</field>
+             <field name="location_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WB')]"/>
+             <field name="warehouse_id" ref="whr_test_b"/>
+             <field name="route_id" ref="stock_location_route_b"/>
+             <field name="action">move</field>
+             <field name="picking_type_id" model="stock.picking.type"
+                 search="[('name', '=', 'Receipts'), ('warehouse_id.code', '=' , 'WB')]"/>
+             <field name="procure_method">make_to_order</field>
+             <field name="location_src_id" model="stock.location"
+                 search="[('name', '=', 'Inter Company Transit'), ('location_id.name', '=' , 'Virtual Locations')]"/>
+             <field name="group_propagation_option">propagate</field>
+             <field name="propagate" eval="True"/>
+             <field name="propagate_warehouse_id" ref="whr_test_b"/>
+         </record>
+         <record id="pull_rule_b_3" model="procurement.rule">
+             <field name="name">WB: stock -> cliente</field>
+             <field name="location_id" model="stock.location"
+                 search="[('name', '=', 'Customers'), ('location_id.name', '=' , 'Partner Locations')]"/>
+             <field name="warehouse_id" ref="whr_test_b"/>
+             <field name="route_id" ref="stock_location_route_b"/>
+             <field name="action">move</field>
+             <field name="picking_type_id" model="stock.picking.type"
+                 search="[('name', '=', 'Delivery Orders'), ('warehouse_id.code', '=' , 'WB')]"/>
+             <field name="procure_method">make_to_order</field>
+             <field name="location_src_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WB')]"/>
+             <field name="group_propagation_option">propagate</field>
+             <field name="propagate" eval="True"/>
+             <field name="propagate_warehouse_id" ref="whr_test_b"/>
+         </record>
+         <record id="pull_rule_b_4" model="procurement.rule">
+             <field name="name">Transit Stock</field>
+             <field name="location_id" model="stock.location"
+                 search="[('name', '=', 'Inter Company Transit'), ('location_id.name', '=' , 'Virtual Locations')]"/>
+             <field name="route_id" ref="stock_location_route_b"/>
+             <field name="action">move</field>
+             <field name="picking_type_id" model="stock.picking.type"
+                 search="[('name', '=', 'Delivery Orders'), ('warehouse_id.code', '=' , 'WA')]"/>
+             <field name="procure_method">make_to_order</field>
+             <field name="location_src_id" model="stock.location"
+                 search="[('name', '=', 'Stock'), ('location_id.name', '=' , 'WA')]"/>
+             <field name="group_propagation_option">propagate</field>
+             <field name="propagate" eval="True"/>
+             <field name="propagate_warehouse_id" ref="whr_test_a"/>
+         </record>
+     </data>
+</openerp>

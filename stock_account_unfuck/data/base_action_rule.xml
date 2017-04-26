@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="automated_action_update_price_unit_move" model="base.action.rule">
+            <field name="name">Automatic update price unit stock move</field>
+            <field name="model_id" model="ir.model" search="[('model', '=', 'stock.move')]"/>
+            <field name="active">1</field>
+            <field name="sequence">5</field>
+            <field name="kind">on_write</field>
+            <field name="server_action_ids" eval="[(6, 0, [ref('stock_account_unfuck.server_action_update_price_unit_move')])]"/>
+        </record>
+    </data>
+</openerp>

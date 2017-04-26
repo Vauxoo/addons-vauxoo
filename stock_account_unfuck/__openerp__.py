@@ -21,9 +21,12 @@
     ],
     # always loaded
     'data': [
+        'data/ir_actions_server.xml',
+        'data/base_action_rule.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
+        'demo/stock_data.xml',
         'demo/demo.xml',
     ],
     'installable': True,
