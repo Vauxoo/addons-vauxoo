@@ -14,18 +14,21 @@ class TestPriceUnit(TransactionCase):
             {'currency_id': self.env.ref('base.MXN').id})
         self.supplier.property_product_pricelist_purchase.write(
             {'currency_id': self.env.ref('base.MXN').id})
+        self.supplier.write({'country_id': self.env.ref('base.mx').id})
         self.env.user.company_id.write(
             {'currency_id': self.env.ref('base.MXN').id})
-        self.customer = self.env.ref('base.res_partner_9')
+        self.customer = self.env['res.partner'].create(
+            {'name': 'Partner test', 'credit_limit': 100000.0})
         self.warehouse_1 = self.env.ref('stock_account_unfuck.whr_test_a')
         self.warehouse_2 = self.env.ref('stock_account_unfuck.whr_test_b')
         self.route_1 = self.env.ref(
             'stock_account_unfuck.stock_location_route_a')
         self.route_2 = self.env.ref(
             'stock_account_unfuck.stock_location_route_b')
+        self.wizard_onshipping = self.env['stock.invoice.onshipping']
+        self.journal_id = self.env.ref('account.sales_journal')
 
     def create_product(self):
-
         dict_vals = {
             'name': 'Product test',
             'uom_id': self.product_uom_unit.id,
@@ -79,6 +82,7 @@ class TestPriceUnit(TransactionCase):
             'picking_policy': 'direct',
             'pricelist_id': self.ref('product.list0'),
             'warehouse_id': warehouse.id,
+            'order_policy': 'picking',
             'order_line': [
                 (0, 0, sale_vals_line)], }
 
@@ -107,11 +111,19 @@ class TestPriceUnit(TransactionCase):
         wizard_transfer_id.with_context(
             warehouse=warehouse.id).do_detailed_transfer()
 
+    def invoice_picking(self, picking):
+        context = {'active_ids': [picking.id]}
+        wizard = self.wizard_onshipping.with_context(context).create(
+            {'journal_id': self.journal_id.id})
+        wizard.open_invoice()
+
     def test_00_price_unit(self):
         """ Test changes in price_unit and average in products doing
         purchases and sales
         """
         product = self.create_product()
+        expense_account = product.categ_id.property_account_expense_categ
+
         supplierinfo = self.env['product.supplierinfo'].create({
             'name': self.supplier.id,
             'min_qty': 0.0,
@@ -163,6 +175,18 @@ class TestPriceUnit(TransactionCase):
         self.assertEqual(product.with_context(
             warehouse=self.warehouse_1.id).qty_available, 109)
 
+        # Validate CoGS
+        self.invoice_picking(picking)
+        invoice = sale_1.invoice_ids
+        self.assertTrue(invoice)
+        invoice.signal_workflow('invoice_open')
+        account_entry = invoice.move_id
+        self.assertTrue(account_entry)
+        self.assertEqual(
+            invoice.move_id.line_id.filtered(
+                lambda li: li.account_id == expense_account).debit,
+            product.standard_price)
+
         # Second sale
         sale_2 = self.create_sale(
             self.customer, product, self.warehouse_2, 1, 100, self.route_1)
@@ -209,6 +233,18 @@ class TestPriceUnit(TransactionCase):
         self.assertEqual(product.with_context(
             warehouse=self.warehouse_1.id).qty_available, 108)
 
+        # Validate CoGS
+        self.invoice_picking(picking)
+        invoice = sale_2.invoice_ids
+        self.assertTrue(invoice)
+        invoice.signal_workflow('invoice_open')
+        account_entry = invoice.move_id
+        self.assertTrue(account_entry)
+        self.assertEqual(
+            invoice.move_id.line_id.filtered(
+                lambda li: li.account_id == expense_account).debit,
+            product.standard_price)
+
         # Third sale
         sale_3 = self.create_sale(self.customer, product, self.warehouse_2, 1,
                                   100, self.route_2)
@@ -221,6 +257,8 @@ class TestPriceUnit(TransactionCase):
         purchase_from_sale.order_line.write({'price_unit': 130})
 
         purchase_from_sale.signal_workflow("purchase_confirm")
+        purchase_from_sale.signal_workflow("purchase_approve")
+        self.assertEqual(purchase_from_sale.state, 'approved')
         self.assertEqual(len(sale_3.picking_ids), 4)
 
         # First pick sale_3
@@ -276,3 +314,15 @@ class TestPriceUnit(TransactionCase):
         self.assertEqual(product.standard_price, 118.29)
         self.assertEqual(product.with_context(
             warehouse=self.warehouse_1.id).qty_available, 108)
+
+        # Validate CoGS
+        self.invoice_picking(picking)
+        invoice = sale_3.invoice_ids
+        self.assertTrue(invoice)
+        invoice.signal_workflow('invoice_open')
+        account_entry = invoice.move_id
+        self.assertTrue(account_entry)
+        self.assertEqual(
+            invoice.move_id.line_id.filtered(
+                lambda li: li.account_id == expense_account).debit,
+            product.standard_price)
