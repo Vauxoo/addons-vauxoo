@@ -108,6 +108,7 @@ class TestPriceUnit(TransactionCase):
         }
         wizard_transfer_id = self.transfer_obj.with_context(ctx).create({
             'picking_id': picking.id, })
+        wizard_transfer_id.item_ids.write({'quantity': qty})
         wizard_transfer_id.with_context(
             warehouse=warehouse.id).do_detailed_transfer()
 
