@@ -28,3 +28,4 @@ Contributors
 
 * Hugo Adan <hugo@vauxoo.com>
 * Nhomar Hernandez <nhomar@vauxoo.com>
+* Edgar Rivero <edgar@vauxoo.com>
