@@ -20,24 +20,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Workalendar Holidays",
+    "name": "Shipping Date on Sale Order",
     "version": "8.0.1.7.0",
     "author": "Vauxoo",
-    "category": "resource",
+    "category": "stock",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "resource",
-        "procurement",
+        "sale_order_dates",
+        "purchase",
+        "mrp",
+        "workalendar_holidays",
     ],
-    "external_dependencies": {
-        'python': ['workalendar']
-    },
     "demo": [],
     "data": [
-        "data/res_country_data.xml",
-        "wizards/workalendar_holiday_import.xml",
-        "views/res_company_view.xml",
+        "views/sale_view.xml",
+        "views/stock_view.xml",
     ],
     "test": [],
     "js": [],

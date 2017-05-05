@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_sale_orderfor" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit6</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_dates.view_sale_orderfor"/>
+            <field name="arch" type="xml">
+                <field name="requested_date" position="attributes">
+                    <attribute name="on_change">onchange_requested_date(requested_date, shipping_date)</attribute>
+                </field>
+                <field name="commitment_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="commitment_date" position="after">
+                    <field name="shipping_date" />
+                </field>
+            </field>
+        </record>
+
+        <record id="view_order_tree_shipping" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_dates.view_order_tree_date"/>
+            <field name="arch" type="xml">
+                <field name="commitment_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="commitment_date" position="after">
+                    <field name="shipping_date" />
+                </field>
+            </field>
+        </record>
+
+        <record id="view_quotation_tree_shipping" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_order_dates.view_quotation_tree_date"/>
+            <field name="arch" type="xml">
+                <field name="commitment_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="commitment_date" position="after">
+                    <field name="shipping_date" />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
