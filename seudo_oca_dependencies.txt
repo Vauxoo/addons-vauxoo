@@ -8,3 +8,4 @@ SerpentCS_Contributions-v8 https://github.com/Vauxoo/SerpentCS_Contributions-v8.
 web https://github.com/Vauxoo/web.git
 odoo-mexico-v2 git@github.com:Vauxoo/odoo-mexico-v2.git
 crm https://github.com/Vauxoo/crm.git
+yoytec git@github.com/Vauxoo-dev/yoytec.git 8.0-website_product_comment_purchased-#vx4483-dev-gomezvillegasdaniel
