@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_stock_picking_wizard" model="ir.ui.view">
+            <field name="name">Change Picking Date</field>
+            <field name="model">wizard.stock.picking</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Change Picking Date">
+                    <group>
+                    <field name="new_date"/>
+                    </group>
+                    <newline/>
+                    <field name="stock_picking_ids" colspan="4" nolabel="1" width="650" height="200"/>
+                    <group col="2" colspan="4">
+                        <button icon='gtk-cancel' special="cancel"
+                            string="Cancel" />
+                        <button name="wizard_picking_change_date" string="Change Date"
+                            colspan="1" type="object" icon="gtk-yes" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+         <record id="action_view_stock_picking_wizard" model="ir.actions.act_window">
+            <field name="name">Change Picking Date</field>
+            <field name="res_model">wizard.stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_stock_picking_wizard"/>
+            <field name="target">new</field>
+            <field name="context">context</field>
+        </record>
+
+         <act_window name="Change Picking Date"
+            res_model="wizard.stock.picking"
+            src_model="stock.picking"
+            view_mode="form"
+            target="new"
+            multi="True"
+            id="action_stock_picking_wizard"
+            groups="group_wizard_stock_picking_force_date"/>
+
+    </data>
+</openerp>
