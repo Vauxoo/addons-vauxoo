@@ -105,6 +105,20 @@ class AccountInvoice(osv.Model):
         return datetime_inv_tz
 
     def create(self, cr, uid, vals, context=None):
+        account_setting_obj = self.pool.get("account.config.settings")
+        key_by_company_id = "acc_invoice.date_invoice_type_" + \
+                            str(account_setting_obj._default_company(cr, uid))
+        type_date = self.pool.get("ir.config_parameter").get_param(
+            cr, uid, key_by_company_id, default='date', context=context)
+        if type_date == "datetime":
+            if vals.get("type", False) in ("out_invoice", "out_refund"):
+                if vals.get('date_invoice', False):
+                    inv_date = vals.pop("date_invoice")
+                    invoice_datetime = inv_date + " " + \
+                        datetime.datetime.strptime(
+                            fields.datetime.now(),
+                            "%Y-%m-%d %H:%M:%S").strftime('%H:%M:%S')
+                    vals.update({'invoice_datetime': invoice_datetime})
         if 'invoice_datetime' in vals.keys():
             datetime_inv = vals.get("invoice_datetime") and \
                 datetime.datetime.strptime(
