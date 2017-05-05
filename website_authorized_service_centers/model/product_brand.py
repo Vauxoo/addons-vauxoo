@@ -27,3 +27,8 @@ class ProductBrand(models.Model):
 
     authorized_partner_ids = fields.Many2many('res.partner')
     url = fields.Char(string="URL")
+    products_count = fields.Integer(
+        string='Number of products',
+        compute='_get_products_count',
+        store=True,
+    )
