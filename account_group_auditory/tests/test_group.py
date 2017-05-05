@@ -1,13 +1,15 @@
 # coding: utf-8
+import time
+from datetime import date
+
 from openerp import SUPERUSER_ID
 from openerp.osv.orm import except_orm
-from openerp.tests.common import TransactionCase
-import time
-from openerp.tools.misc import mute_logger
 from openerp.tests import common
+from openerp.tests.common import TransactionCase
+from openerp.tools.misc import mute_logger
+
 UID = common.ADMIN_USER_ID
 DB = common.DB
-from datetime import date
 
 
 class TestAuditorGroup(TransactionCase):
