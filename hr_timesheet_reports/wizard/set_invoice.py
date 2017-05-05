@@ -33,11 +33,11 @@ class SetInvoice(osv.osv_memory):
     _columns = {
         'total_timesheet': fields.float('Total Timesheet to set',
                                         help="This will be the quantity to "
-                                        "be setted to this invoice be sure "
+                                        "be set to this invoice be sure "
                                         "quantities are consistent"),
         'total_money': fields.float('Total Timesheet in Money',
                                     help="Total in money with the currency and"
-                                    "product of the report which you comes "
+                                    " product of the report which you comes "
                                     "from"),
         'currency_id': fields.many2one('product.product', 'Currency',
                                        help='Currency on report')
