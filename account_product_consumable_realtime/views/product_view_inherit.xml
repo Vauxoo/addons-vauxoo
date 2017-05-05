@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_template_product_consumable_realtime_form" model="ir.ui.view">
+            <field name="name">view.template.product.consumable.realtime.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//separator[@string='Inventory Valuation']" position="replace">
+                        <separator string="Inventory Valuation" colspan="4"/>
+                </xpath>
+                <xpath expr="//field[@name='valuation']" position="replace">
+                    <field name="valuation" attrs="{'readonly':[('type', '=', 'service')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
