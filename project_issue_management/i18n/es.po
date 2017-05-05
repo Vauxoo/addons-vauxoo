@@ -1,0 +1,227 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_issue_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-16 19:37+0000\n"
+"PO-Revision-Date: 2016-04-16 19:37+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_issue_management
+#: field:update.analytic,analytic_account_id:0
+msgid "Analytic Account"
+msgstr "Cuenta analítica"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.view_issue_filter
+#: field:project.issue,verify_partner:0
+msgid "Analytic Partner"
+msgstr "Empresa Analítica"
+
+#. module: project_issue_management
+#: help:update.analytic,analytic_account_id:0
+msgid "Analytic account to load the work in case you want set timesheet on the task related to this issue."
+msgstr "Cuenta analítica para cargar el trabajo en caso de que quiera establecer una hoja de asistencias en la tarea relacionada a esta incidencia."
+
+#. module: project_issue_management
+#: help:update.analytic,confirm:0
+#: help:update.analytic,sure:0
+msgid "Are sure this operation"
+msgstr "Está seguro de esta operación"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_view
+msgid "Assign this issue to yourself"
+msgstr "Auto-asignarse esta incidencia"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_issue_form_view2
+msgid "Audit Information"
+msgstr "Información de Auditoría"
+
+#. module: project_issue_management
+#: help:project.issue,verify_partner:0
+msgid "Checked if the partner is related to the analytic account in the issue"
+msgstr "Seleccionado si la empresa está relacionada a la cuenta analítica de la incidencia"
+
+#. module: project_issue_management
+#: view:update.analytic:project_issue_management.update_analytic_form
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: project_issue_management
+#: field:update.analytic,confirm:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: project_issue_management
+#: field:update.analytic,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: project_issue_management
+#: field:update.analytic,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: project_issue_management
+#: help:project.issue,same_analytic:0
+msgid "Determines if the issue and the task related in the issue has the same analytic account"
+msgstr "Determina si la incidencia y la tarea relacionada a la incidencia tienen la misma cuenta analítica"
+
+#. module: project_issue_management
+#: field:update.analytic,display_name:0
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.view_issue_kanban
+msgid "Has Task:"
+msgstr "Tiene Tarea:"
+
+#. module: project_issue_management
+#: field:update.analytic,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: project_issue_management
+#: view:project.task:project_issue_management.view_task_search_form_issue
+#: field:project.task,issue_id:0
+msgid "Issue"
+msgstr "Incidencia"
+
+#. module: project_issue_management
+#: help:project.task,issue_id:0
+msgid "Issue where this task is related"
+msgstr "Incidencia donde esta tarea está relacionada"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_issue_form_view2
+msgid "It will write this analytic account to the task and timesheet related to this issue"
+msgstr "Se escribirá esta cuenta analítica en la tarea y hoja de asistencias relacionada a esta incidencia"
+
+#. module: project_issue_management
+#: field:update.analytic,__last_update:0
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: project_issue_management
+#: field:update.analytic,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: project_issue_management
+#: field:update.analytic,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_view
+msgid "Management Information"
+msgstr "Información Gestionada"
+
+#. module: project_issue_management
+#: model:res.groups,name:project_issue_management.project_auditor
+msgid "Project Auditor"
+msgstr "Auditor de Proyecto"
+
+#. module: project_issue_management
+#: model:ir.model,name:project_issue_management.model_project_issue
+msgid "Project Issue"
+msgstr "Incidencia proyecto"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.view_issue_filter
+msgid "Project to invoice"
+msgstr "Proyecto a facturar"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.view_issue_filter
+msgid "Same Analytic"
+msgstr "Misma Analítica"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.view_issue_kanban
+msgid "Same Analytic:"
+msgstr "Misma Analítica:"
+
+#. module: project_issue_management
+#: field:project.issue,same_analytic:0
+msgid "Same Analytics"
+msgstr "Mismas Analíticas"
+
+#. module: project_issue_management
+#: help:project.issue,has_task:0
+msgid "Selected if the issue has a task set"
+msgstr "Seleccionado si la incidencia tiene una tarea establecida"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_view
+msgid "Set Analytic Account"
+msgstr "Establecer Cuenta Analítica"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_issue_form_view2
+msgid "Set Analytic Account Consistently on all timesheet and tasks"
+msgstr "Establecer una Cuenta Analítica Consistentemente en todas las hojas de asistencias y tareas"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_view
+msgid "Set this analytic account to the task and timesheet related to this issue"
+msgstr "Establecer esta cuenta analítica a la tarea y hoja de asistencia relacionada a esta incidencia"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_issue_form_view2
+msgid "Statistics"
+msgstr "Estadísticas"
+
+#. module: project_issue_management
+#: field:update.analytic,sure:0
+msgid "Sure"
+msgstr "Seguro"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.project_view
+msgid "Take for Me"
+msgstr "Tomar para mí"
+
+#. module: project_issue_management
+#: model:ir.model,name:project_issue_management.model_project_task
+#: field:project.issue,has_task:0
+msgid "Task"
+msgstr "Tarea"
+
+#. module: project_issue_management
+#: model:ir.actions.act_window,name:project_issue_management.project_issue_action
+#: view:update.analytic:project_issue_management.update_analytic_form
+msgid "Update Analytic"
+msgstr "Actualizar Analítica"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.view_issue_kanban
+msgid "Verify Partner:"
+msgstr "Verificar Empresa:"
+
+#. module: project_issue_management
+#: view:project.issue:project_issue_management.view_issue_filter
+msgid "With Task"
+msgstr "Con Tarea"
+
+#. module: project_issue_management
+#: view:update.analytic:project_issue_management.update_analytic_form
+msgid "You must select both confirmation checkbox"
+msgstr "Debe seleccionar ambas casillas de confirmación"
+
+#. module: project_issue_management
+#: view:update.analytic:project_issue_management.update_analytic_form
+msgid "or"
+msgstr "o"
+
