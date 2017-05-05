@@ -7,6 +7,8 @@ class TestTaxCommon(common.TransactionCase):
 
     def setUp(self):
         super(TestTaxCommon, self).setUp()
+        cr, uid = self.cr, self.uid
+        imd_model = self.registry("ir.model.data")
         self.inv_model = self.registry('account.invoice')
         self.voucher_model = self.registry('account.voucher')
         self.voucher_model_line = self.registry('account.voucher.line')
