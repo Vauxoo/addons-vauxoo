@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_inv_refund,account.inv.refund,account.model_account_invoice_refund,invoice_datetime.group_invoice_hide_datetime,1,1,1,1

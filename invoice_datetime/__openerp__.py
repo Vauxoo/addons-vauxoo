@@ -41,6 +41,7 @@
         "account_invoice_view.xml",
         "res_config_acc_view.xml",
         "security/security.xml",
+        "security/ir.model.access.csv",
     ],
     "test": [],
     "js": [],
