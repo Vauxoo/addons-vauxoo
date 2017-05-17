@@ -1,0 +1,9 @@
+<templates>
+    <t t-name="FieldX2ManyGraph">
+        <div t-att-class="widget.widget_class">
+            <div class="nv_content">
+                <svg></svg>
+            </div>
+        </div>
+    </t>
+</templates>
