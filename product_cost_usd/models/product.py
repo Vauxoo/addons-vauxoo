@@ -12,13 +12,13 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.constrains('standard_price_usd', 'seller_ids')
+    @api.constrains('standard_price_usd', 'seller_ids', 'type')
     def check_cost_and_price(self):
         """ Validate 'Cost in USD' usability.
 
         Usability conditions:
-        - Before set a 'Cost in USD' in a product at least one supplier should
-          have price in USD.
+        - If product type is not a service, before set a 'Cost in USD' in a
+          product at least one supplier should have price in USD.
         - The Cost in USD cannot be less than supplier price.
         """
         usd_currency = self.env.ref('base.USD')
@@ -27,7 +27,8 @@ class ProductTemplate(models.Model):
             lambda x: x.currency_id == usd_currency)
         list_price = usd_seller.price if usd_seller else 0.0
         standard_price_usd = self.standard_price_usd
-        if not usd_seller and float_compare(
+        product_type = self.type
+        if not 'service' in product_type and not usd_seller and float_compare(
                 standard_price_usd, 0, precision_digits=prec) > 0:
             raise ValidationError(
                 _('You must have at least one supplier with price in USD'
