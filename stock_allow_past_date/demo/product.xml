@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo noupdate="1">
+
+     <record id="product_product_1" model="product.product">
+         <field name="name">Bonobo WS 17' Laptop</field>
+         <field name="standard_price">2000.0</field>
+         <field name="list_price">2799.0</field>
+         <field name="type">product</field>
+         <field name="uom_id" ref="product.product_uom_unit"/>
+         <field name="uom_po_id" ref="product.product_uom_unit"/>
+         <field name="default_code">PD100</field>
+     </record>
+
+</odoo>
