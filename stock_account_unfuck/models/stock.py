@@ -21,7 +21,8 @@ class StockMove(models.Model):
             qty_available = move.product_id.product_tmpl_id.qty_available
             if (qty_available + move.product_qty * signal) == 0:
                 continue
-            orig = move.origin_returned_move_id or move.move_dest_id
+            orig = (move.origin_returned_move_id or
+                    (move.move_orig_ids and move.move_orig_ids[0]))
             average_valuation_price = sum(
                 [quant.qty * (orig.price_unit if orig else quant.cost)
                  for quant in move.reserved_quant_ids])
