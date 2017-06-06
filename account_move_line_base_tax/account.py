@@ -24,8 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp.exceptions import ValidationError
-from openerp.tools.translate import _
 
 
 class AccountMoveLine(osv.Model):
@@ -50,29 +48,6 @@ class AccountMoveLine(osv.Model):
             return {'value': {'tax_id_secondary': tax_acc[0]}}
         else:
             return {'value': {}}
-
-    def write(self, cr, uid, ids, vals, context=None, check=True,
-              update_check=True):
-        if context is None:
-            context = {}
-        if not ids:
-            return True
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-
-        res = super(AccountMoveLine, self).write(
-            cr, uid, ids, vals, context=context, check=check,
-            update_check=update_check)
-        for line in self.browse(cr, uid, ids, context=context):
-            if (not line.tax_id_secondary or
-                    line.tax_id_secondary.type_tax_use != 'purchase'):
-                continue
-            cat_tax = line.tax_id_secondary.tax_category_id
-            if cat_tax and cat_tax.name == 'IVA-RET' and line.credit <= 0 and not line.not_move_diot:  # noqa
-                raise ValidationError(_(
-                    'The lines with tax of purchase, need have a value '
-                    'in the credit. \nTax: %s' % line.tax_id_secondary.name))
-        return res
 
     def onchange_account_id(
             self, cr, uid, ids, account_id=False, partner_id=False,

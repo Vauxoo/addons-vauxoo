@@ -38,20 +38,6 @@ msgid "Amount base without amount tax"
 msgstr "Monto base sin el monto del impuesto"
 
 #. module: account_move_line_base_tax
-#: code:addons/account_move_line_base_tax/account.py:72
-#, python-format
-msgid "The lines with tax of purchase, need have a value in the credit."
-msgstr ""
-"Las lineas con impuesto de compra, necesitan tener valor en el credito."
-
-#. module: account_move_line_base_tax
-#: code:addons/account_move_line_base_tax/account.py:68
-#, python-format
-msgid "The lines with tax of purchase, need have a value in the amount base."
-msgstr ""
-"Las lineas con impuesto de compra, necesitan tener valor en el monto base."
-
-#. module: account_move_line_base_tax
 #: code:addons/account_move_line_base_tax/account.py:68
 #: code:addons/account_move_line_base_tax/account.py:72
 #, python-format
@@ -80,7 +66,7 @@ msgid ""
 "considered."
 msgstr ""
 "Si este campo esta activo, aunque el movimiento tenga datos del Diot, no "
-"será conciderado."
+"será considerado."
 
 #. module: account_move_line_base_tax
 #: field:account.move.line,tax_id_secondary:0
