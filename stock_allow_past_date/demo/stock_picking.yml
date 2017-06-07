@@ -1,0 +1,26 @@
+-
+  Make inventory available. Confirm the first initial receipts.
+-
+  !python {model: stock.picking, id: false}: |
+    wizard = self.env['stock.change.product.qty'].create({
+        'product_id': ref('stock_allow_past_date.product_product_1'),
+        'product_tmpl_id': ref('stock_allow_past_date.product_product_1_product_template'),
+        'new_quantity': 34500,
+        'location_id': ref('stock.stock_location_stock'),
+    })
+    past_date = '2015-01-01 14:46:57'
+    wizard.with_context({
+        'default_date': past_date,
+        'default_date_expected': past_date,
+        'default_origin':'(SAPD Demo) WH/Stock Bonobo WS 17\' Laptop Initial Inventory',
+        'allow_past_date_quants': True,
+    }).change_product_qty()
+-
+  Confirm/transfer all the rest operations.
+-
+  !python {model: stock.picking, id: False}: |
+    pickings = self.search([
+        ('origin', 'like', 'SAPD Demo')], order='date')
+    pickings.with_context({'allow_past_date_quants': True}).action_confirm()
+    pickings.with_context({'allow_past_date_quants': True}).do_transfer()
+    assert set(pickings.mapped('state')) == set(['done']), 'all demo pickings are not complete done'

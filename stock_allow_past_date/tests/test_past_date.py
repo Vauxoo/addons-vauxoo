@@ -83,6 +83,8 @@ class TestPickingDate(common.TransactionCase):
             'date': picking_date,
             'min_date': picking_date,
             'picking_type_id': self.picking_type,
+            'location_id': self.ref('stock.stock_location_suppliers'),
+            'location_dest_id': self.ref('stock.stock_location_stock'),
         })
         self.assertTrue(picking)
 

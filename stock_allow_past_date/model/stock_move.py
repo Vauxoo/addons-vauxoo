@@ -12,10 +12,10 @@
 import time
 from datetime import datetime
 
-from openerp import models, api, _
+from odoo import models, api, _
 from odoo.exceptions import UserError
-from openerp.tools.float_utils import float_compare, float_round
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools.float_utils import float_compare, float_round
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class StockMove(models.Model):
@@ -83,8 +83,8 @@ class StockMove(models.Model):
             # but if pack moved entirely, quants should not be written anything
             # for the destination package
             quant_dest_package_id = (
-                operation.result_package_id.id if operation.product_id
-                else False)
+                operation.product_id and operation.result_package_id.id
+                or False)
             entire_pack = not operation.product_id and True or False
 
             # compute quantities for each lot + check quantities match
@@ -208,6 +208,7 @@ class StockMove(models.Model):
             if float_compare(
                 remaining_move_qty[move.id], 0,
                     precision_rounding=move.product_id.uom_id.rounding) > 0:
+                # In case no pack operations in picking
                 # TDE: do in batch ? redone ? check this
                 move.check_tracking(False)
 
@@ -242,6 +243,7 @@ class StockMove(models.Model):
             lambda quant: quant.package_id and quant.qty > 0).mapped(
                 'package_id')._check_location_constraint()
 
+        # set the move as done
         # NOTE VX: This section was overwritten.
         for move in self:
             if move.has_validate_picking_after_move_date():
@@ -249,6 +251,7 @@ class StockMove(models.Model):
             else:
                 move_date = move.date
             move.write({'state': 'done', 'date': move_date})
+
         procurements.check()
         # assign destination moves
         if move_dest_ids:
