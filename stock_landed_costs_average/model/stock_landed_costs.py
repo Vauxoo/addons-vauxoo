@@ -540,7 +540,7 @@ class StockLandedCost(models.Model):
         unlink_ids = line_obj.search(
             cr, uid, [('cost_id', 'in', ids)], context=context)
         line_obj.unlink(cr, uid, unlink_ids, context=context)
-        digits = dp.get_precision('Product Price')(cr)
+        digits = dp.get_precision('Account')(cr)
         towrite_dict = {}
         for cost in self.browse(cr, uid, ids, context=None):
             if not cost.picking_ids and not cost.move_ids:
@@ -565,7 +565,8 @@ class StockLandedCost(models.Model):
 
             for line in cost.cost_lines:
                 value_split = 0.0
-                for valuation in cost.valuation_adjustment_lines:
+                cost_adjust_lines = cost.valuation_adjustment_lines
+                for valuation in cost_adjust_lines:
                     value = 0.0
                     if valuation.cost_line_id and \
                             valuation.cost_line_id.id == line.id:
@@ -587,7 +588,12 @@ class StockLandedCost(models.Model):
                         else:
                             value = (line.price_unit / total_line)
 
-                        if digits:
+                        # When the valuation is the last record, assign
+                        # line.price_unit less the accumulated value in
+                        # value_split
+                        if digits and valuation == cost_adjust_lines[-1]:
+                            value = line.price_unit - value_split
+                        elif digits:
                             value = float_round(
                                 value, precision_digits=digits[1],
                                 rounding_method='UP')
