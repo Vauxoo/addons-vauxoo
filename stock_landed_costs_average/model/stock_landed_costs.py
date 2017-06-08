@@ -565,12 +565,11 @@ class StockLandedCost(models.Model):
 
             for line in cost.cost_lines:
                 value_split = 0.0
-                cost_adjust_lines = cost.valuation_adjustment_lines
                 fnc = min if line.price_unit > 0 else max
+                cost_adjust_lines = cost.valuation_adjustment_lines.filtered(
+                    lambda li: li.cost_line_id is not False and
+                    li.cost_line_id.id == line.id)
                 for valuation in cost_adjust_lines:
-                    if (not valuation.cost_line_id or
-                            valuation.cost_line_id.id != line.id):
-                        continue
                     value = 0.0
                     if line.split_method == 'by_quantity' and total_qty:
                         per_unit = (line.price_unit / total_qty)
