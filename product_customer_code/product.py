@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import api
+from openerp import api, SUPERUSER_ID
 from openerp.osv import osv, fields
 
 
@@ -43,6 +43,87 @@ class ProductProduct(osv.Model):
         default['product_customer_code_ids'] = False
         res = super(ProductProduct, self).copy(default=default)
         return res
+
+    def name_get(self, cr, user, ids, context=None):
+        if context is None:
+            context = {}
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if not len(ids):
+            return []
+
+        def _name_get(d):
+            name = d.get('name', '')
+            code = context.get(
+                'display_default_code', True) and d.get(
+                    'default_code', False) or False
+            base_product = d.get('product_obj', False)
+            if code:
+                if context.get('type', False) == 'out_invoice' and\
+                        base_product and not d.get('has_customer'):
+                    name = '[%s] %s' % (base_product.default_code,
+                                        base_product.name)
+                else:
+                    name = '[%s] %s' % (code, name)
+            return (d['id'], name)
+        partner_id = context.get('partner_id', False)
+        if partner_id:
+            partner_ids = [
+                partner_id, self.pool['res.partner'].browse(
+                    cr,
+                    user,
+                    partner_id, context=context).commercial_partner_id.id]
+        else:
+            partner_ids = []
+
+        # all user don't have access to seller and partner
+        # check access and use superuser
+        self.check_access_rights(cr, user, "read")
+        self.check_access_rule(cr, user, ids, "read", context=context)
+
+        result = []
+        for product in self.browse(cr, SUPERUSER_ID, ids, context=context):
+            variant = ", ".join([v.name for v in product.attribute_value_ids])
+            name = variant and "%s (%s)" % (
+                product.name, variant) or product.name
+            sellers = []
+            buyers = []
+            if partner_ids:
+                sellers = filter(
+                    lambda x: x.name.id in partner_ids, product.seller_ids)
+                buyers = filter(
+                    lambda x: x.partner_id.id == partner_id,
+                    product.product_customer_code_ids)
+            if sellers:
+                for seller in sellers:
+                    seller_variant = seller.product_name and "%s (%s)" % (
+                        seller.product_name, variant) or False
+                    mydict = {
+                        'id': product.id,
+                        'name': seller_variant or name,
+                        'default_code': seller.product_code or
+                        product.default_code,
+                        }
+                    result.append(_name_get(mydict))
+            elif buyers:
+                for buyer in buyers:
+                    mydict = {
+                        'id': product.id,
+                        'name': buyer.product_name or product.name,
+                        'default_code': buyer.product_code or
+                        product.default_code,
+                        'product_obj': product,
+                        'has_customer': True
+                        }
+                    result.append(_name_get(mydict))
+            else:
+                mydict = {
+                    'id': product.id,
+                    'name': name,
+                    'default_code': product.default_code,
+                    }
+                result.append(_name_get(mydict))
+        return result
 
     def name_search(self, cr, user, name='', args=None, operator='ilike',
                     context=None, limit=80):
