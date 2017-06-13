@@ -29,11 +29,15 @@ from openerp.osv import osv, fields
 
 class ProductProduct(osv.Model):
     _inherit = "product.product"
-
+    _order = "default_code,name"
     _columns = {
         'product_customer_code_ids': fields.one2many('product.customer.code',
                                                      'product_id',
                                                      'Customer Codes'),
+        'default_code': fields.related('product_variant_ids', 'default_code',
+                                       type='char',
+                                       string='Internal Reference',
+                                       store=True),
     }
 
     @api.one
@@ -42,6 +46,40 @@ class ProductProduct(osv.Model):
             default = {}
         default['product_customer_code_ids'] = False
         res = super(ProductProduct, self).copy(default=default)
+        return res
+
+    def _product_partner_ref(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        if context is None:
+            context = {}
+        for product in self.browse(cr, uid, ids, context=context):
+            data = self._get_partner_code_name(cr, uid, [], product,
+                                               context.get('partner_id', None),
+                                               context=context)
+            if not data['code']:
+                data['code'] = product.code
+            if not data['name']:
+                data['name'] = product.name
+            res[product.id] = (
+                data['code'] and ('['+data['code']+'] ') or '') + (
+                    data['name'] or '')
+        return res
+
+    def _get_partner_code_name(self, cr, uid, ids, product, partner_id,
+                               context=None):
+        if context.get('type', False) == 'in_invoice':
+            for supinfo in product.seller_ids:
+                if supinfo.name.id == partner_id:
+                    return {
+                        'code': supinfo.product_code or product.default_code,
+                        'name': supinfo.product_name or product.name}
+        else:
+            for buyinfo in product.product_customer_code_ids:
+                if buyinfo.partner_id.id == partner_id:
+                    return {
+                        'code': buyinfo.product_code or product.default_code,
+                        'name': buyinfo.product_name or product.name}
+        res = {'code': product.default_code, 'name': product.name}
         return res
 
     def name_get(self, cr, user, ids, context=None):
