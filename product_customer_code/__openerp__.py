@@ -32,14 +32,16 @@
     "license": "AGPL-3",
     "depends": [
         "base",
-        "product"
+        "product",
+        "sale"
     ],
     "demo": [],
     "data": [
         "security/product_customer_code_security.xml",
         "security/ir.model.access.csv",
         "product_customer_code_view.xml",
-        "product_product_view.xml"
+        "product_product_view.xml",
+        "sale_view.xml"
     ],
     "test": [],
     "js": [],
