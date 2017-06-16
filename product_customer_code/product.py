@@ -1,40 +1,16 @@
 # coding: utf-8
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info@vauxoo.com
-############################################################################
-#    Coded by: Rodo (rodo@vauxoo.com),Moy (moylop260@vauxoo.com)
-############################################################################
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-from openerp import api
-from openerp.osv import osv, fields
+# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+from openerp import models, fields, api
 
 
-class ProductProduct(osv.Model):
+class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    _columns = {
-        'product_customer_code_ids': fields.one2many('product.customer.code',
-                                                     'product_id',
-                                                     'Customer Codes'),
-    }
+    product_customer_code_ids = fields.One2many('product.customer.code',
+                                                'product_id',
+                                                help='Customer Codes',
+                                                string='product customer code')
 
     @api.one
     def copy(self, default=None):
@@ -44,30 +20,22 @@ class ProductProduct(osv.Model):
         res = super(ProductProduct, self).copy(default=default)
         return res
 
-    def name_search(self, cr, user, name='', args=None, operator='ilike',
-                    context=None, limit=80):
-        res = super(ProductProduct, self).name_search(
-            cr, user, name, args, operator, context, limit)
-        if not context:
-            context = {}
-        product_customer_code_obj = self.pool.get('product.customer.code')
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=80):
+        res = super(ProductProduct, self).name_search(name=name, args=args,
+                                                      operator=operator,
+                                                      limit=limit)
+        product_customer_code_obj = self.env['product.customer.code']
         if not res:
             ids = []
-            partner_id = context.get('partner_id', False)
+            partner_id = self._context.get('partner_id')
             if partner_id:
-                id_prod_code = \
-                    product_customer_code_obj.search(cr, user,
-                                                     [('product_code',
-                                                       '=', name),
-                                                         ('partner_id', '=',
-                                                          partner_id)],
-                                                     limit=limit,
-                                                     context=context)
+                id_prod_code = product_customer_code_obj.search(
+                    [('product_code', '=', name),
+                     ('partner_id', '=', partner_id)], limit=limit)
                 # TODO: Search for product customer name
-                id_prod = id_prod_code and product_customer_code_obj.browse(
-                    cr, user, id_prod_code, context=context) or []
-                for ppu in id_prod:
+                for ppu in id_prod_code:
                     ids.append(ppu.product_id.id)
             if ids:
-                res = self.name_get(cr, user, ids, context)
+                res = product_customer_code_obj.product_id.name_get()
         return res
