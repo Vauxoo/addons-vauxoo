@@ -9,14 +9,7 @@ class ProductProduct(models.Model):
 
     product_customer_code_ids = fields.One2many(
         'product.customer.code', 'product_id', string='Product customer codes',
-        help='Customer Codes')
-
-    @api.multi
-    def copy(self, default=None):
-        default = dict(default or {})
-        default['product_customer_code_ids'] = False
-        res = super(ProductProduct, self).copy(default=default)
-        return res
+        copy=False, help='Customer Codes')
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=80):
