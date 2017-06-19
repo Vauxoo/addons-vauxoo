@@ -14,10 +14,10 @@ If the following sql returns records you will can not install it:
 
 .. code-block:: sql
 
-  SELECT supplier_invoice_number, commercial_partner_id, company_id, count(*) AS repeated
+  SELECT lower(regexp_replace(supplier_invoice_number, '\W', '', 'g')), commercial_partner_id, company_id, count(*) AS repeated
   FROM account_invoice
   WHERE supplier_invoice_number IS NOT NULL 
     AND state NOT IN ('draft', 'cancel')
     AND type IN ('in_invoice', 'in_refund')
-  GROUP BY commercial_partner_id, supplier_invoice_number, company_id
+  GROUP BY commercial_partner_id, lower(regexp_replace(supplier_invoice_number, '\W', '', 'g')), company_id
   HAVING count(*) >=2
