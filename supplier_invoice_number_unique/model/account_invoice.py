@@ -19,58 +19,29 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ##########################################################################
-from openerp import models, api
-from openerp.tools.translate import _
-from openerp.exceptions import Warning as UserError
+import re
+
+from openerp import api, fields, models
 
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    @api.multi
-    def action_validate_ref_invoice(self):
-        for invoice in self:
-            if invoice.supplier_invoice_number:
-                self._cr.execute(
-                    """
-                    SELECT supplier_invoice_number,
-                        lower(regexp_replace(
-                            supplier_invoice_number, """ + r"'\W" + """+', '',
-                            'g')) AS data
-                    FROM account_invoice ai JOIN res_partner rp
-                        ON ai.partner_id = rp.id
-                    WHERE lower(regexp_replace(
-                        supplier_invoice_number, """ + r"'\W" + """+', '',
-                            'g')) = lower(
-                            regexp_replace(%s, """ + r"'\W" + """+', '', 'g'))
-                    AND ai.id != %s
-                    AND rp.commercial_partner_id = %s
-                    AND state not in ('draft', 'cancel')
-                    AND ai.company_id = %s
-                    """, (
-                        invoice.supplier_invoice_number,
-                        invoice.id,
-                        invoice.partner_id.commercial_partner_id.id,
-                        invoice.company_id.id)
-                )
-                invoice_duplicate_ids = self._cr.fetchall()
-                if invoice_duplicate_ids:
-                    raise UserError(
-                        _('Invalid Action!'),
-                        _(
-                            'Error you can not validate the invoice with '
-                            'supplier invoice number duplicated.'))
-        return True
+    supplier_invoice_number_strip = fields.Char(
+        compute='_compute_supplier_invoice_number_strip', store=True)
 
     @api.multi
-    def invoice_validate(self):
-        for invoice in self:
-            invoice.action_validate_ref_invoice()
-        return super(AccountInvoice, self).invoice_validate()
+    @api.depends('supplier_invoice_number', 'state', 'type')
+    def _compute_supplier_invoice_number_strip(self):
+        for invoice in self.filtered(
+                lambda inv: inv.state not in ['draft', 'cancel'] and
+                inv.type in ['in_invoice', 'in_refund'] and
+                inv.supplier_invoice_number):
+            invoice.supplier_invoice_number_strip = re.sub(
+                r'\W+|\_', '', invoice.supplier_invoice_number.lower())
 
-    @api.multi
-    def copy(self, default=None):
-        if default is None:
-            default = {}
-        default.update({'supplier_invoice_number': False})
-        return super(AccountInvoice, self).copy(default)
+    _sql_constraints = [
+        ('unique_supplier_invoice_number_strip', 'UNIQUE('
+         'supplier_invoice_number_strip, company_id, commercial_partner_id)',
+         'Error you can not validate the invoice with '
+         'supplier invoice number duplicated.')]
