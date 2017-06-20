@@ -1,6 +1,6 @@
 # coding: utf-8
-# Copyright 2016 Vauxoo (https://www.vauxoo.com) info@vauxoo.com
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# Copyright 2017 Vauxoo (https://www.vauxoo.com) info@vauxoo.com
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 {
     "name": "Products Customer Code",
@@ -8,7 +8,7 @@
     "author": "Vauxoo",
     "category": "Generic Modules/Product",
     "website": "http://www.vauxoo.com/",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": [
         "base",
         "product"
