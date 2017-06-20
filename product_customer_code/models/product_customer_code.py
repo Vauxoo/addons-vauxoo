@@ -8,7 +8,7 @@ from openerp import fields, models
 class ProductCustomerCode(models.Model):
 
     _name = "product.customer.code"
-    _description = "Add manies Code of Customer's"
+    _description = "Add many Customer's Code"
 
     _rec_name = 'product_code'
 
