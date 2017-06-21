@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
-    
+
         <record model="ir.ui.view" id="view_product_customer_code_form">
             <field name="name">view.product.customer.code.form</field>
             <field name="model">product.customer.code</field>
@@ -26,14 +26,14 @@
                 </tree>
             </field>
         </record>
-        
-          <record id="action_product_customer_code_tree" model="ir.actions.act_window">
+
+        <record id="action_product_customer_code_tree" model="ir.actions.act_window">
             <field name="name">Product Customer Code</field>
             <field name="res_model">product.customer.code</field>
             <field name="view_type">form</field>
             <field name="view_id" ref="view_product_customer_code_tree"/>
         </record>
-        
+
         <record id="view_product_customer_code_search" model="ir.ui.view">
             <field name="name">view.product.customer.code.certificate.search</field>
             <field name="model">product.customer.code</field>
@@ -53,8 +53,8 @@
                 </search>
             </field>
         </record>
-        
-         <menuitem action="action_product_customer_code_tree" id="menu_product_customer_code" sequence="50" parent="product.prod_config_main" groups="group_product_customer_code_manager"/>
+
+        <menuitem action="action_product_customer_code_tree" id="menu_product_customer_code" sequence="50" parent="product.prod_config_main" groups="group_product_customer_code_manager"/>
 
     </data>
 </openerp>
