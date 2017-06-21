@@ -2,19 +2,30 @@
 # Copyright 2016 Vauxoo
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.addons.report.controllers import main
-from openerp.addons.web.http import route, request  # pylint: disable=F0401
+import logging
+import cssutils
+from cssutils import parseString
+
 from werkzeug import url_decode  # pylint: disable=E0611
 from lxml import etree
-
-from ..controllers.xfstyle import css2excel
 
 import simplejson
 import xlwt
 
 import StringIO
-import logging
+
+from openerp.addons.report.controllers import main
+from openerp.addons.web.http import route, request  # pylint: disable=F0401
+from ..controllers.xfstyle import css2excel
+
+try:
+    from functools import lru_cache
+except ImportError:
+    from backports.functools_lru_cache import lru_cache
+
 _logger = logging.getLogger(__name__)
+
+cssutils.log.setLevel(logging.CRITICAL)
 
 
 def get_value(value):
@@ -113,29 +124,31 @@ def string_to_number(value, lang_sep, style=None):
     return unformat_number(value, lang_sep)
 
 
+@lru_cache(maxsize=2048)
 def get_css_style(csstext, style):
+    if not csstext:
+        return ""
+
     cssstyle = ""
-    if csstext:
-        try:
-            import cssutils
-            from cssutils import parseString
-            cssutils.log.setLevel(logging.CRITICAL)
-        except ImportError:
-            return ""
-        cssnode = parseString(csstext)
-        stylesheet = cssnode.cssRules
-        for rule in stylesheet:
-            if rule.selectorText.replace(".", "") == style:
-                cssstyle = str(rule.style.cssText)
+    cssnode = parseString(csstext)
+    for rule in cssnode.cssRules:
+        if rule.selectorText.replace(".", "") != style:
+            continue
+        cssstyle = str(rule.style.cssText)
+        break
     return cssstyle
+
+
+@lru_cache(maxsize=4096)
+def html_xpath(html, xpath):
+    return html.xpath(xpath)
 
 
 def get_odoo_style(html, style, node):
     if node.attrib.get('class', False):
         for class_style in node.attrib.get('class', False).split():
-            for style_element in html.xpath('//style[@type="text/css"]'):
-                styleclass = get_css_style(style_element.text,
-                                           class_style)
+            for style_element in html_xpath(html, '//style[@type="text/css"]'):
+                styleclass = get_css_style(style_element.text, class_style)
                 style.update(dict(item.split(":") for item in
                              text_adapt(styleclass).split(";") if item != ''))
     if node.attrib.get('style', False):
@@ -148,28 +161,28 @@ def write_tables_to_excel(sheet, row, col, tables, html, table_styles,
                           lang_sep):
     for table in tables:
         table_styles = get_odoo_style(html, table_styles, table)
-        headers = table.xpath("thead")
+        headers = html_xpath(table, "thead")
         if not headers:
-            headers = table.xpath("table_header")
+            headers = html_xpath(table, "table_header")
         if headers:
             for header in headers:
                 head_style = get_odoo_style(html, table_styles, header)
-                rows = header.xpath("tr")
+                rows = html_xpath(header, "tr")
                 if rows:
                     row = write_rows_to_excel(sheet, row, col, rows,
                                               html, head_style, lang_sep)
-        bodies = table.xpath("tbody")
+        bodies = html_xpath(table, "tbody")
         if not bodies:
-            bodies = table.xpath("table_body")
+            bodies = html_xpath(table, "table_body")
         if bodies:
             for body in bodies:
                 body_style = get_odoo_style(html, table_styles, body)
-                rows = body.xpath("tr")
+                rows = html_xpath(body, "tr")
                 if rows:
                     row = write_rows_to_excel(sheet, row, col, rows,
                                               html, body_style, lang_sep)
         if not headers and not bodies:
-            rows = table.xpath("tr")
+            rows = html_xpath(table, "tr")
             if rows:
                 row = write_rows_to_excel(sheet, row, col, rows,
                                           html, table_styles, lang_sep)
@@ -183,14 +196,13 @@ def write_rows_to_excel(sheet, row, col, nodes, html, styles, lang_sep):
         rowspan = 0
         if tr.attrib.get('rowspan', False):
             rowspan = int(tr.attrib.get('rowspan')) - 1
-        cols = tr.xpath("td")
+        cols = html_xpath(tr, "td")
         if not cols:
-            cols = tr.xpath("th")
+            cols = html_xpath(tr, "th")
         if not cols:
             continue
-        if cols:
-            row = write_cols_to_excel(sheet, row, col, rowspan, cols,
-                                      html, new_styles, lang_sep)
+        row = write_cols_to_excel(sheet, row, col, rowspan, cols,
+                                  html, new_styles, lang_sep)
         row += rowspan + 1
     return row
 
@@ -200,7 +212,7 @@ def write_cols_to_excel(sheet, row, col, rowspan, nodes, html, styles,
     for td in nodes:
         new_styles = get_odoo_style(html, styles, td)
         # Check tables in column
-        tables = td.xpath("table")
+        tables = html_xpath(td, "table")
         if tables:
             row = write_tables_to_excel(sheet, row, col, tables,
                                         html, new_styles, lang_sep)
@@ -247,22 +259,23 @@ def get_xls(html, lang_sep=None):
     table_styles = {}
     table_styles['background-color'] = '#FFFFFF'
     # Check header tables
-    tables = root.xpath("//div[@class=\"header\"]/table")
+    tables = html_xpath(root, "//div[@class=\"header\"]/table")
     if tables:
         row = write_tables_to_excel(ws, row, col, tables, html, table_styles,
                                     lang_sep)
     # Check page tables
-    tables = root.xpath("//div[@class=\"page\"]/table")
+    tables = html_xpath(root, "//div[@class=\"page\"]/table")
     if tables:
         row = write_tables_to_excel(ws, row, col, tables, html, table_styles,
                                     lang_sep)
     # Check footer tables
-    tables = root.xpath("//div[@class=\"footer\"]/table")
+    tables = html_xpath(root, "//div[@class=\"footer\"]/table")
     if tables:
         row = write_tables_to_excel(ws, row, col, tables, html, table_styles,
                                     lang_sep)
     stream = StringIO.StringIO()
     wb.save(stream)
+    html_xpath.cache_clear()
     return stream.getvalue()
 
 
