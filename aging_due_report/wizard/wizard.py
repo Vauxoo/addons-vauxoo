@@ -41,13 +41,6 @@ class AccountAgingWizardDocument(models.TransientModel):
     _rec_name = 'partner_id'
     _order = 'date_due'
 
-    @api.depends('date_due')
-    def _get_due_days(self):
-        for record in self:
-            today = datetime.now()
-            date_due = datetime.strptime(record.date_due, '%Y-%m-%d')
-            record.due_days = (today - date_due).days
-
     partner_id = fields.Many2one('res.partner', 'Partner')
     invoice_id = fields.Many2one('account.invoice', 'Invoice')
     aml_id = fields.Many2one('account.move.line',
@@ -58,8 +51,7 @@ class AccountAgingWizardDocument(models.TransientModel):
     tax = fields.Float('Tax')
     total = fields.Float('Total')
     payment = fields.Float('Payment')
-    due_days = fields.Integer(string='Due Days',
-                              compute="_get_due_days")
+    due_days = fields.Integer(string='Due Days')
     date_emission = fields.Date('Emission Date')
     date_due = fields.Date('Due Date')
     company_id = fields.Many2one('res.company', u'Company')
@@ -109,31 +101,6 @@ class AccountAgingWizardPartner(models.TransientModel):
             if lt_lim and gt_lim:
                 res_line[span] += doc.residual
 
-    @api.depends('document_ids', 'document_ids.residual',
-                 'document_ids.payment', 'document_ids.total')
-    def _get_amount(self):
-        field_sum = ['residual', 'payment', 'total', 'not_due']
-        field_spans = ['span01', 'span02', 'span03', 'span04', 'span05']
-        field_names = field_spans + field_sum
-        for record in self:
-            res = {}
-            direction = record.aaw_id.direction == 'past'
-            spans = [record.aaw_id.period_length * x * (direction and 1 or -1)
-                     for x in range(5)]
-            for fn in field_names:
-                res[fn] = 0.0
-            for doc in record.document_ids:
-                for fsum in field_sum:
-                    if fsum != 'not_due':
-                        res[fsum] += doc.read([fsum])[0][fsum]
-                if not direction and doc.due_days > 0 \
-                        or direction and doc.due_days <= 0:
-                    res['not_due'] += doc.residual
-                else:
-                    record._get_amount_span(
-                        field_spans, res, doc, spans, direction)
-            record.update(res)
-
     partner_id = fields.Many2one('res.partner', string='Partner',
                                  required=True)
     name = fields.Char(string="Name", related='partner_id.name',
@@ -149,32 +116,23 @@ class AccountAgingWizardPartner(models.TransientModel):
                                help='Journal Items')
     currency_id = fields.Many2one('res.currency', 'Currency',
                                   required=True)
-    total = fields.Float(string='Total', digits=dp.get_precision('Account'),
-                         compute='_get_amount', store=True)
+    total = fields.Float(string='Total', digits=dp.get_precision('Account'))
     payment = fields.Float(string='Payment',
-                           digits=dp.get_precision('Account'),
-                           compute='_get_amount', store=True)
+                           digits=dp.get_precision('Account'))
     residual = fields.Float(string='Residual',
-                            digits=dp.get_precision('Account'),
-                            compute='_get_amount', store=True)
+                            digits=dp.get_precision('Account'))
     not_due = fields.Float(string='Not Due',
-                           digits=dp.get_precision('Account'),
-                           compute='_get_amount', store=True)
+                           digits=dp.get_precision('Account'))
     span01 = fields.Float(string='span01',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span02 = fields.Float(string='span02',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span03 = fields.Float(string='span03',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span04 = fields.Float(string='span04',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span05 = fields.Float(string='span05',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     aawc_id = fields.Many2one('account.aging.wizard.currency',
                               'Account Aging Wizard Currency',
                               help='Account Aging Wizard Currency Holder')
@@ -185,30 +143,6 @@ class AccountAgingWizardCurrency(models.TransientModel):
     _description = 'Account Aging Wizard Currency'
     _rec_name = 'currency_id'
 
-    @api.depends('partner_ids', 'partner_ids.residual',
-                 'partner_ids.not_due', 'partner_ids.span01',
-                 'partner_ids.span02', 'partner_ids.span03',
-                 'partner_ids.span04', 'partner_ids.span05')
-    def _get_amount(self):
-        for record in self:
-            residual = not_due = span01 = span02 = 0.00
-            span03 = span04 = span05 = 0.00
-            for part in record.partner_ids:
-                residual += part.residual
-                not_due += part.not_due
-                span01 += part.span01
-                span02 += part.span02
-                span03 += part.span03
-                span04 += part.span04
-                span05 += part.span05
-            record.residual = residual
-            record.not_due = not_due
-            record.span01 = span01
-            record.span02 = span02
-            record.span03 = span03
-            record.span04 = span04
-            record.span05 = span05
-
     currency_id = fields.Many2one('res.currency', 'Currency',
                                   required=True)
     aaw_id = fields.Many2one('account.aging.wizard',
@@ -218,26 +152,19 @@ class AccountAgingWizardCurrency(models.TransientModel):
                                   'aawc_id', 'Partner by Currency',
                                   help='Partner by Currency')
     residual = fields.Float(string='Residual',
-                            digits=dp.get_precision('Account'),
-                            compute='_get_amount', store=True)
+                            digits=dp.get_precision('Account'))
     not_due = fields.Float(string='Not Due',
-                           digits=dp.get_precision('Account'),
-                           compute='_get_amount', store=True)
+                           digits=dp.get_precision('Account'))
     span01 = fields.Float(string='span01',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span02 = fields.Float(string='span02',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span03 = fields.Float(string='span03',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span04 = fields.Float(string='span04',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
     span05 = fields.Float(string='span05',
-                          digits=dp.get_precision('Account'),
-                          compute='_get_amount', store=True)
+                          digits=dp.get_precision('Account'))
 
 
 class AccountAgingPartnerWizard(models.TransientModel):
@@ -443,25 +370,22 @@ class AccountAgingPartnerWizard(models.TransientModel):
 
     @api.multi
     def _get_aml(self, aml_ids, inv_type='out_invoice', currency_id=None):
-        aml_obj = self.env['account.move.line']
         res = 0.0
-        sign = 1 if inv_type == 'out_invoice' else -1
         if not aml_ids:
             return res
+        sign = 1 if inv_type == 'out_invoice' else -1
         if currency_id:
-            aml_gen = (
-                aml_brw.amount_currency * sign
-                for aml_brw in aml_obj.browse(aml_ids))
-            for iii in aml_gen:
-                res += iii
+            amount = aml_ids.read_group(
+                [('id', 'in', aml_ids.ids), ('amount_currency', '!=', 0)],
+                ['amount_currency'], [])
+            amount = amount[0] if amount else {}
+            res = amount.get('amount_currency', 0)
         else:
-            aml_gen = (
-                aml_brw.debit and (aml_brw.debit * sign) or
-                aml_brw.credit * (-1 * sign)
-                for aml_brw in aml_obj.browse(aml_ids))
-            for iii in aml_gen:
-                res += iii
-        return res
+            amount = aml_ids.read_group(
+                [('id', 'in', aml_ids.ids)], ['debit', 'credit'], [])
+            amount = amount[0] if amount else {}
+            res = amount.get('debit', 0) - amount.get('credit', 0)
+        return res * sign
 
     @api.multi
     def _get_invoice_by_partner(self, partner_ids,
@@ -472,13 +396,14 @@ class AccountAgingPartnerWizard(models.TransientModel):
         res = []
         inv_obj = self.env['account.invoice']
         rp_obj = self.env['res.partner']
+        aml_obj = self.env['account.move.line']
         # Filtering Partners by Unique Accounting Partners
         fap_fnc = rp_obj._find_accounting_partner
-        invoices = set(inv_obj.search(
+        invoices = inv_obj.search(
             [('partner_id', 'child_of', partner_ids),
              ('type', '=', inv_type),
              ('residual', '!=', 0),
-             ('state', 'not in', ('cancel', 'draft'))]))
+             ('state', 'not in', ('cancel', 'draft'))])
         if not invoices:
             return res
 
@@ -487,19 +412,20 @@ class AccountAgingPartnerWizard(models.TransientModel):
                            invoice.company_id.currency_id.id and
                            invoice.currency_id.id)
             payment = self._get_aml(
-                [aml.id for aml in invoice.payment_ids],
-                inv_type, currency_id)
+                invoice.payment_ids, inv_type, currency_id)
             residual = invoice.amount_total + payment
 
             if not residual:
                 continue
 
-            date_due = [amx_brw.date_maturity
-                        for amx_brw in invoice.move_id.line_id
-                        if amx_brw.account_id.type in (
-                            'receivable', 'payable')]
-            date_due = date_due and min(date_due)
-            date_due = date_due or invoice.date_due or invoice.date_invoice
+            date_maturity = aml_obj.search_read(
+                [('account_id.type', 'in', ['receivable', 'payable']),
+                 ('date_maturity', '!=', None),
+                 ('move_id', '=', invoice.move_id.id)], ['date_maturity'],
+                limit=1, order='date_maturity ASC')
+            date_due = ((date_maturity[0]['date_maturity']
+                        if date_maturity else invoice.date_due) or
+                        invoice.date_invoice)
 
             res.append({
                 'invoice_id': invoice.id,
@@ -542,6 +468,8 @@ class AccountAgingPartnerWizard(models.TransientModel):
         aawp_ids = {}
         aawc_ids = {}
 
+        today = datetime.now()
+
         for each in self._get_invoice_by_partner(
                 partner_ids, inv_type=inv_type):
             partner_id = each['partner_id']
@@ -563,6 +491,7 @@ class AccountAgingPartnerWizard(models.TransientModel):
                 aawp_ids[partner_id, currency_id] = aawp_id.id
             each['aawp_id'] = aawp_ids[partner_id, currency_id]
             each['aaw_id'] = wzd_brw.id
+            each['due_days'] = self._get_due_days(today, each)
             aawd_obj.create(each)
 
         for line in self._get_lines_by_partner_without_invoice(partner_ids):
@@ -585,8 +514,58 @@ class AccountAgingPartnerWizard(models.TransientModel):
                 aawp_ids[partner_id, currency_id] = aawp_id.id
             line['aawp_id'] = aawp_ids[partner_id, currency_id]
             line['aaw_id'] = wzd_brw.id
+            line['due_days'] = self._get_due_days(today, line)
             aawd_obj.create(line)
+
+        # Only to trigger _get_amount
+        wzd_brw._get_amount()
         return True
+
+    def _get_amount(self):
+        field_sum = ['residual', 'payment', 'total', 'not_due']
+        field_spans = ['span01', 'span02', 'span03', 'span04', 'span05']
+        field_names = field_spans + field_sum
+        wzd_cur_fields = field_spans + ['not_due', 'residual']
+        direction = self.direction == 'past'
+        spans = [
+            self.period_length * x * (direction and 1 or -1)
+            for x in range(5)]
+
+        for wzd_cur in self.currency_ids:
+            for fn in wzd_cur_fields:
+                wzd_cur._cache[fn] = 0.0
+            for part in wzd_cur.partner_ids:
+                res = {}.fromkeys(field_names, 0.0)
+                docs = part.document_ids
+                field_sum_res = docs.read_group(
+                    [('id', 'in', docs.ids)], field_sum, [])
+
+                field_sum_res = field_sum_res[0] if field_sum_res else {}
+                res.update(dict((field, field_sum_res.get(field, 0))
+                                for field in field_sum))
+                not_due_docs = (
+                    docs.filtered(lambda r: r.due_days <= 0) if direction else
+                    docs.filtered(lambda r: r.due_days > 0))
+                not_due_sum = docs.read_group(
+                    [('id', 'in', not_due_docs.ids)], ['residual'], [])
+                not_due_sum = not_due_sum[0] if not_due_sum else {}
+
+                res['not_due'] = not_due_sum.get('residual') or 0
+
+                for due_record in docs - not_due_docs:
+                    part._get_amount_span(
+                        field_spans, res, due_record, spans, direction)
+
+                part.update(res)
+
+                for fn in wzd_cur_fields:
+                   wzd_cur._cache[fn] += res.get(fn) or 0
+            wzd_cur.write(wzd_cur._convert_to_write(wzd_cur._cache))
+        return
+
+    def _get_due_days(self, today, record):
+        date_due = datetime.strptime(record['date_due'], '%Y-%m-%d')
+        return (today - date_due).days
 
     @api.multi
     def print_report(self):

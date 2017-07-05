@@ -540,7 +540,7 @@ class StockLandedCost(models.Model):
         unlink_ids = line_obj.search(
             cr, uid, [('cost_id', 'in', ids)], context=context)
         line_obj.unlink(cr, uid, unlink_ids, context=context)
-        digits = dp.get_precision('Product Price')(cr)
+        digits = dp.get_precision('Account')(cr)
         towrite_dict = {}
         for cost in self.browse(cr, uid, ids, context=None):
             if not cost.picking_ids and not cost.move_ids:
@@ -565,40 +565,46 @@ class StockLandedCost(models.Model):
 
             for line in cost.cost_lines:
                 value_split = 0.0
-                for valuation in cost.valuation_adjustment_lines:
+                fnc = min if line.price_unit > 0 else max
+                cost_adjust_lines = cost.valuation_adjustment_lines.filtered(
+                    lambda li: li.cost_line_id is not False and
+                    li.cost_line_id.id == line.id)
+                for valuation in cost_adjust_lines:
                     value = 0.0
-                    if valuation.cost_line_id and \
-                            valuation.cost_line_id.id == line.id:
-                        if line.split_method == 'by_quantity' and total_qty:
-                            per_unit = (line.price_unit / total_qty)
-                            value = valuation.quantity * per_unit
-                        elif line.split_method == 'by_weight' and total_weight:
-                            per_unit = (line.price_unit / total_weight)
-                            value = valuation.weight * per_unit
-                        elif line.split_method == 'by_volume' and total_volume:
-                            per_unit = (line.price_unit / total_volume)
-                            value = valuation.volume * per_unit
-                        elif line.split_method == 'equal':
-                            value = (line.price_unit / total_line)
-                        elif line.split_method == 'by_current_cost_price' and \
-                                total_cost:
-                            per_unit = (line.price_unit / total_cost)
-                            value = valuation.former_cost * per_unit
-                        else:
-                            value = (line.price_unit / total_line)
+                    if line.split_method == 'by_quantity' and total_qty:
+                        per_unit = (line.price_unit / total_qty)
+                        value = valuation.quantity * per_unit
+                    elif line.split_method == 'by_weight' and total_weight:
+                        per_unit = (line.price_unit / total_weight)
+                        value = valuation.weight * per_unit
+                    elif line.split_method == 'by_volume' and total_volume:
+                        per_unit = (line.price_unit / total_volume)
+                        value = valuation.volume * per_unit
+                    elif line.split_method == 'equal':
+                        value = (line.price_unit / total_line)
+                    elif line.split_method == 'by_current_cost_price' and \
+                            total_cost:
+                        per_unit = (line.price_unit / total_cost)
+                        value = valuation.former_cost * per_unit
+                    else:
+                        value = (line.price_unit / total_line)
 
-                        if digits:
-                            value = float_round(
-                                value, precision_digits=digits[1],
-                                rounding_method='UP')
-                            fnc = min if line.price_unit > 0 else max
-                            value = fnc(value, line.price_unit - value_split)
-                            value_split += value
+                    # When the valuation is the last record, assign
+                    # line.price_unit less the accumulated value in
+                    # value_split
+                    if digits and valuation == cost_adjust_lines[-1]:
+                        value = line.price_unit - value_split
+                    elif digits:
+                        value = float_round(
+                            value, precision_digits=digits[1],
+                            rounding_method='UP')
+                        value = fnc(value, line.price_unit - value_split)
+                        value_split += value
 
-                        if valuation.id not in towrite_dict:
-                            towrite_dict[valuation.id] = value
-                        else:
-                            towrite_dict[valuation.id] += value
+                    if valuation.id not in towrite_dict:
+                        towrite_dict[valuation.id] = value
+                    else:
+                        towrite_dict[valuation.id] += value
         if towrite_dict:
             for key, value in towrite_dict.items():
                 line_obj.write(
