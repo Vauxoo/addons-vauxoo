@@ -2,7 +2,7 @@
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2017 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 #
@@ -24,47 +24,39 @@
 #
 #
 
-from openerp.osv import osv
-from openerp.tools.translate import _
+from openerp import models, api, _
+from openerp.exceptions import ValidationError
 
 
-class ResPartner(osv.Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    def _check_vat_uniqueness(self, cr, uid, ids, context=None):
+    @api.multi
+    @api.constrains('vat')
+    def _check_vat_uniqueness(self):
         """ Check that the vat is unique in the level
             where the partner in the tree
         """
-        if context is None:
-            context = {}
 
-        user_company = self.pool.get(
-            'res.users').browse(cr, uid, uid).company_id
+        user_company = self.env.user.company_id
 
         # User must be of MX
-        if not (user_company.partner_id and
-                user_company.partner_id.country_id
-                and user_company.partner_id.country_id.code == 'MX'):
+        if not user_company.partner_id.country_id.code == 'MX':
             return True
 
-        partner_brw = self.browse(cr, uid, ids)
-        current_vat = partner_brw[0].vat
-        current_parent_id = partner_brw[0].parent_id
+        for partner in self:
+            current_vat = partner.vat
 
-        if not current_vat:
-            return True  # Accept empty VAT's
+            if not current_vat:
+                continue  # Accept empty VAT's
 
-        # Partners without parent, must have VAT uniqueness
-        if not current_parent_id:
-            duplicates = self.browse(cr, uid, self.search(
-                cr, uid, [('vat', '=', current_vat),
-                          ('parent_id', '=', None),
-                          ('id', '!=', partner_brw[0].id)]))
-            return not duplicates
+            # Partners without parent, must have VAT uniqueness
+            if partner.parent_id:
+                continue
 
-        return True
-
-    _constraints = [
-        (_check_vat_uniqueness,
-         _("Error ! Partner's VAT must be a unique value or empty"),
-         []), ]
+            if not partner.search(
+                    [('vat', '=', current_vat), ('parent_id', '=', None),
+                     ('id', '!=', partner.id)], limit=1):
+                continue
+            raise ValidationError(_("Partner's VAT must be a unique "
+                                    "value or empty"))
