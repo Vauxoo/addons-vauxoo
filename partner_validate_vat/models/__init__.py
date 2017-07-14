@@ -2,7 +2,7 @@
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2017 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 #
@@ -24,4 +24,4 @@
 #
 #
 
-from . import models
+from . import res_partner
