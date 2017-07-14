@@ -24,12 +24,14 @@
 #
 #
 
-from openerp import models, api, _
+from openerp import models, api, fields, _
 from openerp.exceptions import ValidationError
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+
+    vat = fields.Char(copy=False)
 
     @api.multi
     @api.constrains('vat')
@@ -40,23 +42,14 @@ class ResPartner(models.Model):
 
         user_company = self.env.user.company_id
 
-        # User must be of MX
-        if not user_company.partner_id.country_id.code == 'MX':
-            return True
-
         for partner in self:
             current_vat = partner.vat
 
-            if not current_vat:
-                continue  # Accept empty VAT's
-
-            # Partners without parent, must have VAT uniqueness
-            if partner.parent_id:
-                continue
-
-            if not partner.search(
-                    [('vat', '=', current_vat), ('parent_id', '=', None),
-                     ('id', '!=', partner.id)], limit=1):
-                continue
-            raise ValidationError(_("Partner's VAT must be a unique "
-                                    "value or empty"))
+            if all([user_company.country_id == partner.country_id, current_vat,
+                    partner.search([
+                        ('vat', '=', current_vat),
+                        ('id', 'not in', [partner.parent_id.id, partner.id]),
+                        ('parent_id', '!=', partner.parent_id.id)
+                    ], limit=1)]):
+                raise ValidationError(_("Partner's VAT must be a unique "
+                                        "value or empty"))
