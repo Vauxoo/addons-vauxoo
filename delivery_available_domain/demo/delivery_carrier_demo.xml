@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="delivery.carrier" id="delivery_under_10">
+        <field name="name">Orders less than 10</field>
+        <field name="delivery_type">base_on_rule</field>
+    </record>
+    <record model="delivery.carrier" id="delivery_over_10">
+        <field name="name">Orders greater than 10</field>
+        <field name="delivery_type">base_on_rule</field>
+    </record>
+    <record model="delivery.carrier" id="delivery_inside_df">
+        <field name="name">Inside Metropolitan Zone</field>
+        <field name="delivery_type">base_on_rule</field>
+        <field name="country_ids" eval="[(4, ref('base.mx'))]"/>
+        <field name="state_ids" eval="[
+            (4, ref('base.state_mx_mex')),
+            (4, ref('base.state_mx_df')),
+        ]"/>
+    </record>
+    <record model="delivery.carrier" id="delivery_outside_df">
+        <field name="name">Outside Metropolitan Zone</field>
+        <field name="delivery_type">base_on_rule</field>
+        <field name="country_ids" eval="[(4, ref('base.mx'))]"/>
+        <field name="state_ids" eval="[
+            (4, ref('base.state_mx_ags')),
+            (4, ref('base.state_mx_bc')),
+            (4, ref('base.state_mx_bcs')),
+            (4, ref('base.state_mx_chih')),
+            (4, ref('base.state_mx_col')),
+            (4, ref('base.state_mx_camp')),
+            (4, ref('base.state_mx_coah')),
+            (4, ref('base.state_mx_dgo')),
+            (4, ref('base.state_mx_gto')),
+            (4, ref('base.state_mx_hgo')),
+            (4, ref('base.state_mx_jal')),
+            (4, ref('base.state_mx_mich')),
+            (4, ref('base.state_mx_mor')),
+            (4, ref('base.state_mx_nl')),
+            (4, ref('base.state_mx_oax')),
+            (4, ref('base.state_mx_pue')),
+            (4, ref('base.state_mx_q roo')),
+            (4, ref('base.state_mx_qro')),
+            (4, ref('base.state_mx_sin')),
+            (4, ref('base.state_mx_slp')),
+            (4, ref('base.state_mx_son')),
+            (4, ref('base.state_mx_tab')),
+            (4, ref('base.state_mx_tlax')),
+            (4, ref('base.state_mx_tamps')),
+            (4, ref('base.state_mx_ver')),
+            (4, ref('base.state_mx_yuc')),
+            (4, ref('base.state_mx_zac')),
+        ]"/>
+
+    </record>
+    <record id="delivery_price_rule1" model="delivery.price.rule">
+        <field name="carrier_id" ref="delivery_over_10"/>
+        <field name="operator">&gt;=</field>
+        <field name="variable">price</field>
+        <field eval="15000" name="max_value"/>
+     </record>
+    <record id="delivery_price_rule2" model="delivery.price.rule">
+        <field name="carrier_id" ref="delivery_under_10"/>
+        <field name="variable">price</field>
+        <field eval="15000" name="max_value"/>
+     </record>
+</odoo>
