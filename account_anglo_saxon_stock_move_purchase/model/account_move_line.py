@@ -35,5 +35,6 @@ class AccountMoveLine(osv.osv):
             'order_id',
             string='Purchase Order',
             type='many2one',
-            relation='purchase.order'),
+            relation='purchase.order',
+            store=True),
     }
