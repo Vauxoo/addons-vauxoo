@@ -20,11 +20,9 @@ class ResPartner(models.Model):
         user_company = self.env.user.company_id
 
         for partner in self:
-            current_vat = partner.vat
-            current_commercial_partner = partner.commercial_partner_id.id
+            current_vat = partner.commercial_partner_id.vat
             if (user_company.country_id == partner.country_id and
-                current_vat and current_commercial_partner and partner.search([
-                    ('vat', '=', current_vat),
+                current_vat and partner.search([
                     ('commercial_partner_id', '!=',
                      partner.commercial_partner_id.id)], limit=1)):
                 raise ValidationError(_("Partner's VAT must be a unique "
