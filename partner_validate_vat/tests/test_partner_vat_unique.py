@@ -55,3 +55,14 @@ class PartnerVatUnique(TransactionCase):
             'type': 'contact',
             'vat': 'MXXXX030303XX4',
         })
+
+    def test_05_test_partner_(self):
+        """Try set in two partners the same VAT when partner is new"""
+        with self.assertRaisesRegexp(
+                ValidationError,
+                "Partner's VAT must be a unique value or empty"):
+            self.partner_obj.create({
+                'name': 'New Partner',
+                'country_id': self.mexico.id,
+                'vat': 'MXXXX030303XX4',
+            })

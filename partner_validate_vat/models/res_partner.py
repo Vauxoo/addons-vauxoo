@@ -11,19 +11,19 @@ class ResPartner(models.Model):
 
     vat = fields.Char(copy=False)
 
-    @api.constrains('vat', 'country_id')
+    @api.constrains('vat', 'country_id', 'commercial_partner_id')
     def _check_vat_uniqueness(self):
-        """ Check that the vat is unique in the level
-            where the partner in the tree
+        """Check that the vat is unique in the level where the partner is
+        in the tree
         """
 
         user_company = self.env.user.company_id
 
-        for partner in self:
-            current_vat = partner.commercial_partner_id.vat
+        for partner in self.mapped('commercial_partner_id').filtered('vat'):
             if (user_company.country_id == partner.country_id and
-                current_vat and partner.search([
+                partner.search([
+                    ('vat', '=', partner.vat),
                     ('commercial_partner_id', '!=',
-                     partner.commercial_partner_id.id)], limit=1)):
+                     partner.id)], limit=1)):
                 raise ValidationError(_("Partner's VAT must be a unique "
                                         "value or empty"))
