@@ -19,11 +19,17 @@ class ResPartner(models.Model):
 
         user_company = self.env.user.company_id
 
-        for partner in self.mapped('commercial_partner_id').filtered('vat'):
-            if (user_company.country_id == partner.country_id and
-                partner.search([
-                    ('vat', '=', partner.vat),
+        for partner in self.filtered(
+                lambda r: r.country_id == user_company.country_id and
+                r.vat is not False):
+            current_commercial = partner.commercial_partner_id
+            if not current_commercial:
+                current_commercial = partner.browse(
+                    partner._commercial_partner_compute(
+                        self.env.cr, 'commercial_parent_id')[partner.id])
+            if (partner.search([
+                    ('vat', '=', current_commercial.vat),
                     ('commercial_partner_id', '!=',
-                     partner.id)], limit=1)):
+                     current_commercial.id)], limit=1)):
                 raise ValidationError(_("Partner's VAT must be a unique "
                                         "value or empty"))
