@@ -14,7 +14,8 @@ class TestPriceUnit(TransactionCase):
             {'currency_id': self.env.ref('base.MXN').id})
         self.supplier.property_product_pricelist_purchase.write(
             {'currency_id': self.env.ref('base.MXN').id})
-        self.supplier.write({'country_id': self.env.ref('base.mx').id})
+        self.supplier.write({'country_id': self.env.ref('base.mx').id,
+                             'vat': 'MXVAU111017CG9'})
         self.env.user.company_id.write(
             {'currency_id': self.env.ref('base.MXN').id})
         self.customer = self.env['res.partner'].create(
@@ -267,13 +268,11 @@ class TestPriceUnit(TransactionCase):
         purchase_from_sale.order_line.write({'price_unit': 130})
 
         purchase_from_sale.signal_workflow("purchase_confirm")
+        purchase_from_sale.signal_workflow("purchase_approve")
         self.assertEqual(purchase_from_sale.state, 'approved')
-        sale_3._get_picking_ids()
-        self.assertEqual(len(sale_3.picking_ids), 4)
 
         # First pick sale_3
-        picking = sale_3.picking_ids.filtered(
-            lambda pick: pick.state == 'assigned')
+        picking = purchase_from_sale.picking_ids
         self.assertTrue(picking)
 
         self.transfer_picking(picking, product, 1, self.warehouse_1)
@@ -351,13 +350,11 @@ class TestPriceUnit(TransactionCase):
         purchase_from_sale.order_line.write({'price_unit': 130})
 
         purchase_from_sale.signal_workflow("purchase_confirm")
+        purchase_from_sale.signal_workflow("purchase_approve")
         self.assertEqual(purchase_from_sale.state, 'approved')
-        sale_4._get_picking_ids()
-        self.assertEqual(len(sale_4.picking_ids), 4)
 
         # First pick sale_4
-        picking_1 = sale_4.picking_ids.filtered(
-            lambda pick: pick.state == 'assigned')
+        picking_1 = purchase_from_sale.picking_ids
         self.assertTrue(picking_1)
 
         self.transfer_picking(picking_1, product, 1, self.warehouse_1)
@@ -425,3 +422,51 @@ class TestPriceUnit(TransactionCase):
         self.assertEqual(product.standard_price, 119.14)
         self.assertEqual(product.with_context(
             warehouse=self.warehouse_1.id).qty_available, 109)
+
+        # Fifth sale
+        # In second picking that is from transit to stock test doing a
+        # partial transfer
+        sale_5 = self.create_sale(
+            self.customer, product, self.warehouse_2, 10, 100, self.route_1)
+        self.assertEqual(len(sale_5.picking_ids), 3)
+
+        # First pick sale_5
+        picking = sale_5.picking_ids.filtered(
+            lambda pick: pick.state == 'confirmed')
+        self.assertTrue(picking)
+
+        self.transfer_picking(picking, product, 10, self.warehouse_1)
+        self.assertEqual(picking.state, 'done')
+
+        self.assertEqual(picking.move_lines[0].price_unit, 119.14)
+        self.assertEqual(product.standard_price, 119.14)
+        self.assertEqual(product.with_context(
+            warehouse=self.warehouse_1.id).qty_available, 99)
+
+        # Second pick sale_5
+        picking = sale_5.picking_ids.filtered(
+            lambda pick: pick.state == 'assigned')
+        self.assertTrue(picking)
+
+        self.transfer_picking(picking, product, 1, self.warehouse_2)
+        self.assertEqual(picking.state, 'done')
+
+        self.assertEqual(picking.move_lines[0].price_unit, 119.14)
+        self.assertEqual(product.standard_price, 119.14)
+        self.assertEqual(product.with_context(
+            warehouse=self.warehouse_1.id).qty_available, 99)
+        self.assertEqual(product.with_context(
+            warehouse=self.warehouse_2.id).qty_available, 1)
+
+        # Third pick sale_5
+        picking = sale_5.picking_ids.filtered(
+            lambda pick: pick.state == 'assigned')
+        self.assertTrue(picking)
+
+        self.transfer_picking(picking, product, 1, self.warehouse_1)
+        self.assertEqual(picking.state, 'done')
+
+        self.assertEqual(picking.move_lines[0].price_unit, 119.14)
+        self.assertEqual(product.standard_price, 119.14)
+        self.assertEqual(product.with_context(
+            warehouse=self.warehouse_1.id).qty_available, 99)
