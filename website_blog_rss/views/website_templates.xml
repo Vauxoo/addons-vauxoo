@@ -5,7 +5,7 @@
         <channel>
         <title><t t-esc="blog[0].name"/></title>
         <link><t t-esc="website_url"/></link>
-        <description><t t-esc="blog[0].description"/></description>
+        <description><t t-esc="blog[0].subtitle or blog[0].name"/></description>
         <!-- This ttl tag is wired now, when the controller become generic
              it will be dynamically stored in ir.config_parameters or the
              model published itself. -->

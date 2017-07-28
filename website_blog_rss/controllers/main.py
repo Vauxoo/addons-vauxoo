@@ -58,25 +58,25 @@ class WebsiteBlogRSS(http.Controller):
                 ('type', '=', 'binary')])
             if blog_rss_ids:
                 ira.sudo().unlink(blog_rss_ids)
-
             pages = 0
             first_page = None
             values = {}
             post_ids = blog_post_obj.sudo().search([
                 ('website_published', '=', True)])
             if post_ids:
-                values['posts'] = blog_post_obj.sudo().browse(post_ids)
+                values['posts'] = post_ids
             if blog_ids:
-                blog = blog_obj.sudo().browse(blog_ids)[0]
+                blog = blog_ids[0]
                 values['blog'] = blog
-            values['company'] = user_brw[0].company_id
+            values['company'] = user_brw[0].company_id.id
             values['website_url'] = config_obj.sudo().get_param('web.base.url')
             values['url_root'] = request.httprequest.url_root
-            urls = iuv.sudo().render('website_blog_rss.blog_rss_locs', values)
+            urls = request.env.ref('website_blog_rss.blog_rss_locs').render(values)
             if urls:
-                page = iuv.sudo().render(
-                    'website_blog_rss.blog_rss_xml', dict(content=urls)
-                )
+                page = request.env.ref(
+                    'website_blog_rss.blog_rss_xml').render(
+                        dict(content=urls)
+                    )
                 if not first_page:
                     first_page = page
                 pages += 1
