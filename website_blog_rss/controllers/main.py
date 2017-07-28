@@ -2,8 +2,8 @@
 import datetime
 from odoo import SUPERUSER_ID
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from odoo.addons.web import http
-from odoo.addons.web.http import request
+from odoo import http
+from odoo.http import request
 
 
 MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT = IMAGE_LIMITS = (1024, 768)
@@ -44,7 +44,7 @@ class WebsiteBlogRSS(http.Controller):
             ('datas', 'create_date'))
         if blog_rss:
             # Check if stored version is still valid
-            server_format =  DEFAULT_SERVER_DATETIME_FORMAT
+            server_format = DEFAULT_SERVER_DATETIME_FORMAT
             create_date = datetime.datetime.strptime(
                 blog_rss[0]['create_date'], server_format)
             delta = datetime.datetime.now() - create_date
