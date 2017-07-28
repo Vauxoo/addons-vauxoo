@@ -50,8 +50,12 @@ class AccountInvoiceLine(osv.osv):
         """
         context = context or {}
         res = {}
+        tax_obj = self.pool.get('account.tax')
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = (line.quantity * line.price_unit)
+            taxes = tax_obj.compute_all(
+                cr, uid, line.invoice_line_tax_id, line.price_unit,
+                line.quantity)
+            res[line.id] = taxes['total']
         return res
 
     def _get_discount(self, cr, uid, ids, args, field_name, context=None):
