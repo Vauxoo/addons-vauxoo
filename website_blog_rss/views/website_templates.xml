@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
     <template id="blog_rss_locs">
         <channel>
@@ -35,4 +35,4 @@
         </xpath>
     </template>
     </data>
-</openerp>
+</odoo>

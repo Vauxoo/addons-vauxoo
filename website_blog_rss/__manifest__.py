@@ -4,7 +4,7 @@
     'category': 'website',
     'summary': 'This module enables RSS on Blog',
     'website': 'http://vauxoo.com',
-    'version': '8.0.0.1.6',
+    'version': '10.0.0.1.0',
     'author': 'Vauxoo',
     'license': 'AGPL-3',
     'depends': [
@@ -20,6 +20,6 @@
     'qweb': [
 
     ],
-    "installable": False,
+    "installable": True,
     'application': True,
 }
