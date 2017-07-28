@@ -35,7 +35,7 @@ class WebsiteBlogRSS(http.Controller):
 
         blog_ids = blog_obj.sudo().search([])
         user_brw = user_obj.sudo().browse([SUPERUSER_ID])
-        blog_post_obj = request.registry['blog.post']
+        blog_post_obj = request.env['blog.post']
         mimetype = 'application/xml;charset=utf-8'
         content = None
         blog_rss = ira.sudo().search_read([
