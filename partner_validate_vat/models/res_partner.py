@@ -17,9 +17,9 @@ class ResPartner(models.Model):
         company
         1.- Validate that the partner's vat is unique, in relation to another
         partner, excluding those related to the commercial_parent_id field.
-        2.- Validate that the partners belong to the same company through
-        the country_id field, since two partners or more can have same vat
-        but is from different countries.
+        2.- Validation that only when the partner's country is the same
+        that company's country, this allow to the external partner could be
+        used a generic VAT.
         3.- The partners that are related have the same fields: vat,
         commercial_parent_id, country_id
         """
