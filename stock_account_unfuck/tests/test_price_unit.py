@@ -14,8 +14,6 @@ class TestPriceUnit(TransactionCase):
             {'currency_id': self.env.ref('base.MXN').id})
         self.supplier.property_product_pricelist_purchase.write(
             {'currency_id': self.env.ref('base.MXN').id})
-        self.supplier.write({'country_id': self.env.ref('base.mx').id,
-                             'vat': 'MXVAU111017CG9'})
         self.env.user.company_id.write(
             {'currency_id': self.env.ref('base.MXN').id})
         self.customer = self.env['res.partner'].create(
