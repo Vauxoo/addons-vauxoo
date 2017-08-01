@@ -25,9 +25,9 @@ class StockMove(models.Model):
                     (move.move_orig_ids and move.move_orig_ids[0]))
             amount_unit = move.product_id.standard_price
             if signal == 1:
-                average_valuation_price = sum(
-                    [quant.qty * (orig.price_unit if orig else amount_unit)
-                     for quant in move.reserved_quant_ids])
+                average_valuation_price = (
+                    move.product_qty *
+                    (orig.price_unit if orig else amount_unit))
             else:
                 average_valuation_price = sum(
                     [quant.qty * (orig.price_unit if orig else quant.cost)
