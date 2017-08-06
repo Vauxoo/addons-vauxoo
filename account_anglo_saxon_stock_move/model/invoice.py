@@ -43,87 +43,70 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def action_cancel(self):
-        aml_obj = self.env['account.move.line']
-        aml_ids = []
-        for inv in self:
-            if not inv.move_id:
-                continue
-            for aml_brw in inv.move_id.line_id:
-                # Unreconcile all non-receivable and non-payable lines
-                if aml_brw.account_id.reconcile and aml_brw.account_id.type \
-                        not in ('receivable', 'payable'):
-                    aml_ids.append(aml_brw.id)
-        if aml_ids:
-            aml_obj._remove_move_reconcile(aml_ids)
-
+        for inv in self.filtered(lambda inv: inv.move_id):
+            amr_ids = inv.invoice_line.mapped('move_id.aml_ids.reconcile_id')
+            amr_ids.unlink()
         return super(AccountInvoice, self).action_cancel()
 
-    def reconcile_stock_accrual(self, cr, uid, ids, context=None):
-        context = dict(context or {})
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        aml_obj = self.pool['account.move.line']
-        amr_obj = self.pool['account.move.reconcile']
-        for inv_brw in self.browse(cr, uid, ids, context=context):
-            for ail_brw in inv_brw.invoice_line:
-                ail_brw.refresh()
-                if not ail_brw.move_id:
+    @api.multi
+    def reconcile_stock_accrual(self):
+        aml_obj = self.env['account.move.line']
+        for inv_brw in self:
+            # We just care about lines which have a stock_move.aml_ids related
+            all_aml_ids = aml_obj
+            aml_ids = inv_brw.invoice_line.mapped('move_id.aml_ids')
+
+            # In order to keep every single line reconciled we will look for
+            # all the lines related to a purchase/sale order
+            all_aml_ids |= aml_ids.mapped('purchase_id.aml_ids')
+            all_aml_ids |= aml_ids.mapped('sale_id.aml_ids')
+
+            categ_ids = all_aml_ids.filtered(
+                lambda m:
+                m.product_id and
+                not m.product_id.categ_id.property_stock_journal)
+            if categ_ids:
+                raise ValidationError(_(
+                    'The Stock Journal is missing on following '
+                    'product categories: %s' % (', '.join(
+                        categ_ids.mapped('name')))
+                ))
+
+            res = {}
+            # Only stack those that are fully reconciled
+            amr_ids = all_aml_ids.mapped('reconcile_id')
+            amr_ids.unlink()
+
+            # Let's group all the Accrual lines by Purchase/Sale Order, Product
+            # and Account
+            for aml_brw in all_aml_ids.filtered('account_id.reconcile'):
+                doc_brw = aml_brw.purchase_id or aml_brw.sale_id
+                account_id = aml_brw.account_id.id
+                product_id = aml_brw.product_id
+                res.setdefault((doc_brw, account_id, product_id), aml_obj)
+                res[(doc_brw, account_id, product_id)] |= aml_brw
+
+            for (doc_brw, account_id, product_id), aml_ids in res.items():
+                if not len(aml_ids) > 1:
                     continue
-                if ail_brw.move_id.product_id != ail_brw.product_id:
-                    continue
-
-                res = {}
-                amr_ids = [
-                    aml_brw1.reconcile_id.id or
-                    aml_brw1.reconcile_partial_id.id
-                    for aml_brw1 in ail_brw.move_id.aml_ids
-                    if aml_brw1.reconcile_id or aml_brw1.reconcile_partial_id
-                ]
-
-                if amr_ids:
-                    amr_ids = list(set(amr_ids))
-                    amr_obj.unlink(cr, uid, amr_ids, context=context)
-
-                ail_brw.refresh()
-                aml_brws = [
-                    aml_brw
-                    for aml_brw in ail_brw.move_id.aml_ids
-                    if aml_brw.product_id and
-                    aml_brw.account_id.reconcile and
-                    aml_brw.product_id == ail_brw.product_id
-                ]
-
-                for brw in aml_brws:
-                    if res.get(brw.account_id.id, False):
-                        res[brw.account_id.id].append(brw.id)
-                    else:
-                        res[brw.account_id.id] = [brw.id]
-
-                for val in res.values():
-                    if not len(val) > 1:
-                        continue
-                    if not ail_brw.product_id.categ_id.property_stock_journal:
-                        raise ValidationError(_(
-                            'The Stock Journal is missing on product category.'
-                        ))
-                    try:
-                        aml_obj.reconcile_partial(
-                            cr, uid, val,
-                            writeoff_period_id=inv_brw.period_id.id,
-                            writeoff_journal_id=ail_brw.product_id.categ_id.property_stock_journal.id,  # noqa
-                            context=context)
-                    except orm.except_orm:
-                        message = (
-                            "Reconciliation was not possible with "
-                            "Journal Items [%(values)s]" % dict(
-                                values=", ".join([str(idx) for idx in val])))
-                        _logger.exception(message)
+                journal_id = product_id.categ_id.property_stock_journal.id
+                try:
+                    aml_ids.reconcile_partial(
+                        writeoff_period_id=inv_brw.period_id.id,
+                        writeoff_journal_id=journal_id)
+                except orm.except_orm:
+                    message = (
+                        "Reconciliation was not possible with "
+                        "Journal Items [%(values)s]" % dict(
+                            values=", ".join([str(idx) for idx in aml_ids])))
+                    _logger.exception(message)
 
         return True
 
-    def invoice_validate(self, cr, uid, ids, context=None):
-        res = super(AccountInvoice, self).invoice_validate(
-            cr, uid, ids, context=context)
-        self.reconcile_stock_accrual(cr, uid, ids, context=context)
+    @api.multi
+    def invoice_validate(self):
+        res = super(AccountInvoice, self).invoice_validate()
+        self.reconcile_stock_accrual()
         return res
 
 
