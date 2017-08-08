@@ -2,8 +2,10 @@
 # Copyright 2017 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp.exceptions import ValidationError
 from openerp.tests.common import TransactionCase
+# from openerp import exceptions
+from openerp.tools import mute_logger
+from psycopg2 import IntegrityError
 
 
 class PartnerVatUnique(TransactionCase):
@@ -28,24 +30,18 @@ class PartnerVatUnique(TransactionCase):
         new_partner = self.partner.copy({})
         self.assertFalse(new_partner.vat, 'Partner VAT is not cleaned in copy')
 
+    @mute_logger('openerp.sql_db')
     def test_02_test_duplicated_partner_vat(self):
         """Try set in two partners the same VAT"""
         with self.assertRaisesRegexp(
-                ValidationError,
-                "Partner's VAT must be a unique value or empty"):
+                IntegrityError,
+                r'"res_partner_unique_commercial_vat"'):
             self.partner2.write({
                 'country_id': self.mexico.id,
                 'vat': 'MXXXX030303XX4',
             })
 
-    def test_03_test_duplicated_vat_different_country(self):
-        """Try set in two partners the same VAT, but the partners have
-        different country, then any raise is not generated"""
-        self.partner2.write({
-            'vat': 'MXXXX030303XX4',
-        })
-
-    def test_04_test_partner_children(self):
+    def test_03_test_partner_children(self):
         """Try set the same VAT to company and children, in this case the
         raise is not generated"""
         self.partner_obj.create({
@@ -56,11 +52,12 @@ class PartnerVatUnique(TransactionCase):
             'vat': 'MXXXX030303XX4',
         })
 
-    def test_05_test_partner_(self):
+    @mute_logger('openerp.sql_db')
+    def test_04_test_partner_(self):
         """Try set in two partners the same VAT when partner is new"""
         with self.assertRaisesRegexp(
-                ValidationError,
-                "Partner's VAT must be a unique value or empty"):
+                IntegrityError,
+                r'"res_partner_unique_commercial_vat"'):
             self.partner_obj.create({
                 'name': 'New Partner',
                 'country_id': self.mexico.id,

@@ -8,10 +8,6 @@ Partner Validate VAT
 
 This module validate that Partner's VAT must be a unique value in each company
 
-Note:  This validation is only when the partner country is the same that
-country company, this because to external partner could be used a generic
-VAT
-
 Requirements:
 -------------
 - Go to https://github.com/Vauxoo/addons-vauxoo and download repo in order to install base_vat_country module.
