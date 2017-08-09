@@ -3,7 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from openerp.tests.common import TransactionCase
-# from openerp import exceptions
 from openerp.tools import mute_logger
 from psycopg2 import IntegrityError
 

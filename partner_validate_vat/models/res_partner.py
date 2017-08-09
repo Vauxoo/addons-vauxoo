@@ -16,7 +16,7 @@ class ResPartner(models.Model):
 
     @api.depends('vat', 'parent_id.commercial_partner_id', 'is_company')
     def _compute_commercial_vat(self):
-        """Detect just global partners (companies) avoiding
+        """Detect vat duplicate just for global partners (companies) avoiding
         children (contacts)"""
         for partner in self.filtered(lambda p: (p.is_company or
                                                 not p.parent_id) and p.vat):
@@ -27,4 +27,4 @@ class ResPartner(models.Model):
     _sql_constraints = [
         ('unique_commercial_vat',
          'unique (commercial_vat,company_id)',
-         'Partner of VAT must be a unique value or empty')]
+         "Partner's VAT must be a unique value or empty")]
