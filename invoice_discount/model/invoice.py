@@ -78,11 +78,13 @@ class AccountInvoice(models.Model):
                  'invoice_line.discount_amount')
     def _compute_subtotal_wo_disc(self):
         line = self.env['account.invoice.line']
+        res = line.read_group(
+            domain=[('invoice_id', 'in', self.ids)],
+            fields=['invoice_id', 'subtotal_wo_discount', 'discount_amount'],
+            groupby='invoice_id')
+        invoice_sum = dict([(item['invoice_id'][0], item) for item in res])
         for invoice in self:
-            res = line.read_group(
-                domain=[('invoice_id', '=', invoice._cache['id'])],
-                fields=['invoice_id', 'subtotal_wo_discount',
-                        'discount_amount'],
-                groupby='invoice_id')[0]
-            invoice.subtotal_wo_discount = res.get('subtotal_wo_discount', 0)
-            invoice.discount_amount = res.get('discount_amount', 0)
+            invoice.subtotal_wo_discount = invoice_sum.get(invoice.id, {}).get(
+                'subtotal_wo_discount')
+            invoice.discount_amount = invoice_sum.get(invoice.id, {}).get(
+                'discount_amount')
