@@ -2,7 +2,7 @@
 
 {
     "name": "Stock Landed Costs Segmentation",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
@@ -22,6 +22,6 @@
     "data": [
         'view/view.xml',
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }

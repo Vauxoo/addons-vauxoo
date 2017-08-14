@@ -7,7 +7,7 @@
             <field name='model'>hr.employee</field>
             <field name='inherit_id' ref='hr.view_employee_form'/>
             <field name='arch' type='xml'>
-                <xpath expr="//label[@for='category_ids']" position="before">
+                <xpath expr="//field[@name='category_ids']" position="before">
                     <group>
                         <group>
                             <field name="second_name" placeholder="Second Name..." nolabel="1"/>
@@ -27,7 +27,7 @@
                 </xpath>
             </field>
         </record>
-        
+
         <record model='ir.ui.view' id='view_last_name_tree'>
             <field name='name'>view.last.name.tree</field>
             <field name='model'>hr.employee</field>
@@ -40,7 +40,7 @@
                 </xpath>
             </field>
         </record>
-        
+
         <record model='ir.ui.view' id='view_last_name_filter'>
             <field name='name'>view.last.name.filter</field>
             <field name='model'>hr.employee</field>
@@ -53,6 +53,6 @@
                 </xpath>
             </field>
         </record>
-        
+
     </data>
 </openerp>

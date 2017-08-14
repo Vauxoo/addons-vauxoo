@@ -26,7 +26,7 @@
 {
     "name": "Costing Method Settings",
     "summary": "Set product default cost method",
-    "version": "8.0.0.1.6",
+    "version": "10.0.0.1.6",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
@@ -42,5 +42,5 @@
     "qweb": [],
     "js": [],
     "css": [],
-    "installable": False,
+    "installable": True,
 }

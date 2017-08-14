@@ -14,12 +14,12 @@
         "sale",
     ],
     "demo": [
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
     "data": [
         'view/view.xml',
         'view/wizard.xml',
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }

@@ -1,12 +1,12 @@
 # coding: utf-8
 import werkzeug
-from openerp import http
-from openerp.http import request
-from openerp.addons.web.controllers.main import login_and_redirect
-from openerp.addons.website_sale.controllers.main import website_sale
+from odoo import http
+from odoo.http import request
+from odoo.addons.web.controllers.main import login_and_redirect
+from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 
-class WebsiteSaleInh(website_sale):
+class WebsiteSaleInh(WebsiteSale):
 
     @http.route(['/shop/product/comment/<int:product_template_id>'],
                 type='http', auth="public", methods=['POST'], website=True)
@@ -18,7 +18,7 @@ class WebsiteSaleInh(website_sale):
             mid = request.registry['product.template'].message_post(
                 cr, uid, product_template_id,
                 body=post.get('comment'),
-                type='comment',
+                message_type='comment',
                 subtype='mt_comment',
                 context=dict(context, mail_create_nosubscribe=True))
         if post.get('rating', 0):

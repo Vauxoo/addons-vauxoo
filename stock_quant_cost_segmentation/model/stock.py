@@ -1,7 +1,6 @@
 # coding: utf-8
 
 from openerp import models, fields, api
-from openerp import SUPERUSER_ID
 from openerp.tools.float_utils import float_compare, float_round, float_is_zero
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
@@ -21,26 +20,22 @@ SEGMENTATION_COST = [
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    @api.v7
-    def action_done(self, cr, uid, ids, context=None):
-        sgmnt = self.product_segmentation_fetch_before_done(
-            cr, uid, ids, context=context)
-        res = super(StockMove, self).action_done(cr, uid, ids, context=context)
-        self.product_segmentation_update_after_done(
-            cr, uid, ids, sgmnt, context=context)
+    @api.multi
+    def action_done(self):
+        sgmnt = self.product_segmentation_fetch_before_done()
+        res = super(StockMove, self).action_done()
+        self.product_segmentation_update_after_done(sgmnt)
         return res
 
-    @api.v7
-    def product_segmentation_fetch_before_done(
-            self, cr, uid, ids, context=None):
+    @api.multi
+    def product_segmentation_fetch_before_done(self):
         """Fetch standard_price and segmentation cost for every product that was
         purchased and is average costing method prior to change its values.
         Returns a dictionary.
         """
         res = {}
-        precision = self.pool.get('decimal.precision').precision_get(
-            cr, uid, 'Account')
-        for move in self.browse(cr, uid, ids, context=context):
+        precision = self.env['decimal.precision'].precision_get('Account')
+        for move in self:
             # adapt standard price on incoming moves if the product
             # cost_method is 'average'
             if move.location_id.usage == 'supplier' and \
@@ -68,17 +63,15 @@ class StockMove(models.Model):
                         res[prod_id].update(sgmnt)
         return res
 
-    @api.v7
-    def product_segmentation_update_after_done(
-            self, cr, uid, ids, sgmnt, context=None):
+    @api.multi
+    def product_segmentation_update_after_done(self, sgmnt):
         """Computes segmentation values on average product based on previous
         values stored before action_done method is applied
         """
-        context = dict(context or {})
-        product_obj = self.pool.get('product.product')
+        product_obj = self.env['product.product']
         res = {}
         for prod_id in sgmnt:
-            prod_brw = product_obj.browse(cr, uid, prod_id, context=context)
+            prod_brw = product_obj.browse(prod_id)
             std = prod_brw.standard_price
             qty = prod_brw.product_tmpl_id.qty_available
             if qty <= 0:
@@ -97,8 +90,7 @@ class StockMove(models.Model):
         # Write the standard price, as SUPERUSER_ID because a warehouse
         # manager may not have the right to write on products
         for prod_id in res:
-            product_obj.write(
-                cr, SUPERUSER_ID, [prod_id], res[prod_id], context=context)
+            product_obj.browse(prod_id).write(res[prod_id])
 
 
 class StockQuant(models.Model):
@@ -310,18 +302,14 @@ class StockQuant(models.Model):
         for prod_id, name, cost_method in res:
             _logger.warning('%s, %s, %s', str(prod_id), name, cost_method)
 
-    @api.v7
-    def _quant_create(
-            self, cr, uid, qty, move, lot_id=False, owner_id=False,
-            src_package_id=False, dest_package_id=False,
-            force_location_from=False, force_location_to=False, context=None):
+    @api.model
+    def _quant_create(self, qty, move, lot_id=False, owner_id=False,
+                      src_package_id=False, dest_package_id=False,
+                      force_location_from=False, force_location_to=False):
         """Create a quant in the destination location and create a negative quant
         in the source location if it's an internal location.
         """
-        if context is None:
-            context = {}
-        price_unit = self.pool.get('stock.move').get_price_unit(
-            cr, uid, move, context=context)
+        price_unit = self.env['stock.move'].get_price_unit(move)
         location = force_location_to or move.location_dest_id
         rounding = move.product_id.uom_id.rounding
         vals = {
@@ -352,8 +340,8 @@ class StockQuant(models.Model):
                     product_id = {product_id}
                     AND sq.propagated_from_id IS NOT NULL
             """.format(product_id=move.product_id.id)
-            cr.execute(query1)
-            for val in cr.fetchall():
+            self._cr.execute(query1)
+            for val in self._cr.fetchall():
                 exclude_ids += list(val)
 
             if exclude_ids:
@@ -380,9 +368,9 @@ class StockQuant(models.Model):
             """.format(
                 product_id=move.product_id.id,
                 exclude_ids=exclude_ids)
-            cr.execute(query2)
+            self._cr.execute(query2)
 
-            res = cr.dictfetchone()
+            res = self._cr.dictfetchone()
             if res:
                 del res['id']
                 vals.update(res)
@@ -396,36 +384,34 @@ class StockQuant(models.Model):
             negative_vals['cost'] = price_unit
             negative_vals['negative_move_id'] = move.id
             negative_vals['package_id'] = src_package_id
-            negative_quant_id = self.create(
-                cr, SUPERUSER_ID, negative_vals, context=context)
-            vals.update({'propagated_from_id': negative_quant_id})
+            negative_quant_id = self.create(negative_vals)
+            vals.update({'propagated_from_id': negative_quant_id.id})
 
         # create the quant as superuser, because we want to restrict the
         # creation of quant manually: we should always use this method to
         # create quants
-        quant_id = self.create(cr, SUPERUSER_ID, vals, context=context)
-        quant_brw = self.browse(cr, uid, quant_id, context=context)
+        quant_brw = self.sudo().create(vals)
         if move.product_id.valuation == 'real_time':
-            self._account_entry_move(cr, uid, [quant_brw], move, context)
+            quant_brw._account_entry_move(move)
         return quant_brw
 
-    @api.v7
-    def _price_update_segmentation(
-            self, cr, uid, ids, newprice, solving_quant, context=None):
-        self._price_update(cr, uid, ids, newprice, context=context)
+    @api.multi
+    def _price_update_segmentation(self, newprice, solving_quant):
+        self._price_update(newprice)
         sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
         for fn in SEGMENTATION_COST:
             sgmnt_dict[fn] = getattr(solving_quant, fn)
-        self.write(cr, SUPERUSER_ID, ids, sgmnt_dict, context=context)
+        self.write(sgmnt_dict)
         return True
 
-    @api.v7
-    def _quant_reconcile_negative(self, cr, uid, quant, move, context=None):
+    @api.one
+    def _quant_reconcile_negative(self, move):
         """When new quant arrive in a location, try to reconcile it with
             negative quants. If it's possible, apply the cost of the new
             quant to the counter-part of the negative quant.
         """
-        solving_quant = quant
+        solving_quant = self
+        quant = self
         dom = [('qty', '<', 0)]
         if quant.lot_id:
             dom += [('lot_id', '=', quant.lot_id.id)]
@@ -433,65 +419,58 @@ class StockQuant(models.Model):
         dom += [('package_id', '=', quant.package_id.id)]
         dom += [('id', '!=', quant.propagated_from_id.id)]
         quants = self.quants_get(
-            cr, uid, quant.location_id, quant.product_id, quant.qty, dom,
-            context=context)
+            quant.location_id, quant.product_id, quant.qty, dom,
+            )
         product_uom_rounding = quant.product_id.uom_id.rounding
-        context = dict(context or {})
+        context = dict(self._context or {})
         context.update({'force_unlink': True})
         for quant_neg, qty in quants:
             if not quant_neg or not solving_quant:
                 continue
-            to_solve_quant_ids = self.search(
-                cr, uid, [('propagated_from_id', '=', quant_neg.id)],
-                context=context)
+            to_solve_quant_ids = self.with_context(context).search(
+                [('propagated_from_id', '=', quant_neg.id)])
             if not to_solve_quant_ids:
                 continue
             solving_qty = qty
             solved_quant_ids = []
-            for to_solve_quant in self.browse(
-                    cr, uid, to_solve_quant_ids, context=context):
+            for to_solve_quant in to_solve_quant_ids:
                 if float_compare(
                         solving_qty, 0,
                         precision_rounding=product_uom_rounding) <= 0:
                     continue
                 solved_quant_ids.append(to_solve_quant.id)
-                self._quant_split(
-                    cr, uid, to_solve_quant,
-                    min(solving_qty, to_solve_quant.qty), context=context)
+                to_solve_quant._quant_split(
+                    min(solving_qty, to_solve_quant.qty))
                 solving_qty -= min(solving_qty, to_solve_quant.qty)
-            remaining_solving_quant = self._quant_split(
-                cr, uid, solving_quant, qty, context=context)
-            remaining_neg_quant = self._quant_split(
-                cr, uid, quant_neg, -qty, context=context)
+            remaining_solving_quant = solving_quant._quant_split(qty)
+            remaining_neg_quant = quant_neg._quant_split(-qty)
             # if the reconciliation was not complete, we need to link together
             # the remaining parts
             if remaining_neg_quant:
                 remaining_to_solve_quant_ids = self.search(
-                    cr, uid,
                     [('propagated_from_id', '=', quant_neg.id),
                      ('id', 'not in', solved_quant_ids)],
-                    context=context)
+                    )
                 if remaining_to_solve_quant_ids:
-                    self.write(
-                        cr, SUPERUSER_ID, remaining_to_solve_quant_ids,
-                        {'propagated_from_id': remaining_neg_quant.id},
-                        context=context)
+                    remaining_to_solve_quant_ids.sudo().write(
+                        {'propagated_from_id': remaining_neg_quant.id})
             if solving_quant.propagated_from_id and solved_quant_ids:
-                self.write(
-                    cr, SUPERUSER_ID, solved_quant_ids,
+                solved_quant_ids.write(
                     {'propagated_from_id':
-                     solving_quant.propagated_from_id.id},
-                    context=context)
+                     solving_quant.propagated_from_id.id})
             # delete the reconciled quants, as it is replaced by the solved
             # quants
-            self.unlink(cr, SUPERUSER_ID, [quant_neg.id], context=context)
+            quant_neg.sudo().with_context(context).unlink()
             if solved_quant_ids:
                 # price update + accounting entries adjustments
-                self._price_update_segmentation(
-                    cr, uid, solved_quant_ids, solving_quant.cost,
-                    solving_quant, context=context)
+                solved_quant_ids._price_update_segmentation(
+                    solving_quant.cost,
+                    solving_quant)
                 # merge history (and cost?)
-                self._quants_merge(
-                    cr, uid, solved_quant_ids, solving_quant, context=context)
-            self.unlink(cr, SUPERUSER_ID, [solving_quant.id], context=context)
+                solved_quant_ids.write({
+                    'history_ids': [
+                        (4, history_move.id)
+                        for history_move in solving_quant.history_ids]
+                })
+            solving_quant.sudo().with_context(context).unlink()
             solving_quant = remaining_solving_quant

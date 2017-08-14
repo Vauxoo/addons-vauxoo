@@ -42,5 +42,5 @@
     "qweb": [],
     "js": [],
     "css": [],
-    "installable": False,
+    "installable": True,
 }

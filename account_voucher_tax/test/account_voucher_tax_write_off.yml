@@ -21,7 +21,7 @@
         invoice_line_tax_id:
             - account_voucher_tax_purchase_iva16
     journal_id: account.expenses_journal
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     reference_type: none
 -
   I change the state of invoice to open by clicking Validate button
@@ -46,7 +46,7 @@
     amount: 3.37
     journal_id: account.bank_journal
     name: 'Payment01_write_off'
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     date: !eval time.strftime("%Y-%m-%d")
     type: 'payment'
 -

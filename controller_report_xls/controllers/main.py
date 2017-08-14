@@ -24,7 +24,7 @@
 ###############################################################################
 
 from openerp.addons.report.controllers import main
-from openerp.addons.web.http import route, request  # pylint: disable=F0401
+from odoo.http import route, request  # pylint: disable=F0401
 from werkzeug import url_decode  # pylint: disable=E0611
 from lxml import etree
 

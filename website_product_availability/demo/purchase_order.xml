@@ -3,7 +3,7 @@
     <data noupdate="0">
         <record id="purchase_order_stock" model="purchase.order">
             <field name="partner_id" ref='base.res_partner_1'/>
-            <field name="pricelist_id" ref='purchase.list0'/>
+            <field name="pricelist_id" ref='product.list0'/>
             <field name="currency_id" ref='base.EUR'/>
             <field name="picking_type_id" ref='stock.chi_picking_type_in'/>
             <field name="date_order" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
@@ -18,6 +18,7 @@
             <field name="price_unit">800</field>
             <field name="order_id" ref='purchase_order_stock'/>
             <field name="date_planned" eval="time.strftime('%Y-%m-%d')"/>
+            <field name='product_uom' ref='product.product_uom_unit'/>
         </record>
 
         <!-- Purchase Order -->
@@ -26,15 +27,17 @@
             <field name="name">Order Purchase availability 1</field>
             <field name="date_order">2015-05-08 18:17:05</field>
             <field name="invoice_method">order</field>
-            <field name="partner_id" ref="base.res_partner_21"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="currency_id" ref="base.EUR"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name='product_uom' ref='product.product_uom_unit'/>
+            <field name="pricelist_id" ref="product.list0"/>
             <field name="location_id" ref="stock.stock_location_company"/>
         </record>
 
         <!-- Purchase Order Lines-->
 
         <record id="purchase_order_availability_1_line_1" model="purchase.order.line">
+            <field name='product_uom' ref='product.product_uom_unit'/>
             <field name="name">Order Purchase availability 1 Line 1</field>
             <field name="order_id" ref="purchase_order_availability_1"/>
             <field name="product_id" ref="product.product_product_11b"/>
@@ -44,22 +47,11 @@
         </record>
 
         <!-- Confirm Purchase Order, (Invoice and Picking is created automatically) -->
-
-        <workflow action="purchase_confirm"
-            model="purchase.order"
-            ref="purchase_order_availability_1"/>
-
-        <workflow action="purchase_approve"
-            model="purchase.order"
-            ref="purchase_order_availability_1"/>
+        <function model="purchase.order"
+            name="button_confirm" eval="[ref('purchase_order_availability_1')]"/>
 
         <!--Transfer of Products in the Picking of Purchase Order -->
 
-        <record id="transfer_purchase" model="stock.transfer_details">
-            <field name="picking_id" model="stock.picking" search="[('origin', '=', 'Order Purchase availability 1')]"/>
-            <field name="picking_source_location_id" ref="stock.stock_location_suppliers"/>
-            <field name="picking_destination_location_id" ref="stock.stock_location_company"/>
-        </record>
 
         <!-- Lot of Products -->
 
@@ -75,30 +67,5 @@
             <field name="product_id" ref="product.product_product_11b"/>
         </record>
         <!-- Transfer Detail Items of Product Transfer -->
-
-        <record id="transfer_purchase_item_1" model="stock.transfer_details_items">
-            <field name="transfer_id" ref="transfer_purchase"/>
-            <field name="product_id" ref="product.product_product_11b"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
-            <field name="quantity">1</field>
-            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
-            <field name="lot_id" ref="lot_purchase_item_1"/>
-        </record>
-
-        <record id="transfer_purchase_item_2" model="stock.transfer_details_items">
-            <field name="transfer_id" ref="transfer_purchase"/>
-            <field name="product_id" ref="product.product_product_11b"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
-            <field name="quantity">1</field>
-            <field name="sourceloc_id" ref="stock.stock_location_suppliers"/>
-            <field name="destinationloc_id"  ref="stock.stock_location_company"/>
-            <field name="lot_id" ref="lot_purchase_item_2"/>
-        </record>
-
-        <!-- Make transfer of product -->
-
-        <function model="stock.transfer_details"
-            name="do_detailed_transfer" eval="[ref('transfer_purchase')]"/>
     </data>
 </openerp>

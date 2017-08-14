@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+        <data noupdate="1">
+
+            <record id="stock_warehouse_default_team" model="stock.warehouse">
+                <field name="name">Team Default Warehouse</field>
+                <field name="code">TDW</field>
+            </record>
+
+            <record model="crm.team" id="section_sales_default_team">
+                <field name="name">Default Team</field>
+                <field name="code">DT</field>
+                <field name="default_warehouse" ref="stock_warehouse_default_team"/>
+                <field name="journal_stock_id" ref="stock_account.stock_journal"/>
+            </record>
+        </data>
+</openerp>

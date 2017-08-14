@@ -1,0 +1,22 @@
+<openerp>
+    <data>
+        <record id="view_model_form" model="ir.ui.view">
+             <field name="name">Tracked Fields</field>
+             <field name="model">ir.model</field>
+             <field name="inherit_id" ref="base.view_model_form"/>
+             <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                     <field name="tracked" readonly="1"/>
+                     <field name="exclude_field_ids"
+                            attrs="{'invisible': [('tracked', '=', False)]}"
+                            widget="many2many_tags"
+                            domain="[('model_id', '=', id)]"
+                         />
+                     <field name="exclude_fields_text"
+                            attrs="{'invisible': [('tracked', '=', False)]}"
+                         />
+                 </xpath>
+             </field>
+        </record>
+    </data>
+</openerp>

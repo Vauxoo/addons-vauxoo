@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-        <record id="base.res_partner_23" model="res.partner">
+        <record id="base.res_partner_18" model="res.partner">
             <field name="user_id" ref="base.user_demo"/>
         </record>
         <record id="invoice_1" model="account.invoice">
@@ -11,7 +11,7 @@
             <field name="state">draft</field>
             <field name="type">out_invoice</field>
             <field name="account_id" ref="account.a_recv"/>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
         </record>
         <record id="invoice_1_line_1" model="account.invoice.line">

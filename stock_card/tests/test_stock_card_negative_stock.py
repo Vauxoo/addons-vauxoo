@@ -32,7 +32,7 @@ class TestStockCardNegativeStock(TransactionCase):
         self.move = self.env['stock.move']
         self.product_id = self.env.ref('stock_card.product01')
         self.location_id = self.env.ref('stock.stock_location_stock')
-        self.partner_id = self.env.ref('base.res_partner_23')
+        self.partner_id = self.env.ref('base.res_partner_18')
         self.purchase_order = self.env['purchase.order']
         self.wizard = self.env['stock.transfer_details']
         self.wizard_item = self.env['stock.transfer_details_items']
@@ -126,7 +126,7 @@ class TestStockCardNegativeStock(TransactionCase):
         purchase_order_id = self.purchase_order.create({
             'partner_id': self.partner_id.id,
             'location_id': self.ref('stock.stock_location_stock'),
-            'pricelist_id': self.ref('purchase.list0'),
+            'pricelist_id': self.ref('product.list0'),
             'order_line': [(0, 0, {
                 'name': "{0} (qty={1}, cost={2})".format(self.product_id.name,
                                                          qty, cost),

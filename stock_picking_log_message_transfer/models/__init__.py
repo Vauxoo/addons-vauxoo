@@ -23,22 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    "name": "Stock Picking Log Message Transfer",
-    "summary": "A message in log when the products are transfered",
-    "version": "8.0.1.0.0",
-    "author": "Vauxoo",
-    "website": "http://www.vauxoo.com/",
-    "license": "LGPL-3",
-    "category": "stock",
-    "depends": [
-        "stock",
-        "sale",
-    ],
-    "demo": [
-        "demo/stock_inventory.xml",
-        "demo/sale_order.xml",
-        "demo/transfer_details.xml",
-    ],
-    "installable": False,
-}
+from . import stock_picking

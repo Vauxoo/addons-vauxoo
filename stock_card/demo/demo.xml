@@ -7,8 +7,8 @@
            <field name="cost_method">average</field>
            <field name="valuation">real_time</field>
            <field name="standard_price">20</field>
-           <field name="property_stock_account_input" ref="account.o_expense"/>
-           <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="product02" model="product.product">
            <field name="name">VX Headphones</field>
@@ -16,36 +16,37 @@
            <field name="cost_method">average</field>
            <field name="valuation">real_time</field>
            <field name="standard_price">20</field>
-           <field name="property_stock_account_input" ref="account.o_expense"/>
-           <field name="property_stock_account_output" ref="account.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
 
         <record id="sc_po_01" model="purchase.order">
             <field name="name">sc_po_01</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="pricelist_id" ref="product.list0"/>
         </record>
         <record id="sc_po_01_line_01" model="purchase.order.line">
             <field name="name">sc_po_01_line_01</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="product02"/>
+            <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="product_qty">10</field>
             <field name="price_unit">100</field>
             <field name="order_id" ref="sc_po_01"/>
         </record>
-        <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_01"/>
-        <workflow action="purchase_approve" model="purchase.order" ref="sc_po_01"/>
-        <function model="stock.picking" name="action_assign">
-            <value eval="[obj(ref('sc_po_01')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details">
-            <value eval="[obj(ref('sc_po_01')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <record model="stock.transfer_details" id="td_01">
-            <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_01')).picking_ids[0].id"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_01')]]"/>
+        <!-- <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_01"/> -->
+        <!-- <workflow action="purchase_approve" model="purchase.order" ref="sc_po_01"/> -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value eval="[obj(ref('sc_po_01')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer"> -->
+        <!--     <value eval="[obj(ref('sc_po_01')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_01"> -->
+        <!--     <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_01')).picking_ids[0].id"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_01')]]"/> -->
 
         <record id="sc_so_01" model="sale.order">
             <field name="name">sc_so_01</field>
@@ -62,18 +63,18 @@
             <field name="product_uom_qty">4</field>
             <field name="price_unit">100</field>
         </record>
-        <workflow action="order_confirm" model="sale.order" ref="sc_so_01"/>
-        <workflow action="manual_invoice" model="sale.order" ref="sc_so_01" uid="base.user_root"/>
-        <function model="stock.picking" name="action_assign">
-            <value eval="[obj(ref('sc_so_01')).picking_ids[0].id]" model="sale.order"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details">
-            <value eval="[obj(ref('sc_so_01')).picking_ids[0].id]" model="sale.order"/>
-        </function>
-        <record model="stock.transfer_details" id="td_02">
-            <field name="picking_id" model="sale.order" eval="obj(ref('sc_so_01')).picking_ids[0].id"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_02')]]"/>
+        <!-- <workflow action="order_confirm" model="sale.order" ref="sc_so_01"/> -->
+        <!-- <workflow action="manual_invoice" model="sale.order" ref="sc_so_01" uid="base.user_root"/> -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value eval="[obj(ref('sc_so_01')).picking_ids[0].id]" model="sale.order"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer"> -->
+        <!--     <value eval="[obj(ref('sc_so_01')).picking_ids[0].id]" model="sale.order"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_02"> -->
+        <!--     <field name="picking_id" model="sale.order" eval="obj(ref('sc_so_01')).picking_ids[0].id"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_02')]]"/> -->
 
         <record id="sc_so_02" model="sale.order">
             <field name="name">sc_so_02</field>
@@ -90,45 +91,46 @@
             <field name="product_uom_qty">5</field>
             <field name="price_unit">100</field>
         </record>
-        <workflow action="order_confirm" model="sale.order" ref="sc_so_02"/>
-        <workflow action="manual_invoice" model="sale.order" ref="sc_so_02" uid="base.user_root"/>
-        <function model="stock.picking" name="action_assign">
-            <value eval="[obj(ref('sc_so_02')).picking_ids[0].id]" model="sale.order"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details">
-            <value eval="[obj(ref('sc_so_02')).picking_ids[0].id]" model="sale.order"/>
-        </function>
-        <record model="stock.transfer_details" id="td_03">
-            <field name="picking_id" model="sale.order" eval="obj(ref('sc_so_02')).picking_ids[0].id"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_03')]]"/>
+        <!-- <workflow action="order_confirm" model="sale.order" ref="sc_so_02"/> -->
+        <!-- <workflow action="manual_invoice" model="sale.order" ref="sc_so_02" uid="base.user_root"/> -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value eval="[obj(ref('sc_so_02')).picking_ids[0].id]" model="sale.order"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer"> -->
+        <!--     <value eval="[obj(ref('sc_so_02')).picking_ids[0].id]" model="sale.order"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_03"> -->
+        <!--     <field name="picking_id" model="sale.order" eval="obj(ref('sc_so_02')).picking_ids[0].id"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_03')]]"/> -->
 
         <record id="sc_po_02" model="purchase.order">
             <field name="name">sc_po_02</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="pricelist_id" ref="product.list0"/>
         </record>
         <record id="sc_po_02_line_01" model="purchase.order.line">
             <field name="name">sc_po_02_line_01</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="product_id" ref="product02"/>
             <field name="product_qty">3</field>
             <field name="price_unit">300</field>
             <field name="order_id" ref="sc_po_02"/>
         </record>
-        <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_02"/>
-        <workflow action="purchase_approve" model="purchase.order" ref="sc_po_02"/>
-        <function model="stock.picking" name="action_assign">
-            <value eval="[obj(ref('sc_po_02')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details">
-            <value eval="[obj(ref('sc_po_02')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <record model="stock.transfer_details" id="td_04">
-            <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_02')).picking_ids[0].id"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_04')]]"/>
+        <!-- <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_02"/> -->
+        <!-- <workflow action="purchase_approve" model="purchase.order" ref="sc_po_02"/> -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value eval="[obj(ref('sc_po_02')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer"> -->
+        <!--     <value eval="[obj(ref('sc_po_02')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_04"> -->
+        <!--     <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_02')).picking_ids[0].id"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_04')]]"/> -->
 
         <record id="sc_so_03" model="sale.order">
             <field name="name">sc_so_03</field>
@@ -145,18 +147,18 @@
             <field name="product_uom_qty">3</field>
             <field name="price_unit">250</field>
         </record>
-        <workflow action="order_confirm" model="sale.order" ref="sc_so_03"/>
-        <workflow action="manual_invoice" model="sale.order" ref="sc_so_03" uid="base.user_root"/>
-        <function model="stock.picking" name="action_assign">
-            <value eval="[obj(ref('sc_so_03')).picking_ids[0].id]" model="sale.order"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details">
-            <value eval="[obj(ref('sc_so_03')).picking_ids[0].id]" model="sale.order"/>
-        </function>
-        <record model="stock.transfer_details" id="td_05">
-            <field name="picking_id" model="sale.order" eval="obj(ref('sc_so_03')).picking_ids[0].id"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_05')]]"/>
+        <!-- <workflow action="order_confirm" model="sale.order" ref="sc_so_03"/> -->
+        <!-- <workflow action="manual_invoice" model="sale.order" ref="sc_so_03" uid="base.user_root"/> -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value eval="[obj(ref('sc_so_03')).picking_ids[0].id]" model="sale.order"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer"> -->
+        <!--     <value eval="[obj(ref('sc_so_03')).picking_ids[0].id]" model="sale.order"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_05"> -->
+        <!--     <field name="picking_id" model="sale.order" eval="obj(ref('sc_so_03')).picking_ids[0].id"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_05')]]"/> -->
 
         <record id="pick_01_sc_so_01" model="stock.picking">
             <field name="name">pick_01_sc_so_01</field>
@@ -164,6 +166,8 @@
             <field name="move_type">one</field>
             <field name="priority">1</field>
             <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_id" ref="stock.stock_location_customers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
         </record>
         <record id="move_01_pick_01" model="stock.move">
             <field name="origin">pick_01_sc_so_01</field>
@@ -175,53 +179,55 @@
             <field name="price_unit">100</field>
             <field name="product_uom_qty">1</field>
             <field name="product_id" ref="product02"/>
-            <field name="origin_returned_move_id" eval="obj(ref('sc_so_01')).picking_ids[0].move_lines[0].id" model="sale.order"/>
+            <!-- <field name="origin_returned_move_id" eval="obj(ref('sc_so_01')).picking_ids[0].move_lines[0].id" model="sale.order"/> -->
         </record>
         <function model="stock.picking" name="action_assign" >
             <value model="stock.picking" eval="obj(ref('pick_01_sc_so_01')).mapped('id')"/>
         </function>
-        <function model="stock.picking" name="do_enter_transfer_details" >
+        <function model="stock.picking" name="do_transfer" >
             <value model="stock.picking" eval="obj(ref('pick_01_sc_so_01')).mapped('id')"/>
         </function>
-        <record model="stock.transfer_details" id="td_06">
-            <field name="picking_id" ref="pick_01_sc_so_01"/>
+        <record model="stock.immediate.transfer" id="td_06">
+            <field name="pick_id" ref="pick_01_sc_so_01"/>
         </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_06')]]"/>
+        <function model="stock.immediate.transfer" name="process" eval="[[ref('td_06')]]"/>
 
         <record id="sc_po_03" model="purchase.order">
             <field name="name">sc_po_03</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="pricelist_id" ref="product.list0"/>
         </record>
         <record id="sc_po_03_line_01" model="purchase.order.line">
             <field name="name">sc_po_03_line_01</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="product_id" ref="product02"/>
             <field name="product_qty">5</field>
             <field name="price_unit">220</field>
             <field name="order_id" ref="sc_po_03"/>
         </record>
-        <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_03"/>
-        <workflow action="purchase_approve" model="purchase.order" ref="sc_po_03"/>
-        <function model="stock.picking" name="action_assign">
-            <value eval="[obj(ref('sc_po_03')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details">
-            <value eval="[obj(ref('sc_po_03')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <record model="stock.transfer_details" id="td_07">
-            <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_03')).picking_ids[0].id"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_07')]]"/>
+        <!-- <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_03"/> -->
+        <!-- <workflow action="purchase_approve" model="purchase.order" ref="sc_po_03"/> -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value eval="[obj(ref('sc_po_03')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer"> -->
+        <!--     <value eval="[obj(ref('sc_po_03')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_07"> -->
+        <!--     <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_03')).picking_ids[0].id"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_07')]]"/> -->
 
         <record id="sc_po_04" model="purchase.order">
             <field name="name">sc_po_04</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="location_id" ref="stock.stock_location_stock"/>
-            <field name="pricelist_id" ref="purchase.list0"/>
+            <field name="pricelist_id" ref="product.list0"/>
         </record>
         <record id="sc_po_04_line_01" model="purchase.order.line">
+            <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="name">sc_po_04_line_01</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="product02"/>
@@ -229,24 +235,26 @@
             <field name="price_unit">400</field>
             <field name="order_id" ref="sc_po_04"/>
         </record>
-        <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_04"/>
-        <workflow action="purchase_approve" model="purchase.order" ref="sc_po_04"/>
-        <function model="stock.picking" name="action_assign">
-            <value eval="[obj(ref('sc_po_04')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details">
-            <value eval="[obj(ref('sc_po_04')).picking_ids[0].id]" model="purchase.order"/>
-        </function>
-        <record model="stock.transfer_details" id="td_08">
-            <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_04')).picking_ids[0].id"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_08')]]"/>
+        <!-- <workflow action="purchase_confirm" model="purchase.order" ref="sc_po_04"/> -->
+        <!-- <workflow action="purchase_approve" model="purchase.order" ref="sc_po_04"/> -->
+        <!-- <function model="stock.picking" name="action_assign"> -->
+        <!--     <value eval="[obj(ref('sc_po_04')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer"> -->
+        <!--     <value eval="[obj(ref('sc_po_04')).picking_ids[0].id]" model="purchase.order"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_08"> -->
+        <!--     <field name="picking_id" model="purchase.order" eval="obj(ref('sc_po_04')).picking_ids[0].id"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_08')]]"/> -->
 
         <record id="pick_junk" model="stock.picking">
             <field name="name">www</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="move_type">one</field>
             <field name="priority">1</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="location_dest_id" ref="stock.stock_location_suppliers"/>
             <field name="picking_type_id" ref="stock.picking_type_internal"/>
         </record>
         <record id="pickline_junk" model="stock.move">
@@ -263,10 +271,12 @@
 
         <record id="pick_02_sc_po_03" model="stock.picking">
             <field name="name">pick_02_sc_po_03</field>
-            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="partner_id" ref="base.res_partner_18"/>
             <field name="move_type">one</field>
             <field name="priority">1</field>
             <field name="picking_type_id" ref="stock.picking_type_internal"/>
+            <field name="location_id" ref="stock.stock_location_customers"/>
+            <field name="location_dest_id" ref="stock.stock_location_stock"/>
         </record>
         <record id="move_02_sc_po_03" model="stock.move">
             <field name="origin">pick_02_sc_po_03</field>
@@ -278,17 +288,17 @@
             <field name="price_unit">220</field>
             <field name="product_uom_qty">2</field>
             <field name="product_id" ref="product02"/>
-            <field name="origin_returned_move_id" eval="obj(ref('sc_po_03')).picking_ids[0].move_lines[0].id" model="purchase.order"/>
+            <!-- <field name="origin_returned_move_id" eval="obj(ref('sc_po_03')).picking_ids[0].move_lines[0].id" model="purchase.order"/> -->
         </record>
-        <function model="stock.picking" name="action_assign" >
-            <value model="stock.picking" eval="obj(ref('pick_02_sc_po_03')).mapped('id')"/>
-        </function>
-        <function model="stock.picking" name="do_enter_transfer_details" >
-            <value model="stock.picking" eval="obj(ref('pick_02_sc_po_03')).mapped('id')"/>
-        </function>
-        <record model="stock.transfer_details" id="td_09">
-            <field name="picking_id" ref="pick_02_sc_po_03"/>
-        </record>
-        <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_09')]]"/>
+        <!-- <function model="stock.picking" name="action_assign" > -->
+        <!--     <value model="stock.picking" eval="obj(ref('pick_02_sc_po_03')).mapped('id')"/> -->
+        <!-- </function> -->
+        <!-- <function model="stock.picking" name="do_transfer" > -->
+        <!--     <value model="stock.picking" eval="obj(ref('pick_02_sc_po_03')).mapped('id')"/> -->
+        <!-- </function> -->
+        <!-- <record model="stock.transfer_details" id="td_09"> -->
+        <!--     <field name="picking_id" ref="pick_02_sc_po_03"/> -->
+        <!-- </record> -->
+        <!-- <function model="stock.transfer_details" name="do_detailed_transfer" eval="[[ref('td_09')]]"/> -->
     </data>
 </openerp>

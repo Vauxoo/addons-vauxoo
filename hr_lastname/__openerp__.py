@@ -43,7 +43,7 @@
     "data": [
         "view/hr_employee_view.xml",
     ],
-    "installable": False,
+    "installable": True,
     'application': False,
     'auto_install': False
 }

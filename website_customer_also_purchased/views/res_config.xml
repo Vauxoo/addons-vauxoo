@@ -6,7 +6,7 @@
             <field name="model">website.config.settings</field>
             <field name="inherit_id" ref="website.view_website_config_settings"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@string='Language']" position="after">
+                <xpath expr="//group[2]" position="after">
                         <group string="Customer Also Purcharse">
                             <field name="cap_sort"/>
                         </group>

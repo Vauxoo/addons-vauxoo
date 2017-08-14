@@ -33,21 +33,18 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     # pylint: disable=W0102
-    def quants_get_prefered_domain(self, cr, uid, location, product, qty,
-                                   domain=None, prefered_domain_list=[],
-                                   restrict_lot_id=False,
-                                   restrict_partner_id=False, context=None):
+    def quants_get_preferred_domain(self, qty, move, ops=False,
+                                    lot_id=False, domain=None,
+                                    preferred_domain_list=[]):
         """The original function tries to find quants in the given location for
         the given domain.
         This method is inherited to return specific quants if these are sending
         by context, if not the quant returned are the found for the original
         method.
         """
+        context = self.env.context
         res = context.get('force_quant', False) or \
-            super(StockQuant, self).\
-            quants_get_prefered_domain(
-                cr, uid, location, product, qty, domain=domain,
-                prefered_domain_list=prefered_domain_list,
-                restrict_lot_id=restrict_lot_id,
-                restrict_partner_id=restrict_partner_id, context=context)
+            super(StockQuant, self).quants_get_preferred_domain(
+                qty, move, ops=False, lot_id=False, domain=None,
+                preferred_domain_list=[])
         return res

@@ -1,10 +1,10 @@
 <openerp>
     <data>
-        <template id="assets_backend" name="mail_asssets_comment_approval" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <script type="text/javascript" src="/website_comment_approval/static/src/js/mail.js"></script>
-            </xpath>
-        </template>
+        <!-- <template id="assets_backend" name="mail_asssets_comment_approval" inherit_id="web.assets_backend"> -->
+        <!--     <xpath expr="." position="inside"> -->
+        <!--         <script type="text/javascript" src="/website_comment_approval/static/src/js/mail.js"></script> -->
+        <!--     </xpath> -->
+        <!-- </template> -->
     </data>
 </openerp>
 

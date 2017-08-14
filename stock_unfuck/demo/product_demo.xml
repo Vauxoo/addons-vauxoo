@@ -4,7 +4,7 @@
 
         <record id="product_product_19" model="product.product">
             <field name="name">Product to try the quants used</field>
-            <field name="categ_id" ref="product.product_category_8"/>
+            <field name="categ_id" ref="product.product_category_4"/>
             <field name="standard_price">1100.0</field>
             <field name="list_price">1250.0</field>
             <field name="type">product</field>

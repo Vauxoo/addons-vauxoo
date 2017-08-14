@@ -1,0 +1,170 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* default_warehouse_from_sale_team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-08 15:50+0000\n"
+"PO-Revision-Date: 2016-08-08 15:50+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_warehouse_spt
+msgid "Access to all picking types"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_warehouse_sp
+msgid "Access to all pickings"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:default.warehouse,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:default.warehouse,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.team,default_warehouse:0
+#: model:ir.module.category,name:default_warehouse_from_sale_team.default_warehouse_module
+msgid "Default Warehouse"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:default.warehouse,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:default.warehouse,id:0
+msgid "ID"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: help:crm.team,default_warehouse:0
+msgid "In this field can be defined a default warehouse for the related users to the sales team."
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:default.warehouse,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:default.warehouse,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:default.warehouse,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_sp
+msgid "Limited access to pickings (filtered by sale teams)"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_spt
+msgid "Limited access to pickings types (filtered by sale teams)"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_warehouse_spt
+msgid "Not matter sales team will leave the user to see all the stock picking types"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_warehouse_sp
+msgid "Not matter sales teams will leave the user to see all the stock pickings"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_crm_case_section
+msgid "Sales Teams"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_stock_picking_type
+msgid "The picking type determines the picking view"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: help:res.users,sale_team_ids:0
+msgid "This is only an informative field. Go to Sales > Sales > Sales Teams to edit"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.actions.server,name:default_warehouse_from_sale_team.server_action_update_users_sales_teams
+msgid "Update users after create/update sales teams"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:res.users,sale_team_ids:0
+msgid "User's sales teams"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_res_users
+msgid "Users"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_spt
+msgid "View only the stock picking types which warehouses match with the user sales teams default warehouses"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_sp
+msgid "View only the stock pickings which warehouses match with the user sales teams default warehouses"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:stock.picking,warehouse_id:0
+msgid "Warehouse"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: code:addons/default_warehouse_from_sale_team/models/res_users.py:30
+#, python-format
+msgid "You can not set %s sale team as default because the user do not belongs to the sale teams.\n"
+"Please go to Sales > Sales > Sales Teams menu if you will like to add this user to the sales team"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.team:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Settings warehouse from sale team"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: field:crm.team,journal_stock_id:0
+msgid "Journal stock valuation"
+msgstr ""
+
+#. module: default_warehouse_from_sale_team
+#: view:crm.team:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
+msgid "Journal's sale team"
+msgstr ""
