@@ -30,11 +30,19 @@ from openerp.osv import fields, osv
 class AccountMoveLine(osv.Model):
     _inherit = "account.move.line"
 
-    """
-    """
+    def _auto_init(self, cr, context=None):
+        res = super(AccountMoveLine, self)._auto_init(cr, context=context)
+        index = 'account_move_line_sm_id_account_id_index'
+        cr.execute("SELECT indexname FROM pg_indexes WHERE indexname = %s",
+                   (index,))
+        if not cr.fetchone():
+            cr.execute(
+                'CREATE INDEX %s ON account_move_line (account_id, sm_id)' %
+                index)
+        return res
 
     _columns = {
-        'sm_id': fields.many2one('stock.move', 'Stock move'),
+        'sm_id': fields.many2one('stock.move', 'Stock move', index=True),
     }
 
 

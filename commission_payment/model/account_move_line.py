@@ -214,21 +214,6 @@ class AccountMoveLine(osv.Model):
 
         return res
 
-    def _get_move_from_reconcilex(self, cr, uid, ids, context=None):
-        move = {}
-        amr_obj = self.pool.get('account.move.reconcile')
-        aml_obj = self.pool.get('account.move.line')
-        for amr_brw in amr_obj.browse(cr, uid, ids, context=context):
-            for line in amr_brw.line_partial_ids:
-                move[line.move_id.id] = True
-            for line in amr_brw.line_id:
-                move[line.move_id.id] = True
-        move_line_ids = []
-        if move:
-            move_line_ids = aml_obj.search(
-                cr, uid, [('move_id', 'in', move.keys())], context=context)
-        return move_line_ids
-
     def _get_aml_related_date(self, cr, uid, ids, context=None):
         res = set([])
         context = context or {}
@@ -268,8 +253,6 @@ class AccountMoveLine(osv.Model):
                 _inherit: (_get_aml_related_date,
                            ['reconcile_id', 'reconcile_partial_id',
                             'reconcile_ref'], 15),
-                'account.move.reconcile': (
-                    _get_move_from_reconcilex, None, 50),
             }),
     }
     _defaults = {
