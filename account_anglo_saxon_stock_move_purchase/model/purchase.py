@@ -34,6 +34,22 @@ class PurchaseOrder(models.Model):
 
     _inherit = "purchase.order"
 
+    @api.multi
+    def _compute_accrual_reconciled(self):
+        for po_brw in self:
+            unreconciled_lines = len(po_brw.mapped('aml_ids').filtered(
+                lambda l: l.account_id.reconcile and not l.reconcile_id))
+            po_brw.accrual_reconciled = not bool(unreconciled_lines)
+            po_brw.unreconciled_lines = unreconciled_lines
+
+    accrual_reconciled = fields.Boolean(
+        compute='_compute_accrual_reconciled',
+        string="Reconciled Accrual",
+        help="Indicates if All Accrual Journal Items are reconciled")
+    unreconciled_lines = fields.Integer(
+        compute='_compute_accrual_reconciled',
+        string="Unreconciled Accrual Lines",
+        help="Indicates how many Accrual Journal Items are unreconciled")
     aml_ids = fields.One2many(
         'account.move.line', 'purchase_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Purchase Order')
@@ -64,6 +80,7 @@ class PurchaseOrder(models.Model):
             res = {}
             # Only stack those that are fully reconciled
             amr_ids = all_aml_ids.mapped('reconcile_id')
+            amr_ids |= all_aml_ids.mapped('reconcile_partial_id')
             amr_ids.unlink()
 
             # Let's group all the Accrual lines by Purchase/Sale Order, Product
