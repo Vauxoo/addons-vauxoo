@@ -14,6 +14,13 @@
                     class="oe_stat_button"
                     icon="fa-truck"
                     />
+                <button
+                    type="object"
+                    string="Reconcile Accruals"
+                    name="reconcile_stock_accrual"
+                    class="oe_stat_button"
+                    icon="fa-handshake-o"
+                    />
             </xpath>
         </field>
     </record>
