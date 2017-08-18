@@ -48,67 +48,6 @@ class AccountInvoice(models.Model):
             amr_ids.unlink()
         return super(AccountInvoice, self).action_cancel()
 
-    @api.multi
-    def reconcile_stock_accrual(self):
-        aml_obj = self.env['account.move.line']
-        for inv_brw in self:
-            # We just care about lines which have a stock_move.aml_ids related
-            all_aml_ids = aml_obj
-            aml_ids = inv_brw.invoice_line.mapped('move_id.aml_ids')
-
-            # In order to keep every single line reconciled we will look for
-            # all the lines related to a purchase/sale order
-            all_aml_ids |= aml_ids.mapped('purchase_id.aml_ids')
-            all_aml_ids |= aml_ids.mapped('sale_id.aml_ids')
-
-            categ_ids = all_aml_ids.filtered(
-                lambda m:
-                m.product_id and
-                not m.product_id.categ_id.property_stock_journal)
-            if categ_ids:
-                raise ValidationError(_(
-                    'The Stock Journal is missing on following '
-                    'product categories: %s' % (', '.join(
-                        categ_ids.mapped('name')))
-                ))
-
-            res = {}
-            # Only stack those that are fully reconciled
-            amr_ids = all_aml_ids.mapped('reconcile_id')
-            amr_ids.unlink()
-
-            # Let's group all the Accrual lines by Purchase/Sale Order, Product
-            # and Account
-            for aml_brw in all_aml_ids.filtered('account_id.reconcile'):
-                doc_brw = aml_brw.purchase_id or aml_brw.sale_id
-                account_id = aml_brw.account_id.id
-                product_id = aml_brw.product_id
-                res.setdefault((doc_brw, account_id, product_id), aml_obj)
-                res[(doc_brw, account_id, product_id)] |= aml_brw
-
-            for (doc_brw, account_id, product_id), aml_ids in res.items():
-                if not len(aml_ids) > 1:
-                    continue
-                journal_id = product_id.categ_id.property_stock_journal.id
-                try:
-                    aml_ids.reconcile_partial(
-                        writeoff_period_id=inv_brw.period_id.id,
-                        writeoff_journal_id=journal_id)
-                except orm.except_orm:
-                    message = (
-                        "Reconciliation was not possible with "
-                        "Journal Items [%(values)s]" % dict(
-                            values=", ".join([str(idx) for idx in aml_ids])))
-                    _logger.exception(message)
-
-        return True
-
-    @api.multi
-    def invoice_validate(self):
-        res = super(AccountInvoice, self).invoice_validate()
-        self.reconcile_stock_accrual()
-        return res
-
 
 class AccountInvoiceLine(osv.osv):
     _inherit = "account.invoice.line"
