@@ -86,8 +86,10 @@ class PurchaseOrder(models.Model):
 
             # In order to keep every single line reconciled we will look for
             # all the lines related to a purchase/sale order
-            all_aml_ids = po_brw.mapped('aml_ids')
+            all_aml_ids = po_brw.mapped('aml_ids').filtered(
+                lambda l: not l.reconcile_id)
 
+            # /!\ NOTE: This does not return Product Categories
             categ_ids = all_aml_ids.filtered(
                 lambda m:
                 m.product_id and
