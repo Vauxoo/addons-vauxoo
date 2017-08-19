@@ -55,6 +55,28 @@ class PurchaseOrder(models.Model):
         help='Journal Entry Lines related to this Purchase Order')
 
     @api.multi
+    def cron_purchase_accrual_reconciliation(self):
+        self._cr.execute('''
+            SELECT
+                aml.purchase_id AS id
+                , COUNT(aml.id) as count
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                purchase_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY purchase_id
+            ;
+            ''')
+
+        self.browse(
+            [x[0] for x in self._cr.fetchall()]
+        ).reconcile_stock_accrual()
+
+        return
+
+    @api.multi
     def reconcile_stock_accrual(self):
         aml_obj = self.env['account.move.line']
         ap_obj = self.env['account.period']
