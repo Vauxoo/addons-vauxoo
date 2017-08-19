@@ -103,8 +103,8 @@ class PurchaseOrder(models.Model):
 
             res = {}
             # Only stack those that are fully reconciled
-            amr_ids = all_aml_ids.mapped('reconcile_id')
-            amr_ids |= all_aml_ids.mapped('reconcile_partial_id')
+            # amr_ids = all_aml_ids.mapped('reconcile_id')
+            amr_ids = all_aml_ids.mapped('reconcile_partial_id')
             amr_ids.unlink()
 
             # Let's group all the Accrual lines by Purchase/Sale Order, Product
