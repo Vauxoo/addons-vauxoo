@@ -54,9 +54,8 @@ class PurchaseOrder(models.Model):
         'account.move.line', 'purchase_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Purchase Order')
 
-    @api.multi
-    def cron_purchase_accrual_reconciliation(self):
-        self._cr.execute('''
+    def cron_purchase_accrual_reconciliation(self, cr, uid, context=None):
+        cr.execute('''
             SELECT
                 aml.purchase_id AS id
                 , COUNT(aml.id) as count
@@ -70,9 +69,8 @@ class PurchaseOrder(models.Model):
             ;
             ''')
 
-        self.browse(
-            [x[0] for x in self._cr.fetchall()]
-        ).reconcile_stock_accrual()
+        ids = [x[0] for x in cr.fetchall()]
+        self.browse(cr, uid, ids, context=context).reconcile_stock_accrual()
 
         return
 
@@ -86,14 +84,14 @@ class PurchaseOrder(models.Model):
 
             # In order to keep every single line reconciled we will look for
             # all the lines related to a purchase/sale order
-            all_aml_ids = po_brw.mapped('aml_ids').filtered(
-                lambda l: not l.reconcile_id)
+            all_aml_ids = po_brw.aml_ids.filtered(lambda l: not l.reconcile_id)
 
             # /!\ NOTE: This does not return Product Categories
             categ_ids = all_aml_ids.filtered(
                 lambda m:
                 m.product_id and
-                not m.product_id.categ_id.property_stock_journal)
+                not m.product_id.categ_id.property_stock_journal).mapped(
+                    'product_id.categ_id')
             if categ_ids:
                 raise ValidationError(_(
                     'The Stock Journal is missing on following '
