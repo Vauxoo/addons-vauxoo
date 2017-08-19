@@ -130,6 +130,8 @@ class PurchaseOrder(models.Model):
                             values=", ".join([str(idx) for idx in aml_ids])))
                     _logger.exception(message)
 
+            po_brw._cr.commit()
+
         return True
 
     def view_accrual(self, cr, uid, ids, context=None):
