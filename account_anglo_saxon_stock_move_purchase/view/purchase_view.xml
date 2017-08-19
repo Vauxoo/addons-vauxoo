@@ -14,14 +14,9 @@
                     class="oe_stat_button"
                     icon="fa-truck"
                     />
-                <button
-                    type="object"
-                    string="Reconcile Accruals"
-                    name="reconcile_stock_accrual"
-                    class="oe_stat_button"
-                    icon="fa-handshake-o"
-                    >
-                    <field name="unreconciled_lines"/>
+
+                <button type="object" name="reconcile_stock_accrual" class="oe_stat_button" icon="fa-random">
+                    <field name="unreconciled_lines" widget="statinfo" string="Reconcile Accruals"/>
                 </button>
             </xpath>
         </field>
