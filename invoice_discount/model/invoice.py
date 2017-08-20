@@ -23,133 +23,68 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-"""File to add functionalitity in account.invoice.line to get the amount without
+"""File to add functionality in account.invoice.line to get the amount without
 discount and the value of the discount
 """
-from openerp.osv import osv, fields
+from openerp import api, fields, models
 
 
-class AccountInvoiceLine(osv.osv):
+class AccountInvoiceLine(models.Model):
 
     """Inherit from account.invoice.line to get by line the amount without
     discount and the amount of this
     """
     _inherit = 'account.invoice.line'
 
-    def _get_subtotal_without_discount(self, cr, uid, ids, args, field_name,
-                                       context=None):
+    subtotal_wo_discount = fields.Float(
+        store=True, string="SubTotal w/o Discount",
+        help=('Amount without apply the discount of the line, '
+              'is calculated as Qty * Price Unit'),
+        compute='_compute_subtotal_wo_disc')
+    discount_amount = fields.Float(
+        store=True, string='Discount Amount',
+        help=('Amount total of the discount, is calculated as '
+              'Discount * SubTotal w/o Discount / 100.'),
+        compute='_compute_subtotal_wo_disc')
+
+    @api.depends('invoice_line_tax_id', 'price_unit', 'quantity', 'discount')
+    def _compute_subtotal_wo_disc(self):
         """Method to get the subtotal of the amount without discount
-        @param self: The object pointer.
-        @param cr: A database cursor
-        @param uid: ID of the user currently logged in
-        @param ids: list of ids for which name should be read
-        @param field_name: field that call the method
-        @param arg: Extra arguments
-        @param context: A standard dictionary
-        @return : Dict with values
         """
-        context = context or {}
-        res = {}
-        tax_obj = self.pool.get('account.tax')
-        for line in self.browse(cr, uid, ids, context=context):
-            taxes = tax_obj.compute_all(
-                cr, uid, line.invoice_line_tax_id, line.price_unit,
-                line.quantity)
-            res[line.id] = taxes['total']
-        return res
-
-    def _get_discount(self, cr, uid, ids, args, field_name, context=None):
-        """Method to get the amount of discount, is used subtraction by rounding
-        @param self: The object pointer.
-        @param cr: A database cursor
-        @param uid: ID of the user currently logged in
-        @param ids: list of ids for which name should be read
-        @param field_name: field that call the method
-        @param arg: Extra arguments
-        @param context: A standard dictionary
-        @return : Dict with values
-        """
-        context = context or {}
-        res = {}
-        for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = line.discount * line.subtotal_wo_discount / 100
-        return res
-
-    _columns = {
-        'subtotal_wo_discount': fields.function(_get_subtotal_without_discount,
-                                                string='SubTotal w/o Discount',
-                                                store=True, type='float',
-                                                help='Amount without apply \
-                                                the discount of the line, is \
-                                                calculated as Qty * Price Unit'
-                                                ),
-        'discount_amount': fields.function(_get_discount,
-                                           string='Discount Amount',
-                                           store=False, type='float',
-                                           help='Amount total of the discount,\
-                                           is calculated as Discount * \
-                                           SubTotal w/o Discount / 100.'),
-    }
+        for line in self:
+            taxes = line.invoice_line_tax_id.compute_all(
+                line.price_unit, line.quantity)
+            line.subtotal_wo_discount = taxes['total']
+            line.discount_amount = (
+                line.discount * line.subtotal_wo_discount / 100)
 
 
-class AccountInvoice(osv.osv):
+class AccountInvoice(models.Model):
 
     """Inherit from account.invoice to get the amount total without discount and
     the amount total of this, of all invoice lines.
     """
     _inherit = 'account.invoice'
 
-    def _get_subtotal_without_discount(self, cr, uid, ids, args, field_name,
-                                       context=None):
-        """Method to get the subtotal of the amount without discount of the sum of
-        invoice lines.
-        @param self: The object pointer.
-        @param cr: A database cursor
-        @param uid: ID of the user currently logged in
-        @param ids: list of ids for which name should be read
-        @param field_name: field that call the method
-        @param arg: Extra arguments
-        @param context: A standard dictionary
-        @return : Dict with values
-        """
-        context = context or {}
-        total = 0.0
-        res = {}
-        for inv in self.browse(cr, uid, ids, context=context):
-            for line in inv.invoice_line:
-                total += line.subtotal_wo_discount
-            res[inv.id] = total
-        return res
+    subtotal_wo_discount = fields.Float(
+        compute='_compute_subtotal_wo_disc', string='SubTotal w/o Discount',
+        store=True,
+        help='Amount without apply the discount of the lines of the invoice.')
+    discount_amount = fields.Float(
+        compute='_compute_subtotal_wo_disc',  string='Discount', store=True,
+        help='Total of discount apply in each line of the invoice.')
 
-    def _get_discount(self, cr, uid, ids, args, field_name, context=None):
-        """Method to get the amount total of discount in the invoice lines.
-        @param self: The object pointer.
-        @param cr: A database cursor
-        @param uid: ID of the user currently logged in
-        @param ids: list of ids for which name should be read
-        @param field_name: field that call the method
-        @param arg: Extra arguments
-        @param context: A standard dictionary
-        @return : Dict with values
-        """
-        context = context or {}
-        total = 0.0
-        res = {}
-        for inv in self.browse(cr, uid, ids, context=context):
-            for line in inv.invoice_line:
-                total += line.discount_amount
-            res[inv.id] = total
-        return res
-
-    _columns = {
-        'subtotal_wo_discount': fields.function(_get_subtotal_without_discount,
-                                                string='SubTotal w/o Discount',
-                                                store=True, type='float',
-                                                help='Amount without apply the\
-                                                 discount of the lines of the \
-                                                invoice.'),
-        'discount_amount': fields.function(_get_discount, string='Discount',
-                                           store=False, type='float',
-                                           help='Total of discount apply in \
-                                           each line of the invoice.'),
-    }
+    @api.depends('invoice_line.subtotal_wo_discount',
+                 'invoice_line.discount_amount')
+    def _compute_subtotal_wo_disc(self):
+        line = self.env['account.invoice.line']
+        res = line.read_group(
+            domain=[('invoice_id', 'in', self.ids)],
+            fields=['invoice_id', 'subtotal_wo_discount', 'discount_amount'],
+            groupby='invoice_id')
+        invoice_sum = dict([(item['invoice_id'][0], item) for item in res])
+        for invoice in self:
+            invoice.subtotal_wo_discount = invoice_sum.get(invoice.id, {}).get(
+                'subtotal_wo_discount')
+            invoice.discount_amount = invoice_sum.get(invoice.id, {}).get(
+                'discount_amount')
