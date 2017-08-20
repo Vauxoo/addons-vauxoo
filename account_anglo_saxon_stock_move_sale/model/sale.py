@@ -21,20 +21,143 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tools.translate import _
-from openerp.osv import osv, fields
+import logging
+
+from openerp.osv import orm
+from openerp import fields, models, api, _
+from openerp.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 
-class SaleOrder(osv.osv):
+class SaleOrder(models.Model):
 
     _inherit = "sale.order"
-    _columns = {
-        'aml_ids': fields.one2many(
-            'account.move.line',
-            'sale_id',
-            # domain='[(account_id.reconcile, "=", True)]',
-            string='Account Move Lines'),
-    }
+
+    @api.multi
+    def _compute_accrual_reconciled(self):
+        for po_brw in self:
+            unreconciled_lines = len(po_brw.mapped('aml_ids').filtered(
+                lambda l: l.account_id.reconcile and not l.reconcile_id))
+            po_brw.accrual_reconciled = not bool(unreconciled_lines)
+            po_brw.unreconciled_lines = unreconciled_lines
+
+    accrual_reconciled = fields.Boolean(
+        compute='_compute_accrual_reconciled',
+        string="Reconciled Accrual",
+        help="Indicates if All Accrual Journal Items are reconciled")
+    unreconciled_lines = fields.Integer(
+        compute='_compute_accrual_reconciled',
+        string="Unreconciled Accrual Lines",
+        help="Indicates how many Accrual Journal Items are unreconciled")
+    aml_ids = fields.One2many(
+        'account.move.line', 'sale_id', 'Account Move Lines',
+        help='Journal Entry Lines related to this Sale Order')
+
+    def cron_sale_accrual_reconciliation(self, cr, uid, context=None):
+        cr.execute('''
+            SELECT
+                aml.sale_id AS id
+                , COUNT(aml.id) as count
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                sale_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY sale_id
+            HAVING COUNT(aml.id) > 1
+            ORDER BY count ASC
+            ;
+            ''')
+
+        ids = [x[0] for x in cr.fetchall()]
+        self.browse(cr, uid, ids, context=context).reconcile_stock_accrual()
+
+        return
+
+    @api.multi
+    def reconcile_stock_accrual(self):
+        aml_obj = self.env['account.move.line']
+        ap_obj = self.env['account.period']
+        date = fields.Date.context_today(self)
+        period_id = ap_obj.with_context(self._context).find(date)[:1].id,
+        total = len(self)
+        count = 0
+        for po_brw in self:
+            count += 1
+
+            # In order to keep every single line reconciled we will look for
+            # all the lines related to a purchase/sale order
+            self._cr.execute('''
+                SELECT
+                    aml.id
+                FROM account_move_line aml
+                INNER JOIN account_account aa ON aa.id = aml.account_id
+                WHERE
+                    sale_id =%s
+                    AND reconcile_id IS NULL
+                    AND aa.reconcile = TRUE
+                ;
+                ''', (po_brw.id,))
+
+            ids = [x[0] for x in self._cr.fetchall()]
+
+            if len(ids) < 2:
+                continue
+
+            all_aml_ids = aml_obj.browse(ids)
+
+            # /!\ NOTE: This does not return Product Categories
+            categ_ids = all_aml_ids.filtered(
+                lambda m:
+                m.product_id and
+                not m.product_id.categ_id.property_stock_journal).mapped(
+                    'product_id.categ_id')
+            if categ_ids:
+                raise ValidationError(_(
+                    'The Stock Journal is missing on following '
+                    'product categories: %s' % (', '.join(
+                        categ_ids.mapped('name')))
+                ))
+
+            res = {}
+            # Only stack those that are fully reconciled
+            # amr_ids = all_aml_ids.mapped('reconcile_id')
+            amr_ids = all_aml_ids.mapped('reconcile_partial_id')
+            amr_ids.unlink()
+
+            # Let's group all the Accrual lines by Purchase/Sale Order, Product
+            # and Account
+            for aml_brw in all_aml_ids:
+                doc_brw = aml_brw.purchase_id or aml_brw.sale_id
+                account_id = aml_brw.account_id.id
+                product_id = aml_brw.product_id
+                res.setdefault((doc_brw, account_id, product_id), aml_obj)
+                res[(doc_brw, account_id, product_id)] |= aml_brw
+
+            do_commit = False
+            for (doc_brw, account_id, product_id), aml_ids in res.items():
+                if not len(aml_ids) > 1:
+                    continue
+                journal_id = product_id.categ_id.property_stock_journal.id
+                try:
+                    aml_ids.reconcile_partial(
+                        writeoff_period_id=period_id,
+                        writeoff_journal_id=journal_id)
+                    do_commit = True
+
+                except orm.except_orm:
+                    message = (
+                        "Reconciliation was not possible with "
+                        "Journal Items [%(values)s]" % dict(
+                            values=", ".join([str(idx) for idx in aml_ids])))
+                    _logger.exception(message)
+
+            if do_commit:
+                po_brw._cr.commit()
+
+        return True
 
     def view_accrual(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids

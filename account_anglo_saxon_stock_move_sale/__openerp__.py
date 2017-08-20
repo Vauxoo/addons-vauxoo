@@ -35,6 +35,7 @@
     "demo": [],
     "data": [
         'view/sale_view.xml',
+        'data/cron_job.xml',
     ],
     "test": [],
     "js": [],
