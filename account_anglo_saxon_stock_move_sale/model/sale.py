@@ -56,13 +56,14 @@ class SaleOrder(models.Model):
         help='Journal Entry Lines related to this Sale Order')
 
     def cron_sale_accrual_reconciliation(self, cr, uid, context=None):
+        company_id = self.pool['res.users'].browse(cr, uid, uid).company_id
         cr.execute('''
             SELECT
-                aml.sale_id AS id
-                , aml.product_id as product_id
-                , aml.account_id as account_id
-                , COUNT(aml.id) as count
-                , SUM(aml.debit - aml.credit)
+                aml.sale_id AS id,
+                aml.product_id as product_id,
+                aml.account_id as account_id,
+                COUNT(aml.id) as count,
+                SUM(aml.debit - aml.credit)
             FROM account_move_line aml
             INNER JOIN account_account aa ON aa.id = aml.account_id
             WHERE
@@ -75,7 +76,7 @@ class SaleOrder(models.Model):
             AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
             ORDER BY count DESC, id DESC, product_id DESC
             ;
-            ''', (2,))
+            ''', (company_id.accrual_offset,))
 
         ids = list(set(x[0] for x in cr.fetchall()))
         self.browse(cr, uid, ids, context=context).reconcile_stock_accrual()
@@ -92,9 +93,10 @@ class SaleOrder(models.Model):
         total = len(self)
         count = 0
 
-        writeoff = True  # TODO: Set on company
-        accrual_offset = 2  # TODO: Set on company
-        do_partial = False  # TODO: Set on company
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        writeoff = company_id.writeoff
+        accrual_offset = company_id.accrual_offset
+        do_partial = company_id.do_partial
 
         for po_brw in self:
             count += 1
