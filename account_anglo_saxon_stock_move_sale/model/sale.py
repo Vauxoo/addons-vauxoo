@@ -22,6 +22,7 @@
 #
 ##############################################################################
 import logging
+import time
 
 from openerp.osv import orm
 from openerp import fields, models, api, _
@@ -54,8 +55,7 @@ class SaleOrder(models.Model):
         'account.move.line', 'sale_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Sale Order')
 
-    def cron_sale_accrual_reconciliation(
-            self, cr, uid, writeoff=False, context=None):
+    def cron_sale_accrual_reconciliation(self, cr, uid, context=None):
         cr.execute('''
             SELECT
                 aml.sale_id AS id
@@ -187,6 +187,9 @@ class SaleOrder(models.Model):
                     _logger.exception(message)
 
             if do_commit:
+                po_brw.message_post(
+                    subject='Accruals Reconciled at %s' % time.ctime(),
+                    body='Applying reconciliation on Order')
                 po_brw._cr.commit()
 
         return True
