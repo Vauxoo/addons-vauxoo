@@ -33,7 +33,7 @@
         "stock_move_entries",
     ],
     "demo": [],
-    "data": [],
+    "data": ['view/company_view.xml'],
     "test": [],
     "js": [],
     "css": [],
