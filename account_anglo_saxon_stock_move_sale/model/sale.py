@@ -197,7 +197,7 @@ class SaleOrder(models.Model):
         return True
 
     def view_accrual(self, cr, uid, ids, context=None):
-        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ids = [ids] if isinstance(ids, (int, long)) else ids
         context = context or {}
         res = []
         for sale_brw in self.browse(cr, uid, ids, context=context):
