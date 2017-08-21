@@ -54,24 +54,30 @@ class SaleOrder(models.Model):
         'account.move.line', 'sale_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Sale Order')
 
-    def cron_sale_accrual_reconciliation(self, cr, uid, context=None):
+    def cron_sale_accrual_reconciliation(
+            self, cr, uid, writeoff=False, context=None):
         cr.execute('''
             SELECT
                 aml.sale_id AS id
+                , aml.product_id as product_id
+                , aml.account_id as account_id
                 , COUNT(aml.id) as count
+                , SUM(aml.debit - aml.credit)
             FROM account_move_line aml
             INNER JOIN account_account aa ON aa.id = aml.account_id
             WHERE
                 sale_id IS NOT NULL
+                AND product_id IS NOT NULL
                 AND reconcile_id IS NULL
                 AND aa.reconcile = TRUE
-            GROUP BY sale_id
-            HAVING COUNT(aml.id) > 1
-            ORDER BY count ASC
+            GROUP BY sale_id, product_id, account_id
+            HAVING COUNT(aml.id)  > 1
+            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            ORDER BY count DESC, id DESC, product_id DESC
             ;
-            ''')
+            ''', (2,))
 
-        ids = [x[0] for x in cr.fetchall()]
+        ids = list(set(x[0] for x in cr.fetchall()))
         self.browse(cr, uid, ids, context=context).reconcile_stock_accrual()
 
         return
@@ -81,9 +87,15 @@ class SaleOrder(models.Model):
         aml_obj = self.env['account.move.line']
         ap_obj = self.env['account.period']
         date = fields.Date.context_today(self)
-        period_id = ap_obj.with_context(self._context).find(date)[:1].id,
+        period_id = ap_obj.with_context(self._context).find(date)[:1].id
+
         total = len(self)
         count = 0
+
+        writeoff = True  # TODO: Set on company
+        accrual_offset = 2  # TODO: Set on company
+        do_partial = False  # TODO: Set on company
+
         for po_brw in self:
             count += 1
 
@@ -97,6 +109,7 @@ class SaleOrder(models.Model):
                 WHERE
                     sale_id =%s
                     AND reconcile_id IS NULL
+                    AND product_id IS NOT NULL
                     AND aa.reconcile = TRUE
                 ;
                 ''', (po_brw.id,))
@@ -111,7 +124,6 @@ class SaleOrder(models.Model):
             # /!\ NOTE: This does not return Product Categories
             categ_ids = all_aml_ids.filtered(
                 lambda m:
-                m.product_id and
                 not m.product_id.categ_id.property_stock_journal).mapped(
                     'product_id.categ_id')
             if categ_ids:
@@ -124,13 +136,12 @@ class SaleOrder(models.Model):
             res = {}
             # Only stack those that are fully reconciled
             # amr_ids = all_aml_ids.mapped('reconcile_id')
-            amr_ids = all_aml_ids.mapped('reconcile_partial_id')
-            amr_ids.unlink()
+            all_aml_ids.mapped('reconcile_partial_id').unlink()
 
             # Let's group all the Accrual lines by Purchase/Sale Order, Product
             # and Account
             for aml_brw in all_aml_ids:
-                doc_brw = aml_brw.purchase_id or aml_brw.sale_id
+                doc_brw = aml_brw.sale_id
                 account_id = aml_brw.account_id.id
                 product_id = aml_brw.product_id
                 res.setdefault((doc_brw, account_id, product_id), aml_obj)
@@ -138,14 +149,35 @@ class SaleOrder(models.Model):
 
             do_commit = False
             for (doc_brw, account_id, product_id), aml_ids in res.items():
-                if not len(aml_ids) > 1:
+                if len(aml_ids) < 2:
                     continue
                 journal_id = product_id.categ_id.property_stock_journal.id
+                writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
                 try:
-                    aml_ids.reconcile_partial(
-                        writeoff_period_id=period_id,
-                        writeoff_journal_id=journal_id)
-                    do_commit = True
+                    # /!\ NOTE: Reconcile with write off
+                    if writeoff and abs(writeoff_amount) <= accrual_offset:
+                        aml_ids.reconcile(
+                            type='manual',
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                        do_commit = True
+                        continue
+                    elif abs(writeoff_amount) <= accrual_offset:
+                        aml_ids.reconcile_partial(
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                        do_commit = True
+                        continue
+                    # /!\ NOTE: I @hbto advise you to neglect the use of this
+                    # option. AS it is resource wasteful and provide little
+                    # value. Use only if you really find it Useful to
+                    # partially reconcile loose lines
+                    if do_partial:
+                        aml_ids.reconcile_partial(
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                        do_commit = True
+                        continue
 
                 except orm.except_orm:
                     message = (
