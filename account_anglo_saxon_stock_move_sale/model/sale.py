@@ -43,6 +43,31 @@ class SaleOrder(models.Model):
             po_brw.accrual_reconciled = not bool(unreconciled_lines)
             po_brw.unreconciled_lines = unreconciled_lines
 
+    @api.multi
+    def _compute_pending_reconciliation(self):
+        query = '''
+            SELECT
+                aml.sale_id AS id,
+                aml.product_id as product_id,
+                aml.account_id as account_id,
+                COUNT(aml.id) as count
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                sale_id = %s
+                AND product_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY sale_id, product_id, account_id
+            HAVING COUNT(aml.id)  > 1
+            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            ;'''
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        accrual_offset = company_id.accrual_offset
+        for po_brw in self:
+            self._cr.execute(query, (po_brw.id, accrual_offset))
+            po_brw.reconciliation_pending = len(self._cr.fetchall())
+
     accrual_reconciled = fields.Boolean(
         compute='_compute_accrual_reconciled',
         string="Reconciled Accrual",
@@ -51,6 +76,10 @@ class SaleOrder(models.Model):
         compute='_compute_accrual_reconciled',
         string="Unreconciled Accrual Lines",
         help="Indicates how many Accrual Journal Items are unreconciled")
+    reconciliation_pending = fields.Integer(
+        compute='_compute_pending_reconciliation',
+        string="Reconciliation Pending",
+        help="Indicates how many possible reconciliation are pending")
     aml_ids = fields.One2many(
         'account.move.line', 'sale_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Sale Order')
@@ -193,6 +222,9 @@ class SaleOrder(models.Model):
                     subject='Accruals Reconciled at %s' % time.ctime(),
                     body='Applying reconciliation on Order')
                 po_brw._cr.commit()
+                _logger.info(
+                    'Reconciling Sale Order id:%s - %s/%s' % (
+                        po_brw.id, count, total))
 
         return True
 
