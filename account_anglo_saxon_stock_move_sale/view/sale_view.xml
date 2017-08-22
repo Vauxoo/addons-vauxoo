@@ -17,7 +17,7 @@
                         groups="account.group_account_user"
                         />
                     <button type="object" name="reconcile_stock_accrual" class="oe_stat_button" groups="account.group_account_user" icon="fa-random">
-                        <field name="unreconciled_lines" widget="statinfo" string="Reconcile Accruals"/>
+                        <field name="reconciliation_pending" widget="statinfo" string="Match Accruals"/>
                     </button>
                 </div>
             </xpath>
