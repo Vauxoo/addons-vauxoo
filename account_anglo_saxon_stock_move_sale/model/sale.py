@@ -46,27 +46,37 @@ class SaleOrder(models.Model):
     @api.multi
     def _compute_pending_reconciliation(self):
         query = '''
-            SELECT
-                aml.sale_id AS id,
-                aml.product_id as product_id,
-                aml.account_id as account_id,
-                COUNT(aml.id) as count
-            FROM account_move_line aml
-            INNER JOIN account_account aa ON aa.id = aml.account_id
-            WHERE
-                sale_id = %s
-                AND product_id IS NOT NULL
-                AND reconcile_id IS NULL
-                AND aa.reconcile = TRUE
-            GROUP BY sale_id, product_id, account_id
-            HAVING COUNT(aml.id)  > 1
-            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            SELECT sale_id, COUNT(qty)
+            FROM (
+                SELECT
+                    aml.sale_id AS sale_id,
+                    aml.product_id as product_id,
+                    aml.account_id as account_id,
+                    COUNT(aml.id) as qty
+                FROM account_move_line aml
+                INNER JOIN account_account aa ON aa.id = aml.account_id
+                WHERE
+                    sale_id IN %s
+                    AND product_id IS NOT NULL
+                    AND reconcile_id IS NULL
+                    AND aa.reconcile = TRUE
+                GROUP BY sale_id, product_id, account_id
+                HAVING COUNT(aml.id)  > 1
+                AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+                ) AS view
+            GROUP BY sale_id
             ;'''
+
         company_id = self.env['res.users'].browse(self._uid).company_id
         accrual_offset = company_id.accrual_offset
-        for po_brw in self:
-            self._cr.execute(query, (po_brw.id, accrual_offset))
-            po_brw.reconciliation_pending = len(self._cr.fetchall())
+
+        self._cr.execute(query, (tuple(self._ids), accrual_offset))
+        res = dict(self._cr.fetchall())
+
+        for brw in self:
+            brw.reconciliation_pending = res.get(brw.id, 0)
+
+        return
 
     accrual_reconciled = fields.Boolean(
         compute='_compute_accrual_reconciled',
