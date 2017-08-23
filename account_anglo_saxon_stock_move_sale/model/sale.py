@@ -70,9 +70,9 @@ class SaleOrder(models.Model):
     def _compute_pending_reconciliation(self):
 
         company_id = self.env['res.users'].browse(self._uid).company_id
-        accrual_offset = company_id.accrual_offset
+        offset = company_id.accrual_offset
 
-        self._cr.execute(self.query, (tuple(self._ids), accrual_offset))
+        self._cr.execute(self.query, (tuple(self._ids), offset))
         res = dict(self._cr.fetchall())
 
         for brw in self:
@@ -84,8 +84,8 @@ class SaleOrder(models.Model):
         ids = self.search([])._ids
         res = {}.fromkeys(ids, 0)
         company_id = self.env['res.users'].browse(self._uid).company_id
-        accrual_offset = company_id.accrual_offset
-        self._cr.execute(self.query, (tuple(ids), accrual_offset))
+        offset = company_id.accrual_offset
+        self._cr.execute(self.query, (tuple(ids), offset))
 
         res.update(dict(self._cr.fetchall()))
 
@@ -98,7 +98,6 @@ class SaleOrder(models.Model):
     reconciliation_pending = fields.Integer(
         compute='_compute_pending_reconciliation',
         search='_search_pending_reconciliation',
-        string="Reconciliation Pending",
         help="Indicates how many possible reconciliation are pending")
     aml_ids = fields.One2many(
         'account.move.line', 'sale_id', 'Account Move Lines',
@@ -144,10 +143,10 @@ class SaleOrder(models.Model):
 
         company_id = self.env['res.users'].browse(self._uid).company_id
         writeoff = company_id.writeoff
-        accrual_offset = company_id.accrual_offset
+        offset = company_id.accrual_offset
         do_partial = company_id.do_partial
 
-        for po_brw in self:
+        for brw in self:
             count += 1
 
             # In order to keep every single line reconciled we will look for
@@ -163,7 +162,7 @@ class SaleOrder(models.Model):
                     AND product_id IS NOT NULL
                     AND aa.reconcile = TRUE
                 ;
-                ''', (po_brw.id,))
+                ''', (brw.id,))
 
             ids = [x[0] for x in self._cr.fetchall()]
 
@@ -206,15 +205,9 @@ class SaleOrder(models.Model):
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
                 try:
                     # /!\ NOTE: Reconcile with write off
-                    if writeoff and abs(writeoff_amount) <= accrual_offset:
+                    if writeoff and abs(writeoff_amount) <= offset:
                         aml_ids.reconcile(
                             type='manual',
-                            writeoff_period_id=period_id,
-                            writeoff_journal_id=journal_id)
-                        do_commit = True
-                        continue
-                    elif abs(writeoff_amount) <= accrual_offset:
-                        aml_ids.reconcile_partial(
                             writeoff_period_id=period_id,
                             writeoff_journal_id=journal_id)
                         do_commit = True
@@ -223,7 +216,8 @@ class SaleOrder(models.Model):
                     # option. AS it is resource wasteful and provide little
                     # value. Use only if you really find it Useful to
                     # partially reconcile loose lines
-                    if do_partial:
+                    elif ((not writeoff and abs(writeoff_amount) <= offset) or
+                            do_partial):
                         aml_ids.reconcile_partial(
                             writeoff_period_id=period_id,
                             writeoff_journal_id=journal_id)
@@ -238,13 +232,13 @@ class SaleOrder(models.Model):
                     _logger.exception(message)
 
             if do_commit:
-                po_brw.message_post(
+                brw.message_post(
                     subject='Accruals Reconciled at %s' % time.ctime(),
                     body='Applying reconciliation on Order')
-                po_brw._cr.commit()
+                brw._cr.commit()
                 _logger.info(
-                    'Reconciling Sale Order id:%s - %s/%s' % (
-                        po_brw.id, count, total))
+                    'Reconciling Sale Order id:%s - %s/%s',
+                    brw.id, count, total)
 
         return True
 
@@ -252,9 +246,9 @@ class SaleOrder(models.Model):
         ids = [ids] if isinstance(ids, (int, long)) else ids
         context = context or {}
         res = []
-        for sale_brw in self.browse(cr, uid, ids, context=context):
+        for brw in self.browse(cr, uid, ids, context=context):
             res += [aml_brw.id
-                    for aml_brw in sale_brw.aml_ids
+                    for aml_brw in brw.aml_ids
                     # This shall be taken away when fixing domain in aml_ids
                     if aml_brw.account_id.reconcile
                     ]
