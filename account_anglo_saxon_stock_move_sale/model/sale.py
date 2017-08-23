@@ -22,6 +22,7 @@
 #
 ##############################################################################
 import logging
+import operator as py_operator
 import time
 
 from openerp.osv import orm
@@ -30,10 +31,40 @@ from openerp.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+OPERATORS = {
+    '<': py_operator.lt,
+    '>': py_operator.gt,
+    '<=': py_operator.le,
+    '>=': py_operator.ge,
+    '=': py_operator.eq,
+    '!=': py_operator.ne
+}
+
 
 class SaleOrder(models.Model):
 
     _inherit = "sale.order"
+    query = '''
+        SELECT sale_id, COUNT(qty)
+        FROM (
+            SELECT
+                aml.sale_id AS sale_id,
+                aml.product_id as product_id,
+                aml.account_id as account_id,
+                COUNT(aml.id) as qty
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                sale_id IN %s
+                AND product_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY sale_id, product_id, account_id
+            HAVING COUNT(aml.id)  > 1
+            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            ) AS view
+        GROUP BY sale_id
+        ;'''
 
     @api.multi
     def _compute_accrual_reconciled(self):
@@ -45,38 +76,32 @@ class SaleOrder(models.Model):
 
     @api.multi
     def _compute_pending_reconciliation(self):
-        query = '''
-            SELECT sale_id, COUNT(qty)
-            FROM (
-                SELECT
-                    aml.sale_id AS sale_id,
-                    aml.product_id as product_id,
-                    aml.account_id as account_id,
-                    COUNT(aml.id) as qty
-                FROM account_move_line aml
-                INNER JOIN account_account aa ON aa.id = aml.account_id
-                WHERE
-                    sale_id IN %s
-                    AND product_id IS NOT NULL
-                    AND reconcile_id IS NULL
-                    AND aa.reconcile = TRUE
-                GROUP BY sale_id, product_id, account_id
-                HAVING COUNT(aml.id)  > 1
-                AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
-                ) AS view
-            GROUP BY sale_id
-            ;'''
 
         company_id = self.env['res.users'].browse(self._uid).company_id
         accrual_offset = company_id.accrual_offset
 
-        self._cr.execute(query, (tuple(self._ids), accrual_offset))
+        self._cr.execute(self.query, (tuple(self._ids), accrual_offset))
         res = dict(self._cr.fetchall())
 
         for brw in self:
             brw.reconciliation_pending = res.get(brw.id, 0)
 
         return
+
+    def _search_pending_reconciliation(self, operator, value):
+        ids = self.search([])._ids
+        res = {}.fromkeys(ids, 0)
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        accrual_offset = company_id.accrual_offset
+        self._cr.execute(self.query, (tuple(ids), accrual_offset))
+
+        res.update(dict(self._cr.fetchall()))
+
+        ids = [sale_id
+               for (sale_id, computed_value) in res.items()
+               if OPERATORS[operator](computed_value, value)]
+
+        return [('id', 'in', ids)]
 
     accrual_reconciled = fields.Boolean(
         compute='_compute_accrual_reconciled',
@@ -88,6 +113,7 @@ class SaleOrder(models.Model):
         help="Indicates how many Accrual Journal Items are unreconciled")
     reconciliation_pending = fields.Integer(
         compute='_compute_pending_reconciliation',
+        search='_search_pending_reconciliation',
         string="Reconciliation Pending",
         help="Indicates how many possible reconciliation are pending")
     aml_ids = fields.One2many(
