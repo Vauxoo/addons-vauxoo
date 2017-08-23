@@ -67,14 +67,6 @@ class SaleOrder(models.Model):
         ;'''
 
     @api.multi
-    def _compute_accrual_reconciled(self):
-        for po_brw in self:
-            unreconciled_lines = len(po_brw.mapped('aml_ids').filtered(
-                lambda l: l.account_id.reconcile and not l.reconcile_id))
-            po_brw.accrual_reconciled = not bool(unreconciled_lines)
-            po_brw.unreconciled_lines = unreconciled_lines
-
-    @api.multi
     def _compute_pending_reconciliation(self):
 
         company_id = self.env['res.users'].browse(self._uid).company_id
@@ -103,14 +95,6 @@ class SaleOrder(models.Model):
 
         return [('id', 'in', ids)]
 
-    accrual_reconciled = fields.Boolean(
-        compute='_compute_accrual_reconciled',
-        string="Reconciled Accrual",
-        help="Indicates if All Accrual Journal Items are reconciled")
-    unreconciled_lines = fields.Integer(
-        compute='_compute_accrual_reconciled',
-        string="Unreconciled Accrual Lines",
-        help="Indicates how many Accrual Journal Items are unreconciled")
     reconciliation_pending = fields.Integer(
         compute='_compute_pending_reconciliation',
         search='_search_pending_reconciliation',
