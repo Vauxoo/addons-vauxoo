@@ -29,8 +29,6 @@ from openerp.osv import orm
 from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
 
-import logging
-
 _logger = logging.getLogger(__name__)
 
 OPERATORS = {
@@ -72,9 +70,9 @@ class PurchaseOrder(models.Model):
     def _compute_pending_reconciliation(self):
 
         company_id = self.env['res.users'].browse(self._uid).company_id
-        accrual_offset = company_id.accrual_offset
+        offset = company_id.accrual_offset
 
-        self._cr.execute(self.query, (tuple(self._ids), accrual_offset))
+        self._cr.execute(self.query, (tuple(self._ids), offset))
         res = dict(self._cr.fetchall())
 
         for brw in self:
@@ -86,8 +84,8 @@ class PurchaseOrder(models.Model):
         ids = self.search([])._ids
         res = {}.fromkeys(ids, 0)
         company_id = self.env['res.users'].browse(self._uid).company_id
-        accrual_offset = company_id.accrual_offset
-        self._cr.execute(self.query, (tuple(ids), accrual_offset))
+        offset = company_id.accrual_offset
+        self._cr.execute(self.query, (tuple(ids), offset))
 
         res.update(dict(self._cr.fetchall()))
 
@@ -100,7 +98,6 @@ class PurchaseOrder(models.Model):
     reconciliation_pending = fields.Integer(
         compute='_compute_pending_reconciliation',
         search='_search_pending_reconciliation',
-        string="Reconciliation Pending",
         help="Indicates how many possible reconciliation are pending")
     aml_ids = fields.One2many(
         'account.move.line', 'purchase_id', 'Account Move Lines',
@@ -146,7 +143,7 @@ class PurchaseOrder(models.Model):
 
         company_id = self.env['res.users'].browse(self._uid).company_id
         writeoff = company_id.writeoff
-        accrual_offset = company_id.accrual_offset
+        offset = company_id.accrual_offset
         do_partial = company_id.do_partial
 
         for brw in self:
@@ -208,15 +205,9 @@ class PurchaseOrder(models.Model):
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
                 try:
                     # /!\ NOTE: Reconcile with write off
-                    if writeoff and abs(writeoff_amount) <= accrual_offset:
+                    if writeoff and abs(writeoff_amount) <= offset:
                         aml_ids.reconcile(
                             type='manual',
-                            writeoff_period_id=period_id,
-                            writeoff_journal_id=journal_id)
-                        do_commit = True
-                        continue
-                    elif abs(writeoff_amount) <= accrual_offset:
-                        aml_ids.reconcile_partial(
                             writeoff_period_id=period_id,
                             writeoff_journal_id=journal_id)
                         do_commit = True
@@ -225,7 +216,8 @@ class PurchaseOrder(models.Model):
                     # option. AS it is resource wasteful and provide little
                     # value. Use only if you really find it Useful to
                     # partially reconcile loose lines
-                    if do_partial:
+                    elif ((not writeoff and abs(writeoff_amount) <= offset) or
+                            do_partial):
                         aml_ids.reconcile_partial(
                             writeoff_period_id=period_id,
                             writeoff_journal_id=journal_id)
@@ -245,8 +237,8 @@ class PurchaseOrder(models.Model):
                     body='Applying reconciliation on Order')
                 brw._cr.commit()
                 _logger.info(
-                    'Reconciling Purchase Order id:%s - %s/%s' % (
-                        brw.id, count, total))
+                    'Reconciling Purchase Order id:%s - %s/%s',
+                    brw.id, count, total)
 
         return True
 
