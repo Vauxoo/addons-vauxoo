@@ -36,6 +36,7 @@
     "data": [
         'view/sale_view.xml',
         'data/cron_job.xml',
+        'data/action_server_data.xml',
     ],
     "test": [],
     "js": [],
