@@ -23,5 +23,29 @@
             </xpath>
         </field>
     </record>
+
+_   <record id="view_sale order stock accrual search" model="ir.ui.view">
+        <field name="name">Sale Order Stock Accrual Search</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="priority">26</field>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@string='Quotations']" position="after">
+                <filter string="Pending for Reconciliation" domain="[('reconciliation_pending','!=',0)]"/>
+            </xpath>
+        </field>
+    </record>
+
+_   <record id="view_sale order stock accrual tree" model="ir.ui.view">
+        <field name="name">Sale Order Stock Accrual Tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="priority">26</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="reconciliation_pending"/>
+            </xpath>
+        </field>
+    </record>
   </data>
 </openerp>
