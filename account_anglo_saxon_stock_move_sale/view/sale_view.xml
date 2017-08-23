@@ -24,7 +24,7 @@
         </field>
     </record>
 
-_   <record id="view_sale order stock accrual search" model="ir.ui.view">
+    <record id="view_sale order stock accrual search" model="ir.ui.view">
         <field name="name">Sale Order Stock Accrual Search</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_sales_order_filter"/>
@@ -36,7 +36,7 @@ _   <record id="view_sale order stock accrual search" model="ir.ui.view">
         </field>
     </record>
 
-_   <record id="view_sale order stock accrual tree" model="ir.ui.view">
+    <record id="view_sale order stock accrual tree" model="ir.ui.view">
         <field name="name">Sale Order Stock Accrual Tree</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
