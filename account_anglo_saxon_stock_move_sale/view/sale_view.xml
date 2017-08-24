@@ -33,7 +33,7 @@
             <xpath expr="//filter[@string='Quotations']" position="after">
                 <filter string="Pending for Reconciliation" domain="[('reconciliation_pending','!=',0)]"/>
                 <filter string="Unreconcile Lines" domain="[('unreconciled_lines','!=',0)]"/>
-                <filter string="Unreconcile Lines &amp; Pending for Reconciliation" domain="[('unreconciled_lines','!=',0),('reconciliation_pending','!=',0)]"/>
+                <filter string="Unreconcile &amp; Not Pending for Reconciliation Lines" domain="[('unreconciled_lines','!=',0),('reconciliation_pending','=',0)]"/>
             </xpath>
         </field>
     </record>
