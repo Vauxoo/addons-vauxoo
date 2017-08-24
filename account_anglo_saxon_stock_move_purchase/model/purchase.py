@@ -45,7 +45,7 @@ class PurchaseOrder(models.Model):
 
     _inherit = "purchase.order"
     query = '''
-        SELECT purchase_id, COUNT(qty)
+        SELECT purchase_id, SUM(qty)
         FROM (
             SELECT
                 aml.purchase_id AS purchase_id,
@@ -60,9 +60,22 @@ class PurchaseOrder(models.Model):
                 AND reconcile_id IS NULL
                 AND aa.reconcile = TRUE
             GROUP BY purchase_id, product_id, account_id
-            HAVING COUNT(aml.id)  > 1
-            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            HAVING ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
             ) AS view
+        GROUP BY purchase_id
+        ;'''
+
+    query2 = '''
+        SELECT
+            aml.purchase_id AS purchase_id,
+            COUNT(aml.id) as qty
+        FROM account_move_line aml
+        INNER JOIN account_account aa ON aa.id = aml.account_id
+        WHERE
+            purchase_id IN %s
+            AND product_id IS NOT NULL
+            AND reconcile_id IS NULL
+            AND aa.reconcile = TRUE
         GROUP BY purchase_id
         ;'''
 
@@ -95,10 +108,35 @@ class PurchaseOrder(models.Model):
 
         return [('id', 'in', ids)]
 
+    @api.multi
+    def _compute_unreconciled_lines(self):
+        self._cr.execute(self.query2, (tuple(self._ids),))
+        res = dict(self._cr.fetchall())
+        for brw in self:
+            brw.unreconciled_lines = res.get(brw.id, 0)
+        return
+
+    def _search_unreconciled_lines(self, operator, value):
+        ids = self.search([])._ids
+        res = {}.fromkeys(ids, 0)
+
+        self._cr.execute(self.query2, (tuple(ids),))
+        res.update(dict(self._cr.fetchall()))
+
+        ids = [purchase_id
+               for (purchase_id, computed_value) in res.items()
+               if OPERATORS[operator](computed_value, value)]
+
+        return [('id', 'in', ids)]
+
+    unreconciled_lines = fields.Integer(
+        compute='_compute_unreconciled_lines',
+        search='_search_unreconciled_lines',
+        help="Indicates how many unreconciled lines are still standing")
     reconciliation_pending = fields.Integer(
         compute='_compute_pending_reconciliation',
         search='_search_pending_reconciliation',
-        help="Indicates how many possible reconciliation are pending")
+        help="Indicates how many possible reconciliations are pending")
     aml_ids = fields.One2many(
         'account.move.line', 'purchase_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Purchase Order')
