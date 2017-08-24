@@ -142,14 +142,14 @@ class PurchaseOrder(models.Model):
         help='Journal Entry Lines related to this Purchase Order')
 
     def cron_purchase_accrual_reconciliation(self, cr, uid, context=None):
+        _logger.info('Reconciling Purchase Order Stock Accruals')
         company_id = self.pool['res.users'].browse(cr, uid, uid).company_id
         cr.execute('''
             SELECT
                 aml.purchase_id AS id,
                 aml.product_id as product_id,
                 aml.account_id as account_id,
-                COUNT(aml.id) as count,
-                SUM(aml.debit - aml.credit)
+                COUNT(aml.id) as count
             FROM account_move_line aml
             INNER JOIN account_account aa ON aa.id = aml.account_id
             WHERE
@@ -160,11 +160,12 @@ class PurchaseOrder(models.Model):
             GROUP BY purchase_id, product_id, account_id
             HAVING COUNT(aml.id)  > 1
             AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
-            ORDER BY count DESC, id DESC, product_id DESC
             ;
             ''', (company_id.accrual_offset,))
 
         ids = list(set(x[0] for x in cr.fetchall()))
+        if not ids:
+            return
         self.browse(cr, uid, ids, context=context).reconcile_stock_accrual()
 
         return
@@ -184,25 +185,28 @@ class PurchaseOrder(models.Model):
         offset = company_id.accrual_offset
         do_partial = company_id.do_partial
 
+        # In order to keep every single line reconciled we will look for all
+        # the lines related to a purchase/sale order
+        self._cr.execute('''
+            SELECT
+                aml.purchase_id,
+                ARRAY_AGG(aml.id) as aml_ids
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                purchase_id IN %s
+                AND reconcile_id IS NULL
+                AND product_id IS NOT NULL
+                AND aa.reconcile = TRUE
+            GROUP BY aml.purchase_id
+            ;
+            ''', (tuple(self._ids),))
+
+        res_aml = dict(self._cr.fetchall())
         for brw in self:
             count += 1
 
-            # In order to keep every single line reconciled we will look for
-            # all the lines related to a purchase/sale order
-            self._cr.execute('''
-                SELECT
-                    aml.id
-                FROM account_move_line aml
-                INNER JOIN account_account aa ON aa.id = aml.account_id
-                WHERE
-                    purchase_id =%s
-                    AND reconcile_id IS NULL
-                    AND product_id IS NOT NULL
-                    AND aa.reconcile = TRUE
-                ;
-                ''', (brw.id,))
-
-            ids = [x[0] for x in self._cr.fetchall()]
+            ids = res_aml.get(brw.id, [])
 
             if len(ids) < 2:
                 continue
