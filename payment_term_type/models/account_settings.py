@@ -30,14 +30,14 @@ class AccountConfigSettings(models.TransientModel):
              'day that the sale order confirmation day.')
 
     @api.model
-    def get_default_payment_term_type(self, fields_name):
+    def get_values(self):
         key_payment = "account.payment_term_type"
         payment_type = self.env["ir.config_parameter"].get_param(
             key_payment, default='bqp')
         return {'payment_type': payment_type}
 
     @api.multi
-    def set_default_payment_term_type(self):
+    def set_values(self):
         config_parameters = self.env["ir.config_parameter"]
         key_by_company_id = "account.payment_term_type"
         config_parameters.set_param(
