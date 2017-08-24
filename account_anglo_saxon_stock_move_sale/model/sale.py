@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
 
     _inherit = "sale.order"
     query = '''
-        SELECT sale_id, COUNT(qty)
+        SELECT sale_id, SUM(qty)
         FROM (
             SELECT
                 aml.sale_id AS sale_id,
@@ -60,8 +60,7 @@ class SaleOrder(models.Model):
                 AND reconcile_id IS NULL
                 AND aa.reconcile = TRUE
             GROUP BY sale_id, product_id, account_id
-            HAVING COUNT(aml.id)  > 1
-            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            HAVING ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
             ) AS view
         GROUP BY sale_id
         ;'''
@@ -137,7 +136,7 @@ class SaleOrder(models.Model):
     reconciliation_pending = fields.Integer(
         compute='_compute_pending_reconciliation',
         search='_search_pending_reconciliation',
-        help="Indicates how many possible reconciliation are pending")
+        help="Indicates how many possible reconciliations are pending")
     aml_ids = fields.One2many(
         'account.move.line', 'sale_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Sale Order')
