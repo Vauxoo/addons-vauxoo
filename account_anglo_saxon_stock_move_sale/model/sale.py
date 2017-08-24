@@ -28,6 +28,7 @@ import time
 from openerp.osv import orm
 from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
+from openerp.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -176,6 +177,7 @@ class SaleOrder(models.Model):
         ap_obj = self.env['account.period']
         date = fields.Date.context_today(self)
         period_id = ap_obj.with_context(self._context).find(date)[:1].id
+        precision = self.env['decimal.precision'].precision_get('Account')
 
         total = len(self)
         count = 0
@@ -247,7 +249,9 @@ class SaleOrder(models.Model):
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
                 try:
                     # /!\ NOTE: Reconcile with write off
-                    if writeoff and abs(writeoff_amount) <= offset:
+                    if ((writeoff and abs(writeoff_amount) <= offset) or
+                            float_is_zero(
+                                writeoff_amount, precision_digits=precision)):
                         aml_ids.reconcile(
                             type='manual',
                             writeoff_period_id=period_id,
