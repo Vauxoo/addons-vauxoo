@@ -32,6 +32,7 @@
         <field name="arch" type="xml">
             <xpath expr="//filter[@string='Quotations']" position="after">
                 <filter string="Pending for Reconciliation" domain="[('reconciliation_pending','!=',0)]"/>
+                <filter string="Unreconcile Lines" domain="[('unreconciled_lines','!=',0)]"/>
             </xpath>
         </field>
     </record>
@@ -44,6 +45,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='state']" position="after">
                 <field name="reconciliation_pending"/>
+                <field name="unreconciled_lines"/>
             </xpath>
         </field>
     </record>

@@ -66,6 +66,20 @@ class SaleOrder(models.Model):
         GROUP BY sale_id
         ;'''
 
+    query2 = '''
+        SELECT
+            aml.sale_id AS sale_id,
+            COUNT(aml.id) as qty
+        FROM account_move_line aml
+        INNER JOIN account_account aa ON aa.id = aml.account_id
+        WHERE
+            sale_id IN %s
+            AND product_id IS NOT NULL
+            AND reconcile_id IS NULL
+            AND aa.reconcile = TRUE
+        GROUP BY sale_id
+        ;'''
+
     @api.multi
     def _compute_pending_reconciliation(self):
 
@@ -95,6 +109,31 @@ class SaleOrder(models.Model):
 
         return [('id', 'in', ids)]
 
+    @api.multi
+    def _compute_unreconciled_lines(self):
+        self._cr.execute(self.query2, (tuple(self._ids),))
+        res = dict(self._cr.fetchall())
+        for brw in self:
+            brw.unreconciled_lines = res.get(brw.id, 0)
+        return
+
+    def _search_unreconciled_lines(self, operator, value):
+        ids = self.search([])._ids
+        res = {}.fromkeys(ids, 0)
+
+        self._cr.execute(self.query2, (tuple(ids),))
+        res.update(dict(self._cr.fetchall()))
+
+        ids = [sale_id
+               for (sale_id, computed_value) in res.items()
+               if OPERATORS[operator](computed_value, value)]
+
+        return [('id', 'in', ids)]
+
+    unreconciled_lines = fields.Integer(
+        compute='_compute_unreconciled_lines',
+        search='_search_unreconciled_lines',
+        help="Indicates how many unreconciled lines are still standing")
     reconciliation_pending = fields.Integer(
         compute='_compute_pending_reconciliation',
         search='_search_pending_reconciliation',
