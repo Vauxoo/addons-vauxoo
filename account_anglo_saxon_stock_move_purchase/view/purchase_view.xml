@@ -9,12 +9,13 @@
              <xpath expr="//div[contains(@class, 'oe_button_box')]" position="inside">
                 <button
                     type="object"
-                    string="Stock Accruals"
                     name="view_accrual"
                     class="oe_stat_button"
                     icon="fa-truck"
                     groups="account.group_account_user"
-                    />
+                    >
+                    <field name="unreconciled_lines" widget="statinfo" string="Stock Accruals"/>
+                </button>
                 <button type="object" name="reconcile_stock_accrual" class="oe_stat_button" groups="account.group_account_user" icon="fa-random">
                     <field name="reconciliation_pending" widget="statinfo" string="Match Accruals"/>
                 </button>
@@ -30,8 +31,8 @@
         <field name="arch" type="xml">
             <xpath expr="//filter[@string='Quotations']" position="after">
                 <filter string="Pending for Reconciliation" domain="[('reconciliation_pending','!=',0)]"/>
-                <filter string="Unreconcile Lines" domain="[('unreconciled_lines','!=',0)]"/>
-                <filter string="Unreconcile &amp; Not Pending for Reconciliation Lines" domain="[('unreconciled_lines','!=',0),('reconciliation_pending','=',0)]"/>
+                <filter string="Unreconciled Lines" domain="[('unreconciled_lines','!=',0)]"/>
+                <filter string="Unreconciled &amp; Not Pending for Reconciliation Lines" domain="[('unreconciled_lines','!=',0),('reconciliation_pending','=',0)]"/>
             </xpath>
         </field>
     </record>
