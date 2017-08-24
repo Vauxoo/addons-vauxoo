@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from openerp import fields, models
+import openerp.addons.decimal_precision as dp
 
 
 class ResCompany(models.Model):
@@ -16,4 +17,5 @@ class ResCompany(models.Model):
         help='Lines will partially reconcile otherwise they will remain loose')
     accrual_offset = fields.Float(
         string='Accrual Offset on Reconciliation',
+        digits=dp.get_precision('Account'),
         help='Threshold used when trying to fully reconcile Accruals')
