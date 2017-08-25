@@ -49,6 +49,67 @@ class AccountInvoice(models.Model):
             amr_ids.unlink()
         return super(AccountInvoice, self).action_cancel()
 
+    def _get_accrual_query(self, query_col, query_type):
+        if query_type == 'query1':
+            query = self._get_accrual_query1(query_col)
+        elif query_type == 'query2':
+            query = self._get_accrual_query2(query_col)
+        else:
+            raise ValidationError(
+                _('This query has not yet being implemented: %s'), query_type)
+        return query
+
+    def _get_accrual_query1(self, query_col):
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT ''' + query_col + ''', SUM(qty)
+            FROM (
+                SELECT
+                    aml.''' + query_col + ''' AS ''' + query_col + ''',
+                    aml.product_id as product_id,
+                    aml.account_id as account_id,
+                    COUNT(aml.id) as qty
+                FROM account_move_line aml
+                INNER JOIN account_account aa ON aa.id = aml.account_id
+                WHERE
+                    ''' + query_col + ''' IN %(ids)s
+                    AND product_id IS NOT NULL
+                    AND reconcile_id IS NULL
+                    AND aa.reconcile = TRUE
+                GROUP BY ''' + query_col + ''', product_id, account_id
+                HAVING ABS(SUM(aml.debit - aml.credit)) <= %(offset)s
+                ) AS view
+            GROUP BY ''' + query_col + '''
+            ;'''
+        return query
+
+    def _get_accrual_query2(self, query_col):
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT
+                aml.''' + query_col + ''' AS ''' + query_col + ''',
+                COUNT(aml.id) as qty
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                ''' + query_col + ''' IN %(ids)s
+                AND product_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY ''' + query_col + '''
+            ;'''
+
+        return query
+
+    def _compute_query(self, ids, query_col, query_type):
+        res = {}.fromkeys(ids, 0)
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        query_params = {'ids': ids, 'offset': company_id.accrual_offset}
+        query = self._get_accrual_query(query_col, query_type)
+        self._cr.execute(query, query_params)
+        res.update(dict(self._cr.fetchall()))
+        return res
+
     @api.multi
     def cron_accrual_reconciliation(self, query_col):
         if query_col == 'sale_id':
