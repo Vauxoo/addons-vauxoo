@@ -216,6 +216,21 @@ class AccountInvoice(models.Model):
                     'Reconciling %s:%s - %s/%s',
                     query_col, brw_id, count, total)
 
+    @api.multi
+    def view_accrual(self, ids, model):
+        brw = self.env[model].browse(ids)
+        res = brw.aml_ids.filtered('account_id.reconcile')
+        return {
+            'domain':
+            "[('id','in',[" + ','.join([str(item.id) for item in res]) + "])]",
+            'name': _('Journal Items'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.move.line',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
+
 
 class AccountInvoiceLine(osv.osv):
     _inherit = "account.invoice.line"
