@@ -177,8 +177,6 @@ class AccountInvoice(models.Model):
                     'Reconciling %s:%s - %s/%s',
                     query_col, brw_id, count, total)
 
-        return True
-
 
 class AccountInvoiceLine(osv.osv):
     _inherit = "account.invoice.line"
