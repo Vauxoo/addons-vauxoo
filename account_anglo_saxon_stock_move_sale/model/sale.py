@@ -49,12 +49,12 @@ class SaleOrder(models.Model):
             FROM account_move_line aml
             INNER JOIN account_account aa ON aa.id = aml.account_id
             WHERE
-                sale_id IN %s
+                sale_id IN %(ids)s
                 AND product_id IS NOT NULL
                 AND reconcile_id IS NULL
                 AND aa.reconcile = TRUE
             GROUP BY sale_id, product_id, account_id
-            HAVING ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            HAVING ABS(SUM(aml.debit - aml.credit)) <= %(offset)s -- Threashold
             ) AS view
         GROUP BY sale_id
         ;'''
@@ -66,59 +66,47 @@ class SaleOrder(models.Model):
         FROM account_move_line aml
         INNER JOIN account_account aa ON aa.id = aml.account_id
         WHERE
-            sale_id IN %s
+            sale_id IN %(ids)s
             AND product_id IS NOT NULL
             AND reconcile_id IS NULL
             AND aa.reconcile = TRUE
         GROUP BY sale_id
         ;'''
 
+    def _compute_query(self, ids, query):
+        res = {}.fromkeys(ids, 0)
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        query_params = {'ids': ids, 'offset': company_id.accrual_offset}
+        self._cr.execute(query, query_params)
+        res.update(dict(self._cr.fetchall()))
+        return res
+
     @api.multi
     def _compute_pending_reconciliation(self):
-
-        company_id = self.env['res.users'].browse(self._uid).company_id
-        offset = company_id.accrual_offset
-
-        self._cr.execute(self.query, (tuple(self._ids), offset))
-        res = dict(self._cr.fetchall())
-
+        res = self._compute_query(self._ids, self.query)
         for brw in self:
             brw.reconciliation_pending = res.get(brw.id, 0)
 
-        return
-
     def _search_pending_reconciliation(self, operator, value):
-        ids = self.search([])._ids
-        res = {}.fromkeys(ids, 0)
-        company_id = self.env['res.users'].browse(self._uid).company_id
-        offset = company_id.accrual_offset
-        self._cr.execute(self.query, (tuple(ids), offset))
-
-        res.update(dict(self._cr.fetchall()))
-
-        ids = [sale_id
-               for (sale_id, computed_value) in res.items()
+        res = self._compute_query(self.search([])._ids, self.query)
+        ids = [rec_id
+               for (rec_id, computed_value) in res.items()
                if OPERATORS[operator](computed_value, value)]
 
         return [('id', 'in', ids)]
 
     @api.multi
     def _compute_unreconciled_lines(self):
-        self._cr.execute(self.query2, (tuple(self._ids),))
-        res = dict(self._cr.fetchall())
+        res = self._compute_query(self._ids, self.query2)
         for brw in self:
             brw.unreconciled_lines = res.get(brw.id, 0)
         return
 
     def _search_unreconciled_lines(self, operator, value):
-        ids = self.search([])._ids
-        res = {}.fromkeys(ids, 0)
+        res = self._compute_query(self.search([])._ids, self.query2)
 
-        self._cr.execute(self.query2, (tuple(ids),))
-        res.update(dict(self._cr.fetchall()))
-
-        ids = [sale_id
-               for (sale_id, computed_value) in res.items()
+        ids = [rec_id
+               for (rec_id, computed_value) in res.items()
                if OPERATORS[operator](computed_value, value)]
 
         return [('id', 'in', ids)]
