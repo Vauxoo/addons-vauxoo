@@ -51,6 +51,15 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def cron_accrual_reconciliation(self, query_col):
+        if query_col == 'sale_id':
+            ttype = 'Sale'
+        elif query_col == 'purchase_id':
+            ttype = 'Purchase'
+        else:
+            raise ValidationError(
+                _('This field has not yet being implemented: %s'), query_col)
+
+        _logger.info('Reconciling %s Order Stock Accruals', ttype)
         company_id = self.env['res.users'].browse(self._uid).company_id
         # /!\ ALERT: SQL INJECTION RISK
         self._cr.execute('''
@@ -76,6 +85,7 @@ class AccountInvoice(models.Model):
         if not ids:
             return
         self.env['account.invoice'].reconcile_stock_accrual(ids, query_col)
+        _logger.info('Reconciling %s Order Stock Accruals Ended', ttype)
 
     @api.multi
     def reconcile_stock_accrual(self, rec_ids, query_col):
