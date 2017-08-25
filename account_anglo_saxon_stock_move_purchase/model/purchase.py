@@ -21,16 +21,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import logging
 import operator as py_operator
-import time
 
-from openerp.osv import orm
 from openerp import fields, models, api, _
-from openerp.exceptions import ValidationError
-from openerp.tools import float_is_zero
-
-_logger = logging.getLogger(__name__)
 
 OPERATORS = {
     '<': py_operator.lt,
@@ -143,10 +136,8 @@ class PurchaseOrder(models.Model):
         help='Journal Entry Lines related to this Purchase Order')
 
     def cron_purchase_accrual_reconciliation(self, cr, uid, context=None):
-        _logger.info('Reconciling Purchase Order Stock Accruals')
         self.pool['account.invoice'].cron_accrual_reconciliation(
             cr, uid, [], 'purchase_id')
-        _logger.info('Reconciling Purchase Order Stock Accruals Ended')
 
     @api.multi
     def reconcile_stock_accrual(self):
