@@ -23,7 +23,7 @@
 ##############################################################################
 import operator as py_operator
 
-from openerp import fields, models, api, _
+from openerp import fields, models, api
 
 OPERATORS = {
     '<': py_operator.lt,
@@ -144,23 +144,7 @@ class PurchaseOrder(models.Model):
         self.env['account.invoice'].reconcile_stock_accrual(
             self._ids, 'purchase_id')
 
-    def view_accrual(self, cr, uid, ids, context=None):
-        ids = [ids] if isinstance(ids, (int, long)) else ids
-        context = context or {}
-        res = []
-        for brw in self.browse(cr, uid, ids, context=context):
-            res += [aml_brw.id
-                    for aml_brw in brw.aml_ids
-                    # This shall be taken away when fixing domain in aml_ids
-                    if aml_brw.account_id.reconcile
-                    ]
-        return {
-            'domain': "[('id','in',\
-                [" + ','.join([str(item) for item in res]) + "])]",
-            'name': _('Journal Items'),
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'res_model': 'account.move.line',
-            'view_id': False,
-            'type': 'ir.actions.act_window'
-        }
+    @api.multi
+    def view_accrual(self):
+        return self.env['account.invoice'].view_accrual(
+            self._ids, 'purchase.order')
