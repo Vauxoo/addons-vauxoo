@@ -110,7 +110,6 @@ class AccountInvoice(models.Model):
 
             all_aml_ids = aml_obj.browse(ids)
 
-            # /!\ NOTE: This does not return Product Categories
             categ_ids = all_aml_ids.filtered(
                 lambda m:
                 not m.product_id.categ_id.property_stock_journal).mapped(
