@@ -99,8 +99,8 @@ class AccountInvoice(models.Model):
         query = ' '.join(query)
         query = self._cr.mogrify(query, query_params)
         self._cr.execute(query)
-        res_aml = ((rec_id, aml_ids)
-                   for (rec_id, aml_ids) in self._cr.fetchall())
+        res_aml = ((rec_id, amls)
+                   for (rec_id, amls) in self._cr.fetchall())
 
         for brw_id, ids in res_aml:
             count += 1
@@ -123,8 +123,8 @@ class AccountInvoice(models.Model):
                 ))
 
             res = {}
-            # Only stack those that are fully reconciled
-            # amr_ids = all_aml_ids.mapped('reconcile_id')
+
+            # Only stack those that are partially reconciled
             all_aml_ids.mapped('reconcile_partial_id').unlink()
 
             # Let's group all the Accrual lines by Purchase/Sale Order, Product
