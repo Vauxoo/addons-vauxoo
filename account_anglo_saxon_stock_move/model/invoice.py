@@ -131,11 +131,11 @@ class AccountInvoice(models.Model):
             for aml_brw in all_aml_ids:
                 account_id = aml_brw.account_id.id
                 product_id = aml_brw.product_id
-                res.setdefault((brw_id, account_id, product_id), aml_obj)
-                res[(brw_id, account_id, product_id)] |= aml_brw
+                res.setdefault((account_id, product_id), aml_obj)
+                res[(account_id, product_id)] |= aml_brw
 
             do_commit = False
-            for (brw_id, account_id, product_id), aml_ids in res.items():
+            for (account_id, product_id), aml_ids in res.items():
                 if len(aml_ids) < 2:
                     continue
                 journal_id = product_id.categ_id.property_stock_journal.id
