@@ -38,77 +38,35 @@ OPERATORS = {
 class PurchaseOrder(models.Model):
 
     _inherit = "purchase.order"
-    query = '''
-        SELECT purchase_id, SUM(qty)
-        FROM (
-            SELECT
-                aml.purchase_id AS purchase_id,
-                aml.product_id as product_id,
-                aml.account_id as account_id,
-                COUNT(aml.id) as qty
-            FROM account_move_line aml
-            INNER JOIN account_account aa ON aa.id = aml.account_id
-            WHERE
-                purchase_id IN %(ids)s
-                AND product_id IS NOT NULL
-                AND reconcile_id IS NULL
-                AND aa.reconcile = TRUE
-            GROUP BY purchase_id, product_id, account_id
-            HAVING ABS(SUM(aml.debit - aml.credit)) <= %(offset)s -- Threashold
-            ) AS view
-        GROUP BY purchase_id
-        ;'''
 
-    query2 = '''
-        SELECT
-            aml.purchase_id AS purchase_id,
-            COUNT(aml.id) as qty
-        FROM account_move_line aml
-        INNER JOIN account_account aa ON aa.id = aml.account_id
-        WHERE
-            purchase_id IN %(ids)s
-            AND product_id IS NOT NULL
-            AND reconcile_id IS NULL
-            AND aa.reconcile = TRUE
-        GROUP BY purchase_id
-        ;'''
-
-    def _compute_query(self, ids, query):
-        res = {}.fromkeys(ids, 0)
-        company_id = self.env['res.users'].browse(self._uid).company_id
-        query_params = {'ids': ids, 'offset': company_id.accrual_offset}
-        self._cr.execute(query, query_params)
-        res.update(dict(self._cr.fetchall()))
-        return res
+    def _compute_query(self, ids, query_type):
+        obj = self.env['account.invoice']
+        return obj._compute_query(ids, 'purchase_id', query_type)
 
     @api.multi
     def _compute_pending_reconciliation(self):
-        res = self._compute_query(self._ids, self.query)
+        res = self._compute_query(self._ids, 'query1')
         for brw in self:
             brw.reconciliation_pending = res.get(brw.id, 0)
 
     def _search_pending_reconciliation(self, operator, value):
-        res = self._compute_query(self.search([])._ids, self.query)
+        res = self._compute_query(self.search([])._ids, 'query1')
         ids = [rec_id
                for (rec_id, computed_value) in res.items()
                if OPERATORS[operator](computed_value, value)]
-
         return [('id', 'in', ids)]
 
     @api.multi
     def _compute_unreconciled_lines(self):
-        res = self._compute_query(self._ids, self.query2)
+        res = self._compute_query(self._ids, 'query2')
         for brw in self:
             brw.unreconciled_lines = res.get(brw.id, 0)
-        return
 
     def _search_unreconciled_lines(self, operator, value):
-        res = self._compute_query(self.search([])._ids, self.query2)
-
+        res = self._compute_query(self.search([])._ids, 'query2')
         ids = [rec_id
                for (rec_id, computed_value) in res.items()
                if OPERATORS[operator](computed_value, value)]
-
         return [('id', 'in', ids)]
 
     unreconciled_lines = fields.Integer(
