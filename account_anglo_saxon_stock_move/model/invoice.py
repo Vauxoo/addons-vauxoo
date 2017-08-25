@@ -50,6 +50,34 @@ class AccountInvoice(models.Model):
         return super(AccountInvoice, self).action_cancel()
 
     @api.multi
+    def cron_accrual_reconciliation(self, query_col):
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        # /!\ ALERT: SQL INJECTION RISK
+        self._cr.execute('''
+            SELECT
+                aml.''' + query_col + ''' AS id,
+                aml.product_id as product_id,
+                aml.account_id as account_id,
+                COUNT(aml.id) as count
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                ''' + query_col + ''' IS NOT NULL
+                AND product_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY ''' + query_col + ''', product_id, account_id
+            HAVING COUNT(aml.id)  > 1
+            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
+            ;
+            ''', (company_id.accrual_offset,))
+
+        ids = list(set(x[0] for x in self._cr.fetchall()))
+        if not ids:
+            return
+        self.env['account.invoice'].reconcile_stock_accrual(ids, query_col)
+
+    @api.multi
     def reconcile_stock_accrual(self, rec_ids, query_col):
         if query_col == 'sale_id':
             obj = self.env['sale.order']
@@ -65,7 +93,7 @@ class AccountInvoice(models.Model):
         period_id = ap_obj.with_context(self._context).find(date)[:1].id
         precision = self.env['decimal.precision'].precision_get('Account')
 
-        total = len(self)
+        total = len(rec_ids)
         count = 0
 
         company_id = self.env['res.users'].browse(self._uid).company_id
@@ -76,7 +104,7 @@ class AccountInvoice(models.Model):
         # In order to keep every single line reconciled we will look for all
         # the lines related to a purchase/sale order
         # /!\ ALERT: SQL INJECTION RISK
-        query_params = {'ids': rec_ids}
+        query_params = {'ids': tuple(rec_ids)}
 
         query = []
 
@@ -99,11 +127,12 @@ class AccountInvoice(models.Model):
         query = ' '.join(query)
         query = self._cr.mogrify(query, query_params)
         self._cr.execute(query)
-        res_aml = ((rec_id, amls)
-                   for (rec_id, amls) in self._cr.fetchall())
 
-        for brw_id, ids in res_aml:
+        for brw_id, ids in self._cr.fetchall():
             count += 1
+            _logger.info(
+                'Attempting Reconciliation at %s:%s - %s/%s',
+                query_col, brw_id, count, total)
 
             if len(ids) < 2:
                 continue
