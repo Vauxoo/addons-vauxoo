@@ -21,12 +21,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
+import time
 
 from openerp.osv import osv, orm
-from openerp import models, api, _
+from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
-
-import logging
+from openerp.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -47,6 +48,137 @@ class AccountInvoice(models.Model):
             amr_ids = inv.invoice_line.mapped('move_id.aml_ids.reconcile_id')
             amr_ids.unlink()
         return super(AccountInvoice, self).action_cancel()
+
+    @api.multi
+    def reconcile_stock_accrual(self, rec_ids, query_col):
+        if query_col == 'sale_id':
+            obj = self.env['sale.order']
+        elif query_col == 'purchase_id':
+            obj = self.env['purchase.order']
+        else:
+            raise ValidationError(
+                _('This field has not yet being implemented: %s'), query_col)
+
+        aml_obj = self.env['account.move.line']
+        ap_obj = self.env['account.period']
+        date = fields.Date.context_today(self)
+        period_id = ap_obj.with_context(self._context).find(date)[:1].id
+        precision = self.env['decimal.precision'].precision_get('Account')
+
+        total = len(self)
+        count = 0
+
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        writeoff = company_id.writeoff
+        offset = company_id.accrual_offset
+        do_partial = company_id.do_partial
+
+        # In order to keep every single line reconciled we will look for all
+        # the lines related to a purchase/sale order
+        # /!\ ALERT: SQL INJECTION RISK
+        query_params = {'ids': rec_ids}
+
+        query = []
+
+        query.append('SELECT')
+        query.append('aml.%s,' % query_col)
+        query.append('''
+                ARRAY_AGG(aml.id) as aml_ids
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE''')
+        query.append('aml.%s' % query_col)
+        query.append('''IN %(ids)s
+                AND reconcile_id IS NULL
+                AND product_id IS NOT NULL
+                AND aa.reconcile = TRUE
+            GROUP BY''')
+        query.append('aml.%s' % query_col)
+        query.append(';')
+
+        query = ' '.join(query)
+        query = self._cr.mogrify(query, query_params)
+        self._cr.execute(query)
+        res_aml = ((rec_id, aml_ids)
+                   for (rec_id, aml_ids) in self._cr.fetchall())
+
+        for brw_id, ids in res_aml:
+            count += 1
+
+            if len(ids) < 2:
+                continue
+
+            all_aml_ids = aml_obj.browse(ids)
+
+            # /!\ NOTE: This does not return Product Categories
+            categ_ids = all_aml_ids.filtered(
+                lambda m:
+                not m.product_id.categ_id.property_stock_journal).mapped(
+                    'product_id.categ_id')
+            if categ_ids:
+                raise ValidationError(_(
+                    'The Stock Journal is missing on following '
+                    'product categories: %s' % (', '.join(
+                        categ_ids.mapped('name')))
+                ))
+
+            res = {}
+            # Only stack those that are fully reconciled
+            # amr_ids = all_aml_ids.mapped('reconcile_id')
+            all_aml_ids.mapped('reconcile_partial_id').unlink()
+
+            # Let's group all the Accrual lines by Purchase/Sale Order, Product
+            # and Account
+            for aml_brw in all_aml_ids:
+                account_id = aml_brw.account_id.id
+                product_id = aml_brw.product_id
+                res.setdefault((brw_id, account_id, product_id), aml_obj)
+                res[(brw_id, account_id, product_id)] |= aml_brw
+
+            do_commit = False
+            for (brw_id, account_id, product_id), aml_ids in res.items():
+                if len(aml_ids) < 2:
+                    continue
+                journal_id = product_id.categ_id.property_stock_journal.id
+                writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
+                try:
+                    # /!\ NOTE: Reconcile with write off
+                    if ((writeoff and abs(writeoff_amount) <= offset) or
+                            float_is_zero(
+                                writeoff_amount, precision_digits=precision)):
+                        aml_ids.reconcile(
+                            type='manual',
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                        do_commit = True
+                    # /!\ NOTE: I @hbto advise you to neglect the use of this
+                    # option. AS it is resource wasteful and provide little
+                    # value. Use only if you really find it Useful to
+                    # partially reconcile loose lines
+                    elif ((not writeoff and abs(writeoff_amount) <= offset) or
+                            do_partial):
+                        aml_ids.reconcile_partial(
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                        do_commit = True
+
+                except orm.except_orm:
+                    message = (
+                        "Reconciliation was not possible with "
+                        "Journal Items [%(values)s]" % dict(
+                            values=", ".join([str(idx) for idx in aml_ids])))
+                    _logger.exception(message)
+
+            if do_commit:
+                obj.browse(brw_id).message_post(
+                    subject='Accruals Reconciled at %s' % time.ctime(),
+                    body='Applying reconciliation on Order')
+                obj._cr.commit()
+                _logger.info(
+                    'Reconciling %s:%s - %s/%s',
+                    query_col, brw_id, count, total)
+
+        return True
 
 
 class AccountInvoiceLine(osv.osv):
