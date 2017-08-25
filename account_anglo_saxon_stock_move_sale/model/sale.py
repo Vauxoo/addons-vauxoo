@@ -144,32 +144,9 @@ class SaleOrder(models.Model):
 
     def cron_sale_accrual_reconciliation(self, cr, uid, context=None):
         _logger.info('Reconciling Sales Order Stock Accruals')
-        company_id = self.pool['res.users'].browse(cr, uid, uid).company_id
-        cr.execute('''
-            SELECT
-                aml.sale_id AS id,
-                aml.product_id as product_id,
-                aml.account_id as account_id,
-                COUNT(aml.id) as count
-            FROM account_move_line aml
-            INNER JOIN account_account aa ON aa.id = aml.account_id
-            WHERE
-                sale_id IS NOT NULL
-                AND product_id IS NOT NULL
-                AND reconcile_id IS NULL
-                AND aa.reconcile = TRUE
-            GROUP BY sale_id, product_id, account_id
-            HAVING COUNT(aml.id)  > 1
-            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
-            ;
-            ''', (company_id.accrual_offset,))
-
-        ids = list(set(x[0] for x in cr.fetchall()))
-        if not ids:
-            return
-        self.browse(cr, uid, ids, context=context).reconcile_stock_accrual()
-
-        return
+        self.pool['account.invoice'].cron_accrual_reconciliation(
+            cr, uid, [], 'sale_id')
+        _logger.info('Reconciling Sales Order Stock Accruals Ended')
 
     @api.multi
     def reconcile_stock_accrual(self):
