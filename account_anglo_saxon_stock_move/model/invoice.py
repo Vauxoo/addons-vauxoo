@@ -221,14 +221,6 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def reconcile_stock_accrual(self, rec_ids, query_col):
-        if query_col == 'sale_id':
-            obj = self.env['sale.order']
-        elif query_col == 'purchase_id':
-            obj = self.env['purchase.order']
-        else:
-            raise ValidationError(
-                _('This field has not yet being implemented: %s'), query_col)
-
         aml_obj = self.env['account.move.line']
         ap_obj = self.env['account.period']
         date = fields.Date.context_today(self)
@@ -247,14 +239,19 @@ class AccountInvoice(models.Model):
         query = self._get_accrual_query(query_col, 'query4', query_params)
         self._cr.execute(query)
 
-        for brw_id, ids in self._cr.fetchall():
+        if query_col == 'sale_id':
+            obj = self.env['sale.order']
+        elif query_col == 'purchase_id':
+            obj = self.env['purchase.order']
+
+        genexp = ((brw_id, ids) for brw_id, ids in self._cr.fetchall()
+                  if len(ids) > 1)
+
+        for brw_id, ids in genexp:
             count += 1
             _logger.info(
                 'Attempting Reconciliation at %s:%s - %s/%s',
                 query_col, brw_id, count, total)
-
-            if len(ids) < 2:
-                continue
 
             all_aml_ids = aml_obj.browse(ids)
 
@@ -287,7 +284,7 @@ class AccountInvoice(models.Model):
                 (account_id, product_id, aml_ids)
                 for (account_id, product_id), aml_ids in res.items()
                 if len(aml_ids) > 1)
-            for (account_id, product_id, aml_ids) in gen:
+            for account_id, product_id, aml_ids in gen:
                 journal_id = product_id.categ_id.property_stock_journal.id
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
 
