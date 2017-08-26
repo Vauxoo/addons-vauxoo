@@ -21,53 +21,38 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import operator as py_operator
-
 from openerp import fields, models, api
-
-OPERATORS = {
-    '<': py_operator.lt,
-    '>': py_operator.gt,
-    '<=': py_operator.le,
-    '>=': py_operator.ge,
-    '=': py_operator.eq,
-    '!=': py_operator.ne
-}
 
 
 class PurchaseOrder(models.Model):
 
     _inherit = "purchase.order"
 
-    def _compute_query(self, ids, query_type):
-        obj = self.env['account.invoice']
-        return obj._compute_query(ids, 'purchase_id', query_type)
+    # /!\ NOTE: Following two methods can be drawn from a TransientModel
+    # instead of account.invoice
+    def _compute_value(self, name, query_type):
+        self.env['account.invoice']._compute_value(
+            self._ids, name, query_type, 'purchase_id')
+
+    def _compute_search(self, name, query_type, operator, value):
+        return self.env['account.invoice']._compute_search(
+            name, query_type, 'purchase_id', operator, value)
 
     @api.multi
     def _compute_pending_reconciliation(self):
-        res = self._compute_query(self._ids, 'query1')
-        for brw in self:
-            brw.reconciliation_pending = res.get(brw.id, 0)
+        self._compute_value('reconciliation_pending', 'query1')
 
     def _search_pending_reconciliation(self, operator, value):
-        res = self._compute_query(self.search([])._ids, 'query1')
-        ids = [rec_id
-               for (rec_id, computed_value) in res.items()
-               if OPERATORS[operator](computed_value, value)]
-        return [('id', 'in', ids)]
+        return self._compute_search(
+            'reconciliation_pending', 'query1', operator, value)
 
     @api.multi
     def _compute_unreconciled_lines(self):
-        res = self._compute_query(self._ids, 'query2')
-        for brw in self:
-            brw.unreconciled_lines = res.get(brw.id, 0)
+        self._compute_value('unreconciled_lines', 'query2')
 
     def _search_unreconciled_lines(self, operator, value):
-        res = self._compute_query(self.search([])._ids, 'query2')
-        ids = [rec_id
-               for (rec_id, computed_value) in res.items()
-               if OPERATORS[operator](computed_value, value)]
-        return [('id', 'in', ids)]
+        return self._compute_search(
+            'unreconciled_lines', 'query2', operator, value)
 
     unreconciled_lines = fields.Integer(
         compute='_compute_unreconciled_lines',
