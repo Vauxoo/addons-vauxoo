@@ -66,6 +66,8 @@ class AccountInvoice(models.Model):
             query = self._get_accrual_query2(query_col)
         elif query_type == 'query3':
             query = self._get_accrual_query3(query_col)
+        elif query_type == 'query4':
+            query = self._get_accrual_query4(query_col)
         else:
             raise ValidationError(
                 _('This query has not yet being implemented: %s'), query_type)
@@ -133,6 +135,25 @@ class AccountInvoice(models.Model):
             AND ABS(SUM(aml.debit - aml.credit)) <= %(offset)s -- Threashold
             ;'''
 
+        return query
+
+    def _get_accrual_query4(self, query_col):
+        # In order to keep every single line reconciled we will look for all
+        # the lines related to a purchase/sale order
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT
+                aml.''' + query_col + ''',
+                ARRAY_AGG(aml.id) as aml_ids
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                ''' + query_col + ''' IN %(ids)s
+                AND reconcile_id IS NULL
+                AND product_id IS NOT NULL
+                AND aa.reconcile = TRUE
+            GROUP BY aml.''' + query_col + '''
+            ;'''
         return query
 
     def _compute_query(self, ids, query_col, query_type):
@@ -216,31 +237,8 @@ class AccountInvoice(models.Model):
         offset = company_id.accrual_offset
         do_partial = company_id.do_partial
 
-        # In order to keep every single line reconciled we will look for all
-        # the lines related to a purchase/sale order
-        # /!\ ALERT: SQL INJECTION RISK
         query_params = {'ids': tuple(rec_ids)}
-
-        query = []
-
-        query.append('SELECT')
-        query.append('aml.%s,' % query_col)
-        query.append('''
-                ARRAY_AGG(aml.id) as aml_ids
-            FROM account_move_line aml
-            INNER JOIN account_account aa ON aa.id = aml.account_id
-            WHERE''')
-        query.append('aml.%s' % query_col)
-        query.append('''IN %(ids)s
-                AND reconcile_id IS NULL
-                AND product_id IS NOT NULL
-                AND aa.reconcile = TRUE
-            GROUP BY''')
-        query.append('aml.%s' % query_col)
-        query.append(';')
-
-        query = ' '.join(query)
-        query = self._cr.mogrify(query, query_params)
+        query = self._get_accrual_query(query_col, 'query4', query_params)
         self._cr.execute(query)
 
         for brw_id, ids in self._cr.fetchall():
