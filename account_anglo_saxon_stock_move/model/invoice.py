@@ -129,6 +129,8 @@ class AccountInvoice(models.Model):
                 ''' + query_col + ''' IS NOT NULL
                 AND product_id IS NOT NULL
                 AND reconcile_id IS NULL
+                AND state = 'valid'
+                AND aml.company_id = %(company_id)s
                 AND aa.reconcile = TRUE
             GROUP BY ''' + query_col + ''', product_id, account_id
             HAVING COUNT(aml.id)  > 1
@@ -151,6 +153,8 @@ class AccountInvoice(models.Model):
                 ''' + query_col + ''' IN %(ids)s
                 AND reconcile_id IS NULL
                 AND product_id IS NOT NULL
+                AND state = 'valid'
+                AND aml.company_id = %(company_id)s
                 AND aa.reconcile = TRUE
             GROUP BY aml.''' + query_col + '''
             ;'''
@@ -203,7 +207,9 @@ class AccountInvoice(models.Model):
 
         _logger.info('Reconciling %s Order Stock Accruals', ttype)
         company_id = self.env['res.users'].browse(self._uid).company_id
-        query_params = {'offset': company_id.accrual_offset}
+        query_params = {
+            'offset': company_id.accrual_offset,
+            'company_id': company_id.id}
         query = self._get_accrual_query(query_col, 'query3', query_params)
         self._cr.execute(query)
         ids = list(set(x[0] for x in self._cr.fetchall()))
@@ -237,7 +243,7 @@ class AccountInvoice(models.Model):
         offset = company_id.accrual_offset
         do_partial = company_id.do_partial
 
-        query_params = {'ids': tuple(rec_ids)}
+        query_params = {'ids': tuple(rec_ids), 'company_id': company_id.id}
         query = self._get_accrual_query(query_col, 'query4', query_params)
         self._cr.execute(query)
 
@@ -282,33 +288,26 @@ class AccountInvoice(models.Model):
                     continue
                 journal_id = product_id.categ_id.property_stock_journal.id
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
-                try:
-                    # /!\ NOTE: Reconcile with write off
-                    if ((writeoff and abs(writeoff_amount) <= offset) or
-                            float_is_zero(
-                                writeoff_amount, precision_digits=precision)):
-                        aml_ids.reconcile(
-                            type='manual',
-                            writeoff_period_id=period_id,
-                            writeoff_journal_id=journal_id)
-                        do_commit = True
-                    # /!\ NOTE: I @hbto advise you to neglect the use of this
-                    # option. AS it is resource wasteful and provide little
-                    # value. Use only if you really find it Useful to
-                    # partially reconcile loose lines
-                    elif ((not writeoff and abs(writeoff_amount) <= offset) or
-                            do_partial):
-                        aml_ids.reconcile_partial(
-                            writeoff_period_id=period_id,
-                            writeoff_journal_id=journal_id)
-                        do_commit = True
 
-                except orm.except_orm:
-                    message = (
-                        "Reconciliation was not possible with "
-                        "Journal Items [%(values)s]" % dict(
-                            values=", ".join([str(idx) for idx in aml_ids])))
-                    _logger.exception(message)
+                # /!\ NOTE: Reconcile with write off
+                if ((writeoff and abs(writeoff_amount) <= offset) or
+                        float_is_zero(
+                            writeoff_amount, precision_digits=precision)):
+                    aml_ids.reconcile(
+                        type='manual',
+                        writeoff_period_id=period_id,
+                        writeoff_journal_id=journal_id)
+                    do_commit = True
+                # /!\ NOTE: I @hbto advise you to neglect the use of this
+                # option. AS it is resource wasteful and provide little
+                # value. Use only if you really find it Useful to
+                # partially reconcile loose lines
+                elif ((not writeoff and abs(writeoff_amount) <= offset) or
+                        do_partial):
+                    aml_ids.reconcile_partial(
+                        writeoff_period_id=period_id,
+                        writeoff_journal_id=journal_id)
+                    do_commit = True
 
             if do_commit:
                 obj.browse(brw_id).message_post(
