@@ -244,6 +244,8 @@ class AccountInvoice(models.Model):
         elif query_col == 'purchase_id':
             obj = self.env['purchase.order']
 
+        journal_ids = {}
+
         genexp = ((brw_id, ids) for brw_id, ids in self._cr.fetchall()
                   if len(ids) > 1)
 
@@ -276,8 +278,11 @@ class AccountInvoice(models.Model):
             for aml_brw in all_aml_ids:
                 account_id = aml_brw.account_id.id
                 product_id = aml_brw.product_id
-                res.setdefault((account_id, product_id), aml_obj)
-                res[(account_id, product_id)] |= aml_brw
+                res.setdefault((account_id, product_id.id), aml_obj)
+                res[(account_id, product_id.id)] |= aml_brw
+                if product_id.id not in journal_ids:
+                    journal_ids[product_id.id] = \
+                        product_id.categ_id.property_stock_journal.id
 
             do_commit = False
             gen = (
@@ -285,7 +290,7 @@ class AccountInvoice(models.Model):
                 for (account_id, product_id), aml_ids in res.items()
                 if len(aml_ids) > 1)
             for account_id, product_id, aml_ids in gen:
-                journal_id = product_id.categ_id.property_stock_journal.id
+                journal_id = journal_ids[product_id]
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
 
                 # /!\ NOTE: Reconcile with write off
