@@ -22,6 +22,7 @@
 #
 ##############################################################################
 import logging
+import operator as py_operator
 import time
 
 from openerp.osv import osv, orm
@@ -30,6 +31,15 @@ from openerp.exceptions import ValidationError
 from openerp.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
+
+OPERATORS = {
+    '<': py_operator.lt,
+    '>': py_operator.gt,
+    '<=': py_operator.le,
+    '>=': py_operator.ge,
+    '=': py_operator.eq,
+    '!=': py_operator.ne
+}
 
 
 class AccountInvoice(models.Model):
@@ -109,6 +119,32 @@ class AccountInvoice(models.Model):
         self._cr.execute(query, query_params)
         res.update(dict(self._cr.fetchall()))
         return res
+
+    def _compute_value(self, ids, name, query_type, query_col):
+        if query_col == 'sale_id':
+            obj = self.env['sale.order']
+        elif query_col == 'purchase_id':
+            obj = self.env['purchase.order']
+        else:
+            raise ValidationError(
+                _('This field has not yet being implemented: %s'), query_col)
+        res = self._compute_query(ids, query_col, query_type)
+        for brw in obj.browse(ids):
+            brw[name] = res.get(brw.id, 0)
+
+    def _compute_search(self, name, query_type, query_col, operator, value):
+        if query_col == 'sale_id':
+            obj = self.env['sale.order']
+        elif query_col == 'purchase_id':
+            obj = self.env['purchase.order']
+        else:
+            raise ValidationError(
+                _('This field has not yet being implemented: %s'), query_col)
+        res = self._compute_query(obj.search([])._ids, query_col, query_type)
+        ids = [rec_id
+               for (rec_id, computed_value) in res.items()
+               if OPERATORS[operator](computed_value, value)]
+        return [('id', 'in', ids)]
 
     @api.multi
     def cron_accrual_reconciliation(self, query_col):
