@@ -25,7 +25,7 @@ import logging
 import operator as py_operator
 import time
 
-from openerp.osv import osv, orm
+from openerp.osv import osv
 from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
 from openerp.tools import float_is_zero
