@@ -59,15 +59,17 @@ class AccountInvoice(models.Model):
             amr_ids.unlink()
         return super(AccountInvoice, self).action_cancel()
 
-    def _get_accrual_query(self, query_col, query_type):
+    def _get_accrual_query(self, query_col, query_type, query_params):
         if query_type == 'query1':
             query = self._get_accrual_query1(query_col)
         elif query_type == 'query2':
             query = self._get_accrual_query2(query_col)
+        elif query_type == 'query3':
+            query = self._get_accrual_query3(query_col)
         else:
             raise ValidationError(
                 _('This query has not yet being implemented: %s'), query_type)
-        return query
+        return self._cr.mogrify(query, query_params)
 
     def _get_accrual_query1(self, query_col):
         # /!\ ALERT: SQL INJECTION RISK
@@ -111,12 +113,34 @@ class AccountInvoice(models.Model):
 
         return query
 
+    def _get_accrual_query3(self, query_col):
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT
+                aml.''' + query_col + ''' AS id,
+                aml.product_id as product_id,
+                aml.account_id as account_id,
+                COUNT(aml.id) as count
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                ''' + query_col + ''' IS NOT NULL
+                AND product_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY ''' + query_col + ''', product_id, account_id
+            HAVING COUNT(aml.id)  > 1
+            AND ABS(SUM(aml.debit - aml.credit)) <= %(offset)s -- Threashold
+            ;'''
+
+        return query
+
     def _compute_query(self, ids, query_col, query_type):
         res = {}.fromkeys(ids, 0)
         company_id = self.env['res.users'].browse(self._uid).company_id
         query_params = {'ids': ids, 'offset': company_id.accrual_offset}
-        query = self._get_accrual_query(query_col, query_type)
-        self._cr.execute(query, query_params)
+        query = self._get_accrual_query(query_col, query_type, query_params)
+        self._cr.execute(query)
         res.update(dict(self._cr.fetchall()))
         return res
 
@@ -158,28 +182,12 @@ class AccountInvoice(models.Model):
 
         _logger.info('Reconciling %s Order Stock Accruals', ttype)
         company_id = self.env['res.users'].browse(self._uid).company_id
-        # /!\ ALERT: SQL INJECTION RISK
-        self._cr.execute('''
-            SELECT
-                aml.''' + query_col + ''' AS id,
-                aml.product_id as product_id,
-                aml.account_id as account_id,
-                COUNT(aml.id) as count
-            FROM account_move_line aml
-            INNER JOIN account_account aa ON aa.id = aml.account_id
-            WHERE
-                ''' + query_col + ''' IS NOT NULL
-                AND product_id IS NOT NULL
-                AND reconcile_id IS NULL
-                AND aa.reconcile = TRUE
-            GROUP BY ''' + query_col + ''', product_id, account_id
-            HAVING COUNT(aml.id)  > 1
-            AND ABS(SUM(aml.debit - aml.credit)) <= %s -- Use Threashold
-            ;
-            ''', (company_id.accrual_offset,))
-
+        query_params = {'offset': company_id.accrual_offset}
+        query = self._get_accrual_query(query_col, 'query3', query_params)
+        self._cr.execute(query)
         ids = list(set(x[0] for x in self._cr.fetchall()))
         if not ids:
+            _logger.info('None %s Order Stock Accruals to Reconcile', ttype)
             return
         self.env['account.invoice'].reconcile_stock_accrual(ids, query_col)
         _logger.info('Reconciling %s Order Stock Accruals Ended', ttype)
