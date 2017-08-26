@@ -283,9 +283,11 @@ class AccountInvoice(models.Model):
                 res[(account_id, product_id)] |= aml_brw
 
             do_commit = False
-            for (account_id, product_id), aml_ids in res.items():
-                if len(aml_ids) < 2:
-                    continue
+            gen = (
+                (account_id, product_id, aml_ids)
+                for (account_id, product_id), aml_ids in res.items()
+                if len(aml_ids) > 1)
+            for (account_id, product_id, aml_ids) in gen:
                 journal_id = product_id.categ_id.property_stock_journal.id
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
 
