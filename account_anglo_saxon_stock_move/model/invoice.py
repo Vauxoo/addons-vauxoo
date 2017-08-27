@@ -340,53 +340,41 @@ class AccountInvoice(models.Model):
 class AccountInvoiceLine(osv.osv):
     _inherit = "account.invoice.line"
 
-    def _anglo_saxon_stock_move_lines(self, cr, uid, res, ttype='customer',
-                                      context=None):
-        ail_obj = self.pool.get('account.invoice.line')
-        fp_obj = self.pool.get('account.fiscal.position')
-        rex = []
+    @api.model
+    def _anglo_saxon_stock_move_lines(self, res, ttype='customer'):
+
+        aa_res = {}
         for line in res:
-            if not line.get('invl_id', False):
-                rex.append(line)
+            if 'invl_id' not in line:
                 continue
 
-            ail_brw = ail_obj.browse(cr, uid, line['invl_id'], context=context)
+            ail_brw = self.browse(line['invl_id'])
             pp_brw = ail_brw.product_id
-            if not (pp_brw and pp_brw.valuation == 'real_time' and
-                    pp_brw.type != 'service'):
-                rex.append(line)
+            if (not pp_brw or pp_brw.valuation != 'real_time' or
+                    pp_brw.type == 'service' or not ail_brw.move_id):
                 continue
 
-            aa = None
-            if ttype == 'supplier':
-                oa = pp_brw.property_stock_account_input and \
-                    pp_brw.property_stock_account_input.id or \
-                    pp_brw.categ_id.property_stock_account_input_categ and\
-                    pp_brw.categ_id.property_stock_account_input_categ.id
-            elif ttype == 'customer':
-                oa = pp_brw.property_stock_account_output and \
-                    pp_brw.property_stock_account_output.id or \
-                    pp_brw.categ_id.property_stock_account_output_categ and\
-                    pp_brw.categ_id.property_stock_account_output_categ.id
+            if pp_brw.id not in aa_res:
+                if ttype == 'supplier':
+                    oa = pp_brw.property_stock_account_input or \
+                        pp_brw.categ_id.property_stock_account_input_categ
+                elif ttype == 'customer':
+                    oa = pp_brw.property_stock_account_output or \
+                        pp_brw.categ_id.property_stock_account_output_categ
+                aa_res[pp_brw.id] = \
+                    ail_brw.invoice_id.fiscal_position.map_account(oa)
 
-            if oa:
-                fpos = ail_brw.invoice_id.fiscal_position or False
-                aa = fp_obj.map_account(cr, uid, fpos, oa)
-            if aa == line['account_id'] and ail_brw.move_id:
+            if aa_res[pp_brw.id].id == line['account_id']:
                 line['sm_id'] = ail_brw.move_id.id
 
-            rex.append(line)
-        return rex
+        return res
 
-    def move_line_get(self, cr, uid, invoice_id, context=None):
-        res = super(AccountInvoiceLine,
-                    self).move_line_get(cr, uid, invoice_id, context=context)
-        inv = self.pool.get('account.invoice').browse(
-            cr, uid, invoice_id, context=context)
+    @api.model
+    def move_line_get(self, invoice_id):
+        res = super(AccountInvoiceLine, self).move_line_get(invoice_id)
+        inv = self.env['account.invoice'].browse(invoice_id)
         if inv.type in ('out_invoice', 'out_refund'):
-            res = self._anglo_saxon_stock_move_lines(
-                cr, uid, res, ttype='customer', context=context)
+            res = self._anglo_saxon_stock_move_lines(res, ttype='customer')
         elif inv.type in ('in_invoice', 'in_refund'):
-            res = self._anglo_saxon_stock_move_lines(
-                cr, uid, res, ttype='supplier', context=context)
+            res = self._anglo_saxon_stock_move_lines(res, ttype='supplier')
         return res
