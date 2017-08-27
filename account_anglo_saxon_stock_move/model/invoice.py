@@ -172,9 +172,6 @@ class AccountInvoice(models.Model):
             obj = self.env['sale.order']
         elif query_col == 'purchase_id':
             obj = self.env['purchase.order']
-        else:
-            raise ValidationError(
-                _('This field has not yet being implemented: %s'), query_col)
         res = self._compute_query(ids, query_col, query_type)
         for brw in obj.browse(ids):
             brw[name] = res.get(brw.id, 0)
@@ -184,9 +181,6 @@ class AccountInvoice(models.Model):
             obj = self.env['sale.order']
         elif query_col == 'purchase_id':
             obj = self.env['purchase.order']
-        else:
-            raise ValidationError(
-                _('This field has not yet being implemented: %s'), query_col)
         res = self._compute_query(obj.search([])._ids, query_col, query_type)
         ids = [rec_id
                for (rec_id, computed_value) in res.items()
@@ -199,9 +193,6 @@ class AccountInvoice(models.Model):
             ttype = 'Sale'
         elif query_col == 'purchase_id':
             ttype = 'Purchase'
-        else:
-            raise ValidationError(
-                _('This field has not yet being implemented: %s'), query_col)
 
         _logger.info('Reconciling %s Order Stock Accruals', ttype)
         company_id = self.env['res.users'].browse(self._uid).company_id
@@ -260,11 +251,11 @@ class AccountInvoice(models.Model):
                 not m.product_id.categ_id.property_stock_journal).mapped(
                     'product_id.categ_id')
             if categ_ids:
-                raise ValidationError(_(
-                    'The Stock Journal is missing on following '
-                    'product categories: %s' % (', '.join(
-                        categ_ids.mapped('name')))
-                ))
+                raise ValidationError(
+                    _('The Stock Journal is missing on following '
+                      'product categories: %s'),
+                    ', '.join(categ_ids.mapped('name'))
+                )
 
             res = {}
 
