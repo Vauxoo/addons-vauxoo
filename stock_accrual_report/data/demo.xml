@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="base.res_partner_2" model="res.partner">
+            <field name="credit_limit">1000000000</field>
+        </record>
+    </data>
+    <data noupdate="0">
+        <record id="product_02_radiogram" model="product.product">
+           <field name="name">VX Radiogram (SAR)</field>
+           <field name="type">product</field>
+           <field name="cost_method">average</field>
+           <field name="valuation">real_time</field>
+           <field name="standard_price">20</field>
+           <field name="property_stock_account_input" ref="account.o_expense"/>
+           <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <!-- 01 - Purchase Order Order 01 -->
+        <record id="sau_po_sar_01" model="purchase.order">
+            <field name="name">sau_po_sar_01</field>
+            <field name="invoice_method">picking</field>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="pricelist_id" ref="purchase.list0"/>
+        </record>
+        <record id="sau_po_sar_01_line_01" model="purchase.order.line">
+            <field name="name">sau_po_sar_01_line_01</field>
+            <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_qty">10</field>
+            <field name="price_unit">100</field>
+            <field name="order_id" ref="sau_po_sar_01"/>
+        </record>
+
+        <!-- 02 - Sale Order 01 -->
+        <record id="sau_so_sar_01" model="sale.order">
+            <field name="name">sau_so_sar_01</field>
+            <field name="date_order" eval="datetime.now().strftime('%Y-%m-%d')" />
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pricelist_id" ref="product.list0"/>
+            <field name="order_policy">picking</field>
+        </record>
+        <record id="sau_so_sar_01_line_01" model="sale.order.line">
+            <field name="name">sau_so_sar_01_line_01</field>
+            <field name="order_id" ref="sau_so_sar_01"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_uom_qty">4</field>
+            <field name="price_unit">100</field>
+        </record>
+    </data>
+</openerp>
