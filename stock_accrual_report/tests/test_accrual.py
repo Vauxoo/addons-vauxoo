@@ -99,7 +99,9 @@ class TestAccrual(TransactionCase):
 
         self.assertEqual(
             len(po_brw.aml_ids), 2, 'There should be two lines')
-        ul = po_brw.search([('unreconciled_lines', '=', 1)])
+        ul = po_brw.search(
+            [('unreconciled_lines', '=', 1),
+             ('id', '=', po_brw.id)])
         self.assertEqual(
             len(ul), 1, 'One Purchase there should be in the search')
         self.assertEqual(
@@ -114,7 +116,9 @@ class TestAccrual(TransactionCase):
             len(po_brw.aml_ids), 3, 'There should be three lines')
         self.assertEqual(
             po_brw.unreconciled_lines, 2, 'Unreconciled Lines should be Two')
-        pl = po_brw.search([('reconciliation_pending', '=', 2)])
+        pl = po_brw.search(
+            [('reconciliation_pending', '=', 2),
+             ('id', '=', po_brw.id)])
         self.assertEqual(
             len(pl), 1, 'One Purchase there should be in the search')
         self.assertEqual(
@@ -180,7 +184,9 @@ class TestAccrual(TransactionCase):
 
         self.assertEqual(
             len(so_brw.aml_ids), 4, 'There should be four lines')
-        ul = so_brw.search([('unreconciled_lines', '=', 2)])
+        ul = so_brw.search(
+            [('unreconciled_lines', '=', 2),
+             ('id', '=', so_brw.id)])
         self.assertEqual(
             len(ul), 1, 'One Sale there should be in the search')
         self.assertEqual(
@@ -201,6 +207,11 @@ class TestAccrual(TransactionCase):
             len(so_brw.aml_ids), 6, 'There should be six lines')
         self.assertEqual(
             so_brw.unreconciled_lines, 4, 'Unreconciled Lines should be Four')
+        pl = so_brw.search(
+            [('reconciliation_pending', '=', 4),
+             ('id', '=', so_brw.id)])
+        self.assertEqual(
+            len(pl), 1, 'One Purchase there should be in the search')
         self.assertEqual(
             so_brw.reconciliation_pending, 4, 'Four to reconciled')
 
