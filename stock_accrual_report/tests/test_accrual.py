@@ -103,7 +103,7 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             len(ul), 1, 'One Purchase there should be in the search')
         self.assertEqual(
-            po_brw.unreconciled_lines, 1, 'Unreconciled Lines should be zero')
+            po_brw.unreconciled_lines, 1, 'Unreconciled Lines should be one')
         self.assertEqual(
             po_brw.reconciliation_pending, 0,
             'To be reconciled should be zero')
@@ -179,27 +179,30 @@ class TestAccrual(TransactionCase):
         so_brw = self.do_sale(xml_id, 'transfer')
 
         self.assertEqual(
-            len(so_brw.aml_ids), 2, 'There should be two lines')
-        ul = so_brw.search([('unreconciled_lines', '=', 1)])
+            len(so_brw.aml_ids), 4, 'There should be four lines')
+        ul = so_brw.search([('unreconciled_lines', '=', 2)])
         self.assertEqual(
             len(ul), 1, 'One Sale there should be in the search')
         self.assertEqual(
-            so_brw.unreconciled_lines, 1, 'Unreconciled Lines should be zero')
+            so_brw.unreconciled_lines, 2, 'Unreconciled Lines should be two')
         self.assertEqual(
             so_brw.reconciliation_pending, 0,
             'To be reconciled should be zero')
 
+        self.env['res.company'].browse(self.uid).do_partial = True
+        so_brw.reconcile_stock_accrual()
+        pl = so_brw.aml_ids.mapped('reconcile_partial_id')
+        self.assertEqual(
+            len(pl), 1, 'There should one partial reconciliation')
+
         self.process_invoice(so_brw)
 
         self.assertEqual(
-            len(so_brw.aml_ids), 3, 'There should be three lines')
+            len(so_brw.aml_ids), 6, 'There should be six lines')
         self.assertEqual(
-            so_brw.unreconciled_lines, 2, 'Unreconciled Lines should be Two')
-        pl = so_brw.search([('reconciliation_pending', '=', 2)])
+            so_brw.unreconciled_lines, 4, 'Unreconciled Lines should be Four')
         self.assertEqual(
-            len(pl), 1, 'One Sale there should be in the search')
-        self.assertEqual(
-            so_brw.reconciliation_pending, 2, 'To be reconciled should be Two')
+            so_brw.reconciliation_pending, 4, 'Four to reconciled')
 
         so_brw.cron_sale_accrual_reconciliation()
         self.assertEqual(

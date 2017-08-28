@@ -49,5 +49,12 @@
             <field name="product_uom_qty">4</field>
             <field name="price_unit">100</field>
         </record>
+        <record id="sau_so_sar_01_line_02" model="sale.order.line">
+            <field name="name">sau_so_sar_01_line_02</field>
+            <field name="order_id" ref="sau_so_sar_01"/>
+            <field name="product_id" ref="product_02_radiogram"/>
+            <field name="product_uom_qty">3</field>
+            <field name="price_unit">100</field>
+        </record>
     </data>
 </openerp>
