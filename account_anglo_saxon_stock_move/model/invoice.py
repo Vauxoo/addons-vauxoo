@@ -306,7 +306,7 @@ class AccountInvoice(models.Model):
                 obj.browse(brw_id).message_post(
                     subject='Accruals Reconciled at %s' % time.ctime(),
                     body='Applying reconciliation on Order')
-                obj._cr.commit()
+                # obj._cr.commit()
                 _logger.info(
                     'Reconciling %s:%s - %s/%s',
                     query_col, brw_id, count, total)
