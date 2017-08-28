@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from openerp.tests.common import TransactionCase
+from openerp.tools.safe_eval import safe_eval
 
 
 class TestAccrual(TransactionCase):
@@ -86,6 +87,9 @@ class TestAccrual(TransactionCase):
 
         self.assertEqual(
             len(po_brw.aml_ids), 2, 'There should be two lines')
+        ul = po_brw.search([('unreconciled_lines', '=', 1)])
+        self.assertEqual(
+            len(ul), 1, 'One Purchase there should be in the search')
         self.assertEqual(
             po_brw.unreconciled_lines, 1, 'Unreconciled Lines should be zero')
         self.assertEqual(
@@ -98,14 +102,35 @@ class TestAccrual(TransactionCase):
             len(po_brw.aml_ids), 3, 'There should be three lines')
         self.assertEqual(
             po_brw.unreconciled_lines, 2, 'Unreconciled Lines should be Two')
+        pl = po_brw.search([('reconciliation_pending', '=', 2)])
+        self.assertEqual(
+            len(pl), 1, 'One Purchase there should be in the search')
         self.assertEqual(
             po_brw.reconciliation_pending, 2, 'To be reconciled should be Two')
 
-        po_brw.reconcile_stock_accrual()
+        po_brw.cron_purchase_accrual_reconciliation()
         self.assertEqual(
             po_brw.unreconciled_lines, 0, 'Unreconciled Lines should be zero')
         self.assertEqual(
             po_brw.reconciliation_pending, 0,
             'To be reconciled should be zero')
+
+        view_accrual = po_brw.view_accrual()
+        self.assertTrue(
+            'domain' in view_accrual,
+            'There is something wrong with `view_accrual`')
+        domain = safe_eval(view_accrual['domain'])
+        self.assertTrue(
+            isinstance(domain, list),
+            'There is something wrong with `view_accrual` domain')
+        self.assertTrue(
+            isinstance(domain[0], tuple) and len(domain[0]) == 3,
+            'There is something wrong with `view_accrual` domain args')
+        self.assertTrue(
+            isinstance(domain[0][2], list),
+            'Something wrong with `view_accrual` domain args operands')
+        self.assertTrue(
+            set(domain[0][2]).issubset(set(po_brw.aml_ids._ids)),
+            'Something wrong with `view_accrual` returned data')
 
         return
