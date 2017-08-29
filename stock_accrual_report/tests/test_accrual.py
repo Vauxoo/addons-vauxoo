@@ -112,6 +112,22 @@ class TestAccrual(TransactionCase):
             po_brw.reconciliation_pending, 0,
             'To be reconciled should be zero')
 
+        # This should not affect the results
+        po_brw.reconcile_stock_accrual()
+
+        self.assertEqual(
+            len(po_brw.aml_ids), 2, 'There should be two lines')
+        ul = po_brw.search(
+            [('unreconciled_lines', '=', 1),
+             ('id', '=', po_brw.id)])
+        self.assertEqual(
+            len(ul), 1, 'One Purchase there should be in the search')
+        self.assertEqual(
+            po_brw.unreconciled_lines, 1, 'Unreconciled Lines should be one')
+        self.assertEqual(
+            po_brw.reconciliation_pending, 0,
+            'To be reconciled should be zero')
+
         self.process_invoice(po_brw)
 
         self.assertEqual(
