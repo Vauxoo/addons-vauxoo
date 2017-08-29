@@ -9,7 +9,7 @@
             <field name="sequence">5</field>
             <field name="code">
 obj = env['sale.order']
-obj.cron_sale_accrual_reconciliation()
+obj.cron_sale_accrual_reconciliation(do_commit=True)
             </field>
         </record>
     </data>

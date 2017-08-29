@@ -12,7 +12,7 @@
             <field eval="False" name="doall" />
             <field eval="'sale.order'" name="model" />
             <field eval="'cron_sale_accrual_reconciliation'" name="function"/>
-            <field eval="'()'" name="args" />
+            <field eval="'(do_commit=True)'" name="args"/>
             <field name="priority">5</field>
         </record>
     </data>
