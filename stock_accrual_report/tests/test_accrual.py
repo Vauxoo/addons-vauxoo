@@ -33,11 +33,13 @@ class TestAccrual(TransactionCase):
         elif obj._name == 'sale.order':
             j_id = self.expenses_journal_id
         values = {'journal_id': j_id}
-        ctx = {'active_ids': [p.id for p in obj.picking_ids],
+        sp_brw = obj.picking_ids.filtered(
+            lambda sp: sp.invoice_state == '2binvoiced')
+        ctx = {'active_ids': [p.id for p in sp_brw],
                "active_model": "stock.picking"}
         sio_brw = self.sio_obj.with_context(ctx).create(values)
-        ctx = {"active_ids": [p.id for p in obj.picking_ids],
-               "active_id": obj.picking_ids.id}
+        ctx = {"active_ids": [p.id for p in sp_brw],
+               "active_id": sp_brw.id}
         sio_brw.with_context(ctx).create_invoice()
         obj.invoice_ids.signal_workflow('invoice_open')
 
