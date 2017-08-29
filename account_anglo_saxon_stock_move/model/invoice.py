@@ -188,7 +188,7 @@ class AccountInvoice(models.Model):
         return [('id', 'in', ids)]
 
     @api.multi
-    def cron_accrual_reconciliation(self, query_col):
+    def cron_accrual_reconciliation(self, query_col, do_commit=False):
         if query_col == 'sale_id':
             ttype = 'Sale'
         elif query_col == 'purchase_id':
@@ -205,11 +205,12 @@ class AccountInvoice(models.Model):
         if not ids:
             _logger.info('None %s Order Stock Accruals to Reconcile', ttype)
             return
-        self.env['account.invoice'].reconcile_stock_accrual(ids, query_col)
+        self.env['account.invoice'].reconcile_stock_accrual(
+            ids, query_col, do_commit=do_commit)
         _logger.info('Reconciling %s Order Stock Accruals Ended', ttype)
 
     @api.multi
-    def reconcile_stock_accrual(self, rec_ids, query_col):
+    def reconcile_stock_accrual(self, rec_ids, query_col, do_commit=False):
         aml_obj = self.env['account.move.line']
         ap_obj = self.env['account.period']
         date = fields.Date.context_today(self)
@@ -273,7 +274,7 @@ class AccountInvoice(models.Model):
                     journal_ids[product_id.id] = \
                         product_id.categ_id.property_stock_journal.id
 
-            do_commit = False
+            do_log = False
             gen = (
                 (account_id, product_id, aml_ids)
                 for (account_id, product_id), aml_ids in res.items()
@@ -290,7 +291,7 @@ class AccountInvoice(models.Model):
                         type='manual',
                         writeoff_period_id=period_id,
                         writeoff_journal_id=journal_id)
-                    do_commit = True
+                    do_log = True
                 # /!\ NOTE: I @hbto advise you to neglect the use of this
                 # option. AS it is resource wasteful and provide little
                 # value. Use only if you really find it Useful to
@@ -300,16 +301,18 @@ class AccountInvoice(models.Model):
                     aml_ids.reconcile_partial(
                         writeoff_period_id=period_id,
                         writeoff_journal_id=journal_id)
-                    do_commit = True
+                    do_log = True
 
-            if do_commit:
+            if do_log:
                 obj.browse(brw_id).message_post(
                     subject='Accruals Reconciled at %s' % time.ctime(),
                     body='Applying reconciliation on Order')
-                # obj._cr.commit()
                 _logger.info(
                     'Reconciling %s:%s - %s/%s',
                     query_col, brw_id, count, total)
+
+            if do_commit:
+                obj._cr.commit()
 
     @api.multi
     def view_accrual(self, ids, model):
