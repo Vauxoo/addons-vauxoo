@@ -25,6 +25,7 @@ import logging
 import operator as py_operator
 import time
 
+from openerp.osv import orm
 from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
 from openerp.tools import float_is_zero
@@ -234,12 +235,15 @@ class AccountInvoice(models.Model):
         elif query_col == 'purchase_id':
             obj = self.env['purchase.order']
 
+        msg = 'Reconciling account_id %s, product_id %s, no. items: %s'
+
         journal_ids = {}
 
         genexp = ((brw_id, ids) for brw_id, ids in self._cr.fetchall()
                   if len(ids) > 1)
 
         for brw_id, ids in genexp:
+            fnc_post = obj.browse(brw_id).message_post
             count += 1
             _logger.info(
                 'Attempting Reconciliation at %s:%s - %s/%s',
@@ -274,7 +278,8 @@ class AccountInvoice(models.Model):
                     journal_ids[product_id.id] = \
                         product_id.categ_id.property_stock_journal.id
 
-            do_log = False
+            msg_log = []
+            error_set = set()
             gen = (
                 (account_id, product_id, aml_ids)
                 for (account_id, product_id), aml_ids in res.items()
@@ -283,33 +288,47 @@ class AccountInvoice(models.Model):
                 journal_id = journal_ids[product_id]
                 writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
 
+                log = msg % (account_id, product_id, len(aml_ids))
+                _logger.info(log)
                 # /!\ NOTE: Reconcile with write off
-                if ((writeoff and abs(writeoff_amount) <= offset) or
-                        float_is_zero(
-                            writeoff_amount, precision_digits=precision)):
-                    aml_ids.reconcile(
-                        type='manual',
-                        writeoff_period_id=period_id,
-                        writeoff_journal_id=journal_id)
-                    do_log = True
-                # /!\ NOTE: I @hbto advise you to neglect the use of this
-                # option. AS it is resource wasteful and provide little
-                # value. Use only if you really find it Useful to
-                # partially reconcile loose lines
-                elif ((not writeoff and abs(writeoff_amount) <= offset) or
-                        do_partial):
-                    aml_ids.reconcile_partial(
-                        writeoff_period_id=period_id,
-                        writeoff_journal_id=journal_id)
-                    do_log = True
+                try:
+                    rec_id = None
+                    if ((writeoff and abs(writeoff_amount) <= offset) or
+                            float_is_zero(
+                                writeoff_amount, precision_digits=precision)):
+                        rec_id = aml_ids.reconcile(
+                            type='manual',
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                    # /!\ NOTE: I @hbto advise you to neglect the use of this
+                    # option. AS it is resource wasteful and provide little
+                    # value. Use only if you really find it Useful to
+                    # partially reconcile loose lines
+                    elif ((not writeoff and abs(writeoff_amount) <= offset) or
+                            do_partial):
+                        rec_id = aml_ids.reconcile_partial(
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                    if rec_id:
+                        msg_log.append(log)
+                except orm.except_orm, e:
+                    if do_commit:
+                        error_set.add((e.name, e.value, e.message))
+                    else:
+                        raise
 
-            if do_log:
-                obj.browse(brw_id).message_post(
+            if msg_log:
+                msg_log = '\n'.join(msg_log)
+                fnc_post(
                     subject='Accruals Reconciled at %s' % time.ctime(),
-                    body='Applying reconciliation on Order')
-                _logger.info(
-                    'Reconciling %s:%s - %s/%s',
-                    query_col, brw_id, count, total)
+                    body='Applying reconciliation on Order\n%s' % msg_log)
+
+            if error_set:
+                obj._cr.rollback()
+                msg_log = '\n'.join('%s: %s %s' % lmg for lmg in error_set)
+                fnc_post(
+                    subject='Errors at reconciliation at %s' % time.ctime(),
+                    body='Following errors were found\n%s' % msg_log)
 
             if do_commit:
                 obj._cr.commit()
