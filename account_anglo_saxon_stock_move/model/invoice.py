@@ -90,7 +90,8 @@ class AccountInvoice(models.Model):
                     AND reconcile_id IS NULL
                     AND aa.reconcile = TRUE
                 GROUP BY ''' + query_col + ''', product_id, account_id
-                HAVING ABS(SUM(aml.debit - aml.credit)) <= %(offset)s
+                HAVING COUNT(aml.id) > 1
+                AND ABS(SUM(aml.debit - aml.credit)) <= %(offset)s
                 ) AS view
             GROUP BY ''' + query_col + '''
             ;'''
