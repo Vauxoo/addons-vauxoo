@@ -27,57 +27,53 @@ class ResPartner(models.Model):
     @api.multi
     def _get_credit_overloaded(self):
         for partner in self:
-            context = self.env.context or {}
-            currency_obj = self.env['res.currency']
-            res_company = self.env['res.company']
-            imd_obj = self.env['ir.model.data']
-            company_id = imd_obj.get_object_reference(
-                'base', 'main_company')[1]
-            company = res_company.browse(company_id)
-            new_amount = context.get('new_amount', 0.0)
-            new_currency = context.get('new_currency', False)
-            if new_currency:
-                from_currency = currency_obj.browse(new_currency)
-            else:
-                from_currency = company.currency_id
-            new_amount_currency = from_currency.compute(
-                new_amount, company.currency_id)
+            company = self.env.user.company_id
+            new_amount = self.env.context.get('new_amount', 0.0)
+            new_currency = self.env.context.get('new_currency', False)
+            new_amount_currency = new_amount
+            if new_currency and company.currency_id != new_currency:
+                new_amount_currency = new_currency.compute(
+                    new_amount, company.currency_id)
 
             new_credit = partner.credit + new_amount_currency
             partner.credit_overloaded = new_credit > partner.credit_limit
 
     @api.model
-    def _get_movelines_domain(self, partner):
+    def movelines_domain(self, partner):
         domain = [('partner_id', '=', partner.id),
                   ('account_id.internal_type', '=', 'receivable'),
                   ('move_id.state', '!=', 'draft'),
                   ('reconciled', '=', False)]
         return domain
 
+    @api.model
+    def debit_credit_maturity(self, movelines):
+        debit_maturity, credit_maturity = 0.0, 0.0
+        for line in movelines:
+            limit_day = line.date_maturity
+            if line.partner_id.grace_payment_days:
+                maturity = fields.Datetime.from_string(
+                    line.date_maturity)
+                grace_payment_days = timedelta(
+                    days=line.partner_id.grace_payment_days)
+                limit_day = maturity + grace_payment_days
+                limit_day = limit_day.strftime("%Y-%m-%d")
+
+            if limit_day <= fields.Date.today():
+                # credit and debit maturity sums all aml
+                # with late payments
+                debit_maturity += line.debit
+            credit_maturity += line.credit
+        return debit_maturity, credit_maturity
+
     @api.multi
     def _get_overdue_credit(self):
         for partner in self:
             moveline_obj = self.env['account.move.line']
-            domain = self._get_movelines_domain(partner)
+            domain = self.movelines_domain(partner)
             movelines = moveline_obj.search(domain)
-            # credit = 0.0
-            debit_maturity, credit_maturity = 0.0, 0.0
-            for line in movelines:
-                limit_day = line.date_maturity
-                if line.partner_id.grace_payment_days:
-                    maturity = fields.Datetime.from_string(
-                        line.date_maturity)
-                    grace_payment_days = timedelta(
-                        days=line.partner_id.grace_payment_days)
-                    limit_day = maturity + grace_payment_days
-                    limit_day = limit_day.strftime("%Y-%m-%d")
-
-                if limit_day <= fields.Date.today():
-                    # credit and debit maturity sums all aml
-                    # with late payments
-                    debit_maturity += line.debit
-                credit_maturity += line.credit
-                # credit += line.credit
+            debit_maturity, credit_maturity = self.debit_credit_maturity(
+                movelines)
             balance_maturity = debit_maturity - credit_maturity
             partner.overdue_credit = balance_maturity > 0.0
 

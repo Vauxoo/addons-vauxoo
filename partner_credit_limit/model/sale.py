@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
                 return True
             allowed_sale = self.env['res.partner'].with_context(
                 {'new_amount': so.amount_total,
-                 'new_currency': so.company_id.currency_id.id}).browse(
+                 'new_currency': so.currency_id}).browse(
                      so.partner_id.id).allowed_sale
             if allowed_sale:
                 return True

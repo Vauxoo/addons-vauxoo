@@ -16,7 +16,7 @@ class AccontInvoice(models.Model):
                 return True
             allowed_sale = self.env['res.partner'].with_context(
                 {'new_amount': invoice.amount_total,
-                 'new_currency': invoice.currency_id.id}).browse(
+                 'new_currency': invoice.currency_id}).browse(
                      invoice.partner_id.id).allowed_sale
             if allowed_sale:
                 return True
@@ -27,12 +27,6 @@ class AccontInvoice(models.Model):
                         '\nCredit'
                         ' Limit : %s') % (invoice.partner_id.credit_limit)
                 raise exceptions.Warning(msg)
-
-    @api.multi
-    def action_invoice_proforma2(self):
-        self.check_limit_credit()
-        res = super(AccontInvoice, self).action_invoice_proforma2()
-        return res
 
     @api.multi
     def action_invoice_open(self):
