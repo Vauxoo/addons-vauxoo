@@ -46,15 +46,20 @@ class ResPartner(models.Model):
             new_credit = partner.credit + new_amount_currency
             partner.credit_overloaded = new_credit > partner.credit_limit
 
+    @api.model
+    def _get_movelines_domain(self, partner):
+        domain = [('partner_id', '=', partner.id),
+                  ('account_id.internal_type', '=', 'receivable'),
+                  ('move_id.state', '!=', 'draft'),
+                  ('reconciled', '=', False)]
+        return domain
+
     @api.multi
     def _get_overdue_credit(self):
         for partner in self:
             moveline_obj = self.env['account.move.line']
-            movelines = moveline_obj.search(
-                [('partner_id', '=', partner.id),
-                 ('account_id.internal_type', '=', 'receivable'),
-                 ('move_id.state', '!=', 'draft'),
-                 ('reconciled', '=', False)])
+            domain = self._get_movelines_domain(partner)
+            movelines = moveline_obj.search(domain)
             # credit = 0.0
             debit_maturity, credit_maturity = 0.0, 0.0
             for line in movelines:
