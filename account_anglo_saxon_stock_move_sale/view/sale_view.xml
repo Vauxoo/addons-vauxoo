@@ -6,19 +6,27 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button
+                    type="object"
+                    name="reconcile_stock_accrual"
+                    groups="account.group_account_user"
+                    string="Reconcile Accruals"
+                    />
+            </xpath>
             <xpath expr="//h1" position="after">
                 <div class="oe_right oe_button_box" name="buttons">
                     <button
                         type="object"
                         name="view_accrual"
                         class="oe_stat_button"
-                        icon="fa-truck"
+                        icon="fa-random"
                         groups="account.group_account_user"
                         >
-                        <field name="unreconciled_lines" widget="statinfo" string="Stock Accruals"/>
-                    </button>
-                    <button type="object" name="reconcile_stock_accrual" class="oe_stat_button" groups="account.group_account_user" icon="fa-random">
-                        <field name="reconciliation_pending" widget="statinfo" string="Match Accruals"/>
+                        <div>
+                            <field name="reconciliation_pending"/> of <field name="unreconciled_lines"/><br/>
+                        </div>
+                        <label string="Stock Accruals"/>
                     </button>
                 </div>
             </xpath>
