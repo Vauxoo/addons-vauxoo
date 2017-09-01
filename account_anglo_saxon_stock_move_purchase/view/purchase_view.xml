@@ -9,10 +9,11 @@
              <xpath expr="//div[contains(@class, 'oe_button_box')]" position="inside">
 				<div class="alert alert-warning oe_right" groups="account.group_account_user">
 					There are <field name="unreconciled_lines" class="oe_inline"/>
-					<button type="object" name="view_accrual" class="oe_link" string="Unreconciled" context="{'search_default_group_by_product':True, 'search_default_group_by_reconcile':True}"/> lines,
+					<button type="object" name="view_accrual" class="oe_link" string="Unreconciled" context="{'search_default_group_by_product':True, 'search_default_unreconciled_n_ap_ar': True}"/> lines,
 					of which <field name="to_be_reconciled" class="oe_inline"/>
 					lines can be fully reconciled.
-					Click "Reconcile Accruals" button when possible.
+					Click "Reconcile Accruals" button when possible.<br/>
+					<button type="object" name="view_accrual" class="oe_link" string="See all Stock Accruals" context="{'search_default_group_by_product':True, 'search_default_group_by_reconcile':True}"/>
 				</div>
 				<newline/>
             </xpath>
