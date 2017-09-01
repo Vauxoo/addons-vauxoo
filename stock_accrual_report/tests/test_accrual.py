@@ -76,7 +76,7 @@ class TestAccrual(TransactionCase):
         """ Description:
         - Approve a Purchase Order, assert state
         - Check for the `unreconciled_lines` field
-        - Check for the `reconciliation_pending` field
+        - Check for the `to_be_reconciled` field
         - Check for the `aml_ids` field
         - Make Reception of products
         - Check for the `accrual_view` method
@@ -92,7 +92,7 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             po_brw.unreconciled_lines, 0, 'Unreconciled Lines should be zero')
         self.assertEqual(
-            po_brw.reconciliation_pending, 0,
+            po_brw.to_be_reconciled, 0,
             'To be reconciled should be zero')
         self.assertEqual(
             len(po_brw.aml_ids), 0, 'There should be no lines at all')
@@ -109,7 +109,7 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             po_brw.unreconciled_lines, 1, 'Unreconciled Lines should be one')
         self.assertEqual(
-            po_brw.reconciliation_pending, 0,
+            po_brw.to_be_reconciled, 0,
             'To be reconciled should be zero')
 
         # This should not affect the results
@@ -125,7 +125,7 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             po_brw.unreconciled_lines, 1, 'Unreconciled Lines should be one')
         self.assertEqual(
-            po_brw.reconciliation_pending, 0,
+            po_brw.to_be_reconciled, 0,
             'To be reconciled should be zero')
 
         self.process_invoice(po_brw)
@@ -135,18 +135,18 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             po_brw.unreconciled_lines, 2, 'Unreconciled Lines should be Two')
         pl = po_brw.search(
-            [('reconciliation_pending', '=', 2),
+            [('to_be_reconciled', '=', 2),
              ('id', '=', po_brw.id)])
         self.assertEqual(
             len(pl), 1, 'One Purchase there should be in the search')
         self.assertEqual(
-            po_brw.reconciliation_pending, 2, 'To be reconciled should be Two')
+            po_brw.to_be_reconciled, 2, 'To be reconciled should be Two')
 
         po_brw.cron_purchase_accrual_reconciliation()
         self.assertEqual(
             po_brw.unreconciled_lines, 0, 'Unreconciled Lines should be zero')
         self.assertEqual(
-            po_brw.reconciliation_pending, 0,
+            po_brw.to_be_reconciled, 0,
             'To be reconciled should be zero')
 
         view_accrual = po_brw.view_accrual()
@@ -173,7 +173,7 @@ class TestAccrual(TransactionCase):
         """ Description:
         - Approve a Sale Order, assert state
         - Check for the `unreconciled_lines` field
-        - Check for the `reconciliation_pending` field
+        - Check for the `to_be_reconciled` field
         - Check for the `aml_ids` field
         - Make Reception of products
         - Check for the `accrual_view` method
@@ -193,7 +193,7 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             so_brw.unreconciled_lines, 0, 'Unreconciled Lines should be zero')
         self.assertEqual(
-            so_brw.reconciliation_pending, 0,
+            so_brw.to_be_reconciled, 0,
             'To be reconciled should be zero')
         self.assertEqual(
             len(so_brw.aml_ids), 0, 'There should be no lines at all')
@@ -210,7 +210,7 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             so_brw.unreconciled_lines, 2, 'Unreconciled Lines should be two')
         self.assertEqual(
-            so_brw.reconciliation_pending, 0,
+            so_brw.to_be_reconciled, 0,
             'To be reconciled should be zero')
 
         self.env['res.company'].browse(self.uid).do_partial = True
@@ -226,18 +226,18 @@ class TestAccrual(TransactionCase):
         self.assertEqual(
             so_brw.unreconciled_lines, 4, 'Unreconciled Lines should be Four')
         pl = so_brw.search(
-            [('reconciliation_pending', '=', 4),
+            [('to_be_reconciled', '=', 4),
              ('id', '=', so_brw.id)])
         self.assertEqual(
             len(pl), 1, 'One Purchase there should be in the search')
         self.assertEqual(
-            so_brw.reconciliation_pending, 4, 'Four to reconciled')
+            so_brw.to_be_reconciled, 4, 'Four to reconciled')
 
         so_brw.cron_sale_accrual_reconciliation()
         self.assertEqual(
             so_brw.unreconciled_lines, 0, 'Unreconciled Lines should be zero')
         self.assertEqual(
-            so_brw.reconciliation_pending, 0,
+            so_brw.to_be_reconciled, 0,
             'To be reconciled should be zero')
 
         view_accrual = so_brw.view_accrual()

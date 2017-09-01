@@ -39,12 +39,12 @@ class PurchaseOrder(models.Model):
             name, query_type, 'purchase_id', operator, value)
 
     @api.multi
-    def _compute_pending_reconciliation(self):
-        self._compute_value('reconciliation_pending', 'query1')
+    def _compute_to_be_reconciled(self):
+        self._compute_value('to_be_reconciled', 'query1')
 
-    def _search_pending_reconciliation(self, operator, value):
+    def _search_to_be_reconciled(self, operator, value):
         return self._compute_search(
-            'reconciliation_pending', 'query1', operator, value)
+            'to_be_reconciled', 'query1', operator, value)
 
     @api.multi
     def _compute_unreconciled_lines(self):
@@ -58,9 +58,9 @@ class PurchaseOrder(models.Model):
         compute='_compute_unreconciled_lines',
         search='_search_unreconciled_lines',
         help="Indicates how many unreconciled lines are still standing")
-    reconciliation_pending = fields.Integer(
-        compute='_compute_pending_reconciliation',
-        search='_search_pending_reconciliation',
+    to_be_reconciled = fields.Integer(
+        compute='_compute_to_be_reconciled',
+        search='_search_to_be_reconciled',
         help="Indicates how many possible reconciliations are pending")
     aml_ids = fields.One2many(
         'account.move.line', 'purchase_id', 'Account Move Lines',
