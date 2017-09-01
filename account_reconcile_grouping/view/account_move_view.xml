@@ -8,8 +8,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//filter[@string='Period']" position="after">
                     <filter string="Parcial Reconcile" icon="terp-go-month" domain="[]" context="{'group_by':'reconcile_partial_id'}"/>
-                    <filter string="Total Reconcile" icon="terp-go-month" domain="[]" context="{'group_by':'reconcile_id'}"/>
-                    <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                    <filter name="group_by_reconcile" string="Total Reconcile" icon="terp-go-month" domain="[]" context="{'group_by':'reconcile_id'}"/>
+                    <filter name="group_by_product" string="Product" domain="[]" context="{'group_by':'product_id'}"/>
                 </xpath>
             </field>
         </record>
