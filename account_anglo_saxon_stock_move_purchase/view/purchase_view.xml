@@ -7,18 +7,14 @@
         <field name="inherit_id" ref="purchase.purchase_order_2_stock_picking"/>
         <field name="arch" type="xml">
              <xpath expr="//div[contains(@class, 'oe_button_box')]" position="inside">
-                <button
-                    type="object"
-                    name="view_accrual"
-                    class="oe_stat_button"
-                    icon="fa-random"
-                    groups="account.group_account_user"
-                    >
-                    <div>
-                        <field name="to_be_reconciled"/> of <field name="unreconciled_lines"/><br/>
-                    </div>
-                    <label string="Stock Accruals"/>
-                </button>
+				<div class="alert alert-warning oe_right" groups="account.group_account_user">
+					There are <field name="unreconciled_lines" class="oe_inline"/>
+					<button type="object" name="view_accrual" class="oe_link" string="Unreconciled" context="{'search_default_group_by_product':True, 'search_default_group_by_reconcile':True}"/> lines,
+					of which <field name="to_be_reconciled" class="oe_inline"/>
+					lines can be fully reconciled.
+					Click "Reconcile Accruals" button when possible.
+				</div>
+				<newline/>
             </xpath>
         </field>
     </record>
