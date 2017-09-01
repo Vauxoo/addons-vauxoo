@@ -12,6 +12,7 @@
                     name="reconcile_stock_accrual"
                     groups="account.group_account_user"
                     string="Reconcile Accruals"
+                    attrs="{'invisible':[('reconciliation_pending','=',0)]}"
                     />
             </xpath>
             <xpath expr="//h1" position="after">
