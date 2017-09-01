@@ -16,21 +16,15 @@
                     class="oe_highlight"
                     />
             </xpath>
-            <xpath expr="//h1" position="after">
-                <div class="oe_right oe_button_box" name="buttons">
-                    <button
-                        type="object"
-                        name="view_accrual"
-                        class="oe_stat_button"
-                        icon="fa-random"
-                        groups="account.group_account_user"
-                        >
-                        <div>
-                            <field name="to_be_reconciled"/> of <field name="unreconciled_lines"/><br/>
-                        </div>
-                        <label string="Stock Accruals"/>
-                    </button>
-                </div>
+            <xpath expr="//h1" position="before">
+				<div class="alert alert-warning oe_right" groups="account.group_account_user">
+					There are <field name="unreconciled_lines" class="oe_inline"/>
+					<button type="object" name="view_accrual" class="oe_link" string="Unreconciled"/> lines,
+					of which <field name="to_be_reconciled" class="oe_inline"/>
+					lines can be fully reconciled.
+					Click "Reconcile Accruals" button when possible.
+				</div>
+				<newline/>
             </xpath>
         </field>
     </record>
