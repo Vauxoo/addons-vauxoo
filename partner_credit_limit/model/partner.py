@@ -26,8 +26,8 @@ class ResPartner(models.Model):
 
     @api.multi
     def _get_credit_overloaded(self):
+        company = self.env.user.company_id
         for partner in self:
-            company = self.env.user.company_id
             new_amount = self.env.context.get('new_amount', 0.0)
             new_currency = self.env.context.get('new_currency', False)
             new_amount_currency = new_amount
@@ -68,8 +68,8 @@ class ResPartner(models.Model):
 
     @api.multi
     def _get_overdue_credit(self):
+        moveline_obj = self.env['account.move.line']
         for partner in self:
-            moveline_obj = self.env['account.move.line']
             domain = self.movelines_domain(partner)
             movelines = moveline_obj.search(domain)
             debit_maturity, credit_maturity = self.debit_credit_maturity(

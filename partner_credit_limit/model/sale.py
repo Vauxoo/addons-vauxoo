@@ -13,10 +13,9 @@ class SaleOrder(models.Model):
         for so in self:
             if so.payment_term_id.payment_type != 'credit':
                 return True
-            allowed_sale = self.env['res.partner'].with_context(
+            allowed_sale = so.partner_id.with_context(
                 {'new_amount': so.amount_total,
-                 'new_currency': so.currency_id}).browse(
-                     so.partner_id.id).allowed_sale
+                 'new_currency': so.currency_id}).allowed_sale
             if allowed_sale:
                 return True
             else:

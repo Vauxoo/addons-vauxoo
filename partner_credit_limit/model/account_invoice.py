@@ -14,10 +14,9 @@ class AccontInvoice(models.Model):
         for invoice in self:
             if invoice.payment_term_id.payment_type != 'credit':
                 return True
-            allowed_sale = self.env['res.partner'].with_context(
+            allowed_sale = invoice.partner_id.with_context(
                 {'new_amount': invoice.amount_total,
-                 'new_currency': invoice.currency_id}).browse(
-                     invoice.partner_id.id).allowed_sale
+                 'new_currency': invoice.currency_id}).allowed_sale
             if allowed_sale:
                 return True
             else:
