@@ -562,30 +562,18 @@ class hr_expense_expense(osv.Model):
         partial_rec = []
         full_rec = []
 
-        if not sum_adv and sum_inv:
-            inv_ids = [self.expense_credit_lines(
-                cr, uid, exp.id, exp.account_move_id.id, sum_inv)]
-            return full_rec, partial_rec
-        elif sum_exp < sum_adv:  # and sum_inv > 0
-            l1 = sum_adv - sum_exp
-            l2 = sum_inv - l1
+        if sum_adv >= sum_exp or sum_adv >= sum_inv:
+            l1 = sum_adv - min(sum_exp, sum_inv)
+            l2 = max(sum_exp, sum_inv) - l1
             l1 = self.expense_credit_lines(
                 cr, uid, exp.id, exp.account_move_id.id, l1)
             l2 = self.expense_credit_lines(
                 cr, uid, exp.id, exp.account_move_id.id, l2)
-            return [l1] + adv_ids + exp_ids, []
-        elif sum_exp == sum_adv:
-            return adv_ids + exp_ids, []
-        else:  # sum_exp > sum_adv
-            inv_ids = [self.expense_credit_lines(
-                cr, uid, exp.id, exp.account_move_id.id, sum_inv)]
-            if sum_adv > sum_inv:
-                return [], exp_ids + adv_ids
-            elif sum_adv == sum_inv:
-                return adv_ids + inv_ids, []
-            else:  # sum_adv < sum_inv
-                return [], adv_ids + inv_ids
-        return [], []
+            full_rec.extend([l1] + adv_ids + exp_ids)
+        elif sum_inv > 0:
+            self.expense_credit_lines(
+                cr, uid, exp.id, exp.account_move_id.id, sum_inv)
+        return full_rec, partial_rec
 
     def expense_debit_lines(self, cr, uid, ids, am_id, amount,
                             account_id=False, partner_id=False, date=None,
