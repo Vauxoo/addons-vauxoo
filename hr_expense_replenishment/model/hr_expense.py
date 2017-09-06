@@ -466,11 +466,7 @@ class hr_expense_expense(osv.Model):
             aml_amount = aml['debit'] - aml['credit']
             adjust_balance_to = aml_amount == 0.0 and 'liquidate' or \
                 (aml_amount > 0.0 and 'debit') or 'credit'
-            part_rec, ff, pp = [], [], []
-            # create and reconcile invoice move lines
-            full_rec = aml['invs'] and self.create_and_reconcile_invoice_lines(
-                cr, uid, exp.id, aml['invs'],
-                adjust_balance_to=adjust_balance_to, context=context) or []
+            full_rec, part_rec, ff, pp = [], [], [], []
 
             # change expense state
             if adjust_balance_to == 'debit':
@@ -490,38 +486,23 @@ class hr_expense_expense(osv.Model):
                     cr, uid, exp.id, aml, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
 
+            # create and reconcile invoice move lines
+            if ff or aml['invs']:
+                full_rec.extend(self.invoice_counter_move_lines(
+                    cr, uid, exp.id, am_id=exp.account_move_id.id,
+                    aml_ids=ff + aml['invs'], context=context))
+
             date_post = exp.date_post or fields.date.today()
 
             period_id = per_obj.find(cr, uid, dt=date_post)
             period_id = period_id and period_id[0]
             exp.write({'date_post': date_post})
 
-            if not exp.account_move_id:
-                raise osv.except_osv(
-                    _('Warning Data Integrity Failure!!!'),
-                    _('Journal Entry for this Expense has been previously '
-                      'deleted, please cancel document and go through the '
-                      'previous steps up to this current step to recreate it!'
-                      ))
-
-            x_aml_ids = [aml_brw.id for aml_brw in exp.account_move_id.line_id]
-
             vals = {'date': date_post, 'period_id': period_id}
             exp.account_move_id.write(vals)
-            aml_obj.write(cr, uid, x_aml_ids, vals)
-            for line_pair in full_rec + [ff]:
-                if not line_pair:
-                    continue
-                try:
-                    aml_obj.reconcile(
-                        cr, uid, line_pair, 'manual', context=context)
-                except BaseException:
-                    new_line_pair = self.invoice_counter_move_lines(
-                        cr, uid, exp.id, am_id=exp.account_move_id.id,
-                        aml_ids=line_pair, context=context)
-                    for nlp in new_line_pair:
-                        aml_obj.reconcile(
-                            cr, uid, nlp, 'manual', context=context)
+            for line_pair in full_rec:
+                aml_obj.reconcile(
+                    cr, uid, line_pair, 'manual', context=context)
             for line_pair in part_rec + [pp]:
                 if not line_pair:
                     continue
