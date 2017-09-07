@@ -14,7 +14,6 @@ class SaleOrder(models.Model):
         compute='_compute_margin_percentage',
         digits=dp.get_precision('Product Price'),
         store=True,
-        string="Margin percentage",
         help="Margin percentage compute based on price unit")
 
     @api.depends('order_line.margin_percentage')
@@ -36,14 +35,16 @@ class SaleOrderLine(models.Model):
     def _default_margin_threshold(self):
         return self.env.user.company_id.margin_threshold
 
-    margin_threshold = fields.Float(default=_default_margin_threshold)
+    margin_threshold = fields.Float(
+        default=_default_margin_threshold,
+        help="Limit margin set in sales configuration")
     margin_percentage = fields.Float(
         compute='_compute_margin_percentage',
         digits=dp.get_precision('Product Price'),
         store=True,
-        string="Margin Percentage",
-        help="Margin percentage compute based on price unit ")
-    purchase_price = fields.Float(readonly=True)
+        help="Margin percentage compute based on price unit")
+    purchase_price = fields.Float(
+        readonly=True, help="Price purchase of product")
 
     @api.depends('product_id', 'purchase_price', 'product_uom_qty',
                  'price_unit')
