@@ -10,4 +10,4 @@ class SaleConfiguration(models.TransientModel):
 
     margin_threshold = fields.Float(
         related='company_id.margin_threshold',
-        string=" Margin Threshold")
+        help="Margin Threshold for product in order lines")
