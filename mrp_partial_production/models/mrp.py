@@ -2,6 +2,7 @@
 # Copyright 2017 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from collections import defaultdict
 from odoo import api, fields, models
 
 
@@ -38,19 +39,19 @@ class MrpProduction(models.Model):
         the lines reserved
         """
         self.ensure_one()
-        result, lines_dict = {}, {}
-        for res in self.move_raw_ids:
-            if res.product_id.id not in result:
-                result[res.product_id.id] = 0
-            result[res.product_id.id] += res.reserved_availability
 
         quantity = self.product_uom_id._compute_quantity(
             self.product_qty, self.bom_id.product_uom_id)
+        if not quantity:
+            return 0
+
         lines = self.bom_id.explode(self.product_id, quantity)[1]
 
+        result, lines_dict = defaultdict(int), defaultdict(int)
+        for res in self.move_raw_ids:
+            result[res.product_id.id] += res.reserved_availability
+
         for line, line_data in lines:
-            if line.product_id.id not in lines_dict:
-                lines_dict[line.product_id.id] = 0
             lines_dict[line.product_id.id] += line_data['qty'] / quantity
 
         qty = [(int(result[key] / val)) for key, val in lines_dict.items()

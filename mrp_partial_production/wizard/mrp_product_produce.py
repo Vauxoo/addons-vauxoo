@@ -21,8 +21,8 @@ class MrpProductProduce(models.TransientModel):
 
     @api.multi
     def do_produce(self):
-        if self.filtered(lambda r: r.product_qty >
-                         r.production_id.qty_available_to_produce):
+        self.ensure_one()
+        if self.product_qty > self.production_id.qty_available_to_produce:
             raise UserError(_('''You cannot produce more than available to
                                 produce for this order'''))
         return super(MrpProductProduce, self).do_produce()
