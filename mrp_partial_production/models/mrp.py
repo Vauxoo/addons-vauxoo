@@ -37,17 +37,23 @@ class MrpProduction(models.Model):
         """Compute the total available to produce considering
         the lines reserved
         """
-        qty = []
-        for record in self:
-            quantity = record.product_uom_id._compute_quantity(
-                record.product_qty, record.bom_id.product_uom_id)
-            boms, lines = record.bom_id.explode(record.product_id, quantity)
+        self.ensure_one()
+        result, lines_dict = {}, {}
+        for res in self.move_raw_ids:
+            if res.product_id.id not in result:
+                result[res.product_id.id] = 0
+            result[res.product_id.id] += res.reserved_availability
 
-            for line, line_data in lines:
-                move_line = record.move_raw_ids.filtered(
-                    lambda li: li.bom_line_id.id == line.id)
-                original_qty = line_data['qty'] / quantity
-                qty.append(int(move_line.reserved_availability / original_qty)
-                           if original_qty else 0)
+        quantity = self.product_uom_id._compute_quantity(
+            self.product_qty, self.bom_id.product_uom_id)
+        lines = self.bom_id.explode(self.product_id, quantity)[1]
+
+        for line, line_data in lines:
+            if line.product_id.id not in lines_dict:
+                lines_dict[line.product_id.id] = 0
+            lines_dict[line.product_id.id] += line_data['qty'] / quantity
+
+        qty = [(int(result[key] / val)) for key, val in lines_dict.items()
+               if val]
 
         return min(qty) if qty else 0.0
