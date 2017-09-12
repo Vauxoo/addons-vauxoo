@@ -26,14 +26,6 @@ class MrpProduction(models.Model):
         'reserved by the order')
 
     @api.multi
-    def test_ready(self):
-        res = super(MrpProduction, self).test_ready()
-        for record in self:
-            if record.qty_available_to_produce > 0:
-                res = True
-        return res
-
-    @api.multi
     def get_qty_available_to_produce(self):
         """Compute the total available to produce considering
         the lines reserved
