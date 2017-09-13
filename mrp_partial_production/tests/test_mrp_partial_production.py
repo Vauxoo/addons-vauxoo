@@ -1,7 +1,6 @@
 # coding: utf-8
-from openerp.tests.common import TransactionCase
-from openerp.tools import mute_logger
-from openerp.exceptions import Warning as UserError
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import Warning as UserError
 
 
 class TestValidatePickings(TransactionCase):
@@ -12,6 +11,8 @@ class TestValidatePickings(TransactionCase):
         self.wizard = self.env['mrp.product.produce']
         self.w_upd_obj = self.env['stock.change.product.qty']
         self.sale = self.env.ref('mrp_partial_production.sale_order_1')
+        self.sale.action_confirm()
+        self.env['procurement.order'].run_scheduler()
         self.product = self.env.ref('mrp_partial_production.'
                                     'product_product_18')
         self.compa = self.env.ref('mrp_partial_production.'
@@ -19,8 +20,8 @@ class TestValidatePickings(TransactionCase):
         self.compb = self.env.ref('mrp_partial_production.'
                                   'product_product_20')
         self.stock = self.env.ref('stock.stock_location_stock')
+        self.transfer_obj = self.env['stock.immediate.transfer']
 
-    @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_01_produce_partially(self):
         """Test the whole process with partial productions
         """
@@ -32,7 +33,7 @@ class TestValidatePickings(TransactionCase):
         self.assertEqual(mrp_brw.qty_available_to_produce, 4,
                          'The quantity available to produce must be 4')
         # Checking state
-        self.assertEqual(mrp_brw.state, 'ready',
+        self.assertEqual(mrp_brw.state, 'confirmed',
                          'The state of the order must be ready')
 
         wz_env = self.wizard.\
@@ -65,38 +66,35 @@ class TestValidatePickings(TransactionCase):
         self.assertFalse(moves,
                          'The move has an assigned line')
 
-        # Loading Lines
-        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
-        values = values.get('value')
-        wz_brw.write(values)
+        # Process production
         wz_brw.do_produce()
+        mrp_brw.post_inventory()
 
-        # Check the number available to produce
-        self.assertEqual(mrp_brw.qty_available_to_produce, 0,
-                         'The quantity available to produce must be 0')
-
+        picking_brw.action_assign()
         moves = picking_brw.move_lines.\
-            filtered(lambda a: a.state == 'assigned')
+            filtered(lambda a: a.state == 'partially_available')
 
         # Checking assigned lines
         self.assertTrue(moves,
                         'The move does not have an assigned line')
-
         # Checking the quantity assigned
-        self.assertEqual(moves.product_uom_qty, 4,
+        self.assertEqual(moves.reserved_availability, 4,
                          'The quantity assigned must be 4')
 
         # Validating Picking
-        picking_brw.do_prepare_partial()
-
-        picking_brw.do_transfer()
+        ctx = {
+            "active_ids": picking_brw.ids,
+            "active_model": "stock.picking",
+        }
+        wizard_transfer_id = self.transfer_obj.with_context(ctx).create({
+            'pick_id': picking_brw.id, })
+        wizard_transfer_id.process()
 
         # Check  status.
         self.assertEqual(picking_brw.state, 'done',
                          'Wrong state of outgoing shipment.')
 
         # Adding new qty available
-
         self.w_upd_obj.create({
             'product_id': self.compa.id,
             'location_id': self.stock.id,
@@ -111,6 +109,7 @@ class TestValidatePickings(TransactionCase):
 
         # Reserving products
         mrp_brw.action_assign()
+
         # Check the number available to produce
         self.assertEqual(mrp_brw.qty_available_to_produce, 6,
                          'The quantity available to produce must be 6')
@@ -134,10 +133,8 @@ class TestValidatePickings(TransactionCase):
                          'The move has an assigned line')
 
         # Loading the lines
-        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
-        values = values.get('value')
-        wz_brw.write(values)
         wz_brw.do_produce()
+        mrp_brw.button_mark_done()
 
         # Check  status.
         self.assertEqual(mrp_brw.state, 'done',
@@ -155,9 +152,9 @@ class TestValidatePickings(TransactionCase):
                          'The quantity assigned must be 6')
 
         # Validating pickings
-        picking_brw.do_prepare_partial()
-
-        picking_brw.do_transfer()
+        wizard_transfer_id = self.transfer_obj.with_context(ctx).create({
+            'pick_id': picking_brw.id, })
+        wizard_transfer_id.process()
 
         # Check  status.
         self.assertEqual(picking_brw.state, 'done',
