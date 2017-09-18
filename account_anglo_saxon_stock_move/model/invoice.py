@@ -21,14 +21,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.osv import osv, orm
-from openerp import models, api, _
-from openerp.exceptions import ValidationError
-
 import logging
+import operator as py_operator
+import time
+
+from openerp.osv import orm
+from openerp import fields, models, api, _
+from openerp.exceptions import ValidationError
+from openerp.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
+
+OPERATORS = {
+    '<': py_operator.lt,
+    '>': py_operator.gt,
+    '<=': py_operator.le,
+    '>=': py_operator.ge,
+    '=': py_operator.eq,
+    '!=': py_operator.ne
+}
 
 
 class AccountInvoice(models.Model):
@@ -43,123 +54,340 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def action_cancel(self):
-        for inv in self.filtered(lambda inv: inv.move_id):
-            amr_ids = inv.invoice_line.mapped('move_id.aml_ids.reconcile_id')
-            amr_ids.unlink()
+        aml_ids = self.mapped('move_id.line_id').filtered('sm_id')
+        aml_ids.mapped('reconcile_id').unlink()
         return super(AccountInvoice, self).action_cancel()
 
-    @api.multi
-    def reconcile_stock_accrual(self):
-        aml_obj = self.env['account.move.line']
-        for inv_brw in self:
-            # We just care about lines which have a stock_move.aml_ids related
-            all_aml_ids = aml_obj
-            aml_ids = inv_brw.invoice_line.mapped('move_id.aml_ids')
+    def _get_accrual_query(self, query_col, query_type, query_params):
+        if query_type == 'query1':
+            query = self._get_accrual_query1(query_col)
+        elif query_type == 'query2':
+            query = self._get_accrual_query2(query_col)
+        elif query_type == 'query3':
+            query = self._get_accrual_query3(query_col)
+        elif query_type == 'query4':
+            query = self._get_accrual_query4(query_col)
+        else:
+            raise ValidationError(
+                _('This query has not yet being implemented: %s'), query_type)
+        return self._cr.mogrify(query, query_params)
 
-            # In order to keep every single line reconciled we will look for
-            # all the lines related to a purchase/sale order
-            all_aml_ids |= aml_ids.mapped('purchase_id.aml_ids')
-            all_aml_ids |= aml_ids.mapped('sale_id.aml_ids')
+    def _get_accrual_query1(self, query_col):
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT ''' + query_col + ''', SUM(qty)
+            FROM (
+                SELECT
+                    aml.''' + query_col + ''' AS ''' + query_col + ''',
+                    aml.product_id as product_id,
+                    aml.account_id as account_id,
+                    COUNT(aml.id) as qty
+                FROM account_move_line aml
+                INNER JOIN account_account aa ON aa.id = aml.account_id
+                WHERE
+                    ''' + query_col + ''' IN %(ids)s
+                    AND product_id IS NOT NULL
+                    AND reconcile_id IS NULL
+                    AND aa.reconcile = TRUE
+                GROUP BY ''' + query_col + ''', product_id, account_id
+                HAVING COUNT(aml.id) > 1
+                AND ABS(SUM(aml.debit - aml.credit)) <= %(offset)s
+                ) AS view
+            GROUP BY ''' + query_col + '''
+            ;'''
+        return query
+
+    def _get_accrual_query2(self, query_col):
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT
+                aml.''' + query_col + ''' AS ''' + query_col + ''',
+                COUNT(aml.id) as qty
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                ''' + query_col + ''' IN %(ids)s
+                AND product_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND aa.reconcile = TRUE
+            GROUP BY ''' + query_col + '''
+            ;'''
+
+        return query
+
+    def _get_accrual_query3(self, query_col):
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT
+                aml.''' + query_col + ''' AS id,
+                aml.product_id as product_id,
+                aml.account_id as account_id,
+                COUNT(aml.id) as count
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                ''' + query_col + ''' IS NOT NULL
+                AND product_id IS NOT NULL
+                AND reconcile_id IS NULL
+                AND state = 'valid'
+                AND aml.company_id = %(company_id)s
+                AND aa.reconcile = TRUE
+            GROUP BY ''' + query_col + ''', product_id, account_id
+            HAVING COUNT(aml.id)  > 1
+            AND ABS(SUM(aml.debit - aml.credit)) <= %(offset)s -- Threashold
+            ;'''
+
+        return query
+
+    def _get_accrual_query4(self, query_col):
+        # In order to keep every single line reconciled we will look for all
+        # the lines related to a purchase/sale order
+        # /!\ ALERT: SQL INJECTION RISK
+        query = '''
+            SELECT
+                aml.''' + query_col + ''',
+                ARRAY_AGG(aml.id) as aml_ids
+            FROM account_move_line aml
+            INNER JOIN account_account aa ON aa.id = aml.account_id
+            WHERE
+                ''' + query_col + ''' IN %(ids)s
+                AND reconcile_id IS NULL
+                AND product_id IS NOT NULL
+                AND state = 'valid'
+                AND aml.company_id = %(company_id)s
+                AND aa.reconcile = TRUE
+            GROUP BY aml.''' + query_col + '''
+            ;'''
+        return query
+
+    def _compute_query(self, ids, query_col, query_type):
+        res = {}.fromkeys(ids, 0)
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        query_params = {'ids': ids, 'offset': company_id.accrual_offset}
+        query = self._get_accrual_query(query_col, query_type, query_params)
+        self._cr.execute(query)
+        res.update(dict(self._cr.fetchall()))
+        return res
+
+    def _compute_value(self, ids, name, query_type, query_col):
+        if query_col == 'sale_id':
+            obj = self.env['sale.order']
+        elif query_col == 'purchase_id':
+            obj = self.env['purchase.order']
+        res = self._compute_query(ids, query_col, query_type)
+        for brw in obj.browse(ids):
+            brw[name] = res.get(brw.id, 0)
+
+    def _compute_search(self, name, query_type, query_col, operator, value):
+        if query_col == 'sale_id':
+            obj = self.env['sale.order']
+        elif query_col == 'purchase_id':
+            obj = self.env['purchase.order']
+        res = self._compute_query(obj.search([])._ids, query_col, query_type)
+        ids = [rec_id
+               for (rec_id, computed_value) in res.items()
+               if OPERATORS[operator](computed_value, value)]
+        return [('id', 'in', ids)]
+
+    @api.multi
+    def cron_accrual_reconciliation(self, query_col, do_commit=False):
+        if query_col == 'sale_id':
+            ttype = 'Sale'
+        elif query_col == 'purchase_id':
+            ttype = 'Purchase'
+
+        _logger.info('Reconciling %s Order Stock Accruals', ttype)
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        query_params = {
+            'offset': company_id.accrual_offset,
+            'company_id': company_id.id}
+        query = self._get_accrual_query(query_col, 'query3', query_params)
+        self._cr.execute(query)
+        ids = list(set(x[0] for x in self._cr.fetchall()))
+        if not ids:
+            _logger.info('None %s Order Stock Accruals to Reconcile', ttype)
+            return
+        self.env['account.invoice'].reconcile_stock_accrual(
+            ids, query_col, do_commit=do_commit)
+        _logger.info('Reconciling %s Order Stock Accruals Ended', ttype)
+
+    @api.multi
+    def reconcile_stock_accrual(self, rec_ids, query_col, do_commit=False):
+        aml_obj = self.env['account.move.line']
+        ap_obj = self.env['account.period']
+        date = fields.Date.context_today(self)
+        period_id = ap_obj.with_context(self._context).find(date)[:1].id
+        precision = self.env['decimal.precision'].precision_get('Account')
+
+        total = len(rec_ids)
+        count = 0
+
+        company_id = self.env['res.users'].browse(self._uid).company_id
+        writeoff = company_id.writeoff
+        offset = company_id.accrual_offset
+        do_partial = company_id.do_partial
+
+        query_params = {'ids': tuple(rec_ids), 'company_id': company_id.id}
+        query = self._get_accrual_query(query_col, 'query4', query_params)
+        self._cr.execute(query)
+
+        if query_col == 'sale_id':
+            obj = self.env['sale.order']
+        elif query_col == 'purchase_id':
+            obj = self.env['purchase.order']
+
+        msg = 'Reconciling account_id %s, product_id %s, no. items: %s'
+
+        journal_ids = {}
+
+        genexp = ((brw_id, ids) for brw_id, ids in self._cr.fetchall()
+                  if len(ids) > 1)
+
+        for brw_id, ids in genexp:
+            fnc_post = obj.browse(brw_id).message_post
+            count += 1
+            _logger.info(
+                'Attempting Reconciliation at %s:%s - %s/%s',
+                query_col, brw_id, count, total)
+
+            all_aml_ids = aml_obj.browse(ids)
 
             categ_ids = all_aml_ids.filtered(
                 lambda m:
-                m.product_id and
-                not m.product_id.categ_id.property_stock_journal)
+                not m.product_id.categ_id.property_stock_journal).mapped(
+                    'product_id.categ_id')
             if categ_ids:
-                raise ValidationError(_(
-                    'The Stock Journal is missing on following '
-                    'product categories: %s' % (', '.join(
-                        categ_ids.mapped('name')))
-                ))
+                raise ValidationError(
+                    _('The Stock Journal is missing on following '
+                      'product categories: %s'),
+                    ', '.join(categ_ids.mapped('name'))
+                )
 
             res = {}
-            # Only stack those that are fully reconciled
-            amr_ids = all_aml_ids.mapped('reconcile_id')
-            amr_ids.unlink()
+
+            # Only stack those that are partially reconciled
+            all_aml_ids.mapped('reconcile_partial_id').unlink()
 
             # Let's group all the Accrual lines by Purchase/Sale Order, Product
             # and Account
-            for aml_brw in all_aml_ids.filtered('account_id.reconcile'):
-                doc_brw = aml_brw.purchase_id or aml_brw.sale_id
+            for aml_brw in all_aml_ids:
                 account_id = aml_brw.account_id.id
                 product_id = aml_brw.product_id
-                res.setdefault((doc_brw, account_id, product_id), aml_obj)
-                res[(doc_brw, account_id, product_id)] |= aml_brw
+                res.setdefault((account_id, product_id.id), aml_obj)
+                res[(account_id, product_id.id)] |= aml_brw
+                if product_id.id not in journal_ids:
+                    journal_ids[product_id.id] = \
+                        product_id.categ_id.property_stock_journal.id
 
-            for (doc_brw, account_id, product_id), aml_ids in res.items():
-                if not len(aml_ids) > 1:
-                    continue
-                journal_id = product_id.categ_id.property_stock_journal.id
+            msg_log = []
+            error_set = set()
+            gen = (
+                (account_id, product_id, aml_ids)
+                for (account_id, product_id), aml_ids in res.items()
+                if len(aml_ids) > 1)
+            for account_id, product_id, aml_ids in gen:
+                journal_id = journal_ids[product_id]
+                writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
+
+                log = msg % (account_id, product_id, len(aml_ids))
+                _logger.info(log)
+                # /!\ NOTE: Reconcile with write off
                 try:
-                    aml_ids.reconcile_partial(
-                        writeoff_period_id=inv_brw.period_id.id,
-                        writeoff_journal_id=journal_id)
-                except orm.except_orm:
-                    message = (
-                        "Reconciliation was not possible with "
-                        "Journal Items [%(values)s]" % dict(
-                            values=", ".join([str(idx) for idx in aml_ids])))
-                    _logger.exception(message)
+                    rec_id = None
+                    if ((writeoff and abs(writeoff_amount) <= offset) or
+                            float_is_zero(
+                                writeoff_amount, precision_digits=precision)):
+                        rec_id = aml_ids.reconcile(
+                            type='manual',
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                    # /!\ NOTE: I @hbto advise you to neglect the use of this
+                    # option. AS it is resource wasteful and provide little
+                    # value. Use only if you really find it Useful to
+                    # partially reconcile loose lines
+                    elif ((not writeoff and abs(writeoff_amount) <= offset) or
+                            do_partial):
+                        rec_id = aml_ids.reconcile_partial(
+                            writeoff_period_id=period_id,
+                            writeoff_journal_id=journal_id)
+                    if rec_id:
+                        msg_log.append(log)
+                except orm.except_orm, e:
+                    if do_commit:
+                        error_set.add((e.name, e.value, e.message))
+                    else:
+                        raise
 
-        return True
+            if msg_log:
+                msg_log = '\n'.join(msg_log)
+                fnc_post(
+                    subject='Accruals Reconciled at %s' % time.ctime(),
+                    body='Applying reconciliation on Order\n%s' % msg_log)
+
+            if error_set:
+                obj._cr.rollback()
+                msg_log = '\n'.join('%s: %s %s' % lmg for lmg in error_set)
+                fnc_post(
+                    subject='Errors at reconciliation at %s' % time.ctime(),
+                    body='Following errors were found\n%s' % msg_log)
+
+            if do_commit:
+                obj._cr.commit()
 
     @api.multi
-    def invoice_validate(self):
-        res = super(AccountInvoice, self).invoice_validate()
-        self.reconcile_stock_accrual()
-        return res
+    def view_accrual(self, ids, model):
+        brw = self.env[model].browse(ids)
+        res = brw.aml_ids.filtered('account_id.reconcile')
+        return {
+            'domain':
+            "[('id','in',[" + ','.join([str(item.id) for item in res]) + "])]",
+            'name': _('Journal Items'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.move.line',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
 
 
-class AccountInvoiceLine(osv.osv):
+class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
-    def _anglo_saxon_stock_move_lines(self, cr, uid, res, ttype='customer',
-                                      context=None):
-        ail_obj = self.pool.get('account.invoice.line')
-        fp_obj = self.pool.get('account.fiscal.position')
-        rex = []
+    @api.model
+    def _anglo_saxon_stock_move_lines(self, res, ttype='customer'):
+
+        aa_res = {}
         for line in res:
-            if not line.get('invl_id', False):
-                rex.append(line)
+            if 'invl_id' not in line:
                 continue
 
-            ail_brw = ail_obj.browse(cr, uid, line['invl_id'], context=context)
+            ail_brw = self.browse(line['invl_id'])
             pp_brw = ail_brw.product_id
-            if not (pp_brw and pp_brw.valuation == 'real_time' and
-                    pp_brw.type != 'service'):
-                rex.append(line)
+            if (not pp_brw or pp_brw.valuation != 'real_time' or
+                    pp_brw.type == 'service' or not ail_brw.move_id):
                 continue
 
-            aa = None
-            if ttype == 'supplier':
-                oa = pp_brw.property_stock_account_input and \
-                    pp_brw.property_stock_account_input.id or \
-                    pp_brw.categ_id.property_stock_account_input_categ and\
-                    pp_brw.categ_id.property_stock_account_input_categ.id
-            elif ttype == 'customer':
-                oa = pp_brw.property_stock_account_output and \
-                    pp_brw.property_stock_account_output.id or \
-                    pp_brw.categ_id.property_stock_account_output_categ and\
-                    pp_brw.categ_id.property_stock_account_output_categ.id
+            if pp_brw.id not in aa_res:
+                if ttype == 'supplier':
+                    oa = pp_brw.property_stock_account_input or \
+                        pp_brw.categ_id.property_stock_account_input_categ
+                elif ttype == 'customer':
+                    oa = pp_brw.property_stock_account_output or \
+                        pp_brw.categ_id.property_stock_account_output_categ
+                aa_res[pp_brw.id] = \
+                    ail_brw.invoice_id.fiscal_position.map_account(oa)
 
-            if oa:
-                fpos = ail_brw.invoice_id.fiscal_position or False
-                aa = fp_obj.map_account(cr, uid, fpos, oa)
-            if aa == line['account_id'] and ail_brw.move_id:
+            if aa_res[pp_brw.id].id == line['account_id']:
                 line['sm_id'] = ail_brw.move_id.id
 
-            rex.append(line)
-        return rex
+        return res
 
-    def move_line_get(self, cr, uid, invoice_id, context=None):
-        res = super(AccountInvoiceLine,
-                    self).move_line_get(cr, uid, invoice_id, context=context)
-        inv = self.pool.get('account.invoice').browse(
-            cr, uid, invoice_id, context=context)
+    @api.model
+    def move_line_get(self, invoice_id):
+        res = super(AccountInvoiceLine, self).move_line_get(invoice_id)
+        inv = self.env['account.invoice'].browse(invoice_id)
         if inv.type in ('out_invoice', 'out_refund'):
-            res = self._anglo_saxon_stock_move_lines(
-                cr, uid, res, ttype='customer', context=context)
+            res = self._anglo_saxon_stock_move_lines(res, ttype='customer')
         elif inv.type in ('in_invoice', 'in_refund'):
-            res = self._anglo_saxon_stock_move_lines(
-                cr, uid, res, ttype='supplier', context=context)
+            res = self._anglo_saxon_stock_move_lines(res, ttype='supplier')
         return res

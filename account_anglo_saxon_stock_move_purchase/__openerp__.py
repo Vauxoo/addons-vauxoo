@@ -30,10 +30,13 @@
     "license": "",
     "depends": [
         "account_anglo_saxon_stock_move",
+        "purchase",
     ],
     "demo": [],
     "data": [
         'view/purchase_view.xml',
+        'data/cron_job.xml',
+        'data/action_server_data.xml',
     ],
     "test": [],
     "js": [],

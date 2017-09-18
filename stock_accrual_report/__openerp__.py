@@ -35,7 +35,9 @@
         "account_anglo_saxon_stock_move_sale",
         "report",
     ],
-    "demo": [],
+    "demo": [
+        "data/demo.xml",
+    ],
     "data": [
         "view/view.xml",
         "view/report.xml",
