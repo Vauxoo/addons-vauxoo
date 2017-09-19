@@ -1,5 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_product_historical","product_historical_price","model_product_historic_price","base.group_user",1,0,0,0
-"access_product_historical_partner_manager","product_historical_price_partner_manager","model_product_historic_price","base.group_partner_manager",1,1,1,1
-
-
