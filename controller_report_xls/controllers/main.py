@@ -32,8 +32,8 @@ from ..controllers.xfstyle import css2excel
 
 import simplejson
 import xlwt
+import io
 
-import StringIO
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -176,7 +176,7 @@ def get_xls(html):
     wb = xlwt.Workbook(style_compression=2)
     ws = wb.add_sheet('Sheet 1')
     parser = etree.HTMLParser()
-    tree = etree.parse(StringIO.StringIO(html), parser)
+    tree = etree.parse(io.StringIO(html), parser)
     root = tree.getroot()
     html = root
     row = 0
@@ -195,7 +195,7 @@ def get_xls(html):
     tables = root.xpath("//div[@class=\"footer\"]/table")
     if tables:
         row = write_tables_to_excel(ws, row, col, tables, html, table_styles)
-    stream = StringIO.StringIO()
+    stream = io.StringIO()
     wb.save(stream)
     return stream.getvalue()
 
