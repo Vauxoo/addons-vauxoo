@@ -1,6 +1,6 @@
 # coding: utf-8
 ###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
+#    Module Writen to odoo, Open Source Management Solution
 #
 #    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
@@ -24,20 +24,18 @@
 #
 ##############################################################################
 
-from openerp.osv import osv
-from openerp.tools.translate import _
-
 import csv
-import cStringIO
-import openerp.tools as tools
+import io
+import odoo.tools as tools
+from odoo import models, _
 
 
-class SaleOrder(osv.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     def import_data_line(self, cr, uid, ids, fdata, favalidate, context={}):
         order = self.pool.get('sale.order').browse(cr, uid, ids)
-        input = cStringIO.StringIO(fdata)
+        input = io.StringIO(fdata)
         input.seek(0)
         data = list(csv.reader(input, quotechar='"' or '"', delimiter=','))
         data[0].append('order_id.id')
