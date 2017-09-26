@@ -5,8 +5,8 @@
 from odoo import fields, models
 
 
-class SaleConfiguration(models.TransientModel):
-    _inherit = 'sale.config.settings'
+class ResConfiguration(models.TransientModel):
+    _inherit = 'res.config.settings'
 
     margin_threshold = fields.Float(
         related='company_id.margin_threshold',

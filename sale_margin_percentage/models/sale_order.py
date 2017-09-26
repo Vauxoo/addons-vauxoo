@@ -31,12 +31,8 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    @api.model
-    def _default_margin_threshold(self):
-        return self.env.user.company_id.margin_threshold
-
     margin_threshold = fields.Float(
-        default=_default_margin_threshold,
+        default=lambda self: self.env.user.company_id.margin_threshold,
         help="Limit margin set in sales configuration")
     margin_percentage = fields.Float(
         compute='_compute_margin_percentage',
