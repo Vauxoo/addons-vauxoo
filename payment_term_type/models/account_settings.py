@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+    _inherit = 'res.config.settings'
 
     payment_type = fields.Selection([
         ('bqp', 'Based on quantity of payments'),
