@@ -45,6 +45,14 @@ OPERATORS = {
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
+    def inv_line_characteristic_hashcode(self, invoice_line):
+        """Including `sm_id` key as part of a hash in the invoice line will
+        prevent lines form same products to be group if they do not share the
+        same ail.move_id foreign_key"""
+        res = super(AccountInvoice, self).inv_line_characteristic_hashcode(
+            invoice_line)
+        return "%s-%s" % (res, invoice_line.get('sm_id', 'False'))
+
     @api.model
     def line_get_convert(self, line, part, date):
         res = super(AccountInvoice, self).line_get_convert(line, part, date)
