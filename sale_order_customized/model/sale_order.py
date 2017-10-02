@@ -90,24 +90,14 @@ class SaleOrder(osv.osv):
         return res
 
     def _get_order_line_categ(self, cr, uid, ids, context=None):
-        o_line_obj = self.pool.get('sale.order.line')
-
         if isinstance(ids, (int, long)):
             ids = [ids]
 
         for order_id in ids:
-
-            cr.execute(
-                """ SELECT id, name FROM sale_order_line
-                WHERE order_id = %s
-                ORDER BY name  """, (order_id, ))
-            dat = cr.dictfetchall()
-
-            o_sequence = 0
-
-            for o_line in dat:
-                o_line_obj.write(cr, uid, o_line['id'],
-                                 {'sequence': o_sequence + 1})
-                o_sequence += 1
-
+            cr.execute("""
+                UPDATE sale_order_line SET sequence=sq.rownumber
+                FROM (SELECT ROW_NUMBER() OVER(ORDER BY name) AS RowNumber, id
+                      FROM sale_order_line WHERE order_id=%s) sq
+                WHERE sq.id=sale_order_line.id
+            """, (order_id,))
         return True
