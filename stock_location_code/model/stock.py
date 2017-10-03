@@ -34,7 +34,7 @@ e.g. [A012345] Stock(El Dorado)
 
 import re
 
-from openerp import api, models
+from openerp import api, models, tools
 
 
 class StockLocation(models.Model):
@@ -65,13 +65,15 @@ class StockLocation(models.Model):
             name, args=args, operator=operator, limit=limit)
         return res
 
+    @tools.ormcache(skiparg=2)
     @api.model
-    def _name_get(self, location):
+    def __name_get(self, location_id):
         """Implements the stock location code in a new feauture, where if the
         location has a reference to a warehouse, the name in a m2o search
         concatenates the code and warehouse to a location if they exist.
         Visually, it's better to know which owns the warehouse location.
         """
+        location = self.browse(location_id)
         barcode = "[%(barcode)s]" % {'barcode': location.loc_barcode} \
             if location.loc_barcode else ''
         # TODO: Add fields.function to get warehouse. get_warehouse is too slow
@@ -83,3 +85,12 @@ class StockLocation(models.Model):
         items = [barcode.strip(), location.name.strip(), wh_name.strip()]
         new_name = ' '.join(item for item in items if item)
         return new_name
+
+    @api.model
+    def _name_get(self, location):
+        """Implements the stock location code in a new feauture, where if the
+        location has a reference to a warehouse, the name in a m2o search
+        concatenates the code and warehouse to a location if they exist.
+        Visually, it's better to know which owns the warehouse location.
+        """
+        return self.__name_get(location.id)
