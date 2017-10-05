@@ -34,7 +34,7 @@ e.g. [A012345] Stock(El Dorado)
 
 import re
 
-from openerp import api, models, tools
+from openerp import api, models
 
 
 class StockLocation(models.Model):
@@ -65,32 +65,42 @@ class StockLocation(models.Model):
             name, args=args, operator=operator, limit=limit)
         return res
 
-    @tools.ormcache(skiparg=2)
-    @api.model
-    def __name_get(self, location_id):
+    @api.multi
+    def name_get(self):
         """Implements the stock location code in a new feauture, where if the
         location has a reference to a warehouse, the name in a m2o search
         concatenates the code and warehouse to a location if they exist.
         Visually, it's better to know which owns the warehouse location.
         """
-        location = self.browse(location_id)
-        barcode = "[%(barcode)s]" % {'barcode': location.loc_barcode} \
-            if location.loc_barcode else ''
-        # TODO: Add fields.function to get warehouse. get_warehouse is too slow
-        # TODO: Add a parameters for a location path name or a wh_name
-        warehouse = self.env['stock.warehouse'].browse(
-            self.get_warehouse(location))
-        wh_name = "(%(warehouse)s)" % {'warehouse': warehouse.name} \
-            if warehouse else ''
-        items = [barcode.strip(), location.name.strip(), wh_name.strip()]
-        new_name = ' '.join(item for item in items if item)
-        return new_name
-
-    @api.model
-    def _name_get(self, location):
-        """Implements the stock location code in a new feauture, where if the
-        location has a reference to a warehouse, the name in a m2o search
-        concatenates the code and warehouse to a location if they exist.
-        Visually, it's better to know which owns the warehouse location.
-        """
-        return self.__name_get(location.id)
+        res = []
+        wh_obj = self.env['stock.warehouse']
+        wh_dict = {}.fromkeys(self._ids, False)
+        query = self._cr.mogrify('''
+            SELECT
+                sl.id AS location_id,
+                ARRAY_AGG(sw.id) AS warehouse_id
+            FROM stock_location sl, stock_location sl_wh
+            INNER JOIN stock_warehouse sw ON sw.view_location_id = sl_wh.id
+            WHERE
+                sl_wh.parent_left <= sl.parent_left
+                AND sl_wh.parent_right <= sl.parent_left
+                AND sl.id IN %(ids)s
+            GROUP BY sl.id
+        ''', {'ids': tuple(self._ids)})
+        self._cr.execute(query)
+        wh_dict.update(
+            dict((l, wh_obj.browse(w[0]))
+                 for l, w in self._cr.fetchall()))
+        for location in self:
+            barcode = "[%(barcode)s]" % {'barcode': location.loc_barcode} \
+                if location.loc_barcode else ''
+            # TODO: Add fields.function to get warehouse. get_warehouse is too
+            # slow
+            # TODO: Add a parameters for a location path name or a wh_name
+            warehouse = wh_dict[location.id]
+            wh_name = "(%(warehouse)s)" % {'warehouse': warehouse.name} \
+                if warehouse else ''
+            items = [barcode.strip(), location.name.strip(), wh_name.strip()]
+            new_name = ' '.join(item for item in items if item)
+            res.append((location.id, new_name))
+        return res
