@@ -73,6 +73,8 @@ class StockLocation(models.Model):
         Visually, it's better to know which owns the warehouse location.
         """
         res = []
+        if not self._ids:
+            return res
         wh_obj = self.env['stock.warehouse']
         wh_dict = {}.fromkeys(self._ids, False)
         query = self._cr.mogrify('''
