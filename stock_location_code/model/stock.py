@@ -77,7 +77,7 @@ class StockLocation(models.Model):
             return res
         wh_obj = self.env['stock.warehouse']
         wh_dict = {}.fromkeys(self._ids, False)
-        query = self._cr.mogrify('''
+        self._cr.execute('''
             SELECT
                 sl.id AS location_id,
                 ARRAY_AGG(sw.id) AS warehouse_id
@@ -89,7 +89,6 @@ class StockLocation(models.Model):
                 AND sl.id IN %(ids)s
             GROUP BY sl.id
         ''', {'ids': tuple(self._ids)})
-        self._cr.execute(query)
         wh_dict.update(
             dict((l, wh_obj.browse(w[0]))
                  for l, w in self._cr.fetchall()))
