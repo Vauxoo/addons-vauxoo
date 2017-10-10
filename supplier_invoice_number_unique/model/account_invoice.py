@@ -20,8 +20,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ##########################################################################
 import re
+from psycopg2 import IntegrityError
 
-from openerp import api, fields, models
+from openerp import api, fields, models, _
+from openerp import exceptions
 
 
 class AccountInvoice(models.Model):
@@ -39,6 +41,16 @@ class AccountInvoice(models.Model):
                 inv.supplier_invoice_number):
             invoice.supplier_invoice_number_strip = re.sub(
                 r'\W+|\_', '', invoice.supplier_invoice_number.lower())
+
+    @api.multi
+    def invoice_validate(self):
+        try:
+            res = super(AccountInvoice, self).invoice_validate()
+        except IntegrityError:
+            raise exceptions.Warning(
+                _('Error you can not validate the invoice with '
+                  'supplier invoice number duplicated.'))
+        return res
 
     _sql_constraints = [
         ('unique_supplier_invoice_number_strip', 'UNIQUE('

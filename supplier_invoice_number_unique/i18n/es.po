@@ -42,3 +42,10 @@ msgstr "¡Acción no válida!"
 #: model:ir.model,name:supplier_invoice_number_unique.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
+
+#. module: supplier_invoice_number_unique
+#: sql_constraint:account.invoice:0
+#: code:addons/supplier_invoice_number_unique/model/account_invoice.py:51
+#, python-format
+msgid "Error you can not validate the invoice with supplier invoice number duplicated."
+msgstr "Error no puedes validar facturas con número de factura de proveedor duplicado"

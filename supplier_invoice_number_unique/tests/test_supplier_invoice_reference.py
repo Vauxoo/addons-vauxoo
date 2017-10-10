@@ -7,8 +7,10 @@
 #    info Vauxoo (info@vauxoo.com)
 #    Coded by: Luis Torres (luis_t@vauxoo.com)
 # ##########################################################################
-from openerp.tests.common import TransactionCase
+
 from openerp import workflow
+from openerp import exceptions
+from openerp.tests.common import TransactionCase
 
 
 class TestReferenceSupplierInvoiceUnique(TransactionCase):
@@ -42,8 +44,8 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice.state, 'open', 'This invoice has not state in open')
         with self.assertRaisesRegexp(
-                ValueError,
-                'account_invoice_unique_supplier_invoice_number_strip'):
+                exceptions.Warning, 'Error you can not validate the invoice '
+                'with supplier invoice number duplicated.'):
             invoice2.signal_workflow('invoice_open')
 
     def test_12_validate_invoice_with_ref_unique_hyphen(self):
@@ -58,8 +60,8 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice.state, 'open', 'This invoice has not state in open')
         with self.assertRaisesRegexp(
-                ValueError,
-                'account_invoice_unique_supplier_invoice_number_strip'):
+                exceptions.Warning, 'Error you can not validate the invoice '
+                'with supplier invoice number duplicated.'):
             invoice2.signal_workflow('invoice_open')
 
     def test_13_validate_invoice_with_ref_unique_space(self):
@@ -74,8 +76,8 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice.state, 'open', 'This invoice has not state in open')
         with self.assertRaisesRegexp(
-                ValueError,
-                'account_invoice_unique_supplier_invoice_number_strip'):
+                exceptions.Warning, 'Error you can not validate the invoice '
+                'with supplier invoice number duplicated.'):
             invoice2.signal_workflow('invoice_open')
 
     def test_20_validate_invoice_without_reference(self):
@@ -112,8 +114,8 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice.state, 'open', 'This invoice has not state in open')
         with self.assertRaisesRegexp(
-                ValueError,
-                'account_invoice_unique_supplier_invoice_number_strip'):
+                exceptions.Warning, 'Error you can not validate the invoice '
+                'with supplier invoice number duplicated.'):
             invoice2.signal_workflow('invoice_open')
 
     def test_40_validate_invoice_with_reference_duplicated_in_cancel(self):
@@ -169,6 +171,6 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice.state, 'open', 'This invoice has not state in open')
         with self.assertRaisesRegexp(
-                ValueError,
-                'account_invoice_unique_supplier_invoice_number_strip'):
+                exceptions.Warning, 'Error you can not validate the invoice '
+                'with supplier invoice number duplicated.'):
             invoice2.signal_workflow('invoice_open')
