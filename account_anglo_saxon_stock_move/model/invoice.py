@@ -61,6 +61,29 @@ class AccountInvoice(models.Model):
         return res
 
     @api.multi
+    def action_move_create(self):
+        """ This super will add a new key into the context sending
+        `novalidate=True` in order to avoid validation at Entry Lines creation.
+        When this method is run at invoice validation (action_move_crate)
+        it commissions the creation of Journal Entry Lines at
+        https://goo.gl/2GWgNY
+        `move = account_move.with_context(ctx_nolang).create(move_vals)`
+        where each line created is validated at https://goo.gl/J2DQ13
+        `tmp = move_obj.validate(cr, uid, [vals['move_id']], context)`
+        after all lines are created and glued their Journal Entry is posted at
+        https://goo.gl/8JbZpP `move.post()` which in turn does another
+        validation on all the previous Journal Items at https://goo.gl/KHuwpR
+        `valid_moves = self.validate(cr, uid, ids, context)`.
+        Therefore, when creating the Journal Entry for an invoice it is enough
+        to do one validate when posting the Journal Entry and skip the other
+        validations at creation time
+
+        """
+        ctx = dict(self._context, novalidate=True)
+        return \
+            super(AccountInvoice, self.with_context(ctx)).action_move_create()
+
+    @api.multi
     def action_cancel(self):
         aml_ids = self.mapped('move_id.line_id').filtered('sm_id')
         aml_ids.mapped('reconcile_id').unlink()
