@@ -3,7 +3,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from collections import defaultdict
+
 from odoo import api, fields, models
+from odoo.addons import decimal_precision as dp
+from odoo.tools import float_round
 
 
 class MrpProduction(models.Model):
@@ -22,6 +25,7 @@ class MrpProduction(models.Model):
 
     qty_available_to_produce = fields.Float(
         compute='_compute_qty_to_produce', readonly=True,
+        digits=dp.get_precision('Product Unit of Measure'),
         help='Quantity available to produce considering the quantities '
         'reserved by the order')
 
@@ -41,12 +45,13 @@ class MrpProduction(models.Model):
 
         result, lines_dict = defaultdict(int), defaultdict(int)
         for res in self.move_raw_ids:
-            result[res.product_id.id] += res.reserved_availability
+            result[res.product_id.id] += (res.reserved_availability -
+                                          res.quantity_done)
 
         for line, line_data in lines:
             lines_dict[line.product_id.id] += line_data['qty'] / quantity
 
-        qty = [(int(result[key] / val)) for key, val in lines_dict.items()
+        qty = [(result[key] / val) for key, val in lines_dict.items()
                if val]
-
-        return min(qty) if qty else 0.0
+        return (float_round(min(qty) * self.bom_id.product_qty, 0) if
+                qty and min(qty) >= 0.0 else 0.0)
