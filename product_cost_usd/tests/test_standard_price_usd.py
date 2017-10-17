@@ -4,7 +4,7 @@ from __future__ import division
 
 from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
-from odoo.tools import float_round
+from odoo.tools import float_round, float_compare
 from odoo import fields
 
 
@@ -45,7 +45,9 @@ class TestStandardPriceUsd(TransactionCase):
         expected_price = float_round(
             product.standard_price_usd * 1.15,
             precision_rounding=self.usd.rounding)
-        self.assertEqual(product.price, expected_price)
+        self.assertEqual(
+            float_compare(product.price, expected_price, precision_digits=2),
+            0, "Product price should be %s" % product.price)
 
     def test_02(self):
         """ Test a MXN pricelist based on cost in usd. """
@@ -55,7 +57,9 @@ class TestStandardPriceUsd(TransactionCase):
         expected_price = float_round(
             (product.standard_price_usd * 1.15) * mxn_rate,
             precision_rounding=self.mxn.rounding)
-        self.assertEqual(product.price, expected_price)
+        self.assertEqual(
+            float_compare(product.price, expected_price, precision_digits=2),
+            0, "Product price should be %s" % product.price)
 
     def test_03(self):
         """ Test constraint check_cost_and_price. """
@@ -100,8 +104,9 @@ class TestStandardPriceUsd(TransactionCase):
         margin = float_round(
             expected_price - expected_cost,
             precision_rounding=self.mxn.rounding)
-        msg = "Sale order margin should be %s" % margin
-        self.assertEqual(sale_order.margin, margin, msg)
+        self.assertEqual(
+            float_compare(sale_order.margin, margin, precision_digits=2),
+            0, "Sale order margin should be %s" % margin)
 
     def test_sale_margin_normal(self):
         """ Test the sale margin module using a pricelist without cost in
