@@ -28,9 +28,10 @@ class TestStandardPriceUsd(TransactionCase):
                 })]
         })
         self.pricelist_15_mxn = self.pricelist_15_usd.copy({
-            'name': 'Pricelist 15% USD',
+            'name': 'Pricelist 15% MXN',
             'currency_id': self.mxn.id})
-        self.pricelist_id = self.ref('product.list0')
+        self.pricelist = self.env['product.pricelist'].create({
+            'name': 'Pricelist Demo'})
 
     def set_standard_price_usd(self, price):
         self.assertTrue(self.product.seller_ids)
@@ -117,7 +118,7 @@ class TestStandardPriceUsd(TransactionCase):
                 'state': 'draft',
                 'product_id': self.product.id})],
             'partner_id': self.partner.id,
-            'pricelist_id': self.pricelist_id})
+            'pricelist_id': self.pricelist.id})
         # Confirm the sale order.
         sale_order.action_confirm()
         # Verify that margin field gets bind with the value.
