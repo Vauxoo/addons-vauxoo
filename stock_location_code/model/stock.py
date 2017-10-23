@@ -80,17 +80,16 @@ class StockLocation(models.Model):
         self._cr.execute('''
             SELECT
                 sl.id AS location_id,
-                ARRAY_AGG(sw.id) AS warehouse_id
+                sw.id AS warehouse_id
             FROM stock_location sl, stock_location sl_wh
             INNER JOIN stock_warehouse sw ON sw.view_location_id = sl_wh.id
             WHERE
                 sl_wh.parent_left <= sl.parent_left
-                AND sl_wh.parent_right <= sl.parent_left
+                AND sl_wh.parent_right >= sl.parent_left
                 AND sl.id IN %(ids)s
-            GROUP BY sl.id
         ''', {'ids': tuple(self._ids)})
         wh_dict.update(
-            dict((l, wh_obj.browse(w[0]))
+            dict((l, wh_obj.browse(w))
                  for l, w in self._cr.fetchall()))
         for location in self:
             barcode = "[%(barcode)s]" % {'barcode': location.loc_barcode} \
