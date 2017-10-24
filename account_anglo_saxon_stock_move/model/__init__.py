@@ -23,4 +23,5 @@
 ###############################################################################
 
 from . import invoice
+from . import stock_account
 from . import res_company
