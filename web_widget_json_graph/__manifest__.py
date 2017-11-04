@@ -19,13 +19,13 @@
 #
 ##############################################################################
 {
-    "name": "Line Graph for x2many fields",
-    "version": "1.0",
+    "name": "Line Graph for json fields",
+    "version": "10.0.1.0.0",
     "author": "Vauxoo, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Hidden/Dependency",
-    "summary": "Draw awesome one2many fields with graphs.",
+    "summary": "Draw awesome json fields with graphs.",
     "depends": [
         'web',
     ],
@@ -33,7 +33,7 @@
         'views/templates.xml',
     ],
     "qweb": [
-        'static/src/xml/web_widget_x2many_graph.xml',
+        'static/src/xml/web_widget_json_graph.xml',
     ],
     "test": [
     ],
