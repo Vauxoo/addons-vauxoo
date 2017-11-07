@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Line Graph for json fields",
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "author": "Vauxoo, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
