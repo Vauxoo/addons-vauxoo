@@ -66,9 +66,7 @@ class AnalyticLine(osv.Model):
                    SELECT array_agg(work.hr_analytic_timesheet_id) as a_id
                    FROM project_task AS task
                    INNER JOIN project_task_work AS work ON work.task_id=task.id
-                   WHERE task.id %(op)s %(tids)s
-                   ''', {'op': (len(ids) == 1) and '=' or 'in',
-                         'tids': (len(ids) == 1) and ids[0] or tuple(ids)})
+                   WHERE task.id in %s''', (tuple(ids),))
         res = cr.dictfetchall()
         if res:
             res = res[0].get('a_id', []) or []
