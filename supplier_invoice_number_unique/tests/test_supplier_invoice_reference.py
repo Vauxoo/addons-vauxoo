@@ -11,6 +11,7 @@
 from openerp import workflow
 from openerp import exceptions
 from openerp.tests.common import TransactionCase
+from openerp.tools import mute_logger
 
 
 class TestReferenceSupplierInvoiceUnique(TransactionCase):
@@ -32,6 +33,7 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice.state, 'open', 'This invoice has not state in open')
 
+    @mute_logger('openerp.sql_db')
     def test_11_validate_invoice_with_ref_unique_uper_lowercase(self):
         """Validate an invoice with reference unique, but a reference in
         uppercase"""
@@ -48,6 +50,7 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
                 'with supplier invoice number duplicated.'):
             invoice2.signal_workflow('invoice_open')
 
+    @mute_logger('openerp.sql_db')
     def test_12_validate_invoice_with_ref_unique_hyphen(self):
         """Validate an invoice with reference unique, but a reference with
         hyphen"""
@@ -64,6 +67,7 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
                 'with supplier invoice number duplicated.'):
             invoice2.signal_workflow('invoice_open')
 
+    @mute_logger('openerp.sql_db')
     def test_13_validate_invoice_with_ref_unique_space(self):
         """Validate an invoice with reference unique, but a reference with a
         space."""
@@ -101,6 +105,7 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice2.state, 'open', 'This invoice has not state in open')
 
+    @mute_logger('openerp.sql_db')
     def test_30_validate_invoice_with_reference_duplicate_in_draft(self):
         """Validate an invoice with reference duplicated, but the duplicated
         invoice is in draft.Is validated an invoice and after try validate
@@ -153,6 +158,7 @@ class TestReferenceSupplierInvoiceUnique(TransactionCase):
         self.assertEquals(
             invoice2.state, 'open', 'This invoice2 has not state in open')
 
+    @mute_logger('openerp.sql_db')
     def test_51_validate_2_invoice_with_same_ref_supplier_contact(self):
         """Validate 2 invoices with the same reference, but a supplier is a
         contact"""
