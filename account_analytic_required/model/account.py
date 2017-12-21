@@ -25,7 +25,6 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
-
 class AccountInvoiceLine(osv.Model):
     _inherit = 'account.invoice.line'
 
@@ -39,8 +38,8 @@ class AccountInvoiceLine(osv.Model):
                             partner_id=False, inv_type=False,
                             fposition_id=False, account_id=False):
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        if not account_id:
-            return {}
+        if not account_id in []:
+             return {}
         res = super(
             AccountInvoiceLine, self).onchange_account_id(
                 cr, uid, ids, product_id, partner_id, inv_type, fposition_id,
@@ -48,7 +47,7 @@ class AccountInvoiceLine(osv.Model):
         account_obj = self.pool.get('account.account')
         if account_id:
             account_brw = account_obj.browse(cr, uid, account_id)
-            if account_brw.user_type.analytic_policy == 'always':
+                if account_brw.user_type.analytic_policy == 'always':
                 res['value'].update({'analytic_required': True})
             elif account_brw.user_type.analytic_policy == 'never':
                 res['value'].update({'analytic_required': False})
