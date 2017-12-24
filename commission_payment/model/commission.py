@@ -1068,9 +1068,10 @@ class CommissionPayment(osv.Model):
                     'comm_total': value,
                     'comm_total_currency': sale_comm_curr[key],
                 }, context=context)
-                comm_line_obj.write(cr, uid, sale_comm_cl[key],
-                                    {'comm_salespeople_id': vendor_id},
-                                    context=context)
+                commline_ids = [
+                    int(item) for item in sale_comm_cl[key].tolist()]
+                comm_line_obj.write(cr, uid, commline_ids,
+                                    {'comm_salespeople_id': vendor_id})
 
             commission.write({
                 'total_comm': cl_data.sum().get('commission'),
@@ -1089,7 +1090,7 @@ class CommissionPayment(osv.Model):
                     'comm_sale_id': comm_salespeople_id,
                     'am_id': am_id,
                 }, context=context)
-                comm_line_obj.write(cr, uid, values,
+                comm_line_obj.write(cr, uid, values.tolist(),
                                     {'comm_voucher_id': comm_voucher_id},
                                     context=context)
 
@@ -1105,7 +1106,7 @@ class CommissionPayment(osv.Model):
                     'comm_voucher_id': comm_voucher_id,
                     'invoice_id': invoice_id,
                 }, context=context)
-                comm_line_obj.write(cr, uid, values,
+                comm_line_obj.write(cr, uid, values.tolist(),
                                     {'comm_invoice_id': comm_invoice_id},
                                     context=context)
 
