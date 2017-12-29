@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_margin_percentage
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-26 18:27+0000\n"
+"PO-Revision-Date: 2017-12-26 18:27+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_margin_percentage
+#: model:ir.model,name:sale_margin_percentage.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: sale_margin_percentage
+#: model:ir.model.fields,help:sale_margin_percentage.field_sale_order_line_margin_threshold
+msgid "Limit margin set in sales configuration"
+msgstr "Límite de margen establecido en la configuración de ventas"
+
+#. module: sale_margin_percentage
+#: model:ir.ui.view,arch_db:sale_margin_percentage.sale_margin_percentage_per_line_tree
+msgid "Margin %"
+msgstr "Margen %"
+
+#. module: sale_margin_percentage
+#: model:ir.model.fields,field_description:sale_margin_percentage.field_sale_order_line_margin_percentage
+#: model:ir.model.fields,field_description:sale_margin_percentage.field_sale_order_margin_percentage
+msgid "Margin Percentage"
+msgstr "Porcentaje de Margen"
+
+#. module: sale_margin_percentage
+#: model:ir.model.fields,field_description:sale_margin_percentage.field_res_company_margin_threshold
+#: model:ir.model.fields,field_description:sale_margin_percentage.field_res_config_settings_margin_threshold
+#: model:ir.model.fields,field_description:sale_margin_percentage.field_sale_order_line_margin_threshold
+#: model:ir.ui.view,arch_db:sale_margin_percentage.view_res_sale_margin_config_settings_inherit
+msgid "Margin Threshold"
+msgstr "Límite de Margen"
+
+#. module: sale_margin_percentage
+#: model:ir.model.fields,help:sale_margin_percentage.field_res_company_margin_threshold
+#: model:ir.model.fields,help:sale_margin_percentage.field_res_config_settings_margin_threshold
+msgid "Margin Threshold for product in order lines"
+msgstr "Límite de Margen para productos en lineas de venta"
+
+#. module: sale_margin_percentage
+#: model:ir.model.fields,help:sale_margin_percentage.field_sale_order_line_margin_percentage
+#: model:ir.model.fields,help:sale_margin_percentage.field_sale_order_margin_percentage
+msgid "Margin percentage compute based on price unit"
+msgstr "Cálculo del porcentaje de margen basado en precio unitario"
+
+#. module: sale_margin_percentage
+#: model:ir.ui.view,arch_db:sale_margin_percentage.view_res_sale_margin_config_settings_inherit
+msgid "Minimun margin percentage allowed"
+msgstr "Porcentaje de margen mínimo permitido"
+
+#. module: sale_margin_percentage
+#: model:ir.model,name:sale_margin_percentage.model_sale_order
+msgid "Quotation"
+msgstr "Presupuesto"
+
+#. module: sale_margin_percentage
+#: model:ir.model,name:sale_margin_percentage.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: sale_margin_percentage
+#: model:ir.model,name:sale_margin_percentage.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"
+
