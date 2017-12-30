@@ -31,13 +31,16 @@ class AccountConfigSettings(models.TransientModel):
 
     @api.model
     def get_values(self):
+        res = super(AccountConfigSettings, self).get_values()
         key_payment = "account.payment_term_type"
         payment_type = self.env["ir.config_parameter"].get_param(
             key_payment, default='bqp')
-        return {'payment_type': payment_type}
+        res.update(payment_type=payment_type)
+        return res
 
     @api.multi
     def set_values(self):
+        super(AccountConfigSettings, self).set_values()
         config_parameters = self.env["ir.config_parameter"]
         key_by_company_id = "account.payment_term_type"
         config_parameters.set_param(
