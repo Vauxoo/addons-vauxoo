@@ -269,7 +269,7 @@ class AccountAgingPartnerWizard(models.TransientModel):
 
         for key, val in aml_data_groups.iteritems():
             partner_id, reconcile_id = key
-            aml_lines = aml_obj.browse(val)
+            aml_lines = aml_obj.browse(val.values.tolist())
             if reconcile_id:
                 # TODO: This process can be improve by using the approach reach
                 # in commission_payment
