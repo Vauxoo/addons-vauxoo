@@ -59,3 +59,41 @@ msgstr "ID del movimiento contable"
 #: help:account.move.line,location_dest_id:0
 msgid "Location Move Destination"
 msgstr "Ubicacion de Destino del Movimiento"
+
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:89
+#, python-format
+msgid "Warning !\n"
+"There is no Journal Entries related with the picking"
+msgstr "Advertencia !\n"
+"No hay Asientos Contables relacionados con el Albarán"
+
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:71
+#, python-format
+msgid "Warning !\n"
+"There is no Journal Items related with the picking"
+msgstr "Advertencia !\n"
+"No hay Apuntes Contables relacionados con el Albarán"
+
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:93
+#, python-format
+msgid "Related Journal Entries"
+msgstr "Asientos Contables Relacionados"
+
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:75
+#, python-format
+msgid "Related Journal Items"
+msgstr "Apuntes Contables Relacionados"
+
+#. module: stock_move_entries
+#: model:ir.model.fields,field_description:stock_move_entries.field_stock_move_aml_ids
+msgid "Account move Lines"
+msgstr "Apuntes Contables"
+
+#. module: stock_move_entries
+#: model:ir.model.fields,field_description:stock_move_entries.field_stock_move_aml_all_ids
+msgid "All Account move Lines"
+msgstr "Todos los Apuntes Contables"

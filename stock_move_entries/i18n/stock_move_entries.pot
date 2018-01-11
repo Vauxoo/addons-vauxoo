@@ -57,3 +57,37 @@ msgstr ""
 msgid "Location Move Destination"
 msgstr ""
 
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:89
+#, python-format
+msgid "Warning !\n"
+"There is no Journal Entries related with the picking"
+msgstr ""
+
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:71
+#, python-format
+msgid "Warning !\n"
+"There is no Journal Items related with the picking"
+msgstr ""
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:93
+#, python-format
+msgid "Related Journal Entries"
+msgstr ""
+
+#. module: stock_move_entries
+#: code:addons/stock_move_entries/model/stock_move_entries.py:75
+#, python-format
+msgid "Related Journal Items"
+msgstr ""
+
+#. module: stock_move_entries
+#: model:ir.model.fields,field_description:stock_move_entries.field_stock_move_aml_ids
+msgid "Account move Lines"
+msgstr ""
+
+#. module: stock_move_entries
+#: model:ir.model.fields,field_description:stock_move_entries.field_stock_move_aml_all_ids
+msgid "All Account move Lines"
+msgstr ""
