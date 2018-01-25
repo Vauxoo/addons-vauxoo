@@ -8,7 +8,7 @@
 #    Coded by: Edgar Rivero (edgar@vauxoo.com)
 ############################################################################
 {
-    "name": "MRP Work Order Post Inventory",
+    "name": "MRP Version",
     "version": "10.0.0.0.1",
     "author": "Vauxoo",
     "category": "MRP",
