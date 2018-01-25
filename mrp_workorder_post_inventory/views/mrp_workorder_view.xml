@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!--
+        MRP Work Order
+    -->
+    <record id="mrp_workorder_form_view_inherit_post_inventory" model="ir.ui.view">
+        <field name="name">mrp.workorder.form.view.inherit.post.inventory</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_scrap']" position="before">
+                <button string="Post Inventory" name="post_inventory_workorder" type="object" class="oe_stat_button"
+                        attrs="{'invisible':[('state','!=','done')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
