@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="invoice_change_currency_form">
+        <field name="name">account.invoice_customer.change.view</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="model">account.invoice</field>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <button name="%(action_account_change_currency)d" type="action" class="oe_inline oe_link" string="(change)" attrs="{'invisible':[('state','!=','draft')]}" groups="account.group_account_user"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="invoice_no_exchange_form">
+        <field name="name">account.invoice_customer_no_exchange.view</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="groups_id" eval="[(4, ref('group_restrict_change_currency_exchange'))]"/>
+        <field name="model">account.invoice</field>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="invoice_supplier_form">
+        <field name="name">account.invoice_supplier.change.view</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="model">account.invoice</field>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="replace">
+                <label for="currency_id" groups="base.group_multi_currency"/>
+                <div groups="base.group_multi_currency">
+                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" class="oe_inline"/>
+                    <button name="%(action_account_change_currency)d" type="action" class="oe_inline oe_link" string="(change)" attrs="{'invisible':[('state','!=','draft')]}" groups="account.group_account_user"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="invoice_no_exchange_supplier_form">
+        <field name="name">account.invoice_supplier_no_exchange.view</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="groups_id" eval="[(4, ref('group_restrict_change_currency_exchange'))]"/>
+        <field name="model">account.invoice</field>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
