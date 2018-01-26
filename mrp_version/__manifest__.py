@@ -20,7 +20,7 @@
     "demo": [],
     "data": [
         "views/mrp_workorder_view.xml",
-        "wizards/change_route_production_view.xml"
+        "wizard/change_route_production_view.xml"
     ],
     "test": [],
     "js": [],
