@@ -1,3 +1,4 @@
 # coding: utf-8
 
-from . import model
+from . import models
+from . import wizards

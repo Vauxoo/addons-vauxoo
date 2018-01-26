@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Change Route Production Wizard -->
+    <record id="view_change_route_production_wizard" model="ir.ui.view">
+        <field name="name">Change Route Production</field>
+        <field name="model">change.route.production</field>
+        <field name="arch" type="xml">
+            <form string="Parameters">
+                <group>
+                    <label string="This wizard will change the production path of the current production order.
+                        Warning when changing the route the order will be canceled, and a new order will be created with the rest to be produced."/>
+                </group>
+                <group>
+                    <field name="production_id"/>
+                    <field name="product_tmpl_id"/>
+                    <field name="bom_id" domain="[('product_tmpl_id', '=', product_tmpl_id), ('routing_id.operation_ids', '!=', False)]"/>
+                    <field name="routing_id"/>
+                </group>
+                <footer>
+                    <button name="change_route" string="Change Route" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window
+        id="action_change_route_production"
+        key2="client_action_multi"
+        name="Change Routing Production"
+        res_model="change.route.production"
+        src_model="mrp.production"
+        groups="mrp.group_mrp_manager"
+        view_mode="form" target="new" view_type="form"/>
+
+</odoo>
