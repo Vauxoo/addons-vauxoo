@@ -100,7 +100,11 @@ class ChangeRouteProduction(models.TransientModel):
             production, qty, group_id=production.procurement_group_id.id)
 
         if production.procurement_ids:
-            vals['rule_id'] = production.procurement_ids[0].rule_id.id
+            procurement = production.procurement_ids[0]
+            vals['rule_id'] = procurement.rule_id.id
+            vals['orderpoint_id'] = procurement.orderpoint_id.id
+            vals['warehouse_id'] = procurement.orderpoint_id.id
+
         else:
             vals['rule_id'] = rule_obj.search(
                 [('action', '=', 'manufacture')], limit=1).id
@@ -112,4 +116,6 @@ class ChangeRouteProduction(models.TransientModel):
             values={'self': new_proc, 'origin': production},
             subtype_id=self.env.ref('mail.mt_note').id)
         new_prod = new_proc.make_mo()
-        return prod_obj.browse(new_prod.get(new_proc.id, []))
+        prod = prod_obj.browse(new_prod.get(new_proc.id, []))
+        new_proc.write({'state': 'running', 'production_id': prod.id})
+        return prod
