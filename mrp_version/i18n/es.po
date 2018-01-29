@@ -1,0 +1,161 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_version
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-29 21:09+0000\n"
+"PO-Revision-Date: 2018-01-29 15:40-0600\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 1.7.5\n"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_mrp_production_backorder_id
+msgid "Back Order Production"
+msgstr "Orden de Producción Origen"
+
+#. module: mrp_version
+#: model:ir.model.fields,help:mrp_version.field_change_route_production_bom_current_id
+msgid "Bill of Materials allow you to define the list of required raw materials to make a finished product."
+msgstr "La lista de materiales le permite definir la lista de las materias primas requeridas para realizar un producto final."
+
+#. module: mrp_version
+#: model:ir.ui.view,arch_db:mrp_version.view_change_route_production_wizard
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: mrp_version
+#: model:ir.ui.view,arch_db:mrp_version.view_change_route_production_wizard
+msgid "Change Route"
+msgstr "Cambiar ruta"
+
+#. module: mrp_version
+#: model:ir.model,name:mrp_version.model_change_route_production
+msgid "Change Route Production"
+msgstr "Cambiar Ruta de Producción"
+
+#. module: mrp_version
+#: model:ir.actions.act_window,name:mrp_version.action_change_route_production
+msgid "Change Routing Production"
+msgstr "Cambiar Ruta de Producción"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_id
+msgid "ID"
+msgstr "ID"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: mrp_version
+#: model:ir.model,name:mrp_version.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Orden de fabricación"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_bom_id
+msgid "Materials list"
+msgstr "Lista de Materiales"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_bom_current_id
+msgid "Materials list current"
+msgstr "Lista de materiales actual"
+
+#. module: mrp_version
+#: model:ir.ui.view,arch_db:mrp_version.view_change_route_production_wizard
+msgid "Parameters"
+msgstr "Parámetros"
+
+#. module: mrp_version
+#: model:ir.ui.view,arch_db:mrp_version.mrp_workorder_form_view_inherit_post_inventory
+msgid "Post Inventory"
+msgstr "Registrar inventario"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_product_tmpl_id
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_production_id
+msgid "Production id"
+msgstr "Orden de Producción"
+
+#. module: mrp_version
+#: code:addons/mrp_version/wizard/change_route_production.py:43
+#, python-format
+msgid "Production orders in canceled or done state can not be changed production routes."
+msgstr "Ordenes de producción en estado cancelado o completado, no pueden ser cambiadas las ruta de producción."
+
+#. module: mrp_version
+#: model:ir.model.fields,field_description:mrp_version.field_change_route_production_routing_id
+msgid "Production route"
+msgstr "Ruta de Producción"
+
+#. module: mrp_version
+#: model:ir.model.fields,help:mrp_version.field_change_route_production_routing_id
+msgid "The operations for producing this BoM.  When a routing is specified, the production orders will  be executed through work orders, otherwise everything is processed in the production order itself. "
+msgstr "Las operaciones para producir este LdM. Cuando se especifica una ruta, las órdenes de producción se ejecutan a través de órdenes de trabajo, en caso contrario todo se procesa en la propia orden de producción."
+
+#. module: mrp_version
+#: code:addons/mrp_version/wizard/change_route_production.py:94
+#, python-format
+msgid "There is nothing left to produce"
+msgstr "No queda nada para producir"
+
+#. module: mrp_version
+#: model:ir.ui.view,arch_db:mrp_version.view_change_route_production_wizard
+msgid "This wizard will change the production path of the current production order.                         Warning when changing the route the order will be canceled, and a new order will be created with the rest to be produced."
+msgstr "Este asistente cambiará la ruta de producción de la orden de producción actual.                         Advertencia al cambiar la ruta se cancelará la orden, y se creará una nueva orden con el resto para ser producido."
+
+#. module: mrp_version
+#: model:ir.model.fields,help:mrp_version.field_mrp_production_backorder_id
+msgid ""
+"When a production order is canceled with the wizard to\n"
+"        change the route, in this field it will store the order from\n"
+"        where it comes."
+msgstr ""
+"Cuando se cancela una orden de producción con el asistente para\n"
+"        cambiar la ruta, en este campo almacenará la orden de\n"
+"        donde proviene."
+
+#. module: mrp_version
+#: model:ir.model,name:mrp_version.model_mrp_workorder
+msgid "Work Order"
+msgstr "Orden de trabajo"
