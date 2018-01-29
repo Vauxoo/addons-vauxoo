@@ -1,4 +1,7 @@
 MRP VERSION
 ===========
 
-Post inventory in work orders
+This module allows:
+
+ * Wizard to change production orders route.
+ * Post inventory in work orders.
