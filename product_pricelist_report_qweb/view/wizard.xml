@@ -39,6 +39,10 @@
                 <xpath expr="//field[@name='qty5']" position="attributes">
                     <attribute name="attrs">{'readonly': ['|',('margin_sale','=',True),('margin_cost','=',True)],'invisible': ['|',('margin_sale','=',True),('margin_cost','=',True)]}</attribute>
                 </xpath>
+                <xpath expr="//field[@name='price_list']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_open': True, 'no_quick_create': True, 'no_create_edit':True}</attribute>
+                    <attribute name="widget"></attribute>
+                </xpath>
             </field>
         </record>
     </data>
