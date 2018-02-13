@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <!-- Vista -->
+    <record id="view_mrp_product_responsible_search" model="ir.ui.view">
+      <field name="name">mrp.product.responsible</field>
+      <field name="model">mrp.production</field>
+      <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+      <field name="arch" type="xml">
+          <xpath expr='//field[@name="name"]' position='after'>
+            <filter name="user_id" string="My" domain="[('user_id','=',uid)]"/>
+            <field name="user_id" string="Responsible"/>
+          </xpath>
+          <xpath expr='//filter[1]' position='after'>
+            <filter name="user_id" string="Responsible" context="{'group_by':'user_id'}" />
+          </xpath>
+      </field>
+    </record>
+</odoo>
