@@ -10,10 +10,16 @@ class AccontInvoice(models.Model):
     _inherit = 'account.invoice'
 
     @api.multi
+    def check_payment_type(self):
+        if self.filtered(lambda invoice:
+                         invoice.payment_term_id.payment_type != 'credit'):
+            return True
+
+    @api.multi
     def check_limit_credit(self):
+        if self.filtered(lambda inv: inv.check_payment_type()):
+            return True
         for invoice in self:
-            if invoice.payment_term_id.payment_type != 'credit':
-                return True
             allowed_sale = invoice.partner_id.with_context(
                 {'new_amount': invoice.amount_total,
                  'new_currency': invoice.currency_id}).allowed_sale
