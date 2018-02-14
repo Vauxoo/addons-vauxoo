@@ -9,10 +9,16 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.multi
+    def check_payment_type(self):
+        if self.filtered(lambda so:
+                         so.payment_term_id.payment_type != 'credit'):
+            return True
+
+    @api.multi
     def check_limit(self):
+        if self.filtered(lambda so: so.check_payment_type()):
+            return True
         for so in self:
-            if so.payment_term_id.payment_type != 'credit':
-                return True
             allowed_sale = so.partner_id.with_context(
                 {'new_amount': so.amount_total,
                  'new_currency': so.currency_id}).allowed_sale
