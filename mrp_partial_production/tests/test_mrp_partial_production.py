@@ -12,7 +12,7 @@ class TestValidatePickings(TransactionCase):
         self.w_upd_obj = self.env['stock.change.product.qty']
         self.sale = self.env.ref('mrp_partial_production.sale_order_1')
         self.sale.action_confirm()
-        self.env['procurement.order'].run_scheduler()
+        self.env['procurement.group'].run_scheduler()
         self.product = self.env.ref('mrp_partial_production.'
                                     'product_product_18')
         self.compa = self.env.ref('mrp_partial_production.'
@@ -21,6 +21,7 @@ class TestValidatePickings(TransactionCase):
                                   'product_product_20')
         self.stock = self.env.ref('stock.stock_location_stock')
         self.transfer_obj = self.env['stock.immediate.transfer']
+        self.back_transfer_obj = self.env['stock.backorder.confirmation']
 
     def test_01_produce_partially(self):
         """Test the whole process with partial productions
@@ -87,7 +88,10 @@ class TestValidatePickings(TransactionCase):
             "active_model": "stock.picking",
         }
         wizard_transfer_id = self.transfer_obj.with_context(ctx).create({
-            'pick_id': picking_brw.id, })
+            'pick_ids': [(6, 0, picking_brw.ids)]})
+        wizard_transfer_id.process()
+        wizard_transfer_id = self.back_transfer_obj.with_context(ctx).create({
+            'pick_ids': [(6, 0, picking_brw.ids)]})
         wizard_transfer_id.process()
 
         # Check  status.
@@ -153,7 +157,7 @@ class TestValidatePickings(TransactionCase):
 
         # Validating pickings
         wizard_transfer_id = self.transfer_obj.with_context(ctx).create({
-            'pick_id': picking_brw.id, })
+            'pick_ids': [(6, 0, picking_brw.ids)]})
         wizard_transfer_id.process()
 
         # Check  status.

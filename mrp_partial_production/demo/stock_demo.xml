@@ -26,7 +26,6 @@
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
 
-        <function model="stock.inventory" name="prepare_inventory" eval="[ref('stock_inventory_pick_0')]"/>
         <function model="stock.inventory" name="action_done" eval="[ref('stock_inventory_pick_0')]"/>
 
     </data>
