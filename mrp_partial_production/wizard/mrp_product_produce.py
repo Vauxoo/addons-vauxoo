@@ -11,6 +11,7 @@ class MrpProductProduce(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
+        fields.append('product_qty')
         res = super(MrpProductProduce, self).default_get(fields)
         if self._context.get('active_id'):
             production = self.env['mrp.production'].browse(
