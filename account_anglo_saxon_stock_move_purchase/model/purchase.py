@@ -66,6 +66,7 @@ class PurchaseOrder(models.Model):
         'account.move.line', 'purchase_id', 'Account Move Lines',
         help='Journal Entry Lines related to this Purchase Order')
 
+    @api.model
     def cron_purchase_accrual_reconciliation(self, do_commit=False):
         self.env['account.invoice'].cron_accrual_reconciliation(
             'purchase_id', do_commit=do_commit)
