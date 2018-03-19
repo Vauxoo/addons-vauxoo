@@ -17,7 +17,8 @@ class AccontInvoice(models.Model):
 
     @api.multi
     def check_limit_credit(self):
-        if self.filtered(lambda inv: inv.check_payment_type()):
+        if self.filtered(lambda inv: inv.check_payment_type() or
+                         inv.type != 'out_invoice'):
             return True
         for invoice in self:
             allowed_sale = invoice.partner_id.with_context(
