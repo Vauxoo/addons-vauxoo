@@ -34,26 +34,27 @@ odoo.define('web.web_widget_json_graph', function (require) {
             /*
             Ignoring lint erros caused by nv and d3 variables from NVD3.js
             */
-            nv.addGraph(function() {
-                var chart = nv.models.lineChart()
-                    .useInteractiveGuideline(true);
-                chart.xAxis
-                    .axisLabel(info.label_x)
-                    .tickFormat(d3.format(',r'));
+            if (info) {
+                nv.addGraph(function() {
+                    var chart = nv.models.lineChart()
+                        .useInteractiveGuideline(true);
+                    chart.xAxis
+                        .axisLabel(info.label_x)
+                        .tickFormat(d3.format(',r'));
 
-                chart.yAxis
-                    .axisLabel(info.label_y)
-                    .tickFormat(d3.format('.02f'));
+                    chart.yAxis
+                        .axisLabel(info.label_y)
+                        .tickFormat(d3.format('.02f'));
 
-                d3.select('.nv_content svg')
-                    .datum(info.data)
-                    .transition().duration(500)
-                    .call(chart);
+                    d3.select('.nv_content svg')
+                        .datum(info.data)
+                        .transition().duration(500)
+                        .call(chart);
+                    nv.utils.windowResize(chart.update);
 
-                nv.utils.windowResize(chart.update);
-
-                return chart;
-            });
+                    return chart;
+                });
+            }
             /*jsl:end*/
         },
         _destroy: function () {
