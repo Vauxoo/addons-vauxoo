@@ -19,18 +19,16 @@ class AccountPaymentTerm(models.Model):
             at least two line to compute
         """
         key_payment = "account.payment_term_type"
-        payment_type = self.env["ir.config_parameter"].get_param(
-            key_payment, default='bqp')
+        payment_type = self.env[
+            "ir.config_parameter"].sudo().get_param(
+                key_payment, default='bqp')
+        p_type = {
+            'bqp': lambda a: 'credit' if a.line_ids else 'cash',
+            'bdp': lambda a: 'credit' if a.line_ids.filtered(
+                lambda e: e.days > 0) else 'cash'}
         for record in self:
-            if payment_type == 'bqp':
-                record.payment_type = 'cash'
-                if len(record.line_ids) > 1:
-                    record.payment_type = 'credit'
-            elif payment_type == 'bdp':
-                for line in record.line_ids:
-                    record.payment_type = 'cash'
-                    if line.days > 0:
-                        record.payment_type = 'credit'
+            record.payment_type = p_type.get(
+                payment_type, lambda a: 'cash')(record)
 
     payment_type = fields.Selection(
         [('credit', _('Credit')),
