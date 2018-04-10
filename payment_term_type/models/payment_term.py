@@ -23,7 +23,7 @@ class AccountPaymentTerm(models.Model):
             "ir.config_parameter"].sudo().get_param(
                 key_payment, default='bqp')
         p_type = {
-            'bqp': lambda a: 'credit' if a.line_ids else 'cash',
+            'bqp': lambda a: 'credit' if len(a.line_ids) > 1 else 'cash',
             'bdp': lambda a: 'credit' if a.line_ids.filtered(
                 lambda e: e.days > 0) else 'cash'}
         for record in self:
