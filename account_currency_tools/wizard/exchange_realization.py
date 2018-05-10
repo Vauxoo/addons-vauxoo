@@ -725,28 +725,15 @@ class ForeignExchangeRealization(osv.osv_memory):
         }
         gal_acc = self.get_gain_loss_account_company(cr, uid, wzd_brw.id,
                                                      context=context)
-        period_ids = [ap_brw.id for ap_brw in wzd_brw.period_ids]
         states = ['posted']
         if wzd_brw.target_move == 'all':
             states.append('draft')
-        argx = {
-            'account_ids': None,
-            'currency_ids': None,
-            'states': tuple(states),
-            'period_ids': tuple(period_ids),
-        }
 
         for key, val in gal_val.iteritems():
             internal_type, currency_id = key
             curr_brw = cur_obj.browse(cr, uid, currency_id, context=context)
             acc = dict_acc[internal_type]
-            account_a = val > 0 and acc['gain'] or acc['loss']
-            argx['account_ids'] = acc['gain'], acc['loss']
-            argx['currency_ids'] = (currency_id,)
-
-            res_acc = self.get_account_balance(cr, uid, argx, context=context)
-            val_acc = res_acc and res_acc[0]['balance'] or 0.0
-            val -= val_acc
+            account_a = acc['gain'] if val > 0 else acc['loss']
 
             args = {
                 'name': name % (mapping[internal_type], curr_brw.name),
@@ -757,7 +744,7 @@ class ForeignExchangeRealization(osv.osv_memory):
             res_a = self.line_get_dict(cr, uid, args, context=context)
 
             args['amount'] = -val
-            args['account_id'] = val > 0 and gal_acc['gain'] or gal_acc['loss']
+            args['account_id'] = gal_acc['gain'] if val > 0 else gal_acc['loss']  # noqa
             res_b = self.line_get_dict(cr, uid, args, context=context)
 
             res.append((0, 0, res_a))
