@@ -53,5 +53,6 @@ class MrpProduction(models.Model):
 
         qty = [(result[key] / val) for key, val in lines_dict.items()
                if val]
-        return (float_round(min(qty) * self.bom_id.product_qty, 0) if
-                qty and min(qty) >= 0.0 else 0.0)
+        return (float_round(
+            min(qty) * self.bom_id.product_qty, 0, rounding_method='DOWN') if
+            qty and min(qty) >= 0.0 else 0.0)
