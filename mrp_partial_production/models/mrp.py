@@ -44,7 +44,7 @@ class MrpProduction(models.Model):
         lines = self.bom_id.explode(self.product_id, quantity)[1]
 
         result, lines_dict = defaultdict(int), defaultdict(int)
-        for res in self.move_raw_ids:
+        for res in self.move_raw_ids.filtered(lambda move: not move.is_done):
             result[res.product_id.id] += (res.reserved_availability -
                                           res.quantity_done)
 
