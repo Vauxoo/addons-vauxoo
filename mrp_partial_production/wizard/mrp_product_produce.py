@@ -13,7 +13,7 @@ class MrpProductProduce(models.TransientModel):
     def default_get(self, fields):
         fields.append('product_qty')
         res = super(MrpProductProduce, self).default_get(fields)
-        if self._context.get('active_id'):
+        if self._context.get('active_id') and res.get('product_qty'):
             production = self.env['mrp.production'].browse(
                 self._context['active_id'])
             res['product_qty'] = (res['product_qty'] > 0 and
