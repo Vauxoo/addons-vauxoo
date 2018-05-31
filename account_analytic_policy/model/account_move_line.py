@@ -32,26 +32,30 @@ class AccountMoveLine(models.Model):
 
     @api.multi
     def _is_analytic_policy_ok(self, vals):
-        account = (self.env['account.account'].browse(vals['account_id'])
-                   if ('account_id' in vals) else self.account_id)
-        analytic = (self.env['account.analytic.account'].browse(
-            vals['analytic_account_id'])
-            if ('analytic_account_id' in vals) else self.analytic_account_id)
-        policy = account.analytic_policy
-        if not policy or policy == 'optional':
-            return True
-        if policy == 'never' and analytic:
-            raise UserError(_(
-                'You cannot use analytic accounts on a move line with Analytic '
-                'Policy "Never" contact the account manager or fix the '
-                'account configuration or pick another account.\n\n') +
-                            '%s' % account.name_get())
-        if policy == 'always' and not analytic:
-            raise UserError(_(
-                'You must use analytic accounts on a move line with Analytic '
-                'Policy "Always" contact the account manager or fix the '
-                'account configuration or pick another account.\n\n') +
-                            '%s' % account.name_get())
+        account = self.env['account.account']
+        analytic = self.env['account.analytic.account']
+        for record in self:
+            account = (account.browse(vals['account_id'])
+                       if ('account_id' in vals) else record.account_id)
+            analytic = (
+                analytic.browse(
+                    vals['analytic_account_id']) if ('analytic_account_id' in vals)
+                else record.analytic_account_id)
+            policy = account.analytic_policy
+            if not policy or policy == 'optional':
+                continue
+            if policy == 'never' and analytic:
+                raise UserError(_(
+                    'You cannot use analytic accounts on a move line with Analytic '
+                    'Policy "Never" contact the account manager or fix the '
+                    'account configuration or pick another account.\n\n') +
+                                '%s' % account.name_get())
+            if policy == 'always' and not analytic:
+                raise UserError(_(
+                    'You must use analytic accounts on a move line with Analytic '
+                    'Policy "Always" contact the account manager or fix the '
+                    'account configuration or pick another account.\n\n') +
+                                '%s' % account.name_get())
         return True
 
     @api.model
