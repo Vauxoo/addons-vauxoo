@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <p>Printing Date: <span t-esc="time.strftime('%Y-%m-%d %H:%M:%S')"/></p>
+                            <p>Printing Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
                         </div>
                     </div>
                     <t t-if="o.line_ids">
