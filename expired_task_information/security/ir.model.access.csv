@@ -1,2 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"config_task_manager","task.expired.config","model_task_expired_config","expired_task_information.group_config_task_expiry",1,1,1,1

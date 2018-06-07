@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<openerp>
-    <data>
-        <record model="res.groups" id="project_auditor">
-            <field name="name">Project Auditor</field>
-        </record>
-    </data>
-</openerp>

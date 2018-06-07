@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_import_tax_tariff,access_import_tax_tariff,model_import_tax_tariff,,1,1,1,1
-access_tariff_tariff,access_tariff_tariff,model_tariff_tariff,,1,1,1,1

@@ -1,2 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"merge_manager","merge.object","model_merge_object","merge_editing.group_merge_editing",1,1,1,1

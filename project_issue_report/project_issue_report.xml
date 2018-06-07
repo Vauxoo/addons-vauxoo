@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<openerp>
-    <data>
-        <report id="project_issue_report" model="project.issue" name="project.issue.report" rml="project_issue_report/report/project_issue_report.rml" string="Issues" auto="True" header="False"/>
-    </data>
-</openerp>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data noupdate="0">
-        <record id="sign_youtube_conf_admin" model="res.groups">            
-            <field name="name">YouTube Administrator</field>
-        </record> 
-    </data>
-</openerp>

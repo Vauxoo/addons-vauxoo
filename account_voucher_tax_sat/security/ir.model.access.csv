@@ -1,3 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_tax_sat_user","account.voucher.tax.sat.manager","model_account_voucher_tax_sat","group_voucher_tax_sat_manager",1,1,1,1
-"access_tax_sat_manager","account.voucher.tax.sat.user","model_account_voucher_tax_sat","group_voucher_tax_sat_user",1,0,0,0

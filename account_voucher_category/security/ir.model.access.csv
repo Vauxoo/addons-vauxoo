@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_account_voucher_category_manager,account.voucher.category,model_account_voucher_category,account.group_account_manager,1,1,1,1
-access_account_voucher_category_type_manager,account.voucher.category.type,model_account_voucher_category_type,account.group_account_manager,1,1,1,1

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-
-        <menuitem id="hr_payroll_bank_menu" parent="hr_payroll.payroll_configure" name="Banks" action="base.action_res_bank_form"/>
-        
-    </data>
-</openerp>

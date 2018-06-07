@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<openerp>
-    <data>
-
-        <report id="report_ir_model_overview" string="Development Deliver" model="ir.model" name="ir.model.overview" report_type="sxw" file="deliver_project/report/modeloverview.sxw" header="False"/>
-
-    </data>
-</openerp>

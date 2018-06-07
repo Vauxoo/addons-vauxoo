@@ -1,3 +1,0 @@
-id,group_id:id,name,model_id,perm_create,perm_unlink,perm_write,perm_read
-rule_sign_youtube,base.group_no_one,sign_youtube_conf,sign.youtube.conf,1,1,1,1
-rule_sign_youtube2,,sign_youtube_conf_line,sign.youtube.conf.line,1,1,1,1

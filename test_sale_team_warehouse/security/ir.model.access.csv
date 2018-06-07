@@ -1,4 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-access_test_generic_model,access_test_generic_model,model_test_generic_model,,1,0,0,0
-access_test_default_get_model,access_test_default_get_model,model_test_default_get_model,,1,0,0,0
-access_test_default_get_warehouse_model,access_test_default_get_warehouse_model,model_test_default_get_warehouse_model,,1,0,0,0

@@ -1,3 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_ara_user","ara.user","model_account_reconcile_advance","group_ara_manager",1,1,1,1
-"access_ara_manager","ara.manager","model_account_reconcile_advance","group_ara_user",1,0,0,0
