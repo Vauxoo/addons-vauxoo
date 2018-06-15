@@ -24,38 +24,31 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from odoo import fields, models
 
 
-class WizardAssetDepreciation(osv.osv_memory):
+class WizardAssetDepreciation(models.TransientModel):
     _name = 'wizard.asset.depreciation'
 
-    _columns = {
-        'date_start': fields.date(
-            'Date Start', help='Select date start to depreciation lines that '
-            'will write that the lines are historical', required=True),
-        'date_stop': fields.date(
-            'Date Stop', help='Select date stop to depreciation lines that '
-            'will write that the lines are historical', required=True),
-    }
+    date_start = fields.Date(
+        help='Select date start to depreciation lines that '
+        'will write that the lines are historical', required=True)
+    date_stop = fields.Date(
+        help='Select date stop to depreciation lines that '
+        'will write that the lines are historical', required=True)
 
-    def write_historical_true(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
+    def write_historical_true(self):
         acc_asset_obj = self.pool.get('account.asset.asset')
         dep_line_obj = self.pool.get('account.asset.depreciation.line')
-        data = self.browse(cr, uid, ids, context=context)[0]
+        data = self.browse(self.ids)
         date_start = data.date_start
         date_stop = data.date_stop
-        for asset in acc_asset_obj.browse(
-                cr, uid, context.get('active_ids', [])):
-            asset_lines = dep_line_obj.search(
-                cr, uid, [
-                    ('asset_id', '=', asset.id),
-                    ('depreciation_date', '>=', date_start),
-                    ('depreciation_date', '<=', date_stop),
-                    ('move_id', '=', False)])
-            for line in dep_line_obj.browse(
-                    cr, uid, asset_lines, context=context):
+        for asset in acc_asset_obj.browse(data):
+            asset_lines = dep_line_obj.search([
+                ('asset_id', '=', asset.id),
+                ('depreciation_date', '>=', date_start),
+                ('depreciation_date', '<=', date_stop),
+                ('move_id', '=', False)])
+            for line in dep_line_obj.browse(asset_lines):
                 line.write({'historical': True})
         return True
