@@ -1,2 +1,0 @@
-pandas >= 0.16.2
-cssutils >= 1.0.1

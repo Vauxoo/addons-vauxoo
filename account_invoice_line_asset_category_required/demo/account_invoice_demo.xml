@@ -1,23 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data noupdate="1">
+<odoo noupdate="1">
+    <record id="a_sale" model="account.account">
+        <field name="code">X2020</field>
+        <field name="name">Product Sales - (test)</field>
+        <field name="user_type_id" ref="account.data_account_type_revenue"/>
+        <field name="tag_ids" eval="[(6,0,[ref('account.account_tag_operating')])]"/>
+    </record>
+    <record id="a_pay" model="account.account">
+        <field name="code">X1111</field>
+        <field name="name">Creditors - (test)</field>
+        <field eval="True" name="reconcile"/>
+        <field name="user_type_id" ref="account.data_account_type_payable"/>
+    </record>
+    <record id="sales_journal" model="account.journal">
+        <field name="name">Customer Invoices - Test</field>
+        <field name="code">TINV</field>
+        <field name="type">sale</field>
+        <field name="default_credit_account_id" ref="a_sale"/>
+        <field name="default_debit_account_id" ref="a_sale"/>
+        <field name="refund_sequence" eval="True"/>
+    </record>
 
-        <!-- Invoice -->
-        <record id="invoice_demo_asset_category" model="account.invoice">
-            <field name="account_id" ref="account.a_pay"/>
-            <field name="company_id" ref="base.main_company"/>
-            <field name="partner_id" ref="base.res_partner_1"/>
-            <field name="journal_id" ref="account.sales_journal"/>
-            <field name="type">in_invoice</field>
-        </record>
 
-        <record id="line_invoice_asset_category" model="account.invoice.line">
-            <field name="name">Computet equipment</field>
-            <field name="product_id" ref="product.product_product_4"/>
-            <field name="price_unit" eval="5355.0" />
-            <field name="uos_id" ref="product.product_uom_hour"/>
-            <field name="invoice_id" ref="invoice_demo_asset_category"/>
-            <field name="quantity">1</field>
-        </record>
-    </data>
-</openerp>
+    <!-- Invoice -->
+    <record id="invoice_demo_asset_category" model="account.invoice">
+        <field name="account_id" ref="a_pay"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="partner_id" ref="base.res_partner_1"/>
+        <field name="journal_id" ref="sales_journal"/>
+        <field name="type">in_invoice</field>
+    </record>
+
+    <record id="line_invoice_asset_category" model="account.invoice.line">
+        <field name="name">Computer equipment</field>
+        <field name="product_id" ref="product.product_product_4"/>
+        <field name="price_unit" eval="5355.0" />
+        <field name="uos_id" ref="product.product_uom_hour"/>
+        <field name="invoice_id" ref="invoice_demo_asset_category"/>
+        <field name="account_id" ref="a_pay"/>
+        <field name="quantity">1</field>
+    </record>
+</odoo>
