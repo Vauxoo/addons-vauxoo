@@ -5,17 +5,15 @@
 {
     'author': 'ADHOC SA,Odoo Community Association (OCA), Vauxoo',
     'category': 'Accounting & Finance',
-    'demo_xml': [],
     'depends': ['account'],
     'installable': True,
     'name': 'Account Invoice Change Currency',
-    'test': [],
     'data': [
         'security/security.xml',
         'wizard/account_change_currency_view.xml',
         'views/invoice_view.xml',
     ],
-    'version': '11.0.0.0.0',
+    'version': '10.0.1.0.0',
     'website': 'www.adhoc.com.ar, www.vauxoo.com',
     'license': 'AGPL-3'
 }
