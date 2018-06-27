@@ -27,16 +27,16 @@ msgid "Always"
 msgstr "Siempre"
 
 #. module: account_invoice_line_asset_category_required
-#: code:addons/account_invoice_line_asset_category_required/models/ail_asset_category_required.py:50
+#: code:addons/account_invoice_line_asset_category_required/models/ail_asset_category_required.py:51
 #, python-format
-msgid "Asset policy is set to 'Always' with account %s '%s' but the asset category is missing in the account invoice line with description is '%s'."
-msgstr "La política del activo esta configurada como 'Siempre' para la cuenta %s '%s' pero la categoría del activo esta faltando en la línea de factura con descripción'%s'."
+msgid "Asset policy is set to 'Always' for the account '%s %s' but the asset category is missing in the account invoice line with description '%s'."
+msgstr "La política del activo está configurada como 'Siempre' para la cuenta '%s %s' pero la categoría del activo está faltando en la línea de factura con descripción '%s'."
 
 #. module: account_invoice_line_asset_category_required
-#: code:addons/account_invoice_line_asset_category_required/models/ail_asset_category_required.py:56
+#: code:addons/account_invoice_line_asset_category_required/models/ail_asset_category_required.py:59
 #, python-format
-msgid "Asset policy is set to 'Never' with account %s '%s' but the account invoice line with description is '%s' "
-msgstr "La política del activo esta configurada como "Nunca" para la cuenta %s '%s' para la línea de factura con descripción '%s' "
+msgid "Asset policy is set to 'Never' for the account '%s %s' but the invoice line with description '%s' have this asset category set: '%s'."
+msgstr "La política del activo está configurada como 'Nunca' para la cuenta '%s %s' pero la línea de la factura con descripción '%s' tiene esta categoría de activo establecida: '%s'."
 
 #. module: account_invoice_line_asset_category_required
 #: model:ir.model,name:account_invoice_line_asset_category_required.model_account_invoice
@@ -61,12 +61,12 @@ msgid "Optional"
 msgstr "Opcional"
 
 #. module: account_invoice_line_asset_category_required
-#: field:account.account.type,asset_policy:0
+#: model:ir.model.fields,field_description:account_invoice_line_asset_category_required.field_account_account_type_asset_policy
 msgid "Policy for asset category"
 msgstr "Política para categoría de activo"
 
 #. module: account_invoice_line_asset_category_required
-#: help:account.account.type,asset_policy:0
+#: model:ir.model.fields,help:account_invoice_line_asset_category_required.field_account_account_type_asset_policy
 msgid "Set the policy for the asset category field : if you select 'Optional', the accountant is free to put a asset category on an account invoice line with this type of account; if you select 'Always', the accountant will get an error message if there is no asset category; if you select 'Never', the accountant will get an error message if a asset category is present."
 msgstr "Configurar la política para la categoría de activo: si se selecciona 'Opcional', la cuenta es libre de colocar una categoria de activo en una linea de factura con esta cuenta; si se selecciona 'Siempre', se obtendrá un error si no se selecciona una categoría de activo; si e selecciona 'Nunca', se mostrará un error si se selecciona una categoría."
 
