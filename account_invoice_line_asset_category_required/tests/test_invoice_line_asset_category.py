@@ -27,7 +27,7 @@ class TestInvoiceLineAssetCategory(TransactionCase):
     def test_01_line_with_police_always_set(self):
         "Create an invoice with a line that need category, ideal case"
         invoice = self.invoice.copy()
-        for line in invoice.invoice_line:
+        for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'always'})
             line.write({'asset_category_id': self.category_asset.id})
         invoice.signal_workflow('invoice_open')
@@ -35,14 +35,14 @@ class TestInvoiceLineAssetCategory(TransactionCase):
     def test_02_line_with_police_never_not_set(self):
         "Create an invoice with a line that not need category, ideal case"
         invoice = self.invoice.copy()
-        for line in invoice.invoice_line:
+        for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'never'})
         invoice.signal_workflow('invoice_open')
 
     def test_03_line_with_police_always_not_set(self):
         "Create an invoice with a line that need category, but this not is set"
         invoice = self.invoice.copy()
-        for line in invoice.invoice_line:
+        for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'always'})
         with self.assertRaisesRegexp(
                 ValidationError, "Asset policy is set to 'Always'"):
@@ -51,7 +51,7 @@ class TestInvoiceLineAssetCategory(TransactionCase):
     def test_04_line_with_police_never_set(self):
         "Create an invoice with a line that not need category, but this is set"
         invoice = self.invoice.copy()
-        for line in invoice.invoice_line:
+        for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'never'})
             line.write({'asset_category_id': self.category_asset.id})
         with self.assertRaisesRegexp(
