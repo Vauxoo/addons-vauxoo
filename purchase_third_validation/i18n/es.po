@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-22 19:00+0000\n"
-"PO-Revision-Date: 2015-09-22 19:00+0000\n"
+"POT-Creation-Date: 2018-06-25 22:54+0000\n"
+"PO-Revision-Date: 2018-06-25 22:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,14 +16,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: purchase_third_validation
-#: help:purchase.config.settings,limit_amount_t:0
-msgid "Amount after which a third validation of purchase is required."
-msgstr "Monto después del que se necesitara una tercera validación."
+#: model:ir.ui.view,arch_db:purchase_third_validation.view_purchase_third_level_inherit
+msgid "Approve Order"
+msgstr "Aprovar Orden"
 
 #. module: purchase_third_validation
-#: field:purchase.config.settings,limit_amount_t:0
-msgid "Limit to require the approbation of a third user"
-msgstr "Limite requerido para la aprobación de un tercer usuario"
+#: model:ir.model,name:purchase_third_validation.model_res_company
+msgid "Companies"
+msgstr "Compañias"
+
+#. module: purchase_third_validation
+#: model:ir.model.fields,field_description:purchase_third_validation.field_res_config_settings_po_third_validation_amount
+msgid "Minimum Amount"
+msgstr "Monto Minimo"
+
+#. module: purchase_third_validation
+#: model:ir.model.fields,help:purchase_third_validation.field_res_company_po_third_validation_amount
+#: model:ir.model.fields,help:purchase_third_validation.field_res_config_settings_po_third_validation_amount
+msgid "Minimum amount for which a third validation is required"
+msgstr "Monto minimo para requerir una tercera validación"
 
 #. module: purchase_third_validation
 #: model:ir.model,name:purchase_third_validation.model_purchase_order
@@ -33,16 +44,25 @@ msgstr "Orden de Compra"
 #. module: purchase_third_validation
 #: model:res.groups,name:purchase_third_validation.general_purchase_manager
 msgid "Purchase third validation"
-msgstr "Tercera validación en compras"
+msgstr "Tercera validación de compra"
 
 #. module: purchase_third_validation
-#: code:addons/purchase_third_validation/models/purchase.py:36
+#: model:ir.model.fields,field_description:purchase_third_validation.field_res_config_settings_po_third_order_approval
+msgid "Third Order Approval"
+msgstr "Tercera Aprovación de Orden"
+
+#. module: purchase_third_validation
+#: model:ir.model.fields,field_description:purchase_third_validation.field_res_company_po_third_validation_amount
+msgid "Third validation amount"
+msgstr "Monto de tercera validación"
+
+#. module: purchase_third_validation
+#: model:ir.model,name:purchase_third_validation.model_res_config_settings
+msgid "res.config.settings"
+msgstr ""
+
+#. module: purchase_third_validation
+#: code:addons/purchase_third_validation/models/model_res_config_settings.py:33
 #, python-format
-msgid "The PO was not approved, you need privileges by the amount of this purchase"
-msgstr "La OC no ha sido aprobada, se necesitan privilegios por el monto de esta compra"
-
-#. module: purchase_third_validation
-#: view:purchase.order:purchase_third_validation.view_purchase_third_level_inherit
-msgid "green:third_level_ok==True;grey:state=='cancel';blue:state in ('wait','confirmed');red:state in ('except_invoice','except_picking');green:third_level_ok==True;"
-msgstr "green:third_level_ok==True;grey:state=='cancel';blue:state in ('wait','confirmed');red:state in ('except_invoice','except_picking');green:third_level_ok==True;"
-
+msgid "The limit amount to the second approbation must be less than                the amount to third validation"
+msgstr "El importe minimo para la segunda validación debe ser menor al monto minimo para tercera validación."
