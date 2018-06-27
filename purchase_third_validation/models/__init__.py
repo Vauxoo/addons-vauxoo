@@ -9,4 +9,5 @@
 #    planned by: Sabrina Romero<sabrina@vauxoo.com>
 ############################################################################
 from . import purchase
-from . import purchase_third_validation_installer
+from . import res_company
+from . import res_config_settings
