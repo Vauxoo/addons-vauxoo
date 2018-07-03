@@ -5,13 +5,20 @@ from openerp import api, fields, models
 
 class InheritedCrmSaseSection(models.Model):
 
-    _inherit = "crm.case.section"
+    _inherit = "crm.team"
 
     default_warehouse = fields.Many2one('stock.warehouse',
                                         string='Default Warehouse',
                                         help='In this field can be '
                                         'defined a default warehouse for '
                                         'the related users to the sales team.')
+    journal_team_ids = fields.One2many(
+        'account.journal', 'section_id', string="Journal's sales teams",
+        help="Choose the Journals that user with this sale team can see")
+    journal_stock_id = fields.Many2one(
+        'account.journal', 'Journal stock valuation',
+        help='It indicates journal to be used when move line is created with'
+        'the warehouse of this sale team')
 
 
 class WarehouseDefault(models.Model):
@@ -20,7 +27,6 @@ class WarehouseDefault(models.Model):
     setted into the sales team.
     """
 
-    _auto = False
     _name = "default.warehouse"
 
     @api.model
@@ -32,12 +38,12 @@ class WarehouseDefault(models.Model):
                          self).default_get(fields_list)
         res_users_obj = self.env['res.users']
         user_brw = res_users_obj.browse(self._uid)
-        warehouse = user_brw.default_section_id.default_warehouse
+        warehouse = user_brw.sale_team_id.default_warehouse
         if warehouse:
             warehouse_id = warehouse.id
             model_obj = self.env['ir.model']
             fields_obj = self.env['ir.model.fields']
-            model_id = model_obj.search([('model', '=', self._model._name)])
+            model_id = model_obj.search([('model', '=', self._name)])
             fields_data = fields_obj.search(
                 [('model_id', '=', model_id.id),
                  ('relation', '=', 'stock.warehouse'),
@@ -49,7 +55,32 @@ class WarehouseDefault(models.Model):
         return defaults
 
 
-class SaleOrder(models.Model):
+    @api.multi
+    def read(self, fields_list=None, load='_classic_read'):
+        """This method is overwrite because we need to propagate SUPERUSER_ID
+        when picking are chained in another warehouse without access to read"""
+        if self.env.user.has_group('default_warehouse_from_sale_team.'
+                                   'group_limited_default_warehouse_sp'):
+            # we need to change to SUPERUSER_ID to allow access to read
+            self = self.sudo()
+        return super(WarehouseDefault, self).read(fields_list, load)
 
-    _name = "sale.order"
-    _inherit = ['sale.order', 'default.warehouse']
+    @api.model
+    def create(self, vals):
+        sequence_obj = self.env['ir.sequence']
+        pick_type_obj = self.env['stock.picking.type']
+        if vals.get('warehouse_id', 'picking_type_id'):
+            code = self._name
+            if code == 'purchase.requisition':
+                code = 'purchase.order.requisition'
+            pick_warehouse_id = pick_type_obj.browse(
+                vals.get('picking_type_id')).warehouse_id.id
+            warehouse_id = vals.get('warehouse_id', pick_warehouse_id)
+            section_id = self.env['crm.team'].search(
+                [('default_warehouse', '=', warehouse_id)], limit=1)
+            sequence_id = sequence_obj.search(
+                [('section_id', '=', section_id.id),
+                 ('code', '=', code)], limit=1)
+            if sequence_id:
+                vals['name'] = sequence_obj.get_id(sequence_id.id, 'id')
+        return super(WarehouseDefault, self).create(vals)
