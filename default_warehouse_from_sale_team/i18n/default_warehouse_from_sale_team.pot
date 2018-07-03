@@ -15,191 +15,156 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_warehouse_spt
 msgid "Access to all picking types"
-msgstr "Acceso a todos los tipos de albarán"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_warehouse_sp
 msgid "Access to all pickings"
-msgstr "Acceso a todos los albaranes"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:default.warehouse,create_uid:0
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:default.warehouse,create_date:0
 msgid "Created on"
-msgstr "Creado en"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:crm.case.section,default_warehouse:0
 #: model:ir.module.category,name:default_warehouse_from_sale_team.default_warehouse_module
 msgid "Default Warehouse"
-msgstr "Almacén por defecto"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:default.warehouse,display_name:0
 msgid "Display Name"
-msgstr "Nombre para mostrar"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:default.warehouse,id:0
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: help:crm.case.section,default_warehouse:0
 msgid "In this field can be defined a default warehouse for the related users to the sales team."
-msgstr "En este campo se puede definir el almacén por defecto para los usuarios relacionados al equipo de ventas."
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:default.warehouse,__last_update:0
 msgid "Last Modified on"
-msgstr "Ultima Modificación en"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:default.warehouse,write_uid:0
 msgid "Last Updated by"
-msgstr "Última actualización por"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:default.warehouse,write_date:0
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_sp
 msgid "Limited access to pickings (filtered by sale teams)"
-msgstr "Acceso limitado a los albaranes (filtrados por equipo de venta)"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_spt
 msgid "Limited access to pickings types (filtered by sale teams)"
-msgstr "Acceso limitado a los tipos de albarán (filtrados por equipo de venta)"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_warehouse_spt
 msgid "Not matter sales team will leave the user to see all the stock picking types"
-msgstr "No importa los equipos de ventas le permitirá al usuario ver todos los tipos de albarán"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_warehouse_sp
 msgid "Not matter sales teams will leave the user to see all the stock pickings"
-msgstr "No importa los equipos de ventas le permitirá al usuario ver todos los albaranes"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_stock_picking
 msgid "Picking List"
-msgstr "Albarán"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_crm_case_section
 msgid "Sales Teams"
-msgstr "Equipos de ventas"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_stock_picking_type
 msgid "The picking type determines the picking view"
-msgstr "El tipo de albarán determina la vista del albarán"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: help:res.users,sale_team_ids:0
 msgid "This is only an informative field. Go to Sales > Sales > Sales Teams to edit"
-msgstr "Este es un campo solamente informativo. Ve a Ventas > Ventas > Equipos de Ventas para editar"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.actions.server,name:default_warehouse_from_sale_team.server_action_update_users_sales_teams
 msgid "Update users after create/update sales teams"
-msgstr "Actualiza los usuarios luego de crear/actualizar los equipos de ventas"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:res.users,sale_team_ids:0
 msgid "User's sales teams"
-msgstr "Equipos de ventas del usuario"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_res_users
 msgid "Users"
-msgstr "Usuarios"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_spt
 msgid "View only the stock picking types which warehouses match with the user sales teams default warehouses"
-msgstr "Ver solamente los tipos de albarán que corresponden con el almacén por defecto de los equipos de venta del usuario"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_sp
 msgid "View only the stock pickings which warehouses match with the user sales teams default warehouses"
-msgstr "Ver solamente los albaranes que corresponden con el almacén por defecto de los equipos de venta del usuario"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:stock.picking,warehouse_id:0
 msgid "Warehouse"
-msgstr "Almacén"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: code:addons/default_warehouse_from_sale_team/models/res_users.py:30
 #, python-format
 msgid "You can not set %s sale team as default because the user do not belongs to the sale teams.\n"
 "Please go to Sales > Sales > Sales Teams menu if you will like to add this user to the sales team"
-msgstr "No puedes agregar a %s como el equipo de ventas por defecto porque el usuario no pertenece a dicho equipo de ventas.\n"
-"Por favor vaya al menú Ventas > Ventas > Equipos de Ventas si desea agregar el usuario al equipo de ventas"
-
-#. module: default_warehouse_from_sale_team
-#: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_journal
-msgid "Access to all Journal"
-msgstr "Acceso a todos los Diarios"
-
-#. module: default_warehouse_from_sale_team
-#: help:crm.case.section,journal_team_ids:0
-msgid "Choose the Journals that user with this sale team can see"
-msgstr "Selecciona los diarios que el usuario con este equipo de ventas puede ver"
-
-#. module: default_warehouse_from_sale_team
-#: field:crm.case.section,journal_team_ids:0
-msgid "Journal's sales teams"
-msgstr "Diarios de equipo de ventas"
-
-#. module: default_warehouse_from_sale_team
-#: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
-msgid "Journals"
-msgstr "Diarios"
-
-#. module: default_warehouse_from_sale_team
-#: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
-msgid "Limited access to Journal (filtered by sale teams)"
-msgstr "Acceso limitado a diarios(Filtrados por equipo de ventas)"
-
-#. module: default_warehouse_from_sale_team
-#: model:res.groups,comment:default_warehouse_from_sale_team.group_manager_default_journal
-msgid "Not matter sales teams will leave the user to see all the Journal"
-msgstr "No importa el equipo de ventas le permitirá ver todos los diarios"
-
-#. module: default_warehouse_from_sale_team
-#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
-msgid "View only the Journal which warehouses match with the user sales teams default warehouses"
-msgstr "Ver solo el diario que coincide con el equipo de venta del usuario"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Settings warehouse from sale team"
-msgstr "Configuración de almacén para equipo de ventas"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: field:crm.case.section,journal_stock_id:0
 msgid "Journal stock valuation"
-msgstr "Diario para valoración de existencias"
+msgstr ""
 
 #. module: default_warehouse_from_sale_team
 #: view:crm.case.section:default_warehouse_from_sale_team.view_crm_case_section_form_inherit
 msgid "Journal's sale team"
-msgstr "Diarios de equipo de ventas"
+msgstr ""
