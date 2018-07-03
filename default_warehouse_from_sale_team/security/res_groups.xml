@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <openerp>
+        <data noupdate="0">
+
+            <record id="default_warehouse_module" model="ir.module.category">
+                <field name="name">Default Warehouse</field>
+            </record>
+
+            <!-- stock picking type -->
+            <record id="group_limited_default_warehouse_spt" model="res.groups">
+                <field name="name">Limited access to pickings types (filtered by sale teams)</field>
+                <field name="comment">View only the stock picking types which warehouses match with the user sales teams default warehouses</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+            <record id="group_manager_default_warehouse_spt" model="res.groups">
+                <field name="name">Access to all picking types</field>
+                <field name="comment">Not matter sales team will leave the user to see all the stock picking types</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+
+            <!-- stock.picking -->
+            <record id="group_limited_default_warehouse_sp" model="res.groups">
+                <field name="name">Limited access to pickings (filtered by sale teams)</field>
+                <field name="comment">View only the stock pickings which warehouses match with the user sales teams default warehouses</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+            <record id="group_manager_default_warehouse_sp" model="res.groups">
+                <field name="name">Access to all pickings</field>
+                <field name="comment">Not matter sales teams will leave the user to see all the stock pickings</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+
+            <record id="group_limited_default_warehouse_journal" model="res.groups">
+                <field name="name">Limited access to Journal (filtered by sale teams)</field>
+                <field name="comment">View only the Journal which warehouses match with the user sales teams default warehouses</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+            <record id="group_manager_default_journal" model="res.groups">
+                <field name="name">Access to all Journal</field>
+                <field name="comment">Not matter sales teams will leave the user to see all the Journal</field>
+                <field name="category_id" ref="default_warehouse_module"/>
+            </record>
+        </data>
+    </openerp>
