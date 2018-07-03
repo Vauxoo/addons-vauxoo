@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <openerp>
+        <data noupdate="0">
+
+            <!-- stock.picking.type -->
+            <record id="rule_default_warehouse_stock_picking_type_team" model="ir.rule">
+                <field name="name">Limited access to picking types (filtered by sale teams)</field>
+                <field name="model_id" search="[('model','=','stock.picking.type')]" model="ir.model"/>
+                <field name="domain_force">[('warehouse_id', 'in', [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_limited_default_warehouse_spt')])]"/>
+            </record>
+            <record id="rule_default_warehouse_stock_picking_type_all" model="ir.rule">
+                <field name="name">Access to all picking types</field>
+                <field name="model_id" search="[('model','=','stock.picking.type')]" model="ir.model"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_warehouse_spt')])]"/>
+            </record>
+
+            <!-- stock.picking -->
+            <record id="rule_default_warehouse_stock_picking_team" model="ir.rule">
+                <field name="name">Limited access to pickings (filtered by sale teams)</field>
+                <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+                <field name="domain_force">[('warehouse_id', 'in', [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_limited_default_warehouse_sp')])]"/>
+            </record>
+            <record id="rule_default_warehouse_stock_picking_team12" model="ir.rule">
+                <field name="name">Limited access to pickings (filtered by not in sale teams)</field>
+                <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+                <field name="perm_read" eval="False"/>
+                <field name="domain_force">[('warehouse_id', 'not in', [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_limited_default_warehouse_sp')])]"/>
+            </record>
+            <record id="rule_default_warehouse_stock_picking_all" model="ir.rule">
+                <field name="name">Access to all pickings</field>
+                <field name="model_id" search="[('model','=','stock.picking')]" model="ir.model"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_warehouse_sp')])]"/>
+            </record>
+
+            <!-- account.journal -->
+            <record id="rule_default_warehouse_journal" model="ir.rule">
+                <field name="name">Limited access to journal (filtered by sale teams)</field>
+                <field name="model_id" search="[('model','=','account.journal')]" model="ir.model"/>
+                <field name="domain_force">[('id', 'in', [journal.id  for team in user.sale_team_ids for journal in team.journal_team_ids])]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_limited_default_warehouse_journal')])]"/>
+            </record>
+            <record id="rule_default_warehouse_journal_all" model="ir.rule">
+                <field name="name">Access to all journal</field>
+                <field name="model_id" search="[('model','=','account.journal')]" model="ir.model"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_journal')])]"/>
+            </record>
+
+            <!-- stock.warehouse -->
+            <record id="rule_default_warehouse_wh" model="ir.rule">
+                <field name="name">Limited access to warehouse (filtered by sale teams)</field>
+                <field name="model_id" search="[('model','=','stock.warehouse')]" model="ir.model"/>
+                <field name="domain_force">[('id', 'in', [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_limited_default_warehouse_sp')])]"/>
+            </record>
+            <record id="rule_default_warehouse_wh_all" model="ir.rule">
+                <field name="name">Access to all warehouse</field>
+                <field name="model_id" search="[('model','=','stock.warehouse')]" model="ir.model"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_warehouse_sp')])]"/>
+            </record>
+
+        </data>
+    </openerp>
