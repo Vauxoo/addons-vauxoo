@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-06 18:52+0000\n"
-"PO-Revision-Date: 2017-02-06 18:52+0000\n"
+"POT-Creation-Date: 2018-07-04 21:18+0000\n"
+"PO-Revision-Date: 2018-07-04 21:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,14 +16,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_cost_usd
+#: model:ir.model.fields,field_description:product_cost_usd.field_product_product_standard_price_usd
 #: model:ir.model.fields,field_description:product_cost_usd.field_product_template_standard_price_usd
 msgid "Cost in USD"
 msgstr "Costo en Dólares"
 
 #. module: product_cost_usd
+#: model:ir.model.fields,help:product_cost_usd.field_product_product_standard_price_usd
 #: model:ir.model.fields,help:product_cost_usd.field_product_template_standard_price_usd
-msgid "Price cost of the product in USD currency"
-msgstr "Precio coste del producto en moneda USD"
+msgid "Price cost of the product expressed in USD currency. To modify this cost you must go to the Purchasing tab, suppliers section and add/create a line with the cost of the product."
+msgstr "Precio de coste del producto expresado en USD. Para modificar este costo debe ir a la pestaña Compras, sección Proveedores y agregar/crear una línea con el costo del producto."
 
 #. module: product_cost_usd
 #: model:ir.model,name:product_cost_usd.model_product_pricelist
@@ -44,22 +46,4 @@ msgstr "Plantilla de producto"
 #: model:ir.model,name:product_cost_usd.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
-
-#. module: product_cost_usd
-#: code:addons/product_cost_usd/models/product.py:38
-#, python-format
-msgid "You cannot create or modify a product if the cost in USD is less than the supplier list price.\n"
-"\n"
-"- Supplier list price = %s\n"
-"- Cost in USD = %s"
-msgstr "No puede crear o modificar un producto si el costo en USD es menor que el precio del proveedores..\n"
-"\n"
-"- Precio del proveedor = %s\n"
-"- Costo en Dólares = %s"
-
-#. module: product_cost_usd
-#: code:addons/product_cost_usd/models/product.py:33
-#, python-format
-msgid "You must have at least one supplier with price in USD before assign a Cost in USD"
-msgstr "Debe tener al menos un proveedor con precio en Dólares antes de asignar un Costo en Dólares a el producto"
 

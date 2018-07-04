@@ -12,35 +12,19 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.constrains('standard_price_usd', 'seller_ids')
-    def check_cost_and_price(self):
-        """ Validate 'Cost in USD' usability.
-
-        Usability conditions:
-        - Before set a 'Cost in USD' in a product at least one supplier should
-          have price in USD.
-        - The Cost in USD cannot be less than supplier price.
-        """
+    @api.depends('seller_ids.price', 'seller_ids.currency_id')
+    def _compute_standard_price_usd(self):
         usd_currency = self.env.ref('base.USD')
-        prec = self.env['decimal.precision'].precision_get('Product Price')
         usd_seller = self.seller_ids.filtered(
             lambda x: x.currency_id == usd_currency)
-        list_price = usd_seller.price if usd_seller else 0.0
-        standard_price_usd = self.standard_price_usd
-        if not usd_seller and float_compare(
-                standard_price_usd, 0, precision_digits=prec) > 0:
-            raise ValidationError(
-                _('You must have at least one supplier with price in USD'
-                  ' before assign a Cost in USD'))
-        if float_compare(
-                list_price, standard_price_usd, precision_digits=prec) > 0:
-            raise ValidationError(
-                _('You cannot create or modify a product if the cost in USD'
-                  ' is less than the supplier list price.\n\n'
-                  '- Supplier list price = %s\n'
-                  '- Cost in USD = %s') % (list_price, standard_price_usd))
+        self.standard_price_usd = usd_seller[0].price if usd_seller else 0.0
 
     standard_price_usd = fields.Float(
         'Cost in USD',
+        compute='_compute_standard_price_usd',
+        readonly=True,
+        store=True,
         digits=dp.get_precision('Product Price'),
-        help="Price cost of the product in USD currency")
+        help="Price cost of the product expressed in USD currency. To modify"
+        " this cost you must go to the Purchasing tab, suppliers section and"
+        " add/create a line with the cost of the product.")

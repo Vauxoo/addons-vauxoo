@@ -35,8 +35,9 @@ class TestStandardPriceUsd(TransactionCase):
 
     def set_standard_price_usd(self, price):
         self.assertTrue(self.product.seller_ids)
-        self.product.seller_ids[0].write({'currency_id': self.usd.id})
-        self.product.write({'standard_price_usd': price})
+        self.product.seller_ids[0].write({
+            'currency_id': self.usd.id,
+            'price': price})
 
     def test_01(self):
         """ Test USD pricelist based on cost in usd. """
@@ -60,20 +61,6 @@ class TestStandardPriceUsd(TransactionCase):
         self.assertEqual(
             float_compare(product.price, expected_price, precision_digits=2),
             0, "Product price should be %s" % product.price)
-
-    def test_03(self):
-        """ Test constraint check_cost_and_price. """
-        with self.assertRaisesRegexp(
-                ValidationError,
-                'You must have at least one supplier with price in USD'):
-            self.product.write({'standard_price_usd': 880})
-
-    def test_04(self):
-        """ Test constraint check_cost_and_price. """
-        with self.assertRaisesRegexp(
-                ValidationError,
-                'You cannot create or modify a product if the cost in USD'):
-            self.set_standard_price_usd(1)
 
     def test_sale_margin(self):
         """ Test the sale margin module using a pricelist with cost in usd. """
