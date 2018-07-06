@@ -32,7 +32,7 @@ class AccountAssetDepreciationLine(models.Model):
     _inherit = 'account.asset.depreciation.line'
 
     @api.depends('move_id')
-    def _compute_get_move_check(self):
+    def _get_move_check(self):
         for line in self:
             line.move_check = bool(line.move_id or line.historical)
 
@@ -41,8 +41,8 @@ class AccountAssetDepreciationLine(models.Model):
     historical = fields.Boolean(help="Check box for the historical validation",
                                 default=False)
     move_check = fields.Boolean(help="Compute the move status",
-                                compute="_compute_get_move_check",
-                                string='Posted')
+                                compute="_get_move_check",
+                                string='Posted', store=True)
 
 
 class AccountAssetAsset(models.Model):
@@ -50,7 +50,7 @@ class AccountAssetAsset(models.Model):
 
     value_residual = fields.Float(
         help="Stores the value of the process",
-        digits=dp.get_precision('Account'), compute="_compute_amount_residual",
+        digits=dp.get_precision('Account'), compute="_amount_residual",
         string='Net Book Value')
 
     def write(self, vals):
@@ -60,7 +60,7 @@ class AccountAssetAsset(models.Model):
         lines.update({'move_check': True})
         return res
 
-    def _compute_amount_residual(self):
+    def _amount_residual(self):
         dep_line_obj = self.env['account.asset.depreciation.line']
         for asset in self:
             dep_lines = dep_line_obj.search(
