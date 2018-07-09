@@ -53,13 +53,6 @@ class AccountAssetAsset(models.Model):
         digits=dp.get_precision('Account'), compute="_amount_residual",
         string='Net Book Value')
 
-    def write(self, vals):
-        res = super(AccountAssetAsset, self).write(vals)
-        lines = self.depreciation_line_ids.filtered(
-            lambda r: not r.move_check and r.historical)
-        lines.update({'move_check': True})
-        return res
-
     def _amount_residual(self):
         dep_line_obj = self.env['account.asset.depreciation.line']
         for asset in self:

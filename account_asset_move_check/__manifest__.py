@@ -36,6 +36,7 @@
     ],
     "demo": [],
     "data": [
+        "data/base_automation.xml",
         "view/asset_line.xml",
         "wizard/wizard_asset_depreciation.xml"
     ],
