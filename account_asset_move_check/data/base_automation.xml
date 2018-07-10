@@ -1,0 +1,13 @@
+<odoo>
+    <record id="automation_write_move_check_if_historical" model="base.automation">
+        <field name="name">Write move_check if historical is checked and saved</field>
+        <field name="model_id" ref="account_asset.model_account_asset_depreciation_line"/>
+        <field name="state">code</field>
+        <field name="trigger">on_write</field>
+        <field name="active" eval="True"/>
+        <field name="code">
+record.update({'move_check': True})
+        </field>
+        <field name="filter_domain">[("move_check","=",False),("historical","=",True)]</field>
+    </record>
+</odoo>

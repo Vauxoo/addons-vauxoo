@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Account Asset Move Check",
-    "version": "8.0.0.0.6",
+    "version": "11.0.1.0.0",
     "author": "Vauxoo",
     "category": "Accounting",
     "website": "http://www.vauxoo.com",
@@ -36,6 +36,7 @@
     ],
     "demo": [],
     "data": [
+        "data/base_automation.xml",
         "view/asset_line.xml",
         "wizard/wizard_asset_depreciation.xml"
     ],
@@ -43,6 +44,6 @@
     "js": [],
     "css": [],
     "qweb": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }
