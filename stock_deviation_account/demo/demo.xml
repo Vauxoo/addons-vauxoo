@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data noupdate="0">
+<odoo>
         <record id="rev_inventory_deviation_account" model="account.account">
             <field name="code">X200-vx-deviation</field>
             <field name="name">INVENTORY_DEVIATION_ACCOUNT</field>
-            <field ref="account.income_view" name="parent_id"/>
-            <field name="type">other</field>
-            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="user_type_id" ref="account.data_account_type_other_income"/>
         </record>
 
         <record id="base.main_company" model="res.company">
             <field name="gain_inventory_deviation_account_id" ref="rev_inventory_deviation_account"/>
             <field name="loss_inventory_deviation_account_id" ref="rev_inventory_deviation_account"/>
         </record>
-    </data>
-</openerp>
+</odoo>
