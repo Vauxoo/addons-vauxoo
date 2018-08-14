@@ -54,7 +54,6 @@ class WarehouseDefault(models.Model):
                  if defaults.get(name)})
         return defaults
 
-
     @api.multi
     def read(self, fields_list=None, load='_classic_read'):
         """This method is overwrite because we need to propagate SUPERUSER_ID
@@ -82,5 +81,5 @@ class WarehouseDefault(models.Model):
                 [('section_id', '=', section_id.id),
                  ('code', '=', code)], limit=1)
             if sequence_id:
-                vals['name'] = sequence_obj.get_id(sequence_id.id, 'id')
+                vals['name'] = sequence_id.next_by_id()
         return super(WarehouseDefault, self).create(vals)
