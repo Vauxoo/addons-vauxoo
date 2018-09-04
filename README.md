@@ -1,5 +1,7 @@
 [![Build Status](http://runbot.odoo.com/logo.png)](http://runbot.vauxoo.com/runbot/)
 [![Build Status](https://travis-ci.org/Vauxoo/addons-vauxoo.svg?branch=9.0)](https://travis-ci.org/Vauxoo/addons-vauxoo)
+[![Code Quality: Python](https://img.shields.io/lgtm/grade/python/g/Vauxoo/addons-vauxoo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Vauxoo/addons-vauxoo/context:python)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/Vauxoo/addons-vauxoo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Vauxoo/addons-vauxoo/alerts)
 
 Vauxoo modules for Odoo
 ===
