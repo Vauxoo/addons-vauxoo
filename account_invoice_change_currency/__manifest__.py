@@ -11,8 +11,6 @@
     'name': 'Account Invoice Change Currency',
     'test': [],
     'data': [
-        'security/security.xml',
-        'wizard/account_change_currency_view.xml',
         'views/invoice_view.xml',
     ],
     'version': '11.0.0.0.0',
