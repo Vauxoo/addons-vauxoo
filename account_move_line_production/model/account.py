@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from openerp import models, fields
+from odoo import models, fields
 
 
 class AccountMoveLine(models.Model):
@@ -10,4 +10,4 @@ class AccountMoveLine(models.Model):
         'mrp.production',
         string='Manufacturing Order',
         readonly=True,
-        )
+    )
