@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from openerp import models, fields
+from odoo import models, fields
 
 
 class MrpRouting(models.Model):
@@ -11,4 +11,4 @@ class MrpRouting(models.Model):
         'account.journal',
         string='Journal',
         readonly=False,
-        )
+    )
