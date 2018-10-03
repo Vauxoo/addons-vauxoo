@@ -1,16 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
-<openerp>
-    <data>
-        <record id="company_stock_deviation_account_form" model="ir.ui.view">
-            <field name="name">res.company.stock.deviation.account.form</field>
-            <field name="model">res.company</field>
-            <field name="inherit_id" ref="base.view_company_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='currency_id']" position="after">
-                    <field name="gain_inventory_deviation_account_id"/>
-                    <field name="loss_inventory_deviation_account_id"/>
-                </xpath>
-            </field>
-        </record>
-    </data>
-</openerp>
+<odoo>
+    <record id="company_stock_deviation_account_form" model="ir.ui.view">
+        <field name="name">res.company.stock.deviation.account.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="gain_inventory_deviation_account_id"/>
+                <field name="loss_inventory_deviation_account_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
