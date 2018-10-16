@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_historical_stock_move,access_historical_stock_move,model_historical_stock_move,stock.group_stock_user,1,1,1,1

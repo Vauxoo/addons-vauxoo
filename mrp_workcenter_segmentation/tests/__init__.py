@@ -5,5 +5,4 @@
 # coded by: hbto@vauxoo.com
 # planned by: hbto@vauxoo.com
 
-from . import test_mrp_production_segmentation
 from . import test_workcenter_segmentation
