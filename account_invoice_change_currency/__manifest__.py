@@ -13,7 +13,7 @@
         'wizard/account_change_currency_view.xml',
         'views/invoice_view.xml',
     ],
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'website': 'www.adhoc.com.ar, www.vauxoo.com',
     'license': 'AGPL-3'
 }
