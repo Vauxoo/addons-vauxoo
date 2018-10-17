@@ -25,8 +25,11 @@ class MailThread(models.AbstractModel):
             new_value = getattr(self, col_name)
 
             if new_value != initial_value and (new_value or initial_value):
+                track_sequence = getattr(
+                    self._fields[col_name], 'track_sequence', 100)
                 tracking = track_obj.create_tracking_values(
-                    initial_value, new_value, col_name, col_info)
+                    initial_value, new_value, col_name,
+                    col_info, track_sequence)
                 if tracking:
                     tracking_value_ids.append([0, 0, tracking])
 
