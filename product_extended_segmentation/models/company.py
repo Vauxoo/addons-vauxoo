@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from openerp import _, api, models, fields
-from openerp.exceptions import ValidationError
+from odoo import _, api, models, fields
+from odoo.exceptions import ValidationError
 
 
 class ResCompany(models.Model):
