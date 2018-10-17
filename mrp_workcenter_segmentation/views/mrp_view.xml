@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_workcenter_segmentation_costs_view" model="ir.ui.view">
+        <field name="name">workcenter.segmentation.costs.form.view</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view">
+        <field name="model">mrp.workcenter</field>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="segmentation_cost"/>
+            </field>
+        </field>
+    </record>
+</odoo>

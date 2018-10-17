@@ -15,6 +15,7 @@
         #####
     ],
     'data': [
+        'views/mrp_view.xml',
     ],
     'demo': [
         'demo/demo.xml',
