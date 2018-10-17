@@ -113,7 +113,7 @@ class StockLandedCost(models.Model):
             lc_brw.update({'cost_lines': [(6, False, {})]})
             cost_lines = []
             for inv_brw in lc_brw.invoice_ids:
-                for ail_brw in inv_brw.invoice_line:
+                for ail_brw in inv_brw.invoice_line_ids:
                     if (not ail_brw.product_id or not
                             ail_brw.product_id.landed_cost_ok):
                         continue
