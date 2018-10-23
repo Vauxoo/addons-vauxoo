@@ -4,21 +4,10 @@ sudo: false
 cache:
   apt: true
   directories:
-    - $HOME/.pip-cache/
-
-python:
-  - "3.6"
-
-env:
-  global:
-  - LINT_CHECK=0 ODOO_LINT=0 TESTS="0" VERSION="12.0" ODOO_REPO="vauxoo/odoo"
-
-  matrix:
-  - LINT_CHECK=1
-  - ODOO_LINT=1
-  - TESTS="1" UNIT_TEST="1"
+    - $HOME/.cache/pip
 
 addons:
+  postgresql: "9.6"
   apt:
     packages:
       - expect-dev  # provides unbuffer utility
@@ -27,23 +16,24 @@ addons:
       - python-serial
       - python-xlrd
 
+python:
+  - "3.6"
+
+env:
+  global:
+  - VERSION="12.0" ODOO_REPO="vauxoo/odoo" TESTS="0" LINT_CHECK="0"
+
+  matrix:
+  - LINT_CHECK="1"
+  - TESTS="1"
+
 install:
   - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
-  - find ${HOME}/maintainer-quality-tools/travis -name test_flake8 -exec sed -i "s/get_modules/get_modules_changed/g" {} \;
-  - find ${HOME}/maintainer-quality-tools/travis -name test_flake8 -exec sed -i "s/get_modules_changed(os.path.abspath('.')/get_modules_changed(os.path.abspath('.'), 'origin\/' \+ os.environ['TRAVIS_BRANCH']/g" {} \;
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 
 script:
-  # get modules changed and set environment variable INCLUDE_LINT
-  - PYTHONPATH=${PATH} python -c "import getaddons;print 'export INCLUDE_LINT=\"' + ' '.join(getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}')) + '\"'" >${TRAVIS_BUILD_DIR}/modules_changed.profile
-  - PYTHONPATH=${PATH} python -c "import os, getaddons;print 'export INCLUDE=\"' + ','.join(map(os.path.basename, getaddons.get_modules_changed('${TRAVIS_BUILD_DIR}', 'origin/${TRAVIS_BRANCH}'))) + '\"'" >>${TRAVIS_BUILD_DIR}/modules_changed.profile
-  - source ${TRAVIS_BUILD_DIR}/modules_changed.profile
-  # If there isn't modules changed for lint checks then exit
-  - if [[ "x${INCLUDE_LINT}" == "x" && "${TESTS}" == "0" ]]; then exit 0; fi
-  # Travis tests disabled. Travis can't download private repositories.
-  - if [[ "${TESTS}" == "1" && "${RUNBOT}" != "1" ]]; then exit 0; fi
-  - travis_wait travis_run_tests
+  - travis_run_tests
 
 after_success:
-- travis_after_tests_success
+  - travis_after_tests_success

@@ -19,7 +19,7 @@ this modules are used.
 Repositories which we depend from.
 ---
 
-Read the repo_dependencies.txt file for more information. TODO:
+Read the oca_dependencies.txt file for more information. TODO:
 
 Python Libraries which we depend from.
 ---

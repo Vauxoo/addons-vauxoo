@@ -6,7 +6,7 @@ Reporting Issues
 2. Double-check that the issue still occurs with the latest version of Odoo (you can easily test this on [Runbot](http://runbot.vauxoo.com))
 3. [Search](https://github.com/vauxoo/addons-vauxoo/issues) for similar issues before reporting anything
 4. If you're a programmer, try investigating/fixing yourself, and consider making a Pull Request instead
-5. If you really think a new issue is useful, keep in mind that it will be treated with a much lower priority than a Pull Request or an Vauxoo Enterprise support ticket
+5. If you really think a new issue is useful, keep in mind that it will be treated with a much lower priority than a Pull Request or a Vauxoo Enterprise support ticket
 
 If later on you create a pull request solving an opened issue, do not forget to reference it in your pull request (e.g.: "This patch fixes issue #42").
 
@@ -37,7 +37,7 @@ Expected behavior:
 Hacking this set of modules.
 ---
 
-The main idea is create a little how-to commit by commit to know how to improve
+The main idea is to create a little how-to commit by commit to know how to improve
 this modules in a clean way and help us to help you, then if you are including
 your new concepts try to be explicit and helpful in your commit messages.
 
@@ -52,17 +52,10 @@ How add a new feature:
     $ git remote add your-name git@github.com:your-github-name/addons-vauxoo.git # << to push your changes
     ```
 
-1. **Before declare this repository as part of your addons-path:** Install all
+1. **Before declaring this repository as part of your addons-path:** Install all
    external dependencies (read travis folder for more information). **note**:
-   You will need some non normal packages (npm and lessc to be precise) when
-   you have v12.0 normally installed, run this command in order to have them all
-   in linux and avoid unexpected runtimes.
-
-    ```bash
-    $ cd addons-vauxoo
-    $ sudo pip install -r ./travis/requirements.txt
-    $ ./travis/travis_install_nightly
-    ```
+   You will need some non-standar packages (npm and lessc to be precise) when
+   you have v12.0 installed.
 
 2. Create your own branch locally.
 
@@ -82,9 +75,9 @@ How add a new feature:
     ```bash
     $ git clone https://github.com/odoo/odoo.git -b 12.0
     $ git clone https://github.com/vauxoo/addons-vauxoo.git -b 12.0
-    $ git clone git@github.com:oca/server-tools.git -b 12.0
+    $ git clone git@github.com:Vauxoo/server-tools.git -b 12.0
     ```
-5. Create a postgres user (only for this work to avoid problems not related to this enviroment).
+5. Create a postgres user (only for this work to avoid problems not related to this environment).
 
     ```bash
     $ sudo su postgres
