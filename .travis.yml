@@ -7,10 +7,7 @@ cache:
     - $HOME/.pip-cache/
 
 python:
-  - "3.4"
-
-virtualenv:
-  system_site_packages: true
+  - "3.6"
 
 env:
   global:
