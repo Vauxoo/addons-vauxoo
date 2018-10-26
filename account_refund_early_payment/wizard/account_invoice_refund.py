@@ -18,8 +18,10 @@ class AccountInvoiceRefund(models.TransientModel):
     def _onchange_amount_total(self):
         context = dict(self._context)
         inv_obj = self.env['account.invoice']
+        amount_total = 0
         for inv in inv_obj.browse(context.get('active_ids', self.active_id)):
-            self.amount_total += inv.amount_total * (self.percentage / 100)
+            amount_total += inv.amount_total * (self.percentage / 100)
+        self.amount_total = amount_total
 
     filter_refund = fields.Selection(
         selection_add=[('early_payment', 'Early payment: Prepare a discount '
