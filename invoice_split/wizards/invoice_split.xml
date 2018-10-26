@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="split_wizard" model="ir.ui.view">
+        <field name="name">split.invoice.wizard</field>
+        <field name="model">account.invoice.split</field>
+        <field name="arch" type="xml">
+            <form string="Split Invoice">
+                <group>
+                    <field name="percent"/>
+                    <field name="create_invoice"/>
+                </group>
+                <footer>
+                    <button
+                        string="Split"
+                        name="action_split_invoice"
+                        type="object"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+   <act_window
+        name="Split Invoice"
+        id="split_act_window"
+        res_model="account.invoice.split"
+        src_model="account.invoice"
+        view_type="form"
+        view_mode="form"
+        target="new"
+        context="{'default_invoice_id': active_id}"
+        groups="account.group_account_invoice"/>
+
+</odoo>
