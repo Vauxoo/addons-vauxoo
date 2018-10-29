@@ -16,6 +16,7 @@
     'data': [
         'data/ir_cron.xml',
         'views/res_config_settings_views.xml',
+        'views/stock_change_standard_price.xml',
     ],
     'demo': [
         'demo/demo.xml',
