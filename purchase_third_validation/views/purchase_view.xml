@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data noupdate="0">
+<odoo>
     	<record id="view_purchase_third_level_inherit" model="ir.ui.view">
             <field name="name">purchase.third.level.inherit</field>
             <field name="model">purchase.order</field>
@@ -9,10 +8,6 @@
                 <xpath expr="//button[@name='button_approve']" position="after">
                     <button name="button_approve" type="object" states='third approve' string="Approve Order" class="oe_highlight" groups="purchase_third_validation.general_purchase_manager"/>
                 </xpath>
-                <xpath expr="//field[@name='state']" position="attributes">
-                    <attribute name="statusbar_visible" add="third approve" separator=","></attribute>
-                </xpath>
             </field>
         </record>
-    </data>
-</openerp>
+</odoo>
