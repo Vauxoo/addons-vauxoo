@@ -3,7 +3,7 @@
 
 import logging
 from odoo.tools.float_utils import float_is_zero
-from odoo import models, _, api, tools
+from odoo import models, _, api, tools, fields
 _logger = logging.getLogger(__name__)
 
 SEGMENTATION_COST = [
@@ -59,13 +59,13 @@ class Product(models.Model):
         return False
 
     @api.multi
-    def compute_segmetation_price(self, cron=None):
+    def compute_segmetation_price(self, cron=None, wizard=None):
         bom_obj = self.env['mrp.bom']
         for product in self:
             bom = bom_obj._bom_find(product=product)
             if bom:
                 try:
-                    product._calc_price_seg(bom)
+                    product._calc_price_seg(bom, wizard=wizard)
                 except BaseException as error:
                     _logger.error(error)
                     product.message_post(
@@ -128,16 +128,17 @@ class Product(models.Model):
         return new_price['standard_price']
 
     @tools.ormcache('bom', 'internal')
-    def _calc_price_seg(self, bom, internal=None):
+    def _calc_price_seg(self, bom, internal=None, wizard=None):
         """Computing the standard price from BOM recursively with its segmentations
         :param bom: Bom which you want to compute the cost
         :type bom: mrp.bom()
         :param internal: Used to return the new cost without writing the cost
         to the target product
+        :param wizard: Used to write new cost even if is internal when function
+        called from the wizard
         :return: The new price
         :rtype: str"""
         price = 0.0
-        wizard_obj = self.env["stock.change.standard.price"]
         result, result2 = bom.explode(self, 1)
 
         def _get_sgmnt(prod_id):
@@ -163,7 +164,7 @@ class Product(models.Model):
             child_bom_id = sbom.child_bom_id
             if child_bom_id and not product_id.cost_method == 'average':
                 prod_costs_dict = self._calc_price_seg(
-                    child_bom_id, True)
+                    child_bom_id, True, wizard)
 
             for fieldname in SEGMENTATION_COST:
                 # NOTE: Is this price well Normalized
@@ -190,7 +191,7 @@ class Product(models.Model):
         if price > 0:
             price = bom.product_uom_id._compute_price(
                 price / bom.product_qty, self.uom_id)
-        if internal:
+        if internal and not wizard:
             sgmnt_dict['price'] = price
             return sgmnt_dict
 
@@ -225,15 +226,7 @@ class Product(models.Model):
         diff = product_tmpl_id.standard_price - price
         if product_tmpl_id.valuation == "real_time" and diff:
             # Call wizard function here
-            wizard_id = wizard_obj.with_context(
-                {'active_model': 'product.product',
-                 'active_id': self.id,
-                 'active_ids': self.ids}).create(
-                {'new_price': price,
-                 'counterpart_account_id':
-                 self.property_account_expense_id.id or
-                 self.categ_id.property_account_expense_categ_id.id,
-                 'counterpart_account_id_required': True})
+            wizard_id = self.create_change_standard_price_wizard(price)
             wizard_id.change_price()
             self.write(sgmnt_dict)
             self.ensure_change_price_log_messages(vals)
@@ -243,6 +236,19 @@ class Product(models.Model):
         self.write(sgmnt_dict)
         self.ensure_change_price_log_messages(vals)
         return price
+
+    def create_change_standard_price_wizard(self, price):
+        wizard_obj = self.env["stock.change.standard.price"]
+        wizard_id = wizard_obj.with_context(
+            {'active_model': 'product.product',
+             'active_id': self.id,
+             'active_ids': self.ids}).create(
+            {'new_price': price,
+             'counterpart_account_id':
+             self.property_account_expense_id.id or
+             self.categ_id.property_account_expense_categ_id.id,
+             'counterpart_account_id_required': True})
+        return wizard_id
 
     def _calc_price(self, bom, segmentation=False):
         """Computing cost from bom recursively"""
@@ -270,3 +276,24 @@ class ProductTemplate(models.Model):
         precision_id = self.env['decimal.precision'].precision_get('Account')
         return float_is_zero(diff, precision_id) or (
             self.standard_price and diff < 0 and computed_th > bottom_th)
+
+    @api.multi
+    def compute_segmetation_price(self, cron=None, wizard=None):
+        for rec in self:
+            rec.product_variant_ids.compute_segmetation_price(cron, wizard)
+        return True
+
+
+class StockChangeStandardPrice(models.TransientModel):
+    _inherit = "stock.change.standard.price"
+
+    @api.multi
+    def change_price(self):
+        res = super(StockChangeStandardPrice, self).change_price()
+
+        if self.env.context.get('from_wizard', False):
+            products = self.env[self._context['active_model']].browse(
+                self._context['active_id'])
+            products.compute_segmetation_price(wizard=True)
+
+        return res
