@@ -103,23 +103,19 @@ class StockLandedCost(models.Model):
                 'account_id': ail_brw.account_id.id,
                 'product_id': ail_brw.product_id.id,
                 'price_unit': price_subtotal,
-                'split_method': 'by_quantity',
+                'split_method': (
+                    ail_brw.product_id.split_method or 'by_quantity'),
             }))
         return cost_lines
 
     @api.onchange('invoice_ids')
     def onchange_invoice_ids(self):
         for lc_brw in self:
-            lc_brw.update({'cost_lines': [(6, False, {})]})
+            lc_brw.update({'cost_lines': [(5, 0, 0)]})
             cost_lines = []
             for inv_brw in lc_brw.invoice_ids:
-                for ail_brw in inv_brw.invoice_line_ids:
-                    if (not ail_brw.product_id or not
-                            ail_brw.product_id.landed_cost_ok):
-                        continue
-                    cost_lines += self.get_vals_from_invoice(inv_brw)
-            if cost_lines:
-                lc_brw.update({'cost_lines': cost_lines})
+                cost_lines += self.get_vals_from_invoice(inv_brw)
+            lc_brw.update({'cost_lines': cost_lines})
 
     @api.multi
     def get_costs_from_invoices(self):
