@@ -1,4 +1,3 @@
-# coding: utf-8
 # Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from datetime import timedelta
@@ -9,8 +8,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     grace_payment_days = fields.Float(
-        'Days grace payment',
-        help='Days grace payment')
+        'Days grace payment')
 
     credit_overloaded = fields.Boolean(
         compute='_get_credit_overloaded',

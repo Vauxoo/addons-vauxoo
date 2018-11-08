@@ -1,10 +1,9 @@
-# coding: utf-8
 # Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
     'name': 'Payment Terms Type',
-    'version': '10.0.0.1.0',
+    'version': '12.0.1.0.0',
     'author': 'Vauxoo',
     'category': '',
     'license': 'LGPL-3',
