@@ -40,12 +40,15 @@ class Product(models.Model):
         """ Find IN moves that can be used to value OUT moves.
         """
         self.ensure_one()
-        domain = [('product_id', '=', self.id),
-                  ('logistic_remaining_qty', '>', 0.0),
-                  '|',
-                  ('warehouse_id', '=', warehouse.id),
-                  ('picking_type_id.warehouse_id', '=', warehouse.id)
-                  ] + self.env['stock.move']._get_in_base_domain()
+        domain = self.env['stock.move']._get_in_base_domain() + [
+            '&',
+            '&',
+            ('product_id', '=', self.id),
+            ('logistic_remaining_qty', '>', 0.0),
+            '|',
+            ('warehouse_id', '=', warehouse.id),
+            ('picking_type_id.warehouse_id', '=', warehouse.id)
+        ]
         candidates = self.env['stock.move'].search(domain, order='date, id')
         return candidates
 
