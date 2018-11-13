@@ -343,7 +343,10 @@ class StockMove(models.Model):
 
             candidate_price_unit = (
                 candidate.logistic_remaining_value /
-                candidate.logistic_remaining_qty)
+                candidate.logistic_remaining_qty
+                if candidate.logistic_remaining_qty
+                else candidate.remaining_value /
+                candidate.remaining_qty)
             value_taken_on_candidate = (
                 qty_taken_on_candidate * candidate_price_unit)
             vals = {
