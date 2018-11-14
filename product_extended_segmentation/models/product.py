@@ -289,11 +289,10 @@ class StockChangeStandardPrice(models.TransientModel):
 
     @api.multi
     def change_price(self):
-        res = super(StockChangeStandardPrice, self).change_price()
-
         if self.env.context.get('from_wizard', False):
             products = self.env[self._context['active_model']].browse(
                 self._context['active_id'])
             products.compute_segmetation_price(wizard=True)
+            return {'type': 'ir.actions.act_window_close'}
 
-        return res
+        return super(StockChangeStandardPrice, self).change_price()
