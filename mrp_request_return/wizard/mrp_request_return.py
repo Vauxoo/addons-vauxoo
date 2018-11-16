@@ -170,7 +170,7 @@ class mrp_request_return_line(osv.TransientModel):
 class mrp_consume(osv.TransientModel):
     _inherit = 'mrp.consume'
 
-    def action_consume(self, cr, uid, ids, context=None):
+    def action_consume(self, cr, uid, ids, lot_id=False, context=None):
         if context is None:
             context = {}
         context['type'] = 'request'
@@ -203,6 +203,7 @@ class mrp_consume(osv.TransientModel):
                     stock_move_obj.action_consume(cr, uid, [move_id],
                                                 qty_to_consume - current_qty,
                                                 line.location_id.id,
+                                                lot_id=lot_id,
                                                 context=context)
                     mrp_consume_line.write(cr, uid, line.id, {
                         'quantity': current_qty,
@@ -218,4 +219,4 @@ class mrp_consume(osv.TransientModel):
                                         'production_id': production.id})
                     shipment_move_id = mrp_production._make_production_internal_shipment_line(
                         cr, uid, fetch_record, pick_id, False)
-        return super(mrp_consume, self).action_consume(cr, uid, ids, context)
+        return super(mrp_consume, self).action_consume(cr, uid, ids, lot_id=lot_id, context)

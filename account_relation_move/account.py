@@ -76,11 +76,11 @@ class stock_move(osv.Model):
         return res
 
     def action_consume(self, cr, uid, ids, product_qty,
-                       location_id=False, context=None):
+                       location_id=False, lot_id=False, context=None):
         account_move_line_pool = self.pool.get('account.move.line')
         res = super(stock_move, self).action_consume(
             cr, uid, ids, product_qty, location_id=location_id,
-            context=context)
+            lot_id=lot_id, context=context)
         for move_id in res:
             cr.execute(
                 'SELECT production_id FROM mrp_production_move_ids\

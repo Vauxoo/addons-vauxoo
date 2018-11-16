@@ -108,7 +108,7 @@ class mrp_consume(osv.TransientModel):
         'consume_line_ids': _get_default_consume_line_ids,
     }
 
-    def action_consume(self, cr, uid, ids, context=None):
+    def action_consume(self, cr, uid, ids, lot_id=False, context=None):
         context = context or {}
         uom_obj = self.pool.get('product.uom')
         for production in self.browse(cr, uid, ids, context=context):
@@ -127,7 +127,7 @@ class mrp_consume(osv.TransientModel):
 
                         move_line.move_id.action_consume(
                             line_qty_left, move_line.location_id.id,
-                            context=context)
+                            lot_id=lot_id, context=context)
 
                         move_apportionment_qty = uom_obj._compute_qty(
                             cr, uid, move_line.move_id.product_uom.id,
