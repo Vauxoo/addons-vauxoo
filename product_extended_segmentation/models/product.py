@@ -144,17 +144,12 @@ class Product(models.Model):
         def _get_sgmnt(prod_id):
             res = {}
             sum_sgmnt = 0.0
-            candidates = prod_id._get_fifo_candidates_in_move()
-            prod_id = candidates[0] if candidates else prod_id
             for fieldname in SEGMENTATION_COST:
                 fn_cost = getattr(prod_id, fieldname)
                 sum_sgmnt += fn_cost
                 res[fieldname] = fn_cost
             if not sum_sgmnt:
-                res['material_cost'] = (
-                    prod_id.standard_price
-                    if hasattr(prod_id, 'standard_price')
-                    else prod_id.price_unit)
+                res['material_cost'] = prod_id.standard_price
             return res
 
         sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
