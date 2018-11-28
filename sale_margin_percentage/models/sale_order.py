@@ -50,7 +50,7 @@ class SaleOrderLine(models.Model):
         for line in self:
             currency = line.order_id.pricelist_id.currency_id
 
-            if not line.product_uom_qty:
+            if not line.product_uom_qty or line.price_subtotal == 0.0:
                 line.margin_percentage = 0.0
                 continue
 
