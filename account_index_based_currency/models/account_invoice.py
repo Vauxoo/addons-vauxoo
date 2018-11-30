@@ -28,7 +28,8 @@ class AccountInvoice(models.Model):
                     inv.company_id, inv.date_invoice or fields.Date.today())
             inv.index_based_currency_amount = index_based_currency_amount
             inv.agreement_currency_amount = (
-                inv.index_based_currency_amount / inv.agreement_currency_rate)
+                inv.index_based_currency_amount /
+                (inv.agreement_currency_rate or 1.0))
 
     @api.onchange('agreement_currency_rate')
     def onchange_agreement_currency_rate(self):
