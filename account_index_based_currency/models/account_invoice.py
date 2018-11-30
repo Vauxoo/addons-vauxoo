@@ -51,13 +51,12 @@ class AccountInvoice(models.Model):
     @api.model
     def default_get(self, default_fields):
         res = super(AccountInvoice, self).default_get(default_fields)
-        default_rate = (
-            self.env.user.company_id.currency_id._convert(
-                1, self.env.user.company_id.index_based_currency_id,
-                self.env.user.company_id,
-                self.date_invoice or fields.Date.today(), round=False))
-        res['agreement_currency_id'] = self.env.user.company_id.currency_id.id
-        res['agreement_currency_rate'] = default_rate
+        currency_id = self.currency_id.browse(res.get('currency_id'))
+        company_id = self.company_id.browse(res.get('company_id'))
+        res['agreement_currency_id'] = currency_id.id
+        res['agreement_currency_rate'] = currency_id._convert(
+            1, company_id.index_based_currency_id, company_id,
+            fields.Date.today(), round=False)
         return res
 
     agreement_currency_id = fields.Many2one(
