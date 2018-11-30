@@ -21,7 +21,7 @@
                             <field name="agreement_currency_amount" string="Agreement Amount"/>
                         </group>
                         <group colspan="2">
-                            <field name="index_based_currency_rate" string="Index Based Rate"/>
+                            <label for="index_based_currency_id" string="Index Based Rate: 1.0"/>
                             <field name="currency_rate" string="Transaction Rate"/>
                             <field name="company_currency_rate" string="Company Rate"/>
                             <field name="agreement_currency_rate" string="Agreement Rate"/>
@@ -53,7 +53,7 @@
                             <field name="agreement_currency_amount" string="Agreement Amount"/>
                         </group>
                         <group colspan="2">
-                            <field name="index_based_currency_rate" string="Index Based Rate"/>
+                            <label for="index_based_currency_id" string="Index Based Rate: 1.0"/>
                             <field name="currency_rate" string="Transaction Rate"/>
                             <field name="company_currency_rate" string="Company Rate"/>
                             <field name="agreement_currency_rate" string="Agreement Rate"/>
