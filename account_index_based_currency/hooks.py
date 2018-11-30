@@ -1,8 +1,3 @@
-import logging
-
-_logger = logging.getLogger(__name__)
-
-
 def pre_init_hook(cr):
     cr.execute(
         'ALTER TABLE account_invoice ADD COLUMN currency_rate '
