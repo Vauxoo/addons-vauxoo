@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record model="ir.ui.view" id="invoice_change_currency_form">
+    <record id="invoice_change_currency_form" model="ir.ui.view">
         <field name="name">account.invoice_customer.change.view</field>
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="model">account.invoice</field>
@@ -32,7 +32,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="invoice_supplier_form">
+    <record id="invoice_supplier_form" model="ir.ui.view">
         <field name="name">account.invoice_supplier.change.view</field>
         <field name="inherit_id" ref="account.invoice_supplier_form"/>
         <field name="model">account.invoice</field>

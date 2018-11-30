@@ -5,40 +5,38 @@ from odoo.exceptions import UserError
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    @api.one
     @api.depends('date_invoice', 'index_based_currency_id',
                  'company_currency_id', 'currency_id')
     def _compute_currency_rate(self):
-        self.index_based_currency_rate = 1
-        self.currency_rate = (
-            self.currency_id._convert(
-                1, self.index_based_currency_id, self.company_id,
-                self.date_invoice or fields.Date.today(), round=False))
-        self.company_currency_rate = (
-            self.company_currency_id._convert(
-                1, self.index_based_currency_id, self.company_id,
-                self.date_invoice or fields.Date.today(), round=False))
+        for inv in self:
+            inv.index_based_currency_rate = 1
+            inv.currency_rate = (
+                inv.currency_id._convert(
+                    1, inv.index_based_currency_id, inv.company_id,
+                    inv.date_invoice or fields.Date.today(), round=False))
+            inv.company_currency_rate = (
+                inv.company_currency_id._convert(
+                    1, inv.index_based_currency_id, inv.company_id,
+                    inv.date_invoice or fields.Date.today(), round=False))
 
-    @api.one
     @api.depends('amount_total_signed', 'agreement_currency_rate',
                  'date_invoice')
     def _compute_currency_amount(self):
-        index_based_currency_amount = self.amount_total_signed
-        if self.index_based_currency_id != self.currency_id:
-            index_based_currency_amount = self.currency_id._convert(
-                self.amount_total_signed, self.index_based_currency_id,
-                self.company_id, self.date_invoice or fields.Date.today())
-        self.index_based_currency_amount = index_based_currency_amount
-        self.agreement_currency_amount = (
-            self.index_based_currency_amount / self.agreement_currency_rate)
+        for inv in self:
+            index_based_currency_amount = inv.amount_total_signed
+            if inv.index_based_currency_id != inv.currency_id:
+                index_based_currency_amount = inv.currency_id._convert(
+                    inv.amount_total_signed, inv.index_based_currency_id,
+                    inv.company_id, inv.date_invoice or fields.Date.today())
+            inv.index_based_currency_amount = index_based_currency_amount
+            inv.agreement_currency_amount = (
+                inv.index_based_currency_amount / inv.agreement_currency_rate)
 
-    @api.multi
     @api.onchange('agreement_currency_rate')
     def onchange_agreement_currency_rate(self):
         if self.agreement_currency_rate <= 0:
             raise UserError(_('Invalid currency rate value'))
 
-    @api.multi
     @api.onchange('agreement_currency_id')
     def onchange_agreement_currency_id(self):
         self.agreement_currency_rate = self.agreement_currency_id._convert(
@@ -62,8 +60,6 @@ class AccountInvoice(models.Model):
         res['agreement_currency_rate'] = default_rate
         return res
 
-    # old_currency_id = fields.Many2one(
-    #     'res.currency', help="The previous currency used")
     agreement_currency_id = fields.Many2one(
         'res.currency',
         copy=True,
@@ -74,47 +70,38 @@ class AccountInvoice(models.Model):
         'res.currency',
         related='company_id.index_based_currency_id',
         help="Currency used for reporting purposes",
-        copy=False,
-        readonly=True)
+        copy=False)
     index_based_currency_amount = fields.Monetary(
         currency_field='index_based_currency_id',
-        store=True, readonly=True, compute='_compute_currency_amount',
+        store=True, compute='_compute_currency_amount',
         copy=False,
         help="Total amount in the currency of the company, negative for "
         "credit notes.")
     agreement_currency_amount = fields.Monetary(
         currency_field='agreement_currency_id',
-        store=True, readonly=True, compute='_compute_currency_amount',
+        store=True, compute='_compute_currency_amount',
         copy=False,
         help="Total amount in the currency of the company, negative for "
         "credit notes.")
     index_based_currency_rate = fields.Float(
         default=1,
-        store=True, readonly=True, compute='_compute_currency_rate',
+        store=True, compute='_compute_currency_rate',
         help='Technical field for Index based currency rate',
         copy=False, digits=(12, 6))
     currency_rate = fields.Float(
         help="Document currency rate at date of document creation or "
         "document approval against Index Based Currency",
-        store=True, readonly=True, compute='_compute_currency_rate',
+        store=True, compute='_compute_currency_rate',
         copy=False, digits=(12, 6))
     company_currency_rate = fields.Float(
         help="Company currency rate at date of document creation or "
         "document approval against Index Based Currency",
-        store=True, readonly=True, compute='_compute_currency_rate',
+        store=True, compute='_compute_currency_rate',
         copy=False, digits=(12, 6))
     agreement_currency_rate = fields.Float(
         help="Currency rate this Document was agreed",
         readonly=True, states={'draft': [('readonly', False)]},
         copy=True, digits=(12, 6))
-
-    # custom_rate = fields.Float(
-    #     default=_default_custom_currency_rate,
-    #     required=True,
-    #     help="Set new currency rate to apply on the invoice\n."
-    #     "This rate will be taken in order to convert amounts between the "
-    #     "currency on the invoice and MX currency",
-    #     copy=True)
 
     @api.multi
     def finalize_invoice_move_lines(self, move_lines):
@@ -132,13 +119,12 @@ class AccountMoveLine(models.Model):
     currency_rate = fields.Float(
         help="Document currency rate at date of document creation or "
         "document approval against Index Based Currency",
-        readonly=True, copy=False, digits=(12, 6))
+        copy=False, digits=(12, 6))
     agreement_currency_rate = fields.Float(
         help="Currency rate this Document was agreed",
-        readonly=True, copy=True, digits=(12, 6))
+        copy=True, digits=(12, 6))
     index_based_currency_id = fields.Many2one(
         'res.currency',
         related='company_id.index_based_currency_id',
         help="Currency used por reporting purposes",
-        store=True,
-        readonly=True)
+        store=True)
