@@ -2,27 +2,28 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===============================
-Account Invoice Change Currency
-===============================
+============================
+Account Index Based Currency
+============================
 
-This replace original odoo wizard for changing currency on an invoice with serveral
-improovements:
-
-* Preview and allow to change the rate thats is going to be used:
-* Log the currency change on the chatter
-* Add this functionality to supplier invoices
+This module adds Currency field in the company to be used to control the values
+in the invoice where new fields where added to computed invoice value based in 
+that control currency and have control on the currency at which the rate in the
+invoice was agreed.
 
 Installation
 ============
 
 To install this module, you need to:
+- Only install this module
 
 
 Configuration
 =============
 
 To configure this module, you need to:
+- Set an Index Based Currency in the company
+- Set your Agreement Currency and rate in the invoice.
 
 
 Usage
@@ -46,7 +47,7 @@ This module was created by Vauxoo S.A. de C.V.
 
 Contributors
 ------------
-* Hugo Adan <hugo@vauxoo.com>
+* Humberto Arocha <hbto@vauxoo.com>
 
 
 Maintainer
