@@ -15,6 +15,5 @@
     ],
     'version': '12.0.1.0.0',
     'website': 'http://www.vauxoo.com',
-    'pre_init_hook': 'pre_init_hook',
     'license': 'AGPL-3'
 }
