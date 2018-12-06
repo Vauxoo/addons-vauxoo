@@ -13,7 +13,7 @@
         'views/invoice_view.xml',
         'views/res_company_view.xml',
     ],
-    'version': '12.0.1.0.0',
+    'version': '11.0.1.0.0',
     'website': 'http://www.vauxoo.com',
     'license': 'AGPL-3'
 }

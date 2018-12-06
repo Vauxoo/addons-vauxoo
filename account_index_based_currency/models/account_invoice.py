@@ -10,12 +10,12 @@ class AccountInvoice(models.Model):
     def _compute_currency_rate(self):
         cur_obj = self.env['res.currency']
         for inv in self:
+            cur_obj = cur_obj.with_context(
+                {'date': inv.date_invoice or fields.Date.today()})
             inv.currency_rate = cur_obj._get_conversion_rate(
-                inv.currency_id, inv.index_based_currency_id, inv.company_id,
-                inv.date_invoice or fields.Date.today())
+                inv.currency_id, inv.index_based_currency_id)
             inv.company_currency_rate = cur_obj._get_conversion_rate(
-                inv.company_currency_id, inv.index_based_currency_id,
-                inv.company_id, inv.date_invoice or fields.Date.today())
+                inv.company_currency_id, inv.index_based_currency_id)
 
     @api.depends('amount_total_signed', 'agreement_currency_rate',
                  'date_invoice')
@@ -23,9 +23,10 @@ class AccountInvoice(models.Model):
         for inv in self:
             index_based_currency_amount = inv.amount_total_signed
             if inv.index_based_currency_id != inv.currency_id:
-                index_based_currency_amount = inv.currency_id._convert(
-                    inv.amount_total_signed, inv.index_based_currency_id,
-                    inv.company_id, inv.date_invoice or fields.Date.today())
+                index_based_currency_amount = inv.currency_id.with_context(
+                    {'date': inv.date_invoice or
+                     fields.Date.today()}).compute(
+                         inv.amount_total_signed, inv.index_based_currency_id)
             inv.index_based_currency_amount = index_based_currency_amount
             inv.agreement_currency_amount = (
                 inv.index_based_currency_amount /
@@ -38,10 +39,10 @@ class AccountInvoice(models.Model):
 
     @api.onchange('agreement_currency_id')
     def onchange_agreement_currency_id(self):
-        cur_obj = self.env['res.currency']
+        cur_obj = self.env['res.currency'].with_context(
+            {'date': self.date_invoice or fields.Date.today()})
         self.agreement_currency_rate = cur_obj._get_conversion_rate(
-            self.agreement_currency_id, self.index_based_currency_id,
-            self.company_id, self.date_invoice or fields.Date.today())
+            self.agreement_currency_id, self.index_based_currency_id)
         self.agreement_currency_amount = (
             self.index_based_currency_amount * self.agreement_currency_rate)
 
@@ -54,8 +55,7 @@ class AccountInvoice(models.Model):
         company_id = self.company_id.browse(res.get('company_id'))
         res['agreement_currency_id'] = currency_id.id
         res['agreement_currency_rate'] = currency_id._get_conversion_rate(
-            currency_id, company_id.index_based_currency_id, company_id,
-            fields.Date.today())
+            currency_id, company_id.index_based_currency_id)
         return res
 
     agreement_currency_id = fields.Many2one(
@@ -103,6 +103,7 @@ class AccountInvoice(models.Model):
         for line in res:
             line[2]['currency_rate'] = self.currency_rate
             line[2]['agreement_currency_rate'] = self.agreement_currency_rate
+            line[2]['company_currency_rate'] = self.company_currency_rate
         return res
 
 
@@ -116,6 +117,10 @@ class AccountMoveLine(models.Model):
     agreement_currency_rate = fields.Float(
         help="Currency rate this Document was agreed",
         copy=True, digits=(12, 6))
+    company_currency_rate = fields.Float(
+        help="Company currency rate at date of document creation or "
+        "document approval against Index Based Currency",
+        copy=False, digits=(12, 6))
     index_based_currency_id = fields.Many2one(
         'res.currency',
         related='company_id.index_based_currency_id',
