@@ -27,23 +27,13 @@ class AccountInvoice(models.Model):
                     inv.amount_total_signed, inv.index_based_currency_id,
                     inv.company_id, inv.date_invoice or fields.Date.today())
             inv.index_based_currency_amount = index_based_currency_amount
-            inv.agreement_currency_amount = (
-                inv.index_based_currency_amount /
-                (inv.agreement_currency_rate or 1.0))
+            inv.transaction_currency_amount = (
+                inv.agreement_currency_rate * inv.agreement_currency_amount)
 
     @api.onchange('agreement_currency_rate')
     def onchange_agreement_currency_rate(self):
         if self.agreement_currency_rate <= 0:
             raise UserError(_('Invalid currency rate value'))
-
-    @api.onchange('agreement_currency_id')
-    def onchange_agreement_currency_id(self):
-        cur_obj = self.env['res.currency']
-        self.agreement_currency_rate = cur_obj._get_conversion_rate(
-            self.agreement_currency_id, self.index_based_currency_id,
-            self.company_id, self.date_invoice or fields.Date.today())
-        self.agreement_currency_amount = (
-            self.index_based_currency_amount * self.agreement_currency_rate)
 
     @api.model
     def default_get(self, default_fields):
@@ -75,9 +65,14 @@ class AccountInvoice(models.Model):
         copy=False,
         help="Total amount in the currency of the company, negative for "
         "credit notes.")
+    transaction_currency_amount = fields.Monetary(
+        currency_field='currency_id',
+        copy=False,
+        store=True, compute='_compute_currency_amount',
+        help="Total amount in the currency of the transaction in accordance "
+        "with the agreement amount and rate.")
     agreement_currency_amount = fields.Monetary(
         currency_field='agreement_currency_id',
-        store=True, compute='_compute_currency_amount',
         copy=False,
         help="Total amount in the currency of the company, negative for "
         "credit notes.")
@@ -93,6 +88,7 @@ class AccountInvoice(models.Model):
         copy=False, digits=(12, 6))
     agreement_currency_rate = fields.Float(
         help="Currency rate this Document was agreed",
+        default=1,
         readonly=True, states={'draft': [('readonly', False)]},
         copy=True, digits=(12, 6))
 
