@@ -88,7 +88,7 @@ class AccountInvoice(models.Model):
         copy=False, digits=(12, 6))
     agreement_currency_rate = fields.Float(
         help="Currency rate this Document was agreed",
-        default=lambda *args: 1,
+        default=1,
         readonly=True, states={'draft': [('readonly', False)]},
         copy=True, digits=(12, 6))
 
