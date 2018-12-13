@@ -256,5 +256,5 @@ class MrpProduction(models.Model):
                 # NOTE: make different between (REAL, AVG) and STD products
                 # STD diff shall be booked onto a deviation account
                 self._create_adjustment_accounting_entries(move_id, diff)
-
+            move_id.post()
         return amount
