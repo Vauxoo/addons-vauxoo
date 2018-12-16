@@ -98,6 +98,8 @@ class AccountInvoice(models.Model):
     def finalize_invoice_move_lines(self, move_lines):
         res = super(AccountInvoice, self).finalize_invoice_move_lines(
             move_lines)
+        if self.currency_id == self.agreement_currency_id:
+            return res
         for line in (line for line in res
                      if line[2]['account_id'] == self.account_id.id):
             line[2]['agreement_currency_id'] = self.agreement_currency_id.id
