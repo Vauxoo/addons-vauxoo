@@ -18,7 +18,7 @@ class AccountInvoice(models.Model):
                 inv.company_id, inv.date_invoice or fields.Date.today())
 
     @api.depends('amount_total_signed', 'agreement_currency_rate',
-                 'date_invoice')
+                 'agreement_currency_amount', 'date_invoice')
     def _compute_currency_amount(self):
         for inv in self:
             index_based_currency_amount = inv.amount_total_signed
