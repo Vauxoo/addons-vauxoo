@@ -48,7 +48,7 @@
                         </group>
                         <group colspan="2">
                             <field name="index_based_currency_amount" string="Index Based Amount"/>
-                            <field name="amount_total_signed" string="Transaction Amount"/>
+                            <field name="transaction_currency_amount" string="Transaction Amount"/>
                             <field name="amount_total_company_signed" string="Company Amount"/>
                             <field name="agreement_currency_amount" string="Agreement Amount"/>
                         </group>
