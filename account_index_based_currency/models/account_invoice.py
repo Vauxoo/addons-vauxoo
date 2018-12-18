@@ -1,5 +1,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+from odoo.addons.account.models.account_payment import (
+    MAP_INVOICE_TYPE_PAYMENT_SIGN)
 
 
 class AccountInvoice(models.Model):
@@ -18,7 +20,7 @@ class AccountInvoice(models.Model):
                 inv.company_id, inv.date_invoice or fields.Date.today())
 
     @api.depends('amount_total_signed', 'agreement_currency_rate',
-                 'date_invoice')
+                 'agreement_currency_amount', 'date_invoice')
     def _compute_currency_amount(self):
         for inv in self:
             index_based_currency_amount = inv.amount_total_signed
@@ -96,24 +98,32 @@ class AccountInvoice(models.Model):
     def finalize_invoice_move_lines(self, move_lines):
         res = super(AccountInvoice, self).finalize_invoice_move_lines(
             move_lines)
-        for line in res:
-            line[2]['currency_rate'] = self.currency_rate
-            line[2]['agreement_currency_rate'] = self.agreement_currency_rate
+        if self.currency_id == self.agreement_currency_id:
+            return res
+        for line in (line for line in res
+                     if line[2]['account_id'] == self.account_id.id):
+            line[2]['agreement_currency_id'] = self.agreement_currency_id.id
+            line[2]['agreement_currency_amount'] = (
+                MAP_INVOICE_TYPE_PAYMENT_SIGN[self.type] *
+                self.agreement_currency_amount)
         return res
 
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    currency_rate = fields.Float(
-        help="Document currency rate at date of document creation or "
-        "document approval against Index Based Currency",
-        copy=False, digits=(12, 6))
-    agreement_currency_rate = fields.Float(
-        help="Currency rate this Document was agreed",
-        copy=True, digits=(12, 6))
     index_based_currency_id = fields.Many2one(
         'res.currency',
         related='company_id.index_based_currency_id',
         help="Currency used por reporting purposes",
         store=True)
+    agreement_currency_id = fields.Many2one(
+        'res.currency',
+        copy=False,
+        help="Currency at which the agreement is to be/was settled",
+    )
+    agreement_currency_amount = fields.Monetary(
+        currency_field='agreement_currency_id',
+        copy=False,
+        help="Total amount in the currency of the company, negative for "
+        "credit notes.")
