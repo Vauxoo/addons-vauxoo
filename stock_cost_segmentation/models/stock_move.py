@@ -432,6 +432,32 @@ class StockMove(models.Model):
                 return True
         return False
 
+    def _account_entry_move(self):
+        super(StockMove, self)._account_entry_move()
+        if self._is_in():
+            hist_obj = self.env['historical.stock.move']
+            hist = hist_obj.search([
+                ('move_id', 'in', self.move_orig_ids.ids)])
+            if hist:
+                hist_obj.create({
+                    'move_id': self.id,
+                    'origin_move_id': hist[0].move_id.id,
+                    'valuation_type': 'logistic',
+                    'date': self.date,
+                    'quantity': self.product_uom_qty,
+                })
+
+    @api.multi
+    def _get_landed_information(self):
+        landed_obj = self.env['stock.landed.cost']
+        landed = landed_obj.search([
+            ('picking_ids', 'in', self.mapped(
+                'move_orig_logistic_ids.origin_move_id.picking_id.id')),
+            ('l10n_mx_edi_customs_number', '!=', False)])
+        if self.move_orig_ids and not landed:
+            landed = self.move_orig_ids._get_landed_information()
+        return landed
+
 
 class StockLocation(models.Model):
 
