@@ -454,8 +454,9 @@ class StockMove(models.Model):
             ('picking_ids', 'in', self.mapped(
                 'move_orig_logistic_ids.origin_move_id.picking_id.id')),
             ('l10n_mx_edi_customs_number', '!=', False)])
-        if self.move_orig_ids and not landed:
-            landed = self.move_orig_ids._get_landed_information()
+        origin_moves = self.mapped('move_orig_ids')
+        if origin_moves and not landed:
+            landed = origin_moves._get_landed_information()
         return landed
 
 
