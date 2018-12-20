@@ -48,14 +48,17 @@ class AccountInvoiceRefund(models.TransientModel):
         for inv, refund in zip_longest(invoices, refunds, fillvalue=None):
             if not inv or not refund:
                 break
+            percentage = inv.amount_total / total
+            taxes = self.product_id.taxes_id
+            tax_perc = sum(taxes.mapped('amount'))
             self.env['account.invoice.line'].create({
                 'invoice_id': refund.id,
                 'product_id': self.product_id.id,
                 'name': self.product_id.name_get()[0][1],
                 'uom_id': self.product_id.uom_id.id,
                 'invoice_line_tax_ids': [
-                    (6, 0, self.product_id.taxes_id._ids)],
-                'price_unit': inv.amount_untaxed * self.percentage / 100,
+                    (6, 0, taxes._ids)],
+                'price_unit': self.amount_total * percentage / (1.0 + abs(tax_perc) / 100),
                 'account_id': self.product_id.property_account_income_id.id or
                               self.product_id.categ_id.property_account_income_categ_id.id
             })
