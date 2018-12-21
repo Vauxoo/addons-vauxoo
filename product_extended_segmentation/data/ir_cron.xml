@@ -6,16 +6,15 @@
             <field name="model_id" ref="product.model_product_product"/>
             <field name="state">code</field>
             <field name="code">
-product_ids = model.search([('bom_ids', '!=', False)])
-product_ids.compute_segmetation_price(cron=True)
-model.clear_caches()
+model.execute_cron_splited(number=500)
             </field>
             <field eval="True" name="active"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_type">weeks</field>
             <field name="numbercall">-1</field>
-             <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 22:00:00')" />
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=7)).strftime('%Y-%m-%d 22:00:00')" />
             <field eval="False" name="doall"/>
         </record>
+
 </odoo>

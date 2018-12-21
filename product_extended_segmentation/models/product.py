@@ -2,6 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
+import time
+from datetime import datetime
+import dateutil.relativedelta
 from odoo.tools.float_utils import float_is_zero
 from odoo import models, _, api, tools, fields
 _logger = logging.getLogger(__name__)
@@ -252,6 +255,96 @@ class Product(models.Model):
 
         return super(Product, self)._calc_price(bom)
 
+    def execute_cron_splited(self, number=500):
+        batch = str(time.time())
+        if number < 3 or not isinstance(number, int):
+            _logger.info(
+                'Cowardly refused run the cron at %s because I need at least '
+                'devide by 1', batch)
+            return False
+        cron_obj = self.env['ir.cron']
+
+        old_cron_ids = cron_obj.search([
+            ('name', 'like', '%Update Cost%'),
+            ('active', '=', False)])
+        if old_cron_ids:
+            serv_acts = old_cron_ids.mapped('ir_actions_server_id')
+            old_cron_ids.unlink()
+            serv_acts.unlink()
+
+        # Create a template of cron in order to set only the new values
+        # afterwards.
+        cron_tmpl = {
+            'user_id': self.env.user.id,
+            'active': False,
+            'priority': 100,
+            'numbercall': 1,
+            'doall': False,
+            'model_id': self.env.ref('product.model_product_product').id,
+            'state': 'code',
+            'nextcall': fields.datetime.now(),
+        }
+
+        def chunks(list_p, numb):
+            """Split the list in "number" parts"""
+            numb = max(1, numb)
+            return [list_p[i:i + numb] for i in range(0, len(list_p), numb)]
+
+        product_ids = self.search([('bom_ids', '!=', False)])
+        if not product_ids:
+            _logger.info(
+                'Cowardly refused run the cron at %s because I do not have '
+                'elements to compute', batch)
+            return False
+
+        chunked = chunks(product_ids, number)
+        cron_name = 'ID Update Cost %s' % batch
+
+        cron_job_ids = []
+        for plist in chunked:
+            new_cron = cron_tmpl.copy()
+            new_cron.update({
+                'name': cron_name,
+                'nextcall': fields.datetime.now(),
+            })
+            created = cron_obj.create(new_cron)
+            created.write({
+                'code': 'model.execute_cron_costs(%s, %d)' % (
+                    plist.ids, created.id),
+            })
+            cron_job_ids.append(created)
+            _logger.info('Created cron job id [%s]', created)
+
+        cron_job_ids = sorted(cron_job_ids)
+        for cron_id in cron_job_ids:
+            next_cron = None
+            active = False
+            if len(cron_job_ids) == 1:
+                active = True
+            elif cron_id == cron_job_ids[0]:
+                active = True
+                next_cron = cron_job_ids[1].id
+            elif cron_id != cron_job_ids[-1]:
+                next_cron = cron_job_ids[cron_job_ids.index(cron_id) + 1].id
+            cron_id.write({
+                'name': cron_name.replace('ID', str(cron_id.id)),
+                'next_cron': next_cron,
+                'active': active,
+            })
+            _logger.info('Setted the elements correct [%s]', cron_id)
+
+    def execute_cron_costs(self, product_ids=None, cron_id=None):
+        products = self.browse(product_ids)
+        products.compute_segmetation_price(cron=True)
+        self.clear_caches()
+        cron_obj = self.env['ir.cron']
+        cron = cron_obj.browse(cron_id)
+        if cron and cron.next_cron:
+            nextcall = (
+                datetime.now() + dateutil.relativedelta.relativedelta(
+                    minutes=1)).strftime('%Y-%m-%d %H:%M:%S')
+            cron.next_cron.write({'active': True, 'nextcall': nextcall})
+
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -291,3 +384,9 @@ class StockChangeStandardPrice(models.TransientModel):
             return {'type': 'ir.actions.act_window_close'}
 
         return super(StockChangeStandardPrice, self).change_price()
+
+
+class IrCron(models.Model):
+    _inherit = "ir.cron"
+
+    next_cron = fields.Many2one('ir.cron', readonly=True)
