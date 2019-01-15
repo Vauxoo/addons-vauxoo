@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<odoo>
-    <record model="res.groups" id="group_restrict_change_currency_exchange">
-        <field name="name">Restrict Change Invoice Currency Exchange</field>
-    </record>
-</odoo>
-
