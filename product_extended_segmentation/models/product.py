@@ -73,7 +73,7 @@ class Product(models.Model):
                     _logger.error(error)
                     product.message_post(
                         body=_('Error at the moment to '
-                               'update the standard price'),
+                               'update the standard price: %s' % error),
                         subject=error)
         if not cron:
             self.clear_caches()
