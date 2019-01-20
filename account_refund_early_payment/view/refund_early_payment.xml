@@ -20,6 +20,9 @@
                          invoice.
                      </div>
                 </xpath>
+                <xpath expr="//field[@name='filter_refund']" position="attributes">
+                    <attribute name="attrs">{'invisible': False}</attribute>
+                </xpath>
             </field>
         </record>
 
