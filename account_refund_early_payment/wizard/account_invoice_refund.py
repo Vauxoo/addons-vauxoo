@@ -50,7 +50,9 @@ class AccountInvoiceRefund(models.TransientModel):
                 break
             percentage = inv.amount_total / total
             taxes = self.product_id.taxes_id
-            tax_perc = sum(taxes.mapped('amount'))
+            tax_perc = sum(taxes.filtered(
+                lambda tax: not tax.price_include
+                and tax.amount_type == 'percent').mapped('amount'))
             self.env['account.invoice.line'].create({
                 'invoice_id': refund.id,
                 'product_id': self.product_id.id,
@@ -58,7 +60,8 @@ class AccountInvoiceRefund(models.TransientModel):
                 'uom_id': self.product_id.uom_id.id,
                 'invoice_line_tax_ids': [
                     (6, 0, taxes._ids)],
-                'price_unit': self.amount_total * percentage / (1.0 + abs(tax_perc) / 100),
+                'price_unit': self.amount_total * percentage / (
+                    1.0 + (tax_perc or 0.0) / 100),
                 'account_id': self.product_id.property_account_income_id.id or
                               self.product_id.categ_id.property_account_income_categ_id.id
             })
