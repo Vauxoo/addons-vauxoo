@@ -18,12 +18,12 @@
                             <t t-raw="warehouse.warehouse_short"> | </t>
                         </b>
                         <div class="pull-right text-right">
-                            <span title="This is real(on hand) quantity  minus reserved quantity" class="text-muted"><t t-raw="warehouse.available_not_res"/></span><br/>
-                            <span title="Available Now but not necessarily what I can sale"><t t-raw="warehouse.available"/></span><br/>
-                            - <span title="Outgoing" class="text-danger"><t t-raw="warehouse.outgoing"/></span><br/>
-                            = <span title="I can sale this quantity now and deliver it immediately" class="text-muted"><t t-raw="warehouse.saleable"/></span><br/>
-                            + <span title="Is coming in" class="text-success"><t t-raw="warehouse.incoming"/></span><br/>
-                            = <span title="This will be available next" class="text-muted"><t t-raw="warehouse.virtual"/></span>
+                            <span title="This is real(on hand) quantity  minus reserved quantity" class="text-muted"><t t-raw="warehouse.available_not_res_formated"/></span><br/>
+                            <span title="Available Now but not necessarily what I can sale"><t t-raw="warehouse.available_formated"/></span><br/>
+                            - <span title="Outgoing" class="text-danger"><t t-raw="warehouse.outgoing_formated"/></span><br/>
+                            = <span title="I can sale this quantity now and deliver it immediately" class="text-muted"><t t-raw="warehouse.saleable_formated"/></span><br/>
+                            + <span title="Is coming in" class="text-success"><t t-raw="warehouse.incoming_formated"/></span><br/>
+                            = <span title="This will be available next" class="text-muted"><t t-raw="warehouse.virtual_formated"/></span>
                         </div>
                     </div>
                 </t>
