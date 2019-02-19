@@ -19,12 +19,12 @@ var ShowPaymentLineWidget = form_common.extend({
         if (info !== false) {
             _.each(info.content, function (k, v) {
                 k.index = v;
-                k.available_not_res = formats.format["float"](k.available_not_res, "", {digits: k.digits});
-                k.available = formats.format["float"](k.available, "", {digits: k.digits});
-                k.incoming = formats.format["float"](k.incoming, "", {digits: k.digits});
-                k.outgoing = formats.format["float"](k.outgoing, "", {digits: k.digits});
-                k.virtual = formats.format["float"](k.virtual, "", {digits: k.digits});
-                k.saleable = formats.format["float"](k.saleable, "", {digits: k.digits});
+                k.available_not_res_formated = formats.format["float"](k.available_not_res, "", {digits: k.digits});
+                k.available_formated  = formats.format["float"](k.available, "", {digits: k.digits});
+                k.incoming_formated  = formats.format["float"](k.incoming, "", {digits: k.digits});
+                k.outgoing_formated  = formats.format["float"](k.outgoing, "", {digits: k.digits});
+                k.virtual_formated  = formats.format["float"](k.virtual, "", {digits: k.digits});
+                k.saleable_formated  = formats.format["float"](k.saleable, "", {digits: k.digits});
             });
         }
         var popover = QWeb.render('ProductWarehousePopOver', {
