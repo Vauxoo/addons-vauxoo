@@ -11,13 +11,13 @@
             <field name="code">
 # Available locals:
 #  - time, datetime, dateutil: Python libraries
-#  - env: Odoo Environement
+#  - env: Odoo Environment
 #  - model: Model of the record on which the action is triggered
 #  - object: Record on which the action is triggered if there is one, otherwise None
 #  - workflow: Workflow engine
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
-self._add_write_patch_model(cr, uid, context.get('active_ids'))
+object._add_write_patch_model()
             </field>
         </record>
 
@@ -30,13 +30,13 @@ self._add_write_patch_model(cr, uid, context.get('active_ids'))
             <field name="code">
 # Available locals:
 #  - time, datetime, dateutil: Python libraries
-#  - env: Odoo Environement
+#  - env: Odoo Environment
 #  - model: Model of the record on which the action is triggered
 #  - object: Record on which the action is triggered if there is one, otherwise None
 #  - workflow: Workflow engine
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
-self._remove_patch_model(cr, uid, context.get('active_ids'))
+object._remove_patch_model()
             </field>
         </record>
 
