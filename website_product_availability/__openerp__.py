@@ -16,9 +16,9 @@
         "demo/purchase_order.xml",
     ],
     "data": [
-        "views/layout.xml",
-        "views/templates.xml",
-        "views/product_view.xml",
+        # "views/layout.xml",
+        # "views/templates.xml",
+        # "views/product_view.xml",
         "security/stock_quant.xml",
         "security/ir.model.access.csv",
     ],
@@ -27,6 +27,6 @@
     "css": [],
     "qweb": [
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }

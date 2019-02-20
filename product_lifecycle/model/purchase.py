@@ -43,24 +43,14 @@ class PurchaseOrderLine(models.Model):
             line.obsolete = \
                 True if line.product_id.state2 == 'obsolete' else False
 
-    @api.v7
-    def onchange_product_id(
-            self, cr, uid, ids, pricelist, product, qty, uom,
-            partner_id, date_order=False, fiscal_position_id=False,
-            date_planned=False, name=False, price_unit=False, state='draft',
-            context=None):
+    @api.onchange('product_id')
+    def onchange_product_id(self):
         """Raise a warning message when the selected product is a obsolete
         product.
         """
-        context = context or {}
-        product_obj = self.pool.get('product.product')
-        res = super(PurchaseOrderLine, self).onchange_product_id(
-            cr, uid, ids, pricelist, product, qty, uom,
-            partner_id, date_order=date_order,
-            fiscal_position_id=fiscal_position_id, date_planned=date_planned,
-            name=name, price_unit=price_unit, state=state, context=context)
-        if product:
-            product_brw = product_obj.browse(cr, uid, product, context=context)
+        res = super(PurchaseOrderLine, self).onchange_product_id()
+        if self.product_id:
+            product_brw = self.product_id
             if product_brw.state2 in ['obsolete']:
                 replacements = product_brw.get_good_replacements()
                 msg = ' '.join([

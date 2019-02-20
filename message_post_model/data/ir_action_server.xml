@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data noupdate="1">
+
+       <record id="add_track_ir_model" model="ir.actions.server">
+            <field name="name">Add Tracking</field>
+            <field name="model_id" eval="ref('base.model_ir_model')"/>
+            <field name="state">code</field>
+            <field name="condition"></field>
+            <field name="sequence">5</field>
+            <field name="code">
+# Available locals:
+#  - time, datetime, dateutil: Python libraries
+#  - env: Odoo Environement
+#  - model: Model of the record on which the action is triggered
+#  - object: Record on which the action is triggered if there is one, otherwise None
+#  - workflow: Workflow engine
+#  - Warning: Warning Exception to use with raise
+# To return an action, assign: action = {...}
+self._add_write_patch_model(cr, uid, context.get('active_ids'))
+            </field>
+        </record>
+
+       <record id="remove_track_ir_model" model="ir.actions.server">
+            <field name="name">Remove Tracking</field>
+            <field name="model_id" eval="ref('base.model_ir_model')"/>
+            <field name="state">code</field>
+            <field name="condition"></field>
+            <field name="sequence">5</field>
+            <field name="code">
+# Available locals:
+#  - time, datetime, dateutil: Python libraries
+#  - env: Odoo Environement
+#  - model: Model of the record on which the action is triggered
+#  - object: Record on which the action is triggered if there is one, otherwise None
+#  - workflow: Workflow engine
+#  - Warning: Warning Exception to use with raise
+# To return an action, assign: action = {...}
+self._remove_patch_model(cr, uid, context.get('active_ids'))
+            </field>
+        </record>
+
+        <!-- Creating then buttons in More Button -->
+
+        <function model="ir.actions.server"
+            name="create_action"
+            eval="[[ref('add_track_ir_model'), ref('remove_track_ir_model')]]"/>
+
+    </data>
+</openerp>

@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-       <record model="ir.ui.view" id="view_crm_team_form_inherit">
+       <record model="ir.ui.view" id="view_crm_case_section_form_inherit">
             <field name="name">view.crm.team.form.inherit</field>
             <field name="model">crm.team</field>
             <field name="inherit_id" ref="sales_team.crm_team_view_form"/>

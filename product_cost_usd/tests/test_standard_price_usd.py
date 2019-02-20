@@ -4,7 +4,7 @@ from __future__ import division
 
 from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
-from odoo.tools import float_round, float_compare
+from odoo.tools import float_round
 from odoo import fields
 
 
@@ -28,10 +28,9 @@ class TestStandardPriceUsd(TransactionCase):
                 })]
         })
         self.pricelist_15_mxn = self.pricelist_15_usd.copy({
-            'name': 'Pricelist 15% MXN',
+            'name': 'Pricelist 15% USD',
             'currency_id': self.mxn.id})
-        self.pricelist = self.env['product.pricelist'].create({
-            'name': 'Pricelist Demo'})
+        self.pricelist_id = self.ref('product.list0')
 
     def set_standard_price_usd(self, price):
         self.assertTrue(self.product.seller_ids)
@@ -45,9 +44,7 @@ class TestStandardPriceUsd(TransactionCase):
         expected_price = float_round(
             product.standard_price_usd * 1.15,
             precision_rounding=self.usd.rounding)
-        self.assertEqual(
-            float_compare(product.price, expected_price, precision_digits=2),
-            0, "Product price should be %s" % product.price)
+        self.assertEqual(product.price, expected_price)
 
     def test_02(self):
         """ Test a MXN pricelist based on cost in usd. """
@@ -57,9 +54,7 @@ class TestStandardPriceUsd(TransactionCase):
         expected_price = float_round(
             (product.standard_price_usd * 1.15) * mxn_rate,
             precision_rounding=self.mxn.rounding)
-        self.assertEqual(
-            float_compare(product.price, expected_price, precision_digits=2),
-            0, "Product price should be %s" % product.price)
+        self.assertEqual(product.price, expected_price)
 
     def test_03(self):
         """ Test constraint check_cost_and_price. """
@@ -104,9 +99,8 @@ class TestStandardPriceUsd(TransactionCase):
         margin = float_round(
             expected_price - expected_cost,
             precision_rounding=self.mxn.rounding)
-        self.assertEqual(
-            float_compare(sale_order.margin, margin, precision_digits=2),
-            0, "Sale order margin should be %s" % margin)
+        msg = "Sale order margin should be %s" % margin
+        self.assertEqual(sale_order.margin, margin, msg)
 
     def test_sale_margin_normal(self):
         """ Test the sale margin module using a pricelist without cost in
@@ -123,7 +117,7 @@ class TestStandardPriceUsd(TransactionCase):
                 'state': 'draft',
                 'product_id': self.product.id})],
             'partner_id': self.partner.id,
-            'pricelist_id': self.pricelist.id})
+            'pricelist_id': self.pricelist_id})
         # Confirm the sale order.
         sale_order.action_confirm()
         # Verify that margin field gets bind with the value.

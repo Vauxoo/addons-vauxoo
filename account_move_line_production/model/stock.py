@@ -1,16 +1,19 @@
 # coding: utf-8
 
-from odoo import models, api
+from openerp import models, api
 
 
-class StockMove(models.Model):
-    _inherit = "stock.move"
+class StockQuant(models.Model):
+    _inherit = "stock.quant"
 
-    def _prepare_account_move_line(self, qty, cost,
-                                   credit_account_id, debit_account_id):
-        res = super(StockMove, self)._prepare_account_move_line(
-            qty, cost, credit_account_id, debit_account_id)
-        production_id = self.production_id or self.raw_material_production_id
+    @api.v7
+    def _prepare_account_move_line(self, cr, uid, move, qty, cost,
+                                   credit_account_id, debit_account_id,
+                                   context=None):
+        res = super(StockQuant, self)._prepare_account_move_line(
+            cr, uid, move, qty, cost, credit_account_id, debit_account_id,
+            context)
+        production_id = move.production_id or move.raw_material_production_id
         if not production_id:
             return res
         for line in res:

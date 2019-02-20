@@ -155,7 +155,7 @@ class TestCommission(TransactionCase):
         ]
 
         salesman_id = self.ref('base.user_demo')
-        partner_id = self.ref('base.res_partner_23')
+        partner_id = self.ref('base.res_partner_18')
         for cl_brw in no_salesman:
             cl_brw.salesman_id = salesman_id
             cl_brw.partner_id = partner_id

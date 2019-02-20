@@ -9,7 +9,7 @@
     amount: 500
     journal_id: account.bank_journal
     name: 'receiptCustomer01'
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     date: !eval time.strftime('%Y-02-28')
     payment_option: 'without_writeoff'
     type : 'receipt'
@@ -39,7 +39,7 @@
     amount: 1000
     journal_id: account.bank_journal
     name: 'receiptCustomer02'
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     date: !eval time.strftime('%Y-02-15')
     payment_option: 'without_writeoff'
     type : 'receipt'
@@ -78,7 +78,7 @@
         quantity: 1.0
         invoice_line_tax_id: []
     journal_id: account.sales_journal
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     reference_type: none
     name: 'Invoice01_customer'
     residual : 100
@@ -109,7 +109,7 @@
         quantity: 1.0
         invoice_line_tax_id: []
     journal_id: account.sales_journal
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     reference_type: none
     name: 'Invoice02_customer'
     residual : 200
@@ -140,7 +140,7 @@
         quantity: 1.0
         invoice_line_tax_id: []
     journal_id: account.sales_journal
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     reference_type: none
     name: 'Invoice03_customer'
     residual : 300
@@ -165,7 +165,7 @@
     name: ARA_01_Customer
     date: !eval time.strftime("%Y-07-18")
     date_post: !eval time.strftime("%Y-06-27")
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     journal_id: account.miscellaneous_journal
 -
   I added invoices and vouchers. Click button Reconcile

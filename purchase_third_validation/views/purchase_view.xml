@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<openerp>
+    <data noupdate="0">
     	<record id="view_purchase_third_level_inherit" model="ir.ui.view">
             <field name="name">purchase.third.level.inherit</field>
             <field name="model">purchase.order</field>
-            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@name='button_approve']" position="after">
-                    <button name="button_approve" type="object" states='third approve' string="Approve Order" class="oe_highlight" groups="purchase_third_validation.general_purchase_manager"/>
+            	<xpath expr="//field[@name='state']" position="after">
+                    <field name="third_level_ok" invisible="1"/>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="colors">green:third_level_ok==True;grey:state=='cancel';blue:state in ('wait','confirmed');red:state in ('except_invoice','except_picking');green:third_level_ok==True;</attribute>
                 </xpath>
             </field>
         </record>
-</odoo>
+    </data>
+</openerp>

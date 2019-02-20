@@ -1,24 +1,38 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<openerp>
-  <data>
+<odoo>
 
 <!--
     Stock Move Extension
   -->
-
     <record id="view_stock_move_form_inherit" model="ir.ui.view">
         <field name="name">stock.move.form.inherit</field>
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_form"/>
         <field name="arch" type="xml">
-            
-                <xpath expr="//group[@name='quants_grp']" position="after">
-                    <group name="aml_grp" string="Journal Items" colspan="4">
-                            <field name="aml_ids" nolabel="1"/>
-                    </group>
-                </xpath>
+            <xpath expr="//group[@name='quants_grp']" position="after">
+                <group name="aml_grp" string="Journal Items" colspan="4">
+                        <field name="aml_ids" nolabel="1"/>
+                </group>
+            </xpath>
         </field>
     </record>
 
-  </data>
-</openerp>
+<!--
+    Account Move Extension
+  -->
+
+    <record id="view_stock_move_entries_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.entries</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button string="Show Journal Entries" name="show_journal_entries" type="object" class="oe_stat_button"
+                        attrs="{'invisible':[('state','!=','done')]}" icon="fa-bars"/>
+                <button string="Show Entry Lines" name="show_entry_lines" type="object" class="oe_stat_button"
+                        attrs="{'invisible':[('state','!=','done')]}" icon="fa-bars"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

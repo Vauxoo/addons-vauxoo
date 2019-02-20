@@ -9,11 +9,14 @@
     'website': "http://www.vauxoo.com",
     'license': 'AGPL-3',
     'category': '',
-    'version': '11.0.1.0.0',
+    'version': '10.0.2.0.0',
     'depends': [
         'sale_stock',
+        #  TODO: Remove "delivery" if the following issue is fixed
+        #  https://github.com/odoo/odoo/pull/13458
         'delivery',
         'sales_team',
+        'base_action_rule',
         'purchase_requisition',
     ],
     'test': [
@@ -25,11 +28,10 @@
         'security/ir.model.access.csv',
         'security/res_groups.xml',
         'security/ir_rule.xml',
+        'data/ir_actions_server.xml',
+        'data/base_action_rule.xml',
     ],
     'demo': [
-        'demo/stock_demo.xml',
+        # 'demo/stock_demo.xml',
     ],
-    'installable': True,
-    'application': False,
-    'auto_install': False,
 }

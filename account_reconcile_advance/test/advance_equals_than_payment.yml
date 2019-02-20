@@ -14,7 +14,7 @@
     amount: 300
     journal_id: account.bank_journal
     name: 'Payment03'
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     date: !eval time.strftime('%Y-02-15')
     type: 'payment'
 -
@@ -42,7 +42,7 @@
     amount: 100
     journal_id: account.bank_journal
     name: 'Payment04'
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     date: !eval time.strftime('%Y-02-28')
     type: 'payment'
 -
@@ -73,7 +73,7 @@
     name: ARA_03
     date: !eval time.strftime("%Y-08-08")
     date_post: !eval time.strftime("%Y-07-28")
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     journal_id: account.miscellaneous_journal
  
 -

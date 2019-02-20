@@ -103,6 +103,42 @@ class TestCreditLimits(common.TestCommon):
         with self.assertRaises(exceptions.Warning):
             invoice_id2.action_invoice_open()
 
+    def test_credit_limit_proforma_overloaded(self):
+        """This test validate the partner has credit overloaded
+            and can not validate the invoice in state pro-forma
+        """
+        # CASE WHERE PARTNER HAVE CREDIT OVERLOADED
+        # set credit limit in 500
+        self.partner_china.credit_limit = 500.00
+
+        # invoice with amount total of 600.00
+        invoice_id = self.account_invoice.create(
+            {'partner_id': self.partner_china.id,
+             'account_id': self.account_id.id,
+             'payment_term_id': self.payment_term_credit.id,
+             'journal_id': self.journal_id.id, })
+        self.account_invoice_line.create(
+            {'product_id': self.product_id.id,
+             'account_id': self.account_sale_id.id,
+             'quantity': 6,
+             'price_unit': 100,
+             'invoice_id': invoice_id.id,
+             'name': 'product that cost 100', })
+
+        # should not validate the invoice
+        # credit limit exceded
+        # credit_limit = 500
+        # amount_total = 600
+        with self.assertRaises(exceptions.Warning):
+            invoice_id.action_invoice_proforma2()
+
+        # CASE WHERE PARTNER HAVE CREDIT
+        # set credit limit in 700
+        self.partner_china.credit_limit = 700.00
+        invoice_id.action_invoice_proforma2()
+        self.assertEqual(invoice_id.state, 'proforma2',
+                         'State of the invoice should be proforma2')
+
     def test_overdue_credit(self):
         """Test for field overdue credit
         """

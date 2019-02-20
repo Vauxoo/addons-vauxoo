@@ -6,22 +6,13 @@
             <field name="model">account.invoice.refund</field>
             <field name="inherit_id" ref="account.view_account_invoice_refund"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='description']" position="after">
-                    <field name="active_id" invisible="True"/>
-                    <field name="percentage" attrs="{'invisible':[('filter_refund', '!=', 'early_payment')]}"/>
-                    <field name="amount_total" attrs="{'invisible':[('filter_refund', '!=', 'early_payment')]}"/>
-                    <field name="product_id"  attrs="{'invisible':[('filter_refund', '!=', 'early_payment')]}"/>
-                </xpath>
-                <xpath expr="//div[hasclass('oe_grey')]" position="after">
-                     <div attrs="{'invisible':[('filter_refund','!=','early_payment')]}" class="oe_grey" colspan="4">
-                         Use this option if you want to apply an early payment
-                         discount to an invoice and. The credit note will be
-                         created, validated and reconciled with the current
-                         invoice.
-                     </div>
-                </xpath>
-                <xpath expr="//field[@name='filter_refund']" position="attributes">
-                    <attribute name="attrs">{'invisible': False}</attribute>
+                <xpath expr="//group/group" position="after">
+                    <group colspan="2" attrs="{'invisible':[('filter_refund', '!=', 'early_payment')]}">
+                        <field name="active_id" invisible="True"/>
+                        <field name="percent" class="oe_inline" on_change="onchange_amount_total(percent, active_id)"/>
+                        <field name="amount_total" class="oe_inline"/>
+                        <field name="product_id" class="oe_inline"/>
+                    </group>
                 </xpath>
             </field>
         </record>

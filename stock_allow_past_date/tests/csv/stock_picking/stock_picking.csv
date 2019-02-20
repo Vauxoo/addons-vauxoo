@@ -1,0 +1,10 @@
+id,picking_type_id,model,origin,partner_id,date,location_dest_id,location_id
+str,ref,str,str,ref,eval,ref,ref
+picking_demo_01,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 1,base.res_partner_2,2015-08-01 04:08:07,stock.stock_location_stock,stock.stock_location_suppliers
+picking_demo_02,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 2,base.res_partner_1,2015-05-19 00:18:44,stock.stock_location_stock,stock.stock_location_suppliers
+picking_demo_03,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 3,base.res_partner_10,2015-06-30 02:38:08,stock.stock_location_stock,stock.stock_location_suppliers
+picking_demo_04,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 4,base.res_partner_2,2015-06-01 15:03:30,stock.stock_location_stock,stock.stock_location_suppliers
+picking_demo_05,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 5,base.res_partner_4,2015-07-21 22:09:37,stock.stock_location_stock,stock.stock_location_suppliers
+picking_demo_06,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 6,base.res_partner_10,2015-07-23 17:19:55,stock.stock_location_stock,stock.stock_location_suppliers
+picking_demo_07,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 7,base.res_partner_10,2015-03-21 07:06:49,stock.stock_location_stock,stock.stock_location_suppliers
+picking_demo_08,stock.picking_type_out,stock.picking,(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 8,base.res_partner_3,2015-05-18 18:27:17,stock.stock_location_stock,stock.stock_location_suppliers

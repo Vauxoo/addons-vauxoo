@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from odoo import models, fields
+from openerp import models, fields
 
 
 class MrpProduction(models.Model):
@@ -13,9 +13,4 @@ class MrpProduction(models.Model):
         'production_id',
         string='Production Journal Entries',
         readonly=True,
-    )
-class MrpWorkcenter(models.Model):
-    _inherit = 'mrp.workcenter'
-
-    costs_general_account_id = fields.Many2one(
-        'account.account', string='General Account')
+        )

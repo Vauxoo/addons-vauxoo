@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-        <record id="o_expense" model="account.account">
-            <field name="code">X1114-X</field>
-            <field name="name">Opening Expense - (test)</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-        </record>
-        <record id="o_income" model="account.account">
-            <field name="code">X1016-X</field>
-            <field name="name">Opening Income - (test)</field>
-            <field name="user_type_id" ref="account.data_account_type_other_income"/>
-        </record>
+<openerp>
+    <data noupdate="0">
         <record id="prod_a" model="product.product">
             <field name="name">prod_a</field>
             <field name="type">product</field>
             <field name="cost_method">standard</field>
             <field name="valuation">real_time</field>
             <field name="standard_price">60</field>
-            <field name="property_stock_account_input" ref="account_move_line_production.o_expense"/>
-            <field name="property_stock_account_output" ref="account_move_line_production.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
         <record id="prod_b" model="product.product">
             <field name="name">prod_b</field>
@@ -25,8 +16,8 @@
             <field name="cost_method">standard</field>
             <field name="valuation">real_time</field>
             <field name="standard_price">20</field>
-            <field name="property_stock_account_input" ref="account_move_line_production.o_expense"/>
-            <field name="property_stock_account_output" ref="account_move_line_production.o_income"/>
+           <field name="property_stock_account_input" model="account.account" search="[('user_type_id.name', '=', 'Expenses')]"/>
+           <field name="property_stock_account_output" model="account.account" search="[('user_type_id.name', '=', 'Income')]"/>
         </record>
 
         <!-- INITIALIZING INVENTORY FOR RAW MATERIAL -->
@@ -45,22 +36,31 @@
             <function model="stock.inventory" name="search"
                 eval="[[('id', '=', ref('account_move_line_production.inventory'))]]"/>
         </function>
-
         <record id="analytic_account" model="account.analytic.account">
             <field name="name">VX-ANLC-0001</field>
+            <field ref="account.income_view" name="parent_id"/>
         </record>
         <record id="general_account" model="account.account">
             <field name="code">VX-GNRL-0001</field>
             <field name="name">Production General Account AMLP (Demo)</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
+            <field ref="account.income_view" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+        </record>
+        <record id="production_journal" model="account.analytic.journal">
+            <field name="code">VX-PJRN-0001</field>
+            <field name="name">Production Journal AMLP (Demo)</field>
+            <field name="type">general</field>
         </record>
         <record id="wc_01" model="mrp.workcenter">
             <field name="name">Workcenter (AMLP)</field>
-            <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
+            <field name="resource_type">material</field>
             <field name="time_efficiency" eval="1.0"/>
+            <field name="time_cycle">1</field>
             <field name="costs_hour">15</field>
             <field name="costs_hour_account_id" ref="analytic_account"/>
             <field name="costs_general_account_id" ref="general_account"/>
+            <field name="costs_journal_id" ref="production_journal"/>
         </record>
 
         <record id="routing_a" model="mrp.routing">
@@ -71,10 +71,13 @@
             <field name="routing_id" ref="routing_a"/>
             <field name="workcenter_id" ref="wc_01"/>
             <field name="name">Routing for A</field>
+            <field name="hour_nbr">1</field>
+            <field name="cycle_nbr">0</field>
             <field name="sequence">5</field>
         </record>
 
         <record id="bom_a" model="mrp.bom">
+            <field name="name">BoM A AMLP (Demo)</field>
             <field model="product.template" name="product_tmpl_id"
                 search="[('name', '=', u'prod_a')]"/>
             <field name="product_id" eval="False"/>
@@ -89,7 +92,7 @@
 
         <record id="production_a" model="mrp.production">
             <field name="name">Production A AMLP (Demo)</field>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom" ref="product.product_uom_unit"/>
             <field name="product_qty">1</field>
             <field name="product_id" ref="prod_a"/>
             <field name="bom_id" ref="bom_a"/>
@@ -98,4 +101,9 @@
             <field name="location_dest_id" ref="stock.stock_location_stock"/>
         </record>
 
-</odoo>
+    <workflow action="button_confirm" model="mrp.production" ref="production_a"/>
+    <workflow action="moves_ready" model="mrp.production" ref="production_a"/>
+    <workflow action="button_produce" model="mrp.production" ref="production_a"/>
+
+    </data>
+</openerp>

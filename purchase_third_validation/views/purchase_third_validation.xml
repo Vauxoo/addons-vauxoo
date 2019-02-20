@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    	<record id="res_config_settings_view_form_purchase_inherit" model="ir.ui.view">
+<openerp>
+    <data noupdate="0">
+    	<record id="view_purchase_configuration_inherit" model="ir.ui.view">
             <field name="name">purchase settings inherit</field>
-            <field name="model">res.config.settings</field>
-            <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+            <field name="model">purchase.config.settings</field>
+            <field name="inherit_id" ref="purchase.view_purchase_configuration"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='po_order_approval']" position="after">
-                    <field name="po_third_order_approval"/>
-                </xpath>
-                <xpath expr="//label[@for='po_order_approval']" position="after">
-                    <br/>
-                    <label for="po_third_order_approval"/>
-                </xpath>
-                <xpath expr="//field[@name='po_double_validation_amount']/../.." position="after">
-                    <div class="content-group" attrs="{'invisible': [('po_third_order_approval', '=', False)]}">
-                        <div class="row mt16">
-                            <label for="po_third_validation_amount" class="col-md-4 o_light_label"/>
-                            <field name="po_third_validation_amount"/>
-                        </div>
+            	<xpath expr="//div[@name='module_purchase_double_validation']" position="after">
+                    <div name="module_purchase_third_validation">
+                        <span class="oe_separate-from-text">
+                            <label for="limit_amount_t"/>
+                            <field name="limit_amount_t" attrs="{'required': [('module_purchase_double_validation','=',True)]}" class="oe_inline"/>
+                        </span>
                     </div>
-                </xpath>
+            	</xpath>
             </field>
         </record>
-</odoo>
+    </data>
+</openerp>

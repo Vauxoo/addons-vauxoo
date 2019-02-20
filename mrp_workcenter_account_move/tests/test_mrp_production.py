@@ -5,10 +5,10 @@
 # coded by: karen@vauxoo.com
 # planned by: hbto@vauxoo.com
 
-from odoo.addons.mrp.tests.common import TestMrpCommon
+from openerp.tests.common import TransactionCase
 
 
-class TestMrpProduction(TestMrpCommon):
+class TestMrpProduction(TransactionCase):
 
     """This test do the following:
             1.- Create a mrp.production.
@@ -26,23 +26,19 @@ class TestMrpProduction(TestMrpCommon):
     def setUp(self):
         super(TestMrpProduction, self).setUp()
         # Define required global variables.
-        self.account_stock_valuation = self.env['account.account'].search([
-            ('code', '=', '100111')])
-        self.account_cost = self.env.ref(
+        self.account_stock_valuation = self.ref('account.stk')
+        self.account_wip = self.ref(
+            'mrp_workcenter_account_move.rev_work_in_process')
+        self.account_cost = self.ref(
             'mrp_workcenter_account_move.rev_production_cost_account')
-        self.account_deviation = self.env.ref(
+        self.account_deviation = self.ref(
             'stock_deviation_account.rev_inventory_deviation_account')
-        self.mrp_production = self.env.ref(
-            'mrp_workcenter_account_move.rev_mrp_production')
+        self.mrp_production = self.env['mrp.production'].browse(self.ref(
+            'mrp_workcenter_account_move.rev_mrp_production'))
         self.wip_account = self.env.ref(
             'mrp_workcenter_account_move.rev_work_in_process')
-        self.env.ref('mrp_workcenter_account_move.rev_routing').write(
-            {'journal_id': self.env.ref(
-                'mrp_routing_account_journal.landed_cost_journal_1').id})
-        self.env.ref('base.main_company').write({
-            'gain_inventory_deviation_account_id': self.account_deviation.id,
-            'loss_inventory_deviation_account_id': self.account_deviation.id, 
-        })
+        self.wzd_obj = self.env['mrp.product.produce']
+        self.wzd_line_obj = self.env['mrp.product.produce.line']
 
     # Test methods.
     def test_10_approve_begin_consumpt_finish_mrp_production(self):
@@ -51,17 +47,26 @@ class TestMrpProduction(TestMrpCommon):
         location_brw = location_obj.search([('name', '=', 'Production')])
         location_brw.write({'valuation_in_account_id': self.wip_account.id,
                             'valuation_out_account_id': self.wip_account.id})
+        # Confirm the mrp production.
+        self.mrp_production.signal_workflow('button_confirm')
         self.assertEqual(self.mrp_production.state,
                          'confirmed',
                          "The mrp production didn't confirm.")
         # Create the moves needed by mrp production.
         self.mrp_production.action_assign()
-        self.mrp_production.button_plan()
+        self.assertEqual(self.mrp_production.state,
+                         'ready',
+                         "The moves aren't ready.")
+        # Begin mrp production.
+        self.mrp_production.signal_workflow('button_produce')
+        self.assertEqual(self.mrp_production.state,
+                         'in_production',
+                         "The mrp is not in production.")
         # Consumption and finish production.
-        self.create_wizard(self.mrp_production)
+        self.create_wizard()
         self.assertEqual(self.mrp_production.state,
                          'done',
-                         "The mrp production isn't done.")
+                         "The mrp production doesn't done.")
 
         self.production_copy_test(self.mrp_production)
 
@@ -69,7 +74,7 @@ class TestMrpProduction(TestMrpCommon):
 
         aml_raw_and_fg = [
             u for u in aml_ids
-            if u.account_id == self.account_stock_valuation]
+            if u.account_id.id == self.account_stock_valuation]
 
         # Raw material assertion
         raw_material = sum([x.credit for x in aml_raw_and_fg])
@@ -80,24 +85,25 @@ class TestMrpProduction(TestMrpCommon):
         finished_goods = sum([y.debit for y in aml_raw_and_fg])
         self.assertEqual(finished_goods,
                          80, "Finished Good Production is wrong")
+
         # Production Cost assertion
         production_cost = sum([
             v.credit for v in aml_ids
-            if v.account_id == self.account_cost])
+            if v.account_id.id == self.account_cost])
         self.assertEqual(production_cost,
                          15, "Production Cost is wrong")
 
         # Standard Deviation assertion
         standard_deviation = sum([
             w.debit for w in aml_ids
-            if w.account_id == self.account_deviation])
+            if w.account_id.id == self.account_deviation])
         self.assertEqual(standard_deviation,
                          20, "Standard Deviation is wrong")
 
         # WIP assertion
         wip_ids = [
             o for o in aml_ids
-            if o.account_id == self.wip_account]
+            if o.account_id.id == self.account_wip]
 
         wip_debit = sum([p.debit for p in wip_ids])
         wip_credit = sum([q.credit for q in wip_ids])
@@ -110,25 +116,25 @@ class TestMrpProduction(TestMrpCommon):
         self.assertTrue(new_production_id != production_id)
         self.assertEqual(new_production_id.account_move_id.id, False)
 
-    def create_wizard(self, production_id=False):
-        wo_ids = production_id.workorder_ids
-        for wo in wo_ids:
-            wo.write({'duration': 60})
+    def create_wizard(self, values=None):
+        # Setting Environment
+        wz_env = self.wzd_obj.with_context(
+            {'active_id': self.mrp_production.id,
+             'active_ids': [self.mrp_production.id]})
 
-        self.wizard_id = self.env['mrp.product.produce'].sudo(
-            self.user_mrp_user).with_context({
-                'active_id': production_id.id,
-                'active_ids': [production_id.id],
-        }).create({
-            'product_qty': 1.0,
-        })
-        self.wizard_id.do_produce()
-        production_id.button_mark_done()
+        # Creating wizard to product
+        wz_values = wz_env.default_get([])
+        wz_brw = wz_env.create(wz_values)
 
-    def produce(self, production_id=False):
-        wo_ids = production_id.workorder_ids
-        for wo in wo_ids:
-            wo.button_start()
-            wo.record_production()
-            wo.write({'duration': 60})
-        production_id.button_mark_done()
+        # Checking the quantity suggested
+        self.assertEqual(wz_brw.product_qty, 1,
+                         'The quantity suggested must be 1')
+
+        # Changing the quantity suggested
+        wz_brw.product_qty = 1
+
+        values = wz_brw.on_change_qty(wz_brw.product_qty, [])
+        values = values.get('value')
+        wz_brw.write(values)
+        wz_brw.do_produce()
+        return True

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from openerp import fields, models
+from openerp import api, fields, models
 
 
 class StockPickingType(models.Model):
@@ -17,17 +17,18 @@ class StockPicking(models.Model):
     warehouse_id = fields.Many2one(related='picking_type_id.warehouse_id')
 
 
-class StockMove(models.Model):
+class StockQuant(models.Model):
 
-    _inherit = "stock.move"
+    _inherit = "stock.quant"
 
-    def _get_accounting_data_for_valuation(self):
+    @api.model
+    def _get_accounting_data_for_valuation(self, move):
 
         journal_id, acc_src, acc_dest, acc_valuation = super(
-            StockMove, self)._get_accounting_data_for_valuation()
+            StockQuant, self)._get_accounting_data_for_valuation(move)
 
-        warehouse_id = (self.picking_id.picking_type_id.warehouse_id or
-                        self.warehouse_id)
+        warehouse_id = move.picking_id.picking_type_id.warehouse_id or\
+            move.warehouse_id
         sale_team = self.env['crm.team'].search(
             [('default_warehouse', '=', warehouse_id.id)], limit=1)
 

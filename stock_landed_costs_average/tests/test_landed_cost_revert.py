@@ -13,7 +13,7 @@ class TestLandedCostRevert(TestStockLandedCommon):
         self.product_id = self.env.ref(
             'stock_landed_costs_average.product_mouse')
         self.supplier_id = self.env.ref('base.res_partner_13')
-        self.customer_id = self.env.ref('base.res_partner_23')
+        self.customer_id = self.env.ref('base.res_partner_18')
         self.loss_acct_id = self.company_id.\
             loss_inventory_deviation_account_id.id
         self.gain_acct_id = self.company_id.\

@@ -13,7 +13,7 @@
         "demo/rating_demo.xml"
     ],
     "data": [
-        "views/layout.xml",
+        #"views/layout.xml",
         "views/star_rate.xml",
     ],
     "test": [],
@@ -23,6 +23,6 @@
         "static/src/xml/rate.xml",
         "static/src/xml/mail.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }

@@ -6,17 +6,7 @@
             <field name="model">account.account.type</field>
             <field name="inherit_id" ref="account.view_account_type_form" />
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='type']" position="after">
-                    <field name="asset_policy"/>
-                </xpath>
-            </field>
-        </record>
-        <record id="account_asset_category_required_account_type_tree" model="ir.ui.view">
-            <field name="name">account.asset.category.required.account.type.tree</field>
-            <field name="model">account.account.type</field>
-            <field name="inherit_id" ref="account.view_account_type_tree" />
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='type']" position="after">
+                <xpath expr="//field[@name='code']" position="after">
                     <field name="asset_policy"/>
                 </xpath>
             </field>

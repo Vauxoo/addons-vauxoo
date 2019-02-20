@@ -33,25 +33,24 @@ class SaleOrder(models.Model):
 
     _inherit = 'sale.order'
 
-    @api.multi
-    @api.depends('order_line.product_id')
-    def _get_commitment_date(self):
+    @api.depends('date_order', 'order_line.customer_lead')
+    def _compute_commitment_date(self):
+        """Compute the commitment date"""
         """This method is overwrite because we need to get
             Commitment date field in base to max date of the
             sale order line
         """
-        res = super(SaleOrder, self)._get_commitment_date(
-            name='commitment_date', arg=None)
+        super(SaleOrder, self)._compute_commitment_date()
         dates_list = []
         for order in self:
-            order.commitment_date = res.get(order.id, '')
             dates_list = []
             order_datetime = datetime.strptime(
                 order.date_order, DEFAULT_SERVER_DATETIME_FORMAT)
             for line in order.order_line:
                 if line.state == 'cancel':
                     continue
-                dt_order = order_datetime + timedelta(days=line.delay or 0.0)
+                dt_order = order_datetime + timedelta(
+                    days=line.customer_lead or 0.0)
                 dt_s = dt_order.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
                 dates_list.append(dt_s)
             if dates_list:
@@ -59,5 +58,4 @@ class SaleOrder(models.Model):
                 # changed min(dates_list)
                 order.commitment_date = max(dates_list)
 
-    commitment_date = fields.Datetime(
-        compute='_get_commitment_date', store=True)
+    commitment_date = fields.Datetime(compute='_compute_commitment_date')

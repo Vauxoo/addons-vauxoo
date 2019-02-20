@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_config_settings" model="ir.ui.view">
+        <field name="name">sale.margin.percentage.settings</field>
+        <field name="model">sale.config.settings</field>
+        <field name="inherit_id" ref="sale.view_sales_config"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='module_sale_margin']" position="after">
+                <field name="margin_threshold" attrs="{'invisible': [('module_sale_margin', '=', 0)]}"/>
+            </xpath>
+       </field>
+    </record>
+
+</odoo>

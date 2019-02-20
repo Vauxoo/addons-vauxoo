@@ -24,6 +24,12 @@ What do you need to create picking/quant in a past date:
    ``action_done()`` picking methods and whatever other method that influence
    in the quant creation and validation.
 
+**NOTE**: In case that you will like to add more data demo, we strongly
+recommend to use Vauxoo/csv2xml tool. Update stock_allow_past_date/test/csv
+file and then run the csv2xml command to generate the proper xml ``csv2xml
+update -m stock_allow_past_date -csv path/to/stock_allow_past_date/tests/csv -n
+path/to/stock_allow_past_date/demo -co ''``
+
 TODO
 ====
 

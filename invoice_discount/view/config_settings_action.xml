@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- <function model="sale.config.settings" name="action_sale_config_settings"/> -->
+    </data>
+</openerp>

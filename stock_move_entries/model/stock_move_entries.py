@@ -24,44 +24,75 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, osv
+from odoo import fields, models, _, api
+from odoo.exceptions import UserError
 
 
-class AccountMoveLine(osv.Model):
+class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     """
     """
 
-    _columns = {
-        'sm_id': fields.many2one('stock.move', 'Stock move'),
-    }
+    sm_id = fields.Many2one('stock.move', 'Stock move')
 
 
-class StockMove(osv.Model):
+class StockMove(models.Model):
     _inherit = "stock.move"
 
     """
     """
 
-    _columns = {
-        'aml_ids': fields.one2many(
-            'account.move.line', 'sm_id', 'Account move Lines',
-            domain=[('account_id.reconcile', '=', True)]),
-        'aml_all_ids': fields.one2many(
-            'account.move.line', 'sm_id', 'All Account move Lines'),
-    }
+    aml_ids = fields.One2many(
+        'account.move.line', 'sm_id', 'Account move Lines',
+        domain=[('account_id.reconcile', '=', True)])
+    aml_all_ids = fields.One2many(
+        'account.move.line', 'sm_id', 'All Account move Lines')
 
-
-class StockQuant(osv.Model):
-    _inherit = "stock.quant"
-
-    def _prepare_account_move_line(self, cr, uid, move, qty, cost,
-                                   credit_account_id, debit_account_id,
-                                   context=None):
-        res = super(StockQuant, self)._prepare_account_move_line(
-            cr, uid, move, qty, cost, credit_account_id, debit_account_id,
-            context)
+    def _prepare_account_move_line(self, qty, cost, credit_account_id,
+                                   debit_account_id):
+        res = super(StockMove, self)._prepare_account_move_line(
+            qty, cost, credit_account_id, debit_account_id)
         for line in res:
-            line[2]['sm_id'] = move.id
+            line[2]['sm_id'] = self.id
         return res
+
+
+class StockPicking(models.Model):
+
+    _inherit = "stock.picking"
+
+    @api.multi
+    def show_entry_lines(self):
+        move_line_ids = self.env['account.move.line']._search(
+            [('sm_id', 'in', self.mapped('move_lines').ids)])
+        if not move_line_ids:
+            raise UserError(
+                _('Warning !\nThere is no Journal Items '
+                  'related with the picking'))
+        return {
+            'domain': [('id', 'in', move_line_ids)],
+            'name': _('Related Journal Items'),
+            'view_mode': 'tree,form',
+            'view_type': 'form',
+            'res_model': 'account.move.line',
+            'type': 'ir.actions.act_window',
+            }
+
+    @api.multi
+    def show_journal_entries(self):
+        move_line_ids = self.env['account.move.line'].search(
+            [('sm_id', 'in', self.mapped('move_lines').ids)])
+        move_ids = move_line_ids.mapped('move_id').ids
+        if not move_ids:
+            raise UserError(
+                _('Warning !\nThere is no Journal Entries '
+                  'related with the picking'))
+        return {
+            'domain': [('id', 'in', move_ids)],
+            'name': _('Related Journal Entries'),
+            'view_mode': 'tree,form',
+            'view_type': 'form',
+            'res_model': 'account.move',
+            'type': 'ir.actions.act_window',
+            }

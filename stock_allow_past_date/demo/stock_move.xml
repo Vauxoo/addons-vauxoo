@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo noupdate="1">
+    <record id="move_demo_01" model="stock.move">
+      <field name="date_expected">2015-08-01 04:08:07</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">664</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_01"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-08-01 04:08:07</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 1</field>
+    </record>
+    <record id="move_demo_02" model="stock.move">
+      <field name="date_expected">2015-05-19 00:18:44</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">344</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_02"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-05-19 00:18:44</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 2</field>
+    </record>
+    <record id="move_demo_03" model="stock.move">
+      <field name="date_expected">2015-06-30 02:38:08</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">782</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_03"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-06-30 02:38:08</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 3</field>
+    </record>
+    <record id="move_demo_04" model="stock.move">
+      <field name="date_expected">2015-06-01 15:03:30</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">702</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_04"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-06-01 15:03:30</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 4</field>
+    </record>
+    <record id="move_demo_05" model="stock.move">
+      <field name="date_expected">2015-07-21 22:09:37</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">204</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_05"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-07-21 22:09:37</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 5</field>
+    </record>
+    <record id="move_demo_06" model="stock.move">
+      <field name="date_expected">2015-07-23 17:19:55</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">733</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_06"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-07-23 17:19:55</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 6</field>
+    </record>
+    <record id="move_demo_07" model="stock.move">
+      <field name="date_expected">2015-03-21 07:06:49</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">751</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_07"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-03-21 07:06:49</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 7</field>
+    </record>
+    <record id="move_demo_08" model="stock.move">
+      <field name="date_expected">2015-05-18 18:27:17</field>
+      <field name="product_id" ref="stock_allow_past_date.product_product_1"/>
+      <field name="product_uom" ref="product.product_uom_unit"/>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="product_uom_qty">321</field>
+      <field name="picking_id" ref="stock_allow_past_date.picking_demo_08"/>
+      <field name="location_dest_id" ref="stock.stock_location_customers"/>
+      <field name="date">2015-05-18 18:27:17</field>
+      <field name="location_id" ref="stock.stock_location_stock"/>
+      <field name="name">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 8</field>
+    </record>
+</odoo>

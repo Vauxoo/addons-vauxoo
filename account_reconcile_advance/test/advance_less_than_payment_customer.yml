@@ -17,7 +17,7 @@
         quantity: 1.0
         invoice_line_tax_id: []
     journal_id: account.sales_journal
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     reference_type: none
     name: 'Invoice04_customer'
     residual : 400
@@ -47,7 +47,7 @@
         quantity: 1.0
         invoice_line_tax_id: []
     journal_id: account.sales_journal
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     reference_type: none
     name: 'Invoice05_customer'
     residual : 200
@@ -77,7 +77,7 @@
         quantity: 1.0
         invoice_line_tax_id: []
     journal_id: account.sales_journal
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     reference_type: none
     name: 'Invoice06_customer'
     residual : 300
@@ -102,7 +102,7 @@
     name: ARA_02_Customer
     date: !eval time.strftime("%Y-07-20")
     date_post: !eval time.strftime("%Y-07-01")
-    partner_id: base.res_partner_23
+    partner_id: base.res_partner_18
     journal_id: account.miscellaneous_journal
 -
   I added invoices and vouchers. Click button Reconcile

@@ -14,6 +14,7 @@ class SaleOrder(models.Model):
         compute='_compute_margin_percentage',
         digits=dp.get_precision('Product Price'),
         store=True,
+        string="Margin percentage",
         help="Margin percentage compute based on price unit")
 
     @api.depends('order_line.margin_percentage')
@@ -31,16 +32,18 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    margin_threshold = fields.Float(
-        default=lambda self: self.env.user.company_id.margin_threshold,
-        help="Limit margin set in sales configuration")
+    @api.model
+    def _default_margin_threshold(self):
+        return self.env.user.company_id.margin_threshold
+
+    margin_threshold = fields.Float(default=_default_margin_threshold)
     margin_percentage = fields.Float(
         compute='_compute_margin_percentage',
         digits=dp.get_precision('Product Price'),
         store=True,
-        help="Margin percentage compute based on price unit")
-    purchase_price = fields.Float(
-        readonly=True, help="Price purchase of product")
+        string="Margin Percentage",
+        help="Margin percentage compute based on price unit ")
+    purchase_price = fields.Float(readonly=True)
 
     @api.depends('product_id', 'purchase_price', 'product_uom_qty',
                  'price_unit')
@@ -50,7 +53,7 @@ class SaleOrderLine(models.Model):
         for line in self:
             currency = line.order_id.pricelist_id.currency_id
 
-            if not line.product_uom_qty or line.price_subtotal == 0.0:
+            if not line.product_uom_qty:
                 line.margin_percentage = 0.0
                 continue
 

@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AccountConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = 'account.config.settings'
 
     payment_type = fields.Selection([
         ('bqp', 'Based on quantity of payments'),
@@ -30,17 +30,14 @@ class AccountConfigSettings(models.TransientModel):
              'day that the sale order confirmation day.')
 
     @api.model
-    def get_values(self):
-        res = super(AccountConfigSettings, self).get_values()
+    def get_default_payment_term_type(self, fields_name):
         key_payment = "account.payment_term_type"
         payment_type = self.env["ir.config_parameter"].get_param(
             key_payment, default='bqp')
-        res.update(payment_type=payment_type)
-        return res
+        return {'payment_type': payment_type}
 
     @api.multi
-    def set_values(self):
-        super(AccountConfigSettings, self).set_values()
+    def set_default_payment_term_type(self):
         config_parameters = self.env["ir.config_parameter"]
         key_by_company_id = "account.payment_term_type"
         config_parameters.set_param(

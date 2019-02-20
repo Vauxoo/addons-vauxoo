@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo noupdate="1">
+    <record id="picking_demo_01" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 1</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-08-01 04:08:07</field>
+      <field name="partner_id" ref="base.res_partner_2"/>
+    </record>
+    <record id="picking_demo_02" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 2</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-05-19 00:18:44</field>
+      <field name="partner_id" ref="base.res_partner_1"/>
+    </record>
+    <record id="picking_demo_03" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 3</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-06-30 02:38:08</field>
+      <field name="partner_id" ref="base.res_partner_10"/>
+    </record>
+    <record id="picking_demo_04" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 4</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-06-01 15:03:30</field>
+      <field name="partner_id" ref="base.res_partner_2"/>
+    </record>
+    <record id="picking_demo_05" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 5</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-07-21 22:09:37</field>
+      <field name="partner_id" ref="base.res_partner_4"/>
+    </record>
+    <record id="picking_demo_06" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 6</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-07-23 17:19:55</field>
+      <field name="partner_id" ref="base.res_partner_10"/>
+    </record>
+    <record id="picking_demo_07" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 7</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-03-21 07:06:49</field>
+      <field name="partner_id" ref="base.res_partner_10"/>
+    </record>
+    <record id="picking_demo_08" model="stock.picking">
+      <field name="origin">(SAPD Demo) WH/Stock Bonobo WS 17' Laptop Sale 8</field>
+      <field name="picking_type_id" ref="stock.picking_type_out"/>
+      <field name="location_id" ref="stock.stock_location_suppliers"/>
+      <field name="location_dest_id" ref="stock.stock_location_stock"/>
+      <field name="date">2015-05-18 18:27:17</field>
+      <field name="partner_id" ref="base.res_partner_3"/>
+    </record>
+</odoo>

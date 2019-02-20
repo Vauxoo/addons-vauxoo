@@ -24,44 +24,55 @@
 #
 ##############################################################################
 
-from odoo import api, fields, models
-from odoo.addons import decimal_precision as dp
+from openerp.osv import osv, fields
+import openerp.addons.decimal_precision as dp
 
 
-class AccountAssetDepreciationLine(models.Model):
+class AccountAssetDepreciationLine(osv.Model):
     _inherit = 'account.asset.depreciation.line'
 
-    @api.depends('move_id')
-    def _get_move_check(self):
-        for line in self:
-            line.move_check = bool(line.move_id or line.historical)
+    def _get_move_check(self, cr, uid, ids, name, args, context=None):
+        res = super(AccountAssetDepreciationLine, self)._get_move_check(
+            cr, uid, ids, name, args, context=context)
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = bool(line.move_id or line.historical)
+        return res
 
-        return super(AccountAssetDepreciationLine, self)._get_move_check()
+    _columns = {
+        'historical': fields.boolean('Historical'),
+        'move_check': fields.function(
+            _get_move_check, method=True, type='boolean', string='Posted',
+            store=True),
+    }
 
-    historical = fields.Boolean(help="Check box for the historical validation",
-                                default=False)
-    move_check = fields.Boolean(help="Compute the move status",
-                                compute="_get_move_check",
-                                string='Posted', store=True)
+    _defaults = {
+        'historical': False,
+    }
 
 
-class AccountAssetAsset(models.Model):
+class AccountAssetAsset(osv.osv):
     _inherit = 'account.asset.asset'
 
-    value_residual = fields.Float(
-        help="Stores the value of the process",
-        digits=dp.get_precision('Account'), compute="_amount_residual",
-        string='Net Book Value')
-
-    def _amount_residual(self):
-        dep_line_obj = self.env['account.asset.depreciation.line']
-        for asset in self:
+    def _amount_residual(self, cr, uid, ids, name, args, context=None):
+        res = super(AccountAssetAsset, self)._amount_residual(
+            cr, uid, ids, name, args, context=context)
+        dep_line_obj = self.pool.get('account.asset.depreciation.line')
+        for asset in res:
             dep_lines = dep_line_obj.search(
-                [('asset_id', '=', asset.id),
-                    ('move_id', '=', False),
-                    ('move_check', '=', True)])
+                cr, uid, [('asset_id', '=', asset),
+                          ('move_id', '=', False),
+                          ('move_check', '=', True),
+                          ], context=context)
             amount = 0
-            for line in dep_lines:
+            for line in dep_line_obj.browse(
+                    cr, uid, dep_lines, context=context):
                 amount += line.amount or 0.0
-            asset.value_residual = amount
-        return super(AccountAssetAsset, self)._amount_residual()
+            res.update({asset: res.get(asset, 0.0) - amount})
+        return res
+
+    _columns = {
+        'value_residual': fields.function(
+            _amount_residual, method=True,
+            digits_compute=dp.get_precision('Account'),
+            string='Net Book Value'),
+    }

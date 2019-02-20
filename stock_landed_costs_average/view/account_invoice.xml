@@ -53,15 +53,12 @@ Costs only needs to run this wizard with Landed Costs field no filled.
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[@class='oe_title']" position="after">
-                    <div class="oe_right oe_button_box" name="button_box">
-                        <!-- Put buttons here -->
+                <xpath expr="//header" position="inside">
                         <button
                             string="Attach Invoice to Landed Costs"
                             name="%(act_attach_invoice_to_landed_costs_wizard)d"
                             type="action"
                             attrs="{'invisible': [('state','not in', ('draft','open','paid'))]}"/>
-                    </div>
                 </xpath>
 
                 <xpath expr="//field[@name='journal_id']" position="after">

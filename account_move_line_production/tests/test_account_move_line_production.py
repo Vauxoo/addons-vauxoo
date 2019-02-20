@@ -18,10 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from odoo.addons.mrp.tests.common import TestMrpCommon
+from openerp.tests.common import TransactionCase
 
 
-class TestAccountMoveLineProduction(TestMrpCommon):
+class TestAccountMoveLineProduction(TransactionCase):
 
     def setUp(self):
         super(TestAccountMoveLineProduction, self).setUp()
@@ -29,20 +29,27 @@ class TestAccountMoveLineProduction(TestMrpCommon):
             'account_move_line_production.production_a')
 
     def produce(self, production_id=False):
+        self.wizard_id = self.env['mrp.product.produce'].with_context({
+            'active_id': production_id.id
+        }).create({})
+        values = self.env['mrp.product.produce'].with_context({
+            'active_id': production_id.id
+        }).on_change_qty(self.wizard_id.id, 1)
 
-        self.wizard_id = self.env['mrp.product.produce'].sudo(
-            self.user_mrp_user).with_context({
-                'active_id': production_id.id,
-                'active_ids': [production_id.id],
-        }).create({
-            'product_qty': 1.0,
-        })
+        values = values['value']['consume_lines']
+
+        for val in values:
+            val = val[2]
+            val['produce_id'] = self.wizard_id.id
+            self.env['mrp.product.produce.line'].create(val)
+
         self.wizard_id.do_produce()
-        production_id.button_mark_done()
         return True
 
     def test_01(self):
-        self.assertEqual(self.production_a.state, 'confirmed')
+        self.assertEqual(self.production_a.state, 'in_production')
+
         self.produce(self.production_a)
         self.assertEqual(self.production_a.state, 'done')
+
         self.assertTrue(self.production_a.aml_production_ids)

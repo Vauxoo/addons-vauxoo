@@ -19,8 +19,13 @@
     "depends": [
         "stock_account",
     ],
+    "demo": [
+        "demo/product.xml",
+        "demo/stock_picking.xml",
+        "demo/stock_move.xml",
+        "demo/stock_picking.yml",
+    ],
     "data": [],
-    "demo": [],
     "test": [],
     "qweb": [],
     "installable": True,

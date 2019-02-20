@@ -1,5 +1,5 @@
-.. image:: https://img.shields.io/badge/licence-LGPL--3-blue.svg
-    :alt: License: LGPL-3
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+    :alt: License: AGPL-3
 
 MRP Partial Prodution
 =====================
@@ -22,8 +22,6 @@ Contributors
 ------------
 
 * Jose Morales <jose@vauxoo.com>
-* Julio Serna Hernandez <julio@vauxoo.com>
-* Yennifer Santiago yennifer@vauxoo.com>
 
 Maintainer
 ----------

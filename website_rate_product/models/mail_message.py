@@ -42,7 +42,7 @@ class MailMessage(models.Model):
         message_qty = mail.search_count([('res_id', '=', int(product_id)),
                                          ('website_published', '=', True),
                                          ('model', '=', 'product.template'),
-                                         ('type', '=', 'comment')])
+                                         ('message_type', '=', 'comment')])
         return message_qty
 
 

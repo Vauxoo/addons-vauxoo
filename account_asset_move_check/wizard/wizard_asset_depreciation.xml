@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <record id="view_wizard_asset_depreciation_historical" model="ir.ui.view">
-        <field name="name">Historical depreciation</field>
-        <field name="model">wizard.asset.depreciation</field>
-        <field name="arch" type="xml">
-        <form string="Set depreciation lines as historical" version="7.0">
-            <group>
+<openerp>
+    <data>
+
+        <record id="view_wizard_asset_depreciation_historical" model="ir.ui.view">
+            <field name="name">Historical depreciation</field>
+            <field name="model">wizard.asset.depreciation</field>
+            <field name="arch" type="xml">
+            <form string="Set depreciation lines as historical" version="7.0">
                 <group>
-                    <field name="date_start"/>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_stop"/>
+                    </group>
                 </group>
-                <group>
-                    <field name="date_stop"/>
-                </group>
-            </group>
-            <footer>
-                <button name='write_historical_true' string="Set as historical" class="oe_highlight" type="object" icon="gtk-ok"/>
-                <button special="cancel" string="Cancel"/>
-            </footer>
-        </form>
-        </field>
-    </record>
-    <record id="action_depeciation_historical" model="ir.actions.act_window">
-        <field name="name">Set Depreciation Historical</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">wizard.asset.depreciation</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="view_wizard_asset_depreciation_historical"/>
-        <field name="target">new</field>
-        <field name="multi"></field>
-    </record>
-</odoo>
+                <footer>
+                    <button name='write_historical_true' string="Set as historical" class="oe_highlight" type="object" icon="gtk-ok"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+        
+        <record id="action_depeciation_historical" model="ir.actions.act_window">
+            <field name="name">Set Depreciation Historical</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.asset.depreciation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_asset_depreciation_historical"/>
+            <field name="target">new</field>
+            <field name="multi"></field>
+        </record>
+
+        <record model="ir.values" id="depreciation_historical">
+            <field name="model_id" ref="account_asset.model_account_asset_asset" />
+            <field name="name">Set Historical</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_depeciation_historical'))" />
+            <field name="key">action</field>
+            <field name="model">account.asset.asset</field>
+        </record>
+
+    </data>
+</openerp>
