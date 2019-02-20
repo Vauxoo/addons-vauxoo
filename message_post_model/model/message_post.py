@@ -311,6 +311,25 @@ class IrModel(models.Model):
                              help='This field identifies if the fields '
                              'in this models are being tracked')
 
+    def set_tracking(self, value, operator='=', field='model'):
+        """Begin tracking models, for given criteria, domain name by default.
+            Example::
+
+        >>> self.env['ir.model'].set_tracking('account.invoice')
+        >>> self.env['ir.model'].set_tracking('account.%' , 'like')
+        >>> self.env['ir.model'].set_tracking(False , '=' , 'tracked') #Track every non tracked model, doesn't work, don't try
+
+        @param value: Searched value, by default Name of the model
+        @type value: str or unicode or int or bool
+        @param operator: Searching operator, equality by default
+        @type operator: str or unicode
+        @param field: Searched field, by default Name of the model
+        @type field: str or unicode
+        @return: None
+        @rtype: NoneType
+        """
+        self.search([(field, operator, value)])._add_write_patch_model()
+
     def write_track_all(self):
 
         @api.multi
