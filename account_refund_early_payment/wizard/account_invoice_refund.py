@@ -7,10 +7,10 @@
 #    info Vauxoo (info@vauxoo.com)
 #    coded by: nhomar <nhomar@vauxoo.com>
 ############################################################################
-from itertools import zip_longest
+from itertools import izip_longest
 from odoo import api, fields, models
 
-
+zip_longest = lambda *x,**y:list(izip_longest(*x,**y))
 class AccountInvoiceRefund(models.TransientModel):
     _inherit = "account.invoice.refund"
 
