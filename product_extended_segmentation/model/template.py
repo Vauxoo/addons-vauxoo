@@ -124,6 +124,7 @@ class ProductTemplate(models.Model):
         factor = _factor(1.0, bom.product_efficiency, bom.product_rounding)
 
         sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
+
         for sbom in bom.bom_line_ids:
             my_qty = sbom.product_qty / sbom.product_efficiency
             if sbom.attribute_value_ids:
