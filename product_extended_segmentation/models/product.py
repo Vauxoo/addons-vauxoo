@@ -131,16 +131,7 @@ class Product(models.Model):
         return new_price['standard_price']
 
     @tools.ormcache('bom', 'internal')
-    def _calc_price_seg(self, bom, internal=None, wizard=None):
-        """Computing the standard price from BOM recursively with its segmentations
-        :param bom: Bom which you want to compute the cost
-        :type bom: mrp.bom()
-        :param internal: Used to return the new cost without writing the cost
-        to the target product
-        :param wizard: Used to write new cost even if is internal when function
-        called from the wizard
-        :return: The new price
-        :rtype: str"""
+    def _calc_material_price_seg(self, bom, internal=None, wizard=None):
         price = 0.0
         result, result2 = bom.explode(self, 1)
 
@@ -173,7 +164,20 @@ class Product(models.Model):
                     sbom.product_uom_id) * sbom_data['qty']
                 price += price_sgmnt
                 sgmnt_dict[fieldname] += price_sgmnt
+        return price, sgmnt_dict
 
+    @tools.ormcache('bom', 'internal')
+    def _calc_price_seg(self, bom, internal=None, wizard=None):
+        """Computing the standard price from BOM recursively with its segmentations
+        :param bom: Bom which you want to compute the cost
+        :type bom: mrp.bom()
+        :param internal: Used to return the new cost without writing the cost
+        to the target product
+        :param wizard: Used to write new cost even if is internal when function
+        called from the wizard
+        :return: The new price
+        :rtype: str"""
+        price, sgmnt_dict = self._calc_material_price_seg(bom, internal, wizard)
         total_cost = 0.0
         for order in bom.routing_id.operation_ids or ():
             workcenter = order.workcenter_id
