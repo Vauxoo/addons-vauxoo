@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="product_x" model="product.product">
+            <field name="name">product_x</field>
+            <field name="type">product</field>
+            <field name="cost_method">average</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">5</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="product_y" model="product.product">
+            <field name="name">product_y</field>
+            <field name="type">product</field>
+            <field name="cost_method">standard</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">15</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+        <record id="product_z" model="product.product">
+            <field name="name">product_z</field>
+            <field name="type">product</field>
+            <field name="cost_method">standard</field>
+            <field name="valuation">real_time</field>
+            <field name="standard_price">80</field>
+            <field name="property_stock_account_input" ref="account.o_expense"/>
+            <field name="property_stock_account_output" ref="account.o_income"/>
+        </record>
+
+        <!-- INITIALIZING INVENTORY FOR RAW MATERIAL -->
+        <record id="basic_stock_inventory" model="stock.inventory">
+            <field name="name">INITIAL INVENTORY - MRP WORKCENTER SEGMENTATION</field>
+        </record>
+        <record id="basic_stock_inventory_line_2" model="stock.inventory.line">
+            <field name="product_id" ref="product_x"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="basic_stock_inventory"/>
+            <field name="product_qty">2.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <function model="stock.inventory" name="action_done">
+            <function eval="[[('id', '=', ref('basic_stock_inventory'))]]" model="stock.inventory" name="search"/>
+        </function>
+
+        <record id="routing_product_y" model="mrp.routing">
+            <field name="name">routing_product_y</field>
+            <field name="journal_id" ref="product_extended_segmentation.landed_cost_journal_1"/>
+        </record>
+
+        <record id="routing_workcenter_product_y" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="routing_product_y"/>
+            <field name="workcenter_id" ref="product_extended_segmentation.basic_workcenter"/>
+            <field name="name">routing_workcenter_product_y</field>
+            <field name="hour_nbr">2</field>
+            <field name="cycle_nbr">0</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="routing_product_z" model="mrp.routing">
+            <field name="name">routing_product_z</field>
+            <field name="journal_id" ref="product_extended_segmentation.landed_cost_journal_1"/>
+        </record>
+        <record id="routing_workcenter_product_z" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="routing_product_z"/>
+            <field name="workcenter_id" ref="product_extended_segmentation.basic_workcenter"/>
+            <field name="name">routing_workcenter_product_z</field>
+            <field name="hour_nbr">2</field>
+            <field name="cycle_nbr">0</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="bom_product_y" model="mrp.bom">
+            <field name="name">bom_product_y</field>
+            <field model="product.template" name="product_tmpl_id" search="[('name', '=', u'product_y')]"/>
+            <field name="product_id" eval="False"/>
+            <field name="product_qty">1</field>
+            <field name="routing_id" ref="routing_product_y"/>
+        </record>
+        <record id="bom_line_product_b" model="mrp.bom.line">
+            <field name="product_id" ref="product_extended_segmentation.producto_b"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_y"/>
+        </record>
+
+        <record id="bom_product_z" model="mrp.bom">
+            <field name="name">bom_product_z</field>
+            <field model="product.template" name="product_tmpl_id" search="[('name', '=', u'product_z')]"/>
+            <field name="product_id" eval="False"/>
+            <field name="product_qty">1</field>
+            <field name="routing_id" ref="routing_product_z"/>
+        </record>
+        <record id="bom_line_product_c" model="mrp.bom.line">
+            <field name="product_id" ref="product_extended_segmentation.producto_c"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_z"/>
+        </record>
+        <record id="bom_line_product_d" model="mrp.bom.line">
+            <field name="product_id" ref="product_extended_segmentation.producto_d"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_z"/>
+        </record>
+        <record id="bom_sub_product_x" model="mrp.subproduct">
+            <field name="product_id" ref="product_x"/>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="product_qty">2</field>
+            <field name="bom_id" ref="bom_product_z"/>
+        </record>
+        <record id="bom_sub_product_y" model="mrp.subproduct">
+            <field name="product_id" ref="product_y"/>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_z"/>
+        </record>
+    </data>
+</openerp>
