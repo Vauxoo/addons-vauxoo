@@ -2,92 +2,91 @@
 <odoo>
 
     <template id="account_entries_report" name="Entries Report">
-        <t t-call="web.external_layout">
-            <t t-set="count" t-value="0"/>
-            <t t-set="count_total" t-value="len(docs)"/>
-            <t t-foreach="docs" t-as="o">
-                <t t-set="count" t-value="count+1"/>
-                <div class="page">
-                    <div class="oe_structure"/>
-                    <br/>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div>
-                                <td>Journal Entries:</td>
-                                <span t-field="o.name"/>
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <td>Journal Entries:</td>
+                                    <span t-field="o.name"/>
+                                </div>
+                                <div>
+                                    <td>Reference:</td>
+                                    <span t-field="o.ref"/>
+                                </div>
+                                <div>
+                                    <td>Date:</td>
+                                    <span t-field="o.date"/>
+                                </div>
+                                <div>
+                                    <h4>To Review:</h4>
+                                </div>
                             </div>
-                            <div>
-                                <td>Reference:</td>
-                                <span t-field="o.ref"/>
-                            </div>
-                            <div>
-                                <td>Date:</td>
-                                <span t-field="o.date"/>
-                            </div>
-                            <div>
-                                <h4>To Review:</h4>
+                            <div class="text-right">
+                                <p>Printing Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <p>Printing Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
+                        <t t-if="o.line_ids">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr style="font-size:8pt; background-color:#620400; color:#FFFFFF;">
+                                        <th>Invoice</th>
+                                        <th>Name</th>
+                                        <th>Partner</th>
+                                        <th>Account</th>
+                                        <th>Due date</th>
+                                        <th class="text-right">Debit</th>
+                                        <th class="text-right">Credit</th>
+                                        <th>Analytic account</th>
+                                        <th class="text-right">Amount Currency</th>
+                                        <th>Currency</th>
+                                        <th>Tax Account</th>
+                                        <th class="text-right">Tax Amount</th>
+                                        <th>Reconcile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.line_ids" t-as="l" style="font-size:6pt;">
+                                        <td><span t-field="l.invoice_id"/></td>
+                                        <td><span t-field="l.name"/></td>
+                                        <td><span t-field="l.partner_id"/></td>
+                                        <td><span t-field="l.account_id"/></td>
+                                        <td><span t-field="l.date_maturity"/></td>
+                                        <td class="text-right">
+                                            <span t-field="l.debit"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.credit"/>
+                                        </td>
+                                        <td><span t-field="l.analytic_account_id"/></td>
+                                        <td class="text-right">
+                                            <span t-field="l.amount_currency"/>
+                                        </td>
+                                        <td><span t-field="l.currency_id.name"/></td>
+                                        <td><span t-field="l.tax_line_id.account_id.name"/></td>
+                                        <td class="text-right">
+                                            <span t-field="l.tax_line_id.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        <td><span t-field="l.full_reconcile_id.name"/></td>
+                                    </tr>
+                                    <tr style="font-size:8pt; background-color:#dcdcdc">
+                                        <td colspan="5"></td>
+                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td colspan="7"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <div t-if="o_index &lt; len(docs)">
+                            <p style="page-break-before:always;"> </p>
                         </div>
+                        <div class="oe_structure"/>
                     </div>
-                    <t t-if="o.line_ids">
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr style="font-size:8pt; background-color:#620400; color:#FFFFFF;">
-                                    <th>Invoice</th>
-                                    <th>Name</th>
-                                    <th>Partner</th>
-                                    <th>Account</th>
-                                    <th>Due date</th>
-                                    <th class="text-right">Debit</th>
-                                    <th class="text-right">Credit</th>
-                                    <th>Analytic account</th>
-                                    <th class="text-right">Amount Currency</th>
-                                    <th>Currency</th>
-                                    <th>Tax Account</th>
-                                    <th class="text-right">Tax Amount</th>
-                                    <th>Reconcile</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr t-foreach="o.line_ids" t-as="l" style="font-size:6pt;">
-                                    <td><span t-field="l.invoice_id"/></td>
-                                    <td><span t-field="l.name"/></td>
-                                    <td><span t-field="l.partner_id"/></td>
-                                    <td><span t-field="l.account_id"/></td>
-                                    <td><span t-field="l.date_maturity"/></td>
-                                    <td class="text-right">
-                                        <span t-field="l.debit"/>
-                                    </td>
-                                    <td class="text-right">
-                                        <span t-field="l.credit"/>
-                                    </td>
-                                    <td><span t-field="l.analytic_account_id"/></td>
-                                    <td class="text-right">
-                                        <span t-field="l.amount_currency"/>
-                                    </td>
-                                    <td><span t-field="l.currency_id.name"/></td>
-                                    <td><span t-field="l.tax_line_id.account_id.name"/></td>
-                                    <td class="text-right">
-                                        <span t-field="l.tax_line_id.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                    <td><span t-field="l.full_reconcile_id.name"/></td>
-                                </tr>
-                                <tr style="font-size:8pt; background-color:#dcdcdc">
-                                    <td colspan="5"></td>
-                                    <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
-                                    <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
-                                    <td colspan="7"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </t>
-                    <div t-if="count &lt; count_total">
-                        <p style="page-break-before:always;"> </p>
-                    </div>
-                    <div class="oe_structure"/>
-                </div>
+                </t>
             </t>
         </t>
     </template>
