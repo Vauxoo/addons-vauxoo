@@ -1,12 +1,4 @@
-# coding: utf-8
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: nhomar <nhomar@vauxoo.com>
-############################################################################
+
 from itertools import zip_longest
 from odoo import api, fields, models
 
@@ -16,12 +8,10 @@ class AccountInvoiceRefund(models.TransientModel):
 
     @api.onchange('percentage')
     def _onchange_amount_total(self):
-        context = dict(self._context)
-        inv_obj = self.env['account.invoice']
-        amount_total = 0
-        for inv in inv_obj.browse(context.get('active_ids', self.active_id)):
-            amount_total += inv.amount_total * (self.percentage / 100)
-        self.amount_total = amount_total
+        invoices = self.env['account.invoice'].browse(
+            self._context.get('active_ids', self.active_id))
+        self.amount_total = sum(invoices.mapped('amount_total')) * (
+            self.percentage / 100)
 
     filter_refund = fields.Selection(
         selection_add=[('early_payment', 'Early payment: Prepare a discount '
@@ -31,7 +21,7 @@ class AccountInvoiceRefund(models.TransientModel):
     product_id = fields.Many2one(
         'product.product', string='Product',
         default=lambda x: x.env.ref(
-            'account_refund_early_payment.product_discount'))
+            'account_refund_early_payment.product_discount', False))
     amount_total = fields.Float()
     active_id = fields.Integer()
 
@@ -44,6 +34,7 @@ class AccountInvoiceRefund(models.TransientModel):
             self._context.get('active_ids'))
         total = sum(invoices.mapped('amount_total'))
         refunds = invoices.browse(result.get('domain')[1][2])
+        refunds.mapped('tax_line_ids').unlink()
         refunds.mapped('invoice_line_ids').unlink()
         for inv, refund in zip_longest(invoices, refunds, fillvalue=None):
             if not inv or not refund:
@@ -53,6 +44,8 @@ class AccountInvoiceRefund(models.TransientModel):
             tax_perc = sum(taxes.filtered(
                 lambda tax: not tax.price_include
                 and tax.amount_type == 'percent').mapped('amount'))
+            account = self.product_id.product_tmpl_id.get_product_accounts(
+                inv.fiscal_position_id)['income']
             self.env['account.invoice.line'].create({
                 'invoice_id': refund.id,
                 'product_id': self.product_id.id,
@@ -62,24 +55,24 @@ class AccountInvoiceRefund(models.TransientModel):
                     (6, 0, taxes._ids)],
                 'price_unit': self.amount_total * percentage / (
                     1.0 + (tax_perc or 0.0) / 100),
-                'account_id': self.product_id.property_account_income_id.id or
-                              self.product_id.categ_id.property_account_income_categ_id.id
+                'account_id': account.id,
             })
             refund.compute_taxes()
             refund.action_invoice_open()
             # Which is the aml to reconcile to (the receivable one)
             reconcile = refund.move_id.line_ids.filtered(
-                lambda x: x.account_id == refund.account_id and not
-                x.rec_aml).sorted('date_maturity')
+                lambda x: x.account_id == refund.account_id
+                and not x.reconciled).sorted('date_maturity')
             inv.assign_outstanding_credit(reconcile.id)
         return result
 
     @api.model
     def action_split_reconcile(self, brw):
-
-        context = dict(self._context)
+        active_ids = self.env.context.get('active_ids')
+        if not active_ids:
+            return False
+        invoices = self.env['account.invoice'].browse(active_ids)
         prec = self.env['decimal.precision'].precision_get('Account')
-        inv_obj = self.env['account.invoice']
         account_m_line_obj = self.env['account.move.line']
 
         brw.move_id.button_cancel()
@@ -87,8 +80,8 @@ class AccountInvoiceRefund(models.TransientModel):
         # we get the aml of refund to be split and reconciled
         to_reconcile_ids = {}
         for tmpline in brw.move_id.line_id:
-            if tmpline.account_id.reconcile and\
-                    tmpline.account_id.type in ('receivable'):
+            if (tmpline.account_id.reconcile
+                    and tmpline.account_id.type == 'receivable'):
                 move_line_id_refund = tmpline
                 move_refund_credit = tmpline.credit
             elif tmpline.account_id.reconcile:
@@ -97,21 +90,21 @@ class AccountInvoiceRefund(models.TransientModel):
 
         amount_total_inv = 0
         invoice_source = []
-        # Get the amount_total of all invoices to can make
+        # Get the amount_total of all invoices to make
         # proration with refund
 
-        for inv in inv_obj.browse(context.get('active_ids')):
+        for inv in invoices:
             amount_total_inv += inv.currency_id.round(inv.amount_total)
             invoice_source.append(inv.number)
 
-        for inv in inv_obj.browse(context.get('active_ids')):
+        for inv in invoices:
             for line in inv.move_id.line_id:
-                if line.account_id.reconcile and not\
-                        line.reconcile_id and\
-                        line.account_id == move_line_id_refund.account_id:
+                if (line.account_id.reconcile
+                        and not line.reconcile_id
+                        and line.account_id == move_line_id_refund.account_id):
                     amount_inv_refund = (
-                        amount_total_inv and inv.amount_total / amount_total_inv) *\
-                        move_line_id_refund.credit or 0.0
+                        amount_total_inv and inv.amount_total
+                        / amount_total_inv) * move_line_id_refund.credit or 0.0
 
                     if 1 > (abs(move_refund_credit - amount_inv_refund)) >\
                             10 ** (-max(5, prec)):

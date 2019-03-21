@@ -7,7 +7,7 @@ Account Refund Early Payment
 This module adds the option Early Payment to create Customer Refund
 
 You can create one Customer Refund with Early Payment for several invoices
-from tree view
+from the tree view
 
 .. image:: account_refund_early_payment/static/src/img/refundfrominvoices.png
     :width: 300pt
@@ -19,8 +19,8 @@ default is set with percent of 5.0
 .. image:: account_refund_early_payment/static/src/img/refundwizard.png
     :width: 300pt
 
-The customer refund created shows in Source Document all invoices that
-were used in this customer refund
+The created customer refund has set on the Source Document field all invoices that
+were used.
 
 .. image:: account_refund_early_payment/static/src/img/refundsourcedocument.png
     :width: 300pt
@@ -31,22 +31,20 @@ customer refund
 .. image:: account_refund_early_payment/static/src/img/refundpayment.png
     :width: 300pt
 
-This module splits into journal entry of customer refund
+This module splits into journal entries of customer refund
 creating one journal item per invoice in order to create independent reconciliations
 
 .. image:: account_refund_early_payment/static/src/img/refundjournalentries.png
     :width: 300pt
 
-Requirements:
--------------
-- Go to https://github.com/Vauxoo/addons-vauxoo and download repo in order to install account_refund_early_payment module.
 
 Contributors
 ------------
 
-* Humberto Arrocha <hbto@vauxoo.com>
-* Yanina Aular <yani@vauxoo.com>
+* Yanina Aular <yanina.aular@vauxoo.com>
+* Humberto Arocha <hbto@vauxoo.com>
 * Julio Serna <julio@vauxoo.com>
+* Luis González <lgonzalez@vauxoo.com>
 
 Maintainer
 ----------

@@ -1,32 +1,21 @@
-# coding: utf-8
-###############################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
-#    All Rights Reserved
-#  ############ Credits #######################################################
-#    Coded by: Yanina Aular <yani@vauxoo.com>
-#    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
-#    Audited by: Jose Morales <jose@vauxoo.com>
-###############################################################################
+# Copyright 2019 Vauxoo
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
     'name': 'Account Refund Early Payment',
-    'version': '11.0.0.1.6',
+    'version': '12.0.1.0.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'license': 'LGPL-3',
     'category': '',
-    'depends': ['account_accountant'],
+    'depends': [
+        'account_accountant',
+    ],
     'data': [
         'data/data.xml',
-        'view/refund_early_payment.xml',
+        'wizards/account_invoice_refund_view.xml',
     ],
     'demo': [
-        'demo/account_invoice_demo.xml',
     ],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
     "installable": True,
 }
