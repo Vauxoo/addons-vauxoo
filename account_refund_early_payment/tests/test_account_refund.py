@@ -1,96 +1,71 @@
-# coding: utf-8
-##############################################################################
-#
-#    OpenERP, Open Source Business Applications
-#    Copyright (c) 2012-TODAY OpenERP S.A. <http://openerp.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestEarlyPayment(TransactionCase):
     def setUp(self):
         super(TestEarlyPayment, self).setUp()
-        self.account_receivable_id = self.env.ref("account.a_recv")
-        self.account_invoice_model = self.env['account.invoice']
-        self.account_invoice_line_model = self.env['account.invoice.line']
-        self.account_invoice_refund_model = self.env['account.invoice.refund']
+        self.invoice_model = self.env['account.invoice']
+        self.invoice_line_model = self.env['account.invoice.line']
+        self.refund_wizard = self.env['account.invoice.refund']
+        self.partner = self.env.ref('base.res_partner_3')
+        self.product = self.env.ref('product.product_product_5')
 
-    def test_early_payment_from_invoices(self):
-        'This test validate the split of reconciliatio between '\
-            'one refund and invoices to apply early payment refund'
+    def create_invoice(self, inv_type='out_invoice', product=None):
+        invoice = self.invoice_model.create({
+            'partner_id': self.partner.id,
+            'type': inv_type,
+        })
+        self.create_invoice_line(invoice, product)
+        return invoice
 
-        move_line_id = []
-        invoice_ids = []
-        invoice_number = []
+    def create_invoice_line(self, invoice, product=None):
+        if product is None:
+            product = self.product
+        line = self.invoice_line_model.new({
+            'product_id': product.id,
+            'invoice_id': invoice.id,
+            'quantity': 1,
+        })
+        line._onchange_product_id()
+        values = line._convert_to_write(line._cache)
+        return self.invoice_line_model.create(values)
 
-        # get all invoices demo to use to reconcile with refund
-        invoice_brw_ids = [
-            self.env.ref(
-                'account_refund_early_payment.invoice_%s' % invoice_number_id)
-            for invoice_number_id in [1, 2, 3, 4, 5, 6]]
+    def test_01_early_payment_from_invoices(self):
+        """Test case: apply early payment refund to invoices
 
-        for invoice_id in invoice_brw_ids:
-            # save invoice ids to use in active_ids of wizard of early_payment
-            invoice_ids.append(invoice_id.id)
-            # validate invoice
-            invoice_id.signal_workflow('invoice_open')
-            invoice_number.append(invoice_id.number)
+        This test covers the process of applying an early payment discount to
+        several invoices.
+        """
+        # Create three invoices for different products
+        product2 = self.env.ref('product.product_product_6')
+        product3 = self.env.ref('product.product_product_7')
+        invoices = (self.create_invoice(product=self.product)
+                    + self.create_invoice(product=product2)
+                    + self.create_invoice(product=product3))
 
-            # we search aml with account receivable
-            for line_invoice in invoice_id.move_id.line_id:
-                if line_invoice.account_id.id == self.account_receivable_id.id:
-                    move_line_id.append(line_invoice)
-                    break
-        # create refund early payment
-        account_refund_id = self.account_invoice_refund_model.with_context(
-            {'active_ids': invoice_ids}).create({
-                'filter_refund': 'early_payment',
-                'amount_total': '52.61'
-            })
-        # it is necessary to allow cancel entry because after reconciliation
-        # normal we need to modify and split journal entry original
-        account_refund_id.journal_id.write({'update_posted': True})
-        result = account_refund_id.invoice_refund()
-        refund_id = result.get('domain')[1][2]
-        checked_line_reconciled = []
-        checked_line = 0
-        refund_brw = self.account_invoice_model.browse(refund_id)
-        for line_move_refund_id in refund_brw.move_id.line_id:
-            for line_move_invoice_id in move_line_id:
-                if line_move_refund_id.reconcile_partial_id ==\
-                        line_move_invoice_id.reconcile_partial_id:
-                    checked_line_reconciled.append(
-                        line_move_refund_id.reconcile_partial_id.id)
-            if line_move_refund_id.credit == 5.01:
-                checked_line += 1
-            if line_move_refund_id.credit == 16.00:
-                checked_line += 1
-            if line_move_refund_id.credit == 20.00:
-                checked_line += 1
-            if line_move_refund_id.credit == 0.05:
-                checked_line += 1
-            if line_move_refund_id.credit == 1.52:
-                checked_line += 1
-            if line_move_refund_id.credit == 10.03:
-                checked_line += 1
+        invoices.action_invoice_open()
+        self.assertEqual(invoices.mapped('state'), 3*['open'])
 
-        self.assertEquals(checked_line, 6)
-        self.assertEquals(len(set(checked_line_reconciled)), 6)
-        self.assertEquals(
-            refund_brw.origin,
-            ','.join(inv_number for inv_number in invoice_number))
+        # Create the refund
+        ctx = {'active_model': 'account.invoice', 'active_ids': invoices.ids}
+        wizard = self.refund_wizard.with_context(ctx).create({
+            'filter_refund': 'early_payment',
+            'percentage': 5.0,
+            'description': 'Test discount',
+            'date': invoices[0].date,
+            'date_invoice': invoices[0].date_invoice,
+        })
+        wizard._onchange_amount_total()
+        result = wizard.invoice_refund()
+        self.assertTrue(result)
+
+        # Check created refunds
+        refunds = self.invoice_model.search(result['domain'], order='id')
+        self.assertEqual(len(refunds), 3)
+        self.assertListEqual(
+            refunds.mapped('origin'), invoices.mapped('number'))
+
+        # Refunds should be for 5% of invoice totals
+        five_percent = [x*5/100 for x in invoices.mapped('amount_total')]
+        self.assertEqual(refunds.mapped('amount_total'), five_percent)
