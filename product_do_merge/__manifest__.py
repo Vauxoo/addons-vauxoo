@@ -22,7 +22,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
     "name": "Merge Duplicate Products",
-    "version": "8.0.0.0.6",
+    "version": "11.0.0.0.1",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "website": "http://www.vauxoo.com/",

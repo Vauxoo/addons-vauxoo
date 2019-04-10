@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <menuitem id='root_menu_product' name='Tools' parent='stock.menu_stock_root' sequence="14" groups='res_group_product_do_merge'/>
 
@@ -102,7 +101,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record model='ir.ui.view' id='base_product_merge_automatic_wizard_form_two'>
             <field name='name'>base.product.merge.automatic.wizard.form.two</field>
             <field name="priority">999</field>
@@ -169,7 +168,7 @@
                                     <field name="name_template" />
                                 </tree>
                             </field>
-                            </group>                            
+                            </group>
                         </page>
                     </notebook>
                     </sheet>
@@ -180,5 +179,4 @@
         <act_window id="action_product_merge" res_model="base.product.merge.automatic.wizard" src_model="product.product"
             target="new" multi="True" key2="client_action_multi" view_mode="form" name="Automatic Merge" groups='res_group_product_do_merge'/>
 
-    </data>
-</openerp>
+</odoo>
