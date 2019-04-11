@@ -40,6 +40,4 @@
     "js": [],
     "css": [],
     "qweb": [],
-    "installable": False,
-    "auto_install": False,
 }

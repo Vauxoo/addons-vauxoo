@@ -29,3 +29,5 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     create_date = fields.Datetime('Create Date', readonly=True)
+    name_template = fields.Char(related='product_tmpl_id.name', store=True,
+                                readonly=True)
