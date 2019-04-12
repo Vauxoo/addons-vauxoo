@@ -81,7 +81,7 @@
                                 redirected to the aggregated product. You can remove
                                 products from this list to avoid merging them.
                                 </p>
-                                <field name="product_to" domain="[('id', 'in', product_ids and product_ids[0] and product_ids[0][2] or False)]" attrs="{'required': [('state', '=', 'selection')]}"/>
+                                <field name="product_to" domain="[('id', 'in', product_ids or [])]" attrs="{'required': [('state', '=', 'selection')]}"/>
                                 <field name="product_ids" nolabel="1">
                                 <tree string="Products">
                                     <field name="id" />
@@ -161,7 +161,7 @@
                                 redirected to the aggregated product. You can remove
                                 products from this list to avoid merging them.
                                 </p>
-                                <field name="product_to" domain="[('id', 'in', product_ids and product_ids[0] and product_ids[0][2] or False)]" attrs="{'required': [('state', '=', 'selection')]}"/>
+                                <field name="product_to" domain="[('id', 'in', product_ids or [])]" attrs="{'required': [('state', '=', 'selection')]}"/>
                             </group>
                             <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}">
                                 <field name="product_ids" nolabel="1">

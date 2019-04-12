@@ -200,11 +200,9 @@ class MergeProductAutomatic(models.TransientModel):
                     # Validation with flag
                     for match in self.env.cr.dictfetchall():
                         uos_field = uos_table.get(table)
-                        uos_id = [match.get(i)
-                                    for i in uos_field
-                                    if match.get(i, False)]
-                        if all([(i in uom_ids and True or False)
-                                for i in uos_id]):
+                        uos_id = [match.get(i) for i in uos_field
+                                  if match.get(i, False)]
+                        if all([(i in uom_ids) for i in uos_id]):
                             continue
                         else:
                             flag.append(False)
@@ -218,11 +216,9 @@ class MergeProductAutomatic(models.TransientModel):
                         self.env.cr.execute(query, (product_ids,))
                         for match in self.env.cr.dictfetchall():
                             uos_field = uos_table.get(table)
-                            uos_id = [match.get(i)
-                                        for i in uos_field
-                                        if match.get(i, False)]
-                            if all([(i in uom_ids and True or False)
-                                    for i in uos_id]):
+                            uos_id = [match.get(i) for i in uos_field
+                                      if match.get(i, False)]
+                            if all([(i in uom_ids) for i in uos_id]):
                                 query = '''UPDATE "%(table)s"
                                             SET %(column)s = %%s
                                             WHERE id=%%s''' % query_dic
