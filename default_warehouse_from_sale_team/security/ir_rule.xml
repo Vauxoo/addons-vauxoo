@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <openerp>
-        <data noupdate="0">
+    <odoo noupdate="0">
 
             <!-- stock.picking.type -->
             <record id="rule_default_warehouse_stock_picking_type_team" model="ir.rule">
@@ -65,5 +64,4 @@
                 <field name="groups" eval="[(6, 0, [ref('default_warehouse_from_sale_team.group_manager_default_warehouse_sp')])]"/>
             </record>
 
-        </data>
-    </openerp>
+    </odoo>
