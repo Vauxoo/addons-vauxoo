@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<openerp>
-    <data>
+<odoo>
 
        <record model="ir.ui.view" id="view_crm_team_form_inherit">
             <field name="name">view.crm.team.form.inherit</field>
@@ -34,5 +33,4 @@
                 </xpath>
             </field>
         </record>
-    </data>
-</openerp>
+</odoo>
