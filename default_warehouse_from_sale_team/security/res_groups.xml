@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <openerp>
-        <data noupdate="0">
+    <odoo noupdate="0">
 
             <record id="default_warehouse_module" model="ir.module.category">
                 <field name="name">Default Warehouse</field>
@@ -40,5 +39,4 @@
                 <field name="comment">Not matter sales teams will leave the user to see all the Journal</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
-        </data>
-    </openerp>
+    </odoo>
