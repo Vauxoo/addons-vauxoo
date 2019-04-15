@@ -9,7 +9,7 @@
     'website': "http://www.vauxoo.com",
     'license': 'AGPL-3',
     'category': '',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'depends': [
         'sale_stock',
         'delivery',
