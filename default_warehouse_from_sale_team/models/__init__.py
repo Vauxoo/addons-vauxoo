@@ -5,3 +5,4 @@ from . import sales
 from . import stock
 from . import purchase
 from . import account_journal
+from . import account_invoice
