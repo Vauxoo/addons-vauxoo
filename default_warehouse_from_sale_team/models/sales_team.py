@@ -8,7 +8,6 @@ class InheritedCrmSaseSection(models.Model):
     _inherit = "crm.team"
 
     default_warehouse = fields.Many2one('stock.warehouse',
-                                        string='Default Warehouse',
                                         help='In this field can be '
                                         'defined a default warehouse for '
                                         'the related users to the sales team.')
@@ -48,7 +47,7 @@ class WarehouseDefault(models.Model):
                 [('model_id', '=', model_id.id),
                  ('relation', '=', 'stock.warehouse'),
                  ('ttype', '=', 'many2one')])
-            names_list = list(set([field.name for field in fields_data]))
+            names_list = list({field.name for field in fields_data})
             defaults.update(
                 {name: warehouse_id for name in names_list
                  if defaults.get(name)})
