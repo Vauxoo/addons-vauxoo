@@ -27,6 +27,7 @@ class WarehouseDefault(models.Model):
     """
 
     _name = "default.warehouse"
+    _description = "Default Warehouse"
 
     @api.model
     def default_get(self, fields_list):
