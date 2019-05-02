@@ -1,0 +1,259 @@
+<html>
+ <head>
+  <style>
+   .backgrounds{background-color:#fff;color:#a41d35}
+  </style>
+ </head>
+ <body>
+  <section class="oe_container" id="description">
+   <object data="https://img.shields.io/badge/licence-AGPL--3-blue.svg" type="image/svg+xml">
+    License: AGPL-3
+   </object>
+   <div class="section oe_span12" id="sales-team-warehouse">
+    <h2 class="oe_slogan">
+     Sales Team Warehouse
+    </h2>
+    <div class="section oe_span12" id="usage">
+     <h2>
+      Usage
+     </h2>
+     <p class="oe_mt32">
+      Add a field
+      <cite>
+       default_warehouse
+      </cite>
+      in sales team.
+     </p>
+     <p class="oe_mt32">
+      Create sort kind of api where any object with field called warehouse_id will
+take the default value from the sales team field
+this taking into account the team defined in
+      <cite>
+       Default Sale Teams
+      </cite>
+      field defined
+in the res.user model.
+     </p>
+     <p class="oe_mt32">
+      To improve, consistency and usability we add the next features:
+     </p>
+     <ul>
+      <li>
+       <p class="oe_mt32">
+        If you try to add a default sale team where the user do not belongs wil throw
+you an error message: Can not set default team is do not belongs to sale team
+       </p>
+      </li>
+      <li>
+       <p class="oe_mt32">
+        Add an automated action/server action to update the user default sales team
+every time that a sales teams by:
+       </p>
+       <blockquote>
+        <ul class="simple">
+         <li>
+          add user's default sale team if empty.
+         </li>
+         <li>
+          remove default sale team from user if not longer in sale team.
+         </li>
+         <li>
+          dummy write to update m2m in users to make new feature for filtering
+records.
+         </li>
+        </ul>
+       </blockquote>
+      </li>
+     </ul>
+     <p class="oe_mt32">
+      Currently this default warehouse feature applies for sale.order,
+stock.picking.type and stock.picking.
+     </p>
+     <p class="oe_mt32">
+      Also add a new feature for Permissions and Security: Taking advantage of the
+default_warehouse field in the sales team model now we can filter the
+records (picking type and picking model) to only show those records that match
+with the user sale teams default_warehouse. To accomplish this I:
+     </p>
+     <ul class="simple">
+      <li>
+       add new groups to manage the records access by user:
+       <ul>
+        <li>
+         Default Warehouse / Limited access to pickings (filtered by sale teams)
+        </li>
+        <li>
+         Default Warehouse / Limited access to stock pickings (filtered by sale teams)
+        </li>
+        <li>
+         Default Warehouse / Access to all picking types (filtered by sale teams)
+        </li>
+        <li>
+         Default Warehouse / Access to all pickings (filtered by sale teams)
+        </li>
+       </ul>
+      </li>
+      <li>
+       add new m2m field in the res.user model used in the new ir.rules.
+this onw is showed as a readonly field (only informative) to know
+the teams were the sale user belongs.
+      </li>
+      <li>
+       add new ir.rule records, one for each default warehouse group. This
+one will let us to only show the records for the current user sale
+teams default_warehouse or to do not take into account the sale teams
+and show all the records to the user.
+      </li>
+     </ul>
+     <p class="oe_mt32">
+      To add more models use it simple do this:
+     </p>
+     <ol class="arabic">
+      <li>
+       <p class="oe_mt32">
+        inherit the class that you want to set the field warehouse_id:
+       </p>
+       <pre class="literal-block">
+class SomeClass(models.Model):
+    _name = 'some.class'
+    _inherit = ['some.class', 'default.warehouse']
+    warehouse_id = fields.Many2one('stock.warehouse', help='Warehouse were'
+    'this object will belong to')
+</pre>
+      </li>
+     </ol>
+     <p class="oe_mt32">
+      2. Create two ir.rule to filter stock.picking and stock.picking.type taking
+into account the current user warehouses. When a user is part of warehouse
+teams will be able to access only the records related to that warehouses:
+     </p>
+     <pre class="literal-block">
+&lt;record id="rule_group_model" model="ir.rule"&gt;
+    &lt;field name="name"&gt;Limited access to model (filtered by sales teams)&lt;/field&gt;
+    &lt;field name="model_id" search="[('model','=','model')]" model="ir.model"/&gt;
+    &lt;field name="groups" eval"[(6, 0, [ref('xml_id_group')])]/&gt;
+    &lt;field name="domain_force"&gt;[('warehouse_id', 'in', [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]&lt;/field&gt;
+&lt;/record&gt;
+&lt;record id="rule_group_model_2" model="ir.rule"&gt;
+    &lt;field name="name"&gt;Access to all model&lt;/field&gt;
+    &lt;field name="model_id" search="[('model','=','model')]" model="ir.model"/&gt;
+    &lt;field name="groups" eval"[(6, 0, [ref('xml_id_group')])]/&gt;
+    &lt;field name="domain_force"&gt;[(1, '=', 1)]&lt;/field&gt;
+&lt;/record&gt;
+</pre>
+     <ol class="arabic simple" start="3">
+      <li>
+       Don't forget depends of this module adding it to the list into
+       <cite>
+        __openerp__.py
+       </cite>
+      </li>
+     </ol>
+     <p class="oe_mt32">
+      The default value from this field will be the warehouse setted in the section
+If the user is not related to a sales team or not warehouse setted on the
+section the default warehouse will be set using the default behavior of the
+system which is assign the main warehouse.
+     </p>
+    </div>
+    <div class="section oe_span12" id="bug-tracker">
+     <h2>
+      Bug Tracker
+     </h2>
+     <p class="oe_mt32">
+      Bugs are tracked on
+      <a class="reference external" href="https://github.com/Vauxoo/addons-vauxoo/issues">
+       GitHub Issues
+      </a>
+      .
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us smashing it by providing a detailed and
+welcomed feedback
+      <a class="reference external" href="https://github.com/Vauxoo/addons-vauxoo/issues/new?body=module:%20default_warehouse_from_sale_team%0Aversion:%208.0.2.0.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">
+       here
+      </a>
+     </p>
+    </div>
+    <div class="section oe_span12" id="credits">
+     <h2>
+      Credits
+     </h2>
+     <p class="oe_mt32">
+      <strong>
+       Contributors
+      </strong>
+     </p>
+     <ul class="simple">
+      <li>
+       Nhomar Hernandez &lt;
+       <a class="reference external" href="mailto:nhomar@vauxoo.com">
+        nhomar@vauxoo.com
+       </a>
+       &gt; (Planner/Developer)
+      </li>
+      <li>
+       Katherine Zaoral &lt;
+       <a class="reference external" href="mailto:kathy@vauxoo.com">
+        kathy@vauxoo.com
+       </a>
+       &gt; (Planner/Developer)
+      </li>
+     </ul>
+    </div>
+   </div>
+  </section>
+  <section class="oe_container">
+   <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+     <h2 class="oe_slogan">
+      Do you need help?
+     </h2>
+     <h3 class="oe_slogan">
+      Let's offer you the best services!
+     </h3>
+     <p class="oe_mt32 text-center">
+      Contact us by our official channels.
+     </p>
+     <div class="oe_spaced">
+      <ul class="text-center list-inline">
+       <li>
+        <a href="https://facebook.com/vauxoo" target="_blank">
+         <i class="fa fa-facebook-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+       <li>
+        <a href="https://twitter.com/vauxoo" target="_blank">
+         <i class="fa fa-twitter-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+       <li>
+        <a href="https://www.linkedin.com/company/vauxoo" target="_blank">
+         <i class="fa fa-linkedin-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+       <li>
+        <a data-placement="left" data-toggle="tooltip" href="https://www.vauxoo.com/page/website.contactus" target="_blank" title="Contact us">
+         <i class="fa fa-envelope-square fa-xs backgrounds">
+         </i>
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <div class="oe_span6">
+     <div class="oe_demo oe_picture oe_screenshot">
+      <a href="https://www.vauxoo.com" r="" target="_blank">
+       <img height="auto" src="https://s3.amazonaws.com/s3.vauxoo.com/description_logo.png" width="200"/>
+      </a>
+      <div class="oe_demo_footer oe_centeralign">
+       Meet Us
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+ </body>
+</html>
