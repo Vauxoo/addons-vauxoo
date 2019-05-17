@@ -150,3 +150,29 @@ class AccountAssetAsset(models.Model):
                 'different_dates': category.different_dates,
             })
             return val
+
+    def _compute_board_undone_dotation_nb(self, depreciation_date, total_days):
+        res = super(AccountAssetAsset, self)._compute_board_undone_dotation_nb(
+            depreciation_date, total_days)
+        if not (self.prorata and self.different_dates):
+            return res
+        res = res - 1
+        return res
+
+    def _compute_board_amount(self, sequence, residual_amount,
+                              amount_to_depr, undone_dotation_number,
+                              posted_depreciation_line_ids, total_days,
+                              depreciation_date):
+        if not self.different_dates:
+            return super(AccountAssetAsset, self)._compute_board_amount(
+                sequence, residual_amount, amount_to_depr,
+                undone_dotation_number, posted_depreciation_line_ids,
+                total_days, depreciation_date)
+        if sequence == undone_dotation_number:
+            return residual_amount
+        if self.method == 'linear':
+            return amount_to_depr / (undone_dotation_number - len(
+                posted_depreciation_line_ids))
+        if self.method == 'degressive':
+            return residual_amount * self.method_progress_factor
+        return 0
