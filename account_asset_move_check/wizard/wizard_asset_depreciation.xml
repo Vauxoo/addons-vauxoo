@@ -14,7 +14,7 @@
                 </group>
             </group>
             <footer>
-                <button name='write_historical_true' string="Set as historical" class="oe_highlight" type="object" icon="gtk-ok"/>
+                <button name='write_historical_true' string="Set as historical" class="oe_highlight" type="object"/>
                 <button special="cancel" string="Cancel"/>
             </footer>
         </form>
@@ -22,12 +22,20 @@
     </record>
     <record id="action_depeciation_historical" model="ir.actions.act_window">
         <field name="name">Set Depreciation Historical</field>
-        <field name="type">ir.actions.act_window</field>
         <field name="res_model">wizard.asset.depreciation</field>
         <field name="view_type">form</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="view_wizard_asset_depreciation_historical"/>
         <field name="target">new</field>
-        <field name="multi"></field>
     </record>
+
+    <!-- Add action entry in the Action Menu for Assets -->
+    <act_window id="action_action_depeciation_historical"
+        name="Set Depreciation Historical"
+        src_model="account.asset.asset"
+        res_model="wizard.asset.depreciation"
+        view_type="form"
+        view_mode="form"
+        key2="client_action_multi"
+        target="new"/>
+
 </odoo>
