@@ -37,18 +37,14 @@ class WizardAssetDepreciation(models.TransientModel):
         help='Select date stop to depreciation lines that '
         'will write that the lines are historical', required=True)
 
-    def write_historical_true(self):
-        acc_asset_obj = self.pool.get('account.asset.asset')
-        dep_line_obj = self.pool.get('account.asset.depreciation.line')
-        data = self.browse(self.ids)
-        date_start = data.date_start
-        date_stop = data.date_stop
-        for asset in acc_asset_obj.browse(data):
-            asset_lines = dep_line_obj.search([
-                ('asset_id', '=', asset.id),
+    def write_historical_true(self, asset):
+        date_start = self.date_start
+        date_stop = self.date_stop
+        for asset in asset['active_ids']:
+            asset_lines = self.env['account.asset.depreciation.line'].search([
+                ('asset_id', '=', asset),
                 ('depreciation_date', '>=', date_start),
                 ('depreciation_date', '<=', date_stop),
                 ('move_id', '=', False)])
-            for line in dep_line_obj.browse(asset_lines):
-                line.write({'historical': True})
+            asset_lines.write({'historical': True})
         return True
