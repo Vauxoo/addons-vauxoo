@@ -1,23 +1,55 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<openerp>
-  <data>
+<odoo>
     <record id="sale_stock_accrual_view" model="ir.ui.view">
         <field name="name">Sale Stock Accrual</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//h1" position="after">
-                <div class="oe_right oe_button_box" name="buttons">
-                    <button
-                        type="object"
-                        string="Stock Accruals"
-                        name="view_accrual"
-                        class="oe_stat_button"
-                        icon="fa-truck"
-                        />
-                </div>
+            <xpath expr="//field[@name='state']" position="before">
+                <button
+                    type="object"
+                    name="reconcile_stock_accrual"
+                    groups="account.group_account_user"
+                    string="Reconcile Accruals"
+                    attrs="{'invisible':[('to_be_reconciled','=',0)]}"
+                    class="oe_highlight">
+                    <field name="to_be_reconciled" invisible="True"/>
+                </button>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button type="object" name="view_accrual" class="oe_stat_button"  context="{'search_default_group_by_product':True, 'search_default_unreconciled_n_ap_ar': True}" attrs="{'invisible':['|', ('state', 'in', ('draft','sent')), ('unreconciled_lines', '=', 0)]}" icon="fa-pencil-square-o">
+                    <field name="unreconciled_lines" string="Unreconciled Lines" widget="statinfo"/>
+                </button>
+
+                <button type="object" name="view_accrual" class="oe_stat_button"  context="{'search_default_group_by_product':True, 'search_default_group_by_reconcile':True}" attrs="{'invisible':[('state', 'in', ('draft','sent'))]}" icon="fa-pencil-square-o" string="See all Accruals"/>
             </xpath>
         </field>
     </record>
-  </data>
-</openerp>
+
+    <!--<record id="view_sale order stock accrual search" model="ir.ui.view">
+        <field name="name">Sale Order Stock Accrual Search</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="priority">26</field>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@string='Quotations']" position="after">
+                <filter string="Pending for Reconciliation" domain="[('to_be_reconciled','!=',0)]"/>
+                <filter string="Unreconciled Lines" domain="[('unreconciled_lines','!=',0)]"/>
+                <filter string="Unreconciled &amp; Not Pending for Reconciliation Lines" domain="[('unreconciled_lines','!=',0),('to_be_reconciled','=',0)]"/>
+            </xpath>
+        </field>
+    </record>-->
+
+    <record id="view_sale order stock accrual tree" model="ir.ui.view">
+        <field name="name">Sale Order Stock Accrual Tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="priority">26</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="to_be_reconciled" string="To Be Rec."/>
+                <field name="unreconciled_lines" string="Unrec. Lines"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
