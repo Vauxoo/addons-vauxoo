@@ -56,3 +56,26 @@ class MrpProduction(models.Model):
         return (float_round(
             min(qty) * self.bom_id.product_qty, 0, rounding_method='DOWN') if
             qty and min(qty) >= 0.0 else 0.0)
+
+
+class MrpWorkorder(models.Model):
+
+    _inherit = 'mrp.workorder'
+
+    @api.multi
+    def record_production(self):
+        res = super(MrpWorkorder, self).record_production()
+        for move in self.move_raw_ids.filtered(
+                lambda mov: mov.state not in ('done', 'cancel')
+                and mov.quantity_done > 0):
+            context = self._context.copy()
+            context['mrp_record_production'] = True
+            move.with_context(context)._action_done()
+        if not self.next_work_order_id:
+            finished_moves = self.production_id.move_finished_ids
+            production_moves = finished_moves.filtered(
+                lambda x: (x.product_id.id == self.production_id.product_id.id)
+                and (x.state not in ('done', 'cancel'))
+                and x.quantity_done > 0)
+            for production_move in production_moves:
+                production_move._action_done()
