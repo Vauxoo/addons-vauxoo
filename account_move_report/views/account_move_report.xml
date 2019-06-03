@@ -42,7 +42,9 @@
                                         <th class="text-right">Debit</th>
                                         <th class="text-right">Credit</th>
                                         <th>Analytic account</th>
-                                        <th class="text-right">Amount Currency</th>
+                                        <t t-if="o.line_ids.filtered('amount_currency')">
+                                            <th class="text-right">Amount Currency</th>
+                                        </t>
                                         <th>Currency</th>
                                         <th>Tax Account</th>
                                         <th class="text-right">Tax Amount</th>
@@ -63,10 +65,12 @@
                                             <span t-field="l.credit"/>
                                         </td>
                                         <td><span t-field="l.analytic_account_id"/></td>
-                                        <td class="text-right">
-                                            <span t-field="l.amount_currency"/>
-                                        </td>
-                                        <td><span t-field="l.currency_id.name"/></td>
+                                        <t t-if="l.amount_currency">
+                                            <td class="text-right">
+                                                <span t-field="l.amount_currency"/>
+                                            </td>
+                                        </t>
+                                        <td><span t-field="(l.currency_id or l.company_id.currency_id).name"/></td>
                                         <td><span t-field="l.tax_line_id.account_id.name"/></td>
                                         <td class="text-right">
                                             <span t-field="l.tax_line_id.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
