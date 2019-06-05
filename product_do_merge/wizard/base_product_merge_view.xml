@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <menuitem id='root_menu_product' name='Tools' parent='stock.menu_stock_root' sequence="14" groups='res_group_product_do_merge'/>
 
@@ -82,7 +81,7 @@
                                 redirected to the aggregated product. You can remove
                                 products from this list to avoid merging them.
                                 </p>
-                                <field name="product_to" domain="[('id', 'in', product_ids and product_ids[0] and product_ids[0][2] or False)]" attrs="{'required': [('state', '=', 'selection')]}"/>
+                                <field name="product_to" domain="[('id', 'in', product_ids or [])]" attrs="{'required': [('state', '=', 'selection')]}"/>
                                 <field name="product_ids" nolabel="1">
                                 <tree string="Products">
                                     <field name="id" />
@@ -102,7 +101,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record model='ir.ui.view' id='base_product_merge_automatic_wizard_form_two'>
             <field name='name'>base.product.merge.automatic.wizard.form.two</field>
             <field name="priority">999</field>
@@ -155,21 +154,23 @@
                             </group>
                             <separator string="Merge the following products"
                                 attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}"/>
-                            <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}" col="1">
+                            <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}">
                                 <p class="oe_grey">
                                 The selected products will be merged together. All
                                 documents linking to one of these products will be
                                 redirected to the aggregated product. You can remove
                                 products from this list to avoid merging them.
                                 </p>
-                                <field name="product_to" domain="[('id', 'in', product_ids and product_ids[0] and product_ids[0][2] or False)]" attrs="{'required': [('state', '=', 'selection')]}"/>
+                                <field name="product_to" domain="[('id', 'in', product_ids or [])]" attrs="{'required': [('state', '=', 'selection')]}"/>
+                            </group>
+                            <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}">
                                 <field name="product_ids" nolabel="1">
                                 <tree string="Products">
                                     <field name="id" />
                                     <field name="name_template" />
                                 </tree>
                             </field>
-                            </group>                            
+                            </group>
                         </page>
                     </notebook>
                     </sheet>
@@ -180,5 +181,4 @@
         <act_window id="action_product_merge" res_model="base.product.merge.automatic.wizard" src_model="product.product"
             target="new" multi="True" key2="client_action_multi" view_mode="form" name="Automatic Merge" groups='res_group_product_do_merge'/>
 
-    </data>
-</openerp>
+</odoo>
