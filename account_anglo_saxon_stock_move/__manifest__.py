@@ -23,21 +23,22 @@
 ###############################################################################
 {
     "name": "Account Anglo-Saxon Stock Move",
-    "version": "8.0.0.1.6",
+    "version": "11.0.0.1.0",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "account_anglo_saxon_missing_key",
         "stock_move_entries",
     ],
     "demo": [],
-    "data": [],
+    "data": [
+        'view/company_view.xml'
+    ],
     "test": [],
     "js": [],
     "css": [],
     "qweb": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }
