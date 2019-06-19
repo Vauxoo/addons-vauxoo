@@ -63,8 +63,8 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def action_cancel(self):
-        aml_ids = self.mapped('move_id.line_id').filtered('sm_id')
-        aml_ids.mapped('reconcile_id').unlink()
+        aml_ids = self.mapped('move_id.line_ids').filtered('sm_id')
+        aml_ids.remove_move_reconcile()
         return super(AccountInvoice, self).action_cancel()
 
     def _get_accrual_query(self, query_col, query_type, query_params):
