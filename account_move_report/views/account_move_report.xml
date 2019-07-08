@@ -42,7 +42,7 @@
                                         <th class="text-right">Debit</th>
                                         <th class="text-right">Credit</th>
                                         <th>Analytic account</th>
-                                        <t t-if="o.line_ids.filtered('amount_currency')">
+                                        <t t-if="o.line_ids.mapped('currency_id')">
                                             <th class="text-right">Amount Currency</th>
                                         </t>
                                         <th>Currency</th>
@@ -65,7 +65,7 @@
                                             <span t-field="l.credit"/>
                                         </td>
                                         <td><span t-field="l.analytic_account_id"/></td>
-                                        <t t-if="l.amount_currency">
+                                        <t t-if="l.currency_id">
                                             <td class="text-right">
                                                 <span t-field="l.amount_currency"/>
                                             </td>
