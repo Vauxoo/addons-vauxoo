@@ -294,8 +294,8 @@ class Product(models.Model):
             numb = max(1, numb)
             return [list_p[i:i + numb] for i in range(0, len(list_p), numb)]
 
-        product_ids = self.search([('bom_ids', '!=', False),
-                                   ('cost_method', '=', 'standard')])
+        product_ids = self.search([('bom_ids', '!=', False)]).filtered(
+            lambda p: p.cost_method == 'standard')
         if not product_ids:
             _logger.info(
                 'Cowardly refused run the cron at %s because I do not have '
