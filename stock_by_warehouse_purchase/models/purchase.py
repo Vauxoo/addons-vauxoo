@@ -7,17 +7,18 @@ class PurchaseOrderLine(models.Model):
 
     _inherit = "purchase.order.line"
 
-    warehouses_stock = fields.Text(compute="_compute_get_warehouses_stock")
+    warehouses_stock = fields.Text(store=False, readonly=True)
     warehouse_id = fields.Many2one(
         string="Warehouse",
         related='order_id.picking_type_id.warehouse_id', readonly=True)
+    warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
 
     @api.multi
-    @api.depends('product_id', 'order_id.picking_type_id.warehouse_id')
     def _compute_get_warehouses_stock(self):
         for line in self:
             line.warehouses_stock = line.product_id.with_context(
-                warehouse_id=line.warehouse_id).warehouses_stock
+                warehouse_id=line.warehouse_id
+            )._compute_get_quantity_warehouses_json()
 
     @api.multi
     @api.onchange('product_id')
@@ -33,3 +34,11 @@ class PurchaseOrderLine(models.Model):
             # is when we need to set the new fields.
             self.warehouse_id = self.order_id.picking_type_id.warehouse_id
             self._compute_get_warehouses_stock()
+
+    @api.onchange('warehouses_stock_recompute')
+    def _warehouses_stock_recompute_onchange(self):
+        if not self.warehouses_stock_recompute:
+            self.warehouses_stock_recompute = True
+            return
+        self._compute_get_warehouses_stock()
+        self.warehouses_stock_recompute = True

@@ -18,8 +18,17 @@ class ProductTemplate(models.Model):
     )
 
     warehouses_stock = fields.Text(
-        compute='_compute_get_quantity_warehouses_json'
+        store=False, readonly=True,
     )
+    warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
+
+    @api.onchange('warehouses_stock_recompute')
+    def _warehouses_stock_recompute_onchange(self):
+        if not self.warehouses_stock_recompute:
+            self.warehouses_stock_recompute = True
+            return
+        self.warehouses_stock = self._compute_get_quantity_warehouses_json()
+        self.warehouses_stock_recompute = True
 
     @api.multi
     @api.depends('product_variant_ids.qty_available_not_res')
@@ -31,18 +40,22 @@ class ProductTemplate(models.Model):
                 tmpl.mapped('product_variant_ids.qty_available_not_res')
             )
 
-    @api.one
-    @api.depends('product_variant_ids.warehouses_stock')
+    @api.multi
     def _compute_get_quantity_warehouses_json(self):
         info = {'title': _('Stock by Warehouse'), 'content': [],
                 'warehouse': self.qty_available_not_res}
+        if not self.exists():
+            return json.dumps(info)
+        self.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
+        # get original from onchange
+        self_origin = self._origin if hasattr(self, '_origin') else self
         for warehouse in self.env['stock.warehouse'].sudo().search([]):
-            tmpl = self.sudo().with_context(
+            tmpl = self_origin.sudo().with_context(
                 warehouse=warehouse.id, location=False)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = tmpl.qty_available_not_res
@@ -58,7 +71,7 @@ class ProductTemplate(models.Model):
                 'saleable':
                 tmpl.qty_available - tmpl.outgoing_qty
             })
-        self.warehouses_stock = json.dumps(info)
+        return json.dumps(info)
 
 
 class ProductProduct(models.Model):
@@ -71,7 +84,18 @@ class ProductProduct(models.Model):
     )
 
     warehouses_stock = fields.Text(
-        compute='_compute_get_quantity_warehouses_json')
+        store=False, readonly=True,
+    )
+
+    warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
+
+    @api.onchange('warehouses_stock_recompute')
+    def _warehouses_stock_recompute_onchange(self):
+        if not self.warehouses_stock_recompute:
+            self.warehouses_stock_recompute = True
+            return
+        self.warehouses_stock = self._compute_get_quantity_warehouses_json()
+        self.warehouses_stock_recompute = True
 
     @api.multi
     def _product_available_not_res_hook(self, quants):
@@ -120,18 +144,22 @@ class ProductProduct(models.Model):
             prod.qty_available_not_res = qty
         return res
 
-    @api.one
-    @api.depends('stock_quant_ids', 'stock_move_ids')
+    @api.multi
     def _compute_get_quantity_warehouses_json(self):
         info = {'title': _('Stock by Warehouse'), 'content': [],
                 'warehouse': self.qty_available_not_res}
+        if not self.exists():
+            return json.dumps(info)
+        self.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
+        # get original from onchange
+        self_origin = self._origin if hasattr(self, '_origin') else self
         for warehouse in self.env['stock.warehouse'].sudo().search([]):
-            product = self.sudo().with_context(
+            product = self_origin.sudo().with_context(
                 warehouse=warehouse.id, location=False)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = product.qty_available_not_res
@@ -147,4 +175,4 @@ class ProductProduct(models.Model):
                 'saleable':
                 product.qty_available - product.outgoing_qty
             })
-        self.warehouses_stock = json.dumps(info)
+        return json.dumps(info)
