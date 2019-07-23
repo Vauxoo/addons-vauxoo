@@ -9,7 +9,10 @@
                 <xpath expr="//field[@name='order_line']//group" position="before">
                     <div class="text-center alert alert-info">
                         <p>The saleable stock in: <field name="warehouse_id"/> that can be delivered immediately is:
-                            <field name="warehouses_stock" widget="warehouse" groups="stock.group_stock_multi_warehouses" options="{'placement': 'bottom'}"/></p>
+                            <field name="warehouses_stock" widget="warehouse" groups="stock.group_stock_multi_warehouses" options="{'placement': 'bottom'}"/>
+                            &amp;nbsp;&amp;nbsp;
+                            <field name="warehouses_stock_recompute" nolabel="1" colspan="1" widget="toggle_button" groups="stock.group_stock_multi_warehouses"/>
+                        </p>
                     </div>
                 </xpath>
             </data>
