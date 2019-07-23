@@ -12,7 +12,8 @@
         <field name="arch" type="xml">
             <data>
                 <field name="default_code" position="before">
-                    <field name="warehouses_stock" widget="warehouse" groups="stock.group_stock_multi_warehouses"/>
+                    <field name="warehouses_stock" widget="warehouse" colspan="1" groups="stock.group_stock_multi_warehouses"/>
+                    <field name="warehouses_stock_recompute" nolabel="1" colspan="1" widget="toggle_button" groups="stock.group_stock_multi_warehouses"/>
                 </field>
             </data>
         </field>
@@ -24,7 +25,8 @@
         <field name="arch" type="xml">
             <data>
                 <field name="default_code" position="before">
-                    <field name="warehouses_stock" widget="warehouse" groups="stock.group_stock_multi_warehouses"/>
+                    <field name="warehouses_stock" colspan="1" widget="warehouse" groups="stock.group_stock_multi_warehouses"/>
+                    <field name="warehouses_stock_recompute" nolabel="1" colspan="1" widget="toggle_button" groups="stock.group_stock_multi_warehouses"/>
                 </field>
             </data>
         </field>
