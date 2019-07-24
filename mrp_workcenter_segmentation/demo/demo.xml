@@ -109,9 +109,22 @@
             <field name="segmentation_cost">material_cost</field>
         </record>
 
+        <record id="account_landed_cost_journal_1" model="account.account">
+             <field name="code">vxprod1</field>
+             <field name="name">Analitic Cost Account (Demo)</field>
+             <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+        </record>
+        <record id="landed_cost_journal_1" model="account.journal">
+            <field name="code">vxprod1</field>
+            <field name="name">Mrp Routing Journal (Demo)</field>
+            <field name="type">general</field>
+            <field name="default_credit_account_id" ref="mrp_workcenter_segmentation.account_landed_cost_journal_1"/>
+            <field name="default_debit_account_id" ref="mrp_workcenter_segmentation.account_landed_cost_journal_1"/>
+        </record>
+
         <record id="routing_segmentation_d_product" model="mrp.routing">
             <field name="name">ROUTING_SEGMENTATION_D_PRODUCT</field>
-            <field name="journal_id" ref="mrp_routing_account_journal.landed_cost_journal_1"/>
+            <field name="journal_id" ref="mrp_workcenter_segmentation.landed_cost_journal_1"/>
         </record>
         <record id="routing_workcenter_segmentation_d_product" model="mrp.routing.workcenter">
             <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_d_product"/>
@@ -135,7 +148,7 @@
 
         <record id="routing_segmentation_e_product" model="mrp.routing">
             <field name="name">ROUTING_SEGMENTATION_E_PRODUCT</field>
-            <field name="journal_id" ref="mrp_routing_account_journal.landed_cost_journal_1"/>
+            <field name="journal_id" ref="mrp_workcenter_segmentation.landed_cost_journal_1"/>
         </record>
         <record id="routing_workcenter_segmentation_e_product" model="mrp.routing.workcenter">
             <field name="routing_id" ref="mrp_workcenter_segmentation.routing_segmentation_e_product"/>
