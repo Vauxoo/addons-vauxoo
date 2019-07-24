@@ -110,13 +110,13 @@
         </record>
 
         <record id="account_landed_cost_journal_1" model="account.account">
-             <field name="code">vxprod1</field>
-             <field name="name">Analitic Cost Account (Demo)</field>
+             <field name="code">vxdemo1</field>
+             <field name="name">Analitic Cost Demo Account</field>
              <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
         </record>
         <record id="landed_cost_journal_1" model="account.journal">
-            <field name="code">vxprod1</field>
-            <field name="name">Mrp Routing Journal (Demo)</field>
+            <field name="code">vxdemo1</field>
+            <field name="name">Mrp Routing Demo Journal</field>
             <field name="type">general</field>
             <field name="default_credit_account_id" ref="mrp_workcenter_segmentation.account_landed_cost_journal_1"/>
             <field name="default_debit_account_id" ref="mrp_workcenter_segmentation.account_landed_cost_journal_1"/>
