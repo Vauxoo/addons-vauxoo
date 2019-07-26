@@ -161,7 +161,7 @@ class Product(models.Model):
                     continue
                 price_sgmnt = product_id.uom_id._compute_price(
                     prod_costs_dict[fieldname],
-                    sbom.product_uom_id) * sbom_data['qty']
+                    sbom.product_uom_id) * sbom.product_qty
                 price += price_sgmnt
                 sgmnt_dict[fieldname] += price_sgmnt
         return price, sgmnt_dict
