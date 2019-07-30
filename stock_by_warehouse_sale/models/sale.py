@@ -20,22 +20,7 @@ class SaleOrderLine(models.Model):
                 warehouse_id=line.warehouse_id
             )._compute_get_quantity_warehouses_json()
 
-    @api.multi
-    @api.onchange('product_id')
-    def product_id_change(self):
-        res = super(SaleOrderLine, self).product_id_change()
-        if res.get('warning'):
-            # If there is a warning then return it to avoid double
-            # control original stuff.
-            return res
-        if res.get('domain'):
-            # When this onchange works fine, then it has a domain
-            # dictionary in the core, then if a dictionary is coming
-            # is when we need to set the new fields.
-            self.warehouse_id = self.order_id.warehouse_id
-            self._compute_get_warehouses_stock()
-
-    @api.onchange('warehouses_stock_recompute')
+    @api.onchange('warehouses_stock_recompute', 'product_id')
     def _warehouses_stock_recompute_onchange(self):
         if not self.warehouses_stock_recompute:
             self.warehouses_stock_recompute = True
