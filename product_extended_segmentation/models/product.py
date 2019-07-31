@@ -151,7 +151,7 @@ class Product(models.Model):
             product_id = sbom.product_id
             prod_costs_dict = _get_sgmnt(product_id)
             child_bom_id = sbom.child_bom_id
-            if child_bom_id and not product_id.cost_method == 'average':
+            if child_bom_id and product_id.cost_method == 'standard':
                 prod_costs_dict = self._calc_price_seg(
                     child_bom_id, True, wizard)
 
