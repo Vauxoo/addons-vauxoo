@@ -42,18 +42,18 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def _compute_get_quantity_warehouses_json(self):
+        # get original from onchange
+        self_origin = self._origin if hasattr(self, '_origin') else self
         info = {'title': _('Stock by Warehouse'), 'content': [],
-                'warehouse': self.qty_available_not_res}
-        if not self.exists():
+                'warehouse': self_origin.qty_available_not_res}
+        if not self_origin.exists():
             return json.dumps(info)
-        self.ensure_one()
+        self_origin.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        # get original from onchange
-        self_origin = self._origin if hasattr(self, '_origin') else self
         for warehouse in self.env['stock.warehouse'].sudo().search([]):
             tmpl = self_origin.sudo().with_context(
                 warehouse=warehouse.id, location=False)
@@ -146,18 +146,18 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _compute_get_quantity_warehouses_json(self):
+        # get original from onchange
+        self_origin = self._origin if hasattr(self, '_origin') else self
         info = {'title': _('Stock by Warehouse'), 'content': [],
-                'warehouse': self.qty_available_not_res}
-        if not self.exists():
+                'warehouse': self_origin.qty_available_not_res}
+        if not self_origin.exists():
             return json.dumps(info)
-        self.ensure_one()
+        self_origin.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        # get original from onchange
-        self_origin = self._origin if hasattr(self, '_origin') else self
         for warehouse in self.env['stock.warehouse'].sudo().search([]):
             product = self_origin.sudo().with_context(
                 warehouse=warehouse.id, location=False)
