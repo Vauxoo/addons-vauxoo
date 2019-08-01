@@ -123,13 +123,14 @@ class ProductProduct(models.Model):
         # TODO: this should probably be refactored performance-wise
         for prod in self:
             vals = {}
-            prod_quant = quants.filtered(lambda x: x.product_id == prod)
-            quantity = sum(prod_quant.mapped(
-                lambda x: x._get_available_quantity(
-                    x.product_id,
-                    x.location_id
-                )
-            ))
+            prod_quant_list = dict(
+                quants.filtered(lambda x: x.product_id == prod).mapped(
+                    lambda x: (x.location_id, x)))
+            quantity = 0
+            for prod_quant in prod_quant_list:
+                quantity += self.env['stock.quant']._get_available_quantity(
+                    prod, prod_quant)
+
             vals['qty_available_not_res'] = quantity
             res[prod.id] = vals
         self._product_available_not_res_hook(quants)
