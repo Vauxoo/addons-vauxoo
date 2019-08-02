@@ -25,5 +25,6 @@ class PurchaseOrderLine(models.Model):
         if not self.warehouses_stock_recompute:
             self.warehouses_stock_recompute = True
             return
+        self.warehouse_id = self.order_id.picking_type_id.warehouse_id
         self._compute_get_warehouses_stock()
         self.warehouses_stock_recompute = True
