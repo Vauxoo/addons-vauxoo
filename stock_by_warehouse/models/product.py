@@ -42,18 +42,18 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def _compute_get_quantity_warehouses_json(self):
+        # get original from onchange
+        self_origin = self._origin if hasattr(self, '_origin') else self
         info = {'title': _('Stock by Warehouse'), 'content': [],
-                'warehouse': self.qty_available_not_res}
-        if not self.exists():
+                'warehouse': self_origin.qty_available_not_res}
+        if not self_origin.exists():
             return json.dumps(info)
-        self.ensure_one()
+        self_origin.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        # get original from onchange
-        self_origin = self._origin if hasattr(self, '_origin') else self
         for warehouse in self.env['stock.warehouse'].sudo().search([]):
             tmpl = self_origin.sudo().with_context(
                 warehouse=warehouse.id, location=False)
@@ -123,13 +123,14 @@ class ProductProduct(models.Model):
         # TODO: this should probably be refactored performance-wise
         for prod in self:
             vals = {}
-            prod_quant = quants.filtered(lambda x: x.product_id == prod)
-            quantity = sum(prod_quant.mapped(
-                lambda x: x._get_available_quantity(
-                    x.product_id,
-                    x.location_id
-                )
-            ))
+            prod_quant_list = dict(
+                quants.filtered(lambda x: x.product_id == prod).mapped(
+                    lambda x: (x.location_id, x)))
+            quantity = 0
+            for prod_quant in prod_quant_list:
+                quantity += self.env['stock.quant']._get_available_quantity(
+                    prod, prod_quant)
+
             vals['qty_available_not_res'] = quantity
             res[prod.id] = vals
         self._product_available_not_res_hook(quants)
@@ -146,18 +147,18 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _compute_get_quantity_warehouses_json(self):
+        # get original from onchange
+        self_origin = self._origin if hasattr(self, '_origin') else self
         info = {'title': _('Stock by Warehouse'), 'content': [],
-                'warehouse': self.qty_available_not_res}
-        if not self.exists():
+                'warehouse': self_origin.qty_available_not_res}
+        if not self_origin.exists():
             return json.dumps(info)
-        self.ensure_one()
+        self_origin.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        # get original from onchange
-        self_origin = self._origin if hasattr(self, '_origin') else self
         for warehouse in self.env['stock.warehouse'].sudo().search([]):
             product = self_origin.sudo().with_context(
                 warehouse=warehouse.id, location=False)
