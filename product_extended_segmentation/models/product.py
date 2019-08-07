@@ -152,7 +152,7 @@ class Product(models.Model):
             prod_costs_dict = _get_sgmnt(product_id)
             child_bom_id = sbom.child_bom_id
             if child_bom_id and product_id.cost_method == 'standard':
-                prod_costs_dict = self._calc_price_seg(
+                prod_costs_dict = product_id._calc_price_seg(
                     child_bom_id, True, wizard)
 
             for fieldname in SEGMENTATION_COST:
@@ -206,6 +206,9 @@ class Product(models.Model):
         computed_th = self._compute_threshold(current_price, price)
 
         if diff < 0 and current_price == 0:
+            if internal:
+                sgmnt_dict['price'] = price
+                return sgmnt_dict
             return price
 
         threshold_reached = product_tmpl_id._evaluate_threshold(
@@ -223,6 +226,9 @@ class Product(models.Model):
         if threshold_reached:
             sgmnt_dict['standard_price'] = price
             self.ensure_change_price_log_messages(vals)
+            if internal:
+                sgmnt_dict['price'] = price
+                return sgmnt_dict
             return price
 
         diff = product_tmpl_id.standard_price - price
@@ -232,11 +238,17 @@ class Product(models.Model):
             wizard_id.change_price()
             self.write(sgmnt_dict)
             self.ensure_change_price_log_messages(vals)
+            if internal:
+                sgmnt_dict['price'] = price
+                return sgmnt_dict
             return price
 
         sgmnt_dict['standard_price'] = price
         self.write(sgmnt_dict)
         self.ensure_change_price_log_messages(vals)
+        if internal:
+            sgmnt_dict['price'] = price
+            return sgmnt_dict
         return price
 
     def create_change_standard_price_wizard(self, price):
