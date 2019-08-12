@@ -17,6 +17,7 @@
         'security/ir.model.access.csv',
         'views/product_historical_view.xml',
         'views/product_views.xml',
+        'views/stock_location_view.xml',
         'views/stock_move_costs.xml',
     ],
     'demo': [
