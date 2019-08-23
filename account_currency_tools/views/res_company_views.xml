@@ -1,12 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<openerp>
-    <data>
+<odoo>
         <record id="res_company_view_act" model="ir.ui.view">
             <field name="name">res.company.view.currency</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
-                <xpath expr="//group[@name='account_grp']" position="after">
+                <xpath expr="//notebook/page/group" position="inside">
                     <group name="account_act" string="Accounts for Redirection of Exchange Rate Difference">
                         <field name='journal_id'/>
                         <field name='check_non_multicurrency_account'/>
@@ -20,17 +19,4 @@
                 </xpath>
             </field>
         </record>
-
-        <!-- Period -->
-        <record id="view_account_period_form" model="ir.ui.view">
-            <field name="name">account.period.form.currency</field>
-            <field name="inherit_id" ref="account.view_account_period_form"/>
-            <field name="model">account.period</field>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="move_id"/>
-                </xpath>
-            </field>
-        </record>
-    </data>
-</openerp>
+</odoo>
