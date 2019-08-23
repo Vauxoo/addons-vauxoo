@@ -21,7 +21,7 @@
 ###############################################################################
 {
     "name": "Account Currency Tools",
-    "version": "8.0.0.1.6",
+    "version": "11.0.0.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
@@ -31,17 +31,17 @@
         "account",
     ],
     "demo": [
-        'demo/account_move.xml',
+        # 'demo/account_move.xml',
     ],
     "data": [
-        'view/view.xml',
-        'view/wizard.xml',
+        'views/res_company_views.xml',
+        'wizards/exchange_realization.xml',
     ],
     "test": [],
     "js": [],
     "css": [],
     "qweb": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "external_dependencies": {
         "python": [
