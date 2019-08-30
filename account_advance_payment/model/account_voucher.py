@@ -32,7 +32,7 @@ class account_voucher(osv.Model):
     _columns = {
         'advance_account_id': fields.many2one('account.account', 'Advance Account', required=False, readonly=True, states={'draft': [('readonly', False)]}),
     }
-
+    
     def writeoff_move_line_get(self, cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=None):
         move_line = super(account_voucher, self).writeoff_move_line_get(cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=context)
         voucher = self.pool.get('account.voucher').browse(cr, uid, voucher_id, context)
@@ -56,9 +56,12 @@ class account_voucher(osv.Model):
         partner = partner_pool.browse(cr, uid, partner_id, context=context)
         advance_account_id = False
         if ttype in ('sale', 'receipt'):
-            advance_account_id = partner.property_account_customer_advance and partner.property_account_customer_advance.id or False
+            advance_account_id = partner.property_account_customer_advance and partner.property_account_customer_advance.id \
+                or partner.property_account_receivable and partner.property_account_receivable.id or False
         else:
-            advance_account_id = partner.property_account_supplier_advance and partner.property_account_supplier_advance.id or False
+            advance_account_id = partner.property_account_supplier_advance and partner.property_account_supplier_advance.id \
+                or partner.property_account_payable and partner.property_account_payable.id or False
+                
         res['value']['advance_account_id'] = advance_account_id
 
         return res
