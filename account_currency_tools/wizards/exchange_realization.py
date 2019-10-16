@@ -283,7 +283,6 @@ class ForeignExchangeRealization(models.TransientModel):
                 aml.account_id IN %(account_ids)s AND
                 aml.currency_id IN %(currency_ids)s AND
                 aml.currency_id IS NOT NULL AND
-                aml.state <> 'draft' AND
                 am.state IN %(states)s AND
                 aml.date <= %(date)s
             GROUP BY aml.currency_id
@@ -306,7 +305,6 @@ class ForeignExchangeRealization(models.TransientModel):
             WHERE
                 aml.account_id IN %(account_ids)s AND
                 aml.currency_id IS NOT NULL AND
-                aml.state <> 'draft' AND
                 am.state IN %(states)s AND
                 aml.date <= %(date)s
             GROUP BY aml.account_id, aml.currency_id
@@ -327,7 +325,6 @@ class ForeignExchangeRealization(models.TransientModel):
             WHERE
                 aa.type = %(account_type)s AND
                 aml.currency_id IS NOT NULL AND
-                aml.state <> 'draft' AND
                 am.state IN %(states)s AND
                 aml.company_id = %(company_id)s AND
                 aml.date <= %(date)s
