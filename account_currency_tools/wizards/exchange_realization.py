@@ -366,8 +366,8 @@ class ForeignExchangeRealization(models.TransientModel):
         # Searching for other accounts that could be used as multicurrency
         if self.check_non_multicurrency_account:
             args = self.get_params(
-                ids, account_type, fieldname)
-            res |= self.get_accounts_from_aml(args)
+                account_type, fieldname)
+            res |= aa_obj.browse(self.get_accounts_from_aml(args))
 
         if res:
             self.write({fieldname: [(6, self.id, res.ids)]})
