@@ -1,0 +1,7 @@
+export BASE_IMAGE="vauxoo/odoo-110-image"
+export PSQL_VERSION="9.6"
+export VERSION="11.0"
+export ODOO_REPO="vauxoo/odoo"
+export ODOO_BRANCH="11.0"
+export TRAVIS_PYTHON_VERSION="3.4"
+export COUNTRY="MX"
