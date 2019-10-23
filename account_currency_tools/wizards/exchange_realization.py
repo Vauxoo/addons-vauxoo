@@ -156,8 +156,7 @@ class ForeignExchangeRealization(models.TransientModel):
     bk_ids = fields.Many2many(
         'account.account', 'act_bk_acc_rel',
         'account_id', 'act_id', 'Bank & Cash Accounts',
-        domain=([('internal_type','=','liquidity'),
-                 ('currency_id','!=',False)]),
+        domain=[('internal_type', '=', 'liquidity')],
         help=('Select your Bank Accounts'))
     bank_gain_exchange_account_id = fields.Many2one(
         'account.account', 'Bank Gain Exchange Rate Account',
@@ -172,8 +171,7 @@ class ForeignExchangeRealization(models.TransientModel):
     rec_ids = fields.Many2many(
         'account.account', 'act_rec_acc_rel',
         'account_id', 'act_id', 'Receivable Accounts',
-        domain=([('internal_type','=','receivable'),
-                 ('currency_id','!=',False)]),
+        domain=[('internal_type', '=', 'receivable')],
         help=('Select your Receivable Accounts'))
     rec_gain_exchange_account_id = fields.Many2one(
         'account.account', 'Receivable Gain Exchange Rate Account',
@@ -188,8 +186,7 @@ class ForeignExchangeRealization(models.TransientModel):
     pay_ids = fields.Many2many(
         'account.account', 'act_pay_acc_rel',
         'account_id', 'act_id', 'Payable Accounts',
-        domain=([('internal_type','=','payable'),
-                 ('currency_id','!=',False)]),
+        domain=[('internal_type', '=', 'payable')],
         help=('Select your Payable Accounts'))
     pay_gain_exchange_account_id = fields.Many2one(
         'account.account', 'Payable Gain Exchange Rate Account',
@@ -222,7 +219,7 @@ class ForeignExchangeRealization(models.TransientModel):
         states={'draft': [('readonly', False)]})
     journal_id = fields.Many2one(
         'account.journal', 'Posting Journal',
-        domain=([('type','=','general')]),
+        domain=([('type', '=', 'general')]),
         required=True)
     line_ids = fields.One2many(
         'foreign.exchange.realization.line',
@@ -317,25 +314,23 @@ class ForeignExchangeRealization(models.TransientModel):
     def get_accounts_from_aml(self, args):
         cr = self._cr
         query = '''
-            SELECT
+            SELECT DISTINCT
                 aml.account_id
             FROM account_move_line AS aml
             INNER JOIN account_account AS aa ON aa.id = aml.account_id
             INNER JOIN account_move AS am ON am.id = aml.move_id
+            INNER JOIN res_currency AS rc ON rc.id = aml.currency_id
+            INNER JOIN res_company AS co ON co.id = aml.company_id
             WHERE
-                aa.type = %(account_type)s AND
-                aml.currency_id IS NOT NULL AND
+                aa.internal_type = %(account_type)s AND
+                aml.currency_id != co.currency_id AND
                 am.state IN %(states)s AND
                 aml.company_id = %(company_id)s AND
                 aml.date <= %(date)s
-            GROUP BY aml.account_id
         '''
         query = cr.mogrify(query, args)
         cr.execute(query)
-        res = cr.fetchall()
-        if res:
-            res = [idx[0] for idx in res]
-        return res
+        return [idx[0] for idx in cr.fetchall()]
 
     def get_params(self, account_type, fieldname):
         company_id = self.company_id.id
