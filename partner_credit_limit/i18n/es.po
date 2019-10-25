@@ -16,12 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: partner_credit_limit
-#: field:res.partner,allowed_sale:0
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_partner_allowed_sale
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_users_allowed_sale
 msgid "Allowed Sales"
 msgstr "Venta a crédito permitida"
 
 #. module: partner_credit_limit
-#: code:addons/partner_credit_limit/model/sale.py:30
+#: code:addons/partner_credit_limit/model/sale.py:28
 #, python-format
 msgid "Can not confirm the Sale Order because Partner has late payments or has exceeded the credit limit.\n"
 "Please cover the late payment or check credit limit\n"
@@ -31,7 +32,7 @@ msgstr "No se puede confirmar la orden de venta por que el cliente tiene pagos a
 "Límite de Crédito : %s"
 
 #. module: partner_credit_limit
-#: code:addons/partner_credit_limit/model/accout_invoice.py:31
+#: code:addons/partner_credit_limit/model/account_invoice.py:30
 #, python-format
 msgid "Can not validate the Invoice because Partner has late payments or has exceeded the credit limit.\n"
 "Please cover the late payment or check credit limit\n"
@@ -41,28 +42,39 @@ msgstr "No se puede validar la Factura porque el cliente tiene pagos atrasados o
 "Límite de Crédito : %s"
 
 #. module: partner_credit_limit
-#: field:res.partner,credit_overloaded:0
+#: model:ir.model,name:partner_credit_limit.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: partner_credit_limit
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_partner_credit_overloaded
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_users_credit_overloaded
 msgid "Credit Overloaded"
 msgstr "Crédito Excedido"
 
 #. module: partner_credit_limit
-#: field:res.partner,grace_payment_days:0
-#: help:res.partner,grace_payment_days:0
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_partner_grace_payment_days
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_users_grace_payment_days
+#: model:ir.model.fields,help:partner_credit_limit.field_res_partner_grace_payment_days
+#: model:ir.model.fields,help:partner_credit_limit.field_res_users_grace_payment_days
 msgid "Days grace payment"
 msgstr "Días de gracia para pago"
 
 #. module: partner_credit_limit
-#: help:res.partner,allowed_sale:0
+#: model:ir.model.fields,help:partner_credit_limit.field_res_partner_allowed_sale
+#: model:ir.model.fields,help:partner_credit_limit.field_res_users_allowed_sale
 msgid "If the Partner has credit overloaded or late payments, he can't validate invoices and sale orders."
 msgstr "Si el Cliente tiene crédito excedido o pagos atrasados, no puede validar facturas y ordenes de venta."
 
 #. module: partner_credit_limit
-#: help:res.partner,credit_overloaded:0
+#: model:ir.model.fields,help:partner_credit_limit.field_res_partner_credit_overloaded
+#: model:ir.model.fields,help:partner_credit_limit.field_res_users_credit_overloaded
 msgid "Indicates when the customer has credit overloaded"
 msgstr "Indica cuando el cliente tiene crédito excedido"
 
 #. module: partner_credit_limit
-#: help:res.partner,overdue_credit:0
+#: model:ir.model.fields,help:partner_credit_limit.field_res_partner_overdue_credit
+#: model:ir.model.fields,help:partner_credit_limit.field_res_users_overdue_credit
 msgid "Indicates when the customer has late payments"
 msgstr "Indica cuando el cliente tiene pagos atrasados"
 
@@ -73,18 +85,12 @@ msgstr "Factura"
 
 #. module: partner_credit_limit
 #: model:ir.actions.act_window,name:partner_credit_limit.action_account_moves_late_payments
-#: view:res.partner:partner_credit_limit.view_category_property_form
-#: field:res.partner,overdue_credit:0
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_partner_overdue_credit
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_users_overdue_credit
 msgid "Late Payments"
 msgstr "Pagos Atrasados"
 
 #. module: partner_credit_limit
-#: model:ir.model,name:partner_credit_limit.model_res_partner
-msgid "Partner"
-msgstr "Empresa"
-
-#. module: partner_credit_limit
 #: model:ir.model,name:partner_credit_limit.model_sale_order
-msgid "Sales Order"
-msgstr "Pedido de venta"
-
+msgid "Quotation"
+msgstr "Presupuesto"
