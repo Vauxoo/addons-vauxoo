@@ -8,9 +8,10 @@ from odoo import models, fields, api
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    credit_limit = fields.Float(company_dependent=True)
     grace_payment_days = fields.Float(
         'Days grace payment',
-        help='Days grace payment')
+        help='Days grace payment', company_dependent=True)
 
     credit_overloaded = fields.Boolean(
         compute='_get_credit_overloaded',
@@ -40,7 +41,10 @@ class ResPartner(models.Model):
 
     @api.model
     def movelines_domain(self, partner):
+        """Return the domain for search the
+        account.move.line for the user's company."""
         domain = [('partner_id', '=', partner.id),
+                  ('company_id', '=', self.env.user.company_id.id),
                   ('account_id.internal_type', '=', 'receivable'),
                   ('move_id.state', '!=', 'draft'),
                   ('reconciled', '=', False)]
