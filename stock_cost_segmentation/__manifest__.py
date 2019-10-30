@@ -15,6 +15,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'data/ir_actions_server.xml',
         'views/product_historical_view.xml',
         'views/product_views.xml',
         'views/stock_location_view.xml',
