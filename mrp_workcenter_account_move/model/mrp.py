@@ -215,7 +215,7 @@ class MrpProduction(models.Model):
         accounts = self.product_id.product_tmpl_id.get_product_accounts()
         # NOTE: make different between (REAL, AVG) and STD products
         # STD diff shall be booked onto a deviation account
-        valuation_account_id = accounts['stock_valuation']
+        valuation_account_id = accounts['stock_valuation'].id
 
         if self.product_id.cost_method == 'standard':
             company_brw = self.env.user.company_id
