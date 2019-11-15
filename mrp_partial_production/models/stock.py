@@ -12,7 +12,8 @@ class StockMove(models.Model):
             return super(StockMove, self)._split(qty, restrict_partner_id)
 
         amls = self.move_line_ids.filtered(
-            lambda aml: aml.qty_done > 0 and aml.product_uom_qty > aml.qty_done)
+            lambda aml: aml.qty_done > 0 and
+            aml.product_uom_qty > aml.qty_done)
         aml_vals = []
         for aml in amls:
             vals = {
@@ -31,6 +32,6 @@ class StockMove(models.Model):
         new_move_id = super(StockMove, self)._split(qty, restrict_partner_id)
         for vals in aml_vals:
             vals['move_id'] = new_move_id
-            new_aml = self.env['stock.move.line'].create(vals)
+            self.env['stock.move.line'].create(vals)
         self.browse(new_move_id)._recompute_state()
         return new_move_id
