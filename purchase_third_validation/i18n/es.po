@@ -18,7 +18,7 @@ msgstr ""
 #. module: purchase_third_validation
 #: model:ir.ui.view,arch_db:purchase_third_validation.view_purchase_third_level_inherit
 msgid "Approve Order"
-msgstr "Aprovar Orden"
+msgstr "Aprobar Orden"
 
 #. module: purchase_third_validation
 #: model:ir.model,name:purchase_third_validation.model_res_company
