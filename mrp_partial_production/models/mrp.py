@@ -49,13 +49,20 @@ class MrpProduction(models.Model):
                                           res.quantity_done)
 
         for line, line_data in lines:
-            if line.product_id.type in ('service','consu'):
+            if line.product_id.type in ('service', 'consu'):
                 continue
             lines_dict[line.product_id.id] += line_data['qty'] / quantity
         qty = [(result[key] / val) for key, val in lines_dict.items() if val]
         return (float_round(
             min(qty) * self.bom_id.product_qty, 0, rounding_method='DOWN') if
             qty and min(qty) >= 0.0 else 0.0)
+
+    def _workorders_create(self, bom, bom_data):
+        workorders = super()._workorders_create(bom, bom_data)
+        ready_wk = workorders.filtered(lambda wk: wk.state == 'ready')
+        moves = self.move_raw_ids.filtered(lambda mv: mv.workorder_id)
+        moves.write({'workorder_id': ready_wk.id})
+        return workorders
 
 
 class MrpWorkorder(models.Model):
@@ -79,3 +86,4 @@ class MrpWorkorder(models.Model):
                 and x.quantity_done > 0)
             for production_move in production_moves:
                 production_move._action_done()
+        return res
