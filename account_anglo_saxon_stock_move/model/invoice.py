@@ -96,7 +96,7 @@ class AccountInvoice(models.Model):
                 WHERE
                     ''' + query_col + ''' IN %(ids)s
                     AND product_id IS NOT NULL
-                    AND reconciled = FALSE
+                    AND full_reconcile_id IS NULL
                     AND aa.reconcile = TRUE
                 GROUP BY ''' + query_col + ''', product_id, account_id
                 HAVING COUNT(aml.id) > 1
@@ -117,7 +117,7 @@ class AccountInvoice(models.Model):
             WHERE
                 ''' + query_col + ''' IN %(ids)s
                 AND product_id IS NOT NULL
-                AND reconciled = FALSE
+                AND full_reconcile_id IS NULL
                 AND aa.reconcile = TRUE
             GROUP BY ''' + query_col + '''
             ;'''
@@ -137,7 +137,7 @@ class AccountInvoice(models.Model):
             WHERE
                 ''' + query_col + ''' IS NOT NULL
                 AND aml.product_id IS NOT NULL
-                AND aml.reconciled = FALSE
+                AND aml.full_reconcile_id IS NULL
                 AND aml.company_id = %(company_id)s
                 AND aa.reconcile = TRUE
             GROUP BY ''' + query_col + ''', product_id, account_id
@@ -159,7 +159,7 @@ class AccountInvoice(models.Model):
             INNER JOIN account_account aa ON aa.id = aml.account_id
             WHERE
                 ''' + query_col + ''' IN %(ids)s
-                AND reconciled = FALSE
+                AND full_reconcile_id IS NULL
                 AND product_id IS NOT NULL
                 AND aml.company_id = %(company_id)s
                 AND aa.reconcile = TRUE
@@ -261,7 +261,7 @@ class AccountInvoice(models.Model):
             if categ_ids:
                 raise ValidationError(
                     _('The Stock Journal is missing on following '
-                      'product categories: %s'),
+                      'product categories: %s') %
                     ', '.join(categ_ids.mapped('name'))
                 )
 
