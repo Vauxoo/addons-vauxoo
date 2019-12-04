@@ -1,8 +1,9 @@
-# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# Copyright 2019 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
 {
     "name": "Partner Credit Limit",
-    "version": "11.0.0.0.2",
+    "version": "12.0.1.0.0",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",
@@ -11,9 +12,10 @@
         "account",
         "sale",
         "payment_term_type", ],
-    "demo": [],
+    "demo": [
+    ],
     "data": [
-        "view/partner_view.xml",
+        "views/partner_view.xml",
     ],
     "installable": True,
 }
