@@ -1,7 +1,3 @@
-# coding: utf-8
-# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
 from odoo import models, api, fields, _
 
 
@@ -33,4 +29,4 @@ class AccountPaymentTerm(models.Model):
     payment_type = fields.Selection(
         [('credit', _('Credit')),
          ('cash', _('Cash'))],
-        string="Payment Type", compute='_compute_payment_type')
+        compute='_compute_payment_type')
