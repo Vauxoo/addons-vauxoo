@@ -9,7 +9,7 @@
     'license': 'LGPL-3',
     'category': '',
     'depends': [
-        'account_accountant',
+        'account',
     ],
     'data': [
         'data/data.xml',
