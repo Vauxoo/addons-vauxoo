@@ -1,7 +1,3 @@
-# coding: utf-8
-# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
 from odoo.tests.common import TransactionCase
 
 
@@ -10,14 +6,14 @@ class PartnerVatWithoutCountry(TransactionCase):
     def setUp(self):
         super(PartnerVatWithoutCountry, self).setUp()
         self.partner_obj = self.env['res.partner']
-        self.mx = self.env.ref('base.mx')
+        self.mex = self.env.ref('base.mx')
 
     def test_partner_vat_without_country(self):
         """Verify that VAT is generated when country and vat_without_country
         are assigned."""
         partner = self.partner_obj.create({
             'name': 'Partner MX',
-            'country_id': self.mx.id,
+            'country_id': self.mex.id,
             'vat_without_country': 'XXX020202XX3',
         })
         partner.onchange_vat_wo_country()
@@ -28,7 +24,7 @@ class PartnerVatWithoutCountry(TransactionCase):
         assigned."""
         partner = self.partner_obj.create({
             'name': 'Partner MX',
-            'country_id': self.mx.id,
+            'country_id': self.mex.id,
         })
         partner.onchange_vat_wo_country()
         self.assertFalse(partner.vat, 'NIF generated without data.')

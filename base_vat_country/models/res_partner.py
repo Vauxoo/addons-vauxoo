@@ -1,12 +1,3 @@
-# coding: utf-8
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: Luis Torres <luis_t@vauxoo.com>
-############################################################################
 from odoo import models, api, fields
 
 
@@ -20,7 +11,7 @@ class ResPartner(models.Model):
         copy=False)
     country_code = fields.Char(
         help='Added the country code in partner, to complete the NIF.',
-        related='country_id.code', size=2, readonly=True)
+        related='country_id.code', size=2)
 
     @api.onchange('vat_without_country', 'country_code')
     def onchange_vat_wo_country(self):
