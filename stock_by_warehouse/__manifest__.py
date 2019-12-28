@@ -1,7 +1,6 @@
-# coding: utf-8
 {
     "name": "Stock by Warehouse",
-    "version": "11.0.0.1.0",
+    "version": "12.0.1.0.0",
     "summary": """
     Know the stock in all your warehouses with a simple click
     from the product form.
@@ -13,13 +12,12 @@
     "depends": [
         "stock",
     ],
-    "demo": [],
     "data": [
-        'views/product_view.xml',
+        'views/assets.xml',
+        'views/product_views.xml',
     ],
-    "test": [],
-    "js": [],
-    "css": [],
+    "demo": [
+    ],
     'qweb': [
         "static/src/xml/template.xml",
     ],
