@@ -1,4 +1,4 @@
-odoo.define('product.warehouse', function (require) {
+odoo.define('stock_by_warehouse.warehouse', function (require) {
 "use strict";
 
 var core = require('web.core');
@@ -34,7 +34,7 @@ var ShowPaymentLineWidget = form_common.extend({
             'content': popover,
             'html': true,
             'placement': this.nodeOptions.placement || 'right',
-            'title': this.nodeOptions.title || info.title,
+            'title': this.nodeOptions.title || info.title || "",
             'trigger': 'focus',
             'delay': { "show": 0, "hide": 100 }
         };
