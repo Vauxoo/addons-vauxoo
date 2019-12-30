@@ -19,12 +19,12 @@ Developers usage:
 -----------------
 
 Developers can inherit this module as a fast way to get product availability
-by warehouse in other views with simply add a related field.
+by warehouse in other views, by simply adding a related field.
 
 Notes:
 ------
 
-This module need to be working with variants and with multiple warehouse management
+This module rely on variants and multiple warehouse management
 properly configured
 
 Maintainer
