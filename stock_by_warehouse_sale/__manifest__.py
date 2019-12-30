@@ -1,7 +1,6 @@
-# coding: utf-8
 {
     "name": "Stock by Warehouse on Sales",
-    "version": "11.0.0.1.0",
+    "version": "12.0.1.0.0",
     "summary": """
     Know the stock in all your warehouses with a simple click
     from the sale order line form.
@@ -14,14 +13,12 @@
         "sale_stock",
         "stock_by_warehouse",
     ],
-    "demo": [],
     "data": [
         'views/sale_view.xml',
     ],
-    "test": [],
-    "js": [],
-    "css": [],
-    'qweb': [],
+    "demo": [],
+    "test": [
+    ],
     "installable": True,
     "auto_install": False,
 }
