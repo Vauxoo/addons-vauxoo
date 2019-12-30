@@ -1,7 +1,6 @@
-# coding: utf-8
 {
     "name": "Stock by Warehouse on Purchases",
-    "version": "11.0.0.1.0",
+    "version": "12.0.1.0.0",
     "summary": """
     Know the stock in all your warehouses with a simple click
     from the purchase order line form.
@@ -12,15 +11,13 @@
     "license": "LGPL-3",
     "depends": [
         "stock_by_warehouse",
+        "purchase",
     ],
-    "demo": [],
     "data": [
         'views/purchase_view.xml',
     ],
-    "test": [],
-    "js": [],
-    "css": [],
-    'qweb': [],
+    "demo": [
+    ],
     "installable": True,
     "auto_install": False,
 }

@@ -1,16 +1,13 @@
-# coding: utf-8
-
 from odoo import api, fields, models
 
 
 class PurchaseOrderLine(models.Model):
-
     _inherit = "purchase.order.line"
 
     warehouses_stock = fields.Text(store=False, readonly=True)
     warehouse_id = fields.Many2one(
         string="Warehouse",
-        related='order_id.picking_type_id.warehouse_id', readonly=True)
+        related='order_id.picking_type_id.warehouse_id')
     warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
 
     @api.multi
