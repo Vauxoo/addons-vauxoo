@@ -1,16 +1,15 @@
-//-*- coding: utf-8 -*-
 //############################################################################
 //
 //   Module Writen For Odoo, Open Source Management Solution
 //
-//   Copyright (c) 2017 Vauxoo - http://www.vauxoo.com
+//   Copyright (c) 2019 Vauxoo - http://www.vauxoo.com
 //   All Rights Reserved.
 //   info Vauxoo (info@vauxoo.com)
 //   coded by: Jose Robles <josemanuel@vauxoo.com>
 //
 //############################################################################
 odoo.define('web.web_widget_json_graph', function (require) {
-"use strict";
+    "use strict";
 
     var core = require('web.core');
     var AbstractField = require('web.AbstractField');
@@ -20,14 +19,14 @@ odoo.define('web.web_widget_json_graph', function (require) {
     var JSONGraphWidget = AbstractField.extend({
         template: 'JSONGraph',
         cssLibs: [
-        '/web/static/lib/nvd3/nv.d3.css'
-    ],
-    jsLibs: [
-        '/web/static/lib/nvd3/d3.v3.js',
-        '/web/static/lib/nvd3/nv.d3.js',
-        '/web/static/src/js/libs/nvd3.js'
-    ],
-        _render: function(){
+            '/web/static/lib/nvd3/nv.d3.css'
+        ],
+        jsLibs: [
+            '/web/static/lib/nvd3/d3.v3.js',
+            '/web/static/lib/nvd3/nv.d3.js',
+            '/web/static/src/js/libs/nvd3.js'
+        ],
+        _render: function () {
             var info = JSON.parse(this.value);
             //this.$el.html(QWeb.render('JSONGraph', {}));
             /*jsl:ignore*/
@@ -35,7 +34,7 @@ odoo.define('web.web_widget_json_graph', function (require) {
             Ignoring lint erros caused by nv and d3 variables from NVD3.js
             */
             if (info) {
-                nv.addGraph(function() {
+                nv.addGraph(function () {
                     var chart = nv.models.lineChart()
                         .useInteractiveGuideline(true);
                     chart.xAxis

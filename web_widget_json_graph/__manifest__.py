@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2015 Vauxoo <http://vauxoo.com>.
+#    This module copyright (C) 2019 Vauxoo <http://vauxoo.com>.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,7 +19,7 @@
 ##############################################################################
 {
     "name": "Line Graph for json fields",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "author": "Vauxoo, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
