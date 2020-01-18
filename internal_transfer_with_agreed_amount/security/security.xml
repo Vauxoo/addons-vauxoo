@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="allow_confirm_internal_transfer_with_agreed_amount" model="res.groups">
+        <field name="name">Allow to confirm an internal transfer with an agreed amount</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+        <field name="comment">The user with this permission can make multi-currency transfers with an agreed amount.</field>
+    </record>
+</odoo>
