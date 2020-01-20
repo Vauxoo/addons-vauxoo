@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_rss_locs">
+        <channel>
+        <title><t t-esc="company.name"/></title>
+        <t t-set="company_website_x" t-value="'&lt;link&gt;{0}&lt;/link&gt;'.format(company.website)"/>
+        <t t-raw="company_website_x"/>
+        <description><t t-esc="company.report_header"/></description>
+        <t t-foreach="products" t-as="product">
+            <t t-set="url" t-value="'{0}shop/product/{1}'.format(url_root, slug(product))"/>
+            <t t-set="url_link" t-value="'&lt;link&gt;{0}&lt;/link&gt;'.format(url)"/>
+            <item>
+                <title><t t-esc="product.name"/></title>
+                <t t-raw="url_link"/>
+                <guid><t t-raw="url"/></guid>
+                <description><t t-esc="product.website_description"/></description>
+                <category><t t-esc="product.categ_id.name"/></category>
+            </item>
+        </t>
+        </channel>
+    </template>
+
+    <template id="product_rss_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        &lt;rss  xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"&gt;
+            <t t-raw="content"/>
+        &lt;/rss&gt;
+    </template>
+</odoo>
