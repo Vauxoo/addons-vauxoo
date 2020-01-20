@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="blog_rss_locs">
+        <channel>
+        <title><t t-esc="blog.name"/></title>
+        <t t-set="website_url_x" t-value="'&lt;link&gt;{0}&lt;/link&gt;'.format(website_url)"/>
+        <t t-raw="website_url_x"/>
+        <description><t t-esc="blog.subtitle"/></description>
+        <!-- This ttl tag is wired now, when the controller become generic
+             it will be dynamically stored in ir.config_parameters or the
+             model published itself. -->
+        <ttl>60</ttl>
+        <t t-foreach="posts" t-as="post">
+            <t t-set="url_x" t-value="'{0}blog/{1}/post/{2}'.format(url_root, slug(post.blog_id), slug(post))"/>
+            <t t-set="url_link" t-value="'&lt;link&gt;{0}&lt;/link&gt;'.format(url_x)"/>
+            <item>
+                <title><t t-esc="post.name"/></title>
+                <link><t t-raw="url_x"/></link>
+                <guid><t t-raw="url_x"/></guid>
+                <pubDate><t t-esc="post.date_rfc2822"/></pubDate>
+                <description><t t-esc="post.content"/></description>
+                <category><t t-esc="post.blog_id.name"/></category>
+            </item>
+        </t>
+        </channel>
+    </template>
+
+    <template id="blog_rss_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        &lt;rss  xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"&gt;
+            <t t-call="website_blog_rss.blog_rss_locs"/>
+        &lt;/rss&gt;
+    </template>
+    <template id="blog_rss_icon" inherit_id="website.footer_custom" name="RSS Icon">
+        <xpath expr="//div[@id='connect']/p" position="inside">
+            <a href="/blog_rss.xml"><i class="fa fa-rss"/></a>
+        </xpath>
+    </template>
+</odoo>
