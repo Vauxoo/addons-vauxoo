@@ -17,26 +17,31 @@ msgstr ""
 
 #. module: stock_by_warehouse_purchase
 #: model:ir.model,name:stock_by_warehouse_purchase.model_purchase_order_line
-msgid "purchases Order Line"
-msgstr "Linea de Orden de Venta"
+msgid "Purchase Order Line"
+msgstr "Línea pedido de compra"
 
 #. module: stock_by_warehouse_purchase
-#: model:ir.ui.view,arch_db:stock_by_warehouse_purchase.purchase_order_form_view
+#: model_terms:ir.ui.view,arch_db:stock_by_warehouse_purchase.purchase_order_form_view
 msgid "The stock in:"
 msgstr "La existencia en:"
 
 #. module: stock_by_warehouse_purchase
-#: model:ir.model.fields,field_description:stock_by_warehouse_purchase.field_purchase_order_line_warehouse_id
+#: model:ir.model.fields,field_description:stock_by_warehouse_purchase.field_purchase_order_line__warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
 
 #. module: stock_by_warehouse_purchase
-#: model:ir.model.fields,field_description:stock_by_warehouse_purchase.field_purchase_order_line_warehouses_stock
+#: model:ir.model.fields,field_description:stock_by_warehouse_purchase.field_purchase_order_line__warehouses_stock
 msgid "Warehouses Stock"
 msgstr "Almacenes de existencia"
 
 #. module: stock_by_warehouse_purchase
-#: model:ir.ui.view,arch_db:stock_by_warehouse_purchase.purchase_order_form_view
+#: model:ir.model.fields,field_description:stock_by_warehouse_purchase.field_purchase_order_line__warehouses_stock_recompute
+msgid "Warehouses Stock Recompute"
+msgstr "Recalcular almacenes de existencia"
+
+#. module: stock_by_warehouse_purchase
+#: model_terms:ir.ui.view,arch_db:stock_by_warehouse_purchase.purchase_order_form_view
 msgid "that is immediately available is:"
 msgstr "que está disponible de inmediato es:"
 
