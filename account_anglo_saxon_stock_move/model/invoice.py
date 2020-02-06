@@ -316,7 +316,7 @@ class AccountInvoice(models.Model):
                         msg_log.append(log)
                 except except_orm as e:
                     if do_commit:
-                        error_set.add((e.name, e.value, e.message))
+                        error_set.add((e.args[0], " ".join(e.args[1:])))
                     else:
                         raise
 
@@ -328,7 +328,7 @@ class AccountInvoice(models.Model):
 
             if error_set:
                 obj._cr.rollback()
-                msg_log = '\n'.join('%s: %s %s' % lmg for lmg in error_set)
+                msg_log = '\n'.join('%s: %s' % lmg for lmg in error_set)
                 fnc_post(
                     subject='Errors at reconciliation at %s' % datetime.datetime.now(),
                     body='Following errors were found\n%s' % msg_log)
