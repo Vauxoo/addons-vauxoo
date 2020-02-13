@@ -450,7 +450,7 @@ class StockMove(models.Model):
     @api.multi
     def _get_landed_information(self):
         landed_obj = self.env['stock.landed.cost']
-        landed = landed_obj.search([
+        landed = landed_obj.sudo().search([
             ('picking_ids', 'in', self.mapped(
                 'move_orig_logistic_ids.origin_move_id.picking_id.id')),
             ('l10n_mx_edi_customs_number', '!=', False)])
