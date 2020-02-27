@@ -498,8 +498,8 @@ class StockMoveLine(models.Model):
                     candidates_receipt = self.env['stock.move'].search(
                         move_id.product_id.
                         _get_fifo_logistic_candidates_in_move(
-                            move.location_id or
-                            move.picking_type_id.default_location_src_id),
+                            move_id.location_id or
+                            move_id.picking_type_id.default_location_src_id),
                         order='date, id desc', limit=1)
                     if candidates_receipt:
                         candidates_receipt.write({
