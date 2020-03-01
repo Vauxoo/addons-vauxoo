@@ -114,7 +114,7 @@ class MrpProduction(models.Model):
     def _create_account_move(self):
         self.ensure_one()
         am_obj = self.env['account.move']
-        date = fields.Date.today()
+        date = fields.Date.context_today(self)
         journal_id = self.routing_id and self.routing_id.journal_id or \
             self.product_id.categ_id.property_stock_journal
         vals = {
