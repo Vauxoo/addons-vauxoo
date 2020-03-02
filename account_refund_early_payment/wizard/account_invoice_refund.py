@@ -70,7 +70,7 @@ class AccountInvoiceRefund(models.TransientModel):
             # Which is the aml to reconcile to (the receivable one)
             reconcile = refund.move_id.line_ids.filtered(
                 lambda x: x.account_id == refund.account_id and not
-                x.rec_aml).sorted('date_maturity')
+                x.reconciled).sorted('date_maturity')
             inv.assign_outstanding_credit(reconcile.id)
         return result
 
