@@ -36,7 +36,7 @@ class Product(models.Model):
         action['domain'] = [('product_id', '=', self.id)]
         return action
 
-    def _get_fifo_logistic_candidates_in_move(self, location):
+    def _get_fifo_logistic_candidates_in_move(self, location, warehouse=None):
         """ Find IN moves that can be used to value OUT moves.
         """
         self.ensure_one()
@@ -49,7 +49,16 @@ class Product(models.Model):
             ('location_dest_id', '=', location.id),
             ('picking_type_id.default_location_dest_id', '=', location.id),
         ]
-        candidates = self.env['stock.move'].search(domain, order='date, id')
+        order = 'date, id'
+        candidates = self.env['stock.move'].search(domain, order=order)
+
+        # If no candidates were found on the specified location and a warehouse
+        # was provided, search on all locations within the specified warehouse
+        if not candidates and warehouse:
+            main_location = warehouse.lot_stock_id
+            domain[-1] = ('location_dest_id', 'child_of', main_location.id)
+            candidates = self.env['stock.move'].search(domain, order=order)
+
         return candidates
 
 
