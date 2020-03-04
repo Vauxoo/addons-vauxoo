@@ -327,7 +327,8 @@ class StockMove(models.Model):
         candidates = (
             move.product_id._get_fifo_logistic_candidates_in_move(
                 move.location_id or
-                move.picking_type_id.default_location_src_id) or
+                move.picking_type_id.default_location_src_id,
+                move.warehouse_id) or
             move.product_id._get_fifo_candidates_in_move())
         candidates -= used
 
@@ -499,7 +500,8 @@ class StockMoveLine(models.Model):
                         move_id.product_id.
                         _get_fifo_logistic_candidates_in_move(
                             move_id.location_id or
-                            move_id.picking_type_id.default_location_src_id),
+                            move_id.picking_type_id.default_location_src_id,
+                            move_id.warehouse_id),
                         order='date, id desc', limit=1)
                     if candidates_receipt:
                         candidates_receipt.write({
