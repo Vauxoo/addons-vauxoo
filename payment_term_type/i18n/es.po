@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-13 17:26+0000\n"
-"PO-Revision-Date: 2016-04-13 17:26+0000\n"
+"POT-Creation-Date: 2020-03-23 23:19+0000\n"
+"PO-Revision-Date: 2020-03-23 23:19+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: payment_term_type
-#: help:account.config.settings,payment_type:0
+#: model:ir.model.fields,help:payment_term_type.field_res_config_settings__payment_type
 msgid "*bqp.- Based on quantity of payments\n"
 "Payments terms will be considered type: \n"
 " 'Cash Payment'- when the payments have been covered in just one exhibition. without matter the date of payment \n"
@@ -35,33 +35,33 @@ msgstr "*bqp.- Basado en la cantidad de pagos\n"
 " 'Pago a Crédito'- Cuando los pagos sean cubiertos en solo dos o más  exhibiciones pero los pagos serán echos en un día diferente que el día de confirmación de la orden de venta. \n"
 
 #. module: payment_term_type
-#: selection:account.config.settings,payment_type:0
+#: selection:res.config.settings,payment_type:0
 msgid "Based on date of payments"
 msgstr "Basado en la fecha de pagos"
 
 #. module: payment_term_type
-#: selection:account.config.settings,payment_type:0
+#: selection:res.config.settings,payment_type:0
 msgid "Based on quantity of payments"
 msgstr "Basado en la cantidad de pagos"
 
 #. module: payment_term_type
 #: selection:account.payment.term,payment_type:0
-#: code:addons/payment_term_type/models/payment_term.py:60
+#: code:addons/payment_term_type/models/payment_term.py:31
 #, python-format
 msgid "Cash"
 msgstr "Contado"
 
 #. module: payment_term_type
+#: model:ir.model,name:payment_term_type.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: payment_term_type
 #: selection:account.payment.term,payment_type:0
-#: code:addons/payment_term_type/models/payment_term.py:59
+#: code:addons/payment_term_type/models/payment_term.py:30
 #, python-format
 msgid "Credit"
 msgstr "Crédito"
-
-#. module: payment_term_type
-#: model:ir.model,name:payment_term_type.model_account_payment_term
-msgid "Payment Term"
-msgstr "Termino de Pago"
 
 #. module: payment_term_type
 #: model:account.payment.term,name:payment_term_type.payment_term_cash
@@ -74,12 +74,17 @@ msgid "Payment Term credit"
 msgstr "Término de Pago a Cŕedito"
 
 #. module: payment_term_type
-#: field:account.payment.term,payment_type:0
+#: model:ir.model,name:payment_term_type.model_account_payment_term
+msgid "Payment Terms"
+msgstr "Términos de Pago"
+
+#. module: payment_term_type
+#: model:ir.model.fields,field_description:payment_term_type.field_account_payment_term__payment_type
 msgid "Payment Type"
 msgstr "Tipo de pago"
 
 #. module: payment_term_type
-#: field:account.config.settings,payment_type:0
+#: model:ir.model.fields,field_description:payment_term_type.field_res_config_settings__payment_type
 msgid "Payments terms"
 msgstr "Términos de Pago"
 
