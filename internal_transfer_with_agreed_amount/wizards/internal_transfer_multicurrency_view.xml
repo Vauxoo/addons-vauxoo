@@ -7,6 +7,7 @@
             <form>
                 <group>
                     <p>Fill with the total amount that you will receive for this operation</p>
+                    <field name="partner_id"/>
                     <field name="agreed_amount"/>
                     <field name="currency_id" invisible="1"/>
                 </group>
