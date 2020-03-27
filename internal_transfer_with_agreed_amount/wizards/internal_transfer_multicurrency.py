@@ -5,6 +5,7 @@ class InternalTransferMulticurrency(models.TransientModel):
     _name = 'internal.transfer.multicurrency'
     _description = 'Wizard to modify the agreed amount with the bank on an internal transfer.'  # noqa
 
+    partner_id = fields.Many2one('res.partner')
     agreed_amount = fields.Monetary(
         help="Agreed amount in the currency of the destination bank.")
     currency_id = fields.Many2one(
@@ -29,6 +30,18 @@ class InternalTransferMulticurrency(models.TransientModel):
         payment.filtered(lambda p: p.state == 'draft').post()
         amls = self.env['account.move.line'].search([
             ('payment_id', '=', payment.id)])
+        if self.partner_id:
+            if len(amls) != 4:
+                return
+            amls.mapped('move_id').button_cancel()
+            to_reconcile = amls.filtered(lambda x: x.full_reconcile_id)
+            if amls.mapped('full_reconcile_id'):
+                amls.remove_move_reconcile()
+            amls.with_context(check_move_validity=False).write(
+                {'partner_id': self.partner_id.id})
+            to_reconcile.reconcile()
+            amls.mapped('move_id').post()
+            payment.write({'partner_id': self.partner_id.id})
         if (self.agreed_amount and
                 self.currency_id == payment.company_id.currency_id):
             if len(amls) != 4:
