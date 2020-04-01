@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+# Copyright 2020 Vauxoo
+# License AGPL-3 or later (http://www.gnu.org/licenses/agpl).
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class ResUsers(models.Model):
-
     _inherit = "res.users"
 
     sale_team_ids = fields.Many2many(
@@ -25,3 +24,24 @@ class ResUsers(models.Model):
                 ' do not belongs to the sale teams.\nPlease go to Sales >'
                 ' Settings > Users > Sales Teams if you will like to add this'
                 ' user to the sales team') % (user.sale_team_id.name))
+
+    @api.multi
+    def write(self, vals):
+        """The workers cache is cleared when the `sale_team_ids` field is modified to reflect the changes when the
+        following domain is called:
+        * `rule_default_warehouse_journal`
+        """
+        res = super(ResUsers, self).write(vals)
+        if vals.get("sale_team_ids"):
+            self.clear_caches()
+        return res
+
+    @api.multi
+    def create(self, values):
+        """The workers cache is cleared to reflect the changes when the following domain is called:
+        * `rule_default_warehouse_journal`
+        """
+        res = super(ResUsers, self).create(values)
+        if values.get("sale_team_ids"):
+            self.clear_caches()
+        return res

@@ -1,10 +1,9 @@
-# coding: utf-8
-
-from openerp import api, fields, models
+# Copyright 2020 Vauxoo
+# License AGPL-3 or later (http://www.gnu.org/licenses/agpl).
+from odoo import api, fields, models
 
 
 class InheritedCrmSaseSection(models.Model):
-
     _inherit = "crm.team"
 
     default_warehouse = fields.Many2one('stock.warehouse',
@@ -20,6 +19,31 @@ class InheritedCrmSaseSection(models.Model):
         help='It indicates journal to be used when move line is created with'
         'the warehouse of this sale team')
 
+    @api.multi
+    def write(self, vals):
+        """The workers cache is cleared when the `journal_team_ids` field is modified to reflect the changes when the
+        following domain is called:
+        * `rule_default_warehouse_journal`
+        """
+        if vals.get("journal_team_ids"):
+            self.clear_caches()
+        return super(InheritedCrmSaseSection, self).write(vals)
+
+    @api.multi
+    def create(self, values):
+        """The workers cache is cleared to reflect the changes when the following domain is called:
+        * `rule_default_warehouse_journal`
+        """
+        if values.get("journal_team_ids"):
+            self.clear_caches()
+        return super(InheritedCrmSaseSection, self).create(values)
+
+    @api.multi
+    def unlink(self):
+        """The workers cache is cleared when a record it's deleted,
+        """
+        self.clear_caches()
+        return super(InheritedCrmSaseSection, self).unlink()
 
 class WarehouseDefault(models.Model):
     """If you inherit from this model and add a field called warehouse_id into
