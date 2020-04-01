@@ -2,7 +2,8 @@
 # Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from datetime import timedelta
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class ResPartner(models.Model):
@@ -24,6 +25,13 @@ class ResPartner(models.Model):
         compute='get_allowed_sale', string="Allowed Sales", type='Boolean',
         help="If the Partner has credit overloaded or late payments,"
         " he can't validate invoices and sale orders.")
+
+    @api.constrains('grace_payment_days')
+    def _check_grace_payment_days_value(self):
+        for record in self:
+            if not 0 < record.grace_payment_days < 999999:
+                raise ValidationError(
+                    _('Payment grace days must be between 0 and 999999'))
 
     @api.multi
     def _get_credit_overloaded(self):
