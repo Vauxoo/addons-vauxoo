@@ -29,9 +29,10 @@ class ResPartner(models.Model):
     @api.constrains('grace_payment_days')
     def _check_grace_payment_days_value(self):
         for record in self:
-            if not 0 < record.grace_payment_days < 999999:
+            if not 0 <= record.grace_payment_days <= 999999:
                 raise ValidationError(
-                    _('Payment grace days must be between 0 and 999999'))
+                    _('Invalid value %s for payment grace days: value must be '
+                      'between 0 and 999999.') % record.grace_payment_days)
 
     @api.multi
     def _get_credit_overloaded(self):
