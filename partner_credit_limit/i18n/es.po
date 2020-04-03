@@ -91,10 +91,10 @@ msgid "Late Payments"
 msgstr "Pagos Atrasados"
 
 #. module: partner_credit_limit
-#: code:addons/partner_credit_limit/model/partner.py:35
+#: code:addons/partner_credit_limit/model/partner.py:34
 #, python-format
-msgid "Payment grace days must be between 0 and 999999"
-msgstr "Los días de gracia de pago deben estar entre 0 y 999999"
+msgid "Invalid value %s for payment grace days: value must be between 0 and 999999."
+msgstr "Valor incorrecto %s para los días de gracia de pago: el valor debe estar entre 0 y 999999."
 
 #. module: partner_credit_limit
 #: model:ir.model,name:partner_credit_limit.model_sale_order
