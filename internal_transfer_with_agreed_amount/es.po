@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* internal_transfer_with_agreed_amount
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-08 21:31+0000\n"
+"PO-Revision-Date: 2020-04-08 21:31+0000\n"
+"Last-Translator: Edilianny Sánchez <esanchez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__agreed_amount
+msgid "Agreed Amount"
+msgstr "Monto Acordado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,help:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__agreed_amount
+msgid "Agreed amount in the currency of the destination bank."
+msgstr "Cantidad acordada en la moneda del banco de destino."
+
+#. module: internal_transfer_with_agreed_amount
+#: model:res.groups,name:internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount
+msgid "Allow to confirm an internal transfer with an agreed amount"
+msgstr "Permitir confirmar una transferencia interna con un monto acordado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_account_payment_form_inherit
+msgid "Confirm with an agreed amount"
+msgstr "Confirmar con un monto acordado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_account_payment_form_inherit
+msgid "Edit agreed amount"
+msgstr "Editar monto acordado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Fill with the total amount that you will receive for this operation"
+msgstr "Complete con el monto total que recibirá por esta operación"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__id
+msgid "ID"
+msgstr ""
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.actions.act_window,name:internal_transfer_with_agreed_amount.action_internal_transfer_multicurrency
+msgid "Specify the agreed amount"
+msgstr "Especifique el monto acordado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:res.groups,comment:internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount
+msgid "The user with this permission can make multi-currency transfers with an agreed amount."
+msgstr "El usuario con este permiso puede realizar transferencias multi moneda con un monto acordado."
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model,name:internal_transfer_with_agreed_amount.model_internal_transfer_multicurrency
+msgid "Wizard to modify the agreed amount with the bank on an internal transfer."
+msgstr "Wizard para modificar el monto acordado con el banco en una transferencia interna."
+
