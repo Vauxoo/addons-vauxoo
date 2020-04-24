@@ -1,0 +1,151 @@
+<odoo noupdate="0">
+        <record id="account_product_extended_wip" model="account.account">
+            <field name="code">X201-vx-WIP</field>
+            <field name="name">WORK_IN_PROCESS</field>
+            <field name="user_type_id" ref="account.data_account_type_other_income"/>
+        </record>
+
+        <record id="landed_cost_journal_1" model="account.journal">
+            <field name="code">vxland</field>
+            <field name="name">Landed Cost Journal (Demo)</field>
+            <field name="type">general</field>
+        </record>
+
+        <record id="producto_a" model="product.product">
+            <field name="name">producto_a</field>
+            <field name="type">product</field>
+            <field name="property_cost_method">average</field>
+            <field name="property_valuation">real_time</field>
+            <field name="standard_price">10</field>
+            <field name="property_stock_account_input" ref="stock_cost_segmentation.o_expense"/>
+            <field name="property_stock_account_output" ref="stock_cost_segmentation.o_income"/>
+        </record>
+        <record id="producto_b" model="product.product">
+            <field name="name">producto_b</field>
+            <field name="type">product</field>
+            <field name="property_cost_method">average</field>
+            <field name="property_valuation">real_time</field>
+            <field name="standard_price">20</field>
+            <field name="property_stock_account_input" ref="stock_cost_segmentation.o_expense"/>
+            <field name="property_stock_account_output" ref="stock_cost_segmentation.o_income"/>
+        </record>
+        <record id="producto_c" model="product.product">
+            <field name="name">producto_c</field>
+            <field name="type">product</field>
+            <field name="property_cost_method">average</field>
+            <field name="property_valuation">real_time</field>
+            <field name="standard_price">30</field>
+            <field name="property_stock_account_input" ref="stock_cost_segmentation.o_expense"/>
+            <field name="property_stock_account_output" ref="stock_cost_segmentation.o_income"/>
+        </record>
+        <record id="producto_d" model="product.product">
+            <field name="name">producto_d</field>
+            <field name="type">product</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">real_time</field>
+            <field name="standard_price">50</field>
+            <field name="property_stock_account_input" ref="stock_cost_segmentation.o_expense"/>
+            <field name="property_stock_account_output" ref="stock_cost_segmentation.o_income"/>
+        </record>
+        <record id="producto_e" model="product.product">
+            <field name="name">producto_e</field>
+            <field name="type">product</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+            <field name="standard_price">80</field>
+            <field name="property_stock_account_input" ref="stock_cost_segmentation.o_expense"/>
+            <field name="property_stock_account_output" ref="stock_cost_segmentation.o_income"/>
+        </record>
+
+        <!-- INITIALIZING INVENTORY FOR RAW MATERIAL -->
+        <record id="basic_stock_inventory" model="stock.inventory">
+            <field name="name">INITIAL INVENTORY - MRP WORKCENTER SEGMENTATION</field>
+            <field name="filter">none</field>
+        </record>
+        <record id="basic_stock_inventory_line_1" model="stock.inventory.line">
+            <field name="product_id" ref="producto_a"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="basic_stock_inventory"/>
+            <field name="product_qty">5.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+        <record id="basic_stock_inventory_line_2" model="stock.inventory.line">
+            <field name="product_id" ref="producto_b"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="basic_stock_inventory"/>
+            <field name="product_qty">3.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+        <record id="basic_stock_inventory_line_3" model="stock.inventory.line">
+            <field name="product_id" ref="producto_c"/>
+            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="inventory_id" ref="basic_stock_inventory"/>
+            <field name="product_qty">2.0</field>
+            <field name="location_id" ref="stock.stock_location_14"/>
+        </record>
+
+        <record id="routing_product_d" model="mrp.routing">
+            <field name="name">routing_product_d</field>
+            <field name="journal_id" ref="landed_cost_journal_1"/>
+        </record>
+
+        <record id="basic_workcenter" model="mrp.workcenter">
+            <field name="name">WORKCENTER</field>
+            <field name="time_efficiency" eval="100"/>
+            <field name="oee_target" eval="100"/>
+            <field name="capacity" eval="1"/>
+            <field name="costs_hour">10</field>
+        </record>
+
+        <record id="routing_workcenter_product_d" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="routing_product_d"/>
+            <field name="workcenter_id" ref="basic_workcenter"/>
+            <field name="name">routing_workcenter_product_d</field>
+            <field name="sequence">100</field>
+        </record>
+
+        <record id="routing_product_e" model="mrp.routing">
+            <field name="name">routing_product_e</field>
+            <field name="journal_id" ref="landed_cost_journal_1"/>
+        </record>
+        <record id="routing_workcenter_product_e" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="routing_product_e"/>
+            <field name="workcenter_id" ref="basic_workcenter"/>
+            <field name="name">routing_workcenter_product_e</field>
+            <field name="sequence">100</field>
+        </record>
+
+        <record id="bom_product_d" model="mrp.bom">
+            <field name="product_tmpl_id" ref="producto_d_product_template"/>
+            <field name="product_id" ref="producto_d"/>
+            <field name="product_qty">1</field>
+            <field name="routing_id" ref="routing_product_d"/>
+        </record>
+        <record id="bom_line_product_a" model="mrp.bom.line">
+            <field name="product_id" ref="producto_a"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_d"/>
+        </record>
+        <record id="bom_line_product_b" model="mrp.bom.line">
+            <field name="product_id" ref="producto_b"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_d"/>
+        </record>
+
+        <record id="bom_product_e" model="mrp.bom">
+            <field name="product_tmpl_id" ref="producto_e_product_template"/>
+            <field name="product_id" ref="producto_e"/>
+            <field name="product_qty">1</field>
+            <field name="routing_id" ref="routing_product_e"/>
+        </record>
+        <record id="bom_line_product_c" model="mrp.bom.line">
+            <field name="product_id" ref="producto_c"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_e"/>
+        </record>
+        <record id="bom_line_product_d" model="mrp.bom.line">
+            <field name="product_id" ref="producto_d"/>
+            <field name="product_qty">1</field>
+            <field name="bom_id" ref="bom_product_e"/>
+        </record>
+</odoo>
