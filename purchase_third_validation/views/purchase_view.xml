@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    	<record id="view_purchase_third_level_inherit" model="ir.ui.view">
+            <field name="name">purchase.third.level.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_approve']" position="after">
+                    <button name="button_approve" type="object" states='third approve' string="Approve Order" class="oe_highlight" groups="purchase_third_validation.general_purchase_manager"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>
