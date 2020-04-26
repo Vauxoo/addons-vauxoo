@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stk" model="account.account">
+        <field name="code">X1011-X</field>
+        <field name="name">Purchased Stocks - (test)</field>
+        <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+        <field name="tag_ids" eval="[(6,0,[ref('account.demo_stock_account')])]"/>
+    </record>
+
+    <record id="base.main_company" model="res.company">
+        <field name="require_workcenter_analytic" eval="True"/>
+    </record>
+
+    <record id="rev_work_in_process" model="account.account">
+        <field name="code">X200-vx-WIP</field>
+        <field name="name">WORK_IN_PROCESS</field>
+        <field name="user_type_id" ref="account.data_account_type_revenue"/>
+    </record>
+    <record id="rev_production_cost_account" model="account.account">
+        <field name="code">X200-vx-production</field>
+        <field name="name">PRODUCTION_COST_ACCOUNT</field>
+        <field name="user_type_id" ref="account.data_account_type_revenue"/>
+    </record>
+
+    <record id="rev_production_analytic_account" model="account.analytic.account">
+        <field name="name">PRODUCTION_ANALYTIC_ACCOUNT</field>
+    </record>
+
+    <record id="rev_raw_material_std_realtime" model="product.product">
+        <field name="name">RAW_MATERIAL_STD_REALTIME</field>
+        <field name="type">product</field>
+        <field name="cost_method">standard</field>
+        <field name="valuation">real_time</field>
+        <field name="standard_price">85</field>
+        <field name="property_stock_account_input" ref="account_move_line_production.o_expense"/>
+        <field name="property_stock_account_output" ref="account_move_line_production.o_income"/>
+    </record>
+
+    <record id="rev_prod_std_realtime" model="product.product">
+        <field name="name">PROD_STD_REALTIME</field>
+        <field name="type">product</field>
+        <field name="cost_method">standard</field>
+        <field name="valuation">real_time</field>
+        <field name="standard_price">80</field>
+        <field name="property_stock_account_input" ref="account_move_line_production.o_expense"/>
+        <field name="property_stock_account_output" ref="account_move_line_production.o_income"/>
+    </record>
+
+    <record id="rev_workcenter" model="mrp.workcenter">
+        <field name="name">WORKCENTER</field>
+        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
+        <field name="time_efficiency" eval="1.0"/>
+        <field name="costs_hour">15</field>
+        <field name="costs_hour_account_id" ref="rev_production_analytic_account"/>
+        <field name="costs_general_account_id" ref="rev_production_cost_account"/>
+    </record>
+
+    <record id="rev_routing" model="mrp.routing">
+        <field name="name">PROD_STD-REALTIME_ROUTING</field>
+        <!--<field name="journal_id" ref="mrp_routing_account_journal.landed_cost_journal_1"/>-->
+    </record>
+
+    <record id="rev_routing_workcenter" model="mrp.routing.workcenter">
+        <field name="routing_id" ref="rev_routing"/>
+        <field name="workcenter_id" ref="rev_workcenter"/>
+        <field name="name">Assembly workcenter</field>
+        <field name="sequence">5</field>
+    </record>
+
+    <record id="rev_bom_std_realtime" model="mrp.bom">
+        <field model="product.template" name="product_tmpl_id" search="[('name', '=', u'PROD_STD_REALTIME')]"/>
+        <field name="product_id" eval="False"/>
+        <field name="product_qty">1</field>
+        <field name="routing_id" ref="rev_routing"/>
+    </record>
+
+    <record id="bom_std_line_" model="mrp.bom.line">
+        <field name="product_id" ref="rev_raw_material_std_realtime"/>
+        <field name="product_qty">1</field>
+        <field name="bom_id" ref="rev_bom_std_realtime"/>
+    </record>
+
+    <record id="rev_mrp_production" model="mrp.production">
+        <field name="name">MRP_PRODUCTION</field>
+        <field name="product_uom_id" ref="product.product_uom_unit"/>
+        <field name="product_qty">1</field>
+        <field name="product_id" ref="rev_prod_std_realtime"/>
+        <field name="bom_id" ref="rev_bom_std_realtime"/>
+        <field name="routing_id" ref="rev_routing"/>
+        <field name="location_src_id" ref="stock.stock_location_14"/>
+        <field name="location_dest_id" ref="stock.stock_location_14"/>
+    </record>
+
+    <record id="stock_inventory" model="stock.inventory">
+        <field name="name">Initial Inventory - RAW_MATERIAL_STD_REALTIME</field>
+    </record>
+
+    <record id="stock_inventory_line_1" model="stock.inventory.line">
+        <field name="product_id" ref="rev_raw_material_std_realtime"/>
+        <field name="product_uom_id" ref="product.product_uom_unit"/>
+        <field name="inventory_id" ref="mrp_workcenter_account_move.stock_inventory"/>
+        <field name="product_qty">1.0</field>
+        <field name="location_id" ref="stock.stock_location_14"/>
+    </record>
+
+    <function model="stock.inventory" name="action_done">
+        <function eval="[[('id', '=', ref('mrp_workcenter_account_move.stock_inventory'))]]" model="stock.inventory" name="search"/>
+    </function>
+</odoo>
