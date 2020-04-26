@@ -26,7 +26,7 @@
         <field name="inherit_id" ref="account.view_account_search"/>
         <field name="arch"  type="xml">
             <xpath expr="//group" position="inside">
-                <filter string="Analytic Policy" context="{'group_by':'user_type_id'}" groups="analytic.group_analytic_accounting"/>
+                <filter string="Analytic Policy" name="filter_analytic_user_type_id" context="{'group_by':'user_type_id'}" groups="analytic.group_analytic_accounting"/>
             </xpath>
         </field>
     </record>
