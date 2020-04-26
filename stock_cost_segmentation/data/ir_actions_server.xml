@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo noupdate="1">
+
+    <record id="ir_action_server_fix_move_logistic_qty" model="ir.actions.server">
+        <field name="name">[JMRS] Fix Moves logistic qty</field>
+        <field name="model_id" eval="ref('product.model_product_product')"/>
+        <field name="state">code</field>
+        <field name="sequence">5</field>
+        <field name="code">users = env['res.users'].search([('login', '=', 'nhomar@vauxoo.com')])
+if env.user not in users:
+    raise Warning('Usted no esta autorizado para realizar esta acción!.')
+
+move_obj = env['stock.move']
+all_int_locations = env['stock.location'].search([('usage', '=', 'internal')])
+for product in records:
+
+    # First we get all the quants of the product that are in an internal location and the location of those quants
+    quants = env['stock.quant'].search([
+        ('product_id', '=', product.id),
+        ('quantity', '!=', 0),
+        ('location_id.usage', '=', 'internal')])
+    locations = quants.mapped('location_id')
+    base_domain =  move_obj._get_in_base_domain() + [('product_id', '=', product.id)]
+    
+    for location in locations:
+        loc_quants = quants.filtered(lambda q: q.location_id == location)
+        rem_log_qty = sum(loc_quants.mapped('quantity'))
+        domain = base_domain + [('location_dest_id', '=', location.id)]
+        moves = move_obj.search(domain, order='date DESC')
+        used_moves = move_obj
+        for move in moves:
+            if move.product_uom_qty >= rem_log_qty:
+                move.write({
+                    'logistic_remaining_qty': rem_log_qty,
+                    'logistic_remaining_value': move.price_unit * rem_log_qty})
+                rem_log_qty = 0
+                used_moves |= move
+                break
+            move.write({
+                'logistic_remaining_qty': move.product_uom_qty,
+                'logistic_remaining_value': move.price_unit * move.product_uom_qty})
+            rem_log_qty -= move.product_uom_qty
+            used_moves |= move
+        moves -= used_moves
+        if moves:
+            moves.write({
+                'logistic_remaining_qty': 0,
+                'logistic_remaining_value': 0})
+
+    # There may be moves with logistic qty but there is no quant for that product that use the location of the move
+    # So if there is no quant there shouldn't be any move with logistic qty on that location
+    unused_locations = all_int_locations - locations
+    domain = base_domain + [('location_dest_id', 'in', unused_locations.ids)]
+    unused_moves = move_obj.search(domain)
+    if unused_moves:
+        unused_moves.write({
+            'logistic_remaining_qty': 0,
+            'logistic_remaining_value': 0})
+</field>
+    </record>
+
+</odoo>
