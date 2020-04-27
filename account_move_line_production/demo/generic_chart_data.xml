@@ -17,11 +17,14 @@
         <field name="code_digits">6</field>
         <field name="bank_account_code_prefix">10014</field>
         <field name="cash_account_code_prefix">10015</field>
-        <field name="transfer_account_id" ref="transfer_account_id"/>
         <field name="currency_id" ref="base.USD"/>
     </record>
     <record id="transfer_account_id" model="account.account.template">
         <field name="chart_template_id" ref="configurable_chart_template"/>
+    </record>
+
+    <record id="base.main_company" model="res.company">
+        <field name="transfer_account_id" ref="transfer_account_id"/>
     </record>
 
     <!-- Account Templates-->
