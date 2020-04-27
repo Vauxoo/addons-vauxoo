@@ -16,7 +16,7 @@ class ResConfigSettings(models.TransientModel):
         == 'three_step')
     po_third_validation_amount = fields.Monetary(
         related='company_id.po_third_validation_amount',
-        string="Minimum Amount", currency_field='company_currency_id')
+        string="Minimum Amount", currency_field='company_currency_id', readonly=False)
 
     def set_values(self):
         super(ResConfigSettings, self).set_values()
