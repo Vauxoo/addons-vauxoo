@@ -69,7 +69,7 @@
     <record id="po_01_line_01" model="purchase.order.line">
         <field name="name">Standard Product</field>
         <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="product_id" ref="stock_landed_segmentation.product_std_01"/>
         <field name="product_qty">100</field>
         <field name="price_unit">100</field>
@@ -80,7 +80,7 @@
         <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
         <field name="product_id" ref="stock_landed_segmentation.product_avg_01"/>
         <field name="product_qty">100</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">100</field>
         <field name="order_id" ref="stock_landed_segmentation.po_01"/>
     </record>
@@ -89,7 +89,7 @@
         <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
         <field name="product_id" ref="stock_landed_segmentation.product_real_01"/>
         <field name="product_qty">100</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">100</field>
         <field name="order_id" ref="stock_landed_segmentation.po_01"/>
     </record>
@@ -101,7 +101,7 @@
         <field name="name">Standard Product</field>
         <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
         <field name="product_id" ref="stock_landed_segmentation.product_std_01"/>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="product_qty">150</field>
         <field name="price_unit">100</field>
         <field name="order_id" ref="stock_landed_segmentation.po_02"/>
@@ -111,7 +111,7 @@
         <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
         <field name="product_id" ref="stock_landed_segmentation.product_avg_01"/>
         <field name="product_qty">150</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">210</field>
         <field name="order_id" ref="stock_landed_segmentation.po_02"/>
     </record>
@@ -121,7 +121,7 @@
         <field name="product_id" ref="stock_landed_segmentation.product_real_01"/>
         <field name="product_qty">150</field>
         <field name="price_unit">100</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="order_id" ref="stock_landed_segmentation.po_02"/>
     </record>
     <record id="invoice_landing_costs_average_1" model="account.invoice">
