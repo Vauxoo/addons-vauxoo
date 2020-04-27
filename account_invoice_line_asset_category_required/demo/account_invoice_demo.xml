@@ -35,7 +35,7 @@
         <field name="name">Computer equipment</field>
         <field name="product_id" ref="product.product_product_4"/>
         <field name="price_unit" eval="5355.0" />
-        <field name="uom_id" ref="product.product_uom_hour"/>
+        <field name="uom_id" ref="uom.product_uom_hour"/>
         <field name="invoice_id" ref="invoice_demo_asset_category"/>
         <field name="account_id" ref="a_pay"/>
         <field name="quantity">1</field>

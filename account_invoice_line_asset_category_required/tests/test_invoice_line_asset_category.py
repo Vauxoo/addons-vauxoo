@@ -7,11 +7,18 @@
 #    info Vauxoo (info@vauxoo.com)
 #    coded by: Luis Torres <luis_t@vauxoo.com>
 ############################################################################
+from odoo import tools
 from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
+from odoo.modules.module import get_resource_path
 
 
 class TestInvoiceLineAssetCategory(TransactionCase):
+
+    def _load(self, module, *args):
+        tools.convert_file(
+            self.cr, 'account_asset', get_resource_path(module, *args),
+            {}, 'init', False, 'test', self.registry._assertion_report)
 
     def setUp(self):
         super(TestInvoiceLineAssetCategory, self).setUp()
@@ -21,8 +28,10 @@ class TestInvoiceLineAssetCategory(TransactionCase):
         self.invoice = self.env.ref(
             'account_invoice_line_asset_category_required.'
             'invoice_demo_asset_category')
+        self._load('account', 'test', 'account_minimal_test.xml')
+        self._load('account_asset', 'test', 'account_asset_demo_test.xml')
         self.category_asset = self.env.ref(
-            'account_asset.account_asset_category_fixedassets0')
+            'account_asset.account_asset_category_fixedassets_test0')
 
     def test_01_line_with_police_always_set(self):
         "Create an invoice with a line that need category, ideal case"

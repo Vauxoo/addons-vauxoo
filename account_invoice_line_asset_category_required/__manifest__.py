@@ -15,7 +15,6 @@
     'license': 'AGPL-3',
     'category': '',
     'depends': [
-        'account',
         'account_asset',
     ],
     'demo': [
