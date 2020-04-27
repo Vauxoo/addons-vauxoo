@@ -14,7 +14,7 @@
     ],
     "demo": [
         'demo/generic_chart_data.xml',
-        'demo/account_chart_template_data.yml',
+        'demo/account_chart_template_data.xml',
         'demo/demo.xml',
     ],
     "data": [
