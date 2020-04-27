@@ -9,7 +9,7 @@
                 <field name="move_id"/>
                 <field name="origin_move_id"/>
                 <field name="product_id"/>
-                <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="product.group_uom"/>
+                <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="uom.group_uom"/>
                 <field name="cost"/>
                 <field name="quantity" string="Quantity Done"/>
                 <field name="valuation_type"/>
@@ -34,7 +34,7 @@
                             <label for="quantity" string="Quantity Done"/>
                             <div class="o_row">
                                 <field name="quantity"/>
-                                <field name="product_uom" options="{'no_create': True}" string="Unit of Measure" groups="product.group_uom"/>
+                                <field name="product_uom" options="{'no_create': True}" string="Unit of Measure" groups="uom.group_uom"/>
                             </div>
                         </group>
                     </group>
