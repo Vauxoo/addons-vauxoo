@@ -52,14 +52,14 @@
         </record>
         <record id="stock_inventory_line_1" model="stock.inventory.line">
             <field name="product_id" ref="prod_a_avg_realtime"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="inventory_id" ref="mrp_workcenter_segmentation.stock_inventory"/>
             <field name="product_qty">5.0</field>
             <field name="location_id" ref="stock.stock_location_14"/>
         </record>
         <record id="stock_inventory_line_2" model="stock.inventory.line">
             <field name="product_id" ref="prod_b_avg_realtime"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="inventory_id" ref="mrp_workcenter_segmentation.stock_inventory"/>
             <field name="product_qty">3.0</field>
             <field name="location_id" ref="stock.stock_location_14"/>
@@ -80,7 +80,7 @@
             <field name="name">pick_01</field>
             <field name="location_id" ref="stock.location_inventory"/>
             <field name="location_dest_id" ref="stock.stock_location_14"/>
-            <field name="product_uom" ref="product.product_uom_unit" />
+            <field name="product_uom" ref="uom.product_uom_unit" />
             <field name="price_unit">25</field>
             <field name="product_uom_qty">2</field>
             <field name="product_id" ref="prod_c_avg_realtime"/>
@@ -200,7 +200,7 @@
 
         <record id="mrp_production_segmentation_d_product" model="mrp.production">
             <field name="name">MRP_PRODUCTION_SEGMENTATION_D_PRODUCT</field>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="product_qty">3</field>
             <field name="product_id" ref="prod_d_std_realtime"/>
             <field name="bom_id" ref="bom_segmentation_d_product"/>
@@ -211,7 +211,7 @@
 
         <record id="mrp_production_segmentation_e_product" model="mrp.production">
             <field name="name">MRP_PRODUCTION_SEGMENTATION_E_PRODUCT</field>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="product_qty">1</field>
             <field name="product_id" ref="prod_e_std_realtime"/>
             <field name="bom_id" ref="bom_segmentation_e_product"/>
