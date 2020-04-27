@@ -104,7 +104,7 @@
         <field name="location_id" ref="stock.stock_location_14"/>
     </record>
 
-    <function model="stock.inventory" name="action_done">
+    <function model="stock.inventory" name="action_validate">
         <function eval="[[('id', '=', ref('mrp_workcenter_account_move.stock_inventory'))]]" model="stock.inventory" name="search"/>
     </function>
 </odoo>
