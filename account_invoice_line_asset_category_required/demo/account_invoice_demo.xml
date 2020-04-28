@@ -22,7 +22,7 @@
     </record>
 
 
-    <!-- Invoice -->
+    <!-- Invoice 
     <record id="invoice_demo_asset_category" model="account.invoice">
         <field name="account_id" ref="a_pay"/>
         <field name="company_id" ref="base.main_company"/>
@@ -40,4 +40,5 @@
         <field name="account_id" ref="a_pay"/>
         <field name="quantity">1</field>
     </record>
+    -->
 </odoo>
