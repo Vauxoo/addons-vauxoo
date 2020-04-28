@@ -19,24 +19,11 @@ msgstr ""
 "X-Generator: Weblate 2.2-dev\n"
 
 #. module: account_anglo_saxon_stock_move_purchase
-#: field:purchase.order,aml_ids:0
+#: model:ir.model.fields,field_description:account_anglo_saxon_stock_move_purchase.field_purchase_order__aml_ids
 msgid "Account Move Lines"
 msgstr "Líneas de Asientos Contables"
 
 #. module: account_anglo_saxon_stock_move_purchase
-#: code:addons/account_anglo_saxon_stock_move_purchase/model/purchase.py:52
-#: model:ir.model,name:account_anglo_saxon_stock_move_purchase.model_account_move_line
-#, python-format
-msgid "Journal Items"
-msgstr "Líneas de Asientos"
-
-#. module: account_anglo_saxon_stock_move_purchase
-#: field:account.move.line,purchase_id:0
 #: model:ir.model,name:account_anglo_saxon_stock_move_purchase.model_purchase_order
 msgid "Purchase Order"
 msgstr "Orden de Compra"
-
-#. module: account_anglo_saxon_stock_move_purchase
-#: view:purchase.order:account_anglo_saxon_stock_move_purchase.purchase_stock_accrual_view
-msgid "Stock Accruals"
-msgstr "Provisiones de Inventario"
