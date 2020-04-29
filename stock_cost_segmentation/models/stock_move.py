@@ -19,6 +19,7 @@ SEGMENTATION_COST = [
 
 class HistoricalStockMove(models.Model):
     _name = 'historical.stock.move'
+    _description = 'historical.stock.move'
 
     move_id = fields.Many2one(
         'stock.move', 'Move',
