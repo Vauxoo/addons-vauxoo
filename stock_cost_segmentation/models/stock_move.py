@@ -63,7 +63,7 @@ class StockMove(models.Model):
         copy=False)
 
     move_orig_financial_ids = fields.One2many(
-        'historical.stock.move', 'move_id', 'Original Fifo Move',
+        'historical.stock.move', 'move_id', 'Orig. Fifo Move',
         domain=[('valuation_type', '=', 'financial')],
         help="Optional: previous stock move when chaining them")
 
