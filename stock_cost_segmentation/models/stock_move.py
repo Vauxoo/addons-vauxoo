@@ -83,7 +83,7 @@ class StockMove(models.Model):
         string='Subcontracting Cost',
         digits=dp.get_precision('Account'))
     landed_cost = fields.Float(
-        string='Landed Cost',
+        string='Landed Cost Value',
         digits=dp.get_precision('Account'))
     segmentation_cost = fields.Float(
         string='Actual Cost', store=True, readonly=True,
