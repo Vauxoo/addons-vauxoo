@@ -21,6 +21,7 @@ except ImportError:
 class ForeignExchangeRealizationLine(models.TransientModel):
 
     _name = 'foreign.exchange.realization.line'
+    _description = 'foreign.exchange.realization.line'
 
     wizard_id = fields.Many2one(
         'foreign.exchange.realization',
@@ -69,6 +70,7 @@ class ForeignExchangeRealizationLine(models.TransientModel):
 class ForeignExchangeRealization(models.TransientModel):
 
     _name = 'foreign.exchange.realization'
+    _description = 'foreign.exchange.realization'
 
     def _get_default_company(self):
         company_id = self.env['res.users']._get_company()
@@ -249,7 +251,7 @@ class ForeignExchangeRealization(models.TransientModel):
             ('exception', 'Exception'),
             ('posted', 'Posted Journal'),
         ],
-        'Entries to Include',
+        'State',
         required=True,
         default='draft',
         help=(
