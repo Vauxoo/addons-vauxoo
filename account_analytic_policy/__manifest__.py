@@ -9,7 +9,7 @@
 ############################################################################
 {
     "name": "Account Analytic Policy",
-    "version": "11.0.0.1.7",
+    "version": "12.0.1.0.0",
     "author": "Vauxoo",
     "category": "Accounting",
     "website": "http://www.vauxoo.com",
