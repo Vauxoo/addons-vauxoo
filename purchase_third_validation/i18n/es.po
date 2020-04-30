@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: purchase_third_validation
-#: model:ir.ui.view,arch_db:purchase_third_validation.view_purchase_third_level_inherit
+#: model_terms:ir.ui.view,arch_db:purchase_third_validation.view_purchase_third_level_inherit
 msgid "Approve Order"
 msgstr "Aprobar Orden"
 
