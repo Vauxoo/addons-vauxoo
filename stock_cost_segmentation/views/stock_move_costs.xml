@@ -10,7 +10,7 @@
                 <field name="reference"/>
                 <field name="product_id"/>
                 <field name="product_uom_qty"/>
-                <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="product.group_uom"/>
+                <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="uom.group_uom"/>
                 <field name="price_unit"/>
                 <field name="material_cost"/>
                 <field name="landed_cost"/>

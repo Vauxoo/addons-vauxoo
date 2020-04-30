@@ -17,7 +17,7 @@
             <field name="name">po_sgmnt_01_line_01</field>
             <field name="date_planned" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="product_id" ref="product_sgmnt"/>
-            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="product_uom" ref="uom.product_uom_unit"/>
             <field name="product_qty">10</field>
             <field name="price_unit">32</field>
             <field name="order_id" ref="po_sgmnt_01"/>
@@ -39,7 +39,7 @@
 
         <record id="stock_inventory_line_1" model="stock.inventory.line">
             <field name="product_id" ref="product_real_periodic"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="inventory_id" ref="stock_cost_segmentation.stock_inventory_01"/>
             <field name="product_qty">1.0</field>
             <field name="location_id" ref="stock.stock_location_14"/>
@@ -63,7 +63,7 @@
 
         <record id="stock_inventory_line_2" model="stock.inventory.line">
             <field name="product_id" ref="product_real_realtime"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="inventory_id" ref="stock_cost_segmentation.stock_inventory_02"/>
             <field name="product_qty">1.0</field>
             <field name="location_id" ref="stock.stock_location_14"/>

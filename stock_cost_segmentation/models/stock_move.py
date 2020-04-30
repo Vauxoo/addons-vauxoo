@@ -19,6 +19,7 @@ SEGMENTATION_COST = [
 
 class HistoricalStockMove(models.Model):
     _name = 'historical.stock.move'
+    _description = 'historical.stock.move'
 
     move_id = fields.Many2one(
         'stock.move', 'Move',
@@ -62,7 +63,7 @@ class StockMove(models.Model):
         copy=False)
 
     move_orig_financial_ids = fields.One2many(
-        'historical.stock.move', 'move_id', 'Original Fifo Move',
+        'historical.stock.move', 'move_id', 'Orig. Fifo Move',
         domain=[('valuation_type', '=', 'financial')],
         help="Optional: previous stock move when chaining them")
 
@@ -82,7 +83,7 @@ class StockMove(models.Model):
         string='Subcontracting Cost',
         digits=dp.get_precision('Account'))
     landed_cost = fields.Float(
-        string='Landed Cost',
+        string='Landed Cost Value',
         digits=dp.get_precision('Account'))
     segmentation_cost = fields.Float(
         string='Actual Cost', store=True, readonly=True,
