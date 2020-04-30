@@ -27,9 +27,3 @@ msgstr "Factura"
 #: model:ir.model,name:account_anglo_saxon_stock_move.model_account_invoice_line
 msgid "Invoice Line"
 msgstr "Línea de Factura"
-
-#. module: account_anglo_saxon_stock_move
-#: code:addons/account_anglo_saxon_stock_move/model/invoice.py:105
-#, python-format
-msgid "The Stock Journal is missing on product category."
-msgstr "El diario de inventarios esta faltando en la categoría del producto."
