@@ -9,7 +9,7 @@
 
 {
     "name": "MRP Responsible",
-    "version": "0.2",
+    "version": "12.0.1.0.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Product",
     "website": "http://Vauxoo.com",
