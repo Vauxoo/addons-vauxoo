@@ -25,7 +25,7 @@
 ##############################################################################
 {
     "name": "Stock Move Entries",
-    "version": "11.0.0.1.0",
+    "version": "12.0.0.1.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",

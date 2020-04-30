@@ -25,37 +25,6 @@ msgid "Account Entry"
 msgstr "Comprobante Contable"
 
 #. module: stock_move_entries
-#: model:ir.model,name:stock_move_entries.model_stock_move
+#: model:ir.model,name:stock_move_entries.model_stock_move_line
 msgid "Stock Move"
 msgstr "Movimiento de stock"
-
-#. module: stock_move_entries
-#: field:account.move,sm_id:0 field:account.move.line,sm_id:0
-msgid "Stock move ID"
-msgstr "ID de movimiento de inventario"
-
-#. module: stock_move_entries
-#: field:account.move.line,location_dest_id:0
-#: field:account.move.line,location_id:0
-msgid "Location Move"
-msgstr "Ubicación de Movimiento"
-
-#. module: stock_move_entries
-#: help:account.move.line,location_id:0
-msgid "Location Move Source"
-msgstr "Ubicacion de Origen del Movimiento"
-
-#. module: stock_move_entries
-#: model:ir.model,name:stock_move_entries.model_account_move_line
-msgid "Journal Items"
-msgstr "Apuntes contables"
-
-#. module: stock_move_entries
-#: field:stock.move,am_id:0
-msgid "Account move ID"
-msgstr "ID del movimiento contable"
-
-#. module: stock_move_entries
-#: help:account.move.line,location_dest_id:0
-msgid "Location Move Destination"
-msgstr "Ubicacion de Destino del Movimiento"
