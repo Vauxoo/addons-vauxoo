@@ -26,7 +26,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
 
         # Products
         self.product = self.env.ref('product.product_product_11')
-        self.product_uom = self.env.ref('product.product_uom_unit')
+        self.product_uom = self.env.ref('uom.product_uom_unit')
 
     def test_default_picking_type_purchase_requisition(self):
         """Validate the picking type by default from sale team warehouse in
