@@ -24,10 +24,6 @@
         <field name="chart_template_id" ref="configurable_chart_template"/>
     </record>
 
-    <record id="base.main_company" model="res.company">
-        <field name="transfer_account_id" ref="transfer_account_id"/>
-    </record>
-
     <!-- Account Templates-->
 
     <!-- Balance Sheet -->
