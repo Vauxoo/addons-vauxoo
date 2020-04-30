@@ -83,7 +83,7 @@
 
     <record id="rev_mrp_production" model="mrp.production">
         <field name="name">MRP_PRODUCTION</field>
-        <field name="product_uom_id" ref="product.product_uom_unit"/>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="product_qty">1</field>
         <field name="product_id" ref="rev_prod_std_realtime"/>
         <field name="bom_id" ref="rev_bom_std_realtime"/>
@@ -98,13 +98,13 @@
 
     <record id="stock_inventory_line_1" model="stock.inventory.line">
         <field name="product_id" ref="rev_raw_material_std_realtime"/>
-        <field name="product_uom_id" ref="product.product_uom_unit"/>
+        <field name="product_uom_id" ref="uom.product_uom_unit"/>
         <field name="inventory_id" ref="mrp_workcenter_account_move.stock_inventory"/>
         <field name="product_qty">1.0</field>
         <field name="location_id" ref="stock.stock_location_14"/>
     </record>
 
-    <function model="stock.inventory" name="action_done">
+    <function model="stock.inventory" name="action_validate">
         <function eval="[[('id', '=', ref('mrp_workcenter_account_move.stock_inventory'))]]" model="stock.inventory" name="search"/>
     </function>
 </odoo>
