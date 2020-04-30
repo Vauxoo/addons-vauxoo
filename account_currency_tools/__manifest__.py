@@ -21,7 +21,7 @@
 ###############################################################################
 {
     "name": "Account Currency Tools",
-    "version": "11.0.0.0.0",
+    "version": "12.0.1.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
@@ -29,9 +29,6 @@
     "depends": [
         "base",
         "account",
-    ],
-    "demo": [
-        # 'demo/account_move.xml',
     ],
     "data": [
         'views/res_company_views.xml',
