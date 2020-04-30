@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 class AttachInvoiceToLandedCostsWizard(models.TransientModel):
     _name = 'attach.invoice.to.landed.costs.wizard'
+    _description = 'attach.invoice.to.landed.costs.wizard'
 
     stock_landed_cost_id = fields.Many2one(
         'stock.landed.cost',

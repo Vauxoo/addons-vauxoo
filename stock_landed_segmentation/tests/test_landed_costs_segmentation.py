@@ -127,7 +127,7 @@ class TestLandedCostsSegmentation(TransactionCase):
                    'price_unit': 50,
                    'name': product.name,
                    'product_uom_qty': qty,
-                   'product_uom': self.env.ref('product.product_uom_unit').id,
+                   'product_uom': self.env.ref('uom.product_uom_unit').id,
                    })]})
 
         sale.action_confirm()
