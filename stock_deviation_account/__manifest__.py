@@ -1,7 +1,7 @@
 # coding: utf-8
 {
     "name": "Stock Deviation Account",
-    "version": "11.0.0.0.0",
+    "version": "12.0.1.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
