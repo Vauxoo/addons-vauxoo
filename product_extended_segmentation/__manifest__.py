@@ -5,12 +5,12 @@
     "name": "Product Extension to track Segmentation Cost",
     'summary': '''
     ''',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'author': 'Vauxoo',
     'category': 'Accounting',
     'license': 'OEEL-1',
     'depends': [
-        'product_extended',
+        'mrp_bom_cost',
         'mrp_workcenter_segmentation',
     ],
     'data': [
