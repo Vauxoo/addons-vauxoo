@@ -35,13 +35,13 @@
         </record>
         <record id="inventory_line_01" model="stock.inventory.line">
             <field name="product_id" ref="prod_b"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="inventory_id" ref="account_move_line_production.inventory"/>
             <field name="product_qty">3.0</field>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
 
-        <function model="stock.inventory" name="action_done">
+        <function model="stock.inventory" name="action_validate">
             <function model="stock.inventory" name="search"
                 eval="[[('id', '=', ref('account_move_line_production.inventory'))]]"/>
         </function>
@@ -89,7 +89,7 @@
 
         <record id="production_a" model="mrp.production">
             <field name="name">Production A AMLP (Demo)</field>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="product_qty">1</field>
             <field name="product_id" ref="prod_a"/>
             <field name="bom_id" ref="bom_a"/>

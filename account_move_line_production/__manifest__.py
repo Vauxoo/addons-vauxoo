@@ -2,7 +2,7 @@
 
 {
     "name": "Account Move Line Production",
-    "version": "11.0.0.0.0",
+    "version": "12.0.1.0.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
     "website": "http://www.vauxoo.com/",
@@ -14,7 +14,7 @@
     ],
     "demo": [
         'demo/generic_chart_data.xml',
-        'demo/account_chart_template_data.yml',
+        'demo/account_chart_template_data.xml',
         'demo/demo.xml',
     ],
     "data": [
