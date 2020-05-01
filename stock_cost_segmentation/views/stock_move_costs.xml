@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_move_cost" model="ir.ui.view">
+        <field name="name">cost.stock.move.tree</field>
+        <field name="model">stock.move</field>
+        <field eval="99" name="priority"/>
+        <field name="arch" type="xml">
+            <tree string="Stock Move Costs" create="0" default_order="date">
+                <field name="date"/>
+                <field name="reference"/>
+                <field name="product_id"/>
+                <field name="product_uom_qty"/>
+                <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="uom.group_uom"/>
+                <field name="price_unit"/>
+                <field name="material_cost"/>
+                <field name="landed_cost"/>
+                <field name="production_cost"/>
+                <field name="subcontracting_cost"/>
+                <field name="remaining_qty"/>
+                <field name="remaining_value"/>
+                <field name="logistic_remaining_qty"/>
+                <field name="logistic_remaining_value"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

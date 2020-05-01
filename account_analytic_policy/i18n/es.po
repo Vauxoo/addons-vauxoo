@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_analytic_policy
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:14+0000\n"
+"PO-Revision-Date: 2020-04-28 16:06+0200\n"
+"Last-Translator: Luis Escobar [Vauxoo] <lescobar@vauxoo.comcom>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.7.1\n"
+
+#. module: account_analytic_policy
+#: model:ir.model.fields,help:account_analytic_policy.field_account_account__analytic_policy
+msgid ""
+"\"Optional\": , the accountant is free to put an analytic account "
+"on an account move line;\n"
+"\"Always\": the accountant will get an error message if there is "
+"no analytic account;\n"
+"\"Never\": the accountant will get an error message if an "
+"analytic account is present."
+msgstr ""

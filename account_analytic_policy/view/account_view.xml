@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_account_form" model="ir.ui.view">
+        <field name="name">account.account.form</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch"  type="xml">
+            <field name="deprecated" position="after">
+                <field name="analytic_policy" widget="radio" groups="analytic.group_analytic_accounting"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_account_list" model="ir.ui.view">
+        <field name="name">account.account.list</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch"  type="xml">
+            <field name="user_type_id" position="after">
+                <field name="analytic_policy" groups="analytic.group_analytic_accounting"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_account_search" model="ir.ui.view">
+        <field name="name">account.account.search</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_search"/>
+        <field name="arch"  type="xml">
+            <xpath expr="//group" position="inside">
+                <filter string="Analytic Policy" name="filter_analytic_user_type_id" context="{'group_by':'user_type_id'}" groups="analytic.group_analytic_accounting"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

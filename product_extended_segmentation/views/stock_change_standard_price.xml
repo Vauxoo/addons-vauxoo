@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_change_standard_price_inherit" model="ir.ui.view">
+            <field name="name">Change Standard Price Inherit</field>
+            <field name="inherit_id" ref="stock_account.view_change_standard_price"/>
+            <field name="model">stock.change.standard.price</field>
+            <field name="arch" type="xml">
+                <field name="new_price" position="attributes">
+                    <attribute name="readonly">context.get('from_wizard', False)</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_product_ext_form_view2_inherit" model="ir.ui.view">
+            <field name="name">mrp_bom_cost.product.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="mrp_bom_cost.product_product_ext_form_view2" />
+            <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+            <field name="arch" type="xml">
+                <button name="button_bom_cost" position="attributes">
+                    <attribute name="context">{'from_wizard': True}</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="product_product_view_form_normal_inherit_extended_inherit" model="ir.ui.view">
+            <field name="name">product.product.view.form.normal.inherit.extended</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="mrp_bom_cost.product_product_view_form_normal_inherit_extended"/>
+            <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+            <field name="arch" type="xml">
+                <button name="button_bom_cost" position="attributes">
+                    <attribute name="context">{'from_wizard': True}</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="product_product_view_form_easy_inherit_extended_inherit" model="ir.ui.view">
+            <field name="name">product.product.view.form.easy.inherit.extended</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="mrp_bom_cost.product_variant_easy_edit_view_bom_inherit"/>
+            <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+            <field name="arch" type="xml">
+                <button name="button_bom_cost" position="attributes">
+                    <attribute name="context">{'from_wizard': True}</attribute>
+                </button>
+            </field>
+        </record>
+</odoo>

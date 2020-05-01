@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* mrp_workcenter_account_move
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-29 18:48+0000\n"
+"PO-Revision-Date: 2020-04-29 18:48+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_workcenter_account_move
+#: code:addons/mrp_workcenter_account_move/model/mrp.py:138
+#, python-format
+msgid " (Valuation Adjustment)"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: code:addons/mrp_workcenter_account_move/model/mrp.py:56
+#, python-format
+msgid "Add Financial Account on Location: {location} For product: {product}\n"
+""
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: code:addons/mrp_workcenter_account_move/model/mrp.py:53
+#, python-format
+msgid "Add Hour Analytical Account on Worcenter: {wc}\n"
+""
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: model:ir.model.fields,field_description:mrp_workcenter_account_move.field_res_company__require_workcenter_analytic
+msgid "Check Analytic on Workcenter"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: model:ir.model,name:mrp_workcenter_account_move.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: model:ir.model.fields,field_description:mrp_workcenter_account_move.field_mrp_production__account_move_id
+msgid "Cost Journal Entry"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: code:addons/mrp_workcenter_account_move/model/mrp.py:229
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: model:ir.model,name:mrp_workcenter_account_move.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: code:addons/mrp_workcenter_account_move/model/mrp.py:230
+#, python-format
+msgid "Please configure Gain & Loss Inventory Valuation in your Company"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: code:addons/mrp_workcenter_account_move/model/mrp.py:41
+#, python-format
+msgid "Please set a Journal in Product Category: {cat} to book Production Cost Journal Entries\n"
+""
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: code:addons/mrp_workcenter_account_move/model/mrp.py:54
+#, python-format
+msgid "Please set a Journal in Routing: {routing} to book Production Cost Journal Entries\n"
+""
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: model_terms:ir.ui.view,arch_db:mrp_workcenter_account_move.mrp_production_account_move_form_view
+msgid "Production Journal Items"
+msgstr ""
+
+#. module: mrp_workcenter_account_move
+#: model:ir.model.fields,help:mrp_workcenter_account_move.field_res_company__require_workcenter_analytic
+msgid "When finishing production Cost Journal Entry Lines are created if this option is check Analytical accounts are required on Workcenters"
+msgstr ""
+

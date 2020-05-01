@@ -1,0 +1,648 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_currency_tools
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-28 16:35+0000\n"
+"PO-Revision-Date: 2020-04-28 16:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__account_id
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Accounting Info"
+msgstr "Información Contable"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.res_company_view_act
+msgid "Accounts for Redirection of Exchange Rate Difference"
+msgstr "Cuentas para Redireccionar por Diferencia en Tasa Cambiaria"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Accounts that are not set as multicurrency, i.e., they were not set with a secondary currency, but were involved in multicurrency transactions will appear here"
+msgstr "Las cuentas que no son multi-moneda, esto es, no fueron configuradas con una moneda secundaria, pero que estuvieron involucradas en transacciones multi-moneda aparecerán aquí"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__adjusted_balance
+msgid "Adjusted Balance"
+msgstr "Saldo Ajustado"
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,target_move:0
+msgid "All Entries"
+msgstr "Todos los Asientos"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__target_move
+msgid "All Journal Entries or just Posted Journal Entries"
+msgstr "Todos Los Asientos o sólo los Asientos Posteados"
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,target_move:0
+msgid "All Posted Entries"
+msgstr "Todos los Asientos Posteados"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "As there were no Unrealized Gains or Losses to book."
+msgstr "Dado que no hay Ganancias o Pérdida sin considerar para contabilizar."
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__balance
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:569
+#, python-format
+msgid "Bank"
+msgstr "Banco"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__bk_ids
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Bank & Cash Accounts"
+msgstr "Cuentas de Banco & Caja"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__bank_gain_exchange_account_id
+msgid "Bank Gain Account"
+msgstr "Cuenta de Ganancia en Banco"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__bank_gain_exchange_account_id
+msgid "Bank Gain Exchange Rate Account"
+msgstr "Cuenta de Ganancia en Tasa de Cambio en Banco"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__bank_gain_exchange_account_id
+#: model:ir.model.fields,help:account_currency_tools.field_res_company__bank_gain_exchange_account_id
+msgid "Bank Gain Exchange Rate Account for booking Difference"
+msgstr "Cuenta de Ganancia en Tasa de Cambio en Banco para contabilizar Diferencias"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__bank_loss_exchange_account_id
+msgid "Bank Loss Account"
+msgstr "Cuenta de Pérdida en Banco"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__bank_loss_exchange_account_id
+msgid "Bank Loss Exchange Rate Account"
+msgstr "Cuenta de Pérdida en Tasa de Cambio en Banco"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__bank_loss_exchange_account_id
+#: model:ir.model.fields,help:account_currency_tools.field_res_company__bank_loss_exchange_account_id
+msgid "Bank Loss Exchange Rate Account for booking Difference"
+msgstr "Cuenta de Pérdida en Tasa de Cambio en Banco para contabilizar Diferencias"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:595
+#, python-format
+msgid "Both Gain & Loss Accounts for %s have to be filled, \n"
+"You can not fill one without filling the other"
+msgstr "Ambas Cuentas de Ganancia & Pérdida para %s se tienen que rellenar,\n"
+"No puede rellenar una sin rellenar la otra"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__check_non_multicurrency_account
+#: model:ir.model.fields,help:account_currency_tools.field_res_company__check_non_multicurrency_account
+msgid "Check Accounts that were not set as multicurrency, i.e., they were not set with a secondary currency, but were involved in multicurrency transactions"
+msgstr "Revise que cuentas no estan seteadas como multimoneda"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__check_non_multicurrency_account
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__check_non_multicurrency_account
+msgid "Check Non-Multicurrency Account"
+msgstr "Revisar Cuantas No Multimoneda"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Check that those Accounts being presented here to you are really 'Liquidity' Type and Multicurrency"
+msgstr "Revise que esas Cuentas que se le presentan aquí sean realmente de Tipo 'Liquidez' y Multi-moneda"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Check that those Accounts being presented here to you are really 'Payable' Type and Multicurrency"
+msgstr "Revise que esas Cuentas que se le presentan aquí sean realmente de Tipo 'A Pagar' y Multi-moneda"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Check that those Accounts being presented here to you are really 'Receivable' Type and Multicurrency"
+msgstr "Revise que esas Cuentas que se le presentan aquí sean realmente de Tipo 'A Cobrar' y Multi-moneda"
+
+#. module: account_currency_tools
+#: model:ir.model,name:account_currency_tools.model_res_company
+msgid "Companies"
+msgstr "Compañias"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__currency_id
+msgid "Company Currency"
+msgstr "Moneda de la Compañía"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Company Info"
+msgstr "Información de la Compañía"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Create Journal Entry"
+msgstr "Crear Asiento Contable"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__create_uid
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__create_date
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: account_currency_tools
+#: model:ir.model,name:account_currency_tools.model_res_currency
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__display_name
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__state
+msgid ""
+"Draft: Fill required data to get Unrealized Values,\n"
+"Missing Opening Journal Entry: No Opening Journal Entry,\n"
+"Preparing Data: Data to Fetch Unrealized Values has been set,\n"
+"In Progress: Unrealized Values has been fetched, ready to book,\n"
+"Exception: There are no Unrealized Values to book,\n"
+"Posted Journal: Unrealized Values have been booked"
+msgstr ""
+"Borrador: Rellene los datos requeridos para obtener los Valores no "
+"Realizados,\n"
+"Ejercicio Fiscal Abierto: El Ejercicio Fiscal Anterior está abierto,\n"
+"Asiento de Apertura Faltante: No hay Asiento de Apertura,\n"
+"Preparar Datos: Los Datos para obtener los Valores no Realizados se han "
+"configurado,\n"
+"En Progreso: Los Valores no Realizados se han obtenido, listo para "
+"contabilizar,\n"
+"Excepción: No hay Valores no Realizados para contabilizar,\n"
+"Asiento Posteado: Los Valores no Realizados se han contabilizado"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__state
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__target_move
+msgid "Entries to Include"
+msgstr "Asientos a Incluir"
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,state:0
+msgid "Exception"
+msgstr "Excepción"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Exceptional State"
+msgstr "Estado Excepcional"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:430
+#, python-format
+msgid "Exch. Curr. Rate Diff. for %s"
+msgstr "Diff. Cambiaria para %s"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:457
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:528
+#, python-format
+msgid "Exch. Curr. Rate Diff. for %s in %s"
+msgstr "Diff. Cambiaria para %s en %s"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__exchange_rate
+msgid "Exchange Rate"
+msgstr "Tasa de Cambio"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__foreign_balance
+msgid "Foreign Balance"
+msgstr "Saldo Foráneo"
+
+#. module: account_currency_tools
+#: model:ir.actions.act_window,name:account_currency_tools.action_foreign_exchange_realization
+#: model:ir.ui.menu,name:account_currency_tools.menu_foreign_exchange_realization
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Foreign Currency Exchange Realization"
+msgstr "Realización de Cambio en Moneda Foránea"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:619
+#, python-format
+msgid "Gain & Loss Recognition already booked"
+msgstr "Reconocimiento de Ganancia & Pérdida ya contabilizada"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__income_currency_exchange_account_id
+msgid "Gain Exchange Rate Account"
+msgstr "Cuenta de Ganancia en Tasa de Cambio"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Get Unrecognized G & L on Accounts"
+msgstr "Obtener G & P No Reconocidas en Cuentas"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__id
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__id
+msgid "ID"
+msgstr ""
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
+msgstr "Si una de sus cuentas no aparece aquí. Abra una nueva ventana arregle su cuenta faltante e intente agregarla otra vez."
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,state:0
+msgid "In Progress"
+msgstr "En progreso"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__type
+msgid "Internal Type"
+msgstr "Tipo Interno"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "It is likely wrongfully set Accounts got attribute 'Liquidity' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G & L on Accounts' step."
+msgstr "Es probable que Cuentas mal configuradas tengan el atributo Tipo 'Liquidez'. Considérese advertido que usted debe atender este asunto antes de proceder con el paso 'Obtener G & Pérdidas No Reconocidas en Cuentas'."
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "It is likely wrongfully set Accounts got attribute 'Payable' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G & L on Accounts' step."
+msgstr "Es probable que Cuentas mal configuradas tengan el atributo Tipo 'a Pagar'. Considérese advertido que usted debe atender este asunto antes de proceder con el paso 'Obtener G & Pérdidas No Reconocidas en Cuentas'."
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "It is likely wrongfully set Accounts got attribute 'Receivable' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G & L on Accounts' step."
+msgstr "Es probable que Cuentas mal configuradas tengan el atributo Tipo 'a Cobrar'. Considérese advertido que usted debe atender este asunto antes de proceder con el paso 'Obtener G & Pérdidas No Reconocidas en Cuentas'."
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "It is mandatory that you fill the field below with the accounts that hold your Bank & Cash in Foreign Currency."
+msgstr "Es obligatorio que llene el campo de abajo con las cuentas que constituyen sus Bancos & Cajas en Moneda Foránea."
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "It is mandatory that you fill the field in the right with the accounts that hold your Payable in Foreign Currency."
+msgstr "Es obligatorio que llene el campo de abajo con las cuentas que constituyen sus Cuentas por Pagar en Moneda Foránea."
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "It is mandatory that you fill the field in the right with the accounts that hold your Receivables in Foreign Currency."
+msgstr "Es obligatorio que llene el campo de abajo con las cuentas que constituyen sus Cuentas por Cobrar en Moneda Foránea."
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization____last_update
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line____last_update
+msgid "Last Modified on"
+msgstr "Última Actualización el"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__write_uid
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__write_date
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:530
+#, python-format
+msgid "Liquidity"
+msgstr "Liquidez"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__expense_currency_exchange_account_id
+msgid "Loss Exchange Rate Account"
+msgstr "Cuenta de Pérdida en Tasa de Cambio"
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,state:0
+msgid "Missing Opening Journal Entry"
+msgstr "Falta Asiento de Apertura"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Only Unrecognized Gains or Losses that are different than zero will be booked. If all of the lines below are zero and you try to Create Journal Entry then you will be taken to a State of Exception where no further steps can be taken."
+msgstr "Sólo las Ganancias o Pérdidas No Reconocidas que son diferentes de cero serán contabilizadas. Si todas las líneas de abajo son cero y usted intenta Crear el Asiento Contable entonces se le llevará a un Estado de Excepción y no podrá toman más pasos posteriores."
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Other Info"
+msgstr "Otra Información"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:532
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:583
+#, python-format
+msgid "Payable"
+msgstr "A pagar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__pay_ids
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Payable Accounts"
+msgstr "Cuentas por Pagar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__pay_gain_exchange_account_id
+msgid "Payable Gain Account"
+msgstr "Cuenta de Ganancia en A Pagar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__pay_gain_exchange_account_id
+msgid "Payable Gain Exchange Rate Account"
+msgstr "Cuenta de Ganancia en Tasa de Cambio en A Pagar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__pay_gain_exchange_account_id
+#: model:ir.model.fields,help:account_currency_tools.field_res_company__pay_gain_exchange_account_id
+msgid "Payable Gain Exchange Rate Account for booking Difference"
+msgstr "Cuenta de Ganancia en Tasa de Cambio en A Pagar para contabilizar Diferencias"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__pay_loss_exchange_account_id
+msgid "Payable Loss Account"
+msgstr "Cuenta de Pérdida en A Pagar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__pay_loss_exchange_account_id
+msgid "Payable Loss Exchange Rate Account"
+msgstr ""
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__pay_loss_exchange_account_id
+#: model:ir.model.fields,help:account_currency_tools.field_res_company__pay_loss_exchange_account_id
+msgid "Payable Loss Exchange Rate Account for booking Difference"
+msgstr "Cuenta de Pérdida en Tasa de Cambio en A Pagar"
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,state:0
+msgid "Posted Journal"
+msgstr "Asiento Posteado"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__date
+msgid "Posting Date"
+msgstr "Fecha de Posteo"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__journal_id
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__journal_id
+msgid "Posting Journal"
+msgstr "Diario de Posteo"
+
+#. module: account_currency_tools
+#: selection:foreign.exchange.realization,state:0
+msgid "Preparing Data"
+msgstr "Preparando Datos"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Realization Info"
+msgstr "Información de Realización"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__move_id
+msgid "Realization Journal Entry"
+msgstr "Asiento Contable de Realización"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:531
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:576
+#, python-format
+msgid "Receivable"
+msgstr "A cobrar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__rec_ids
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Receivable Accounts"
+msgstr "Cuentas por Cobrar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__rec_gain_exchange_account_id
+msgid "Receivable Gain Account"
+msgstr "Cuenta de Ganancia en A Cobrar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__rec_gain_exchange_account_id
+msgid "Receivable Gain Exchange Rate Account"
+msgstr "Cuenta de Ganancia en Tasa de Cambio en A Cobrar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__rec_gain_exchange_account_id
+#: model:ir.model.fields,help:account_currency_tools.field_res_company__rec_gain_exchange_account_id
+msgid "Receivable Gain Exchange Rate Account for booking Difference"
+msgstr "Cuenta de Ganancia en Tasa de Cambio en A Cobrar para contabilizar Diferencias"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_res_company__rec_loss_exchange_account_id
+msgid "Receivable Loss Account"
+msgstr "Cuenta de Pérdida en A Cobrar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__rec_loss_exchange_account_id
+msgid "Receivable Loss Exchange Rate Account"
+msgstr "Cuenta de Pérdida en Tasa de Cambio en A Cobrar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__rec_loss_exchange_account_id
+#: model:ir.model.fields,help:account_currency_tools.field_res_company__rec_loss_exchange_account_id
+msgid "Receivable Loss Exchange Rate Account for booking Difference"
+msgstr "Cuenta de Pérdida en Tasa de Cambio en A Cobrar para contabilizar Diferencias"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Retrieve Multi Currency Accounts"
+msgstr "Obtener Cuentas Multi-Monedas"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__bk_ids
+msgid "Select your Bank Accounts"
+msgstr "Seleccione sus Cuentas de Banco"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__pay_ids
+msgid "Select your Payable Accounts"
+msgstr "Seleccione sus Cuentas por Pagar"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__rec_ids
+msgid "Select your Receivable Accounts"
+msgstr "Seleccione sus Cuentas por Cobrar"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Set the field above if you want that accounts below be redirected to the above account when posting Realization Journal Entry"
+msgstr "Configure el campo de arriba si desea que las cuentas de abajo se redirijan a la cuenta de arriba cuando se postee el Asiento de Realización"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Set the fields above if you want that Unrecognized Gains or Losses below be redirected to the above accounts when posting Realization Journal Entry"
+msgstr "Configure el campo de arriba si desea que las Ganancias o Pérdidas No Reconocidas de abajo se redirijan a la cuenta de arriba cuando se postee el Asiento de Realización"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__skip_opening_entry
+msgid "Skip Opening Journal Entry Check"
+msgstr "Saltar Validación de Asiento de Apertura"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization__line_ids
+msgid "Suggested Recognition Lines"
+msgstr "Líneas de Reconocimiento Sugeridas"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization_line__type
+msgid "The 'Internal Type' is used for features available on different types of accounts: payable/receivable are for partners accounts (for debit/credit computations), liquidity for bank & cash"
+msgstr "El 'tipo interno' se usa para funcionalidad disponible en distintos tipos de cuentas: a Cobrar/a Pagar son para cuentas de clientes (para cálculos de débito/crédito), liquidez para banco y caja"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:403
+#, python-format
+msgid "There are no accounts to compute"
+msgstr "No hay cuentas para calcular"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:637
+#, python-format
+msgid "There is already a Realization Journal Entry!"
+msgstr "Ya hay un Asiento contable de Realización!"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:77
+#, python-format
+msgid "There is no default company for the current user!"
+msgstr "No hay compañía predeterminada para el usuario actual!"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "These are the Unrecognized Gains or Losses that have not yet been realized in your Liquidity, Receivables & Payable Accounts"
+msgstr ""
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "These are your Bank & Cash Accounts that need Exchange Currency Rate Difference Realization."
+msgstr "Estas son las Ganancias o Pérdidas No Reconocidas que no se han realizado en sus cuentas de Liquidez, a Cobrar & a Pagar"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "These are your Payable Accounts that need Exchange Currency Rate Difference Realization."
+msgstr "Estas son sus Cuentas por Pagar que necesitan Realización por Diferencia en Tasa de Cambio."
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "These are your Receivable Accounts that need Exchange Currency Rate Difference Realization."
+msgstr "Estas son sus Cuentas por Cobrar que necesitan Realización por Diferencia en Tasa de Cambio."
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization__currency_id
+msgid "This is currency used to post Exchange Rate Difference"
+msgstr "Esta es la moneda que se usa para postear las Diferencias en Tasa de Cambio"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization_line__adjusted_balance
+msgid "Total amount (in Company currency) for transactions held in secondary currency for this account."
+msgstr "Cantidad total (en moneda de la compañía) para transacciones mantenidas en moneda secundaria para esta cuenta."
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization_line__foreign_balance
+msgid "Total amount (in Secondary currency) for transactions held in secondary currency for this account."
+msgstr "Cantidad total (en moneda de la compañía) para transacciones mantenidas en moneda secundaria para esta cuenta."
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__unrealized_gain_loss
+msgid "Unrealized Gain(+) or Loss(-)"
+msgstr "Ganancia (+) o Pérdida(-) No Realizada"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "Unrealized Gains or Losses"
+msgstr "Ganancias o Pérdidas No Realizadas"
+
+#. module: account_currency_tools
+#: model:ir.model.fields,help:account_currency_tools.field_foreign_exchange_realization_line__unrealized_gain_loss
+msgid "Value of Loss or Gain due to changes in exchange rate when doing multi-currency transactions."
+msgstr "Valor de Ganancia o Pérdida debido cambios en la tasa de cambio cuando se realizan transacción en multi-moneda."
+
+#. module: account_currency_tools
+#: model:ir.model.fields,field_description:account_currency_tools.field_foreign_exchange_realization_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "You have been redirected to this state"
+msgstr "Se le ha redirigido a este estado"
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:609
+#, python-format
+msgid "You should configure the 'Gain Exchange Rate Account'to manage automatically the booking of accounting entries related to differences between exchange rates."
+msgstr "Deberá configurar la Cuenta de Ganancia en Tasa de Cambio para administrar automáticamente la contabilización de los asientos contables relacionados con diferencias entre tasas de cambio."
+
+#. module: account_currency_tools
+#: code:addons/account_currency_tools/wizards/exchange_realization.py:602
+#, python-format
+msgid "You should configure the 'Loss Exchange Rate Account' to manage automatically the booking of accounting entries related to differences between exchange rates."
+msgstr "Deberá configurar la Cuenta de Pérdida en Tasa de Cambio para administrar automáticamente la contabilización de los asientos contables relacionados con diferencias entre tasas de cambio."
+
+#. module: account_currency_tools
+#: model:ir.model,name:account_currency_tools.model_foreign_exchange_realization
+msgid "foreign.exchange.realization"
+msgstr ""
+
+#. module: account_currency_tools
+#: model:ir.model,name:account_currency_tools.model_foreign_exchange_realization_line
+msgid "foreign.exchange.realization.line"
+msgstr ""
+
+#. module: account_currency_tools
+#: model_terms:ir.ui.view,arch_db:account_currency_tools.view_foreign_exchange_realization
+msgid "or"
+msgstr "o"

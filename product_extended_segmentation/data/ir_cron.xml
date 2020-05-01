@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+        <record forcecreate="True" id="compute_extended_price_segmentation" model="ir.cron">
+            <field name="name">Compute Cost From BOM with segmentation</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="state">code</field>
+            <field name="code">
+model.execute_cron_splited(number=500)
+            </field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=7)).strftime('%Y-%m-%d 22:00:00')" />
+            <field eval="False" name="doall"/>
+        </record>
+
+</odoo>

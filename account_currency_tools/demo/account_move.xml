@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="res_partner_23" model="res.partner">
+            <field name="name">VX for Account Currency Tools</field>
+            <field eval="[(6,0,[ref('base.res_partner_category_4')])]" name="category_id"/>
+            <field name="supplier">1</field>
+            <field eval="1" name="customer"/>
+            <field name="is_company">1</field>
+            <field name="street">3rd Floor, Room 3-C,</field>
+            <field name="street2">Carretera Panamericana, Km 1, Urb. Delgado Chalbaud</field>
+            <field name="city">Caracas</field>
+            <field name="zip">1090</field>
+            <field name="email">vx@yourcompany.example.com</field>
+            <field name="phone">+58 212 681 0538</field>
+            <field name="country_id" ref="base.ve"/>
+        </record>
+
+        <!--
+        Accounts
+        -->
+
+        <record id="a_recv_usd" model="account.account">
+            <field name="code">X11999</field>
+            <field name="name">Debtors USD- (test)</field>
+            <field name="reconcile" eval="True"/>
+            <field name="user_type_id" ref="account.data_account_type_receivable"/>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+        <record id="a_pay_usd" model="account.account">
+            <field name="code">X1199</field>
+            <field name="name">Creditors USD - (test)</field>
+            <field name="reconcile" eval="True"/>
+            <field name="user_type_id" ref="account.data_account_type_payable"/>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+        <record id="equities_view" model="account.account">
+            <field name="name">Equities - (test)</field>
+            <field name="code">X12</field>
+            <field name="user_type_id" ref="account.data_account_type_equity"/>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="a_equity" model="account.account">
+            <field name="name">Equity - (test)</field>
+            <field name="code">X1201</field>
+            <field name="user_type_id" ref="account.data_account_type_equity"/>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <!--
+        Journal Entries
+        -->
+
+       <record id="act_am_00" model="account.move">
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="ref">Shareholders Money</field>
+       </record>
+
+       <record id="act_aml_00_a" model="account.move.line">
+            <field name="move_id" ref="act_am_00"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="name">Shareholders Money</field>
+            <field name="account_id" ref="account.usd_bnk"/>
+            <field name="debit">1000.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">1000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+       </record>
+
+       <record id="act_aml_00_b" model="account.move.line">
+            <field name="move_id" ref="act_am_00"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="name">Shareholders Money</field>
+            <field name="account_id" ref="a_equity"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1000.0</field>
+            <field name="amount_currency">-1000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+       </record>
+
+       <record id="act_am_01" model="account.move">
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-05'"/>
+            <field name="ref">Manual Customer Invoice Vauxoo</field>
+        </record>
+
+       <record id="act_aml_01_a" model="account.move.line">
+            <field name="move_id" ref="act_am_01"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-05'"/>
+            <field name="name">Receivable from Product Sale</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_recv_usd"/>
+            <field name="debit">1500.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">3500.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_01_b" model="account.move.line">
+            <field name="move_id" ref="act_am_01"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-05'"/>
+            <field name="name">Product Sale</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1500.0</field>
+            <field name="amount_currency">-3500.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_am_02" model="account.move">
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
+            <field name="ref">Payment for Vauxoo Customer Invoice</field>
+        </record>
+
+       <record id="act_aml_02_a" model="account.move.line">
+            <field name="move_id" ref="act_am_02"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
+            <field name="name">Bank Payment USD</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.usd_bnk"/>
+            <field name="debit">2000.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">3500.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_02_b" model="account.move.line">
+            <field name="move_id" ref="act_am_02"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
+            <field name="name">Invoice Payment</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_recv_usd"/>
+            <field name="debit">0.0</field>
+            <field name="credit">2000.0</field>
+            <field name="amount_currency">-3500.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_02_c" model="account.move.line">
+            <field name="move_id" ref="act_am_02"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
+            <field name="name">Gain on Invoice Payment</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_recv_usd"/>
+            <field name="debit">500.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">0.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_02_d" model="account.move.line">
+            <field name="move_id" ref="act_am_02"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-12'"/>
+            <field name="name">Gain on Invoice Payment</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.income_fx_income"/>
+            <field name="debit">0.0</field>
+            <field name="credit">500.0</field>
+            <field name="amount_currency">0.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_am_03" model="account.move">
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-17'"/>
+            <field name="ref">Manual Customer Invoice Vauxoo</field>
+        </record>
+
+       <record id="act_aml_03_a" model="account.move.line">
+            <field name="move_id" ref="act_am_03"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-17'"/>
+            <field name="name">Receivable from Product Sale</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_recv_usd"/>
+            <field name="debit">2000.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">3000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_03_b" model="account.move.line">
+            <field name="move_id" ref="act_am_03"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-17'"/>
+            <field name="name">Product Sale</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.a_sale"/>
+            <field name="debit">0.0</field>
+            <field name="credit">2000.0</field>
+            <field name="amount_currency">-3000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_am_04" model="account.move">
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-22'"/>
+            <field name="ref">Payment for Vauxoo Customer Invoice</field>
+        </record>
+
+       <record id="act_aml_04_a" model="account.move.line">
+            <field name="move_id" ref="act_am_04"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-22'"/>
+            <field name="name">Bank Payment USD</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.usd_bnk"/>
+            <field name="debit">1000.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">2000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_04_b" model="account.move.line">
+            <field name="move_id" ref="act_am_04"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-22'"/>
+            <field name="name">Invoice Payment</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_recv_usd"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1000.0</field>
+            <field name="amount_currency">-2000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_am_05" model="account.move">
+            <field name="journal_id" ref="account.expenses_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-25'"/>
+            <field name="ref">Manual Supplier Invoice Vauxoo</field>
+        </record>
+
+       <record id="act_aml_05_a" model="account.move.line">
+            <field name="move_id" ref="act_am_05"/>
+            <field name="journal_id" ref="account.expenses_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-25'"/>
+            <field name="name">Payable from Product Purchase</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="debit">1800.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">700.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_05_b" model="account.move.line">
+            <field name="move_id" ref="act_am_05"/>
+            <field name="journal_id" ref="account.expenses_journal"/>
+            <field name="date" eval="time.strftime('%Y')+'-01-25'"/>
+            <field name="name">Product Purchase</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_pay_usd"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1800.0</field>
+            <field name="amount_currency">-700.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_am_06" model="account.move">
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
+            <field name="ref">Payment to Vauxoo Supplier Invoice</field>
+        </record>
+
+       <record id="act_aml_06_a" model="account.move.line">
+            <field name="move_id" ref="act_am_06"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
+            <field name="name">Bank Payment USD</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_pay_usd"/>
+            <field name="debit">1600.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">1700.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_06_b" model="account.move.line">
+            <field name="move_id" ref="act_am_06"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
+            <field name="name">Invoice Payment</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.usd_bnk"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1600.0</field>
+            <field name="amount_currency">-1700.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_06_c" model="account.move.line">
+            <field name="move_id" ref="act_am_06"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
+            <field name="name">Gain on Invoice Payment</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="a_pay_usd"/>
+            <field name="debit">200.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">0.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+       <record id="act_aml_06_d" model="account.move.line">
+            <field name="move_id" ref="act_am_06"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
+            <field name="name">Gain on Invoice Payment</field>
+            <field name="partner_id" ref="res_partner_23"/>
+            <field name="account_id" ref="account.income_fx_income"/>
+            <field name="debit">0.0</field>
+            <field name="credit">200.0</field>
+            <field name="amount_currency">0.0</field>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+</odoo>

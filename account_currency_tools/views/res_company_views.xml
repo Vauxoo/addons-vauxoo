@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+        <record id="res_company_view_act" model="ir.ui.view">
+            <field name="name">res.company.view.currency</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/group" position="inside">
+                    <group name="account_act" string="Accounts for Redirection of Exchange Rate Difference">
+                        <field name='journal_id'/>
+                        <field name='check_non_multicurrency_account'/>
+                        <field name='bank_gain_exchange_account_id'/>
+                        <field name='bank_loss_exchange_account_id'/>
+                        <field name='rec_gain_exchange_account_id'/>
+                        <field name='rec_loss_exchange_account_id'/>
+                        <field name='pay_gain_exchange_account_id'/>
+                        <field name='pay_loss_exchange_account_id'/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+</odoo>
