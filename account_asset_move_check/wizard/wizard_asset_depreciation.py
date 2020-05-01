@@ -29,6 +29,7 @@ from odoo import fields, models
 
 class WizardAssetDepreciation(models.TransientModel):
     _name = 'wizard.asset.depreciation'
+    _description = 'wizard.asset.depreciation'
 
     date_start = fields.Date(
         help='Select date start to depreciation lines that '

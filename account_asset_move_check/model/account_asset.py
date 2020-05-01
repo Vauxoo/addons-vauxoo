@@ -42,7 +42,7 @@ class AccountAssetDepreciationLine(models.Model):
                                 default=False)
     move_check = fields.Boolean(help="Compute the move status",
                                 compute="_get_move_check",
-                                string='Posted', store=True)
+                                string='Move Posted', store=True)
 
 
 class AccountAssetAsset(models.Model):
