@@ -18,7 +18,7 @@ class AccountJournal(models.Model):
             self.clear_caches()
         return super(AccountJournal, self).write(vals)
 
-    @api.multi
+    @api.model
     def create(self, values):
         """The workers cache is cleared to reflect the changes when the following domain is called:
         * `rule_default_warehouse_journal`
