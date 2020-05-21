@@ -16,7 +16,7 @@
             <field name="name">Main A</field>
             <field name="product_id" ref="mrp_partial_production.product_product_18"/>
             <field name="product_uom_qty">10</field>
-            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="product_uom" ref="uom.product_uom_unit"/>
             <field name="price_unit">2950.00</field>
         </record>
 
