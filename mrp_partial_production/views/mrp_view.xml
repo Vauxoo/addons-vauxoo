@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_stock_mrp_partial">
+        <field name="name">stock.picking.wave.inherit.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_id']" position="before">
+                <field name="qty_available_to_produce"/>
+            </xpath>
+            <xpath expr="//button[@name='action_assign']" position="replace">
+                <button name="action_assign" states="confirmed,progress" string="Check Availability" type="object" class="oe_highlight"/>
+            </xpath>
+        </field>
+        </record>
+
+
+    </data>
+</odoo>

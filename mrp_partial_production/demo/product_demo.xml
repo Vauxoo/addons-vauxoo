@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="product_product_18" model="product.product">
+            <field name="name">Main Product A</field>
+            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="standard_price">1020.0</field>
+            <field name="list_price">1150.0</field>
+            <field name="type">product</field>
+            <field name="route_ids" eval="[(4,ref('mrp.route_warehouse0_manufacture')),(4,ref('stock.route_warehouse0_mto'))]"></field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">maina</field>
+        </record>
+
+        <record id="product_product_19" model="product.product">
+            <field name="name">Component A for Product A</field>
+            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="standard_price">1100.0</field>
+            <field name="list_price">1250.0</field>
+            <field name="type">product</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">testb</field>
+        </record>
+
+        <record id="product_product_20" model="product.product">
+            <field name="name">Component B for Product A</field>
+            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="standard_price">1700.0</field>
+            <field name="list_price">1950.0</field>
+            <field name="type">product</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">compb</field>
+        </record>
+
+    </data>
+</odoo>

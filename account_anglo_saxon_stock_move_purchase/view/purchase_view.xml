@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="purchase_stock_accrual_view" model="ir.ui.view">
+        <field name="name">Purchase Stock Accrual</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button type="object" name="view_accrual" class="oe_stat_button"  context="{'search_default_group_by_product':True, 'search_default_unreconciled_n_ap_ar': True}" attrs="{'invisible':['|', ('state', 'in', ('draft','sent','to approve')), ('unreconciled_lines', '=', 0)]}" icon="fa-pencil-square-o">
+                    <field name="unreconciled_lines" string="Unreconciled Lines" widget="statinfo"/>
+                </button>
+
+                <button type="object" name="view_accrual" class="oe_stat_button"  context="{'search_default_group_by_product':True, 'search_default_group_by_reconcile':True}" attrs="{'invisible':[('state', 'in', ('draft','sent','to approve'))]}" icon="fa-pencil-square-o" string="See all Accruals"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="before">
+                <button
+                    type="object"
+                    name="reconcile_stock_accrual"
+                    groups="account.group_account_user"
+                    string="Reconcile Accruals"
+                    attrs="{'invisible':[('to_be_reconciled','=',0)]}"
+                    class="oe_highlight">
+                    <field name="to_be_reconciled" invisible="True"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!--<record id="view_purchase order stock accrual search" model="ir.ui.view">
+        <field name="name">Purchase Order Stock Accrual Search</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="priority">26</field>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@string='Quotations']" position="after">
+                <filter string="Pending for Reconciliation" domain="[('to_be_reconciled','!=',0)]"/>
+                <filter string="Unreconciled Lines" domain="[('unreconciled_lines','!=',0)]"/>
+                <filter string="Unreconciled &amp; Not Pending for Reconciliation Lines" domain="[('unreconciled_lines','!=',0),('to_be_reconciled','=',0)]"/>
+            </xpath>
+        </field>
+    </record>-->
+
+    <record id="view_purchase order stock accrual tree" model="ir.ui.view">
+        <field name="name">Purchase Order Stock Accrual Tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="priority">26</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="to_be_reconciled" string="To Be Rec."/>
+                <field name="unreconciled_lines" string="Unrec. Lines"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

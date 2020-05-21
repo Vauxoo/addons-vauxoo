@@ -33,7 +33,7 @@ class TestsStockmoveCostSegmentation(TestStockCommon):
             self.env.ref('stock_cost_segmentation.stock_inventory_01') +
             self.env.ref('stock_cost_segmentation.stock_inventory_02'))
         inventories.action_start()
-        inventories.action_done()
+        inventories.action_validate()
 
     def asserting_cost_segmentation(self):
         move = self.move.search(
