@@ -5,13 +5,11 @@ from odoo import exceptions
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    @api.multi
     def check_payment_type(self):
         if self.filtered(lambda so:
                          so.payment_term_id.payment_type != 'credit'):
             return True
 
-    @api.multi
     def check_limit(self):
         if self.filtered(lambda so: so.check_payment_type()):
             return True
@@ -28,7 +26,6 @@ class SaleOrder(models.Model):
                         '\nCredit Limit : %s') % (so.partner_id.credit_limit)
                 raise exceptions.Warning(msg)
 
-    @api.multi
     def action_confirm(self):
         self.check_limit()
         return super(SaleOrder, self).action_confirm()

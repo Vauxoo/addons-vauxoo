@@ -8,7 +8,6 @@ class SaleOrder(models.Model):
     _name = "sale.order"
     _inherit = ['sale.order', 'default.warehouse']
 
-    @api.multi
     def _prepare_invoice(self):
         res = super(SaleOrder, self)._prepare_invoice()
         default_journals = self.team_id.journal_team_ids.filtered(

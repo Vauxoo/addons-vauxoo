@@ -28,12 +28,10 @@ class ProductProduct(models.Model):
         self.warehouses_stock = self._compute_get_quantity_warehouses_json()
         self.warehouses_stock_recompute = True
 
-    @api.multi
     def _product_available_not_res_hook(self, quants):
         """Hook used to introduce possible variations"""
         return False
 
-    @api.multi
     def _prepare_domain_available_not_reserved(self):
         domain_quant = [
             ('product_id', 'in', self.ids)
@@ -42,7 +40,6 @@ class ProductProduct(models.Model):
         domain_quant.extend(domain_quant_locations)
         return domain_quant
 
-    @api.multi
     def _compute_product_available_not_res_dict(self):
 
         res = {}
@@ -68,7 +65,6 @@ class ProductProduct(models.Model):
 
         return res
 
-    @api.multi
     def _compute_qty_available_not_reserved(self):
         res = self._compute_product_available_not_res_dict()
         for prod in self:
@@ -76,7 +72,6 @@ class ProductProduct(models.Model):
             prod.qty_available_not_res = qty
         return res
 
-    @api.multi
     def _compute_get_quantity_warehouses_json(self):
         # get original from onchange
         self_origin = self._origin if hasattr(self, '_origin') else self

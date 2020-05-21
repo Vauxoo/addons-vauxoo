@@ -54,7 +54,6 @@ class WarehouseDefault(models.Model):
                  if defaults.get(name)})
         return defaults
 
-    @api.multi
     def read(self, fields_list=None, load='_classic_read'):
         """This method is overwrite because we need to propagate SUPERUSER_ID
         when picking are chained in another warehouse without access to read"""

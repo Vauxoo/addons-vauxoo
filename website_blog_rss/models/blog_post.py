@@ -10,7 +10,6 @@ from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 class BlogPost(models.Model):
     _inherit = 'blog.post'
 
-    @api.multi
     def _compute_get_date(self):
         posts = self
         for post in posts:

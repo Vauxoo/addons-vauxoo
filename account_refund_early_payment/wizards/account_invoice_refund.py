@@ -25,7 +25,6 @@ class AccountInvoiceRefund(models.TransientModel):
     amount_total = fields.Float()
     active_id = fields.Integer()
 
-    @api.multi
     def compute_refund(self, mode):
         result = super(AccountInvoiceRefund, self).compute_refund(mode)
         if mode != 'early_payment':

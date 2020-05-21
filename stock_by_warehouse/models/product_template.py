@@ -27,7 +27,6 @@ class ProductTemplate(models.Model):
         self.warehouses_stock = self._compute_get_quantity_warehouses_json()
         self.warehouses_stock_recompute = True
 
-    @api.multi
     @api.depends('product_variant_ids.qty_available_not_res')
     def _compute_product_available_not_res(self):
         for tmpl in self:
@@ -37,7 +36,6 @@ class ProductTemplate(models.Model):
                 tmpl.mapped('product_variant_ids.qty_available_not_res')
             )
 
-    @api.multi
     def _compute_get_quantity_warehouses_json(self):
         # get original from onchange
         self_origin = self._origin if hasattr(self, '_origin') else self

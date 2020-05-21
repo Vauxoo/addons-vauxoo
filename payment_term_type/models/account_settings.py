@@ -35,7 +35,6 @@ class AccountConfigSettings(models.TransientModel):
         res.update(payment_type=payment_type)
         return res
 
-    @api.multi
     def set_values(self):
         super(AccountConfigSettings, self).set_values()
         config_parameters = self.env["ir.config_parameter"]
