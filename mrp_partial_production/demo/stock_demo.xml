@@ -13,21 +13,21 @@
 
         <record id="stock_inventory_line_1" model="stock.inventory.line">
             <field name="product_id" ref="mrp_partial_production.product_product_19"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="inventory_id" ref="stock_inventory_pick_0"/>
             <field name="product_qty">12</field>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
         <record id="stock_inventory_line_14" model="stock.inventory.line">
             <field name="product_id" ref="mrp_partial_production.product_product_20"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="inventory_id" ref="stock_inventory_pick_0"/>
             <field name="product_qty">8</field>
             <field name="location_id" ref="stock.stock_location_stock"/>
         </record>
 
         <function model="stock.inventory" name="action_start" eval="[ref('stock_inventory_pick_0')]"/>
-        <function model="stock.inventory" name="action_done" eval="[ref('stock_inventory_pick_0')]"/>
+        <function model="stock.inventory" name="action_validate" eval="[ref('stock_inventory_pick_0')]"/>
 
     </data>
 </odoo>

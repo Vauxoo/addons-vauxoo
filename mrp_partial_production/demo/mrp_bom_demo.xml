@@ -6,7 +6,7 @@
 
         <record id="mrp_bom_1" model="mrp.bom">
             <field name="product_tmpl_id" ref="mrp_partial_production.product_product_18_product_template"/>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">5</field>
             <field name="type">normal</field>
         </record>
@@ -14,7 +14,7 @@
         <record id="mrp_bom_line_1" model="mrp.bom.line">
             <field name="product_id" ref="mrp_partial_production.product_product_19"/>
             <field name="product_qty">3</field>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">5</field>
             <field name="bom_id" ref="mrp_bom_1"/>
         </record>
@@ -22,7 +22,7 @@
         <record id="mrp_bom_line_2" model="mrp.bom.line">
             <field name="product_id" ref="mrp_partial_production.product_product_20"/>
             <field name="product_qty">2</field>
-            <field name="product_uom_id" ref="product.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="sequence">5</field>
             <field name="bom_id" ref="mrp_bom_1"/>
         </record>
