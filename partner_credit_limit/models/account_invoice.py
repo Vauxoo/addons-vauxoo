@@ -6,13 +6,11 @@ class AccontInvoice(models.Model):
 
     _inherit = 'account.invoice'
 
-    @api.multi
     def check_payment_type(self):
         if self.filtered(lambda invoice:
                          invoice.payment_term_id.payment_type != 'credit'):
             return True
 
-    @api.multi
     def check_limit_credit(self):
         if self.filtered(lambda inv: inv.check_payment_type() or
                          inv.type != 'out_invoice'):
@@ -31,7 +29,6 @@ class AccontInvoice(models.Model):
                         ' Limit : %s') % (invoice.partner_id.credit_limit)
                 raise exceptions.Warning(msg)
 
-    @api.multi
     def action_invoice_open(self):
         self.check_limit_credit()
         res = super(AccontInvoice, self).action_invoice_open()

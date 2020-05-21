@@ -5,7 +5,6 @@ class AccountPaymentTerm(models.Model):
 
     _inherit = 'account.payment.term'
 
-    @api.multi
     @api.depends('line_ids')
     def _compute_payment_type(self):
         """This method compute the Payment type

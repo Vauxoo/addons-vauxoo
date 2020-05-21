@@ -94,7 +94,6 @@ class AccountInvoice(models.Model):
         readonly=True, states={'draft': [('readonly', False)]},
         copy=True, digits=(12, 6))
 
-    @api.multi
     def finalize_invoice_move_lines(self, move_lines):
         res = super(AccountInvoice, self).finalize_invoice_move_lines(
             move_lines)

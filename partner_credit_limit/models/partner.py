@@ -22,7 +22,6 @@ class ResPartner(models.Model):
         help="If the Partner has credit overloaded or late payments,"
         " he can't validate invoices and sale orders.")
 
-    @api.multi
     def _get_credit_overloaded(self):
         company = self.env.user.company_id
         for partner in self:
@@ -67,7 +66,6 @@ class ResPartner(models.Model):
             credit_maturity += line.credit
         return debit_maturity, credit_maturity
 
-    @api.multi
     def _get_overdue_credit(self):
         moveline_obj = self.env['account.move.line']
         for partner in self:
@@ -78,7 +76,6 @@ class ResPartner(models.Model):
             balance_maturity = debit_maturity - credit_maturity
             partner.overdue_credit = balance_maturity > 0.0
 
-    @api.multi
     def get_allowed_sale(self):
         for partner in self:
             partner.allowed_sale = not partner.credit_overloaded and \
