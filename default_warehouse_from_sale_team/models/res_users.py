@@ -18,7 +18,8 @@ class ResUsers(models.Model):
         """ Can only set the Default Sales team if the user is part o
         """
         for user in self.filtered(
-                lambda dat: dat.sale_team_id not in dat.sale_team_ids):
+                lambda dat: dat.sale_team_id and dat.sale_team_id
+                not in dat.sale_team_ids):
             raise ValidationError(_(
                 'You can not set %s sale team as default because the user'
                 ' do not belongs to the sale teams.\nPlease go to Sales >'
