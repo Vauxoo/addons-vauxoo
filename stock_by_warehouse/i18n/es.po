@@ -45,6 +45,27 @@ msgstr "Esta llegando"
 
 #. module: stock_by_warehouse
 #. openerp-web
+#: code:addons/stock_by_warehouse/static/src/xml/template.xml:36
+#, python-format
+msgid "locations."
+msgstr "ubicaciones."
+
+#. module: stock_by_warehouse
+#. openerp-web
+#: code:addons/stock_by_warehouse/static/src/xml/template.xml:46
+#, python-format
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: stock_by_warehouse
+#. openerp-web
+#: code:addons/stock_by_warehouse/static/src/xml/template.xml:54
+#, python-format
+msgid "Locations:"
+msgstr "Ubicaciones:"
+
+#. module: stock_by_warehouse
+#. openerp-web
 #: code:addons/stock_by_warehouse/static/src/xml/template.xml:23
 #, python-format
 msgid "Outgoing"
@@ -71,10 +92,37 @@ msgid "Quantity On Hand Unreserved"
 msgstr "Cantidad a mano sin reserva"
 
 #. module: stock_by_warehouse
+#. openerp-web
+#: code:addons/stock_by_warehouse/static/src/xml/template.xml:46
+#, python-format
+msgid "Stock Location"
+msgstr "Ubicación en el Inventario"
+
+#. module: stock_by_warehouse
+#. openerp-web
+#: code:addons/stock_by_warehouse/static/src/xml/template.xml:47
+#, python-format
+msgid "Stock Quantity"
+msgstr "Cantidad en Inventario"
+
+#. module: stock_by_warehouse
 #: code:addons/stock_by_warehouse/models/product.py:101
 #, python-format
 msgid "Stock by Warehouse"
 msgstr "Existencia por almacén"
+
+#. module: stock_by_warehouse
+#: code:addons/stock_by_warehouse/models/product_product.py:128
+#, python-format
+msgid "Stock by Warehouse and Locations"
+msgstr "Existencia por Almacén y Ubicaciones"
+
+#. module: stock_by_warehouse
+#. openerp-web
+#: code:addons/stock_by_warehouse/static/src/xml/template.xml:35
+#, python-format
+msgid "The product is available in:"
+msgstr "El producto está disponible en:"
 
 #. module: stock_by_warehouse
 #. openerp-web
@@ -91,7 +139,19 @@ msgid "This will be available next"
 msgstr "Esto estará disponible pronto"
 
 #. module: stock_by_warehouse
+#. openerp-web
+#: code:addons/stock_by_warehouse/static/src/xml/template.xml:53
+#, python-format
+msgid "Warehouse:"
+msgstr "Almacén:"
+
+#. module: stock_by_warehouse
 #: model:ir.model.fields,field_description:stock_by_warehouse.field_product_product_warehouses_stock
 msgid "Warehouses Stock"
 msgstr "Almacenes de existencias"
+
+#. module: stock_by_warehouse
+#: model:ir.model.fields,field_description:stock_by_warehouse.field_product_product__warehouses_stock_location
+msgid "Warehouses Stock Locations"
+msgstr "Almacenes y Ubicaciones de existencias"
 

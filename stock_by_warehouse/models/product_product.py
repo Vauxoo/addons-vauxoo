@@ -1,6 +1,8 @@
 import json
+from collections import defaultdict
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
+from odoo.tools import float_is_zero
 
 UNIT = dp.get_precision('Product Unit of Measure')
 
@@ -18,7 +20,9 @@ class ProductProduct(models.Model):
         store=False, readonly=True,
     )
 
-    warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
+    warehouses_stock_location = fields.Text(store=False, readonly=True)
+
+    warehouses_stock_recompute = fields.Boolean(store=False)
 
     @api.onchange('warehouses_stock_recompute')
     def _warehouses_stock_recompute_onchange(self):
@@ -26,6 +30,7 @@ class ProductProduct(models.Model):
             self.warehouses_stock_recompute = True
             return
         self.warehouses_stock = self._compute_get_quantity_warehouses_json()
+        self.warehouses_stock_location = self._compute_get_stock_location()
         self.warehouses_stock_recompute = True
 
     @api.multi
@@ -89,4 +94,71 @@ class ProductProduct(models.Model):
                 'saleable':
                 product.qty_available - product.outgoing_qty
             })
+        return json.dumps(info)
+
+    @api.multi
+    def _compute_get_stock_location(self):
+        """Method to get the stock quants that have a specific product and the locations of all the warehouses.
+        It will return a dict with the location and quantity, the location with the most quantity of the product,
+        and a number of locations where the product is available.
+        """
+
+        # Get original from onchange
+        self_origin = getattr(self, '_origin', self)
+        info = {'title': _('Stock by Warehouse and Locations'), 'content': []}
+        if not self_origin.exists():
+            return json.dumps(info)
+
+        # To avoid that multiple records call this method when is called from another method other than an onchange
+        self.ensure_one()
+
+        # Just in case it's asked from other place different than product
+        # itself, we enable this context management
+        warehouse_context = self._context.get('warehouse')
+
+        warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].sudo().search([])
+        available_locations_warehouse = 0
+        for warehouse in warehouses:
+            # Get all the stock locations that are part of the warehouse.
+            warehouse_locations = self.env['stock.location'].sudo().search([
+                ('id', 'child_of', warehouse.lot_stock_id.id), ('usage', '=', 'internal')])
+
+            quants = self.env['stock.quant'].sudo().search([
+                ('product_id', '=', self_origin.id), ('location_id', 'in', warehouse_locations.ids),
+                ('quantity', '>', 0)])
+
+            if not quants:
+                continue
+
+            most_quantity_location = False
+            info_content = []
+            qty_per_location_dict = defaultdict(float)
+            for quant in quants:
+                # Get the real quantity of product that is available, excluding reserved products.
+                quantity = quant.quantity - quant.reserved_quantity
+                if not float_is_zero(quantity, precision_rounding=self.uom_id.rounding):
+                    qty_per_location_dict[quant.location_id] += quantity
+
+            locations_available = len(qty_per_location_dict)
+            available_locations_warehouse += len(qty_per_location_dict)
+
+            qty_per_location = [(quantity, location) for location, quantity in qty_per_location_dict.items()]
+            # This sort the list by the first element by default, in reverse mode because we want the locations with
+            # the most quantity at first places.
+            qty_per_location.sort(reverse=True)
+
+            if qty_per_location:
+                # Get the location with most quantities of products available.
+                most_quantity_location = qty_per_location[0][1]
+
+            info_content += [
+                {'location': location.display_name, 'quantity': quantity} for quantity, location in qty_per_location]
+            info['content'].append({
+                'warehouse_name': warehouse.name,
+                'most_quantity_location_id': most_quantity_location.id,
+                'info_content': info_content,
+                'locations_available': locations_available
+            })
+
+        info['available_locations'] = available_locations_warehouse
         return json.dumps(info)
