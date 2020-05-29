@@ -9,6 +9,10 @@
             <xpath expr="//field[@name='default_code']" position="before">
                 <field name="warehouses_stock"
                     widget="warehouse"
+                    groups="stock.group_stock_multi_warehouses"/>
+                <field name="warehouses_stock_location"
+                    widget="warehouse"
+                    options='{"by_location": True}'
                     colspan="1"
                     groups="stock.group_stock_multi_warehouses"/>
                 <field name="warehouses_stock_recompute"
