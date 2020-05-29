@@ -7,8 +7,16 @@ Functional Rationale:
 Provide a nice widget in the product form to see the quantity of product
 by warehouse in order to help you to review such information as fast as possible.
 
-.. image:: http://screenshots.vauxoo.com/nhomar/stock_by_warehouse.png
+.. figure:: static/description/widget_by_warehouse.png
     :alt: Example on Form View
+    :width: 800px
+
+Also, provide another widget in the product variant form to see the quantity in
+stock by locations and by warehouse, to help you have a better look of where your
+products are available.
+
+.. figure:: static/description/widget_locations.png
+    :alt: Example with locations on Form View
     :width: 800px
 
 Developers usage:
