@@ -30,4 +30,37 @@
             </div>
         </div>
     </t>
+
+    <t t-name="StockAvailabilityAlert">
+        <p class="availability_product my-0 mr-2">
+            The product is available in: <t t-raw="locations_available"/> locations.
+            <a role="button" tabindex="0" class="js_available_info fa fa-bars"></a>
+        </p>
+    </t>
+
+    <t t-name="StockAvailabilityPopOver">
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th title="Stock Location">Location</th>
+                        <th title="Quantity Available">Stock Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="lines" t-as="warehouse">
+                        <tr class="table-info">
+                            <td>Warehouse: <t t-esc="warehouse.name"/></td>
+                            <td>Locations: <t t-esc="warehouse.locations_quantity_formatted"/></td>
+                        </tr>
+                        <tr t-foreach="warehouse.locations_info" t-as="location">
+                            <td t-esc="location.location"/>
+                            <td t-esc="location.quantity"/>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+
 </templates>
