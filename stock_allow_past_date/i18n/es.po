@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_allow_past_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-08 02:55+0000\n"
+"PO-Revision-Date: 2016-04-08 02:55+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_allow_past_date
+#: code:addons/stock_allow_past_date/model/stock_move.py:132
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: stock_allow_past_date
+#: model:ir.model,name:stock_allow_past_date.model_stock_quant
+msgid "Quants"
+msgstr "Quants"
+
+#. module: stock_allow_past_date
+#: model:ir.model,name:stock_allow_past_date.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de inventario"
+
+#. module: stock_allow_past_date
+#: code:addons/stock_allow_past_date/model/stock_move.py:133
+#, python-format
+msgid "The roundings of your Unit of Measures %s on the move vs. %s on the product don't allow to do these operations or you are not transferring the picking at once. "
+msgstr "El redondeo de su unidad de medida %s en el movimiento vs. %s en el producto no permite realizar estas operaciones o no está transfiriendo el albarán de una vez. "
+
