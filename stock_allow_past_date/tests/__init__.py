@@ -9,4 +9,5 @@
 #    planned by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################
 
-from . import test_past_date
+# TODO: Add tests on v12.0
+# from . import test_past_date
