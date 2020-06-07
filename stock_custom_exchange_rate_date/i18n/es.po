@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_custom_exchange_rate_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-07 01:08+0000\n"
+"PO-Revision-Date: 2020-06-07 01:08+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_custom_exchange_rate_date
+#: model:ir.model.fields,field_description:stock_custom_exchange_rate_date.field_stock_picking__exchange_rate_date
+msgid "Exchange Rate Date"
+msgstr "Fecha de tasa de cambio"
+
+#. module: stock_custom_exchange_rate_date
+#: model:ir.model.fields,help:stock_custom_exchange_rate_date.field_stock_picking__exchange_rate_date
+msgid "If set, specifies a customized date that will be used when computing product unit prices, instead of the date when the transfer is validated, in case exchange rates are involved."
+msgstr "Si se establece, especifica una fecha personalizada que se utilizará al calcular precios unitarios de productos, en lugar de la fecha en que se valide la transferencia, en caso que haya tasas de cambio involucradas."
+
+#. module: stock_custom_exchange_rate_date
+#: model:ir.model,name:stock_custom_exchange_rate_date.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: stock_custom_exchange_rate_date
+#: model:ir.model,name:stock_custom_exchange_rate_date.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
+
