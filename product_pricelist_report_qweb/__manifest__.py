@@ -21,27 +21,23 @@
 ###############################################################################
 {
     "name": "Product Pricelist Report QWeb",
-    "version": "8.0.0.1.6",
+    "version": "11.0.0.1.0",
     "author": "Vauxoo",
     "category": "Accouting",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "report",
         "product",
-        "controller_report_xls",
     ],
     "demo": [],
     "data": [
-        "view/report.xml",
-        "view/wizard.xml",
-        "report/layouts.xml",
-        "report/template.xml",
+        "wizard/product_pricelist_views.xml",
+        "report/product_pricelist_templates.xml",
     ],
     "test": [],
     "js": [],
     "css": [],
     "qweb": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }
