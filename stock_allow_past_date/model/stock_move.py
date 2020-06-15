@@ -107,4 +107,27 @@ class StockMove(models.Model):
 
         if picking:
             picking._create_backorder()
+        for move in moves_todo:
+            # Apply restrictions on the stock move to be able to make
+            # consistent accounting entries.
+            if move._is_in() and move._is_out():
+                raise UserError(_("The move lines are not in a consistent state: "
+                                  "some are entering and other are leaving the company."))
+            company_src = move.mapped('move_line_ids.location_id.company_id')
+            company_dst = move.mapped('move_line_ids.location_dest_id.company_id')
+            try:
+                if company_src:
+                    company_src.ensure_one()
+                if company_dst:
+                    company_dst.ensure_one()
+            except ValueError:
+                raise UserError(_("The move lines are not in a consistent states: "
+                                  "they do not share the same origin or destination company."))
+            if company_src and company_dst and company_src.id != company_dst.id:
+                raise UserError(_("The move lines are not in a consistent states: they are doing an intercompany "
+                                  "in a single step while they should go through the intercompany transit location."))
+            move._run_valuation()
+        for move in moves_todo.filtered(lambda m: m.product_id.valuation == 'real_time' and (
+                m._is_in() or m._is_out() or m._is_dropshipped() or m._is_dropshipped_returned())):
+            move._account_entry_move()
         return moves_todo
