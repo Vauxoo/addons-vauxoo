@@ -3,7 +3,7 @@
 
 {
     "name": "Partner Credit Limit",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",
