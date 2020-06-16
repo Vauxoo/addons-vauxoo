@@ -27,3 +27,4 @@ msgstr "Factura"
 #: model:ir.model,name:account_anglo_saxon_stock_move.model_account_invoice_line
 msgid "Invoice Line"
 msgstr "Línea de Factura"
+

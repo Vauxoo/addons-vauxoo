@@ -1,10 +1,8 @@
-# coding: utf-8
-
 import logging
 import operator as py_operator
 import datetime
 
-from odoo import fields, models, api, _
+from odoo import models, api, _
 from odoo.exceptions import ValidationError, except_orm
 from odoo.tools import float_is_zero
 
@@ -176,20 +174,19 @@ class AccountInvoice(models.Model):
         res.update(dict(self._cr.fetchall()))
         return res
 
+    @api.model
+    def _get_model_from_query_col(self, query_col):
+        model = self.env['sale.order'if query_col == 'sale_id'else 'purchase.order']
+        return model
+
     def _compute_value(self, ids, name, query_type, query_col):
-        if query_col == 'sale_id':
-            obj = self.env['sale.order']
-        elif query_col == 'purchase_id':
-            obj = self.env['purchase.order']
+        obj = self._get_model_from_query_col(query_col)
         res = self._compute_query(ids, query_col, query_type)
         for brw in obj.browse(ids):
             brw[name] = res.get(brw.id, 0)
 
     def _compute_search(self, name, query_type, query_col, operator, value):
-        if query_col == 'sale_id':
-            obj = self.env['sale.order']
-        elif query_col == 'purchase_id':
-            obj = self.env['purchase.order']
+        obj = self._get_model_from_query_col(query_col)
         res = self._compute_query(obj.search([])._ids, query_col, query_type)
         ids = [rec_id
                for (rec_id, computed_value) in res.items()
@@ -198,11 +195,7 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def cron_accrual_reconciliation(self, query_col, do_commit=False):
-        if query_col == 'sale_id':
-            ttype = 'Sale'
-        elif query_col == 'purchase_id':
-            ttype = 'Purchase'
-
+        ttype = query_col.split('_')[0]
         _logger.info('Reconciling %s Order Stock Accruals', ttype)
         company_id = self.env['res.users'].browse(self._uid).company_id
         query_params = {
@@ -220,7 +213,6 @@ class AccountInvoice(models.Model):
     @api.multi
     def reconcile_stock_accrual(self, rec_ids, query_col, do_commit=False):
         aml_obj = self.env['account.move.line']
-        date = fields.Date.context_today(self)
         precision = self.env['decimal.precision'].precision_get('Account')
 
         total = len(rec_ids)
@@ -234,12 +226,7 @@ class AccountInvoice(models.Model):
         query_params = {'ids': tuple(rec_ids), 'company_id': company_id.id}
         query = self._get_accrual_query(query_col, 'query4', query_params)
         self._cr.execute(query)
-
-        if query_col == 'sale_id':
-            obj = self.env['sale.order']
-        elif query_col == 'purchase_id':
-            obj = self.env['purchase.order']
-
+        obj = self._get_model_from_query_col(query_col)
         msg = 'Reconciling account_id %s, product_id %s, no. items: %s'
 
         journal_ids = {}
@@ -292,7 +279,7 @@ class AccountInvoice(models.Model):
                 if len(aml_ids) > 1)
             for account_id, product_id, aml_ids in gen:
                 journal_id = journal_ids[product_id]
-                writeoff_amount = sum(l.debit - l.credit for l in aml_ids)
+                writeoff_amount = sum(ml.debit - ml.credit for ml in aml_ids)
 
                 log = msg % (account_id, product_id, len(aml_ids))
                 _logger.info(log)
