@@ -2,11 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
-import time
-from datetime import datetime
-import dateutil.relativedelta
-from odoo.tools.float_utils import float_is_zero
-from odoo import models, _, api, tools, fields
+from odoo import models, tools
+
 _logger = logging.getLogger(__name__)
 
 SEGMENTATION_COST = [
