@@ -4,9 +4,8 @@ from odoo.tests.common import TransactionCase
 
 
 class TestPurchaseThirdValidation(TransactionCase):
-    """
-        This Tests validate that purchase order need a third validation
-        when the amount total is over the limit assigned
+    """This Tests validate that purchase order need a third validation
+    when the amount total is over the limit assigned
     """
 
     def setUp(self):
@@ -40,9 +39,8 @@ class TestPurchaseThirdValidation(TransactionCase):
         self.pol.create(pol_dict)
 
     def test_purchase_by_1000(self):
-        """
-         Test with the amount of purchase order by a total less than minimum
-         required to not need a second validation, (amount = 1000).
+        """Test with the amount of purchase order by a total less than minimum
+        required to not need a second validation, (amount = 1000).
         """
         self._generate_confirm_po(1000)
         self.assertEqual(
@@ -50,9 +48,8 @@ class TestPurchaseThirdValidation(TransactionCase):
             'Purchase Order should be confirmed')
 
     def test_purchase_by_5000(self):
-        """
-         Test with the amount of purchase order by a total higher than the
-         minimum required to need a second validation, but not need a third,
+        """Test with the amount of purchase order by a total higher than the
+        minimum required to need a second validation, but not need a third,
          (amount = 5000).
         """
         self._generate_confirm_po(5000)
@@ -61,8 +58,7 @@ class TestPurchaseThirdValidation(TransactionCase):
             'Purchase Order should be confirmed')
 
     def test_purchase_by_100000(self):
-        """
-         Test with the amount of purchase order by a total higher than the
+        """Test with the amount of purchase order by a total higher than the
          minimum required to need a third validation, (amount = 100000).
         """
         self._generate_confirm_po(100000)
