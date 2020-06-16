@@ -22,26 +22,6 @@ msgid "Allowed Sales"
 msgstr "Venta a crédito permitida"
 
 #. module: partner_credit_limit
-#: code:addons/partner_credit_limit/model/sale.py:28
-#, python-format
-msgid "Can not confirm the Sale Order because Partner has late payments or has exceeded the credit limit.\n"
-"Please cover the late payment or check credit limit\n"
-"Credit Limit : %s"
-msgstr "No se puede confirmar la orden de venta por que el cliente tiene pagos atrasados o tiene un límite de crédito excedido.\n"
-"Por favor cubrir los pagos atrasados o revisar el límite de crédito.\n"
-"Límite de Crédito : %s"
-
-#. module: partner_credit_limit
-#: code:addons/partner_credit_limit/model/account_invoice.py:30
-#, python-format
-msgid "Can not validate the Invoice because Partner has late payments or has exceeded the credit limit.\n"
-"Please cover the late payment or check credit limit\n"
-"Credit Limit : %s"
-msgstr "No se puede validar la Factura porque el cliente tiene pagos atrasados o tiene un límite de crédito excedido.\n"
-"Por favor cubrir los pagos atrasados o revisar el límite de crédito.\n"
-"Límite de Crédito : %s"
-
-#. module: partner_credit_limit
 #: model:ir.model,name:partner_credit_limit.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
@@ -79,6 +59,7 @@ msgid "Indicates when the customer has late payments"
 msgstr "Indica cuando el cliente tiene pagos atrasados"
 
 #. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/account_invoice.py:23
 #: model:ir.model,name:partner_credit_limit.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
@@ -100,3 +81,55 @@ msgstr "Valor incorrecto %s para los días de gracia de pago: el valor debe esta
 #: model:ir.model,name:partner_credit_limit.model_sale_order
 msgid "Quotation"
 msgstr "Presupuesto"
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/partner.py:111
+#, python-format
+msgid "Please: \n"
+""
+msgstr "Por favor: \n"
+""
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/sale.py:21
+#, python-format
+msgid "Sale Order"
+msgstr "Pedido de venta"
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/partner.py:107
+#, python-format
+msgid "record"
+msgstr "registro"
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/partner.py:118
+#, python-format
+msgid "• Check credit limit.\n"
+""
+msgstr "• Revisar el límite de crédito.\n"
+""
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/partner.py:115
+#, python-format
+msgid "• Cover the late payments.\n"
+""
+msgstr "• Cubrir los pagos atrasados.\n"
+""
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/partner.py:117
+#, python-format
+msgid "• Has exceeded the credit limit.\n"
+""
+msgstr "• Tiene un límite de crédito excedido.\n"
+""
+
+#. module: partner_credit_limit
+#: code:addons/partner_credit_limit/models/partner.py:114
+#, python-format
+msgid "• Has late payments.\n"
+""
+msgstr "• Tiene pagos atrasados.\n"
+""

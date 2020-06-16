@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
-from odoo import exceptions
+from odoo.exceptions import ValidationError
 from . import common
 
 
@@ -52,7 +52,7 @@ class TestSalesCreditLimits(common.TestCommon):
         # credit limit exceded
         # credit_limit = 500
         # amount_total = 600
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(ValidationError):
             sale_id.action_confirm()
 
         # CASE WHERE PARTNER HAVE CREDIT
@@ -109,7 +109,7 @@ class TestSalesCreditLimits(common.TestCommon):
         # should not confirm sale order should fail,
         # couse there are late payments
         # since the invoice 1 was validate with curent day minus 2 days
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(ValidationError):
             sale_id.action_confirm()
 
     def test_credit_limit_overloaded_with_diferent_currency(self):
@@ -142,5 +142,5 @@ class TestSalesCreditLimits(common.TestCommon):
                             sale_id.company_id.currency_id)
         # Should not confirm sale order
         # Credit limit exceded when conversion is done from USD to MXN
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(ValidationError):
             sale_id.action_confirm()

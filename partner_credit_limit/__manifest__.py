@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "Partner Credit Limit",
-    "version": "11.0.0.0.3",
+    "version": "11.0.0.0.4",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",
