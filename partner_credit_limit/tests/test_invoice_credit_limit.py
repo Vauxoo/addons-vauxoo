@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from odoo import exceptions
+from odoo.exceptions import ValidationError
 from . import common
 
 
@@ -46,7 +46,7 @@ class TestCreditLimits(common.TestCommon):
         # credit limit exceded
         # credit_limit = 500
         # amount_total = 600
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(ValidationError):
             invoice_id.action_invoice_open()
 
     def test_partner_with_late_payments(self):
@@ -96,7 +96,7 @@ class TestCreditLimits(common.TestCommon):
              'name': 'product that cost 100', })
         # Validate the invoice, should fail, couse there are late payments
         # since the invoice 1 was validate with curent day minus 2 days
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(ValidationError):
             invoice_id2.action_invoice_open()
 
     def test_overdue_credit(self):
