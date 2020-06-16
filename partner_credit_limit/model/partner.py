@@ -5,6 +5,9 @@ from datetime import timedelta
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
+NO_BREAK_SPACE = "\u00a0"
+TAB_SPACE = 4 * NO_BREAK_SPACE
+
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -95,3 +98,23 @@ class ResPartner(models.Model):
         for partner in self:
             partner.allowed_sale = not partner.credit_overloaded and \
                 not partner.overdue_credit
+
+    def _check_credit_limit(self, model_name=False):
+        """Method that will return a message when the partner has late payments and/or has exceeded the credit limit.
+        """
+        self.ensure_one()
+        if self.allowed_sale:
+            return False
+        credit_overloaded = self.credit_overloaded
+        overdue_credit = self.overdue_credit
+        msg = _('Can not confirm the %s because the Partner:\n') % (model_name and model_name or _('record'))
+        do_msg = _('Please: \n')
+
+        if overdue_credit:
+            msg += TAB_SPACE + _('• Has late payments.\n')
+            do_msg += TAB_SPACE + _('• Cover the late payments.\n')
+        if credit_overloaded:
+            msg += TAB_SPACE + _('• Has exceeded the credit limit.\n')
+            do_msg += TAB_SPACE + _('• Check credit limit.\n')
+            do_msg += TAB_SPACE*2 + _('Credit limit: %s') % self.credit_limit
+        return '%s %s' % (msg, do_msg)
