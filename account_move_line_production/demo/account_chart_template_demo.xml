@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <function
+        model="account.chart.template"
+        name="try_loading_for_current_company"
+        eval="[ref('account_move_line_production.configurable_chart_template')]"/>
+
+</odoo>

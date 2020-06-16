@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="1">
+<odoo>
 
     <record id="tax_group_15" model="account.tax.group">
         <field name="name">Tax 15%</field>
     </record>
 
+    <!-- Since CoA needs to be referenced twice (one to create it and another to
+    set their accounts) we need to disable the lint that prevents same external ID
+    from being referenced several times
+    pylint: disable=duplicate-xml-record-id
+    -->
     <record id="transfer_account_id" model="account.account.template">
         <field name="code">10017</field>
         <field name="name">Liquidity Transfers</field>
