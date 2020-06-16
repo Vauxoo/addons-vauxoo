@@ -37,10 +37,10 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     aml_ids = fields.One2many(
-            'account.move.line', 'sm_id', 'Account move Lines',
-            domain=[('account_id.reconcile', '=', True)])
+        'account.move.line', 'sm_id', 'Account move Lines',
+        domain=[('account_id.reconcile', '=', True)])
     aml_all_ids = fields.One2many(
-            'account.move.line', 'sm_id', 'All Account move Lines')
+        'account.move.line', 'sm_id', 'All Account move Lines')
 
     def _prepare_account_move_line(self, qty, cost,
                                    credit_account_id, debit_account_id):

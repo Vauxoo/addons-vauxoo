@@ -28,3 +28,4 @@ msgstr "Comprobante Contable"
 #: model:ir.model,name:stock_move_entries.model_stock_move_line
 msgid "Stock Move"
 msgstr "Movimiento de stock"
+
