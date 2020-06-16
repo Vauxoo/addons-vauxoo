@@ -22,6 +22,7 @@ class ResConfigSettings(models.TransientModel):
         return res
 
     def set_values(self):
-        super(ResConfigSettings, self).set_values()
+        res = super(ResConfigSettings, self).set_values()
         self.env.user.company_id.std_price_neg_threshold = (
             self.std_price_neg_threshold)
+        return res
