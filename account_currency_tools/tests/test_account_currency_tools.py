@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoo.tests.common import TransactionCase
 
 
@@ -12,7 +10,7 @@ class TestsAccountCurrencyTools(TransactionCase):
         super(TestsAccountCurrencyTools, self).setUp()
         self.wzd_obj = self.env['foreign.exchange.realization']
         self.rc_obj = self.env['res.company']
-        self.company_id = self.ref('base.main_company'),
+        self.company_id = self.ref('base.main_company')
 
     def create_wizard(self, default=None):
         default = dict(default or {})

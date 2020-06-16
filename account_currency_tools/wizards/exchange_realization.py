@@ -1,10 +1,6 @@
-# coding: utf-8
 import logging
-from datetime import datetime, timedelta
-import pytz
 from odoo import _, api, fields, models
 import odoo.addons.decimal_precision as dp
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -23,48 +19,34 @@ class ForeignExchangeRealizationLine(models.TransientModel):
     _name = 'foreign.exchange.realization.line'
     _description = 'foreign.exchange.realization.line'
 
-    wizard_id = fields.Many2one(
-        'foreign.exchange.realization',
-        string='Wizard',
-        required=False,)
-    account_id = fields.Many2one(
-        'account.account', 'Account',
-        required=True,)
-    currency_id = fields.Many2one(
-        'res.currency', 'Currency',
-        required=True,)
-    exchange_rate = fields.Float(
-        'Exchange Rate',
-        digits=(12, 6))
-    balance = fields.Float(
-        'Balance',
-        digits=dp.get_precision('Account'))
+    wizard_id = fields.Many2one('foreign.exchange.realization')
+    account_id = fields.Many2one('account.account', 'Account', required=True)
+    currency_id = fields.Many2one('res.currency', required=True)
+    exchange_rate = fields.Float(digits=(12, 6))
+    balance = fields.Float(digits=dp.get_precision('Account'))
     foreign_balance = fields.Float(
-        'Foreign Balance',
         digits=dp.get_precision('Account'),
-        help=("Total amount (in Secondary currency) for transactions held "
-              "in secondary currency for this account."))
+        help="Total amount (in Secondary currency) for transactions held "
+        "in secondary currency for this account.")
     adjusted_balance = fields.Float(
-        'Adjusted Balance',
         digits=dp.get_precision('Account'),
-        help=("Total amount (in Company currency) for transactions held "
-              "in secondary currency for this account."))
+        help="Total amount (in Company currency) for transactions held "
+        "in secondary currency for this account.")
     unrealized_gain_loss = fields.Float(
         'Unrealized Gain(+) or Loss(-)',
         digits=(2, 2),
-        help=("Value of Loss or Gain due to changes in exchange rate when "
-              "doing multi-currency transactions."))
+        help="Value of Loss or Gain due to changes in exchange rate when "
+        "doing multi-currency transactions.")
     type = fields.Selection(
         related="account_id.internal_type",
         selection=[('receivable', 'Receivable'),
                    ('payable', 'Payable'),
                    ('liquidity', 'Liquidity')],
         string='Internal Type',
-        required=False,
-        help=("The 'Internal Type' is used for features available on "
-              "different types of accounts: "
-              "payable/receivable are for partners accounts (for "
-              "debit/credit computations), liquidity for bank & cash"))
+        help="The 'Internal Type' is used for features available on "
+        "different types of accounts: "
+        "payable/receivable are for partners accounts (for "
+        "debit/credit computations), liquidity for bank & cash")
 
 
 class ForeignExchangeRealization(models.TransientModel):
@@ -158,9 +140,11 @@ class ForeignExchangeRealization(models.TransientModel):
     bk_ids = fields.Many2many(
         'account.account', 'act_bk_acc_rel',
         'account_id', 'act_id', 'Bank & Cash Accounts',
-        domain=([('internal_type','=','liquidity'),
-                 ('currency_id','!=',False)]),
-        help=('Select your Bank Accounts'))
+        domain=[
+            ('internal_type', '=', 'liquidity'),
+            ('currency_id', '!=', False),
+        ],
+        help='Select your Bank Accounts')
     bank_gain_exchange_account_id = fields.Many2one(
         'account.account', 'Bank Gain Exchange Rate Account',
         required=False,
@@ -174,9 +158,11 @@ class ForeignExchangeRealization(models.TransientModel):
     rec_ids = fields.Many2many(
         'account.account', 'act_rec_acc_rel',
         'account_id', 'act_id', 'Receivable Accounts',
-        domain=([('internal_type','=','receivable'),
-                 ('currency_id','!=',False)]),
-        help=('Select your Receivable Accounts'))
+        domain=[
+            ('internal_type', '=', 'receivable'),
+            ('currency_id', '!=', False),
+        ],
+        help='Select your Receivable Accounts')
     rec_gain_exchange_account_id = fields.Many2one(
         'account.account', 'Receivable Gain Exchange Rate Account',
         required=False,
@@ -190,8 +176,10 @@ class ForeignExchangeRealization(models.TransientModel):
     pay_ids = fields.Many2many(
         'account.account', 'act_pay_acc_rel',
         'account_id', 'act_id', 'Payable Accounts',
-        domain=([('internal_type','=','payable'),
-                 ('currency_id','!=',False)]),
+        domain=[
+            ('internal_type', '=', 'payable'),
+            ('currency_id', '!=', False),
+        ],
         help=('Select your Payable Accounts'))
     pay_gain_exchange_account_id = fields.Many2one(
         'account.account', 'Payable Gain Exchange Rate Account',
@@ -224,7 +212,7 @@ class ForeignExchangeRealization(models.TransientModel):
         states={'draft': [('readonly', False)]})
     journal_id = fields.Many2one(
         'account.journal', 'Posting Journal',
-        domain=([('type','=','general')]),
+        domain=[('type', '=', 'general')],
         required=True)
     line_ids = fields.One2many(
         'foreign.exchange.realization.line',
@@ -251,7 +239,6 @@ class ForeignExchangeRealization(models.TransientModel):
             ('exception', 'Exception'),
             ('posted', 'Posted Journal'),
         ],
-        'State',
         required=True,
         default='draft',
         help=(
