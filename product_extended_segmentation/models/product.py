@@ -41,14 +41,14 @@ class Product(models.Model):
         for tmpl_id, std_price in res:
             counter += 1
             _logger.info(msglog, str(tmpl_id), str(total), str(counter))
-            self.env.cr.execute('''
-                UPDATE product_template
-                SET material_cost = {material_cost}
-                WHERE id = {id}
-                    '''.format(
-                material_cost=std_price,
-                id=tmpl_id,
-            ))
+            self.env.cr.execute("""
+                UPDATE
+                    product_template
+                SET
+                    material_cost = %s
+                WHERE
+                    id = %s
+                """, [std_price, tmpl_id])
         return True
 
     @api.multi
@@ -73,7 +73,7 @@ class Product(models.Model):
                     _logger.error(error)
                     product.message_post(
                         body=_('Error at the moment to '
-                               'update the standard price: %s' % error),
+                               'update the standard price: %s') % error,
                         subject=error)
         if not cron:
             self.clear_caches()
@@ -133,7 +133,7 @@ class Product(models.Model):
     @tools.ormcache('bom', 'internal')
     def _calc_material_price_seg(self, bom, internal=None, wizard=None):
         price = 0.0
-        result, result2 = bom.explode(self, 1)
+        _result, result2 = bom.explode(self, 1)
 
         def _get_sgmnt(prod_id):
             res = {}
@@ -147,7 +147,7 @@ class Product(models.Model):
             return res
 
         sgmnt_dict = {}.fromkeys(SEGMENTATION_COST, 0.0)
-        for sbom, sbom_data in result2:
+        for sbom, _sbom_data in result2:
             product_id = sbom.product_id
             prod_costs_dict = _get_sgmnt(product_id)
             child_bom_id = sbom.child_bom_id
@@ -194,8 +194,7 @@ class Product(models.Model):
             price = bom.product_uom_id._compute_price(
                 price / bom.product_qty, self.uom_id)
         if internal and not wizard:
-            sgmnt_dict['price'] = price
-            return sgmnt_dict
+            return self._get_segmentation_price(price, sgmnt_dict, internal)
 
         product_tmpl_id = bom.product_tmpl_id
 
@@ -206,10 +205,7 @@ class Product(models.Model):
         computed_th = self._compute_threshold(current_price, price)
 
         if diff < 0 and current_price == 0:
-            if internal:
-                sgmnt_dict['price'] = price
-                return sgmnt_dict
-            return price
+            return self._get_segmentation_price(price, sgmnt_dict, internal)
 
         threshold_reached = product_tmpl_id._evaluate_threshold(
             bottom_th, computed_th, diff)
@@ -226,10 +222,7 @@ class Product(models.Model):
         if threshold_reached:
             sgmnt_dict['standard_price'] = price
             self.ensure_change_price_log_messages(vals)
-            if internal:
-                sgmnt_dict['price'] = price
-                return sgmnt_dict
-            return price
+            return self._get_segmentation_price(price, sgmnt_dict, internal)
 
         diff = product_tmpl_id.standard_price - price
         if product_tmpl_id.valuation == "real_time" and diff:
@@ -238,14 +231,15 @@ class Product(models.Model):
             wizard_id.change_price()
             self.write(sgmnt_dict)
             self.ensure_change_price_log_messages(vals)
-            if internal:
-                sgmnt_dict['price'] = price
-                return sgmnt_dict
-            return price
+            return self._get_segmentation_price(price, sgmnt_dict, internal)
 
         sgmnt_dict['standard_price'] = price
         self.write(sgmnt_dict)
         self.ensure_change_price_log_messages(vals)
+        return self._get_segmentation_price(price, sgmnt_dict, internal)
+
+    @api.model
+    def _get_segmentation_price(self, price, sgmnt_dict, internal):
         if internal:
             sgmnt_dict['price'] = price
             return sgmnt_dict
