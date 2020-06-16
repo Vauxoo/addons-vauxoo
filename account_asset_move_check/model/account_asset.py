@@ -1,29 +1,3 @@
-# coding: utf-8
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info@vauxoo.com
-############################################################################
-#    Coded by: Sabrina Romero (sabrina@vauxoo.com)
-############################################################################
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
 
@@ -32,16 +6,16 @@ class AccountAssetDepreciationLine(models.Model):
     _inherit = 'account.asset.depreciation.line'
 
     @api.depends('move_id')
-    def _get_move_check(self):
+    def _compute_move_check(self):
         for line in self:
             line.move_check = bool(line.move_id or line.historical)
 
-        return super(AccountAssetDepreciationLine, self)._get_move_check()
+        return super()._compute_move_check()
 
     historical = fields.Boolean(help="Check box for the historical validation",
                                 default=False)
     move_check = fields.Boolean(help="Compute the move status",
-                                compute="_get_move_check",
+                                compute="_compute_move_check",
                                 string='Move Posted', store=True)
 
 
