@@ -1,5 +1,3 @@
-# coding: utf-8
-
 {
     "name": "Account Move Line Production",
     "version": "12.0.1.0.0",
@@ -13,8 +11,8 @@
         "stock_account",
     ],
     "demo": [
-        'demo/generic_chart_data.xml',
-        'demo/account_chart_template_data.xml',
+        'demo/generic_chart_demo.xml',
+        'demo/account_chart_template_demo.xml',
         'demo/demo.xml',
     ],
     "data": [

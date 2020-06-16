@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from odoo import models, fields
 
 
@@ -14,6 +12,8 @@ class MrpProduction(models.Model):
         string='Production Journal Entries',
         readonly=True,
     )
+
+
 class MrpWorkcenter(models.Model):
     _inherit = 'mrp.workcenter'
 
