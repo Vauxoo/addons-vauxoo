@@ -16,7 +16,7 @@ class ResCompany(models.Model):
             SELECT
                 c.id,
                 (SELECT
-                    r.rate 
+                    r.rate
                 FROM
                     res_currency_rate AS r
                 WHERE
