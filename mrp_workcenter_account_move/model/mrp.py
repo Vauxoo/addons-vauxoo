@@ -133,21 +133,21 @@ class MrpProduction(models.Model):
         self.ensure_one()
 
         base_line = dict(
-            move_id = move_id.id,
-            production_id = self.id,
-            name = self.product_id.name + _(' (Valuation Adjustment)'),
-            product_id = self.product_id.id,)
+            move_id=move_id.id,
+            production_id=self.id,
+            name=self.product_id.name + _(' (Valuation Adjustment)'),
+            product_id=self.product_id.id,)
 
         debit_line = dict(
             base_line,
-            debit = abs(diff),
-            account_id = (
-                valuation_account_id if diff > 0 else production_account_id),)
+            debit=abs(diff),
+            account_id=(
+                valuation_account_id if diff > 0 else production_account_id))
         credit_line = dict(
             base_line,
-            credit = abs(diff),
-            account_id = (
-                production_account_id if diff > 0 else valuation_account_id),)
+            credit=abs(diff),
+            account_id=(
+                production_account_id if diff > 0 else valuation_account_id))
         move_id.write({
             'line_ids': [
                 (0, 0, debit_line),

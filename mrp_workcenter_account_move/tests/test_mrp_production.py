@@ -41,7 +41,7 @@ class TestMrpProduction(TestMrpCommon):
                 'mrp_routing_account_journal.landed_cost_journal_1').id})
         self.env.ref('base.main_company').write({
             'gain_inventory_deviation_account_id': self.account_deviation.id,
-            'loss_inventory_deviation_account_id': self.account_deviation.id, 
+            'loss_inventory_deviation_account_id': self.account_deviation.id,
         })
 
     # Test methods.
@@ -119,9 +119,9 @@ class TestMrpProduction(TestMrpCommon):
             self.user_mrp_user).with_context({
                 'active_id': production_id.id,
                 'active_ids': [production_id.id],
-        }).create({
-            'product_qty': 1.0,
-        })
+            }).create({
+                'product_qty': 1.0,
+            })
         self.wizard_id.do_produce()
         production_id.button_mark_done()
 
