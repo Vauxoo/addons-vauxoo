@@ -1,7 +1,3 @@
-# coding: utf-8
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-# from odoo.tools import float_round
-#from odoo.tools.float_utils import float_compare, float_round, float_is_zero
 import logging
 from odoo.addons import decimal_precision as dp
 from odoo import fields, models, api
@@ -61,26 +57,20 @@ class StockMove(models.Model):
         "product is moved from a specific warehouse")
     logistic_remaining_value = fields.Float(
         copy=False)
-
     move_orig_financial_ids = fields.One2many(
         'historical.stock.move', 'move_id', 'Orig. Fifo Move',
         domain=[('valuation_type', '=', 'financial')],
         help="Optional: previous stock move when chaining them")
-
     move_orig_logistic_ids = fields.One2many(
         'historical.stock.move', 'move_id', 'Original Logistic Move',
         domain=[('valuation_type', '=', 'logistic')],
         help="Optional: previous stock move when chaining them")
-
     material_cost = fields.Float(
-        string='Material Cost',
         digits=dp.get_precision('Account'))
 
     production_cost = fields.Float(
-        string='Production Cost',
         digits=dp.get_precision('Account'))
     subcontracting_cost = fields.Float(
-        string='Subcontracting Cost',
         digits=dp.get_precision('Account'))
     landed_cost = fields.Float(
         string='Landed Cost Value',
@@ -178,8 +168,7 @@ class StockMove(models.Model):
             record.segmentation_cost = sum([
                 getattr(record, fn) for fn in SEGMENTATION_COST])
 
-
-###############################################################################
+    ###########################################################################
 
     @api.model
     def _fifo_vacuum(self):
@@ -271,8 +260,8 @@ class StockMove(models.Model):
     @api.model
     def _run_logistic_fifo(self, move, quantity=None):
         move.ensure_one()
-        Trace = self.env['stock.traceability.report']
-        MoveLine = self.env['stock.move.line']
+        trace_obj = self.env['stock.traceability.report']
+        sml_obj = self.env['stock.move.line']
 
         # Deal with possible move lines that do not impact the valuation.
         valued_move_lines = move.move_line_ids.filtered(
@@ -287,14 +276,15 @@ class StockMove(models.Model):
         qty_to_take_on_candidates = quantity or valued_quantity
         # Gathering logistic moves
         sml_ids = move.move_line_ids.filtered(lambda a: a.lot_id)
-        Historical = self.env['historical.stock.move']
+        hist_obj = self.env['historical.stock.move']
         used = self.env['stock.move']
         for sml in sml_ids:
-            lines = Trace.with_context(active_id=sml.lot_id.id,
-                                       model='stock.production.lot',
-                                       ttype='downstream').get_lines()
+            lines = trace_obj.with_context(
+                active_id=sml.lot_id.id,
+                model='stock.production.lot',
+                ttype='downstream').get_lines()
             track_ids = [line['model_id'] for line in lines]
-            move_line = MoveLine.browse(track_ids)
+            move_line = sml_obj.browse(track_ids)
             origin_moves = move_line.mapped('move_id').filtered(
                 lambda a: a.logistic_remaining_qty > 0)
             for origin_move in origin_moves:
@@ -324,7 +314,7 @@ class StockMove(models.Model):
                 origin_move.write(candidate_vals)
                 qty_to_take_on_candidates -= real_qty
                 used += origin_move
-                Historical.create(vals)
+                hist_obj.create(vals)
         candidates = (
             move.product_id._get_fifo_logistic_candidates_in_move(
                 move.location_id or
@@ -359,7 +349,7 @@ class StockMove(models.Model):
                 'date': fields.Datetime.now(),
                 'valuation_type': 'logistic'
             }
-            Historical.create(vals)
+            hist_obj.create(vals)
             candidate_vals = {
                 'logistic_remaining_qty':
                 candidate.logistic_remaining_qty - qty_taken_on_candidate,
@@ -375,7 +365,7 @@ class StockMove(models.Model):
         candidate_to_take = {
             candidate.id: candidate.remaining_qty for candidate in candidates}
         res = super(StockMove, self)._run_fifo(move, quantity=quantity)
-        Historical = self.env['historical.stock.move']
+        hist_obj = self.env['historical.stock.move']
         # Gathering both(Financial, Logistic) moves
 
         needed_qty = move.product_uom_qty
@@ -397,7 +387,7 @@ class StockMove(models.Model):
                     'valuation_type': 'financial'
                 }
                 needed_qty -= used_qty
-                Historical.create(vals)
+                hist_obj.create(vals)
         self._run_logistic_fifo(move, quantity)
         # Update the segmentation fields with the values of the last used
         # candidate, if any.
@@ -435,7 +425,7 @@ class StockMove(models.Model):
         return False
 
     def _account_entry_move(self):
-        super(StockMove, self)._account_entry_move()
+        res = super(StockMove, self)._account_entry_move()
         if self._is_in():
             hist_obj = self.env['historical.stock.move']
             hist = hist_obj.search([
@@ -448,6 +438,7 @@ class StockMove(models.Model):
                     'date': self.date,
                     'quantity': self.product_uom_qty,
                 })
+        return res
 
     @api.multi
     def _get_landed_information(self):

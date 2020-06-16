@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 import logging
 from odoo import models, fields, _
 _logger = logging.getLogger(__name__)
@@ -65,14 +62,10 @@ class Product(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    material_cost = fields.Float(
-        string='Material Cost', readonly=True)
-    production_cost = fields.Float(
-        string='Production Cost', readonly=True)
-    subcontracting_cost = fields.Float(
-        string='Subcontracting Cost', readonly=True)
-    landed_cost = fields.Float(
-        string='Landed Cost', readonly=True)
+    material_cost = fields.Float(readonly=True)
+    production_cost = fields.Float(readonly=True)
+    subcontracting_cost = fields.Float(readonly=True)
+    landed_cost = fields.Float(readonly=True)
 
     def action_view_historical_lines(self):
         self.ensure_one()
