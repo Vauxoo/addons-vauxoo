@@ -1,13 +1,3 @@
-# coding: utf-8
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: jorge_nr@vauxoo.com
-#    planned by: Humberto Arocha <hbto@vauxoo.com>
-############################################################################
 {
     'name': 'Account Invoice Line Asset Category Required',
     'version': '12.0.1.0.0',
