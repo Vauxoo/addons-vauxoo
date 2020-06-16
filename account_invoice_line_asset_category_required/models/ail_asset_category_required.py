@@ -51,7 +51,7 @@ class AccountInvoiceLine(models.Model):
                     "line with description '%s'.") % (
                         line.account_id.code, line.account_id.name,
                         line.name))
-            elif policy == 'never' and line.asset_category_id:
+            if policy == 'never' and line.asset_category_id:
                 raise ValidationError(_(
                     "Asset policy is set to 'Never' for the account '%s %s' "
                     "but the invoice line with description '%s' have this "

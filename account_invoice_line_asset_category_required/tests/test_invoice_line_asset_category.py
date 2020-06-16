@@ -1,12 +1,3 @@
-# coding: utf-8
-############################################################################
-#    Module Writen For Odoo, Open Source Management Solution
-#
-#    Copyright (c) 2016 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
-#    coded by: Luis Torres <luis_t@vauxoo.com>
-############################################################################
 from odoo import tools
 from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
@@ -20,13 +11,13 @@ class TestInvoiceLineAssetCategory(TransactionCase):
             self.cr, 'account_asset', get_resource_path(module, *args),
             {}, 'init', False, 'test', self.registry._assertion_report)
 
-    def create_invoice(self, journal, a_pay, uom, inv_type='out_invoice', product=None, 
-            price=100.0):
+    def create_invoice(self, journal, a_pay, uom, inv_type='out_invoice', product=None,
+                       price=100.0):
         invoice = self.invoice_model.create({
             'partner_id': self.partner.id,
             'company_id': self.company,
             'type': inv_type,
-            'journal_id': journal, 
+            'journal_id': journal,
             'account_id': a_pay.id,
         })
         self.create_invoice_line(invoice, product, uom, price)
@@ -53,16 +44,15 @@ class TestInvoiceLineAssetCategory(TransactionCase):
         self.invoice_line_obj = self.env['account.invoice.line']
         self.company = self.env.ref('base.main_company')
         self.partner = self.env.ref('base.res_partner_3')
-        self.sales_journal = self.env.ref('account_invoice_line_asset_category_required.'
-            'sales_journal') 
-        self.a_pay = self.env.ref('account_invoice_line_asset_category_required.'
-            'a_pay')
-        self.a_sale = self.env.ref('account_invoice_line_asset_category_required.'
-            'a_sale')
+        self.sales_journal = self.env.ref(
+            'account_invoice_line_asset_category_required.sales_journal')
+        self.a_pay = self.env.ref('account_invoice_line_asset_category_required.a_pay')
+        self.a_sale = self.env.ref('account_invoice_line_asset_category_required.a_sale')
         self.product = self.env.ref('product.product_product_4')
         self.uom = self.env.ref('uom.product_uom_hour')
 
-        self.invoice = self.create_invoice(self.sales_journal, self.a_pay, self.uom, 
+        self.invoice = self.create_invoice(
+            self.sales_journal, self.a_pay, self.uom,
             inv_type='in_invoice', product=self.product, price=5355.0)
 
         self._load('account', 'test', 'account_minimal_test.xml')
@@ -71,7 +61,7 @@ class TestInvoiceLineAssetCategory(TransactionCase):
             'account_asset.account_asset_category_fixedassets_test0')
 
     def test_01_line_with_police_always_set(self):
-        "Create an invoice with a line that need category, ideal case"
+        """Create an invoice with a line that need category, ideal case"""
         invoice = self.invoice.copy()
         for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'always'})
@@ -79,14 +69,14 @@ class TestInvoiceLineAssetCategory(TransactionCase):
         invoice.signal_workflow('invoice_open')
 
     def test_02_line_with_police_never_not_set(self):
-        "Create an invoice with a line that not need category, ideal case"
+        """Create an invoice with a line that not need category, ideal case"""
         invoice = self.invoice.copy()
         for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'never'})
         invoice.signal_workflow('invoice_open')
 
     def test_03_line_with_police_always_not_set(self):
-        "Create an invoice with a line that need category, but this not is set"
+        """Create an invoice with a line that need category, but this not is set"""
         invoice = self.invoice.copy()
         for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'always'})
@@ -95,7 +85,7 @@ class TestInvoiceLineAssetCategory(TransactionCase):
             invoice.signal_workflow('invoice_open')
 
     def test_04_line_with_police_never_set(self):
-        "Create an invoice with a line that not need category, but this is set"
+        """Create an invoice with a line that not need category, but this is set"""
         invoice = self.invoice.copy()
         for line in invoice.invoice_line_ids:
             line.account_id.user_type.write({'asset_policy': 'never'})
