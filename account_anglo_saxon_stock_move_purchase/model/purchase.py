@@ -1,10 +1,36 @@
-# coding: utf-8
 from odoo import fields, models, api
 
 
 class PurchaseOrder(models.Model):
 
     _inherit = "purchase.order"
+
+    unreconciled_lines = fields.Integer(
+        compute='_compute_unreconciled_lines',
+        search='_search_unreconciled_lines',
+        help="Indicates how many unreconciled lines are still standing for this purchase order")
+    to_be_reconciled = fields.Integer(
+        compute='_compute_to_be_reconciled',
+        search='_search_to_be_reconciled',
+        help="Indicates how many possible reconciliations are pending for this purchase order")
+    aml_ids = fields.One2many(
+        'account.move.line', 'purchase_id', 'Account Move Lines',
+        help='Journal Entry Lines related to this Purchase Order')
+
+    @api.model
+    def cron_purchase_accrual_reconciliation(self, do_commit=False):
+        self.env['account.invoice'].cron_accrual_reconciliation(
+            'purchase_id', do_commit=do_commit)
+
+    @api.multi
+    def reconcile_stock_accrual(self):
+        self.env['account.invoice'].reconcile_stock_accrual(
+            self._ids, 'purchase_id')
+
+    @api.multi
+    def view_accrual(self):
+        return self.env['account.invoice'].view_accrual(
+            self._ids, 'purchase.order')
 
     # /!\ NOTE: Following two methods can be drawn from a TransientModel
     # instead of account.invoice
@@ -31,30 +57,3 @@ class PurchaseOrder(models.Model):
     def _search_unreconciled_lines(self, operator, value):
         return self._compute_search(
             'unreconciled_lines', 'query2', operator, value)
-
-    unreconciled_lines = fields.Integer(
-        compute='_compute_unreconciled_lines',
-        search='_search_unreconciled_lines',
-        help="Indicates how many unreconciled lines are still standing")
-    to_be_reconciled = fields.Integer(
-        compute='_compute_to_be_reconciled',
-        search='_search_to_be_reconciled',
-        help="Indicates how many possible reconciliations are pending")
-    aml_ids = fields.One2many(
-        'account.move.line', 'purchase_id', 'Account Move Lines',
-        help='Journal Entry Lines related to this Purchase Order')
-
-    @api.model
-    def cron_purchase_accrual_reconciliation(self, do_commit=False):
-        self.env['account.invoice'].cron_accrual_reconciliation(
-            'purchase_id', do_commit=do_commit)
-
-    @api.multi
-    def reconcile_stock_accrual(self):
-        self.env['account.invoice'].reconcile_stock_accrual(
-            self._ids, 'purchase_id')
-
-    @api.multi
-    def view_accrual(self):
-        return self.env['account.invoice'].view_accrual(
-            self._ids, 'purchase.order')
