@@ -43,38 +43,20 @@ class ProductProduct(models.Model):
         return domain_quant
 
     @api.multi
-    def _compute_product_available_not_res_dict(self):
+    def _compute_qty_available_not_reserved(self):
+        """Method to set the quantity available that is not reserved of a serie of products.
+        """
+        domain_quant = self._prepare_domain_available_not_reserved()
+        quants = self.env['stock.quant'].with_context(lang=False).read_group(
+            domain_quant, fields=['product_id', 'quantity', 'reserved_quantity'], groupby="product_id")
 
         res = {}
+        for quant in quants:
+            quantity = quant.get('quantity') - quant.get('reserved_quantity')
+            res[quant.get('product_id')[0]] = max(quantity, 0.0)
 
-        domain_quant = self._prepare_domain_available_not_reserved()
-        quants = self.env['stock.quant'].with_context(lang=False).search(
-            domain_quant,
-        ).filtered(lambda x: x.reserved_quantity < x.quantity)
-        # TODO: this should probably be refactored performance-wise
         for prod in self:
-            vals = {}
-            prod_quant_list = dict(
-                quants.filtered(lambda x: x.product_id == prod).mapped(
-                    lambda x: (x.location_id, x)))
-            quantity = 0
-            for prod_quant in prod_quant_list:
-                quantity += self.env['stock.quant']._get_available_quantity(
-                    prod, prod_quant)
-
-            vals['qty_available_not_res'] = quantity
-            res[prod.id] = vals
-        self._product_available_not_res_hook(quants)
-
-        return res
-
-    @api.multi
-    def _compute_qty_available_not_reserved(self):
-        res = self._compute_product_available_not_res_dict()
-        for prod in self:
-            qty = res[prod.id]['qty_available_not_res']
-            prod.qty_available_not_res = qty
-        return res
+            prod.qty_available_not_res = res.get(prod.id, 0.0)
 
     @api.multi
     def _compute_get_quantity_warehouses_json(self):
