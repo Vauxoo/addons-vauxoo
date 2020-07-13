@@ -155,7 +155,7 @@ class ProductProduct(models.Model):
                 {'location': location.display_name, 'quantity': quantity} for quantity, location in qty_per_location]
             info['content'].append({
                 'warehouse_name': warehouse.name,
-                'most_quantity_location_id': most_quantity_location.id,
+                'most_quantity_location_id': most_quantity_location and most_quantity_location.id or 0,
                 'info_content': info_content,
                 'locations_available': locations_available
             })
