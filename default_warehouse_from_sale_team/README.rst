@@ -37,10 +37,10 @@ with the user sale teams default_warehouse. To accomplish this I:
 
 - add new groups to manage the records access by user:
 
-  * Default Warehouse / Limited access to pickings (filtered by sale teams)
-  * Default Warehouse / Limited access to stock pickings (filtered by sale teams)
-  * Default Warehouse / Access to all picking types (filtered by sale teams)
-  * Default Warehouse / Access to all pickings (filtered by sale teams)
+  * Default Warehouse / Limited access to transfers (filtered by sales team)
+  * Default Warehouse / Limited access to operation types (filtered by sales team)
+  * Default Warehouse / Access to all operation types
+  * Default Warehouse / Access to all transfers
 
 - add new m2m field in the res.user model used in the new ir.rules.
   this onw is showed as a readonly field (only informative) to know
