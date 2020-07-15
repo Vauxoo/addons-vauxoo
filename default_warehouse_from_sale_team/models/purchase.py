@@ -7,6 +7,7 @@ class DefaultPickingType(models.Model):
 
     _name = 'default.picking.type'
     _inherit = ['default.warehouse']
+    _description = "Default Operation Type"
 
     @api.model
     def default_get(self, fields_list):

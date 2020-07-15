@@ -21,7 +21,7 @@ class ResUsers(models.Model):
         for user in self.filtered(
                 lambda dat: dat.sale_team_id not in dat.sale_team_ids):
             raise ValidationError(_(
-                'You can not set %s sale team as default because the user'
-                ' do not belongs to the sale teams.\nPlease go to Sales >'
+                'You can not set the sales team %s as default because the user'
+                ' does not belongs to that sale teams.\nPlease go to Sales >'
                 ' Settings > Users > Sales Teams if you will like to add this'
                 ' user to the sales team') % (user.sale_team_id.name))
