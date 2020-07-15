@@ -7,4 +7,4 @@ class AccountJournal(models.Model):
 
     _inherit = 'account.journal'
 
-    section_id = fields.Many2one('crm.team', string='Sale team')
+    section_id = fields.Many2one('crm.team', string='Sales Team')
