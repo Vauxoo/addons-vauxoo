@@ -7,36 +7,36 @@
 
             <!-- stock picking type -->
             <record id="group_limited_default_warehouse_spt" model="res.groups">
-                <field name="name">Limited access to pickings types (filtered by sale teams)</field>
-                <field name="comment">View only the stock picking types which warehouses match with the user sales teams default warehouses</field>
+                <field name="name">Limited access to operation types (filtered by sales team)</field>
+                <field name="comment">View only the operation types which warehouses match with the user sales teams default warehouses</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
             <record id="group_manager_default_warehouse_spt" model="res.groups">
-                <field name="name">Access to all picking types</field>
-                <field name="comment">Not matter sales team will leave the user to see all the stock picking types</field>
+                <field name="name">Access to all operation types</field>
+                <field name="comment">Allow the user to see all operation types, regardless of sales teams</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
 
             <!-- stock.picking -->
             <record id="group_limited_default_warehouse_sp" model="res.groups">
-                <field name="name">Limited access to pickings (filtered by sale teams)</field>
-                <field name="comment">View only the stock pickings which warehouses match with the user sales teams default warehouses</field>
+                <field name="name">Limited access to transfers (filtered by sales team)</field>
+                <field name="comment">View only the transfers which warehouses match with the user sales teams default warehouses</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
             <record id="group_manager_default_warehouse_sp" model="res.groups">
-                <field name="name">Access to all pickings</field>
-                <field name="comment">Not matter sales teams will leave the user to see all the stock pickings</field>
+                <field name="name">Access to all transfers</field>
+                <field name="comment">Allow the user to see all transfers, regardless of sales teams</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
 
             <record id="group_limited_default_warehouse_journal" model="res.groups">
-                <field name="name">Limited access to Journal (filtered by sale teams)</field>
-                <field name="comment">View only the Journal which warehouses match with the user sales teams default warehouses</field>
+                <field name="name">Limited access to Journals (filtered by sales team)</field>
+                <field name="comment">View only the Journal whose warehouse match the configured for the user as default warehouse</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
             <record id="group_manager_default_journal" model="res.groups">
-                <field name="name">Access to all Journal</field>
-                <field name="comment">Not matter sales teams will leave the user to see all the Journal</field>
+                <field name="name">Access to all Journals</field>
+                <field name="comment">Allow the user to see all journals, regardless of sales teams</field>
                 <field name="category_id" ref="default_warehouse_module"/>
             </record>
     </odoo>
