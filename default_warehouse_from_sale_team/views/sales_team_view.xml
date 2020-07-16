@@ -16,7 +16,7 @@
                                 <field name="journal_stock_id" modifiers="{}"/>
                             </group>
                         </group>
-                        <separator string="Journal's sales team"/>
+                        <separator string="Journal's sales teams"/>
                         <field name="journal_team_ids" domain="[('section_id', '=', False)]" widget='many2many'/>
                     </page>
                 </xpath>
