@@ -16,10 +16,11 @@ class ResUsers(models.Model):
 
     @api.constrains('sale_team_id')
     def _check_section_id(self):
-        """ Can only set the Default Sales team if the user is part o
+        """ Can only set the Default Sales team if the user has that team on its
+        Sales Teams (`sale_team_ids`).
         """
         for user in self.filtered(
-                lambda dat: dat.sale_team_id not in dat.sale_team_ids):
+                lambda dat: dat.sale_team_id and dat.sale_team_id not in dat.sale_team_ids):
             raise ValidationError(_(
                 'You can not set the sales team %s as default because the user'
                 ' does not belongs to that sale teams.\nPlease go to Sales >'
