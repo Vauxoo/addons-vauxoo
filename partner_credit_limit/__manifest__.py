@@ -11,9 +11,11 @@
         "account",
         "sale",
         "payment_term_type", ],
-    "demo": [],
     "data": [
         "view/partner_view.xml",
+    ],
+    "demo": [
+        "demo/res_partner_demo.xml",
     ],
     "post_init_hook": "post_init_hook",
     "installable": True,

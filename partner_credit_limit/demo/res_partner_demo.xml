@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="base.res_partner_1" model="res.partner">
+        <field name="credit_limit">1000000</field>
+    </record>
+    <record id="base.res_partner_2" model="res.partner">
+        <field name="credit_limit">1000000</field>
+    </record>
+    <record id="base.res_partner_3" model="res.partner">
+        <field name="credit_limit">1000000</field>
+    </record>
+    <record id="base.res_partner_12" model="res.partner">
+        <field name="credit_limit">1000000</field>
+    </record>
+    <record id="base.res_partner_18" model="res.partner">
+        <field name="credit_limit">1000000</field>
+    </record>
+
+</odoo>
