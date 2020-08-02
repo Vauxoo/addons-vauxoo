@@ -15,9 +15,7 @@
     "website": "http://Vauxoo.com",
     "license": "",
     "depends": [
-        "purchase",
         "mrp",
-        "base_automation",
     ],
     "demo": [],
     "data": [

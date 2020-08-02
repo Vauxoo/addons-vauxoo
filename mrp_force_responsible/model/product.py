@@ -10,6 +10,6 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     production_responsible = fields.Many2one(
-        'res.users', 'Production responsible',
-        help='This user will be used as responsible to production order '
-        'when use this product.')
+        'res.users',
+        help='This user will be used as responsible to production orders '
+        'when using this product.')

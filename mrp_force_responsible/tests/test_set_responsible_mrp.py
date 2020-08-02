@@ -1,65 +1,54 @@
-# coding: utf-8
-# © 2015 Vauxoo - http://www.vauxoo.com
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-# info Vauxoo (info@vauxoo.com)
-# coded by: jose@vauxoo.com
-#           luis_t@vauxoo.com
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form, TransactionCase
 
 
 class TestMrpResponsible(TransactionCase):
 
     def setUp(self):
         super(TestMrpResponsible, self).setUp()
-        self.product = self.env['product.product']
-        self.users = self.env['res.users']
-        self.mrp = self.env['mrp.production']
-        self.procurement_order = self.env['procurement.group']
-        self.warehouse_id = self.env.ref('stock.warehouse0')
-        self.product_id_mrp = self.env.ref(
-            "mrp.product_product_19")
-        self.route_manufacture = self.env.ref(
-            'mrp.route_warehouse0_manufacture'
-        )
+        self.warehouse = self.env.ref('stock.warehouse0')
+        self.location_stock = self.env.ref('stock.stock_location_stock')
+        self.product_mrp = self.env.ref("product.product_product_3")
         # Creating User
-        self.user_id = self.users.create(
-            {'name': 'Product Test',
-             'login': 'user@test.com'})
-        self.product_id_mrp.write(
-            {'production_responsible': self.user_id.id})
-
-    def test_create_product(self):
-        # Creating MRP
-        mrp_id = self.mrp.create(
-            {'product_id': self.product_id_mrp.id,
-             'product_uom_id': self.product_id_mrp.uom_po_id.id,
-             'bom_id': self.env.ref('mrp.mrp_bom_3').id})
-        mrp_id.onchange_product_id()
-        mrp_brw = self.mrp.browse(mrp_id.id)
-        self.assertTrue(mrp_brw.user_id.id == self.user_id.id,
-                        'The Responsible was not set correctly')
-
-    def test_responsible_from_procurement_mrp(self):
-        'This test validate responsible user is set in '\
-            'MO when is created from Procurement'
-
-        self.product_id_mrp.write({
-            'route_ids': [(6, 0, [self.route_manufacture.id])],
-            'production_responsible': self.user_id.id
+        self.user_responsible = self.env['res.users'].with_context(no_reset_password=False).create({
+            'name': 'Product Responsible Test',
+            'login': 'product@example.com',
+            'email': 'product@example.com',
         })
-        procurement_id = self.procurement_order.create({
-            'name': 'Test',
-        })
-        mrp_num = self.mrp.search(
-            [('product_id', '=', self.product_id_mrp.id)])
-        procurement_id.run(self.product_id_mrp, 1, self.product_id_mrp.uom_id,
-                           self.warehouse_id.lot_stock_id, 'Test', 'Test', {})
+        self.product_mrp.production_responsible = self.user_responsible
 
-        mrp_num_after = self.mrp.search(
-            [('product_id', '=', self.product_id_mrp.id)])
+    def create_manufacturing_order(self, product=None):
+        if product is None:
+            product = self.product_mrp
+        mo = Form(self.env['mrp.production'])
+        mo.product_id = product
+        return mo.save()
 
-        self.assertTrue(len(mrp_num_after) > len(mrp_num),
-                        "MO should be created")
-        self.assertTrue(
-            mrp_num_after[-1].user_id == self.user_id,
+    def test_01_create_product(self):
+        # Creating manufacturing order
+        mo = self.create_manufacturing_order()
+        self.assertEqual(
+            mo.user_id, self.user_responsible,
+            'The Responsible was not set correctly')
+
+    def test_02_responsible_from_procurement_mrp(self):
+        """This test validate responsible user is set in MO when is created from Procurement"""
+        procurement = self.env['procurement.group'].create({'name': 'Test'})
+        existing_mos = self.env['mrp.production'].search([('product_id', '=', self.product_mrp.id)])
+        procurement.run(
+            product_id=self.product_mrp,
+            product_qty=1,
+            product_uom=self.product_mrp.uom_id,
+            location_id=self.location_stock,
+            name='Test procurement',
+            origin=procurement.name,
+            values={})
+
+        created_mo = self.env['mrp.production'].search([
+            ('product_id', '=', self.product_mrp.id),
+            ('id', 'not in', existing_mos.ids),
+        ])
+
+        self.assertEqual(len(created_mo), 1)
+        self.assertEqual(
+            created_mo.user_id, self.user_responsible,
             'The Responsible was not set correctly')
