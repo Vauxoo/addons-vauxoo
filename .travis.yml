@@ -18,6 +18,7 @@ python:
 env:
   global:
   - VERSION="12.0" ODOO_REPO="vauxoo/odoo" TESTS="0" LINT_CHECK="0"
+  - EXCLUDE="account_asset_move_check,account_invoice_line_asset_category_required,account_move_line_production,mrp_workcenter_account_move,mrp_workcenter_segmentation,product_extended_segmentation,product_extended_segmentation_byproduct,stock_cost_segmentation,stock_landed_segmentation"
 
   matrix:
   - LINT_CHECK="1"
@@ -27,6 +28,7 @@ install:
   - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
+  - if [ "${TESTS}" == "1" ]; then pip install -r pseudo_requirements.txt; fi
 
 script:
   - travis_run_tests
