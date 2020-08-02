@@ -128,7 +128,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         # Confirm sale order
         sale.sudo().action_confirm()
         pick = sale.picking_ids
-        pick.force_assign()
+        pick.action_assign()
         pick.move_lines.write({'quantity_done': 1})
         pick.button_validate()
 
