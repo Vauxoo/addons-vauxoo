@@ -9,8 +9,7 @@
     'license': 'LGPL-3',
     'category': 'account',
     'depends': [
-        'account_accountant',
-        'l10n_mx_edi',
+        'account',
     ],
     'data': [
         # Security
