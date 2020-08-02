@@ -48,6 +48,10 @@ class TestStockLogisticsWarehouse(TransactionCase):
         })
         return picking
 
+    def compare_qty_available_not_res(self, product, value):
+        product.refresh()
+        self.assertEqual(product.qty_available_not_res, value)
+
     def test01_stock_levels(self):
         """checking that qty_available_not_res actually reflects \
         the variations in stock, both on product and template"""
@@ -71,35 +75,30 @@ class TestStockLogisticsWarehouse(TransactionCase):
                                            self.stock_location,
                                            product_b, 3)
 
-        def compare_qty_available_not_res(product, value):
-            # Refresh, because the function field is not recalculated between
-            # transactions
-            product.refresh()
-            self.assertEqual(product.qty_available_not_res, value)
-
-        compare_qty_available_not_res(product_a, 0)
-        compare_qty_available_not_res(self.template_ab, 0)
+        self.compare_qty_available_not_res(product_a, 0)
+        self.compare_qty_available_not_res(self.template_ab, 0)
 
         picking_in_a.action_confirm()
-        compare_qty_available_not_res(product_a, 0)
-        compare_qty_available_not_res(self.template_ab, 0)
+        self.compare_qty_available_not_res(product_a, 0)
+        self.compare_qty_available_not_res(self.template_ab, 0)
 
         picking_in_a.action_assign()
-        compare_qty_available_not_res(product_a, 0)
-        compare_qty_available_not_res(self.template_ab, 0)
+        self.compare_qty_available_not_res(product_a, 0)
+        self.compare_qty_available_not_res(self.template_ab, 0)
 
         picking_in_a.move_line_ids.write({'qty_done': 2})
-        picking_in_a.do_transfer()
-        compare_qty_available_not_res(product_a, 2)
-        compare_qty_available_not_res(self.template_ab, 2)
+        picking_in_a.button_validate()
+        self.compare_qty_available_not_res(product_a, 2)
+        self.compare_qty_available_not_res(self.template_ab, 2)
 
-        # will directly trigger action_done on productB
+        picking_in_b.action_confirm()
+        picking_in_b.action_assign()
         picking_in_b.move_line_ids.write({'qty_done': 3})
-        picking_in_b.do_transfer()
-        compare_qty_available_not_res(product_a, 2)
-        compare_qty_available_not_res(product_b, 3)
+        picking_in_b.button_validate()
+        self.compare_qty_available_not_res(product_a, 2)
+        self.compare_qty_available_not_res(product_b, 3)
 
-        compare_qty_available_not_res(self.template_ab, 5)
+        self.compare_qty_available_not_res(self.template_ab, 5)
 
         # Create a picking from STOCK to CUSTOMER
         picking_out_a = self.create_picking(self.ref('stock.picking_type_out'),
@@ -107,18 +106,18 @@ class TestStockLogisticsWarehouse(TransactionCase):
                                             self.customer_location,
                                             product_b, 2)
 
-        compare_qty_available_not_res(product_b, 3)
-        compare_qty_available_not_res(self.template_ab, 5)
+        self.compare_qty_available_not_res(product_b, 3)
+        self.compare_qty_available_not_res(self.template_ab, 5)
 
         picking_out_a.action_confirm()
-        compare_qty_available_not_res(product_b, 3)
-        compare_qty_available_not_res(self.template_ab, 5)
+        self.compare_qty_available_not_res(product_b, 3)
+        self.compare_qty_available_not_res(self.template_ab, 5)
 
         picking_out_a.action_assign()
-        compare_qty_available_not_res(product_b, 1)
-        compare_qty_available_not_res(self.template_ab, 3)
+        self.compare_qty_available_not_res(product_b, 1)
+        self.compare_qty_available_not_res(self.template_ab, 3)
 
         picking_out_a.move_line_ids.write({'qty_done': 2})
-        picking_out_a.do_transfer()
-        compare_qty_available_not_res(product_b, 1)
-        compare_qty_available_not_res(self.template_ab, 3)
+        picking_out_a.button_validate()
+        self.compare_qty_available_not_res(product_b, 1)
+        self.compare_qty_available_not_res(self.template_ab, 3)
