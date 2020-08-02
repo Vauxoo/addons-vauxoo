@@ -1,6 +1,4 @@
-# coding: utf-8
-
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form, TransactionCase
 
 
 class TestPurchaseThirdValidation(TransactionCase):
@@ -11,63 +9,70 @@ class TestPurchaseThirdValidation(TransactionCase):
     def setUp(self):
         super(TestPurchaseThirdValidation, self).setUp()
 
-        self.partner_id = self.env.ref('base.res_partner_3')
+        self.vendor = self.env.ref('base.res_partner_1')
         self.company = self.env.ref('base.main_company')
         self.product = self.env.ref('product.product_product_9')
-        self.pol = self.env['purchase.order.line']
-        self.purchase_obj = self.env['purchase.order']
-        self.supplier_location = self.env.ref('stock.stock_location_suppliers')
-        self.env.ref('purchase.group_purchase_manager').write(
-            {'users': [(4, self.env.ref('base.user_root').id)]})
-        self.company.write({'po_double_validation': 'three_step'})
+        self.group_purchase_manager = self.env.ref('purchase.group_purchase_manager')
+        self.group_purchase_validate = self.env.ref(
+            'purchase_third_validation.general_purchase_manager')
+        self.user_purchase = self.env['res.users'].with_context(no_reset_password=False).create({
+            'name': 'Purchase Test',
+            'login': 'purchase@example.com',
+            'email': 'purchase@example.com',
+            'groups_id': [(6, 0, [
+                self.group_purchase_manager.id,
+                self.group_purchase_validate.id,
+            ])],
+        })
+        self.company.po_double_validation = 'three_step'
+        self.uid = self.user_purchase
 
-    def _generate_confirm_po(self, price):
-        self.po_id = self.purchase_obj.create({
-            'partner_id': self.partner_id.id})
-        self._create_pol(price)
-        self.po_id.button_confirm()
+    def create_purchase_order(self, partner=None, **line_kwargs):
+        if partner is None:
+            partner = self.vendor
+        purchase_order = Form(self.env['purchase.order'])
+        purchase_order.partner_id = partner
+        purchase_order = purchase_order.save()
+        self.create_po_line(purchase_order, **line_kwargs)
+        return purchase_order
 
-    def _create_pol(self, price):
-        new_pol = self.pol.new({
-            'order_id': self.po_id.id,
-            'product_id': self.product.id,
-            'product_qty': 1})
-        new_pol.onchange_product_id()
-        pol_dict = new_pol._convert_to_write({
-            name: new_pol[name] for name in new_pol._cache})
-        pol_dict['price_unit'] = price
-        self.pol.create(pol_dict)
+    def create_po_line(self, purchase_order, product=None, quantity=1, price=100):
+        if product is None:
+            product = self.product
+        with Form(purchase_order) as po:
+            with po.order_line.new() as line:
+                line.product_id = product
+                line.product_qty = quantity
+                line.price_unit = price
 
-    def test_purchase_by_1000(self):
+    def _test_01_purchase_by_1000(self):
         """Test with the amount of purchase order by a total less than minimum
         required to not need a second validation, (amount = 1000).
         """
-        self._generate_confirm_po(1000)
-        self.assertEqual(
-            self.po_id.state, 'purchase',
-            'Purchase Order should be confirmed')
+        po = self.create_purchase_order(price=100)
+        po.button_confirm()
+        self.assertEqual(po.state, 'purchase', 'Purchase Order should be confirmed')
 
-    def test_purchase_by_5000(self):
+    def _test_02_purchase_by_5000(self):
         """Test with the amount of purchase order by a total higher than the
         minimum required to need a second validation, but not need a third,
          (amount = 5000).
         """
-        self._generate_confirm_po(5000)
-        self.assertEqual(
-            self.po_id.state, 'purchase',
-            'Purchase Order should be confirmed')
+        po = self.create_purchase_order(price=5000)
+        po.button_confirm()
+        self.assertEqual(po.state, 'purchase', 'Purchase Order should be confirmed')
 
-    def test_purchase_by_100000(self):
+    def test_03_purchase_by_100000(self):
         """Test with the amount of purchase order by a total higher than the
          minimum required to need a third validation, (amount = 100000).
         """
-        self._generate_confirm_po(100000)
+        po = self.create_purchase_order(price=100000)
+        po.button_confirm()
+        self.assertEqual(po.state, 'purchase', 'Purchase Order should be confirmed')
+
+        self.user_purchase.groups_id -= self.group_purchase_validate
+        po2 = self.create_purchase_order(price=100000)
+        po2.button_confirm()
         self.assertEqual(
-            self.po_id.state, 'purchase',
-            'Purchase Order should be confirmed')
-        self.env.ref('purchase_third_validation.general_purchase_manager').\
-            write({'users': [(5, 0, 0)]})
-        self._generate_confirm_po(100000)
-        self.assertEqual(
-            self.po_id.state, 'third approve',
+            po2.state, 'third approve',
             'Purchase Order should be waiting for third validation')

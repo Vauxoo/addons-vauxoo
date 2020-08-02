@@ -12,8 +12,11 @@ class PurchaseOrder(models.Model):
     @api.multi
     def button_approve(self, force=False):
         group = 'purchase_third_validation.general_purchase_manager'
-        limit = self.env.user.company_id.currency_id.compute(
-            self.company_id.po_third_validation_amount, self.currency_id)
+        limit = self.company_id.currency_id._convert(
+            self.env.user.company_id.po_third_validation_amount,
+            self.currency_id,
+            self.company_id,
+            self.date_order or fields.Date.today())
         if self.company_id.po_double_validation in ['one_Step', 'two_step']\
                 or (self.company_id.po_double_validation == 'three_step'
                     and self.amount_total < limit)\
