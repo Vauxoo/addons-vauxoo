@@ -21,7 +21,7 @@ class TestSalesCreditLimits(common.TestCommon):
         self.account_id = self.env.ref("account.a_recv")
         self.account_sale_id = self.env.ref("account.a_sale")
         self.product_id = self.env.ref("product.product_product_6")
-        self.mxn_currency = self.env.ref('base.MXN')
+        self.eur_currency = self.env.ref('base.EUR')
         self.usd_currency = self.env.ref('base.USD')
 
     def test_credit_limit_overloaded(self):
@@ -119,7 +119,7 @@ class TestSalesCreditLimits(common.TestCommon):
         # Sale order with amount total of 600.00, the same of partner credit
         # limit, but when conversion is done, this amount must exceed partner
         # credit limit
-        self.pricelist.currency_id = self.usd_currency.id
+        self.pricelist.currency_id = self.eur_currency
         sale_id = self.sale_order.create(
             {'partner_id': self.partner_china.id,
                 'pricelist_id': self.pricelist.id,
@@ -131,11 +131,12 @@ class TestSalesCreditLimits(common.TestCommon):
                 'order_id': sale_id.id,
                 'name': 'product that cost 100', })
 
-        sale_id.company_id.write({'currency_id': self.mxn_currency.id})
-        self.mxn_currency.rate_ids.write({'rate': 18.0})
-        # Sale currency must be USD and company currency must be MXN
-        self.assertNotEqual(sale_id.currency_id,
-                            sale_id.company_id.currency_id)
+        self.usd_currency.rate_ids.write({'rate': 1})
+        self.eur_currency.rate_ids.write({'rate': 0.8})
+        # Sale currency must be EUR and company currency must be USD
+        self.assertEqual(sale_id.currency_id, self.eur_currency)
+        self.assertEqual(sale_id.company_id.currency_id, self.usd_currency)
+
         # Should not confirm sale order
         # Credit limit exceded when conversion is done from USD to MXN
         with self.assertRaises(ValidationError):
