@@ -4,11 +4,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-01 17:55+0000\n"
-"PO-Revision-Date: 2015-10-01 17:55+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2020-08-03 04:36+0000\n"
+"PO-Revision-Date: 2020-08-03 04:36+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,69 +16,46 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.external_layout_footer
-msgid "&bull;"
-msgstr "&bull;"
-
-#. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.minimal_layout
-msgid "<!DOCTYPE html>"
-msgstr "<!DOCTYPE html>"
-
-#. module: product_pricelist_report_qweb
-#: field:product.price_list,cost:0
+#: model:ir.model.fields,field_description:product_pricelist_report_qweb.field_product_price_list_cost
 msgid "Cost"
 msgstr "Costo"
 
 #. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.external_layout_header
-msgid "Currency"
-msgstr "Moneda"
-
-#. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.report_document
-msgid "Description"
-msgstr "Descripción"
-
-#. module: product_pricelist_report_qweb
-#: field:product.price_list,margin_cost:0
+#: model:ir.model.fields,field_description:product_pricelist_report_qweb.field_product_price_list_margin_cost
+#: model:ir.ui.view,arch_db:product_pricelist_report_qweb.report_pricelist
 msgid "Exp. Marg. Cost (%)"
-msgstr "Exp. Marg. Cost (%)"
+msgstr "Exp. Marg. Costo (%)"
 
 #. module: product_pricelist_report_qweb
-#: field:product.price_list,margin_sale:0
+#: model:ir.model.fields,field_description:product_pricelist_report_qweb.field_product_price_list_margin_sale
+#: model:ir.ui.view,arch_db:product_pricelist_report_qweb.report_pricelist
 msgid "Exp. Marg. Sale (%)"
-msgstr "Exp. Marg. Sale (%)"
+msgstr "Exp. Marg. Venta (%)"
 
 #. module: product_pricelist_report_qweb
-#: help:product.price_list,products_with_price:0
+#: model:ir.model.fields,help:product_pricelist_report_qweb.field_product_price_list_products_with_price
 msgid "If this field is active, only will to add the products that have price."
 msgstr "Si se activa este campo, solo se mostrarán los productos que tengan precio en el reporte."
 
 #. module: product_pricelist_report_qweb
-#: help:product.price_list,only_prod_pricelist:0
+#: model:ir.model.fields,help:product_pricelist_report_qweb.field_product_price_list_only_prod_pricelist
 msgid "If you active this field the products that are not in pricelist will have in the report the price in zero"
-msgstr "Si se activa este campo los productos que no están el la lista de precios tendrán un 0 en el reporte"
+msgstr "Si se activa este campo, los productos que no estén en la lista de precios tendrán un 0 en el reporte"
 
 #. module: product_pricelist_report_qweb
-#: view:product.price_list:product_pricelist_report_qweb.view_product_price_list
+#: model:ir.ui.view,arch_db:product_pricelist_report_qweb.view_product_price_list
 msgid "Margins"
 msgstr "Márgenes"
 
 #. module: product_pricelist_report_qweb
-#: field:product.price_list,only_prod_pricelist:0
+#: model:ir.model.fields,field_description:product_pricelist_report_qweb.field_product_price_list_only_prod_pricelist
 msgid "Only products in pricelist"
-msgstr "Solo productos en la lista de precios"
+msgstr "Sólo productos en la lista de precios"
 
 #. module: product_pricelist_report_qweb
-#: field:product.price_list,products_with_price:0
+#: model:ir.model.fields,field_description:product_pricelist_report_qweb.field_product_price_list_products_with_price
 msgid "Only products with price"
-msgstr "Solo productos con precio"
-
-#. module: product_pricelist_report_qweb
-#: view:product.price_list:product_pricelist_report_qweb.view_product_price_list
-msgid "Output Format"
-msgstr "Formato de salida"
+msgstr "Sólo productos con precio"
 
 #. module: product_pricelist_report_qweb
 #: selection:product.price_list,report_format:0
@@ -86,27 +63,12 @@ msgid "PDF"
 msgstr "PDF"
 
 #. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.external_layout_footer
-msgid "Page:"
-msgstr "Página:"
-
-#. module: product_pricelist_report_qweb
 #: model:ir.model,name:product_pricelist_report_qweb.model_product_price_list
 msgid "Price List"
 msgstr "Lista de precios"
 
 #. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.external_layout_header
-msgid "Price List Name"
-msgstr "Nombre tarifa"
-
-#. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.external_layout_header
-msgid "Print date"
-msgstr "Fecha de impresión"
-
-#. module: product_pricelist_report_qweb
-#: field:product.price_list,report_format:0
+#: model:ir.model.fields,field_description:product_pricelist_report_qweb.field_product_price_list_report_format
 msgid "Report Format"
 msgstr "Formato de reporte"
 
@@ -116,27 +78,19 @@ msgid "Spreadsheet"
 msgstr "Hoja de cálculo"
 
 #. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.layout
-msgid "data_report_dpi if data_report_dpi else None"
-msgstr "data_report_dpi if data_report_dpi else None"
+#: code:addons/product_pricelist_report_qweb/wizards/product_pricelist.py:31
+#, python-format
+msgid "You have to set a logo or a layout for your company."
+msgstr "Debe configurar un logo o un diseño para su compañía."
 
 #. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.layout
-msgid "data_report_header_spacing if data_report_header_spacing else None"
-msgstr "data_report_header_spacing if data_report_header_spacing else None"
+#: code:addons/product_pricelist_report_qweb/wizards/product_pricelist.py:33
+#, python-format
+msgid "You have to set your reports's header and footer layout."
+msgstr "Debe configurar el diseño del encabezado y pie de página de su reporte."
 
 #. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.layout
-msgid "data_report_margin_top if data_report_margin_top else None"
-msgstr "data_report_margin_top if data_report_margin_top else None"
-
-#. module: product_pricelist_report_qweb
-#: view:website:product_pricelist_report_qweb.layout
-msgid "product_pricelist_report_qweb.layout"
-msgstr "product_pricelist_report_qweb.layout"
-
-#. module: product_pricelist_report_qweb
-#: view:product.price_list:product_pricelist_report_qweb.view_product_price_list
-msgid "{'readonly': ['|',('margin_sale','=',True),('margin_cost','=',True)],'invisible': ['|',('margin_sale','=',True),('margin_cost','=',True)]}"
-msgstr "{'readonly': ['|',('margin_sale','=',True),('margin_cost','=',True)],'invisible': ['|',('margin_sale','=',True),('margin_cost','=',True)]}"
+#: model:ir.model,name:product_pricelist_report_qweb.model_report_product_report_pricelist
+msgid "report.product.report_pricelist"
+msgstr "report.product.report_pricelist"
 
