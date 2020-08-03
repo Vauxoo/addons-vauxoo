@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_pricelist" inherit_id="product.report_pricelist">
+        <xpath expr="//table/thead/tr" position="inside">
+            <th t-if="data.get('context', {}).get('margin_cost')">Exp. Marg. Cost (%)</th>
+            <th t-if="data.get('context', {}).get('margin_sale')">Exp. Marg. Sale (%)</th>
+        </xpath>
+        <xpath expr="//table/tbody/t/tr[2]" position="inside">
+            <td t-if="data.get('context', {}).get('margin_cost')" t-esc="categ_data['prices'][product.id]['margin_cost']"
+                t-options="{
+                    'widget': 'float',
+                    'decimal_precision': 'Product Price',
+                }"/>
+            <td t-if="data.get('context', {}).get('margin_sale')" t-esc="categ_data['prices'][product.id]['margin_sale']"
+                t-options="{
+                    'widget': 'float',
+                    'decimal_precision': 'Product Price',
+                }"/>
+        </xpath>
+    </template>
+
+</odoo>
