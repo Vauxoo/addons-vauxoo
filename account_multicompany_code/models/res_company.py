@@ -9,7 +9,6 @@ class Company(models.Model):
 
     code = fields.Char(help="Internal code name of the company")
 
-    @api.multi
     @api.constrains('code')
     def unique_code(self):
         for record in self:
