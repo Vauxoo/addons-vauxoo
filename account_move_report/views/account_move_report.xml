@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="account_entries_report" name="Entries Report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="row table-condensed table-sm">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th><strong>Number: </strong><span t-field="o.name"/></th>
+                                        <th t-if="o.ref"><strong>Reference: </strong><span><span t-field="o.ref"/></span></th>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>Date: </strong><span t-field="o.date"/></th>
+                                        <th><span><strong>Printing Date: </strong><span><t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></span></span></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br/>
+                        <div class="row table-condensed table-sm">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Account</th>
+                                        <th>Name</th>
+                                        <th>Partner</th>
+                                        <th>Due</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th groups="analytic.group_analytic_accounting">Analytic</th>
+                                        <th t-if="o.line_ids.mapped('currency_id')">Amount Currency</th>
+                                        <th>Currency</th>
+                                    </tr>
+                                </thead>
+                                <tbody t-if="o.line_ids">
+                                    <tr t-foreach="o.line_ids" t-as="l">
+                                        <td><small t-raw="l.account_id.code"/></td>
+                                        <td><small t-raw="l.account_id.name"/></td>
+                                        <td><small t-field="l.name"/></td>
+                                        <td><small t-field="l.partner_id"/></td>
+                                        <td><small t-field="l.date_maturity"/></td>
+                                        <td class="text-right">
+                                            <small t-field="l.debit"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <small t-field="l.credit"/>
+                                        </td>
+                                        <td groups="analytic.group_analytic_accounting"><small t-field="l.analytic_account_id"/></td>
+                                        <t t-if="l.currency_id">
+                                            <td class="text-right">
+                                                <small t-field="l.amount_currency"/>
+                                            </td>
+                                        </t>
+                                        <td><small t-field="(l.currency_id or l.company_id.currency_id).name"/></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5"></td>
+                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div t-if="o_index &lt; len(docs)">
+                            <p style="page-break-before:always;"> </p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
