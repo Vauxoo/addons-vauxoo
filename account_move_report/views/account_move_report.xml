@@ -6,89 +6,72 @@
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
-                        <div class="oe_structure"/>
-                        <br/>
-                        <div class="row">
-                            <div class="col-6">
-                                <div>
-                                    <td>Journal Entries:</td>
-                                    <span t-field="o.name"/>
-                                </div>
-                                <div>
-                                    <td>Reference:</td>
-                                    <span t-field="o.ref"/>
-                                </div>
-                                <div>
-                                    <td>Date:</td>
-                                    <span t-field="o.date"/>
-                                </div>
-                                <div>
-                                    <h4>To Review:</h4>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p>Printing Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
-                            </div>
-                        </div>
-                        <t t-if="o.line_ids">
-                            <table class="table table-condensed">
-                                <thead>
-                                    <tr style="font-size:8pt; background-color:#620400; color:#FFFFFF;">
-                                        <th>Invoice</th>
-                                        <th>Name</th>
-                                        <th>Partner</th>
-                                        <th>Account</th>
-                                        <th>Due date</th>
-                                        <th class="text-right">Debit</th>
-                                        <th class="text-right">Credit</th>
-                                        <th>Analytic account</th>
-                                        <t t-if="o.line_ids.mapped('currency_id')">
-                                            <th class="text-right">Amount Currency</th>
-                                        </t>
-                                        <th>Currency</th>
-                                        <th>Tax Account</th>
-                                        <th class="text-right">Tax Amount</th>
-                                        <th>Reconcile</th>
-                                    </tr>
-                                </thead>
+                        <div class="row table-condensed table-sm">
+                            <table class="table">
                                 <tbody>
-                                    <tr t-foreach="o.line_ids" t-as="l" style="font-size:6pt;">
-                                        <td><span t-field="l.invoice_id"/></td>
-                                        <td><span t-field="l.name"/></td>
-                                        <td><span t-field="l.partner_id"/></td>
-                                        <td><span t-field="l.account_id"/></td>
-                                        <td><span t-field="l.date_maturity"/></td>
-                                        <td class="text-right">
-                                            <span t-field="l.debit"/>
-                                        </td>
-                                        <td class="text-right">
-                                            <span t-field="l.credit"/>
-                                        </td>
-                                        <td><span t-field="l.analytic_account_id"/></td>
-                                        <t t-if="l.currency_id">
-                                            <td class="text-right">
-                                                <span t-field="l.amount_currency"/>
-                                            </td>
-                                        </t>
-                                        <td><span t-field="(l.currency_id or l.company_id.currency_id).name"/></td>
-                                        <td><span t-field="l.tax_line_id.account_id.name"/></td>
-                                        <td class="text-right">
-                                            <span t-field="l.tax_line_id.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                        <td><span t-field="l.full_reconcile_id.name"/></td>
+                                    <tr>
+                                        <th><strong>Number: </strong><span t-field="o.name"/></th>
+                                        <th t-if="o.ref"><strong>Reference: </strong><span><span t-field="o.ref"/></span></th>
                                     </tr>
-                                    <tr style="font-size:8pt; background-color:#dcdcdc">
-                                        <td colspan="5"></td>
-                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
-                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
-                                        <td colspan="7"></td>
+                                    <tr>
+                                        <th><strong>Date: </strong><span t-field="o.date"/></th>
+                                        <th><span><strong>Printing Date: </strong><span><t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></span></span></th>
                                     </tr>
                                 </tbody>
                             </table>
-                        </t>
+                        </div>
+                        <br/>
+                        <div class="row table-condensed table-sm">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Account</th>
+                                        <th>Name</th>
+                                        <th>Partner</th>
+                                        <th>Due</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th groups="analytic.group_analytic_accounting">Analytic</th>
+                                        <th t-if="o.line_ids.mapped('currency_id')">Amount Currency</th>
+                                        <th>Currency</th>
+                                    </tr>
+                                </thead>
+                                <tbody t-if="o.line_ids">
+                                    <tr t-foreach="o.line_ids" t-as="l">
+                                        <td><small t-raw="l.account_id.code"/></td>
+                                        <td><small t-raw="l.account_id.name"/></td>
+                                        <td><small t-field="l.name"/></td>
+                                        <td><small t-field="l.partner_id"/></td>
+                                        <td><small t-field="l.date_maturity"/></td>
+                                        <td class="text-right">
+                                            <small t-field="l.debit"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <small t-field="l.credit"/>
+                                        </td>
+                                        <td groups="analytic.group_analytic_accounting"><small t-field="l.analytic_account_id"/></td>
+                                        <t t-if="l.currency_id">
+                                            <td class="text-right">
+                                                <small t-field="l.amount_currency"/>
+                                            </td>
+                                        </t>
+                                        <td><small t-field="(l.currency_id or l.company_id.currency_id).name"/></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5"></td>
+                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                         <div t-if="o_index &lt; len(docs)">
                             <p style="page-break-before:always;"> </p>
                         </div>
-                        <div class="oe_structure"/>
                     </div>
                 </t>
             </t>
