@@ -2,7 +2,7 @@
     "name": "Journal Entries Report",
     "version": "13.0.1.0.0",
     "author": "Vauxoo",
-    "category": "Accounting",
+    "category": "Accounting/Accounting",
     "website": "http://www.vauxoo.com/",
     "license": "LGPL-3",
     "depends": [
