@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from odoo import models, fields, api
 SEGMENTATION_COST = [
     'landed_cost',
