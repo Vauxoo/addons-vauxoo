@@ -1,4 +1,3 @@
-# coding: utf-8
 {
     "name": "MRP Workcenter Account Move",
     "version": "12.0.1.0.0",
