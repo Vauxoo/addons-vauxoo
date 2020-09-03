@@ -1,6 +1,3 @@
-# coding: utf-8
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 {
     "name": "Product Extension to track Segmentation Cost with Sub products",
     'summary': '''
