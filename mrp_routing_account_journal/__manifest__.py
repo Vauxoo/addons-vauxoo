@@ -1,4 +1,3 @@
-# coding: utf-8
 {
     "name": "MRP Routing Account Journal",
     "version": "12.0.1.0.0",
