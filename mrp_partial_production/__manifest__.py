@@ -1,6 +1,3 @@
-# coding: utf-8
-# Copyright 2017 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "MRP Partial Production",
     "version": "12.0.1.0.0",
