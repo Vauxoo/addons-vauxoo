@@ -1,6 +1,3 @@
-# © 2018 Vauxoo, S.A. de C.V.
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
-
 {
     'author': 'Vauxoo',
     'category': 'Accounting & Finance',
