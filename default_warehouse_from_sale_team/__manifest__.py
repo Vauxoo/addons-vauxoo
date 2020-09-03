@@ -1,4 +1,3 @@
-# coding: utf-8
 {
     'name': "Sale Team Warehouse",
     'summary': """Adding a field for the default user warehouse and modifying
