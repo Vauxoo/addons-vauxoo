@@ -1,4 +1,3 @@
-
 from itertools import zip_longest
 from odoo import api, fields, models
 
