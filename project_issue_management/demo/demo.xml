@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<openerp>
-    <data>
-        <record model="res.users" id="base.user_root">
-            <field eval="[(4,ref('project_issue_management.project_auditor'))]" name="groups_id"/>
-        </record>
-    </data>
-</openerp>
-

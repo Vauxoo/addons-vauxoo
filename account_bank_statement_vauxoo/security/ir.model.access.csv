@@ -1,6 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-
-
-"bank_statement_user","bank.statement.imported.lines","model_bank_statement_imported_lines","account_bank_statement_vauxoo.group_bank_statement_import_user",1,0,0,0
-"bank_statement_manager","bank.statement.imported.lines","model_bank_statement_imported_lines","account_bank_statement_vauxoo.group_bank_statement_import_manager",1,1,1,1
-

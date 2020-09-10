@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<openerp>
-    <data>
-        
-        <report auto="False" id="ir_module_reference_print22" model="ir.module.module" name="ir.module.vauxoo" rml="deliver_project/report/ir_module_reference.rml" string="Technical guide Vauxoo"/>
-        
-    </data>
-</openerp>

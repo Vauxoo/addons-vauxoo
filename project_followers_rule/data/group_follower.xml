@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-<data noupdate="0">
-    <record id="group_followers_project" model="res.groups">
-            <field name="name">Lectura al proyecto - siendo seguidor de tarea</field>
-            <field name="is_portal" eval="False"/>
-        </record>
-</data>
-</openerp>

@@ -1,4 +1,0 @@
-"id","name","model_id:id","group_id:id",perm_read,perm_write,perm_create,perm_unlink
-"access_sprint_user","sprint_kanban","model_sprint_kanban","sprint_kanban.group_sprint_kanban_user",1,0,0,0
-"access_sprint_user_portal","sprint_kanban","model_sprint_kanban","base.group_portal",1,0,0,0
-"access_sprint_manager","sprint_kanban","model_sprint_kanban","sprint_kanban.group_sprint_kanban_manager",1,1,1,1

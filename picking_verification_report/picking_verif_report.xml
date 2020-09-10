@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<openerp>
-  <data>
-       <report id="packing_list_report" string="Nota de Chequeo" menu="True" model="stock.picking" name="picking_verification_report.packing_list_report" rml="picking_verification_report/report/picking.rml" header="False"/>
-
-<!-- 'rml = nombre del modulo/carpeta(report)/nombre del archivo rml '-->
-  </data>
-</openerp>

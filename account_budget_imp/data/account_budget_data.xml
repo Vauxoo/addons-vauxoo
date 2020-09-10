@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<openerp>
-    <data>
-        <record model="account.budget.post" id="data_cross">
-            <field name="name">BaseAsDefaultIfEmpty</field>
-            <field name="code">docde</field>
-        </record>
-    </data>
-</openerp>

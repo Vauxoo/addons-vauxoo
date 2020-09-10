@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_customs_rate_user,product.product.customs.rate.user,model_product_customs_rate,,1,0,0,0
-access_product_customs_rate_manager,product.product.customs.rate.manager,model_product_customs_rate,,1,1,1,1

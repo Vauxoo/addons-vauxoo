@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<openerp>
-    <data noupdate="1">
-        <function model="stock.config.settings" name="action_stock_config_settings_lot_repeated"/>
-    </data>
-</openerp>

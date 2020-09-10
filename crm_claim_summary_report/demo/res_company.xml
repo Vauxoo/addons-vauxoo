@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
-        <record id="base.main_company" model="res.company">
-            <field name="rma_footer_note">YourCompany will keep goods to be reviewed with the customer agreement for a frame of 15 weekdays, after that the customer must be contacted for a confirmation for repair/replace of his goods. If after three dayweeks the customer doesn't reply, YourCompany will not be responsible for loss goods</field>
-        </record>
-    </data>
-</openerp>

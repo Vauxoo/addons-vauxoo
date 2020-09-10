@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<openerp><data>
-
-    <record id="base.group_purchase_cancel" model="res.groups">
-        <field name="name">Purchase / Button Cancel</field>
-    </record>
-
-</data></openerp>

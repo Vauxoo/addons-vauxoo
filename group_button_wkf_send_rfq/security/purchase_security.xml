@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>                                          
-<openerp>                                                                       
-    <data>                                                                      
-        <record model="res.groups" id="group_button_send_email">                       
-            <field name="name">Purchase / Button Send E-mail</field>
-        </record>                                                               
-                                                                                                                                                   
-    </data>                                                                     
-</openerp>  

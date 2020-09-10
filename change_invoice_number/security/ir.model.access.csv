@@ -1,4 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-
-
-"group_change_number_manager","change.number","model_change_number","change_invoice_number.group_change_number",1,1,1,1

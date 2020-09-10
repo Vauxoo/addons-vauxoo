@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mrp_workcenter_operation_product_quantity_user,mrp.workcenter.operation.product.quantity,model_mrp_workcenter_operation_product_quantity,mrp.group_mrp_user,1,0,0,0
-access_mrp_workcenter_operation_product_quantity_manager,mrp.workcenter.operation.product.quantity,model_mrp_workcenter_operation_product_quantity,mrp.group_mrp_manager,1,1,1,0
-access_mrp_workcenter_product_capacity_user,mrp.workcenter.product.capacity,model_mrp_workcenter_product_capacity,mrp.group_mrp_user,1,1,0,0
-access_mrp_workcenter_product_capacity_manager,mrp.workcenter.product.capacity,model_mrp_workcenter_product_capacity,mrp.group_mrp_manager,1,1,1,0

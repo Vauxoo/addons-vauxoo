@@ -1,3 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_project_task_work_user","access.project.task.work.user","model_project_task_work","project_task_work.group_project_task_work_user",1,0,0,0
-"access_project_task_work_manager","access.project.task.work.manager","model_project_task_work","project_task_work.group_project_task_work_manager",1,1,1,1

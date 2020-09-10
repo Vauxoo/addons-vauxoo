@@ -1,6 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-
-
-"transaction_type_user","transaction.type","model_transaction_type","transaction_type.group_transaction_type_user",1,0,0,0
-"transaction_type_manager","transaction.type","model_transaction_type","transaction_type.group_transaction_type_manager",1,1,1,1
-

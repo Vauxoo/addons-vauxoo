@@ -1,3 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_sale_uom_group","sale.uom.group","model_sale_uom_group","sale_uom_group.group_sale_user_uom",1,1,1,0
-"access_sale_uom_group_manager","sale.uom.group.manager","model_sale_uom_group","sale_uom_group.group_sale_manager_uom",1,1,1,1

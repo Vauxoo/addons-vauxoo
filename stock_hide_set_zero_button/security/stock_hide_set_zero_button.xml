@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<openerp><data>
-
-    <record id="stock.group_stock_zero_button" model="res.groups">
-        <field name="name">Stock / Button set zero</field>
-    </record>
-
-</data></openerp>

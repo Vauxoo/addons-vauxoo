@@ -1,2 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_report_project","hr.timesheet.reports.base","model_hr_timesheet_reports_base","project.group_project_manager",1,1,1,1
