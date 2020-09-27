@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "Account Multicompany Code",
-    "version": "11.0.0.1.0",
+    "version": "13.0.1.0.0",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",
