@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_default_warehouse,default.warehouse,model_default_warehouse,,1,0,0,0
-access_default_picking_type,access_default_picking_type,model_default_picking_type,,1,0,0,0

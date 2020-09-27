@@ -17,7 +17,7 @@ When reporting an issue or creating a pull request, please **use the following t
 
 Impacted versions:
 
- - 12.0
+ - 13.0
 
 Steps to reproduce:
 
@@ -47,7 +47,7 @@ How add a new feature:
 0. Clone this repository:
 
     ```bash
-    $ git clone git@github.com:vauxoo/addons-vauxoo.git -b 12.0
+    $ git clone git@github.com:vauxoo/addons-vauxoo.git -b 13.0
     $ cd addons-vauxoo
     $ git remote add your-name git@github.com:your-github-name/addons-vauxoo.git # << to push your changes
     ```
@@ -55,27 +55,26 @@ How add a new feature:
 1. **Before declaring this repository as part of your addons-path:** Install all
    external dependencies (read travis folder for more information). **note**:
    You will need some non-standar packages (npm and lessc to be precise) when
-   you have v12.0 installed.
+   you have v13.0 installed.
 
 2. Create your own branch locally.
 
     ```bash
-    $ git checkout -b 12.0-your_new_feature_theme
+    $ git checkout -b 13.0-your_new_feature_theme
     ```
 
 3. Push your first change branch to know you start to work on.
 
     ```bash
-    $ git push -u origin 12.0-your_new_feature_theme
+    $ git push -u origin 13.0-your_new_feature_theme
     ```
 
 4. Prepare your environment to work with this repository and the mandatory ones
    to have all the environment ready.
 
     ```bash
-    $ git clone https://github.com/odoo/odoo.git -b 12.0
-    $ git clone https://github.com/vauxoo/addons-vauxoo.git -b 12.0
-    $ git clone git@github.com:Vauxoo/server-tools.git -b 12.0
+    $ git clone https://github.com/odoo/odoo.git -b 13.0
+    $ git clone https://github.com/vauxoo/addons-vauxoo.git -b 13.0
     ```
 5. Create a postgres user (only for this work to avoid problems not related to this environment).
 
@@ -89,8 +88,8 @@ How add a new feature:
 
     ```bash
     $ cd path/to/odoo/odoo
-    $ ./openerp-server \
-    --addons-path=addons/,../addons-vauxoo,../server-tools -r \
+    $ ./odoo-bin \
+    --addons-path=addons/,../addons-vauxoo -r \
     testuser -w 1 --db-filter=test \
     -i module_to_improve -d test
     ```
@@ -134,7 +133,7 @@ How add a new feature:
 12. Push your first change branch to know you start to work on.
 
     ```bash
-    $ git push -u vauxoo-dev 12.0-your_new_feature_theme
+    $ git push -u vauxoo-dev 13.0-your_new_feature_theme
     ```
 
 13. Make a PR with your changes as you usually do it with github's web
@@ -182,5 +181,5 @@ Issues
 ---
 
 - Where?: [here](https://github.com/Vauxoo/addons-vauxoo/issues/new)
-- How? Follow [odoo?s](https://github.com/odoo/odoo/blob/12.0/CONTRIBUTING.md) standard to put your issues.
+- How? Follow [odoo?s](https://github.com/odoo/odoo/blob/13.0/CONTRIBUTING.md) standard to put your issues.
 

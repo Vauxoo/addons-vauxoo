@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_price_ranges_manager,product_price_ranges_manager,model_product_price_ranges,group_product_price_ranges_manager,1,1,1,1
-access_product_price_ranges_user,product_price_ranges_user,model_product_price_ranges,,1,0,0,0
