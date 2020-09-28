@@ -15,10 +15,11 @@ class StockMove(models.Model):
             lambda aml: aml.qty_done > 0 and
             aml.product_uom_qty > aml.qty_done)
         aml_vals = []
+        available_quantity = 0
         for aml in amls:
+            product_uom_qty = aml.product_uom_qty - aml.qty_done
             vals = {
                 'product_id': aml.product_id.id,
-                'product_uom_qty': aml.product_uom_qty - aml.qty_done,
                 'product_uom_id': aml.product_uom_id.id,
                 'workorder_id': aml.workorder_id.id,
                 'location_id': aml.location_id.id,
@@ -28,10 +29,14 @@ class StockMove(models.Model):
                 'package_id': aml.package_id.id or False,
                 'owner_id': aml.owner_id.id or False,
             }
+            available_quantity += product_uom_qty
             aml_vals.append(vals)
         new_move_id = super(StockMove, self)._split(qty, restrict_partner_id)
         for vals in aml_vals:
             vals['move_id'] = new_move_id
             self.env['stock.move.line'].create(vals)
-        self.browse(new_move_id)._recompute_state()
+        new_move = self.browse(new_move_id)
+        new_move._update_reserved_quantity(
+            new_move.product_uom_qty, available_quantity, new_move.location_id, strict=False)
+        new_move._recompute_state()
         return new_move_id
