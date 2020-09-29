@@ -14,29 +14,20 @@ class StockMove(models.Model):
         amls = self.move_line_ids.filtered(
             lambda aml: aml.qty_done > 0 and
             aml.product_uom_qty > aml.qty_done)
-        aml_vals = []
-        available_quantity = 0
+        new_move_id = super(StockMove, self)._split(qty, restrict_partner_id)
+        new_move = self.browse(new_move_id)
         for aml in amls:
             product_uom_qty = aml.product_uom_qty - aml.qty_done
-            vals = {
-                'product_id': aml.product_id.id,
-                'product_uom_id': aml.product_uom_id.id,
-                'workorder_id': aml.workorder_id.id,
-                'location_id': aml.location_id.id,
-                'location_dest_id': aml.location_dest_id.id,
-                'picking_id': aml.picking_id.id,
-                'lot_id': aml.lot_id.id or False,
-                'package_id': aml.package_id.id or False,
-                'owner_id': aml.owner_id.id or False,
-            }
-            available_quantity += product_uom_qty
-            aml_vals.append(vals)
-        new_move_id = super(StockMove, self)._split(qty, restrict_partner_id)
-        for vals in aml_vals:
-            vals['move_id'] = new_move_id
-            self.env['stock.move.line'].create(vals)
-        new_move = self.browse(new_move_id)
-        new_move._update_reserved_quantity(
-            new_move.product_uom_qty, available_quantity, new_move.location_id, strict=False)
+            new_move.with_context(workorder_id=aml.workorder_id.id)._update_reserved_quantity(
+                new_move.product_uom_qty, product_uom_qty, aml.location_id,
+                aml.lot_id, aml.package_id, aml.owner_id)
         new_move._recompute_state()
         return new_move_id
+
+    def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
+        res = super(StockMove, self)._prepare_move_line_vals(quantity, reserved_quant)
+        if self._context.get('mrp_record_production'):
+            res.update({
+                'workorder_id': self._context.get('workorder_id') or False,
+            })
+        return res
