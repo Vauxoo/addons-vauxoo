@@ -10,7 +10,7 @@
                     <page string="Warehouse settings for the sales team">
                         <group>
                             <group name="conf_warehouse">
-                                <field name="default_warehouse" widget="selection" modifiers="{}"/>
+                                <field name="default_warehouse_id" widget="selection" modifiers="{}"/>
                             </group>
                             <group name="conf_journal">
                                 <field name="journal_stock_id" modifiers="{}"/>
