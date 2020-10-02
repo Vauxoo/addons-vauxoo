@@ -96,6 +96,42 @@ class ProductProduct(models.Model):
             })
         return json.dumps(info)
 
+    def get_qty_per_location(self, warehouse):
+        """Method to get the locations where a product is available, of a specific warehouse.
+        If there is no quants for the product and the locations it will return False.
+        Otherwise it returns a dict with a list of the location and the quantity available sorted by the locations
+        with the most quantity at the beginning, and the number of locations where the product is available.
+        """
+        self.ensure_one()
+        # Get all the stock locations that are part of the warehouse.
+        warehouse_locations = self.env['stock.location'].sudo().search([
+            ('id', 'child_of', warehouse.lot_stock_id.id), ('usage', '=', 'internal')])
+
+        quants = self.env['stock.quant'].sudo().search([
+            ('product_id', '=', self.id), ('location_id', 'in', warehouse_locations.ids),
+            ('quantity', '>', 0)])
+
+        if not quants:
+            return False
+
+        qty_per_location_dict = defaultdict(float)
+        for quant in quants:
+            # Get the real quantity of product that is available, excluding reserved products.
+            quantity = quant.quantity - quant.reserved_quantity
+            if not float_is_zero(quantity, precision_rounding=self.uom_id.rounding):
+                qty_per_location_dict[quant.location_id] += quantity
+
+        locations_available = len(qty_per_location_dict)
+
+        qty_per_location = [(quantity, location) for location, quantity in qty_per_location_dict.items()]
+        # This sort the list by the first element by default, in reverse mode because we want the locations with
+        # the most quantity at first places.
+        qty_per_location.sort(reverse=True)
+        return {
+            'qty_per_location': qty_per_location,
+            'locations_available': locations_available,
+        }
+
     @api.multi
     def _compute_get_stock_location(self):
         """Method to get the stock quants that have a specific product and the locations of all the warehouses.
@@ -119,39 +155,20 @@ class ProductProduct(models.Model):
         warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].sudo().search([])
         available_locations_warehouse = 0
         for warehouse in warehouses:
-            # Get all the stock locations that are part of the warehouse.
-            warehouse_locations = self.env['stock.location'].sudo().search([
-                ('id', 'child_of', warehouse.lot_stock_id.id), ('usage', '=', 'internal')])
-
-            quants = self.env['stock.quant'].sudo().search([
-                ('product_id', '=', self_origin.id), ('location_id', 'in', warehouse_locations.ids),
-                ('quantity', '>', 0)])
-
-            if not quants:
+            qty_per_location_info = self_origin.get_qty_per_location(warehouse)
+            if not qty_per_location_info:
                 continue
 
+            qty_per_location = qty_per_location_info.get('qty_per_location')
+            locations_available = qty_per_location_info.get('locations_available')
+            available_locations_warehouse += locations_available
+
             most_quantity_location = False
-            info_content = []
-            qty_per_location_dict = defaultdict(float)
-            for quant in quants:
-                # Get the real quantity of product that is available, excluding reserved products.
-                quantity = quant.quantity - quant.reserved_quantity
-                if not float_is_zero(quantity, precision_rounding=self.uom_id.rounding):
-                    qty_per_location_dict[quant.location_id] += quantity
-
-            locations_available = len(qty_per_location_dict)
-            available_locations_warehouse += len(qty_per_location_dict)
-
-            qty_per_location = [(quantity, location) for location, quantity in qty_per_location_dict.items()]
-            # This sort the list by the first element by default, in reverse mode because we want the locations with
-            # the most quantity at first places.
-            qty_per_location.sort(reverse=True)
-
             if qty_per_location:
                 # Get the location with most quantities of products available.
                 most_quantity_location = qty_per_location[0][1]
 
-            info_content += [
+            info_content = [
                 {'location': location.display_name, 'quantity': quantity} for quantity, location in qty_per_location]
             info['content'].append({
                 'warehouse_name': warehouse.name,
