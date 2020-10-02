@@ -96,7 +96,7 @@ class ProductProduct(models.Model):
             })
         return json.dumps(info)
 
-    def get_qty_per_location(self, warehouse):
+    def _get_qty_per_location(self, warehouse):
         """Method to get the locations where a product is available, of a specific warehouse.
         If there is no quants for the product and the locations it will return False.
         Otherwise it returns a dict with a list of the location and the quantity available sorted by the locations
@@ -155,7 +155,7 @@ class ProductProduct(models.Model):
         warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].sudo().search([])
         available_locations_warehouse = 0
         for warehouse in warehouses:
-            qty_per_location_info = self_origin.get_qty_per_location(warehouse)
+            qty_per_location_info = self_origin._get_qty_per_location(warehouse)
             if not qty_per_location_info:
                 continue
 
