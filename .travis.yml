@@ -1,0 +1,35 @@
+language: python
+
+sudo: false
+cache:
+  apt: true
+  directories:
+    - $HOME/.cache/pip
+
+addons:
+  postgresql: "11"
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+
+python:
+  - "3.7"
+
+env:
+  global:
+  - VERSION="15.0" ODOO_REPO="vauxoo/odoo" TESTS="0" LINT_CHECK="0"
+
+  matrix:
+  - LINT_CHECK="1"
+  - TESTS="1"
+
+install:
+  - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+
+script:
+  - travis_run_tests
+
+after_success:
+  - travis_after_tests_success
