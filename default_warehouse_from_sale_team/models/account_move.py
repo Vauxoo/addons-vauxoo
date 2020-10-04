@@ -1,11 +1,11 @@
 from odoo import models, api
 
 
-class AccountInvoice(models.Model):
-    _inherit = 'account.invoice'
+class AccountMove(models.Model):
+    _inherit = 'account.move'
 
     @api.onchange('team_id')
-    def sale_team_change(self):
+    def _onchange_team_id(self):
         if (self.state != 'draft' or not self.team_id or
                 not self.team_id.journal_team_ids):
             return
