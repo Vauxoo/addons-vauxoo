@@ -1,14 +1,13 @@
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
-class InheritedCrmSaseSection(models.Model):
-
+class CrmTeam(models.Model):
     _inherit = "crm.team"
 
-    default_warehouse = fields.Many2one('stock.warehouse',
-                                        help='In this field can be '
-                                        'defined a default warehouse for '
-                                        'the related users to the sales team.')
+    default_warehouse_id = fields.Many2one(
+        'stock.warehouse',
+        help='In this field can be defined a default warehouse for '
+        'the related users to the sales team.')
     journal_team_ids = fields.One2many(
         'account.journal', 'section_id', string="Journal's sales teams",
         help="Specify what journals a member of this sales team can see")
@@ -36,7 +35,7 @@ class WarehouseDefault(models.Model):
                          self).default_get(fields_list)
         res_users_obj = self.env['res.users']
         user_brw = res_users_obj.browse(self._uid)
-        warehouse = user_brw.sale_team_id.default_warehouse
+        warehouse = user_brw.sale_team_id.default_warehouse_id
         if warehouse:
             warehouse_id = warehouse.id
             model_obj = self.env['ir.model']
@@ -52,7 +51,6 @@ class WarehouseDefault(models.Model):
                  if defaults.get(name)})
         return defaults
 
-    @api.multi
     def read(self, fields_list=None, load='_classic_read'):
         """This method is overwrite because we need to propagate SUPERUSER_ID
         when picking are chained in another warehouse without access to read"""
@@ -74,7 +72,7 @@ class WarehouseDefault(models.Model):
                 vals.get('picking_type_id')).warehouse_id.id
             warehouse_id = vals.get('warehouse_id', pick_warehouse_id)
             section_id = self.env['crm.team'].search(
-                [('default_warehouse', '=', warehouse_id)], limit=1)
+                [('default_warehouse_id', '=', warehouse_id)], limit=1)
             sequence_id = sequence_obj.search(
                 [('section_id', '=', section_id.id),
                  ('code', '=', code)], limit=1)
