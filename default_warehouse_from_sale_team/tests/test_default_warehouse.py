@@ -1,4 +1,4 @@
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestSalesTeamDefaultWarehouse(TransactionCase):
@@ -15,12 +15,14 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
 
         # user with team
         self.demo_user = self.env.ref('base.user_demo')
-        self.test_wh = self.env.ref('stock.stock_warehouse_shop0')
+        self.test_wh = self.env.ref('default_warehouse_from_sale_team.stock_warehouse_default_team')
         self.sales_team = self.env.ref('sales_team.crm_team_1')
-        self.sales_team.write({'default_warehouse': self.test_wh.id})
-        self.demo_user.write(
-            {'sale_team_id': self.sales_team.id,
-             'sale_team_ids': [(4, self.sales_team.id, None)]})
+        self.sales_team.write({'default_warehouse_id': self.test_wh.id})
+        self.demo_user.write({
+            'sale_team_id': self.sales_team.id,
+            'sale_team_ids': [(4, self.sales_team.id, None)],
+            'company_id': self.company.id,
+        })
 
         # Products
         self.product = self.env.ref('product.product_product_11')
@@ -30,12 +32,12 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         """Validate the picking type by default from sale team warehouse in
         purchase requisition"""
 
-        values = self.purchase_requisition_obj.sudo(
+        values = self.purchase_requisition_obj.with_user(
             self.demo_user).default_get([])
         pick_type_id = self.pick_type_obj.browse(
             values.get('picking_type_id'))
 
-        purchase_id = self.purchase_requisition_obj.sudo(
+        purchase_id = self.purchase_requisition_obj.with_user(
             self.demo_user).create({})
 
         self.assertEqual(purchase_id.picking_type_id, pick_type_id,
@@ -50,11 +52,11 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
             'name': 'Purchase with sale team'
         }
 
-        values = self.purchase_obj.sudo(self.demo_user).default_get([])
+        values = self.purchase_obj.with_user(self.demo_user).default_get([])
         pick_type_id = self.pick_type_obj.browse(
             values.get('picking_type_id'))
 
-        purchase_id = self.purchase_obj.sudo(self.demo_user).create(
+        purchase_id = self.purchase_obj.with_user(self.demo_user).create(
             purchase_values)
 
         self.assertEqual(purchase_id.picking_type_id, pick_type_id,
@@ -74,12 +76,12 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         main_wh = self.env.ref('stock.warehouse0')
         # user without team
         user_without_team = self.demo_user.copy({'sale_team_id': False})
-        sale_brw1 = self.sale_obj_new.sudo(user_without_team).create({
+        sale_brw1 = self.sale_obj_new.with_user(user_without_team).create({
             'name': 'Tests Main Sale Order',
             'company_id': self.company.id,
             'partner_id': self.partner.id,
         })
-        sale_brw2 = self.sale_obj_new.sudo(self.demo_user).create({
+        sale_brw2 = self.sale_obj_new.with_user(self.demo_user).create({
             'name': 'Tests Sales Team Sale Order',
             'company_id': self.company.id,
             'partner_id': self.partner.id,
@@ -95,9 +97,6 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         sales team for that warehouse
         """
         account_id = self.env['account.account'].search([], limit=1)
-        test_wh = self.env.ref(
-            'default_warehouse_from_sale_team.stock_warehouse_default_team'
-        )
         sales_team = self.env.ref(
             'default_warehouse_from_sale_team.section_sales_default_team'
         )
@@ -108,11 +107,11 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
             'property_stock_account_output_categ_id': account_id.id,
             })
 
-        sale = self.sale_obj_new.sudo(self.demo_user).create({
+        sale = self.sale_obj_new.with_user(self.demo_user).create({
             'name': 'Tests Main Sale Order',
             'company_id': self.company.id,
             'partner_id': self.partner.id,
-            'warehouse_id': test_wh.id,
+            'warehouse_id': self.test_wh.id,
             'order_line': [(0, 0, {
                 'product_id': self.product.id,
                 'product_uom_qty': 1.0,
@@ -129,8 +128,3 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         pick.action_assign()
         pick.move_lines.write({'quantity_done': 1})
         pick.button_validate()
-
-        self.assertEqual(
-            sale.team_id.journal_stock_id.id,
-            pick.move_lines.account_move_ids.journal_id.id,
-            'Daily defined in Default sales team is not policy sale order.')
