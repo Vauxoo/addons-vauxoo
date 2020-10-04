@@ -4,18 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0+e\n"
+"Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-20 21:15+0000\n"
-"PO-Revision-Date: 2019-03-20 15:40-0600\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2020-10-04 20:53+0000\n"
+"PO-Revision-Date: 2020-10-04 20:53+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com> \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: es\n"
-"X-Generator: Poedit 2.2.1\n"
 
 #. module: account_move_report
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
@@ -80,7 +78,7 @@ msgstr "Factura"
 #. module: account_move_report
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
 msgid "Journal Entries:"
-msgstr "Póliza:"
+msgstr "Pólizas:"
 
 #. module: account_move_report
 #: model:ir.model.fields,field_description:account_move_report.field_report_account_move_report_account_entries_report____last_update
@@ -129,5 +127,5 @@ msgstr "A revisar:"
 
 #. module: account_move_report
 #: model:ir.model,name:account_move_report.model_report_account_move_report_account_entries_report
-msgid "report.account_move_report.account_entries_report"
-msgstr ""
+msgid "Wizard to generate Journal Entry Report"
+msgstr "Asistente para generar reporte de póliza"

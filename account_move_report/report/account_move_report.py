@@ -1,11 +1,10 @@
-from odoo import api, models
+from odoo import models
 
 
 class ParticularReport(models.AbstractModel):
     _name = 'report.account_move_report.account_entries_report'
-    _description = 'Assistant to generate policy reports'
+    _description = 'Wizard to generate Journal Entry Report'
 
-    @api.multi
     def _get_report_values(self, docids, data=None):
         docs = self.env['account.move'].browse(docids)
         total_debit_credit = self.get_total_debit_credit(docs)
@@ -17,7 +16,6 @@ class ParticularReport(models.AbstractModel):
             'total_debit_credit': total_debit_credit,
         }
 
-    @api.multi
     def get_total_debit_credit(self, docs):
         res = {}
         for doc in docs:
