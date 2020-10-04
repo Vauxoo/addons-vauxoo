@@ -1,4 +1,4 @@
-from openerp import fields, models
+from odoo import fields, models
 
 
 class StockPickingType(models.Model):
@@ -27,7 +27,7 @@ class StockMove(models.Model):
         warehouse_id = (self.picking_id.picking_type_id.warehouse_id or
                         self.warehouse_id)
         sale_team = self.env['crm.team'].search(
-            [('default_warehouse', '=', warehouse_id.id)], limit=1)
+            [('default_warehouse_id', '=', warehouse_id.id)], limit=1)
 
         if sale_team.journal_stock_id:
             journal_id = sale_team.journal_stock_id.id
