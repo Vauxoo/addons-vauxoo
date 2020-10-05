@@ -4,16 +4,36 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-04 20:53+0000\n"
-"PO-Revision-Date: 2020-10-04 20:53+0000\n"
+"POT-Creation-Date: 2020-10-05 03:18+0000\n"
+"PO-Revision-Date: 2020-10-05 03:18+0000\n"
 "Last-Translator: Luis González <lgonzalez@vauxoo.com> \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_move_report
+#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
+msgid "<strong>Date: </strong>"
+msgstr "<strong>Fecha: </strong>"
+
+#. module: account_move_report
+#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
+msgid "<strong>Number: </strong>"
+msgstr "<strong>Número: </strong>"
+
+#. module: account_move_report
+#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
+msgid "<strong>Printing Date: </strong>"
+msgstr "<strong>Fecha de impresión: </strong>"
+
+#. module: account_move_report
+#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
+msgid "<strong>Reference: </strong>"
+msgstr "<strong>Referencia: </strong>"
 
 #. module: account_move_report
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
@@ -32,8 +52,13 @@ msgstr "Importe divisa"
 
 #. module: account_move_report
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Analytic account"
-msgstr "Cuenta Analítica"
+msgid "Analytic"
+msgstr "Analítica"
+
+#. module: account_move_report
+#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
+msgid "Code"
+msgstr "Código"
 
 #. module: account_move_report
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
@@ -47,11 +72,6 @@ msgstr "Moneda"
 
 #. module: account_move_report
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Date:"
-msgstr "Fecha:"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
 msgid "Debit"
 msgstr "Debe"
 
@@ -62,23 +82,13 @@ msgstr "Nombre para mostrar"
 
 #. module: account_move_report
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Due date"
-msgstr "Fecha de vencimiento"
+msgid "Due"
+msgstr "Vence"
 
 #. module: account_move_report
 #: model:ir.model.fields,field_description:account_move_report.field_report_account_move_report_account_entries_report__id
 msgid "ID"
 msgstr ""
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Invoice"
-msgstr "Factura"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Journal Entries:"
-msgstr "Pólizas:"
 
 #. module: account_move_report
 #: model:ir.model.fields,field_description:account_move_report.field_report_account_move_report_account_entries_report____last_update
@@ -94,36 +104,6 @@ msgstr "Nombre"
 #: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
 msgid "Partner"
 msgstr "Socio"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Printing Date:"
-msgstr "Fecha de impresión:"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Reconcile"
-msgstr "Conciliación"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Reference:"
-msgstr "Referencia:"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Tax Account"
-msgstr "Cuenta impuesto"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "Tax Amount"
-msgstr "Importe impuestos/base"
-
-#. module: account_move_report
-#: model_terms:ir.ui.view,arch_db:account_move_report.account_entries_report
-msgid "To Review:"
-msgstr "A revisar:"
 
 #. module: account_move_report
 #: model:ir.model,name:account_move_report.model_report_account_move_report_account_entries_report
