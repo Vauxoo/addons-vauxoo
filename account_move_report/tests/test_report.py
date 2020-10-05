@@ -11,7 +11,7 @@ class TestReport(TransactionCase):
     def create_invoice(self, partner=None, **line_kwargs):
         if partner is None:
             partner = self.customer
-        invoice = Form(self.env['account.move'].with_context(default_type='out_invoice'))
+        invoice = Form(self.env['account.move'].with_context(default_move_type='out_invoice'))
         invoice.partner_id = partner
         invoice = invoice.save()
         self.create_inv_line(invoice, **line_kwargs)
@@ -28,5 +28,5 @@ class TestReport(TransactionCase):
 
     def test_01_render_report(self):
         invoice = self.create_invoice()
-        report_result = self.move_report.render(invoice.ids)
+        report_result = self.move_report._render(invoice.ids)
         self.assertEqual(len(report_result), 2)
