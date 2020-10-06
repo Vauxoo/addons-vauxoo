@@ -1,6 +1,6 @@
 {
     "name": "Account Multicompany Code",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Vauxoo",
     "category": "Accounting/Accounting",
     "website": "https://www.vauxoo.com/",
