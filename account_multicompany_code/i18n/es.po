@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-06 02:46+0000\n"
-"PO-Revision-Date: 2020-10-06 02:46+0000\n"
+"POT-Creation-Date: 2020-10-06 03:52+0000\n"
+"PO-Revision-Date: 2020-10-06 03:52+0000\n"
 "Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,20 @@ msgid "Companies"
 msgstr "Compañías"
 
 #. module: account_multicompany_code
+#: model:ir.model.fields,field_description:account_multicompany_code.field_account_account__display_name
+#: model:ir.model.fields,field_description:account_multicompany_code.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_multicompany_code.field_res_company__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: account_multicompany_code
+#: model:ir.model.fields,field_description:account_multicompany_code.field_account_account__id
+#: model:ir.model.fields,field_description:account_multicompany_code.field_account_journal__id
+#: model:ir.model.fields,field_description:account_multicompany_code.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: account_multicompany_code
 #: model:ir.model.fields,help:account_multicompany_code.field_res_company__code
 msgid "Internal code name of the company"
 msgstr "Código interno de la compañía"
@@ -45,3 +59,10 @@ msgstr "Código interno de la compañía"
 #: model:ir.model,name:account_multicompany_code.model_account_journal
 msgid "Journal"
 msgstr "Diario"
+
+#. module: account_multicompany_code
+#: model:ir.model.fields,field_description:account_multicompany_code.field_account_account____last_update
+#: model:ir.model.fields,field_description:account_multicompany_code.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_multicompany_code.field_res_company____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
