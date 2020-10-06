@@ -1,10 +1,9 @@
-from odoo import api, models
+from odoo import models
 
 
 class AccountAccount(models.Model):
     _inherit = 'account.account'
 
-    @api.multi
     def name_get(self):
         result = dict(super(AccountAccount, self).name_get())
         for record in self:
@@ -16,7 +15,6 @@ class AccountAccount(models.Model):
 class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
-    @api.multi
     def name_get(self):
         result = dict(super(AccountJournal, self).name_get())
         for record in self:
