@@ -22,5 +22,5 @@ class TestMulticompanyCode(TransactionCase):
             ('company_id', '=', self.company.id),
             ('currency_id', '=', False),
             ], limit=1)
-        expected_account_name = "%s (%s) (TEST-CODE)" % (journal.name, self.company.currency_id.name)
-        self.assertEqual(journal.display_name, expected_account_name)
+        expected_journal_name = "%s (TEST-CODE)" % journal.name
+        self.assertEqual(journal.display_name, expected_journal_name)
