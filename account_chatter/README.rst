@@ -7,6 +7,12 @@ Account Chatter
 This module allows to use chatter in CoA, Journals and Account Moves, to
 create audit changes in every model.
 
+To configure go to:
+
+1. Settings > Users > Account & Finance
+
+2. Check > Show account notifications
+
 Known issues / Roadmap
 ======================
 
