@@ -6,7 +6,7 @@
     "website": "http://www.vauxoo.com",
     "license": "LGPL-3",
     "depends": [
-        "account_accountant",
+        "account",
     ],
     "demo": [
 
