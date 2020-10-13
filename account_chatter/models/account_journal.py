@@ -1,7 +1,7 @@
 # Copyright 2020 Vauxoo
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, models, fields
+from odoo import models, fields
 
 
 class AccountJournal(models.Model):
