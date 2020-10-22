@@ -1,10 +1,9 @@
 import json
 from collections import defaultdict
 from odoo import api, fields, models, _
-from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero
 
-UNIT = dp.get_precision('Product Unit of Measure')
+UNIT = 'Product Unit of Measure'
 
 
 class ProductProduct(models.Model):
@@ -33,12 +32,10 @@ class ProductProduct(models.Model):
         self.warehouses_stock_location = self._compute_get_stock_location()
         self.warehouses_stock_recompute = True
 
-    @api.multi
     def _product_available_not_res_hook(self, quants):
         """Hook used to introduce possible variations"""
         return False
 
-    @api.multi
     def _prepare_domain_available_not_reserved(self):
         domain_quant = [
             ('product_id', 'in', self.ids)
@@ -47,7 +44,7 @@ class ProductProduct(models.Model):
         domain_quant.extend(domain_quant_locations)
         return domain_quant
 
-    @api.multi
+    @api.depends_context('warehouse', 'force_company')
     def _compute_qty_available_not_reserved(self):
         """Method to set the quantity available that is not reserved of a serie of products.
         """
@@ -63,7 +60,6 @@ class ProductProduct(models.Model):
         for prod in self:
             prod.qty_available_not_res = res.get(prod.id, 0.0)
 
-    @api.multi
     def _compute_get_quantity_warehouses_json(self):
         # get original from onchange
         self_origin = self._origin if hasattr(self, '_origin') else self
@@ -77,9 +73,9 @@ class ProductProduct(models.Model):
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        for warehouse in self.env['stock.warehouse'].sudo().search([]):
-            product = self_origin.sudo().with_context(
-                warehouse=warehouse.id, location=False)
+        for warehouse in self.env['stock.warehouse'].search([]):
+            product = self_origin.with_context(
+                warehouse=warehouse.id, location=False, force_company=warehouse.company_id.id)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = product.qty_available_not_res
             info['content'].append({
@@ -96,6 +92,17 @@ class ProductProduct(models.Model):
             })
         return json.dumps(info)
 
+    @api.depends_context(
+        'lot_id', 'owner_id', 'package_id', 'from_date', 'to_date',
+        'company_owned', 'force_company', 'warehouse',
+    )
+    def _compute_quantities(self):
+        """Inherited method to add 'warehouse' from the api.depends_context
+        of _compute_quantities() as:
+        It is needed. It is changed in a single transaction in the current code,
+        since the widget iterates over several warehouses at the same time"""
+        return super(ProductProduct, self)._compute_quantities()
+
     def _get_qty_per_location(self, warehouse):
         """Method to get the locations where a product is available, of a specific warehouse.
         If there is no quants for the product and the locations it will return False.
@@ -104,10 +111,10 @@ class ProductProduct(models.Model):
         """
         self.ensure_one()
         # Get all the stock locations that are part of the warehouse.
-        warehouse_locations = self.env['stock.location'].sudo().search([
+        warehouse_locations = self.env['stock.location'].search([
             ('id', 'child_of', warehouse.lot_stock_id.id), ('usage', '=', 'internal')])
 
-        quants = self.env['stock.quant'].sudo().search([
+        quants = self.env['stock.quant'].search([
             ('product_id', '=', self.id), ('location_id', 'in', warehouse_locations.ids),
             ('quantity', '>', 0)])
 
@@ -132,7 +139,6 @@ class ProductProduct(models.Model):
             'locations_available': locations_available,
         }
 
-    @api.multi
     def _compute_get_stock_location(self):
         """Method to get the stock quants that have a specific product and the locations of all the warehouses.
         It will return a dict with the location and quantity, the location with the most quantity of the product,
@@ -152,7 +158,7 @@ class ProductProduct(models.Model):
         # itself, we enable this context management
         warehouse_context = self._context.get('warehouse')
 
-        warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].sudo().search([])
+        warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].search([])
         available_locations_warehouse = 0
         for warehouse in warehouses:
             qty_per_location_info = self_origin._get_qty_per_location(warehouse)
