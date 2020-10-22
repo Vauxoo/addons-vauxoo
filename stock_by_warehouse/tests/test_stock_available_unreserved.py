@@ -6,7 +6,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
     def setUp(self):
         super(TestStockLogisticsWarehouse, self).setUp()
         self.picking_obj = self.env['stock.picking']
-        self.product_obj = self.env['product.product']
+        self.product_obj = self.env['product.product'].with_context(tracking_disable=True)
         self.template_obj = self.env['product.template']
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
         self.stock_location = self.env.ref(
@@ -14,22 +14,38 @@ class TestStockLogisticsWarehouse(TransactionCase):
         self.customer_location = self.env.ref('stock.stock_location_customers')
         self.uom_unit = self.env.ref('uom.product_uom_unit')
 
+        # Create attribute
+        self.attribute = self.env['product.attribute'].create({'name': 'Type',
+                                                               'sequence': 1})
+        self.attribute_a = self.env['product.attribute.value'].create({
+            'name': 'A',
+            'attribute_id': self.attribute.id,
+            'sequence': 1,
+        })
+        self.attribute_b = self.env['product.attribute.value'].create({
+            'name': 'B',
+            'attribute_id': self.attribute.id,
+            'sequence': 2,
+        })
+
         # Create product template
         self.template_ab = self.template_obj.create(
             {'name': 'templAB',
+             'standard_price': 1,
+             'type': 'product',
              'uom_id': self.uom_unit.id,
+             'attribute_line_ids': [(0, 0, {
+                 'attribute_id': self.attribute.id,
+                 'value_ids': [(6, 0, (self.attribute_a + self.attribute_b).ids)]
+             })],
              })
-
         self.product_values = {'name': 'product A',
-                               'standard_price': 1,
-                               'type': 'product',
-                               'uom_id': self.uom_unit.id,
                                'default_code': 'A',
-                               'product_tmpl_id': self.template_ab.id,
                                }
 
-    def create_product(self, values):
-        return self.product_obj.create(values)
+    def update_product(self, position, values):
+        self.template_ab.product_variant_ids[position].write(values)
+        return self.template_ab.product_variant_ids[position]
 
     def create_picking(self, picking_type, loc_orig, loc_dest, product, qty):
         picking = self.picking_obj.create({
@@ -56,12 +72,13 @@ class TestStockLogisticsWarehouse(TransactionCase):
         """checking that qty_available_not_res actually reflects \
         the variations in stock, both on product and template"""
 
-        # Create product A and B
+        # Update product A and B
 
-        product_a = self.create_product(self.product_values)
-        product_b = product_a.copy({'name': 'product B',
+        product_a = self.update_product(0, self.product_values)
+        self.product_values.update({'name': 'product B',
                                     'default_code': 'B',
-                                    'product_tmpl_id': self.template_ab.id})
+                                    })
+        product_b = self.update_product(1, self.product_values)
 
         # Create a picking move from INCOMING to STOCK
 
