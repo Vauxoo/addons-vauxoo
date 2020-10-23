@@ -1,9 +1,9 @@
 <odoo>
-    <record id="view_account_form_inherit" model="ir.ui.view">
-        <field name="name">account.account.form.inherit</field>
-        <field name="model">account.account</field>
-        <field name="inherit_id" ref="account.view_account_form"/>
-        <field name="groups_id" eval="[(4, ref('account_chatter.group_show_account_notifications'))]"/>
+    <record id="view_account_journal_form_inherit" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="groups_id" eval="[(4, ref('account_chatter.group_show_account_chatter_notifications'))]"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="after">
                 <div class="oe_chatter">
