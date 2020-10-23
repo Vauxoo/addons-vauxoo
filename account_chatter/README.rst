@@ -1,5 +1,5 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+.. image:: https://img.shields.io/badge/licence-LGPL--3-blue.svg
+    :alt: License: LGPL-3
 
 Account Chatter
 ===============
@@ -9,9 +9,11 @@ create audit changes in every model.
 
 To configure go to:
 
-1. Settings > Users > Account & Finance
+1. Settings > Users & Companies > Users
 
-2. Check > Show account notifications
+2. Select any user you can share account chatter notifications
+
+3. Account & Finance > Check > Show account notifications
 
 Known issues / Roadmap
 ======================
