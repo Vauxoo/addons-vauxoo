@@ -39,7 +39,7 @@ class AccountAccount(models.Model):
                 new_value = ", ".join(new_value.mapped('name')) if new_value else False
                 display_info['type'] = 'char'
                 tracking = self.env['mail.tracking.value'].create_tracking_values(
-                initial_value, new_value, display_name, display_info, tracking_sequence)
+                    initial_value, new_value, display_name, display_info, tracking_sequence)
                 if tracking:
                     tracking_value_ids.append([0, 0, tracking])
                 changes.add(display_name)
