@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="group_sale_margin_percentage" model="res.groups">
+        <field name="name">Sales with higher margin percentages</field>
+        <field name="comment">
+            - Users of this group will have access to validate
+            sales with higher margin percentage.
+        </field>
+    </record>
+
+</odoo>
