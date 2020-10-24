@@ -15,11 +15,6 @@ To configure go to:
 
 3. Account & Finance > Check > Show account notifications
 
-Known issues / Roadmap
-======================
-
-* No issues have been reported yet.
-
 Bug Tracker
 ===========
 
