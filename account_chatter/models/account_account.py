@@ -21,7 +21,11 @@ class AccountAccount(models.Model):
     realizable_account = fields.Boolean(track_visibility=True)
 
     def _message_track(self, tracked_fields, initial):
-        """Shows old value ---> new value in every changed record."""
+        """Perform a field tracking over tax_ids and tag_ids
+
+        This is performed manually because field tracking over many2many fields is not
+        natively supported.
+        """
         changes, tracking_value_ids = super()._message_track(tracked_fields, initial)
         for display_name, display_info in tracked_fields.items():
             if display_name not in ('tag_ids', 'tax_ids'):
