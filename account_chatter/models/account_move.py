@@ -8,7 +8,6 @@ class AccountMove(models.Model):
 
     _name = "account.move"
     _inherit = ['account.move', 'mail.thread']
-    _translate = False
 
     name = fields.Char(track_visibility=True)
     ref = fields.Char(track_visibility=True)
