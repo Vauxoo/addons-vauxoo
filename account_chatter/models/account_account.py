@@ -8,7 +8,6 @@ class AccountAccount(models.Model):
 
     _name = "account.account"
     _inherit = ['account.account', 'mail.thread']
-    _translate = False
 
     name = fields.Char(track_visibility=True)
     currency_id = fields.Many2one(track_visibility=True)
@@ -21,12 +20,8 @@ class AccountAccount(models.Model):
     group_id = fields.Many2one(track_visibility=True)
     realizable_account = fields.Boolean(track_visibility=True)
 
-    """
-    Funtion:
-        Track changes in tag_ids and tax_ids fields.
-        Shows old value ---> new value in every changed record.
-    """
     def _message_track(self, tracked_fields, initial):
+        """Shows old value ---> new value in every changed record."""
         changes, tracking_value_ids = super()._message_track(tracked_fields, initial)
         for display_name, display_info in tracked_fields.items():
             if display_name not in ('tag_ids', 'tax_ids'):
