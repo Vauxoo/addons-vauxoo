@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Vauxoo
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
@@ -43,10 +42,13 @@ class SaleOrderLine(models.Model):
         readonly=True, help="Price purchase of product")
 
     @api.depends('product_id', 'purchase_price', 'product_uom_qty',
-                 'price_unit')
+                 'price_unit', 'price_subtotal')
     def _compute_margin_percentage(self):
         """ Same margin but we return a percentage from the purchase price.
         """
+        if not self.env.in_onchange:
+            # prefetch the fields needed for the computation
+            self.read(['price_subtotal', 'purchase_price', 'product_uom_qty', 'order_id'])
         for line in self:
             currency = line.order_id.pricelist_id.currency_id
 
@@ -58,8 +60,7 @@ class SaleOrderLine(models.Model):
                 line.margin_percentage = -100.0
                 continue
 
-            purchase_price = \
-                line.purchase_price or line.product_id.standard_price
+            purchase_price = line.purchase_price or line.product_id.standard_price
             if not purchase_price:
                 line.margin_percentage = 100.0
                 continue
