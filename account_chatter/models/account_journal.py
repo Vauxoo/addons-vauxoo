@@ -8,7 +8,6 @@ class AccountJournal(models.Model):
 
     _inherit = ["account.journal", "mail.thread"]
     _name = "account.journal"
-    _translate = False
 
     name = fields.Char(track_visibility=True)
     code = fields.Char(track_visibility=True)
