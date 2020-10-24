@@ -15,6 +15,27 @@ To configure go to:
 
 3. Account & Finance > Check > Show account notifications
 
+CoA:
+
+    .. image:: https://user-images.githubusercontent.com/16024775/95902633-4de0f580-0d52-11eb-8266-abb1e5517aec.png
+       :alt: CoA
+       :class: with-shadow
+       :width: 400px
+
+AM:
+
+    .. image:: https://user-images.githubusercontent.com/16024775/95902540-30139080-0d52-11eb-90bf-279a7b8c4a93.png
+       :alt: AM
+       :class: with-shadow
+       :width: 400px
+
+Journal:
+
+    .. image:: https://user-images.githubusercontent.com/16024775/95902579-3dc91600-0d52-11eb-936c-310aa0cfb859.png
+       :alt: AM
+       :class: with-shadow
+       :width: 400px
+
 Bug Tracker
 ===========
 
