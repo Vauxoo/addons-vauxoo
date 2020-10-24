@@ -12,7 +12,6 @@
         "account",
     ],
     "demo": [
-
     ],
     "data": [
         "security/account_chatter_security.xml",
