@@ -10,7 +10,7 @@
                 <div class="col-xs-12 col-md-6 o_setting_box" attrs="{'invisible': [('module_sale_margin' ,'=', False)]}" groups="base.group_no_one">
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
-                        <label string="Margin Threshold"/>
+                        <label for="margin_threshold" string="Margin Threshold"/>
                         <div class="text-muted">
                             Minimun margin percentage allowed
                         </div>
