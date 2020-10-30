@@ -64,7 +64,7 @@ class WarehouseDefault(models.Model):
     def create(self, vals):
         sequence_obj = self.env['ir.sequence']
         pick_type_obj = self.env['stock.picking.type']
-        if vals.get('warehouse_id', 'picking_type_id'):
+        if vals.get('warehouse_id', 'picking_type_id') and 'name' not in vals:
             code = self._name
             if code == 'purchase.requisition':
                 code = 'purchase.order.requisition'
