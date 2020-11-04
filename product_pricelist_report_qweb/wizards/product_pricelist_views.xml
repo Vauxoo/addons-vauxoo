@@ -15,9 +15,9 @@
                 </group>
 
                 <!-- TODO Module `controllers_report_xls` not migrated -->
-                <!--group string="Output Format">
+                <group string="Output Format">
                     <field name="report_format" widget="radio" required='1'/>
-                </group-->
+                </group>
 
                 <group>
                     <field name="only_prod_pricelist"/>

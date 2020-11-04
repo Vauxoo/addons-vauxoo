@@ -21,14 +21,12 @@
 ###############################################################################
 {
     "name": "XLS Report Controller",
-    "version": "8.0.0.1.7",
+    "version": "11.0.1.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
-    "depends": [
-        "report",
-    ],
+    "depends": [],
     "external_dependencies": {
         'python': ['cssutils']
     },
