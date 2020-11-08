@@ -1,13 +1,3 @@
-//############################################################################
-//
-//   Module Writen For Odoo, Open Source Management Solution
-//
-//   Copyright (c) 2019 Vauxoo - http://www.vauxoo.com
-//   All Rights Reserved.
-//   info Vauxoo (info@vauxoo.com)
-//   coded by: Jose Robles <josemanuel@vauxoo.com>
-//
-//############################################################################
 odoo.define('web.web_widget_json_graph', function (require) {
     "use strict";
 
