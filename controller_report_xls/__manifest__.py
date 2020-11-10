@@ -26,7 +26,9 @@
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
-    "depends": [],
+    "depends": [
+        "base",
+    ],
     "external_dependencies": {
         'python': ['cssutils']
     },
