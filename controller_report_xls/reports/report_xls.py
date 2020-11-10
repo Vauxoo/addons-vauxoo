@@ -221,3 +221,4 @@ class ActionReport(models.Model):
             'type': 'ir.actions.act_url',
             'url': "web/content/?id=" + str(attachment.id) + "&download=true&filename=" + attachment.name,
             'target': 'new',
+        }
