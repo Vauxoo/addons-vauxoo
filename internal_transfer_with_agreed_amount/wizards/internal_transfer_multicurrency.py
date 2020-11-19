@@ -41,6 +41,9 @@ class InternalTransferMulticurrency(models.TransientModel):
             credit = amls.filtered(lambda x: x.credit > 0)
             debit.with_context(check_move_validity=False).write(
                 {'debit': self.agreed_amount})
+            aml_dest = debit.filtered(lambda x: x.move_id.journal_id.id == payment.destination_journal_id.id)
+            aml_dest.with_context(check_move_validity=False).write(
+                {'amount_currency': 0.00, 'currency_id': False})
             credit.with_context(check_move_validity=False).write(
                 {'credit': self.agreed_amount})
             to_reconcile.reconcile()
