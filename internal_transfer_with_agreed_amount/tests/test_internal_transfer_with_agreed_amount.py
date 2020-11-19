@@ -7,11 +7,10 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
         self.currency_usd = self.env.ref("base.USD")
         self.currency_eur = self.env.ref("base.EUR")
         self.bank_journal_usd = self.env['account.journal'].create({
-            'name': 'Bank US', 'type': 'bank', 'code': 'BNK68',
-            'update_posted': True})
+            'name': 'Bank US', 'type': 'bank', 'code': 'BNK68'})
         self.bank_journal_eur = self.env['account.journal'].create({
             'name': 'Bank EUR', 'type': 'bank', 'code': 'BNK67',
-            'currency_id': self.currency_eur.id, 'update_posted': True})
+            'currency_id': self.currency_eur.id})
         self.payment_method_manual = self.env.ref(
             "account.account_payment_method_manual_in")
 
