@@ -47,12 +47,11 @@ class ProductPriceList(models.TransientModel):
                 res['qty%d' % idx] = 0.0
 
         context = {
-            'xls_report': res.get('report_format') == 'pdf',
+            'xls_report': res.get('report_format') == 'xls',
             'only_prod_pricelist': res.get('only_prod_pricelist', False),
             'products_with_price': res.get('products_with_price', False),
             'margin_cost': res['margin_cost'],
             'margin_sale': res['margin_sale'],
         }
-
         datas['form'] = res
         return self.env.ref('product.action_report_pricelist').with_context(context).report_action([], data=datas)

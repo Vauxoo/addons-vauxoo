@@ -7,6 +7,7 @@
     "license": "AGPL-3",
     "depends": [
         "product",
+        "controller_report_xls",
     ],
     "data": [
         "wizards/product_pricelist_views.xml",
