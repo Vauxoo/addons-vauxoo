@@ -1,4 +1,4 @@
-from odoo.tests import Form, TransactionCase
+from odoo.tests import TransactionCase
 
 
 class TestInternalTransferWithAgreedAmount(TransactionCase):
@@ -16,20 +16,21 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
             "account.account_payment_method_manual_in")
 
     def create_internal_transfer(self, currency, journal, destination_journal, amount):
-        transfer = Form(self.env['account.payment'])
-        transfer.payment_type = 'transfer'
-        transfer.journal_id = journal
-        transfer.currency_id = currency
-        transfer.destination_journal_id = destination_journal
-        transfer.amount = amount
-        return transfer.save()
+        transfer = self.env['account.payment'].create({
+            'payment_type': 'transfer',
+            'journal_id': journal.id,
+            'currency_id': currency.id,
+            'destination_journal_id': destination_journal.id,
+            'payment_method_id': self.payment_method_manual.id,
+            'amount': amount})
+        return transfer
 
     def create_multicurrency_transfer(self, payment, agreed_amount, currency):
         ctx = {'active_model': payment._name, 'active_ids': payment.ids}
-        wizard = Form(self.env['internal.transfer.multicurrency'].with_context(**ctx))
-        wizard.agreed_amount = agreed_amount
-        wizard.currency_id = currency
-        wizard = wizard.save()
+        wizard = self.env['internal.transfer.multicurrency'].with_context(**ctx).create({
+            'agreed_amount': agreed_amount,
+            'currency_id': currency.id,
+        })
         wizard.apply()
         return wizard
 
@@ -42,20 +43,16 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
         # Check journal item in USD
         usd_aml = transfer.move_line_ids.filtered(
             lambda m: m.account_id == transfer.journal_id.default_debit_account_id)
-        self.assertRecordValues(usd_aml, [{
-            'balance': -100.0,  # payment amount
-            'amount_currency': 0.0,
-            'currency_id': False,
-        }])
+        self.assertEquals(usd_aml.balance, -100.0)  # payment amount
+        self.assertEquals(usd_aml.amount_currency, 0.0)
+        self.assertFalse(usd_aml.currency_id)
 
         # Check journal item in EUR
         eur_aml = transfer.move_line_ids.filtered(
             lambda m: m.account_id == transfer.destination_journal_id.default_credit_account_id)
-        self.assertRecordValues(eur_aml, [{
-            'balance': 100.0,  # payment amount
-            'amount_currency': 120.0,  # Agreed amount
-            'currency_id': self.currency_eur.id,
-        }])
+        self.assertEquals(eur_aml.balance, 100.0)  # payment amount
+        self.assertEquals(eur_aml.amount_currency, 120.0)  # agreed amount
+        self.assertEquals(eur_aml.currency_id, self.currency_eur)
 
     def test_02_transfer_eur_usd(self):
         transfer = self.create_internal_transfer(
@@ -66,17 +63,13 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
         # Check journal item in USD
         usd_aml = transfer.move_line_ids.filtered(
             lambda m: m.account_id == transfer.destination_journal_id.default_credit_account_id)
-        self.assertRecordValues(usd_aml, [{
-            'balance': 80.0,  # Agreed amount
-            'amount_currency': 0.0,
-            'currency_id': False,
-        }])
+        self.assertEquals(usd_aml.balance, 80.0)  # agreed amount
+        self.assertEquals(usd_aml.amount_currency, 0.0)
+        self.assertFalse(usd_aml.currency_id)
 
         # Check journal item in EUR
         eur_aml = transfer.move_line_ids.filtered(
             lambda m: m.account_id == transfer.journal_id.default_credit_account_id)
-        self.assertRecordValues(eur_aml, [{
-            'balance': -80.0,  # Agreed amount
-            'amount_currency': -100.0,  # Payment amount
-            'currency_id': self.currency_eur.id,
-        }])
+        self.assertEquals(eur_aml.balance, -80.0)  # agreed amount
+        self.assertEquals(eur_aml.amount_currency, -100.0)
+        self.assertEquals(eur_aml.currency_id, self.currency_eur)

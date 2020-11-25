@@ -1,6 +1,6 @@
 {
     'name': 'Internal transfers with an agreed amount',
-    'version': '12.0.1.0.0',
+    'version': '11.0.1.0.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'license': 'LGPL-3',
