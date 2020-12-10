@@ -177,7 +177,8 @@ class ProductProduct(models.Model):
                 most_quantity_location = qty_per_location[0][1]
 
             info_content = [
-                {'location': location.display_name, 'quantity': quantity} for quantity, location in qty_per_location]
+                {'location': location.display_name, 'quantity': quantity, 'location_id': location.id}
+                for quantity, location in qty_per_location]
             info['content'].append({
                 'warehouse_name': warehouse.name,
                 'most_quantity_location_id': most_quantity_location and most_quantity_location.id or 0,

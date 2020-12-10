@@ -126,6 +126,13 @@ msgstr "El producto está disponible en:"
 
 #. module: stock_by_warehouse
 #. openerp-web
+#: code:addons/stock_by_warehouse/static/src/js/widget.js:28
+#, python-format
+msgid "There is no stock available"
+msgstr "No hay existencias disponibles"
+
+#. module: stock_by_warehouse
+#. openerp-web
 #: code:addons/stock_by_warehouse/static/src/xml/template.xml:21
 #, python-format
 msgid "This is real(on hand) quantity  minus reserved quantity"
