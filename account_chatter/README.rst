@@ -13,23 +13,23 @@ To configure go to:
 
 2. Select any user you can share account chatter notifications
 
-3. Account & Finance > Check > Show account notifications
+3. Accounting > Check > Show account notifications
 
 Account:
 
-    .. image:: account_chatter/static/description/chatter_in_account.png
+    .. image:: ../account_chatter/static/description/chatter_in_account.png
        :alt: Chatter in account
        :width: 400px
 
 Journal entry:
 
-    .. image:: account_chatter/static/description/chatter_in_move.png
+    .. image:: ../account_chatter/static/description/chatter_in_move.png
        :alt: Chatter in journal entry
        :width: 400px
 
 Journal:
 
-    .. image:: account_chatter/static/description/chatter_in_journal.png
+    .. image:: ../account_chatter/static/description/chatter_in_journal.png
        :alt: Chatter in journal
        :width: 400px
 
