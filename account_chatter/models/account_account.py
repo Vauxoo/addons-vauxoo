@@ -9,16 +9,15 @@ class AccountAccount(models.Model):
     _name = "account.account"
     _inherit = ['account.account', 'mail.thread']
 
-    name = fields.Char(track_visibility=True)
-    currency_id = fields.Many2one(track_visibility=True)
-    code = fields.Char(track_visibility=True)
-    deprecated = fields.Boolean(track_visibility=True)
-    reconcile = fields.Boolean(track_visibility=True)
-    user_type_id = fields.Many2one(track_visibility=True)
-    tax_ids = fields.Many2many(track_visibility=True)
-    tag_ids = fields.Many2many(track_visibility=True)
-    group_id = fields.Many2one(track_visibility=True)
-    realizable_account = fields.Boolean(track_visibility=True)
+    name = fields.Char(tracking=True)
+    currency_id = fields.Many2one(tracking=True)
+    code = fields.Char(tracking=True)
+    deprecated = fields.Boolean(tracking=True)
+    reconcile = fields.Boolean(tracking=True)
+    user_type_id = fields.Many2one(tracking=True)
+    tax_ids = fields.Many2many(tracking=True)
+    tag_ids = fields.Many2many(tracking=True)
+    group_id = fields.Many2one(tracking=True)
 
     def _message_track(self, tracked_fields, initial):
         """Perform a field tracking over tax_ids and tag_ids
