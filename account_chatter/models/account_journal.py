@@ -6,14 +6,13 @@ from odoo import models, fields
 
 class AccountJournal(models.Model):
 
-    _inherit = ["account.journal", "mail.thread"]
-    _name = "account.journal"
+    _inherit = "account.journal"
 
-    name = fields.Char(track_visibility=True)
-    code = fields.Char(track_visibility=True)
-    type = fields.Selection(track_visibility=True)
-    default_credit_account_id = fields.Many2one(track_visibility=True)
-    default_debit_account_id = fields.Many2one(track_visibility=True)
-    currency_id = fields.Many2one(track_visibility=True)
-    company_id = fields.Many2one(track_visibility=True)
-    active = fields.Boolean(track_visibility=True)
+    name = fields.Char(tracking=True)
+    code = fields.Char(tracking=True)
+    type = fields.Selection(tracking=True)
+    default_credit_account_id = fields.Many2one(tracking=True)
+    default_debit_account_id = fields.Many2one(tracking=True)
+    currency_id = fields.Many2one(tracking=True)
+    company_id = fields.Many2one(tracking=True)
+    active = fields.Boolean(tracking=True)
