@@ -8,8 +8,6 @@ class AccountMove(models.Model):
 
     _inherit = "account.move"
 
-    name = fields.Char(tracking=True)
-    ref = fields.Char(tracking=True)
     date = fields.Date(tracking=True)
     journal_id = fields.Many2one(tracking=True)
     narration = fields.Text(tracking=True)
