@@ -10,12 +10,12 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th><strong>Number: </strong><span t-field="o.name"/></th>
-                                        <th t-if="o.ref"><strong>Reference: </strong><span><span t-field="o.ref"/></span></th>
+                                        <th name="th_number"><strong>Number: </strong><span t-field="o.name"/></th>
+                                        <th t-if="o.ref" name="th_ref"><strong>Reference: </strong><span><span t-field="o.ref"/></span></th>
                                     </tr>
                                     <tr>
-                                        <th><strong>Date: </strong><span t-field="o.date"/></th>
-                                        <th><span><strong>Printing Date: </strong><span><t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></span></span></th>
+                                        <th name="th_date"><strong>Date: </strong><span t-field="o.date"/></th>
+                                        <th name="th_printing_date"><span><strong>Printing Date: </strong><span><t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></span></span></th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -25,45 +25,45 @@
                             <table class="table table-bordered">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Code</th>
-                                        <th>Account</th>
-                                        <th>Name</th>
-                                        <th>Partner</th>
-                                        <th>Due</th>
-                                        <th>Debit</th>
-                                        <th>Credit</th>
-                                        <th groups="analytic.group_analytic_accounting">Analytic</th>
-                                        <th t-if="o.line_ids.mapped('currency_id')">Amount Currency</th>
-                                        <th>Currency</th>
+                                        <th name="th_account_code">Code</th>
+                                        <th name="th_account_name">Account</th>
+                                        <th name="th_name">Name</th>
+                                        <th name="th_partner">Partner</th>
+                                        <th name="th_date_maturity">Due</th>
+                                        <th name="th_debit">Debit</th>
+                                        <th name="th_credit">Credit</th>
+                                        <th name="th_analytic_account" groups="analytic.group_analytic_accounting">Analytic</th>
+                                        <th name="th_amount_currency" t-if="o.line_ids.mapped('currency_id')">Amount Currency</th>
+                                        <th name="th_currency">Currency</th>
                                     </tr>
                                 </thead>
                                 <tbody t-if="o.line_ids">
                                     <tr t-foreach="o.line_ids" t-as="l">
-                                        <td><small t-raw="l.account_id.code"/></td>
-                                        <td><small t-raw="l.account_id.name"/></td>
-                                        <td><small t-field="l.name"/></td>
-                                        <td><small t-field="l.partner_id"/></td>
-                                        <td><small t-field="l.date_maturity"/></td>
-                                        <td class="text-right">
+                                        <td name="td_account_code"><small t-raw="l.account_id.code"/></td>
+                                        <td name="td_account_name"><small t-raw="l.account_id.name"/></td>
+                                        <td name="td_name"><small t-field="l.name"/></td>
+                                        <td name="td_partner"><small t-field="l.partner_id"/></td>
+                                        <td name="td_date_maturity"><small t-field="l.date_maturity"/></td>
+                                        <td name="td_debit" class="text-right">
                                             <small t-field="l.debit"/>
                                         </td>
-                                        <td class="text-right">
+                                        <td name="td_credit" class="text-right">
                                             <small t-field="l.credit"/>
                                         </td>
-                                        <td groups="analytic.group_analytic_accounting"><small t-field="l.analytic_account_id"/></td>
+                                        <td name="td_analytic_account" groups="analytic.group_analytic_accounting"><small t-field="l.analytic_account_id"/></td>
                                         <t t-if="l.currency_id">
-                                            <td class="text-right">
+                                            <td name="td_amount_currency" class="text-right">
                                                 <small t-field="l.amount_currency"/>
                                             </td>
                                         </t>
-                                        <td><small t-field="(l.currency_id or l.company_id.currency_id).name"/></td>
+                                        <td name="td_currency"><small t-field="(l.currency_id or l.company_id.currency_id).name"/></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="5"></td>
-                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
-                                        <td class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td name="td_total_debit" class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                        <td name="td_total_credit" class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
                                         <td colspan="3"></td>
                                     </tr>
                                 </tfoot>
