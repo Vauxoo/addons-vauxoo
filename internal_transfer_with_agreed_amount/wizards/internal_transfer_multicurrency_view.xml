@@ -18,9 +18,10 @@
         </field>
     </record>
 
-    <act_window id="action_internal_transfer_multicurrency"
-        name="Specify the agreed amount"
-        res_model="internal.transfer.multicurrency"
-        view_mode="form"
-        target="new"/>
+    <record id="action_internal_transfer_multicurrency" model="ir.actions.act_window">
+        <field name="name">Specify the agreed amount</field>
+        <field name="res_model">internal.transfer.multicurrency</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 </odoo>
