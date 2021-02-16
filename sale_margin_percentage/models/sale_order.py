@@ -43,7 +43,7 @@ class SaleOrderLine(models.Model):
         readonly=True, help="Price purchase of product")
 
     @api.depends('product_id', 'purchase_price', 'product_uom_qty',
-                 'price_unit')
+                 'price_unit', 'price_subtotal')
     def _compute_margin_percentage(self):
         """ Same margin but we return a percentage from the purchase price.
         """
