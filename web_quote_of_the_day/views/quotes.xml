@@ -19,7 +19,7 @@
         <field name="name">quote.view.tree</field>
         <field name="model">quote</field>
         <field name="arch" type="xml">
-            <tree string="Quote">
+            <tree>
                 <field name="quote"/>
                 <field name="author"/>
                 <field name="last_date_shown"/>
@@ -29,11 +29,12 @@
     <record id="quotes_action" model="ir.actions.act_window">
         <field name="name">Quotes</field>
         <field name="res_model">quote</field>
-        <field name="view_type">form</field>
+        <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
-            Set your very first quote
+            <b>Set your very first quote</b>
         </field>
     </record>
-    <menuitem id="quote_menu" name="Quotes" sequence="10" action="quotes_action" web_icon="web_icon_quote_of_the_day,static/description/icon.jpg"/>
+    <menuitem id="quote_main" name="Quotes" sequence="1000" web_icon="web_quote_of_the_day,static/description/icon.png"/>
+    <menuitem id="quote_menu" name="Quotes" sequence="1000" parent="quote_main" action="web_quote_of_the_day.quotes_action"/>
 </odoo>

@@ -10,6 +10,7 @@
         'data': [
             'views/quotes.xml',
             'views/assets.xml',
+            'security/ir.model.access.csv',
         ],
         'auto_install': True,
         'application': True,
