@@ -1,0 +1,39 @@
+<odoo>
+    <record id="quote_view_form" model="ir.ui.view">
+        <field name="name">quote.view.form</field>
+        <field name="model">quote</field>
+        <field name="arch" type="xml">
+            <form string="Quote">
+                <sheet>
+                    <group>
+                        <field name="quote"/>
+                        <field name="background"/>
+                        <field name="author"/>
+                        <field name="last_date_shown"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="quote_view_tree" model="ir.ui.view">
+        <field name="name">quote.view.tree</field>
+        <field name="model">quote</field>
+        <field name="arch" type="xml">
+            <tree string="Quote">
+                <field name="quote"/>
+                <field name="author"/>
+                <field name="last_date_shown"/>
+            </tree>
+        </field>
+    </record>
+    <record id="quotes_action" model="ir.actions.act_window">
+        <field name="name">Quotes</field>
+        <field name="res_model">quote</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            Set your very first quote
+        </field>
+    </record>
+    <menuitem id="quote_menu" name="Quotes" sequence="10" action="quotes_action" web_icon="web_icon_quote_of_the_day,static/description/icon.jpg"/>
+</odoo>

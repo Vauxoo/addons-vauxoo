@@ -1,20 +1,15 @@
 {
-        'name': '',
+        'name': 'Quote of the day',
         'version': '1.0',
-        'description': '',
-        'summary': '',
-        'author': '',
-        'website': '',
+        'description': 'Quote of the day is retrieved from different services',
+        'summary': 'Quote of the day is retrieved from different services',
+        'author': 'Vauxoo',
+        'website': 'https://vauxoo.com',
         'license': 'LGPL-3',
-        'category': '',
-        'depends': [
-            ''
-        ],
+        'category': 'Tools',
         'data': [
-            ''
-        ],
-        'demo': [
-            ''
+            'views/quotes.xml',
+            'views/assets.xml',
         ],
         'auto_install': True,
         'application': True,
