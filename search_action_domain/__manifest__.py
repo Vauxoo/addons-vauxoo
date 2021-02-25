@@ -14,6 +14,7 @@
     'test': [
     ],
     'data': [
+        'data/ir_actions_server.xml',
     ],
     'demo': [
     ],

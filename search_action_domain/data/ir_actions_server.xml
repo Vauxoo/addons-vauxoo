@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.actions.server" id="create_as_ir_filter">
+        <field name="name">Create As Filter</field>
+        <field name="model_id" ref="base.model_ir_actions_server"/>
+        <field name="binding_model_id" ref="base.model_ir_actions_server"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">
+for record in records:
+    if not record.state == 'code':
+        continue
+    xid = '__export__.ir_filters_server_action_%s' % record.id
+    if env.ref(xid, raise_if_not_found=False):
+        continue
+    filter = env['ir.filters'].create({
+        'name': record.name,
+        'model_id': record.model_id.model,
+        'domain': '[]',
+        'context': "{'search_action_domain': {'%s': [%s]}}" % (record.model_id.model, record.id),
+        'active': True,
+        'user_id': False,
+        'is_default': False,
+        'action_id': False,
+        'sort': '[]',
+    })
+    env['ir.model.data'].create({
+        'module': xid.split('.')[0],
+        'name': xid.split('.')[1],
+        'res_id': filter.id,
+        'model': filter._name,
+    })
+        </field>
+    </record>
+
+</odoo>
