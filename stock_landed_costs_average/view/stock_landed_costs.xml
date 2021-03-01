@@ -20,6 +20,7 @@
                     <field
                         name="move_ids"
                         widget="many2many_tags"
+                        domain="['|', ('unbuild_id', '!=', False), ('production_id', '!=', False), ('state', 'in', ('done',))]"
                         />
                 </xpath>
                 <xpath expr='//field[@name="account_move_id"]' position='after'>

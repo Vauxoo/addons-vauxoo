@@ -25,7 +25,6 @@ class StockLandedCost(models.Model):
         string='Production Moves',
         readonly=True,
         states={'draft': [('readonly', False)]},
-        domain=['|', ('unbuild_id', '!=', False), ('production_id', '!=', False), ('state', 'in', ('done',))],
         help='Production Moves to be increased in costs',
         copy=False,
     )
@@ -513,13 +512,13 @@ class StockLandedCost(models.Model):
 
             cost.write(
                 {'state': 'done', 'account_move_id': move_id})
-            
+
             # Post the account move if the journal's auto post true
             move_obj = self.env['account.move'].browse(move_id)
             if move_obj.journal_id.entry_posted:
                 move_obj.post()
                 move_obj.validate()
-                
+
         return True
 
     @api.v7
