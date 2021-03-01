@@ -25,7 +25,7 @@ class StockLandedCost(models.Model):
         string='Production Moves',
         readonly=True,
         states={'draft': [('readonly', False)]},
-        domain=[('production_id', '!=', False), ('state', 'in', ('done',))],
+        domain=['|', ('unbuild_id', '!=', False), ('production_id', '!=', False), ('state', 'in', ('done',))],
         help='Production Moves to be increased in costs',
         copy=False,
     )
