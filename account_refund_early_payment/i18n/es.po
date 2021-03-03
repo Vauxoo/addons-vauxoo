@@ -16,27 +16,27 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_refund_early_payment
-#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_invoice_refund__active_id
+#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_move_reversal__active_id
 msgid "Active"
 msgstr "Activo"
 
 #. module: account_refund_early_payment
-#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_invoice_refund__amount_total
+#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_move_reversal__amount_total
 msgid "Amount Total"
 msgstr "Importe total"
 
 #. module: account_refund_early_payment
-#: selection:account.invoice.refund,filter_refund:0
+#: selection:account.move.reversal,refund_method:0
 msgid "Cancel: create credit note and reconcile"
 msgstr "Cancelar: crear nota de crédito y conciliar"
 
 #. module: account_refund_early_payment
-#: model:ir.model.fields,help:account_refund_early_payment.field_account_invoice_refund__filter_refund
+#: model:ir.model.fields,help:account_refund_early_payment.field_account_move_reversal__refund_method
 msgid "Choose how you want to credit this invoice. You cannot Modify and Cancel if the invoice is already reconciled"
 msgstr ""
 
 #. module: account_refund_early_payment
-#: selection:account.invoice.refund,filter_refund:0
+#: selection:account.move.reversal,refund_method:0
 msgid "Create a draft credit note"
 msgstr "Crear un borrador de nota de crédito"
 
@@ -46,12 +46,12 @@ msgid "Create refund invoice"
 msgstr "Crear Nota de Crédito"
 
 #. module: account_refund_early_payment
-#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_invoice_refund__filter_refund
+#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_move_reversal__refund_method
 msgid "Credit Method"
 msgstr "Método de crédito"
 
 #. module: account_refund_early_payment
-#: model:ir.model,name:account_refund_early_payment.model_account_invoice_refund
+#: model:ir.model,name:account_refund_early_payment.model_account_move_reversal
 msgid "Credit Note"
 msgstr "Nota de crédito"
 
@@ -62,22 +62,22 @@ msgid "Discount Early Payment"
 msgstr "Descuento por Pronto Pago"
 
 #. module: account_refund_early_payment
-#: selection:account.invoice.refund,filter_refund:0
+#: selection:account.move.reversal,refund_method:0
 msgid "Early payment: Prepare a discount and reconcile automatically such refund with the invoices selected"
 msgstr "Pronto pago: Preparar un descuento y conciliar dicha nota de crédito automáticamente con las facturas seleccionadas"
 
 #. module: account_refund_early_payment
-#: selection:account.invoice.refund,filter_refund:0
+#: selection:account.move.reversal,refund_method:0
 msgid "Modify: create credit note, reconcile and create a new draft invoice"
 msgstr "Modificar: crear nota de crédito, conciliar y crear una nueva factura"
 
 #. module: account_refund_early_payment
-#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_invoice_refund__percentage
+#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_move_reversal__percentage
 msgid "Percentage"
 msgstr "Porcentaje"
 
 #. module: account_refund_early_payment
-#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_invoice_refund__product_id
+#: model:ir.model.fields,field_description:account_refund_early_payment.field_account_move_reversal__product_id
 msgid "Product"
 msgstr "Producto"
 
@@ -97,4 +97,3 @@ msgstr "Utilice esta opción si desea aplicar un descuento por pronto pago a una
 #: model:product.template,weight_uom_name:account_refund_early_payment.product_discount_product_template
 msgid "kg"
 msgstr ""
-

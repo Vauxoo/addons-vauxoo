@@ -1,6 +1,6 @@
 {
     'name': 'Account Refund Early Payment',
-    'version': '12.0.1.0.0',
+    'version': '14.0.1.0.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'license': 'LGPL-3',
