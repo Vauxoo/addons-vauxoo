@@ -28,6 +28,8 @@
                         widget="many2many_tags"
                         domain="['|', ('unbuild_id', '!=', False), ('production_id', '!=', False), ('state', 'in', ('done',))]"
                         />
+                    <field name="production_ids" widget="many2many_tags" domain="[('state', 'in', ('done',))]"/>
+                    <field name="unbuild_ids" widget="many2many_tags" domain="[('state', 'in', ('done',))]"/>
                 </xpath>
                 <xpath expr='//field[@name="account_move_id"]' position='after'>
                     <group colspan="2">

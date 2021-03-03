@@ -43,6 +43,28 @@ class StockLandedCost(models.Model):
         help='Production Moves to be increased in costs',
         copy=False,
     )
+    production_ids = fields.Many2many(
+        'mrp.production',
+        'stock_landed_mrp_production_rel',
+        'stock_landed_cost_id',
+        'production_id',
+        string='Production Orders',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        help='Production Orders with finished goods to be increased in costs',
+        copy=False,
+    )
+    unbuild_ids = fields.Many2many(
+        'mrp.unbuild',
+        'stock_landed_mrp_unbuild_rel',
+        'stock_landed_cost_id',
+        'unbuild_id',
+        string='Unbuild Orders',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        help='Unbuild Orders with Disassembled goods to be increased in costs',
+        copy=False,
+    )
 
     @api.multi
     def button_validate(self):
@@ -134,8 +156,8 @@ class StockLandedCost(models.Model):
         """It returns product valuations based on picking's moves
         """
         lines = []
-        for move in (self.mapped('picking_ids').mapped('move_lines') +
-                     self.move_ids):
+        for move in (self.mapped('picking_ids.move_lines') | self.move_ids |
+                     self.mapped('production_ids.move_finished_ids') | self.mapped('unbuild_ids.produce_line_ids')):
             if (move.product_id.valuation != 'real_time' or
                     move.product_id.cost_method != 'fifo'):
                 continue
