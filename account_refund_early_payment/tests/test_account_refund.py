@@ -1,9 +1,10 @@
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
-class TestEarlyPayment(TransactionCase):
+class TestEarlyPayment(AccountTestInvoicingCommon):
     def setUp(self):
-        super(TestEarlyPayment, self).setUp()
+        super().setUp()
         self.customer = self.env.ref('base.res_partner_3')
         self.product1 = self.env.ref('product.product_product_5')
         self.product2 = self.env.ref('product.product_product_6')
@@ -12,34 +13,29 @@ class TestEarlyPayment(TransactionCase):
         self.product_discount.taxes_id = False
         self.env.user.company_id.account_sale_tax_id = False
 
-    def create_invoice(self, partner=None, **line_kwargs):
-        if partner is None:
-            partner = self.customer
-        invoice = Form(self.env['account.invoice'])
-        invoice.partner_id = partner
-        invoice = invoice.save()
-        self.create_inv_line(invoice, **line_kwargs)
-        return invoice
+    def create_invoice_with_product(self, product=None, move_type='out_invoice', partner=None, quantity=1, price=150):
+        move_form = Form(self.env['account.move'].with_context(default_move_type=move_type))
+        move_form.partner_id = partner or self.customer
+        product = product or self.product1
 
-    def create_inv_line(self, invoice, product=None, quantity=1, price=150):
-        if product is None:
-            product = self.product1
-        with Form(invoice) as inv:
-            with inv.invoice_line_ids.new() as line:
-                line.product_id = product
-                line.quantity = quantity
-                line.price_unit = price
+        with move_form.invoice_line_ids.new() as line_form:
+            line_form.product_id = product
+            line_form.quantity = quantity
+            line_form.price_unit = price
+
+        rslt = move_form.save()
+        rslt.action_post()
+        return rslt
 
     def create_refunds(self, invoices, percentage=5.0):
         ctx = {'active_model': invoices._name, 'active_ids': invoices.ids}
-        wizard = Form(self.env['account.invoice.refund'].with_context(**ctx))
-        wizard.filter_refund = 'early_payment'
+        wizard = Form(self.env['account.move.reversal'].with_context(**ctx))
+        wizard.refund_method = 'early_payment'
         wizard.percentage = percentage
-        wizard.description = 'Test discount'
         wizard = wizard.save()
-        result = wizard.invoice_refund()
+        result = wizard.reverse_moves()
         self.assertTrue(result)
-        refunds = self.env['account.invoice'].search(result['domain'], order='id')
+        refunds = self.env['account.move'].search(result['domain'], order='id')
         return refunds
 
     def test_01_early_payment_from_invoices(self):
@@ -49,12 +45,11 @@ class TestEarlyPayment(TransactionCase):
         several invoices.
         """
         # Create three invoices for different products
-        invoices = (self.create_invoice(product=self.product1, price=100)
-                    + self.create_invoice(product=self.product2, price=200)
-                    + self.create_invoice(product=self.product3, price=300))
+        invoices = (self.create_invoice_with_product(product=self.product1, price=100)
+                    + self.create_invoice_with_product(product=self.product2, price=200)
+                    + self.create_invoice_with_product(product=self.product3, price=300))
 
-        invoices.action_invoice_open()
-        self.assertEqual(invoices.mapped('state'), 3*['open'])
+        self.assertEqual(invoices.mapped('state'), 3*['posted'])
 
         # Create refunds
         refunds = self.create_refunds(invoices)
