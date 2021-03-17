@@ -16,7 +16,6 @@ class MrpProductProduce(models.TransientModel):
                                   production.qty_available_to_produce)
         return res
 
-    @api.multi
     def do_produce(self):
         self.ensure_one()
         if self.product_qty > self.production_id.qty_available_to_produce:

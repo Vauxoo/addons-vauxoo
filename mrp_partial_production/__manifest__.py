@@ -1,6 +1,6 @@
 {
     "name": "MRP Partial Production",
-    "version": "12.0.1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Vauxoo",
     "category": "",
     "website": "http://www.vauxoo.com/",

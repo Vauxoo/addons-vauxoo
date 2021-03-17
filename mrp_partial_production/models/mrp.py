@@ -9,7 +9,6 @@ class MrpProduction(models.Model):
 
     _inherit = 'mrp.production'
 
-    @api.multi
     @api.depends('state', 'move_raw_ids')
     def _compute_qty_to_produce(self):
         """Used to shown the quantity available to produce considering the
@@ -25,7 +24,6 @@ class MrpProduction(models.Model):
         help='Quantity available to produce considering the quantities '
         'reserved by the order')
 
-    @api.multi
     def get_qty_available_to_produce(self):
         """Compute the total available to produce considering
         the lines reserved
@@ -65,7 +63,6 @@ class MrpWorkorder(models.Model):
 
     _inherit = 'mrp.workorder'
 
-    @api.multi
     def record_production(self):
         res = super(MrpWorkorder, self).record_production()
         for move in self.move_raw_ids.filtered(
