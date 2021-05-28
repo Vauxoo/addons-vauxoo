@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.product.form.stock.warehouse</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="before">
+                <field name="warehouses_stock"
+                    widget="warehouse"
+                    groups="stock.group_stock_multi_warehouses"/>
+                <field name="warehouses_stock_location"
+                    widget="warehouse"
+                    options='{"by_location": True}'
+                    colspan="1"
+                    groups="stock.group_stock_multi_warehouses"/>
+                <field name="warehouses_stock_recompute"
+                    nolabel="1"
+                    colspan="1"
+                    widget="toggle_button"
+                    groups="stock.group_stock_multi_warehouses"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_only_form_view" model="ir.ui.view">
+        <field name="name">product.template.only.form.warehouse</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="before">
+                <field name="warehouses_stock"
+                    colspan="1"
+                    widget="warehouse"
+                    groups="stock.group_stock_multi_warehouses"/>
+                <field name="warehouses_stock_recompute"
+                    nolabel="1"
+                    colspan="1"
+                    widget="toggle_button"
+                    groups="stock.group_stock_multi_warehouses"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
