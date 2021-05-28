@@ -1,8 +1,8 @@
 from odoo.tests import Form
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.tests.common import TransactionCase
 
 
-class TestEarlyPayment(AccountTestInvoicingCommon):
+class TestEarlyPayment(TransactionCase):
     def setUp(self):
         super().setUp()
         self.customer = self.env.ref('base.res_partner_3')
@@ -55,7 +55,7 @@ class TestEarlyPayment(AccountTestInvoicingCommon):
         refunds = self.create_refunds(invoices)
         self.assertEqual(len(refunds), 3)
         self.assertListEqual(
-            refunds.mapped('origin'), invoices.mapped('number'))
+            sorted(refunds.mapped('invoice_origin')), sorted(invoices.mapped('name')))
 
         # Refunds should be for 5% of invoice totals
-        self.assertEqual(refunds.mapped('amount_total'), [5.0, 10.0, 15.0])
+        self.assertEqual(sorted(refunds.mapped('amount_total')), [5.0, 10.0, 15.0])
