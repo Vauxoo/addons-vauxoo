@@ -10,6 +10,7 @@
     'category': 'Accounting',
     'license': 'OEEL-1',
     'depends': [
+        "mrp",
         "stock_cost_segmentation",
         "stock_landed_costs",
     ],
