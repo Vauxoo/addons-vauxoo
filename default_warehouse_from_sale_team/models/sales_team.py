@@ -36,7 +36,7 @@ class WarehouseDefault(models.Model):
                          self).default_get(fields_list)
         res_users_obj = self.env['res.users']
         user_brw = res_users_obj.browse(self._uid)
-        warehouse = user_brw.sale_team_id.default_warehouse
+        warehouse = user_brw.sudo().sale_team_id.default_warehouse
         if warehouse:
             warehouse_id = warehouse.id
             model_obj = self.env['ir.model']
