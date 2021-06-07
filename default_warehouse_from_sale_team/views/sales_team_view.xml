@@ -6,8 +6,8 @@
             <field name="model">crm.team</field>
             <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[@name='members']" position="after">
-                    <page string="Warehouse settings for the sales team">
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Settings warehouse from sale team">
                         <group>
                             <group name="conf_warehouse">
                                 <field name="default_warehouse" widget="selection" modifiers="{}"/>
