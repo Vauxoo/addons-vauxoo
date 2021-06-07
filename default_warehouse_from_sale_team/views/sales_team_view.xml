@@ -6,7 +6,7 @@
             <field name="model">crm.team</field>
             <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[@name='members']" position="after">
+                <xpath expr="//page[last()]" position="after">
                     <page string="Warehouse settings for the sales team">
                         <group>
                             <group name="conf_warehouse">
