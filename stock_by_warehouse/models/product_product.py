@@ -79,14 +79,23 @@ class ProductProduct(models.Model):
 
         # Just in case it's asked from only a group of warehouses
         warehouse_ids = self._context.get('warehouse_ids')
+        warehouse_location_type = self._context.get('warehouse_location_type')
         some_wh = False
         if warehouse_ids:
             info['warehouse'] = 0.0
             some_wh = not warehouse_id
 
         for warehouse in warehouse_ids or self.env['stock.warehouse'].sudo().search([]):
-            product = self_origin.sudo().with_context(
-                warehouse=warehouse.id, location=False)
+            context = {
+                'warehouse': warehouse.id,
+                'location': False,
+            }
+            if warehouse_location_type:
+                context.update({
+                    'location': warehouse.mapped(warehouse_location_type).id,
+                })
+                context.pop('warehouse')
+            product = self_origin.sudo().with_context(**context)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = product.qty_available_not_res
             if some_wh:
