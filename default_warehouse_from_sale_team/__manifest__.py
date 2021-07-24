@@ -1,27 +1,25 @@
 {
-    'name': "Sale Team Warehouse",
+    'name': "Default Warehouse from Sales Team",
     'summary': """Adding a field for the default user warehouse and modifying
     the global default method for assign in any related field the correct
     default warehouse.
     """,
     'author': "Vauxoo",
     'website': "http://www.vauxoo.com",
-    'license': 'AGPL-3',
-    'category': '',
-    'version': '13.0.1.0.0',
+    'license': 'LGPL-3',
+    'category': 'Inventory/Inventory',
+    'version': '14.0.1.0.0',
     'depends': [
         'sale_stock',
-        'delivery',
-        'sales_team',
         'purchase_requisition',
     ],
     'test': [
     ],
     'data': [
-        'views/sales_team_view.xml',
-        'views/res_users_view.xml',
-        'views/stock_view.xml',
-        'security/ir.model.access.csv',
+        'views/crm_team_views.xml',
+        'views/ir_sequence_views.xml',
+        'views/res_users_views.xml',
+        'views/stock_picking_type_views.xml',
         'security/res_groups.xml',
         'security/ir_rule.xml',
     ],
