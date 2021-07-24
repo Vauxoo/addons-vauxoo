@@ -1,23 +1,23 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-====================
-Sales Team Warehouse
-====================
+=================================
+Default Warehouse from Sales Team
+=================================
 
 Usage
 =====
 
-Add a field `default_warehouse` in sales team.
+Add a field `Default Warehouse` in sales team.
 
 Create sort kind of api where any object with field called warehouse_id will
 take the default value from the sales team field
 this taking into account the team defined in `Default Sale Teams` field defined
 in the res.user model.
 
-To improve, consistency and usability we add the next features:
+To improve, consistency and usability we add the following features:
 
-- If you try to add a default sale team where the user do not belongs wil throw
+- If you try to add a default sales team where the user doesn't belongs wil throw
   you an error message: Can not set default team is do not belongs to sale team
 - Add an automated action/server action to update the user default sales team
   every time that a sales teams by:
@@ -27,8 +27,10 @@ To improve, consistency and usability we add the next features:
     - dummy write to update m2m in users to make new feature for filtering
       records.
 
-Currently this default warehouse feature applies for sale.order,
-stock.picking.type and stock.picking.
+Currently this default warehouse feature applies for:
+- Sale orders
+- Transcers (``stock.picking``)
+- Operation type (``stock.picking.type``)
 
 Also add a new feature for Permissions and Security: Taking advantage of the
 default_warehouse field in the sales team model now we can filter the
@@ -95,7 +97,7 @@ welcomed feedback
 `here <https://github.com/Vauxoo/addons-vauxoo/issues/new?body=module:%20
 default_warehouse_from_sale_team
 %0Aversion:%20
-8.0.2.0.0
+14.0
 %0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_
 
 Credits
@@ -103,8 +105,9 @@ Credits
 
 **Contributors**
 
-* Nhomar Hernandez <nhomar@vauxoo.com> (Planner/Developer)
+* Nhomar Hernández <nhomar@vauxoo.com> (Planner/Developer)
 * Katherine Zaoral <kathy@vauxoo.com> (Planner/Developer)
+- Luis González <lgonzalez@vauxoo.com> (Developer)
 
 Maintainer
 ==========
@@ -114,6 +117,6 @@ Maintainer
    :target: https://www.vauxoo.com
    :width: 200
 
-This module is maintained by the Vauxoo.
+This module is maintained by Vauxoo.
 
 To contribute to this module, please visit https://www.vauxoo.com.
