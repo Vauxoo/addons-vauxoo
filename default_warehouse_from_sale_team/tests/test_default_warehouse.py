@@ -1,13 +1,12 @@
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form, TransactionCase
 
 
 class TestSalesTeamDefaultWarehouse(TransactionCase):
 
     def setUp(self):
-        super(TestSalesTeamDefaultWarehouse, self).setUp()
+        super().setUp()
         self.company = self.env.ref('base.main_company')
         self.partner = self.env.ref('base.res_partner_12')
-        self.sale_obj_new = self.env['sale.order']
         self.purchase_obj = self.env['purchase.order']
         self.purchase_requisition_obj = self.env['purchase.requisition']
         self.res_user_obj = self.env['res.users']
@@ -28,10 +27,28 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         self.product = self.env.ref('product.product_product_11')
         self.product_uom = self.env.ref('uom.product_uom_unit')
 
-    def test_default_picking_type_purchase_requisition(self):
-        """Validate the picking type by default from sale team warehouse in
-        purchase requisition"""
+    def create_sale_order(self, partner=None, **line_kwargs):
+        if partner is None:
+            partner = self.partner
+        sale_order = Form(self.env["sale.order"])
+        sale_order.partner_id = partner
+        sale_order = sale_order.save()
+        self.create_so_line(sale_order, **line_kwargs)
+        return sale_order
 
+    def create_so_line(self, sale_order, product=None, quantity=1, price=100):
+        if product is None:
+            product = self.product
+        with Form(sale_order) as so:
+            with so.order_line.new() as line:
+                line.product_id = product
+                line.product_uom_qty = quantity
+                line.price_unit = price
+
+    def test_01_default_picking_type_purchase_requisition(self):
+        """Validate the picking type by default from sale team warehouse in
+        purchase requisition
+        """
         values = self.purchase_requisition_obj.with_user(
             self.demo_user).default_get([])
         pick_type_id = self.pick_type_obj.browse(
@@ -44,7 +61,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
                          'Default picking type is not the'
                          'set on the sales team related to de user.')
 
-    def test_default_picking_type_purchase(self):
+    def test_02_default_picking_type_purchase(self):
         """Validate picking type by default from sale team warehouse in
         purchase order"""
         purchase_values = {
@@ -56,14 +73,13 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         pick_type_id = self.pick_type_obj.browse(
             values.get('picking_type_id'))
 
-        purchase_id = self.purchase_obj.with_user(self.demo_user).create(
-            purchase_values)
+        purchase_id = self.purchase_obj.with_user(self.demo_user).create(purchase_values)
 
         self.assertEqual(purchase_id.picking_type_id, pick_type_id,
                          'Default picking type is not the'
                          'set on the sales team related to de user.')
 
-    def test_proper_behavior(self):
+    def test_03_proper_behavior(self):
         """1.- Testing that the Demo User has not sales team set.
         2.-Testing that the sales order created by Demo User has
         the main warehouse assigned by default.
@@ -76,23 +92,16 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         main_wh = self.env.ref('stock.warehouse0')
         # user without team
         user_without_team = self.demo_user.copy({'sale_team_id': False})
-        sale_brw1 = self.sale_obj_new.with_user(user_without_team).create({
-            'name': 'Tests Main Sale Order',
-            'company_id': self.company.id,
-            'partner_id': self.partner.id,
-        })
-        sale_brw2 = self.sale_obj_new.with_user(self.demo_user).create({
-            'name': 'Tests Sales Team Sale Order',
-            'company_id': self.company.id,
-            'partner_id': self.partner.id,
-        })
-        self.assertEqual(sale_brw1.warehouse_id.id, main_wh.id,
-                         'Default warehouse is not the main warehouse.')
-        self.assertEqual(sale_brw2.warehouse_id.id, self.test_wh.id,
-                         'Default warehouse is not the warehouse'
-                         'set on the sales team related to de user.')
+        self.uid = user_without_team
+        sale_order1 = self.create_sale_order()
+        self.uid = self.demo_user
+        sale_order2 = self.create_sale_order()
+        self.assertEqual(sale_order1.warehouse_id, main_wh, 'Default warehouse is not the main warehouse.')
+        self.assertEqual(
+            sale_order2.warehouse_id, self.test_wh,
+            'Default warehouse is not the warehouse set on the sales team related to de user.')
 
-    def test_warehouse_team_sale_policy(self):
+    def test_04_warehouse_team_sale_policy(self):
         """Verify that the policy is created with the daily defined in the
         sales team for that warehouse
         """
@@ -106,21 +115,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
             'property_stock_account_input_categ_id': account_id.id,
             'property_stock_account_output_categ_id': account_id.id,
             })
-
-        sale = self.sale_obj_new.with_user(self.demo_user).create({
-            'name': 'Tests Main Sale Order',
-            'company_id': self.company.id,
-            'partner_id': self.partner.id,
-            'warehouse_id': self.test_wh.id,
-            'order_line': [(0, 0, {
-                'product_id': self.product.id,
-                'product_uom_qty': 1.0,
-                'price_unit': 100.0,
-                'product_uom': self.product_uom.id,
-            })],
-            'payment_term_id': payment_term.id,
-            'team_id': sales_team.id,
-        })
+        sale = self.create_sale_order()
 
         # Confirm sale order
         sale.sudo().action_confirm()
