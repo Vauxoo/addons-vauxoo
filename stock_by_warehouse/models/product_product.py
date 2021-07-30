@@ -1,10 +1,7 @@
 import json
 from collections import defaultdict
 from odoo import api, fields, models, _
-from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero
-
-UNIT = dp.get_precision('Product Unit of Measure')
 
 
 class ProductProduct(models.Model):
@@ -12,7 +9,7 @@ class ProductProduct(models.Model):
 
     qty_available_not_res = fields.Float(
         string='Qty Available Not Reserved',
-        digits=UNIT,
+        digits='Product Unit of Measure',
         compute='_compute_qty_available_not_reserved',
     )
 
