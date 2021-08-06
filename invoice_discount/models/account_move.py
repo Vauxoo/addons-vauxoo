@@ -48,7 +48,8 @@ class AccountMove(models.Model):
         sum of invoice lines.
         """
         move_lines = self.env['account.move.line'].read_group(
-            [('move_id', 'in', self.ids)], ['move_id', 'discount_amount', 'subtotal_wo_discount'], ['move_id'])
+            [('move_id', 'in', self.ids), ('exclude_from_invoice_tab', '=', False)],
+            ['move_id', 'discount_amount', 'subtotal_wo_discount'], ['move_id'])
         amounts = dict((lines['move_id'][0], {
             'subtotal_wo_discount': lines['subtotal_wo_discount'],
             'discount_amount': lines['discount_amount'],
