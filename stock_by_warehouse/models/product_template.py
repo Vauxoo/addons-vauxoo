@@ -27,7 +27,7 @@ class ProductTemplate(models.Model):
         self.warehouses_stock_recompute = True
 
     @api.depends('product_variant_ids.qty_available_not_res')
-    @api.depends_context('warehouse', 'force_company')
+    @api.depends_context('warehouse', 'company')
     def _compute_product_available_not_res(self):
         for tmpl in self:
             if isinstance(tmpl.id, models.NewId):
@@ -50,8 +50,7 @@ class ProductTemplate(models.Model):
         warehouse_id = self._context.get('warehouse_id')
 
         for warehouse in self.env['stock.warehouse'].search([]):
-            tmpl = self_origin.with_context(
-                warehouse=warehouse.id, location=False, force_company=warehouse.company_id.id)
+            tmpl = self_origin.with_company(warehouse.company_id).with_context(warehouse=warehouse.id, location=False)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = tmpl.qty_available_not_res
             info['content'].append({
@@ -67,11 +66,3 @@ class ProductTemplate(models.Model):
                 tmpl.qty_available - tmpl.outgoing_qty
             })
         return json.dumps(info)
-
-    @api.depends_context('company_owned', 'force_company', 'warehouse')
-    def _compute_quantities(self):
-        """Inherited method to add 'warehouse' from the api.depends_context
-        of _compute_quantities() as:
-        It is needed. It is changed in a single transaction in the current code,
-        since the widget iterates over several warehouses at the same time"""
-        return super(ProductTemplate, self)._compute_quantities()
