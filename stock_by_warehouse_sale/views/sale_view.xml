@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form//field[@name='sequence']" position="after">
-                <div class="text-center alert alert-info">
+                <div class="text-center alert alertdialog">
                     <p>The saleable stock in: <field name="warehouse_id"/> that can be delivered immediately is:
                         <field name="warehouses_stock"
                             widget="warehouse"
