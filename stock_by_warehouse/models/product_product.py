@@ -44,7 +44,7 @@ class ProductProduct(models.Model):
         domain_quant.extend(domain_quant_locations)
         return domain_quant
 
-    @api.depends_context('warehouse', 'force_company')
+    @api.depends_context('warehouse', 'company')
     def _compute_qty_available_not_reserved(self):
         """Method to set the quantity available that is not reserved of a serie of products.
         """
@@ -74,8 +74,8 @@ class ProductProduct(models.Model):
         warehouse_id = self._context.get('warehouse_id')
 
         for warehouse in self.env['stock.warehouse'].search([]):
-            product = self_origin.with_context(
-                warehouse=warehouse.id, location=False, force_company=warehouse.company_id.id)
+            product = self_origin.with_company(warehouse.company_id).with_context(
+                warehouse=warehouse.id, location=False)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = product.qty_available_not_res
             info['content'].append({
@@ -91,17 +91,6 @@ class ProductProduct(models.Model):
                 product.qty_available - product.outgoing_qty
             })
         return json.dumps(info)
-
-    @api.depends_context(
-        'lot_id', 'owner_id', 'package_id', 'from_date', 'to_date',
-        'company_owned', 'force_company', 'warehouse',
-    )
-    def _compute_quantities(self):
-        """Inherited method to add 'warehouse' from the api.depends_context
-        of _compute_quantities() as:
-        It is needed. It is changed in a single transaction in the current code,
-        since the widget iterates over several warehouses at the same time"""
-        return super(ProductProduct, self)._compute_quantities()
 
     def _get_qty_per_location(self, warehouse):
         """Method to get the locations where a product is available, of a specific warehouse.
