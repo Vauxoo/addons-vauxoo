@@ -1,6 +1,6 @@
 {
     "name": "Stock by Warehouse",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "summary": """
     Know the stock in all your warehouses with a simple click
     from the product form.
