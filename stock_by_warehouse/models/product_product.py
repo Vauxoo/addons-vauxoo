@@ -73,11 +73,29 @@ class ProductProduct(models.Model):
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        for warehouse in self.env['stock.warehouse'].search([]):
-            product = self_origin.with_company(warehouse.company_id).with_context(
-                warehouse=warehouse.id, location=False)
+        # Just in case it's asked from only a group of warehouses
+        warehouse_ids = self._context.get('warehouse_ids')
+        warehouse_location_type = self._context.get('warehouse_location_type')
+        some_wh = False
+        if warehouse_ids:
+            info['warehouse'] = 0.0
+            some_wh = not warehouse_id
+
+        for warehouse in warehouse_ids or self.env['stock.warehouse'].sudo().search([]):
+            context = {
+                'warehouse': warehouse.id,
+                'location': False,
+            }
+            if warehouse_location_type:
+                context.update({
+                    'location': warehouse.mapped(warehouse_location_type).id,
+                })
+                context.pop('warehouse')
+            product = self_origin.sudo().with_context(**context)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = product.qty_available_not_res
+            if some_wh:
+                info['warehouse'] += product.qty_available_not_res
             info['content'].append({
                 'warehouse': warehouse.name,
                 'warehouse_short': warehouse.code,
@@ -87,8 +105,7 @@ class ProductProduct(models.Model):
                 'virtual': product.virtual_available,
                 'incoming': product.incoming_qty,
                 'outgoing': product.outgoing_qty,
-                'saleable':
-                product.qty_available - product.outgoing_qty
+                'saleable': product.qty_available - product.outgoing_qty
             })
         return json.dumps(info)
 
@@ -164,7 +181,8 @@ class ProductProduct(models.Model):
                 most_quantity_location = qty_per_location[0][1]
 
             info_content = [
-                {'location': location.display_name, 'quantity': quantity} for quantity, location in qty_per_location]
+                {'location': location.display_name, 'quantity': quantity, 'location_id': location.id}
+                for quantity, location in qty_per_location]
             info['content'].append({
                 'warehouse_name': warehouse.name,
                 'most_quantity_location_id': most_quantity_location and most_quantity_location.id or 0,

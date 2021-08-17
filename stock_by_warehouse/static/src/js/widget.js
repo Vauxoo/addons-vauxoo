@@ -6,27 +6,34 @@ var Widget = require('web.Widget');
 var form_common = require('web.AbstractField');
 var formats = require('web.field_utils');
 var fieldRegistry = require('web.field_registry');
+var {EventDispatcherMixin} = require('web.mixins');
 var QWeb = core.qweb;
+var _t = core._t;
 
-var Locations = Widget.extend({
-    init: function (info) {
+var Locations = Widget.extend(EventDispatcherMixin, {
+    init: function (parent, info) {
+        this._super(...arguments);
         this.info = info;
     },
 
     start: function () {
+        this._super(...arguments);
         var info = this.info;
         if (info !== false) {
             _.each(info.content, function (k, v) {
                 k.index = v;
-                k.name = k.warehouse_name
+                k.name = k.warehouse_name;
                 k.locations_quantity_formatted = formats.format["integer"](
                     k.locations_available, "", {digits: k.digits});
                 k.locations_info = k.info_content;
             });
         }
-        var popover = QWeb.render('StockAvailabilityPopOver', {
-            'lines': info.content || [],
-        });
+        var popover = _t('There is no stock available');
+        if (info !== false && info.available_locations !== 0) {
+            popover = QWeb.render('StockAvailabilityPopOver', {
+                'lines': info.content || [],
+            });
+        }
 
         var options = {
             content: popover,
@@ -53,7 +60,7 @@ var ShowPaymentLineWidget = form_common.extend({
                         digits: self.info.digits || 0}),
             }));
 
-            var popover = new Locations(this.info);
+            var popover = new Locations(this, this.info);
             popover.attachTo($('.js_available_info'));
         } else{
             this.$el.html(QWeb.render('ShowWarehouseInfo', {
