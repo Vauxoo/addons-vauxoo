@@ -3,7 +3,7 @@
 
     <record id="group_show_account_chatter_notifications" model="res.groups">
         <field name="name">Show account chatter notifications</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_accounting_accounting"/>
         <field name="comment">Show notifications of accounting entries, journal and accounts reflecting changes and observations.</field>
     </record>
 
