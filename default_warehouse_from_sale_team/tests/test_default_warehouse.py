@@ -106,10 +106,6 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         sales team for that warehouse
         """
         account_id = self.env['account.account'].search([], limit=1)
-        sales_team = self.env.ref(
-            'default_warehouse_from_sale_team.section_sales_default_team'
-        )
-        payment_term = self.env.ref('account.account_payment_term_immediate')
         self.product.categ_id.write({
             'property_valuation': 'real_time',
             'property_stock_account_input_categ_id': account_id.id,
