@@ -52,3 +52,12 @@ class DefaultWarehouseMixing(models.AbstractModel):
         )
         salesteam = warehouse.sale_team_ids[:1]
         return salesteam
+
+    def onchange(self, values, field_name, field_onchange):
+        """Add an extra context to prevent current user's salesteam from being overwritten by onchanges
+
+        This is useful in e.g. sale orders, where sales person's sales team has priority over current
+        user's sales team.
+        """
+        self_team_ctx = self.with_context(keep_current_user_salesteam=True)
+        return super(DefaultWarehouseMixing, self_team_ctx).onchange(values, field_name, field_onchange)
