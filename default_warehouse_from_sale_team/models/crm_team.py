@@ -19,6 +19,16 @@ class CrmTeam(models.Model):
         'the warehouse of this sales team',
     )
 
+    def _get_default_team_id(self, user_id=None, domain=None):
+        """When specified by context, ensure the sales team is taken from the current user"""
+        if (
+            user_id is not None
+            and self.env.context.get("keep_current_user_salesteam")
+            and self.env.user.sale_team_id
+        ):
+            user_id = self.env.uid
+        return super()._get_default_team_id(user_id=user_id, domain=domain)
+
     def _get_default_journal_sale(self):
         for journal in self.journal_team_ids:
             if journal.type == "sale":
