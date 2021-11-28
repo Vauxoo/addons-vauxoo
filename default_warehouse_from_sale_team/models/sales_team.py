@@ -31,13 +31,12 @@ class WarehouseDefault(models.Model):
         """Force that if model has a field called warehouse_id the default
         value is the one in the sales team in the user setted
         """
-        defaults = super(WarehouseDefault,
-                         self).default_get(fields_list)
+        defaults = super().default_get(fields_list)
         res_users_obj = self.env['res.users']
         user_brw = res_users_obj.browse(self._uid)
-        warehouse = user_brw.sale_team_id.default_warehouse_id
-        if warehouse:
-            warehouse_id = warehouse.id
+        allowed_warehouse_ids = user_brw.sale_team_ids.default_warehouse_id.sorted('sequence')
+        default_warehouse_id = allowed_warehouse_ids[:1].id
+        if default_warehouse_id:
             model_obj = self.env['ir.model']
             fields_obj = self.env['ir.model.fields']
             model_id = model_obj.search([('model', '=', self._name)])
@@ -46,9 +45,7 @@ class WarehouseDefault(models.Model):
                  ('relation', '=', 'stock.warehouse'),
                  ('ttype', '=', 'many2one')])
             names_list = list({field.name for field in fields_data})
-            defaults.update(
-                {name: warehouse_id for name in names_list
-                 if defaults.get(name)})
+            defaults.update({name: default_warehouse_id for name in names_list if defaults.get(name)})
         return defaults
 
     def read(self, fields_list=None, load='_classic_read'):
