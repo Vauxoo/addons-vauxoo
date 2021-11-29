@@ -34,7 +34,8 @@ class WarehouseDefault(models.Model):
         defaults = super().default_get(fields_list)
         res_users_obj = self.env['res.users']
         user_brw = res_users_obj.browse(self._uid)
-        allowed_warehouse_ids = user_brw.sale_team_ids.default_warehouse_id.sorted('sequence')
+        allowed_warehouse_ids = user_brw.sale_team_ids.filtered(
+            lambda x: x.company_id in self.env.companies).default_warehouse_id.sorted('sequence')
         default_warehouse_id = allowed_warehouse_ids[:1].id
         if default_warehouse_id:
             model_obj = self.env['ir.model']
