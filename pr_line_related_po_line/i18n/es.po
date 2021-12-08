@@ -6,22 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-11 08:42+0000\n"
-"PO-Revision-Date: 2015-08-11 10:44+0200\n"
-"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
+"POT-Creation-Date: 2021-12-08 00:50+0000\n"
+"PO-Revision-Date: 2021-12-08 00:50+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: sl\n"
-"X-Generator: Poedit 1.8.2\n"
 
 #. module: pr_line_related_po_line
 #: model:ir.model.fields,field_description:pr_line_related_po_line.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:pr_line_related_po_line.field_purchase_requisition_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #. module: pr_line_related_po_line
 #: model:ir.model.fields,field_description:pr_line_related_po_line.field_purchase_order_line__id
@@ -33,20 +31,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:pr_line_related_po_line.field_purchase_order_line____last_update
 #: model:ir.model.fields,field_description:pr_line_related_po_line.field_purchase_requisition_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación el"
 
 #. module: pr_line_related_po_line
 #: model:ir.model,name:pr_line_related_po_line.model_purchase_order_line
 msgid "Purchase Order Line"
-msgstr "Postavka nabavnega naloga"
+msgstr "Línea de pedido de compra"
 
 #. module: pr_line_related_po_line
 #: model:ir.model.fields,field_description:pr_line_related_po_line.field_purchase_requisition_line__purchase_order_line_ids
 msgid "Purchase Order Lines"
-msgstr ""
+msgstr "Líneas de pedido de compra"
 
 #. module: pr_line_related_po_line
 #: model:ir.model,name:pr_line_related_po_line.model_purchase_requisition_line
 #: model:ir.model.fields,field_description:pr_line_related_po_line.field_purchase_order_line__purchase_requisition_line_id
 msgid "Purchase Requisition Line"
-msgstr "Nabava Postavka zahtevka"
+msgstr "Línea solicitud de compra"
