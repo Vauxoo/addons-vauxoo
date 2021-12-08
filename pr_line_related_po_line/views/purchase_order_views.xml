@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="purchase_order_form">
+        <field name="name">purchase.order.prl.related.pol.inherit.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='invoice_lines']" position="after">
+                <field name="purchase_requisition_line_id"
+                       invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/field[@name='display_type']" position="after">
+                <field name="purchase_requisition_line_id"
+                       invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
