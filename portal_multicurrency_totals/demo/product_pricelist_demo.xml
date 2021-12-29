@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="pricelist_usd" model="product.pricelist">
+        <field name="name">Pricelist in USD</field>
+        <field name="sequence" eval="10" />
+        <field name="currency_id" ref="base.USD" />
+    </record>
+
+</odoo>
