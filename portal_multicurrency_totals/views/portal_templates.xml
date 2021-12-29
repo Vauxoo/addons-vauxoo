@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="totals_footer">
+        <h4 t-if="totals_by_currency" class="mt16">Totals by Currency</h4>
+        <t t-if="totals_by_currency" t-call="portal.portal_table">
+            <t t-set="pager" t-value="False" />
+            <t t-set="currencies" t-value="list(totals_by_currency)" />
+            <t
+                t-set="show_paid"
+                t-value="'paid' in totals_by_currency[currencies[0]]"
+            />
+            <t
+                t-set="show_unpaid"
+                t-value="'unpaid' in totals_by_currency[currencies[0]]"
+            />
+            <thead>
+                <tr>
+                    <th>Currency</th>
+                    <th class="text-right">Total</th>
+                    <th t-if="show_paid" class="text-right">Paid</th>
+                    <th t-if="show_unpaid" class="text-right">Unpaid</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="currencies" t-as="currency">
+                    <t
+                        t-set="totals_this_currency"
+                        t-value="totals_by_currency[currency]"
+                    />
+                    <td>
+                        <span t-esc="currency.name" />
+                    </td>
+                    <td class="text-right">
+                        <span
+                            t-esc="totals_this_currency['amount']"
+                            t-options="{
+                                'widget': 'monetary',
+                                'display_currency': currency,
+                            }"
+                        />
+                    </td>
+                    <td t-if="show_paid" class="text-right">
+                        <span
+                            t-esc="totals_this_currency['paid']"
+                            t-options="{
+                                'widget': 'monetary',
+                                'display_currency': currency,
+                            }"
+                        />
+                    </td>
+                    <td t-if="show_unpaid" class="text-right">
+                        <span
+                            t-esc="totals_this_currency['unpaid']"
+                            t-options="{
+                                'widget': 'monetary',
+                                'display_currency': currency,
+                            }"
+                        />
+                    </td>
+                </tr>
+            </tbody>
+        </t>
+    </template>
+
+    <template
+        id="portal_my_orders"
+        inherit_id="sale.portal_my_orders"
+        name="Show Multi-Currency Totals in Quotations"
+        customize_show="True"
+    >
+        <xpath expr="//t[@t-call='portal.portal_table']" position="after">
+            <t t-call="portal_multicurrency_totals.totals_footer" />
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_quotations"
+        inherit_id="sale.portal_my_quotations"
+        name="Show Multi-Currency Totals in Sale orders"
+        customize_show="True"
+    >
+        <xpath expr="//t[@t-call='portal.portal_table']" position="after">
+            <t t-call="portal_multicurrency_totals.totals_footer" />
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_invoices"
+        inherit_id="account.portal_my_invoices"
+        name="Show Multi-Currency Totals in Invoices"
+        customize_show="True"
+    >
+        <xpath expr="//t[@t-call='portal.portal_table']" position="after">
+            <t t-call="portal_multicurrency_totals.totals_footer" />
+        </xpath>
+    </template>
+
+</odoo>
