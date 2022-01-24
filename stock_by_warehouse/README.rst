@@ -28,7 +28,7 @@ by warehouse in other views, by simply adding a related field.
 Notes:
 ------
 
-This module rely on variants and multiple warehouse management
+This module relies on variants and multiple warehouse management
 properly configured
 
 Maintainer
