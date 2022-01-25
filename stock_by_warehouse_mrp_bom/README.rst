@@ -7,9 +7,15 @@ Functional Rationale:
 Provide a nice widget in the product on the bill of material's line to see the quantity of product
 by warehouse in order to help you to review such information as fast as possible.
 
-.. image:: ./static/images/image.png
+.. image:: ./static/description/widget_bom_warehouse.png
     :alt: Example on Form View
     :width: 600px
+
+In case there is no warehouse configured, the widget will not show that part of the text:
+
+.. image:: ./static/description/widget_bom_nowarehouse.png
+   :alt: Example on Form View
+   :width: 600px
 
 Notes:
 ------
