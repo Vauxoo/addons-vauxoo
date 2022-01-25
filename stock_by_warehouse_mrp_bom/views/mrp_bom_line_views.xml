@@ -6,9 +6,9 @@
         <field name="model">mrp.bom.line</field>
         <field name="inherit_id" ref="mrp.mrp_bom_line_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//form/group" position="before">
-                <div class="text-center alert alert-info">
-                    <p>The stock in: <field name="warehouse_id"/> that is immediately available is:
+            <xpath expr="//form/sheet/group" position="before">
+                <div class="text-center alert alert-info" role="alert">
+                    <p>The stock <span attrs="{'invisible':[('warehouse_id','=',False)]}">in: <field name="warehouse_id"/></span> that is immediately available is:
                         <field name="warehouses_stock"
                             widget="warehouse"
                             groups="stock.group_stock_multi_warehouses"

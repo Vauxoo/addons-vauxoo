@@ -1,6 +1,6 @@
 {
     "name": "Stock by Warehouse on MRP_BoM",
-    "version": "12.0.1.0.0",
+    "version": "15.0.1.0.0",
     "summary": """
     Know the stock in all your warehouses with a simple click
     from the mrp bill of material's line form.
@@ -14,7 +14,8 @@
         "stock_by_warehouse",
     ],
     "data": [
-        'views/mrp_bom_view.xml'
+        'views/mrp_bom_line_views.xml',
+        'views/mrp_bom_views.xml'
     ],
     "demo": [
     ],

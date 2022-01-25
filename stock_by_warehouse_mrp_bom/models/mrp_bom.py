@@ -10,7 +10,6 @@ class MrpBomLine(models.Model):
         related='bom_id.picking_type_id.warehouse_id')
     warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
 
-    @api.multi
     def _compute_get_warehouses_stock(self):
         for line in self:
             line.warehouses_stock = line.product_id.with_context(
