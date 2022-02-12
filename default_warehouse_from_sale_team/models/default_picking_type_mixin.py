@@ -1,9 +1,9 @@
 from odoo import models, api
 
 
-class DefaultPickingTypeMixing(models.AbstractModel):
-    _name = 'default.picking.type.mixing'
-    _inherit = 'default.warehouse.mixing'
+class DefaultPickingTypeMixin(models.AbstractModel):
+    _name = 'default.picking.type.mixin'
+    _inherit = 'default.warehouse.mixin'
     _description = "Default Operation Type"
 
     @api.model
