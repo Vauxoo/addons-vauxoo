@@ -52,7 +52,7 @@ msgstr ""
 " equipos de ventas"
 
 #. module: default_warehouse_from_sale_team
-#: model:ir.model,name:default_warehouse_from_sale_team.model_default_picking_type_mixing
+#: model:ir.model,name:default_warehouse_from_sale_team.model_default_picking_type_mixin
 msgid "Default Operation Type"
 msgstr "Tipo de Operación por defecto"
 
@@ -62,7 +62,7 @@ msgid "Default Team"
 msgstr "Equipo por defecto"
 
 #. module: default_warehouse_from_sale_team
-#: model:ir.model,name:default_warehouse_from_sale_team.model_default_warehouse_mixing
+#: model:ir.model,name:default_warehouse_from_sale_team.model_default_warehouse_mixin
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team__default_warehouse_id
 #: model:ir.module.category,name:default_warehouse_from_sale_team.default_warehouse_module
 msgid "Default Warehouse"
@@ -72,8 +72,8 @@ msgstr "Almacén por defecto"
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal__display_name
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_move__display_name
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixing__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixing__display_name
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixin__display_name
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixin__display_name
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_ir_sequence__display_name
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_requisition__display_name
@@ -89,8 +89,8 @@ msgstr "Nombre a mostrar"
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal__id
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_move__id
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixing__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixing__id
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixin__id
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixin__id
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_ir_sequence__id
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_order__id
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_requisition__id
@@ -145,8 +145,8 @@ msgstr "Diarios de equipos de ventas"
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal____last_update
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_move____last_update
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixing____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixing____last_update
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixin____last_update
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixin____last_update
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_ir_sequence____last_update
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_order____last_update
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_requisition____last_update
