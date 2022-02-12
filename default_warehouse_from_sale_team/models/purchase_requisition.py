@@ -3,7 +3,7 @@ from odoo import models
 
 class PurchaseRequisition(models.Model):
     _name = 'purchase.requisition'
-    _inherit = ['purchase.requisition', 'default.picking.type.mixing']
+    _inherit = ['purchase.requisition', 'default.picking.type.mixin']
 
     def action_in_progress(self):
         """Pass team by context so sequence number is computed
