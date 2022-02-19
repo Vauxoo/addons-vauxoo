@@ -73,8 +73,8 @@ class ProductProduct(models.Model):
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        for warehouse in self.env['stock.warehouse'].search([]):
-            product = self_origin.with_company(warehouse.company_id).with_context(
+        for warehouse in self.env['stock.warehouse'].sudo().search([]):
+            product = self_origin.sudo().with_company(warehouse.company_id).with_context(
                 warehouse=warehouse.id, location=False)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = product.qty_available_not_res
@@ -100,10 +100,10 @@ class ProductProduct(models.Model):
         """
         self.ensure_one()
         # Get all the stock locations that are part of the warehouse.
-        warehouse_locations = self.env['stock.location'].search([
+        warehouse_locations = self.env['stock.location'].sudo().search([
             ('id', 'child_of', warehouse.lot_stock_id.id), ('usage', '=', 'internal')])
 
-        quants = self.env['stock.quant'].search([
+        quants = self.env['stock.quant'].sudo().search([
             ('product_id', '=', self.id), ('location_id', 'in', warehouse_locations.ids),
             ('quantity', '>', 0)])
 
@@ -147,7 +147,7 @@ class ProductProduct(models.Model):
         # itself, we enable this context management
         warehouse_context = self._context.get('warehouse')
 
-        warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].search([])
+        warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].sudo().search([])
         available_locations_warehouse = 0
         for warehouse in warehouses:
             qty_per_location_info = self_origin._get_qty_per_location(warehouse)
