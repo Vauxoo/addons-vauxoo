@@ -49,8 +49,9 @@ class ProductTemplate(models.Model):
         # itself, we enable this context management
         warehouse_id = self._context.get('warehouse_id')
 
-        for warehouse in self.env['stock.warehouse'].search([]):
-            tmpl = self_origin.with_company(warehouse.company_id).with_context(warehouse=warehouse.id, location=False)
+        for warehouse in self.env['stock.warehouse'].sudo().search([]):
+            tmpl = self_origin.sudo().with_company(warehouse.company_id).with_context(
+                warehouse=warehouse.id, location=False)
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info['warehouse'] = tmpl.qty_available_not_res
             info['content'].append({
