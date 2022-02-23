@@ -1,3 +1,9 @@
 .js_product_warehouse, .js_available_info{
     cursor: pointer;
 }
+
+.popover-body.stock-by-warehouse-widget{
+    overflow: auto;
+    max-height: 400px;
+    padding: 0px;
+}
