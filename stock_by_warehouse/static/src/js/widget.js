@@ -80,7 +80,8 @@ var ShowPaymentLineWidget = form_common.extend({
                 'placement': this.nodeOptions.placement || 'right',
                 'title': this.nodeOptions.title || self.info.title || "",
                 'trigger': 'focus',
-                'delay': { "show": 0, "hide": 100 }
+                'delay': { "show": 0, "hide": 100 },
+                'template': QWeb.render('StockByWarehousePopoverTemplate'),
             };
             $(button).popover(options);
         }
