@@ -2,6 +2,14 @@
 
 <templates xml:space="preserve">
 
+    <t t-name="StockByWarehousePopoverTemplate">
+        <div class="popover" role="tooltip">
+            <div class="arrow"/>
+            <h3 class="popover-header"/>
+            <div class="popover-body stock-by-warehouse-widget"/>
+        </div>
+    </t>
+
     <t t-name="ShowWarehouseInfo">
         <div>
             <a role="button" tabindex="0" class="js_product_warehouse">
@@ -10,7 +18,7 @@
     </t>
 
     <t t-name="ProductWarehousePopOver">
-        <div class="panel clearfix">
+        <div class="panel clearfix container">
             <div class="list-group">
                 <t t-foreach="lines" t-as="warehouse">
                     <div t-if="warehouse.available_not_res &gt; 0 or warehouse.available &gt; 0 or warehouse.outgoing &gt; 0 or warehouse.saleable &gt; 0 or warehouse.incoming &gt; 0 or warehouse.virtual &gt; 0" class="list-group-item row">
