@@ -29,8 +29,19 @@ class CrmTeam(models.Model):
             user_id = self.env.uid
         return super()._get_default_team_id(user_id=user_id, domain=domain)
 
-    def _get_default_journal_sale(self):
-        for journal in self.journal_team_ids:
-            if journal.type == "sale":
-                return journal
-        return self.env["account.journal"]
+    def _get_default_journal(self, journal_types):
+        journal = self.env["account.journal"]
+        if not self:
+            return journal
+        company = self.env["res.company"].browse(self.env.context.get("default_company_id")) or self.env.company
+        company_currency = company.currency_id
+        currency_ids = [self.env.context.get("default_currency_id") or company_currency.id]
+        if currency_ids == company_currency.ids:
+            currency_ids.append(False)
+        domain = [
+            ("section_id", "=", self.id),
+            ("company_id", "=", company.id),
+            ("type", "in", journal_types),
+        ]
+        domain_currency = domain + [("currency_id", "in", currency_ids)]
+        return journal.search(domain_currency, limit=1) or journal.search(domain, limit=1)
