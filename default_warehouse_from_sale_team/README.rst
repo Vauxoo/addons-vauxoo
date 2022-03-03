@@ -107,7 +107,7 @@ Credits
 
 * Nhomar Hernández <nhomar@vauxoo.com> (Planner/Developer)
 * Katherine Zaoral <kathy@vauxoo.com> (Planner/Developer)
-- Luis González <lgonzalez@vauxoo.com> (Developer)
+* Luis González <lgonzalez@vauxoo.com> (Developer)
 
 Maintainer
 ==========
