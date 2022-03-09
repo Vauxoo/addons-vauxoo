@@ -7,8 +7,8 @@ class ResUsers(models.Model):
 
     sale_team_ids = fields.Many2many(
         "crm.team", "sale_member_rel", "member_id", "section_id",
-        string="User's sales teams",
-        help="This is only an informative field. Go to Sales > Sales > Sales Teams to edit",
+        string="Allowed sales teams",
+        help="Sales teams allowed for the user, to give access to warehouses and their related documents.",
     )
 
     @api.constrains('sale_team_id')
@@ -19,10 +19,7 @@ class ResUsers(models.Model):
         user_wrong_team = self.filtered(lambda u: u.sale_team_id - u.sale_team_ids)
         if user_wrong_team:
             raise ValidationError(_(
-                "You can not set the sales team %s as default because the user"
-                " does not belongs to that sales team.\n"
-                "Please go to Sales > Settings > Users > Sales Teams if you would like to add this "
-                "user to the sales team",
+                "The chosen team (%s) is not in the allowed sales teams for this user",
                 user_wrong_team[0].sale_team_id.name
             ))
 
