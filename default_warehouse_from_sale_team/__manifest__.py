@@ -8,7 +8,7 @@
     'website': "http://www.vauxoo.com",
     'license': 'LGPL-3',
     'category': 'Inventory/Inventory',
-    'version': '14.0.1.0.0',
+    'version': '15.0.1.0.0',
     'depends': [
         'sale_stock',
         'purchase_requisition',
