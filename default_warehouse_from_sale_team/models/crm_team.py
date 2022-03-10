@@ -31,7 +31,7 @@ class CrmTeam(models.Model):
 
     def _get_default_journal(self, journal_types):
         journal = self.env["account.journal"]
-        if not self:
+        if not self or set(journal_types) == {"general"}:
             return journal
         company = self.env["res.company"].browse(self.env.context.get("default_company_id")) or self.env.company
         company_currency = company.currency_id
