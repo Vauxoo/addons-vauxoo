@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-   <record id="crm_team_view_form" model="ir.ui.view">
+    <record id="crm_team_view_form" model="ir.ui.view">
         <field name="name">crm.team.form.inherit.default.warehouse</field>
         <field name="model">crm.team</field>
         <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='members']" position="after">
+            <xpath expr="//page[@name='members_users']" position="after">
                 <page string="Warehouse settings for the sales team">
                     <group>
                         <group name="conf_warehouse">
