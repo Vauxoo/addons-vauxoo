@@ -29,7 +29,7 @@ To improve, consistency and usability we add the following features:
 
 Currently this default warehouse feature applies for:
 - Sale orders
-- Transcers (``stock.picking``)
+- Transfers (``stock.picking``)
 - Operation type (``stock.picking.type``)
 
 Also add a new feature for Permissions and Security: Taking advantage of the
@@ -97,7 +97,7 @@ welcomed feedback
 `here <https://github.com/Vauxoo/addons-vauxoo/issues/new?body=module:%20
 default_warehouse_from_sale_team
 %0Aversion:%20
-14.0
+15.0
 %0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_
 
 Credits
@@ -108,6 +108,7 @@ Credits
 * Nhomar Hernández <nhomar@vauxoo.com> (Planner/Developer)
 * Katherine Zaoral <kathy@vauxoo.com> (Planner/Developer)
 * Luis González <lgonzalez@vauxoo.com> (Developer)
+* Rolando Duarte <rolando@vauxoo.com> (Developer)
 
 Maintainer
 ==========
