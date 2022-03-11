@@ -140,9 +140,6 @@ class TestStockLogisticsWarehouse(TransactionCase):
         self.compare_qty_available_not_res(self.template_ab, 5)
 
         picking_out_a.action_confirm()
-        self.compare_qty_available_not_res(product_b, 3)
-        self.compare_qty_available_not_res(self.template_ab, 5)
-
         picking_out_a.action_assign()
         self.compare_qty_available_not_res(product_b, 1)
         self.compare_qty_available_not_res(self.template_ab, 3)
