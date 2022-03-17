@@ -2,12 +2,15 @@
 __pycache__/
 *.py[cod]
 
+*.DS_Store*
+
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
 env/
+bin/
 build/
 develop-eggs/
 dist/
@@ -52,6 +55,20 @@ coverage.xml
 # Django stuff:
 *.log
 
+# Pycharm
+.idea
+
+# VS Code
+.vscode
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Rope
+.ropeproject
+
 # Sphinx documentation
 docs/_build/
 
@@ -70,4 +87,3 @@ package.json
 
 # docker node_modules
 node_modules/
-
