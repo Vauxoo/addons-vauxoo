@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class StockWarehouse(models.Model):
@@ -14,11 +14,17 @@ class StockWarehouse(models.Model):
         In some cases, it's required to grant access to warehouses not allowed for the current user, e.g.
         when an inventory rule is triggered that involves other warehouses.
         """
-        rule_warehouse = self.env.ref("default_warehouse_from_sale_team.rule_default_warehouse_wh")
         warehouses = self.exists()
+        allowed_rules = self._get_salesteam_record_rules()
+        failed_rules = self.env["ir.rule"]._get_failing(warehouses, mode="read")
         return (
             warehouses
             and not self.env.su
             and warehouses.check_access_rights("read", raise_exception=False)
-            and self.env["ir.rule"]._get_failing(warehouses, mode="read") == rule_warehouse
+            and failed_rules
+            and not failed_rules - allowed_rules
         )
+
+    @api.model
+    def _get_salesteam_record_rules(self):
+        return self.env.ref("default_warehouse_from_sale_team.rule_default_warehouse_wh")
