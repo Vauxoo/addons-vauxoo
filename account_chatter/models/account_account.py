@@ -19,26 +19,32 @@ class AccountAccount(models.Model):
     tag_ids = fields.Many2many(tracking=True)
     group_id = fields.Many2one(tracking=True)
 
-    def _message_track(self, tracked_fields, initial):
+    def _mail_track(self, tracked_fields, initial):
         """Perform a field tracking over tax_ids and tag_ids
-
         This is performed manually because field tracking over many2many fields is not
         natively supported.
         """
-        changes, tracking_value_ids = super()._message_track(tracked_fields, initial)
-        for display_name, display_info in tracked_fields.items():
-            if display_name not in ('tag_ids', 'tax_ids'):
+        self.ensure_one()
+        changes = set()  # contains onchange tracked fields that changed
+        tracking_value_ids = []
+
+        # generate tracked_values data structure: {'col_name': {col_info, new_value, old_value}}
+        for col_name, col_info in tracked_fields.items():
+            if col_name not in initial:
                 continue
-            initial_value = initial[display_name]
-            new_value = self[display_name]
-            if new_value != initial_value and (new_value or initial_value):
-                tracking_sequence = getattr(self._fields[display_name], 'track_sequence', 100)
-                initial_value = ", ".join(initial_value.mapped('name')) if initial_value else False
-                new_value = ", ".join(new_value.mapped('name')) if new_value else False
-                display_info['type'] = 'char'
+            initial_value = initial[col_name]
+            new_value = self[col_name]
+
+            if new_value != initial_value and (new_value or initial_value):  # because browse null != False
+                tracking_sequence = getattr(
+                    # backward compatibility with old parameter name
+                    self._fields[col_name], 'tracking', getattr(self._fields[col_name], 'track_sequence', 100))
+                if tracking_sequence is True:
+                    tracking_sequence = 100
                 tracking = self.env['mail.tracking.value'].create_tracking_values(
-                    initial_value, new_value, display_name, display_info, tracking_sequence)
+                    initial_value, new_value, col_name, col_info, tracking_sequence, self._name)
                 if tracking:
                     tracking_value_ids.append([0, 0, tracking])
-                changes.add(display_name)
+                changes.add(col_name)
+
         return changes, tracking_value_ids
