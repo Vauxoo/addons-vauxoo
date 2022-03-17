@@ -43,7 +43,7 @@ help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/vauxoo/
 addons-vauxoo/issues/new?body=module:%20
 account_chatter%0Aversion:%20
-12.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+15.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Contributors
 ------------
