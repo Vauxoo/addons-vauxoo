@@ -1,4 +1,4 @@
-from odoo import models, api, http
+from odoo import api, http, models
 from odoo.tools.cache import ormcache
 
 
@@ -7,11 +7,17 @@ class Base(models.AbstractModel):
 
     @ormcache('self.env.uid', 'model', 'action_ids', 'cache_key')
     def _get_cached_action_domain_to_include(self, model, action_ids, cache_key=False):
-        actions = self.env['ir.actions.server'].with_context(search_action_domain=False).search([
-            ('id', 'in', action_ids.split(',')),
-            ('state', '=', 'code'),
-            ('model_id.model', '=', model),
-        ])
+        actions = (
+            self.env['ir.actions.server']
+            .with_context(search_action_domain=False)
+            .search(
+                [
+                    ('id', 'in', action_ids.split(',')),
+                    ('state', '=', 'code'),
+                    ('model_id.model', '=', model),
+                ]
+            )
+        )
         domain = []
         for action in actions:
             res = action.with_context(active_model=model).run()
@@ -28,7 +34,8 @@ class Base(models.AbstractModel):
         if not action_ids or not isinstance(action_ids, list) or not all(isinstance(aid, int) for aid in action_ids):
             return []
         return self._get_cached_action_domain_to_include(
-            self._name, ','.join(map(str, action_ids)), id(http.request.httprequest))
+            self._name, ','.join(map(str, action_ids)), id(http.request.httprequest)
+        )
 
     @api.model
     def _search(self, args, *oargs, **kwargs):
