@@ -11,15 +11,11 @@
     'depends': [
         'base',
     ],
-    'test': [
-    ],
     'data': [
         'data/ir_actions_server.xml',
     ],
-    'demo': [
-    ],
-    'external_dependencies': {
-    },
+    'demo': [],
+    'external_dependencies': {},
     'installable': True,
     'auto_install': False,
     'application': False,
