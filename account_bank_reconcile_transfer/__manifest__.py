@@ -11,18 +11,14 @@
     'depends': [
         'account',
     ],
-    'test': [
-    ],
     'data': [
         'views/assets.xml',
     ],
-    'demo': [
-    ],
+    'demo': [],
     'qweb': [
         'static/src/xml/bank_reconciliation.xml',
     ],
-    'external_dependencies': {
-    },
+    'external_dependencies': {},
     'installable': True,
     'auto_install': False,
     'application': False,
