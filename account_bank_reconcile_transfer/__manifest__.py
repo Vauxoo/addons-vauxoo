@@ -19,7 +19,7 @@
         'static/src/xml/bank_reconciliation.xml',
     ],
     'external_dependencies': {},
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }
