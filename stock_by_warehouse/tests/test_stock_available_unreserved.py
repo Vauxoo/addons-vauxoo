@@ -4,7 +4,7 @@ from odoo.tests.common import TransactionCase
 class TestStockLogisticsWarehouse(TransactionCase):
 
     def setUp(self):
-        super(TestStockLogisticsWarehouse, self).setUp()
+        super().setUp()
         self.picking_obj = self.env['stock.picking']
         self.product_obj = self.env['product.product'].with_context(tracking_disable=True)
         self.template_obj = self.env['product.template']
