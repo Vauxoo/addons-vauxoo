@@ -6,15 +6,8 @@ from odoo import models, fields
 
 class AccountAccount(models.Model):
 
-    _name = "account.account"
-    _inherit = ['account.account', 'mail.thread']
+    _inherit = 'account.account'
 
-    name = fields.Char(tracking=True)
-    currency_id = fields.Many2one(tracking=True)
-    code = fields.Char(tracking=True)
-    deprecated = fields.Boolean(tracking=True)
-    reconcile = fields.Boolean(tracking=True)
-    user_type_id = fields.Many2one(tracking=True)
     tax_ids = fields.Many2many(tracking=True)
     tag_ids = fields.Many2many(tracking=True)
     group_id = fields.Many2one(tracking=True)
