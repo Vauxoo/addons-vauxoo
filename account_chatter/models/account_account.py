@@ -7,7 +7,7 @@ from odoo import models, fields
 class AccountAccount(models.Model):
 
     _name = "account.account"
-    _inherit = ['account.account', 'mail.thread']
+    _inherit = ['account.account', 'mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(tracking=True)
     currency_id = fields.Many2one(tracking=True)
