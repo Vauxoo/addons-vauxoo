@@ -6,7 +6,8 @@ from odoo import models, fields
 
 class AccountAccount(models.Model):
 
-    _inherit = 'account.account'
+    _name = "account.account"
+    _inherit = ['account.account', 'mail.thread', 'mail.activity.mixin']
 
     tax_ids = fields.Many2many(tracking=True)
     tag_ids = fields.Many2many(tracking=True)
