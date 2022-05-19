@@ -1,27 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="view_account_journal_form_inherit" model="ir.ui.view">
-        <field name="name">account.journal.form.inherit</field>
+
+    <record id="view_account_journal_form_show_chatter" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.account.chatter.show</field>
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form"/>
         <field name="groups_id" eval="[(4, ref('account_chatter.group_show_account_chatter_notifications'))]"/>
-        <field eval="100" name="priority"/>
+        <field name="priority" eval="100"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="after">
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
                     <field name="message_ids"/>
                 </div>
             </xpath>
         </field>
     </record>
+
     <record id="view_account_journal_form_inherit_hidden" model="ir.ui.view">
-        <field name="name">account.journal.form.inherit.hidden</field>
+        <field name="name">account.journal.form.inherit.account.chatter</field>
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form"/>
-        <field eval="99" name="priority"/>
+        <field name="priority" eval="99"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('oe_chatter')]" position="replace">
             </xpath>
         </field>
     </record>
+
 </odoo>
