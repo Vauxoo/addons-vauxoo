@@ -6,6 +6,7 @@
         <field name="model">account.account</field>
         <field name="inherit_id" ref="account.view_account_form"/>
         <field name="groups_id" eval="[(4, ref('account_chatter.group_show_account_chatter_notifications'))]"/>
+        <field name="priority" eval="100" />
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="after">
                 <div class="oe_chatter">
@@ -16,5 +17,13 @@
             </xpath>
         </field>
     </record>
-
+    <record id="view_account_form" model="ir.ui.view">
+        <field name="name">account.account.form.inherit.account.chatter</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_chatter')]" position="replace"/>
+        </field>
+    </record>
 </odoo>
