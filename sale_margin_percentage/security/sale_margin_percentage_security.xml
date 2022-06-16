@@ -7,6 +7,7 @@
             - Users of this group will have access to validate
             sales with higher margin percentage.
         </field>
+        <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
     </record>
 
 </odoo>
