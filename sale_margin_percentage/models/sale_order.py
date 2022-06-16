@@ -1,9 +1,4 @@
-# Copyright 2017 Vauxoo
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
-from __future__ import division
 from odoo import models, fields, api
-import odoo.addons.decimal_precision as dp
 
 
 class SaleOrder(models.Model):
@@ -11,7 +6,7 @@ class SaleOrder(models.Model):
 
     margin_percentage = fields.Float(
         compute='_compute_margin_percentage',
-        digits=dp.get_precision('Product Price'),
+        digits='Product Price',
         store=True,
         help="Margin percentage compute based on price unit")
 
@@ -35,7 +30,7 @@ class SaleOrderLine(models.Model):
         help="Limit margin set in sales configuration")
     margin_percentage = fields.Float(
         compute='_compute_margin_percentage',
-        digits=dp.get_precision('Product Price'),
+        digits='Product Price',
         store=True,
         help="Margin percentage compute based on price unit")
     purchase_price = fields.Float(
@@ -46,9 +41,6 @@ class SaleOrderLine(models.Model):
     def _compute_margin_percentage(self):
         """ Same margin but we return a percentage from the purchase price.
         """
-        if not self.env.in_onchange:
-            # prefetch the fields needed for the computation
-            self.read(['price_subtotal', 'purchase_price', 'product_uom_qty', 'order_id'])
         for line in self:
             currency = line.order_id.pricelist_id.currency_id
 
@@ -56,15 +48,17 @@ class SaleOrderLine(models.Model):
                 line.margin_percentage = 0.0
                 continue
 
-            if not line.price_unit or line.price_subtotal == 0.0:
+            if currency.is_zero(line.price_unit) or currency.is_zero(line.price_subtotal):
                 line.margin_percentage = -100.0
                 continue
 
             purchase_price = line.purchase_price or line.product_id.standard_price
-            if not purchase_price:
+            if currency.is_zero(purchase_price):
                 line.margin_percentage = 100.0
                 continue
 
-            line.margin_percentage = currency.round((
-                line.price_subtotal - purchase_price * line.product_uom_qty) *
-                100.0 / line.price_subtotal)
+            line.margin_percentage = currency.round(
+                (
+                    line.price_subtotal - purchase_price * line.product_uom_qty
+                ) * 100.0 / line.price_subtotal
+            )
