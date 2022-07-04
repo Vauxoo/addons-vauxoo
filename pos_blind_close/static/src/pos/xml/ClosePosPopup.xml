@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <!--
+        Refers to vauxoo task#57812 to more information.
+    -->
+    <t t-name="ClosePosPopup" t-inherit="point_of_sale.ClosePosPopup" t-inherit-mode="extension" owl="1">
+        <!--
+            Hides the payments done with customer acounts. (Section 1 of requirements).
+        -->
+        <xpath expr="//div[hasclass('session-overview')]//div[hasclass('info-title')]/span[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('session-overview')]//div[hasclass('info-title')]/span[3]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('session-overview')]//div[hasclass('info-value')]/span[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('session-overview')]//div[hasclass('info-value')]/span[3]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <!--
+            Here we remove the headers for expected and differences
+        -->
+        <xpath expr="//div[hasclass('payment-methods-overview')]//thead//th[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('payment-methods-overview')]//thead//th[4]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <!--
+            Here we hide the total expected and differences of the payment methods that are cash.
+            (Section 2 of requirements).
+        -->
+        <xpath expr="//div[hasclass('payment-methods-overview')]/table/t/tbody[1]//td[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('payment-methods-overview')]/table/t/tbody[1]//td[last()]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('payment-methods-overview')]/table/t/tbody[2]/tr[1]/td[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('payment-methods-overview')]/table/t/tbody[2]/tr[2]/td[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('payment-methods-overview')]/table/t/tbody[2]/tr[3]/td[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        <!--
+            Here we hide the input, difference and total expected of the payment methods that are not cash.
+            (Section 2,3 and 4 of requirements).
+        <xpath expr="//div[hasclass('payment-methods-overview')]/table/tbody[last()]/tr/td[2]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+        -->
+        <xpath expr="//div[hasclass('payment-methods-overview')]/table/tbody[last()]/tr" position="replace">
+            <tr t-foreach="otherPaymentMethods" t-as="pm" t-key="pm.id">
+                <t t-set="_showDiff" t-value="_getShowDiff(pm)" />
+                <td t-esc="pm.name"/>
+                <t t-if="env.pos.config.hide_totals_at_closing_session">
+                    <td t-if="_showDiff" t-on-input="handleInputChange(pm.id)"><input class="pos-input" type="number" t-model.number="state.payments[pm.id].counted"/></td>
+                </t>
+                <t t-if="!env.pos.config.hide_totals_at_closing_session">
+                    <td t-esc="env.pos.format_currency(pm.amount)"/>
+                    <td t-if="_showDiff" t-on-input="handleInputChange(pm.id)"><input class="pos-input" type="number" t-model.number="state.payments[pm.id].counted"/></td>
+                    <td t-if="_showDiff" t-esc="env.pos.format_currency(state.payments[pm.id].difference)" t-att-class="{'warning': state.payments[pm.id].difference}"/>
+                </t>
+            </tr>
+        </xpath>
+        <!--
+            Here we hide the input, the "accept difference and total" checkbox.
+        -->
+        <xpath expr="//div[hasclass('accept-closing')]" position="attributes">
+            <attribute name="t-if">!env.pos.config.hide_totals_at_closing_session</attribute>
+        </xpath>
+    </t>
+</templates>

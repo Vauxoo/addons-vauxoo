@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_config_view_form_inherit" model="ir.ui.view">
+        <field name="name">pos.config.form.inherit.villagroup</field>
+        <field name="model">pos.config</field>
+        <field name="priority">100</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='payment_methods_new']/.." position="inside">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="hide_totals_at_closing_session" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Hide totals at closing session</span>
+                        <p class="text-muted">If this field is checked, the totals are going to be
+hidden in the closing control pop up, when closing a session. Also, the check box for "Accept payments
+difference and post a profit/loss journal entry" will be automatically hidden and checked.</p>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
