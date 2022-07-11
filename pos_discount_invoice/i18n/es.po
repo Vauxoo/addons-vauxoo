@@ -1,0 +1,92 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* invoice_discount
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-06 00:24+0000\n"
+"PO-Revision-Date: 2021-08-06 00:24+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: invoice_discount
+#: model:ir.model.fields,help:invoice_discount.field_account_move_line__discount_amount
+msgid ""
+"Amount total of the discount, is calculated as Discount * SubTotal w/o "
+"Discount / 100."
+msgstr "Monto total de el descuento, es calculado con Descuento * SubTotal sin Descuento / 100."
+
+#. module: invoice_discount
+#: model:ir.model.fields,help:invoice_discount.field_account_move_line__subtotal_wo_discount
+msgid ""
+"Amount without apply the discount of the line, is calculated as Qty * Price "
+"Unit"
+msgstr "Monto sin aplicar el descuento de la línea, es calculado con Cantidad * Precio Unitario"
+
+#. module: invoice_discount
+#: model:ir.model.fields,help:invoice_discount.field_account_bank_statement_line__subtotal_wo_discount
+#: model:ir.model.fields,help:invoice_discount.field_account_move__subtotal_wo_discount
+#: model:ir.model.fields,help:invoice_discount.field_account_payment__subtotal_wo_discount
+msgid "Amount without apply the discount of the lines of the invoice."
+msgstr "Monto sin aplicar el descuento de las líneas de la factura."
+
+#. module: invoice_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_bank_statement_line__discount_amount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move__discount_amount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_payment__discount_amount
+msgid "Discount"
+msgstr "Descuento"
+
+#. module: invoice_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move_line__discount_amount
+msgid "Discount Amount"
+msgstr "Monto descuento"
+
+#. module: invoice_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move__display_name
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move_line__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: invoice_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move__id
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move_line__id
+msgid "ID"
+msgstr ""
+
+#. module: invoice_discount
+#: model:ir.model,name:invoice_discount.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: invoice_discount
+#: model:ir.model,name:invoice_discount.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: invoice_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move____last_update
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move_line____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: invoice_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_bank_statement_line__subtotal_wo_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move__subtotal_wo_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_move_line__subtotal_wo_discount
+#: model:ir.model.fields,field_description:invoice_discount.field_account_payment__subtotal_wo_discount
+msgid "SubTotal w/o Discount"
+msgstr "SubTotal sin descuento"
+
+#. module: invoice_discount
+#: model:ir.model.fields,help:invoice_discount.field_account_bank_statement_line__discount_amount
+#: model:ir.model.fields,help:invoice_discount.field_account_move__discount_amount
+#: model:ir.model.fields,help:invoice_discount.field_account_payment__discount_amount
+msgid "Total of discount apply in each line of the invoice."
+msgstr "Descuento total aplicado en cada una de las líneas de la factura."
