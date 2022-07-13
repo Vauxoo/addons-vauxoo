@@ -1,0 +1,18 @@
+<odoo>
+    <record id="view_server_action_form" model="ir.ui.view">
+        <field name="name">ir.actions.server.form.inherit</field>
+        <field name="model">ir.actions.server</field>
+        <field name="inherit_id" ref="base.view_server_action_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button 
+                    name="create_as_ir_filter"
+                    string="Create As Filter"
+                    type="object"
+                    class="btn-primary"
+                    help="Display a filter in the 'Favorites' section in the selected menu to apply the action."
+                />
+            </header>
+        </field>
+    </record>
+</odoo>
