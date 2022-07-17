@@ -9,12 +9,14 @@
     'website': 'https://vauxoo.com',
     'license': 'LGPL-3',
     'depends': [
+        'account',
         'analytic'
     ],
     'data': [
         'views/account_analytic_view.xml',
         'views/account_analytic_business_view.xml',
         'views/account_analytic_line_view.xml',
+        'views/account_move_line_view.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [
