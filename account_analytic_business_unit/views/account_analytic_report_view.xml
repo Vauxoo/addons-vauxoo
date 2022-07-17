@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_account_report_analytic" model="ir.actions.client">
+        <field name="name">BU: Analytic Report</field>
+        <field name="tag">account_report</field>
+        <field name="context" eval="{'model': 'account.analytic.report'}" />
+    </record>
+    <menuitem id="menu_action_report_account_analytic" name="BU: Analytic Report" action="action_account_report_analytic"
+            parent="account.account_reports_management_menu" groups="analytic.group_analytic_accounting"/>
+</odoo>

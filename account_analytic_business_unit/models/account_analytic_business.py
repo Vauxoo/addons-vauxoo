@@ -13,3 +13,13 @@ class AccountAnalyticDistribution(models.Model):
         ('unique_code', 'UNIQUE(code, name)',
          'The combination of code and and name for a business unit must be unique.')
     ]
+
+
+    def name_get(self):
+        res = []
+        for business_unit in self:
+            name = business_unit.name
+            if business_unit.code:
+                name = '[' + business_unit.code + '] ' + name
+            res.append((business_unit.id, name))
+        return res
