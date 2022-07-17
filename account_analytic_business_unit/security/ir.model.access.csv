@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_analytic_business_unit.access_account_analytic_business_unit,access_account_analytic_business_unit,account_analytic_business_unit.model_account_analytic_business_unit,base.group_user,1,1,1,0
