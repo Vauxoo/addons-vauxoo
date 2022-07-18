@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_analytic_business_unit_view_form" model="ir.ui.view">
+        <field name="name">account.analytic.business.unit.view.form</field>
+        <field name="model">account.analytic.business.unit</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="account_analytic_business_unit_view_tree" model="ir.ui.view">
+        <field name="name">account.analytic.business.unit.view.tree</field>
+        <field name="model">account.analytic.business.unit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="account_analytic_business_unit_view_search" model="ir.ui.view">
+        <field name="name">account.analytic.business.unit.view.search</field>
+        <field name="model">account.analytic.business.unit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+            </search>
+        </field>
+    </record>
+    <record id="account_analytic_business_unit_view_kanban" model="ir.ui.view">
+        <field name="name">account.analytic.business.unit.view.kanban</field>
+        <field name="model">account.analytic.business.unit</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="display_name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="account_analytic_business_unit_action" model="ir.actions.act_window">
+        <field name="name">Business Unit</field>
+        <field name="res_model">account.analytic.business.unit</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p  class="o_view_nocontent_smiling_face">Add a new business unit</p>
+            <p>Creating an efficient business unit model can help companies assign specific tasks to departments in
+                order to streamline work and achieve overall goals. This kind of business structure can also create 
+                better organization and financial efficiency within your business. Understanding what a business 
+                unit is and how it functions can help you determine if it's the right fit for your company.
+                In this article, we describe what a business unit is, its characteristics and how it differs from a
+                subsidiary.</p>
+        </field>
+    </record>
+    <menuitem
+        id="account_analytic_business_unit_menu"
+        name="Business Units"
+        action="account_analytic_business_unit_action"
+        parent="account.menu_analytic_accounting"
+        sequence="100"/>
+</odoo>
