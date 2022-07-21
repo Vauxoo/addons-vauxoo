@@ -5,11 +5,13 @@
         <field name="inherit_id" ref="base.view_server_action_form"/>
         <field name="arch" type="xml">
             <header position="inside">
+                <field name="usage" invisible="True"/>
                 <button 
                     name="create_as_ir_filter"
                     string="Create As Filter"
                     type="object"
                     class="btn-primary"
+                    attrs="{'invisible': [('usage', '=', 'base_automation')]}"
                     help="Display a filter in the 'Favorites' section in the selected menu to apply the action."
                 />
             </header>
