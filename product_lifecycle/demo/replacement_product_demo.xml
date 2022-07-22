@@ -28,8 +28,7 @@
         <field name="product_tmpl_id" ref="product.product_product_4_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[
             ref('product.product_attribute_value_1'),
-            ref('product_lifecycle.product_attribute_value_6'),
-            ref('product.product_attribute_value_5')
+            ref('product_lifecycle.product_attribute_value_6')
         ])]"/>
     </record>
 
@@ -39,8 +38,7 @@
         <field name="product_tmpl_id" ref="product.product_product_4_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[
             ref('product.product_attribute_value_2'),
-            ref('product_lifecycle.product_attribute_value_7'),
-            ref('product.product_attribute_value_5')
+            ref('product_lifecycle.product_attribute_value_7')
         ])]"/>
     </record>
     <record id="product_product_4f" model="product.product">
@@ -49,8 +47,7 @@
         <field name="product_tmpl_id" ref="product.product_product_4_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[
             ref('product.product_attribute_value_2'),
-            ref('product_lifecycle.product_attribute_value_6'),
-            ref('product.product_attribute_value_5')
+            ref('product_lifecycle.product_attribute_value_6')
         ])]"/>
         <field name="replaced_by_product_id" ref="product_product_4g"/>
     </record>
