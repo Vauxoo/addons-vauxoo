@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Vauxoo
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
-
 from odoo import api, fields, models
 
 
@@ -32,7 +27,7 @@ class Pricelist(models.Model):
         :param datetime date: validity date
         :param ID uom_id: intermediate unit of measure
         """
-        results = super(Pricelist, self)._compute_price_rule(products_qty_partner, date=date, uom_id=uom_id)
+        results = super()._compute_price_rule(products_qty_partner, date=date, uom_id=uom_id)
         usd_currency = self.env.ref("base.USD")
         for product_id in results:
             # get current price and pricelist item for product_id
@@ -50,9 +45,3 @@ class Pricelist(models.Model):
                 price = usd_currency.compute(price, self.currency_id, round=False)
             results[product_id] = (price, suitable_rule and suitable_rule.id or False)
         return results
-
-
-class PricelistItem(models.Model):
-    _inherit = "product.pricelist.item"
-
-    base = fields.Selection(selection_add=[("standard_price_usd", "Cost in USD")])
