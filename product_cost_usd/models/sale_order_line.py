@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Vauxoo
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
 from odoo import api, models
 
 
@@ -13,7 +9,7 @@ class SaleOrderLine(models.Model):
         """Inherited to recalculate purchase price when pricelist item is
         based on cost in usd.
         """
-        res = super(SaleOrderLine, self)._get_purchase_price(pricelist, product, product_uom, date)
+        res = super()._get_purchase_price(pricelist, product, product_uom, date)
         price_rule = pricelist._compute_price_rule([(product, 1, False)])
         price, rule = price_rule[product.id]
         suitable_rule = pricelist.item_ids.filtered(lambda x: x.id == rule)
@@ -39,7 +35,7 @@ class SaleOrderLine(models.Model):
         calculate the purchase price when pricelist item is based on cost
         in usd.
         """
-        price = super(SaleOrderLine, self)._compute_margin(order_id, product_id, product_uom_id)
+        price = super()._compute_margin(order_id, product_id, product_uom_id)
         date = order_id.date_order
         prices = self._get_purchase_price(order_id.pricelist_id, product_id, product_uom_id, date)
         return prices.get("purchase_price", price)

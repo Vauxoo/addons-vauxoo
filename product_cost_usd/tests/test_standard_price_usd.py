@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from __future__ import division
 
 from odoo import fields
@@ -10,7 +8,7 @@ from odoo.tools import float_compare, float_round
 
 class TestStandardPriceUsd(TransactionCase):
     def setUp(self):
-        super(TestStandardPriceUsd, self).setUp()
+        super().setUp()
         self.mxn = self.env.ref("base.MXN")
         self.usd = self.env.ref("base.USD")
         self.sale_order = self.env["sale.order"]

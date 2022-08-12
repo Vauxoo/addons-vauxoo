@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Vauxoo
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
 import odoo.addons.decimal_precision as dp
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -10,6 +6,10 @@ from odoo.tools import float_compare
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
+
+    standard_price_usd = fields.Float(
+        "Cost in USD", digits=dp.get_precision("Product Price"), help="Price cost of the product in USD currency"
+    )
 
     @api.constrains("standard_price_usd", "seller_ids")
     def check_cost_and_price(self):
@@ -39,7 +39,3 @@ class ProductTemplate(models.Model):
                 )
                 % (list_price, standard_price_usd)
             )
-
-    standard_price_usd = fields.Float(
-        "Cost in USD", digits=dp.get_precision("Product Price"), help="Price cost of the product in USD currency"
-    )
