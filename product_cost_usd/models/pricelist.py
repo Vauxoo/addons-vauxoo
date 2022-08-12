@@ -3,16 +3,15 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class Pricelist(models.Model):
     _inherit = "product.pricelist"
 
     @api.multi
-    def _compute_price_rule(
-            self, products_qty_partner, date=False, uom_id=False):
-        """ Inherited to modify price computation when a pricelist item is
+    def _compute_price_rule(self, products_qty_partner, date=False, uom_id=False):
+        """Inherited to modify price computation when a pricelist item is
         based on cost in USD.
 
         Why this inheritance?
@@ -33,32 +32,27 @@ class Pricelist(models.Model):
         :param datetime date: validity date
         :param ID uom_id: intermediate unit of measure
         """
-        results = super(Pricelist, self)._compute_price_rule(
-            products_qty_partner, date=date, uom_id=uom_id)
-        usd_currency = self.env.ref('base.USD')
+        results = super(Pricelist, self)._compute_price_rule(products_qty_partner, date=date, uom_id=uom_id)
+        usd_currency = self.env.ref("base.USD")
         for product_id in results:
             # get current price and pricelist item for product_id
             price, item_id = results[product_id]
             suitable_rule = self.item_ids.filtered(lambda x: x.id == item_id)
             # look that pricelist item is based on cost in usd
-            if not suitable_rule or suitable_rule.base != 'standard_price_usd':
+            if not suitable_rule or suitable_rule.base != "standard_price_usd":
                 continue
-            product = self.env['product.product'].browse(product_id)
+            product = self.env["product.product"].browse(product_id)
             # go back conversion made in super, moving the price into
             # product currency for items based on cost in USD
-            price = self.currency_id.compute(
-                price, product.currency_id, round=False)
+            price = self.currency_id.compute(price, product.currency_id, round=False)
             # now convert from USD into pricelist currency
             if self.currency_id != usd_currency:
-                price = usd_currency.compute(
-                    price, self.currency_id, round=False)
-            results[product_id] = (
-                price, suitable_rule and suitable_rule.id or False)
+                price = usd_currency.compute(price, self.currency_id, round=False)
+            results[product_id] = (price, suitable_rule and suitable_rule.id or False)
         return results
 
 
 class PricelistItem(models.Model):
     _inherit = "product.pricelist.item"
 
-    base = fields.Selection(
-        selection_add=[('standard_price_usd', 'Cost in USD')])
+    base = fields.Selection(selection_add=[("standard_price_usd", "Cost in USD")])

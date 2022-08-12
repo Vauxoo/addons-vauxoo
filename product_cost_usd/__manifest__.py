@@ -4,20 +4,19 @@
 
 {
     "name": "Product Price Cost in USD",
-    "summary": '''
+    "summary": """
 This module adds the field Cost in USD to the Product form.
-    ''',
+    """,
     "version": "10.0.0.0.1",
     "author": "Vauxoo",
     "category": "Rico",
     "website": "http://vauxoo.com",
     "license": "LGPL-3",
     "depends": [
-        'product',
-        'sale_margin',
+        "product",
+        "sale_margin",
     ],
-    "demo": [
-    ],
+    "demo": [],
     "data": [
         "views/product_view.xml",
     ],
