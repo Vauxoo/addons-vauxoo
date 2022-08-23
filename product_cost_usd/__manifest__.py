@@ -3,7 +3,7 @@
     "summary": """
 This module adds the field Cost in USD to the Product form.
     """,
-    "version": "11.0.1.0.1",
+    "version": "11.0.1.0.2",
     "author": "Vauxoo",
     "category": "Sales/Sales",
     "website": "https://vauxoo.com",
