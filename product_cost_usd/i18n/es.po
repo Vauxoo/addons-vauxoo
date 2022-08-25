@@ -18,7 +18,7 @@ msgstr ""
 #. module: product_cost_usd
 #: model:ir.model.fields,field_description:product_cost_usd.field_product_template_standard_price_usd
 msgid "Cost in USD"
-msgstr "Costo en Dólares"
+msgstr "Costo en USD"
 
 #. module: product_cost_usd
 #: model:ir.model.fields,help:product_cost_usd.field_product_template_standard_price_usd
@@ -52,14 +52,13 @@ msgid "You cannot create or modify a product if the cost in USD is less than the
 "\n"
 "- Supplier list price = %s\n"
 "- Cost in USD = %s"
-msgstr "No puede crear o modificar un producto si el costo en USD es menor que el precio del proveedores..\n"
+msgstr "No puede crear o modificar un producto si el costo en USD es menor que el precio del proveedor.\n"
 "\n"
 "- Precio del proveedor = %s\n"
-"- Costo en Dólares = %s"
+"- Costo en USD = %s"
 
 #. module: product_cost_usd
 #: code:addons/product_cost_usd/models/product.py:33
 #, python-format
 msgid "You must have at least one supplier with price in USD before assign a Cost in USD"
-msgstr "Debe tener al menos un proveedor con precio en Dólares antes de asignar un Costo en Dólares a el producto"
-
+msgstr "Debe tener al menos un proveedor con precio en USD antes de asignar un Costo en USD al producto"

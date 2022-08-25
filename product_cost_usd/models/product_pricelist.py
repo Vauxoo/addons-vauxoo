@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class Pricelist(models.Model):
@@ -11,10 +11,10 @@ class Pricelist(models.Model):
 
         Why this inheritance?
 
-        This method always compute the product price, from product currency
+        This method always computes the product price, from product currency
         (mostly the same company currency) into pricelist currency. When the
         pricelist item is based on cost in USD is necessary that currency
-        conversion is made from USD currency. By this reason we must go back
+        conversion is made from USD currency. For this reason, we must go back
         the conversion made in super and then made a conversion from USD
         currency to the pricelist currency to get the expected price when the
         pricelist item is based on cost in USD.

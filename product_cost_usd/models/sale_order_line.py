@@ -26,14 +26,14 @@ class SaleOrderLine(models.Model):
     @api.model
     def _compute_margin(self, order_id, product_id, product_uom_id):
         """Inherited to recalculate purchase price when pricelist item is
-        based on cost in usd.
+        based on cost in USD.
 
         Why this inheritance?
 
         In spite of the name this method is only used to get the purchase
         price, calling the method get_purchase_price we reuse that logic to
         calculate the purchase price when pricelist item is based on cost
-        in usd.
+        in USD.
         """
         price = super()._compute_margin(order_id, product_id, product_uom_id)
         date = order_id.date_order
