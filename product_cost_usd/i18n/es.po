@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* product_cost_usd
+# 	* product_cost_usd
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-06 18:52+0000\n"
-"PO-Revision-Date: 2017-02-06 18:52+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2022-08-25 22:26+0000\n"
+"PO-Revision-Date: 2022-08-25 22:26+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,24 +16,50 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_cost_usd
-#: model:ir.model.fields,field_description:product_cost_usd.field_product_template_standard_price_usd
+#: model:ir.model.fields,help:product_cost_usd.field_product_pricelist_item__base
+msgid ""
+"Base price for computation.\n"
+"Sales Price: The base price will be the Sales Price.\n"
+"Cost Price : The base price will be the cost price.\n"
+"Other Pricelist : Computation of the base price based on another Pricelist."
+msgstr ""
+"Precio base para el cálculo.\n"
+"Precio de venta: El precio base será el precio de venta.\n"
+"Precio de coste: El precio base será el precio de coste.\n"
+"Otra lista de precios: Cálculo del precio base de acuerdo con otra lista de precios."
+
+#. module: product_cost_usd
+#: model:ir.model.fields,field_description:product_cost_usd.field_product_pricelist_item__base
+msgid "Based on"
+msgstr "Basado en"
+
+#. module: product_cost_usd
+#: model:ir.model.fields,field_description:product_cost_usd.field_product_product__standard_price_usd
+#: model:ir.model.fields,field_description:product_cost_usd.field_product_template__standard_price_usd
+#: model:ir.model.fields.selection,name:product_cost_usd.selection__product_pricelist_item__base__standard_price_usd
 msgid "Cost in USD"
 msgstr "Costo en USD"
 
 #. module: product_cost_usd
-#: model:ir.model.fields,help:product_cost_usd.field_product_template_standard_price_usd
+#: model:ir.model.fields,help:product_cost_usd.field_product_product__standard_price_usd
+#: model:ir.model.fields,help:product_cost_usd.field_product_template__standard_price_usd
 msgid "Price cost of the product in USD currency"
 msgstr "Precio coste del producto en moneda USD"
 
 #. module: product_cost_usd
 #: model:ir.model,name:product_cost_usd.model_product_pricelist
 msgid "Pricelist"
-msgstr "Tarifa"
+msgstr "Lista de precios"
+
+#. module: product_cost_usd
+#: model:product.pricelist,name:product_cost_usd.pricelist_15_usd
+msgid "Pricelist 15% USD"
+msgstr "Lista de precios 15% USD"
 
 #. module: product_cost_usd
 #: model:ir.model,name:product_cost_usd.model_product_pricelist_item
-msgid "Pricelist item"
-msgstr "Elemento de la tarifa"
+msgid "Pricelist Rule"
+msgstr "Regla de la lista de precios"
 
 #. module: product_cost_usd
 #: model:ir.model,name:product_cost_usd.model_product_template
@@ -46,19 +72,25 @@ msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
 
 #. module: product_cost_usd
-#: code:addons/product_cost_usd/models/product.py:38
+#: code:addons/product_cost_usd/models/product_template.py:0
 #, python-format
-msgid "You cannot create or modify a product if the cost in USD is less than the supplier list price.\n"
+msgid ""
+"You cannot create or modify a product if the cost in USD is less than the supplier list price.\n"
 "\n"
 "- Supplier list price = %s\n"
 "- Cost in USD = %s"
-msgstr "No puede crear o modificar un producto si el costo en USD es menor que el precio del proveedor.\n"
+msgstr ""
+"No puede crear o modificar un producto si el costo en USD es menor que el precio del proveedor.\n"
 "\n"
 "- Precio del proveedor = %s\n"
 "- Costo en USD = %s"
 
 #. module: product_cost_usd
-#: code:addons/product_cost_usd/models/product.py:33
+#: code:addons/product_cost_usd/models/product_template.py:0
 #, python-format
-msgid "You must have at least one supplier with price in USD before assign a Cost in USD"
-msgstr "Debe tener al menos un proveedor con precio en USD antes de asignar un Costo en USD al producto"
+msgid ""
+"You must have at least one supplier with price in USD before assigning a "
+"Cost in USD"
+msgstr ""
+"Debe tener al menos un proveedor con precio en USD antes de asignar un Costo"
+" en USD al producto"
