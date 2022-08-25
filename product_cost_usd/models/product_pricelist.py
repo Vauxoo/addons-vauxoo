@@ -1,10 +1,9 @@
-from odoo import api, models
+from odoo import fields, models
 
 
 class Pricelist(models.Model):
     _inherit = "product.pricelist"
 
-    @api.multi
     def _compute_price_rule(self, products_qty_partner, date=False, uom_id=False):
         """Inherited to modify price computation when a pricelist item is
         based on cost in USD.
@@ -29,6 +28,7 @@ class Pricelist(models.Model):
         """
         results = super()._compute_price_rule(products_qty_partner, date=date, uom_id=uom_id)
         usd_currency = self.env.ref("base.USD")
+        date = fields.Date.context_today(self)
         for product_id in results:
             # get current price and pricelist item for product_id
             price, item_id = results[product_id]
@@ -39,9 +39,9 @@ class Pricelist(models.Model):
             product = self.env["product.product"].browse(product_id)
             # go back conversion made in super, moving the price into
             # product currency for items based on cost in USD
-            price = self.currency_id.compute(price, product.currency_id, round=False)
+            price = self.currency_id._convert(price, product.currency_id, self.env.company, date, round=False)
             # now convert from USD into pricelist currency
             if self.currency_id != usd_currency:
-                price = usd_currency.compute(price, self.currency_id, round=False)
+                price = usd_currency._convert(price, self.currency_id, self.env.company, date, round=False)
             results[product_id] = (price, suitable_rule and suitable_rule.id or False)
         return results
