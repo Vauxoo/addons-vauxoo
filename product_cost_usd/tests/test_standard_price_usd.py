@@ -15,23 +15,7 @@ class TestStandardPriceUsd(TransactionCase):
         self.partner = self.env.ref("base.res_partner_4")
         self.product_uom = self.env.ref("product.product_uom_unit")
         self.product = self.env.ref("product.product_product_24")
-        self.pricelist_15_usd = self.env["product.pricelist"].create(
-            {
-                "name": "Pricelist 15% USD",
-                "currency_id": self.usd.id,
-                "item_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "compute_price": "formula",
-                            "base": "standard_price_usd",  # based on cost in usd
-                            "price_discount": -15,
-                        },
-                    )
-                ],
-            }
-        )
+        self.pricelist_15_usd = self.env.ref("product_cost_usd.pricelist_15_usd")
         self.pricelist_15_mxn = self.pricelist_15_usd.copy({"name": "Pricelist 15% MXN", "currency_id": self.mxn.id})
         self.pricelist = self.env["product.pricelist"].create({"name": "Pricelist Demo"})
 
@@ -41,7 +25,7 @@ class TestStandardPriceUsd(TransactionCase):
         self.product.write({"standard_price_usd": price})
 
     def test_01(self):
-        """Test USD pricelist based on cost in usd."""
+        """Test USD pricelist based on cost in USD."""
         self.set_standard_price_usd(880)
         product = self.product.with_context(pricelist=self.pricelist_15_usd.id)
         expected_price = float_round(product.standard_price_usd * 1.15, precision_rounding=self.usd.rounding)
@@ -52,7 +36,7 @@ class TestStandardPriceUsd(TransactionCase):
         )
 
     def test_02(self):
-        """Test a MXN pricelist based on cost in usd."""
+        """Test a MXN pricelist based on cost in USD."""
         self.set_standard_price_usd(880)
         product = self.product.with_context(pricelist=self.pricelist_15_mxn.id)
         mxn_rate = self.mxn.rate / self.usd.rate
@@ -76,7 +60,7 @@ class TestStandardPriceUsd(TransactionCase):
             self.set_standard_price_usd(1)
 
     def test_sale_margin(self):
-        """Test the sale margin module using a pricelist with cost in usd."""
+        """Test the sale margin module using a pricelist with cost in USD."""
         self.set_standard_price_usd(880)
         product = self.product.with_context(pricelist=self.pricelist_15_mxn.id)
         # Create a sale order for product Graphics Card.
@@ -116,7 +100,7 @@ class TestStandardPriceUsd(TransactionCase):
 
     def test_sale_margin_normal(self):
         """Test the sale margin module using a pricelist without cost in
-        usd.
+        USD.
         """
         # Create a sale order for product Graphics Card.
         sale_order = self.sale_order.create(

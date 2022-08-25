@@ -1,7 +1,8 @@
-import odoo.addons.decimal_precision as dp
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
+
+import odoo.addons.decimal_precision as dp
 
 
 class ProductTemplate(models.Model):
@@ -23,11 +24,11 @@ class ProductTemplate(models.Model):
         usd_currency = self.env.ref("base.USD")
         prec = self.env["decimal.precision"].precision_get("Product Price")
         usd_seller = self.seller_ids.filtered(lambda x: x.currency_id == usd_currency)
-        list_price = usd_seller.price if usd_seller else 0.0
+        list_price = usd_seller.price
         standard_price_usd = self.standard_price_usd
         if not usd_seller and float_compare(standard_price_usd, 0, precision_digits=prec) > 0:
             raise ValidationError(
-                _("You must have at least one supplier with price in USD" " before assign a Cost in USD")
+                _("You must have at least one supplier with price in USD before assigning a Cost in USD")
             )
         if float_compare(list_price, standard_price_usd, precision_digits=prec) > 0:
             raise ValidationError(

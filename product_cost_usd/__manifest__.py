@@ -3,7 +3,7 @@
     "summary": """
 This module adds the field Cost in USD to the Product form.
     """,
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.0.1",
     "author": "Vauxoo",
     "category": "Sales/Sales",
     "website": "https://vauxoo.com",
@@ -11,7 +11,9 @@ This module adds the field Cost in USD to the Product form.
     "depends": [
         "sale_margin",
     ],
-    "demo": [],
+    "demo": [
+        "demo/product_pricelist_demo.xml",
+    ],
     "data": [
         "views/product_template_views.xml",
     ],
