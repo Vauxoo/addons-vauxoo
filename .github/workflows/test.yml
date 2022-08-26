@@ -1,0 +1,43 @@
+name: tests
+
+on:
+  pull_request:
+    branches:
+      - "15.0*"
+  push:
+    branches:
+      - "15.0"
+
+env:
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+  LINT_CHECK: "0"
+  TESTS: "0"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    container: vauxoo/odoo-80-image-shippable-auto
+    name: odoo
+    env:
+      TESTS: "1"
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Install dependencies and run tests
+        shell: bash
+        run: |
+          source variables.sh
+          git clone --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+          export PATH=${HOME}/maintainer-quality-tools/travis:${HOME}/gitlab_tools:${PATH}
+          source ${REPO_REQUIREMENTS}/virtualenv/python${TRAVIS_PYTHON_VERSION}/bin/activate
+          source ${REPO_REQUIREMENTS}/virtualenv/nodejs/bin/activate
+          source /usr/local/rvm/scripts/rvm
+          travis_install_nightly
+          travis_run_tests
+          travis_after_tests_success || true
+          coverage html --rcfile=${GITHUB_WORKSPACE}/.coveragerc -d $CI_COMMIT_REF_SLUG || true
+          coverage xml --rcfile=${GITHUB_WORKSPACE}/.coveragerc -o $CI_COMMIT_REF_SLUG/coverage.xml || true
+          coverage report -m --show-missing --rcfile=${GITHUB_WORKSPACE}/.coveragerc || [[ $? != 2 ]]
