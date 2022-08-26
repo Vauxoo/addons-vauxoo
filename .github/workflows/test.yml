@@ -1,0 +1,23 @@
+name: tests
+
+on:
+  pull_request:
+    branches:
+      - "15.0*"
+  push:
+    branches:
+      - "15.0"
+
+jobs:
+  pre-commit-mandatory:
+    runs-on: ubuntu-latest
+    container: quay.io/vauxoo/dockerv:latest
+    name: somename
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Upgrade pre-commit-vauxoo to te latest version
+        run: pip3 install --upgrade pre-commit-vauxoo
+      - name: Run pre-commit-vauxoo
+        run: pre-commit-vauxoo
