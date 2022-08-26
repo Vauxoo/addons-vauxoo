@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="template_account_move_report" model="ir.actions.report">
         <field name="name">Account Move Report</field>
@@ -6,7 +6,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">account_move_report.account_entries_report</field>
         <field name="report_file">account_move_report.account_entries_report</field>
-        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move" />
         <field name="binding_type">report</field>
     </record>
 </odoo>

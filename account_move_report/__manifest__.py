@@ -11,7 +11,7 @@
     "demo": [],
     "data": [
         "views/account_reports.xml",
-        "views/account_move_report.xml"
+        "views/account_move_report.xml",
     ],
     "installable": True,
     "auto_install": False,
