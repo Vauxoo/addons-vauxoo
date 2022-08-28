@@ -7,27 +7,22 @@ on:
   push:
     branches:
       - "15.0"
-env:
-  PIP_CACHE_DIR: "/root/.cache/pip"
-  PRE_COMMIT_HOME: "/root/.cache/pre-commit"
 
 jobs:
-  pre-commit:
+  pre-commit-vauxoo:
     runs-on: ubuntu-latest
-    container:
-      image: quay.io/vauxoo/dockerv:latest
-      options: --user root
-    name: ${{ matrix.name }}
-    env:
-      PRECOMMIT_HOOKS_TYPE: ${{ matrix.name }}
-    strategy:
-      fail-fast: false
-      matrix:
-        name: [mandatory, optional]
+    name: pre-commit-vauxoo
     steps:
       - uses: actions/checkout@v2
-      - name: Upgrade pre-commit-vauxoo to te latest version
-        run: pip3 install --upgrade pre-commit-vauxoo
+      - name: Cache pre-commit and pip packages
+        id: cache-pre-commit-pip
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pre-commit
+            ~/.cache/pip
+          key: cache-pre-commit-pip
+      - name: Install pre-commit-vauxoo
+        run: pip install --upgrade pre-commit-vauxoo
       - name: Run pre-commit-vauxoo
         run: pre-commit-vauxoo
-        continue-on-error: ${{ matrix.name == 'optional' }}
