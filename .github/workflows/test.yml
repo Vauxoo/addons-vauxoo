@@ -19,17 +19,25 @@ jobs:
     name: pre-commit-vauxoo
     steps:
       - uses: actions/checkout@v2
-      - name: Cache pre-commit and pip packages
-        id: cache-pre-commit-pip
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+      - name: Cache pre-commit
+        id: cache-pre-commit-venv
         uses: actions/cache@v3
         with:
           path: |
             ~/.cache/pre-commit
-            ~/.cache/pip
-          key: cache-pre-commit-pip
+            ~/.cache/virtualenv
+          key: cache-pre-commit-venv
+      - name: Generate virtualenv
+        run: |
+          virtualenv ~/.cache/virtualenv &&
+          source ~/.cache/virtualenv/bin/activate
+      - name: Verbose debug info
+        run: which python && python --version && pip --version
       - name: Install pre-commit-vauxoo
-        run: pip install --upgrade pre-commit-vauxoo
-      - name: Install again pre-commit-vauxoo to cgheck where's installed
         run: pip install --upgrade pre-commit-vauxoo
       - name: Run pre-commit-vauxoo
         run: pre-commit-vauxoo || true
