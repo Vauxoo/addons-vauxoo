@@ -1,4 +1,4 @@
-from odoo import models, fields, _
+from odoo import models, fields
 
 
 class AccountAnalyticDistribution(models.Model):
@@ -13,7 +13,6 @@ class AccountAnalyticDistribution(models.Model):
         ('unique_code', 'UNIQUE(code, name)',
          'The combination of code and and name for a business unit must be unique.')
     ]
-
 
     def name_get(self):
         res = []
