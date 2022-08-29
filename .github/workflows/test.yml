@@ -1,0 +1,74 @@
+name: tests
+
+on:
+  pull_request:
+    branches:
+      - "15.0*"
+  push:
+    branches:
+      - "15.0"
+
+env:
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+  LINT_CHECK: "0"
+  TESTS: "0"
+
+jobs:
+  pre-commit-vauxoo:
+    runs-on: ubuntu-latest
+    name: pre-commit-vauxoo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache pre-commit and pip packages
+        id: cache-pre-commit-pip
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pre-commit
+            ~/.cache/pip
+          key: cache-pre-commit-pip
+      - name: Install pre-commit-vauxoo
+        run: pip install --upgrade pre-commit-vauxoo
+      - name: Install again pre-commit-vauxoo to cgheck where's installed
+        run: pip install --upgrade pre-commit-vauxoo
+      - name: Run pre-commit-vauxoo
+        run: pre-commit-vauxoo || true
+  no-dependency-files:
+    runs-on: ubuntu-latest
+    name: No dependency files
+    steps:
+      - uses: actions/checkout@v2
+      - name: Ensure dependency files don't exist
+      - run: |
+          for reqfile in requirements.txt oca_requirements.txt ; do
+              if [ -f ${reqfile} ] ; then
+                  echo "Please avoid adding requirement files to this repo, because requirements will be installed in all project depending on this one."
+                  echo "If you need them for test to work, you can use test-${reqfile} instead of ${reqfile}"
+                  exit 1
+                fi
+           done
+  odoo:
+    runs-on: ubuntu-latest
+    container: vauxoo/odoo-80-image-shippable-auto
+    name: Odoo
+    env:
+      TESTS: "1"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Install dependencies and run tests
+        shell: bash
+        run: |
+          source variables.sh
+          git clone --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+          export PATH=${HOME}/maintainer-quality-tools/travis:${HOME}/gitlab_tools:${PATH}
+          source ${REPO_REQUIREMENTS}/virtualenv/python${TRAVIS_PYTHON_VERSION}/bin/activate
+          source ${REPO_REQUIREMENTS}/virtualenv/nodejs/bin/activate
+          source /usr/local/rvm/scripts/rvm
+          travis_install_nightly
+          travis_run_tests
+          travis_after_tests_success || true
+          coverage html --rcfile=${GITHUB_WORKSPACE}/.coveragerc -d $CI_COMMIT_REF_SLUG || true
+          coverage xml --rcfile=${GITHUB_WORKSPACE}/.coveragerc -o $CI_COMMIT_REF_SLUG/coverage.xml || true
+          coverage report -m --show-missing --rcfile=${GITHUB_WORKSPACE}/.coveragerc || [[ $? != 2 ]]
