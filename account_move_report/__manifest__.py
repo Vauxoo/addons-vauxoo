@@ -1,6 +1,6 @@
 {
     "name": "Journal Entries Report",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "author": "Vauxoo",
     "category": "Accounting/Accounting",
     "website": "http://www.vauxoo.com/",
@@ -9,10 +9,7 @@
         "account",
     ],
     "demo": [],
-    "data": [
-        "views/account_reports.xml",
-        "views/account_move_report.xml"
-    ],
+    "data": ["views/account_reports.xml", "views/account_move_report.xml"],
     "installable": True,
     "auto_install": False,
 }

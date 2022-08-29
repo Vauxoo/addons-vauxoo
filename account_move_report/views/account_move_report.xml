@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <template id="account_entries_report" name="Entries Report">
@@ -10,17 +10,26 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th name="th_number"><strong>Number: </strong><span t-field="o.name"/></th>
-                                        <th t-if="o.ref" name="th_ref"><strong>Reference: </strong><span><span t-field="o.ref"/></span></th>
+                                        <th name="th_number"><strong>Number: </strong><span t-field="o.name" /></th>
+                                        <th t-if="o.ref" name="th_ref">
+                                            <strong>Reference: </strong><span t-field="o.ref" />
+                                        </th>
                                     </tr>
                                     <tr>
-                                        <th name="th_date"><strong>Date: </strong><span t-field="o.date"/></th>
-                                        <th name="th_printing_date"><span><strong>Printing Date: </strong><span><t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></span></span></th>
+                                        <th name="th_date"><strong>Date: </strong><span t-field="o.date" /></th>
+                                        <th name="th_printing_date">
+                                            <strong>Printing Date: </strong>
+                                            <span>
+                                                <t
+                                                    t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"
+                                                />
+                                            </span>
+                                        </th>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <br/>
+                        <br />
                         <div class="row table-condensed table-sm">
                             <table class="table table-bordered">
                                 <thead class="thead-light">
@@ -32,39 +41,56 @@
                                         <th name="th_date_maturity">Due</th>
                                         <th name="th_debit">Debit</th>
                                         <th name="th_credit">Credit</th>
-                                        <th name="th_analytic_account" groups="analytic.group_analytic_accounting">Analytic</th>
-                                        <th name="th_amount_currency" t-if="o.line_ids.mapped('currency_id')">Amount Currency</th>
+                                        <th
+                                            name="th_analytic_account"
+                                            groups="analytic.group_analytic_accounting"
+                                        >Analytic</th>
+                                        <th
+                                            name="th_amount_currency"
+                                            t-if="o.line_ids.mapped('currency_id')"
+                                        >Amount Currency</th>
                                         <th name="th_currency">Currency</th>
                                     </tr>
                                 </thead>
                                 <tbody t-if="o.line_ids">
                                     <tr t-foreach="o.line_ids" t-as="l">
-                                        <td name="td_account_code"><small t-raw="l.account_id.code"/></td>
-                                        <td name="td_account_name"><small t-raw="l.account_id.name"/></td>
-                                        <td name="td_name"><small t-field="l.name"/></td>
-                                        <td name="td_partner"><small t-field="l.partner_id"/></td>
-                                        <td name="td_date_maturity"><small t-field="l.date_maturity"/></td>
+                                        <td name="td_account_code"><small t-out="l.account_id.code" /></td>
+                                        <td name="td_account_name"><small t-out="l.account_id.name" /></td>
+                                        <td name="td_name"><small t-field="l.name" /></td>
+                                        <td name="td_partner"><small t-field="l.partner_id" /></td>
+                                        <td name="td_date_maturity"><small t-field="l.date_maturity" /></td>
                                         <td name="td_debit" class="text-right">
-                                            <small t-field="l.debit"/>
+                                            <small t-field="l.debit" />
                                         </td>
                                         <td name="td_credit" class="text-right">
-                                            <small t-field="l.credit"/>
+                                            <small t-field="l.credit" />
                                         </td>
-                                        <td name="td_analytic_account" groups="analytic.group_analytic_accounting"><small t-field="l.analytic_account_id"/></td>
+                                        <td
+                                            name="td_analytic_account"
+                                            groups="analytic.group_analytic_accounting"
+                                        ><small t-field="l.analytic_account_id" /></td>
                                         <t t-if="l.currency_id">
                                             <td name="td_amount_currency" class="text-right">
-                                                <small t-field="l.amount_currency"/>
+                                                <small t-field="l.amount_currency" />
                                             </td>
                                         </t>
-                                        <td name="td_currency"><small t-field="(l.currency_id or l.company_id.currency_id).name"/></td>
+                                        <td name="td_currency"><small
+                                                t-field="(l.currency_id or l.company_id.currency_id).name"
+                                            /></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5"></td>
-                                        <td name="td_total_debit" class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
-                                        <td name="td_total_credit" class="text-right"><strong><span t-esc="total_debit_credit[o.id]['sum_tot_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
-                                        <td colspan="3"></td>
+                                        <td colspan="5" />
+                                        <td name="td_total_debit" class="text-right"><strong><span
+                                                    t-esc="total_debit_credit[o.id]['sum_tot_debit']"
+                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                                /></strong></td>
+                                        <td name="td_total_credit" class="text-right"><strong><span
+                                                    t-esc="total_debit_credit[o.id]['sum_tot_credit']"
+                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                                /></strong></td>
+                                        <td colspan="3" />
                                     </tr>
                                 </tfoot>
                             </table>
