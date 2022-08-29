@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Ensure dependency files don't exist
-      - run: |
+        run: |
           for reqfile in requirements.txt oca_requirements.txt ; do
               if [ -f ${reqfile} ] ; then
                   echo "Please avoid adding requirement files to this repo, because requirements will be installed in all project depending on this one."
