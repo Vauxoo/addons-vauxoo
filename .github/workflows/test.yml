@@ -35,7 +35,9 @@ jobs:
       - name: Verbose debug info
         run: source ~/.cache/virtualenv/bin/activate && which python && python --version && pip --version
       - name: Install pre-commit-vauxoo
-        run: source ~/.cache/virtualenv/bin/activate && pip install --upgrade pre-commit-vauxoo
+        run: |
+          source ~/.cache/virtualenv/bin/activate &&
+          which pre-commit-vauxoo || pip install pre-commit-vauxoo
       - name: Run pre-commit-vauxoo
         run: source ~/.cache/virtualenv/bin/activate && pre-commit-vauxoo || true
   no-dependency-files:
