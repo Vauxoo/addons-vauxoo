@@ -33,11 +33,11 @@ jobs:
           pip install virtualenv && python -m virtualenv ~/.cache/virtualenv &&
           source ~/.cache/virtualenv/bin/activate
       - name: Verbose debug info
-        run: which python && python --version && pip --version
+        run: source ~/.cache/virtualenv/bin/activate && which python && python --version && pip --version
       - name: Install pre-commit-vauxoo
-        run: pip install --upgrade pre-commit-vauxoo
+        run: source ~/.cache/virtualenv/bin/activate && pip install --upgrade pre-commit-vauxoo
       - name: Run pre-commit-vauxoo
-        run: pre-commit-vauxoo || true
+        run: source ~/.cache/virtualenv/bin/activate && pre-commit-vauxoo || true
   no-dependency-files:
     runs-on: ubuntu-latest
     name: No dependency files
