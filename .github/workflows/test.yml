@@ -30,7 +30,7 @@ jobs:
           key: cache-pre-commit-venv
       - name: Generate virtualenv
         run: |
-          pip install virtualenv && virtualenv ~/.cache/virtualenv &&
+          pip install virtualenv && python -m virtualenv ~/.cache/virtualenv &&
           source ~/.cache/virtualenv/bin/activate
       - name: Verbose debug info
         run: which python && python --version && pip --version
