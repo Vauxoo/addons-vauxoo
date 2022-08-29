@@ -4,7 +4,7 @@
         <t t-jquery=".create_journal_id" t-operation="after">
             <tr class="transfer_journal_id">
                 <td class="o_td_label"><label class="o_form_label">Transfer Journal</label></td>
-                <td class="o_td_field"></td>
+                <td class="o_td_field" />
             </tr>
         </t>
     </t>
