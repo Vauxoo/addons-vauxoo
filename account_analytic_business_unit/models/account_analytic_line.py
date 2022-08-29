@@ -6,10 +6,10 @@ class AccountAnalyticLine(models.Model):
 
     business_unit_id = fields.Many2one(
         'account.analytic.business.unit',
-        compute = '_compute_business_unit_id',
-        inverse = '_inverse_business_unit_id',
-        readonly = False,
-        store = True,
+        compute='_compute_business_unit_id',
+        inverse='_inverse_business_unit_id',
+        readonly=False,
+        store=True,
     )
 
     @api.depends('account_id', 'account_id.business_unit_id')
