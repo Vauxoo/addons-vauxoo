@@ -88,10 +88,16 @@ package.json
 # docker node_modules
 node_modules/
 
-# mqt pre-commit lint check files
+# pre-commit-vauxoo
+.editorconfig
 .eslintrc.json
 .flake8
-.pre-commit-config-optional.yaml
+.flake8-optional
+.isort.cfg
 .pre-commit-config.yaml
+.pre-commit-config-autofix.yaml
+.pre-commit-config-optional.yaml
+.prettierrc.yml
 .pylintrc
 .pylintrc-optional
+pyproject.toml
