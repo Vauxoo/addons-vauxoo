@@ -10,6 +10,7 @@ class DefaultWarehouseMixin(models.AbstractModel):
 
         _inherit = ["default.warehouse.mixin", "sale.order"]
     """
+
     _name = "default.warehouse.mixin"
     _description = "Default Warehouse"
 
@@ -22,16 +23,19 @@ class DefaultWarehouseMixin(models.AbstractModel):
         default_warehouse = self.env.user._get_default_warehouse_id()
         if not default_warehouse:
             return defaults
-        warehouse_fields = self.env['ir.model.fields'].sudo().search([
-            ('model', '=', self._name),
-            ('relation', '=', 'stock.warehouse'),
-            ('ttype', '=', 'many2one'),
-            ('name', 'in', fields_list),
-        ])
-        defaults.update({
-            fld.name: default_warehouse.id
-            for fld in warehouse_fields
-        })
+        warehouse_fields = (
+            self.env["ir.model.fields"]
+            .sudo()
+            .search(
+                [
+                    ("model", "=", self._name),
+                    ("relation", "=", "stock.warehouse"),
+                    ("ttype", "=", "many2one"),
+                    ("name", "in", fields_list),
+                ]
+            )
+        )
+        defaults.update({fld.name: default_warehouse.id for fld in warehouse_fields})
         return defaults
 
     @api.model
