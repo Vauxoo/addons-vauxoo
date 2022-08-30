@@ -1,5 +1,6 @@
-[![Build Status](http://runbot.odoo.com/logo.png)](http://runbot.vauxoo.com/runbot/)
-[![Build Status](https://travis-ci.org/Vauxoo/addons-vauxoo.svg?branch=15.0)](https://travis-ci.org/Vauxoo/addons-vauxoo)
+[![Vauxoo Logo](https://www.vauxoo.com/logo.png)](https://www.vauxoo.com)
+
+[![GitHub Actions Build Status](https://github.com/Vauxoo/addons-vauxoo/actions/workflows/test.yml/badge.svg)](https://github.com/Vauxoo/addons-vauxoo/actions)
 
 Vauxoo modules for Odoo
 =======================
