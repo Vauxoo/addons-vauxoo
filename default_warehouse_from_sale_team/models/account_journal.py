@@ -2,9 +2,9 @@ from odoo import fields, models
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = "account.journal"
 
-    section_id = fields.Many2one('crm.team', string='Sales Team')
+    section_id = fields.Many2one("crm.team", string="Sales Team")
 
     def name_get(self):
         """Avoid access errors when computing journal's display name
