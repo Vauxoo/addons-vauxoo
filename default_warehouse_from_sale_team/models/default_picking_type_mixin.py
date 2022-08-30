@@ -1,9 +1,9 @@
-from odoo import models, api
+from odoo import api, models
 
 
 class DefaultPickingTypeMixin(models.AbstractModel):
-    _name = 'default.picking.type.mixin'
-    _inherit = 'default.warehouse.mixin'
+    _name = "default.picking.type.mixin"
+    _inherit = "default.warehouse.mixin"
     _description = "Default Operation Type"
 
     @api.model
@@ -19,13 +19,13 @@ class DefaultPickingTypeMixin(models.AbstractModel):
         res = super().default_get(fields_list)
         default_warehouse = self.env.user._get_default_warehouse_id()
         if default_warehouse:
-            pick_type = self.env['stock.picking.type'].search(
+            pick_type = self.env["stock.picking.type"].search(
                 [
-                    ('code', '=', 'incoming'),
-                    ('warehouse_id', '=', default_warehouse.id),
+                    ("code", "=", "incoming"),
+                    ("warehouse_id", "=", default_warehouse.id),
                 ],
                 limit=1,
             )
-            res.update({'picking_type_id': pick_type.id})
+            res.update({"picking_type_id": pick_type.id})
 
         return res
