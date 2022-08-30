@@ -11,8 +11,7 @@
     "depends": [
         "account",
     ],
-    "demo": [
-    ],
+    "demo": [],
     "data": [
         "security/account_chatter_security.xml",
         "views/account_account_views.xml",
