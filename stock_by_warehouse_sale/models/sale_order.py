@@ -13,7 +13,7 @@ class SaleOrderLine(models.Model):
                 warehouse_id=line.warehouse_id
             )._compute_get_quantity_warehouses_json()
 
-    @api.onchange('warehouses_stock_recompute', 'product_id')
+    @api.onchange("warehouses_stock_recompute", "product_id")
     def _warehouses_stock_recompute_onchange(self):
         if not self.warehouses_stock_recompute:
             self.warehouses_stock_recompute = True
