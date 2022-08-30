@@ -182,4 +182,3 @@ Issues
 
 - Where?: [here](https://github.com/Vauxoo/addons-vauxoo/issues/new)
 - How? Follow [odoo?s](https://github.com/odoo/odoo/blob/15.0/CONTRIBUTING.md) standard to put your issues.
-
