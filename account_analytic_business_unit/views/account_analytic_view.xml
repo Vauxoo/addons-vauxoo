@@ -1,42 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_account_analytic_account_form" model="ir.ui.view">
         <field name="name">account.analytic.account.view.form</field>
         <field name="model">account.analytic.account</field>
-        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='group_id']" position="after">
-                <field name="business_unit_id"/>
+                <field name="business_unit_id" />
             </xpath>
         </field>
     </record>
     <record id="view_account_analytic_account_list" model="ir.ui.view">
         <field name="name">account.analytic.account.view.form</field>
         <field name="model">account.analytic.account</field>
-        <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_list" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="business_unit_id" optional="hide"/>
-                <field name="group_id" optional="hide"/>
+                <field name="business_unit_id" optional="hide" />
+                <field name="group_id" optional="hide" />
             </xpath>
         </field>
     </record>
     <record id="view_account_analytic_account_search" model="ir.ui.view">
         <field name="name">account.analytic.account.view.search</field>
         <field name="model">account.analytic.account</field>
-        <field name="inherit_id" ref="analytic.view_account_analytic_account_search"/>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_search" />
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='associatedpartner']" position="before">
-                <filter string="No Business Unit" name="no_business_unit" domain="[('business_unit_id', '=', False)]"/>
-                <filter string="No Group" name="no_group" domain="[('group_id', '=', False)]"/>
+                <filter
+                    string="No Business Unit"
+                    name="no_business_unit"
+                    domain="[('business_unit_id', '=', False)]"
+                />
+                <filter string="No Group" name="no_group" domain="[('group_id', '=', False)]" />
             </xpath>
             <xpath expr="//filter[@name='associatedpartner']" position="after">
-                <filter string="Business Unit" name="business_unit" domain="[]" context="{'group_by': 'business_unit_id'}"/>
-                <filter string="Group" name="group" domain="[]" context="{'group_by': 'group_id'}"/>
+                <filter
+                    string="Business Unit"
+                    name="business_unit"
+                    domain="[]"
+                    context="{'group_by': 'business_unit_id'}"
+                />
+                <filter string="Group" name="group" domain="[]" context="{'group_by': 'group_id'}" />
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="business_unit_id"/>
-                <field name="group_id"/>
+                <field name="business_unit_id" />
+                <field name="group_id" />
             </xpath>
         </field>
     </record>

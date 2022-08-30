@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_account_analytic_line_form" model="ir.ui.view">
         <field name="name">account.analytic.line.view.form</field>
         <field name="model">account.analytic.line</field>
-        <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_uom_id']" position="after">
-                <field name="business_unit_id"/>
+                <field name="business_unit_id" />
             </xpath>
         </field>
     </record>
     <record id="view_account_analytic_line_tree" model="ir.ui.view">
         <field name="name">account.analytic.line.view.tree</field>
         <field name="model">account.analytic.line</field>
-        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree"/>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_uom_id']" position="after">
-                <field name="business_unit_id" optional="hide"/>
+                <field name="business_unit_id" optional="hide" />
             </xpath>
         </field>
     </record>
