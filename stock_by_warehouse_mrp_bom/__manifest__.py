@@ -13,12 +13,8 @@
         "mrp",
         "stock_by_warehouse",
     ],
-    "data": [
-        'views/mrp_bom_line_views.xml',
-        'views/mrp_bom_views.xml'
-    ],
-    "demo": [
-    ],
+    "data": ["views/mrp_bom_line_views.xml", "views/mrp_bom_views.xml"],
+    "demo": [],
     "installable": True,
     "auto_install": False,
 }
