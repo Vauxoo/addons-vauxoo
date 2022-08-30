@@ -14,11 +14,10 @@
         "stock_by_warehouse",
     ],
     "data": [
-        'views/sale_view.xml',
+        "views/sale_view.xml",
     ],
     "demo": [],
-    "test": [
-    ],
+    "test": [],
     "installable": True,
     "auto_install": False,
 }
