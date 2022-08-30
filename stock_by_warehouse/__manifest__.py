@@ -13,10 +13,9 @@
         "stock",
     ],
     "data": [
-        'views/product_views.xml',
+        "views/product_views.xml",
     ],
-    "demo": [
-    ],
+    "demo": [],
     "assets": {
         "web.assets_backend": [
             "stock_by_warehouse/static/src/js/widget.js",
