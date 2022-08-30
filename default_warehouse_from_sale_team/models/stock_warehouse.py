@@ -1,11 +1,13 @@
-from odoo import models, fields
+from odoo import fields, models
 
 
 class StockWarehouse(models.Model):
     _inherit = "stock.warehouse"
 
     sale_team_ids = fields.One2many(
-        "crm.team", "default_warehouse_id", string="Sales teams",
+        "crm.team",
+        "default_warehouse_id",
+        string="Sales teams",
     )
 
     def _access_unallowed_current_user_salesteams(self):
