@@ -8,14 +8,12 @@ class IrActionsServer(models.Model):
         self.env["ir.filters"]._load_records(
             [
                 {
-                    "xml_id": "search_action_domain.ir_filters_server_action_%s"
-                    % record.id,
+                    "xml_id": "search_action_domain.ir_filters_server_action_%s" % record.id,
                     "noupdate": True,
                     "values": {
                         "name": record.name,
                         "model_id": record.model_id.model,
-                        "context": "{'search_action_domain': {'%s': [%s]}}"
-                        % (record.model_id.model, record.id),
+                        "context": "{'search_action_domain': {'%s': [%s]}}" % (record.model_id.model, record.id),
                         "user_id": False,
                         "action_id": False,
                     },
