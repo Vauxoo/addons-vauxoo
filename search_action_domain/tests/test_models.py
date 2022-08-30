@@ -37,7 +37,5 @@ action = {'domain': [('id', 'in', elements.ids)]}
         # Apply the filter succesfully
         ctx = safe_eval(created_filter.context)
         found_partner_action = self.env["res.partner"].with_context(**ctx).search([])
-        found_partner_search = self.env["res.partner"].search(
-            [("is_company", "=", True)]
-        )
+        found_partner_search = self.env["res.partner"].search([("is_company", "=", True)])
         self.assertEqual(found_partner_action, found_partner_search)

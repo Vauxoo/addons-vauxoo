@@ -41,13 +41,9 @@ class Base(models.AbstractModel):
     @api.model
     def _search(self, args, *oargs, **kwargs):
         args += self._get_action_domain_to_include()
-        return super(Base, self.with_context(search_action_domain=False))._search(
-            args, *oargs, **kwargs
-        )
+        return super(Base, self.with_context(search_action_domain=False))._search(args, *oargs, **kwargs)
 
     @api.model
     def _read_group_raw(self, domain, *oargs, **kwargs):
         domain += self._get_action_domain_to_include()
-        return super(
-            Base, self.with_context(search_action_domain=False)
-        )._read_group_raw(domain, *oargs, **kwargs)
+        return super(Base, self.with_context(search_action_domain=False))._read_group_raw(domain, *oargs, **kwargs)
