@@ -1,29 +1,31 @@
 import json
 from collections import defaultdict
-from odoo import api, fields, models, _
+
+from odoo import _, api, fields, models
 from odoo.tools import float_is_zero
 
-UNIT = 'Product Unit of Measure'
+UNIT = "Product Unit of Measure"
 
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
     qty_available_not_res = fields.Float(
-        string='Qty Available Not Reserved',
+        string="Qty Available Not Reserved",
         digits=UNIT,
-        compute='_compute_qty_available_not_reserved',
+        compute="_compute_qty_available_not_reserved",
     )
 
     warehouses_stock = fields.Text(
-        store=False, readonly=True,
+        store=False,
+        readonly=True,
     )
 
     warehouses_stock_location = fields.Text(store=False, readonly=True)
 
     warehouses_stock_recompute = fields.Boolean(store=False)
 
-    @api.onchange('warehouses_stock_recompute')
+    @api.onchange("warehouses_stock_recompute")
     def _warehouses_stock_recompute_onchange(self):
         if not self.warehouses_stock_recompute:
             self.warehouses_stock_recompute = True
@@ -37,59 +39,62 @@ class ProductProduct(models.Model):
         return False
 
     def _prepare_domain_available_not_reserved(self):
-        domain_quant = [
-            ('product_id', 'in', self.ids)
-        ]
+        domain_quant = [("product_id", "in", self.ids)]
         domain_quant_locations = self._get_domain_locations()[0]
         domain_quant.extend(domain_quant_locations)
         return domain_quant
 
-    @api.depends_context('warehouse', 'company')
+    @api.depends_context("warehouse", "company")
     def _compute_qty_available_not_reserved(self):
-        """Method to set the quantity available that is not reserved of a serie of products.
-        """
+        """Method to set the quantity available that is not reserved of a serie of products."""
         domain_quant = self._prepare_domain_available_not_reserved()
-        quants = self.env['stock.quant'].with_context(lang=False).read_group(
-            domain_quant, fields=['product_id', 'quantity', 'reserved_quantity'], groupby="product_id")
+        quants = (
+            self.env["stock.quant"]
+            .with_context(lang=False)
+            .read_group(domain_quant, fields=["product_id", "quantity", "reserved_quantity"], groupby="product_id")
+        )
 
         res = {}
         for quant in quants:
-            quantity = quant.get('quantity') - quant.get('reserved_quantity')
-            res[quant.get('product_id')[0]] = max(quantity, 0.0)
+            quantity = quant.get("quantity") - quant.get("reserved_quantity")
+            res[quant.get("product_id")[0]] = max(quantity, 0.0)
 
         for prod in self:
             prod.qty_available_not_res = res.get(prod.id, 0.0)
 
     def _compute_get_quantity_warehouses_json(self):
         # get original from onchange
-        self_origin = self._origin if hasattr(self, '_origin') else self
-        info = {'title': _('Stock by Warehouse'), 'content': [],
-                'warehouse': self_origin.qty_available_not_res}
+        self_origin = self._origin if hasattr(self, "_origin") else self
+        info = {"title": _("Stock by Warehouse"), "content": [], "warehouse": self_origin.qty_available_not_res}
         if not self_origin.exists():
             return json.dumps(info)
         self_origin.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
-        warehouse_id = self._context.get('warehouse_id')
+        warehouse_id = self._context.get("warehouse_id")
 
-        for warehouse in self.env['stock.warehouse'].sudo().search([]):
-            product = self_origin.sudo().with_company(warehouse.company_id).with_context(
-                warehouse=warehouse.id, location=False)
+        for warehouse in self.env["stock.warehouse"].sudo().search([]):
+            product = (
+                self_origin.sudo()
+                .with_company(warehouse.company_id)
+                .with_context(warehouse=warehouse.id, location=False)
+            )
             if warehouse_id and warehouse_id.id == warehouse.id:
-                info['warehouse'] = product.qty_available_not_res
-            info['content'].append({
-                'warehouse': warehouse.name,
-                'warehouse_short': warehouse.code,
-                'product': product.id,
-                'available_not_res': product.qty_available_not_res,
-                'available': product.qty_available,
-                'virtual': product.virtual_available,
-                'incoming': product.incoming_qty,
-                'outgoing': product.outgoing_qty,
-                'saleable':
-                product.qty_available - product.outgoing_qty
-            })
+                info["warehouse"] = product.qty_available_not_res
+            info["content"].append(
+                {
+                    "warehouse": warehouse.name,
+                    "warehouse_short": warehouse.code,
+                    "product": product.id,
+                    "available_not_res": product.qty_available_not_res,
+                    "available": product.qty_available,
+                    "virtual": product.virtual_available,
+                    "incoming": product.incoming_qty,
+                    "outgoing": product.outgoing_qty,
+                    "saleable": product.qty_available - product.outgoing_qty,
+                }
+            )
         return json.dumps(info)
 
     def _get_qty_per_location(self, warehouse):
@@ -100,12 +105,19 @@ class ProductProduct(models.Model):
         """
         self.ensure_one()
         # Get all the stock locations that are part of the warehouse.
-        warehouse_locations = self.env['stock.location'].sudo().search([
-            ('id', 'child_of', warehouse.lot_stock_id.id), ('usage', '=', 'internal')])
+        warehouse_locations = (
+            self.env["stock.location"]
+            .sudo()
+            .search([("id", "child_of", warehouse.lot_stock_id.id), ("usage", "=", "internal")])
+        )
 
-        quants = self.env['stock.quant'].sudo().search([
-            ('product_id', '=', self.id), ('location_id', 'in', warehouse_locations.ids),
-            ('quantity', '>', 0)])
+        quants = (
+            self.env["stock.quant"]
+            .sudo()
+            .search(
+                [("product_id", "=", self.id), ("location_id", "in", warehouse_locations.ids), ("quantity", ">", 0)]
+            )
+        )
 
         if not quants:
             return False
@@ -124,8 +136,8 @@ class ProductProduct(models.Model):
         # the most quantity at first places.
         qty_per_location.sort(reverse=True)
         return {
-            'qty_per_location': qty_per_location,
-            'locations_available': locations_available,
+            "qty_per_location": qty_per_location,
+            "locations_available": locations_available,
         }
 
     def _compute_get_stock_location(self):
@@ -135,8 +147,8 @@ class ProductProduct(models.Model):
         """
 
         # Get original from onchange
-        self_origin = getattr(self, '_origin', self)
-        info = {'title': _('Stock by Warehouse and Locations'), 'content': []}
+        self_origin = getattr(self, "_origin", self)
+        info = {"title": _("Stock by Warehouse and Locations"), "content": []}
         if not self_origin.exists():
             return json.dumps(info)
 
@@ -145,17 +157,17 @@ class ProductProduct(models.Model):
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
-        warehouse_context = self._context.get('warehouse')
+        warehouse_context = self._context.get("warehouse")
 
-        warehouses = warehouse_context and warehouse_context or self.env['stock.warehouse'].sudo().search([])
+        warehouses = warehouse_context and warehouse_context or self.env["stock.warehouse"].sudo().search([])
         available_locations_warehouse = 0
         for warehouse in warehouses:
             qty_per_location_info = self_origin._get_qty_per_location(warehouse)
             if not qty_per_location_info:
                 continue
 
-            qty_per_location = qty_per_location_info.get('qty_per_location')
-            locations_available = qty_per_location_info.get('locations_available')
+            qty_per_location = qty_per_location_info.get("qty_per_location")
+            locations_available = qty_per_location_info.get("locations_available")
             available_locations_warehouse += locations_available
 
             most_quantity_location = False
@@ -164,13 +176,16 @@ class ProductProduct(models.Model):
                 most_quantity_location = qty_per_location[0][1]
 
             info_content = [
-                {'location': location.display_name, 'quantity': quantity} for quantity, location in qty_per_location]
-            info['content'].append({
-                'warehouse_name': warehouse.name,
-                'most_quantity_location_id': most_quantity_location and most_quantity_location.id or 0,
-                'info_content': info_content,
-                'locations_available': locations_available
-            })
+                {"location": location.display_name, "quantity": quantity} for quantity, location in qty_per_location
+            ]
+            info["content"].append(
+                {
+                    "warehouse_name": warehouse.name,
+                    "most_quantity_location_id": most_quantity_location and most_quantity_location.id or 0,
+                    "info_content": info_content,
+                    "locations_available": locations_available,
+                }
+            )
 
-        info['available_locations'] = available_locations_warehouse
+        info["available_locations"] = available_locations_warehouse
         return json.dumps(info)
