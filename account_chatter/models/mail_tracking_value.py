@@ -12,7 +12,12 @@ class MailTrackingValue(models.Model):
         natively supported.
         """
         values = super().create_tracking_values(
-            initial_value, new_value, col_name, col_info, tracking_sequence, model_name,
+            initial_value,
+            new_value,
+            col_name,
+            col_info,
+            tracking_sequence,
+            model_name,
         )
         if values or model_name != "account.account" or col_info["type"] != "many2many":
             return values
