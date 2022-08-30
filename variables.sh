@@ -10,3 +10,4 @@ export COUNTRY="MX"
 export CUSTOMER="addons_vauxoo"
 export COVERAGE_MIN=70
 export COVERAGE_PRECISION=2
+export PRECOMMIT_HOOKS_TYPE="all"
