@@ -7,6 +7,7 @@ export ODOO_BRANCH="15.0"
 export TRAVIS_PYTHON_VERSION="3.7"
 export TRAVIS_REPO_SLUG="Vauxoo/"
 export COUNTRY="MX"
+export MAIN_APP="stock_by_warehouse"
 export CUSTOMER="addons_vauxoo"
 export COVERAGE_MIN=70
 export COVERAGE_PRECISION=2
