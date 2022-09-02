@@ -68,7 +68,7 @@ jobs:
           export {CI_PIPELINE_ID,CI_REPOSITORY_URL,CI_JOB_ID}=123 &&
           export CI_COMMIT_REF_NAME=${GITHUB_REF_NAME} &&
           export CI_PROJECT_NAMESPACE='-dev' &&
-          export IGNORE_CHECKS=1 &&
+          export PRIVATE_DEPLOY_KEY=12345 &&
           echo $CI_PROJECT_NAME &&
           echo $CI_REPOSITORY_URL &&
           echo $IMAGE_TAG &&
