@@ -59,6 +59,8 @@ jobs:
         run: pip install --force-reinstall -U git+https://git.vauxoo.com/vauxoo-dev/gitlab_tools.git@testall-moy
       - name: Build image
         run: >-
+          sudo apt-get update &&
+          sudo apt-get install dos2unix &&
           source variables.sh &&
           export IMAGE_REPO=${DOCKER_IMAGE_REPO} &&
           export IMAGE_TAG=${CUSTOMER}-${VERSION}-latest &&
