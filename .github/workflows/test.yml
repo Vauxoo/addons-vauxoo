@@ -59,6 +59,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install dos2unix
+          mkdir -p ~/.ssh/
           ssh-keyscan -H git.vauxoo.com >> ~/.ssh/known_hosts
           pip install -U deployv
           pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
