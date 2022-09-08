@@ -79,7 +79,6 @@ jobs:
           echo $CI_COMMIT_REF_SLUG
           deployvcmd gitlab_tools check_keys
           deployvcmd gitlab_tools build_image
-        shell: run
 
     # artifacts:
     #   paths:
