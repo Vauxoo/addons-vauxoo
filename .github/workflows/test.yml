@@ -67,10 +67,7 @@ jobs:
           PRIVATE_DEPLOY_KEY: ${{ secrets.PRIVATE_DEPLOY_KEY }}
         run: |         
           source variables.sh
-          export CI_COMMIT_REF_NAME=${GITHUB_REF_NAME}
-          export {CI_PIPELINE_ID,CI_JOB_ID}=123
           vxci check_keys
-          pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
           vxci build_image
 
     # artifacts:
