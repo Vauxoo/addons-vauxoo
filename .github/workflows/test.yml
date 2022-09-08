@@ -63,6 +63,8 @@ jobs:
           ssh-keyscan -H git.vauxoo.com >> ~/.ssh/known_hosts
           pip install -U deployv vxci
       - name: Build image
+        env:
+          PRIVATE_DEPLOY_KEY: ${{ secrets.PRIVATE_DEPLOY_KEY }}
         run: |         
           source variables.sh
           vxci check_keys
