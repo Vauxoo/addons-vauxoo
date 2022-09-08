@@ -56,7 +56,7 @@ jobs:
             ~/.cache/pip
           key: cache-pip-build
       - name: Install dependencies
-        run: pip install --force-reinstall -U git+https://git.vauxoo.com/vauxoo-dev/gitlab_tools.git@testall-moy
+        run: pip install --force-reinstall -U deployv-addon-gitlab-tools
       - name: Build image
         run: |
           sudo apt-get update
