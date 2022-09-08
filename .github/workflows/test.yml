@@ -61,14 +61,13 @@ jobs:
           sudo apt-get install dos2unix
           mkdir -p ~/.ssh/
           ssh-keyscan -H git.vauxoo.com >> ~/.ssh/known_hosts
-          pip install -U deployv
-          pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
+          pip install -U deployv vxci
       - name: Build image
         run: |         
           source variables.sh
-          export PRIVATE_DEPLOY_KEY=12345
-          deployvcmd gitlab_tools check_keys
-          deployvcmd gitlab_tools build_image
+          vxci check_keys
+          pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
+          vxci build_image
 
     # artifacts:
     #   paths:
