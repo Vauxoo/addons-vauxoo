@@ -56,11 +56,14 @@ jobs:
             ~/.cache/pip
           key: cache-pip-build
       - name: Install dependencies
-        run: pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
-      - name: Build image
         run: |
           sudo apt-get update
           sudo apt-get install dos2unix
+          ssh-keyscan -H git.vauxoo.com >> ~/.ssh/known_hosts
+          pip install -U deployv
+          pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
+      - name: Build image
+        run: |         
           source variables.sh
           export PRIVATE_DEPLOY_KEY=12345
           deployvcmd gitlab_tools check_keys
