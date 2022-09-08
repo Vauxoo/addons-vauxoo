@@ -56,7 +56,7 @@ jobs:
             ~/.cache/pip
           key: cache-pip-build
       - name: Install dependencies
-        run: pip install --force-reinstall -U git+https://git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
+        run: pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-gh_actions-truiz deployv
       - name: Build image
         run: |
           sudo apt-get update
