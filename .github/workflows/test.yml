@@ -68,8 +68,8 @@ jobs:
         run: |
           pip install -U --force-reinstall vxbase vxci
           source variables.sh
-          vxci check_keys --log_level=DEBUG
-          vxci build_image --log_level=DEBUG
+          vxci check_keys
+          vxci build_image
 
     # artifacts:
     #   paths:
