@@ -69,7 +69,7 @@ jobs:
           pip install -U --force-reinstall vxbase vxci
           source variables.sh
           vxci check_keys
-          vxci build_image
+          vxci build_image --push_image
 
     # artifacts:
     #   paths:
