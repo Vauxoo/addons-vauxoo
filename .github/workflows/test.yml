@@ -82,8 +82,8 @@ jobs:
           ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          pip install -U --force-reinstall vxbase
-          pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-fix_push_gha-truiz-truiz
+          pip install -U --force-reinstall vxbase vxci
+#          pip install --force-reinstall -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-fix_push_gha-truiz-truiz
           source variables.sh
           vxci check_keys
           vxci build_image --push_image
