@@ -65,11 +65,15 @@ jobs:
       - name: Build image
         env:
           PRIVATE_DEPLOY_KEY: ${{ secrets.PRIVATE_DEPLOY_KEY }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          ORCHEST_REGISTRY: ${{ secrets.ORCHEST_REGISTRY }}
+          ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
         run: |
           pip install -U --force-reinstall vxbase vxci
           source variables.sh
           vxci check_keys
-          vxci build_image
+          vxci build_image --push_image
 
     # artifacts:
     #   paths:
