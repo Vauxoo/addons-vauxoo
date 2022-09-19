@@ -81,7 +81,6 @@ jobs:
           ORCHEST_REGISTRY: ${{ secrets.ORCHEST_REGISTRY }}
           ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-          CI_COMMIT_REF_NAME: ${GITHUB_SHA}
         run: |
           pip install -U --force-reinstall vxbase vxci
           source variables.sh
@@ -90,7 +89,7 @@ jobs:
 
       - name: Test odoo image
         run: |
-          source $CI_COMMIT_REF_NAME/image_name.env
+          source $GITHUB_REF_NAME/image_name.env
           vxci test_repo --allow_deprecated
     # artifacts:
     #   paths:
