@@ -47,7 +47,6 @@ jobs:
   #          done
   odoo:
     runs-on: ubuntu-latest
-    container: vauxoo/odoo-80-image-shippable-auto
     name: Odoo
     env:
       TESTS: "1"
