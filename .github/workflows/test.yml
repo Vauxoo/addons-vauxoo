@@ -6,7 +6,7 @@ on:
       - "15.0*"
   push:
     branches:
-      - "15.0"
+      - "15.0*"
 
 env:
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
