@@ -61,7 +61,7 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          # ssh-add - <<< "${{ secrets.PRIVATE_DEPLOY_KEY }}"
+          ssh-add - <<< "${{ secrets.PRIVATE_DEPLOY_KEY }}"
 
       - name: Install dependencies
         env:
