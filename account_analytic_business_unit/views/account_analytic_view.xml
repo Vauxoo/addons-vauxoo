@@ -7,14 +7,18 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='group_id']" position="after">
                 <field name="business_unit_id" />
+                <field name="sequence" invisible="1" />
             </xpath>
         </field>
     </record>
     <record id="view_account_analytic_account_list" model="ir.ui.view">
-        <field name="name">account.analytic.account.view.form</field>
+        <field name="name">account.analytic.account.view.list</field>
         <field name="model">account.analytic.account</field>
         <field name="inherit_id" ref="analytic.view_account_analytic_account_list" />
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="sequence" widget="handle" />
+            </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="business_unit_id" optional="hide" />
                 <field name="group_id" optional="hide" />
