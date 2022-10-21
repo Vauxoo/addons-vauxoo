@@ -1,50 +1,44 @@
-from odoo import _, models
-from odoo.exceptions import UserError
+from odoo import models
 
 
 class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
 
-    def process_reconciliation(self, counterpart_aml_dicts=None, payment_aml_rec=None, new_aml_dicts=None):
-        transfer_aml_dicts = [aml_dict for aml_dict in new_aml_dicts or [] if aml_dict.get("transfer_journal_id")]
-        new_aml_dicts = [aml_dict for aml_dict in new_aml_dicts or [] if not aml_dict.get("transfer_journal_id")]
-        counterpart_moves = super().process_reconciliation(
-            counterpart_aml_dicts=counterpart_aml_dicts, payment_aml_rec=payment_aml_rec, new_aml_dicts=new_aml_dicts
-        )
-        payment_model = self.env["account.payment"]
+    def _prepare_reconciliation(self, lines_vals_list, allow_partial=False):
+        """Inherit the method to create the internal transfers from the bank statement line.
+        Note this method is run at the beginning of 'reconcile' method.
+        """
+        reconciliation_overview, open_balance_vals = super()._prepare_reconciliation(lines_vals_list, allow_partial)
         manual_payment_method = self.env.ref("account.account_payment_method_manual_out")
-        for transfer_dict in transfer_aml_dicts:
+        for reconciliation in reconciliation_overview:
+            line = reconciliation["line_vals"]
+            if not line.get("transfer_journal_id"):
+                continue
             statement = self.statement_id
             company = statement.company_id
-            original_transfer_account = company.transfer_account_id
-            company.transfer_account_id = transfer_dict["account_id"]
+            company.transfer_account_id = line["account_id"]
             statement_journal = statement.journal_id
-            target_journal_id = transfer_dict["transfer_journal_id"]
-            is_credit = bool(transfer_dict["credit"])
-            transfer = payment_model.create(
+            target_journal_id = line["transfer_journal_id"]
+            is_credit = bool(line["credit"])
+            transfer = self.env["account.payment"].create(
                 {
-                    "payment_type": "transfer",
+                    "is_internal_transfer": True,
+                    "payment_type": "inbound" if is_credit else "outbound",
                     "company_id": company.id,
-                    "amount": transfer_dict["credit"] if is_credit else transfer_dict["debit"],
+                    "amount": line["credit"] if is_credit else line["debit"],
                     "currency_id": (self.currency_id or self.journal_id.currency_id or company.currency_id).id,
-                    "payment_date": self.date,
-                    "communication": transfer_dict.get("name") or "",
-                    "journal_id": target_journal_id if is_credit else statement_journal.id,
-                    "destination_journal_id": statement_journal.id if is_credit else target_journal_id,
+                    "date": self.date,
+                    "ref": line.get("name") or "",
+                    "journal_id": statement_journal.id,
+                    "destination_journal_id": target_journal_id,
                     "payment_method_id": manual_payment_method.id,
                 }
             )
-            transfer.post()
-            account = statement_journal["default_%s_account_id" % ("debit" if is_credit else "credit")]
-            move_line = transfer.move_line_ids.filtered(
-                lambda move: move.account_id == account and (move.debit if is_credit else move.credit)
-            )
-            if len(move_line) != 1:
-                raise UserError(
-                    _("Could not identify the correct transfer move. Make sure bank journals are properly set up.")
-                )
-            move_line.statement_line_id = self.id
-            move = move_line.move_id
-            counterpart_moves += move
-            company.transfer_account_id = original_transfer_account
-        return counterpart_moves
+            transfer.action_post()
+            liquidity_lines, __counterpart_lines, __writeoff_lines = transfer._seek_for_lines()
+            line["name"] = "%s: %s" % (transfer.name, liquidity_lines.name)
+            line["account_id"] = liquidity_lines.account_id.id
+            reconciliation["counterpart_line"] = liquidity_lines
+            # This value is not needed anymore (This field does not belong to account.move.line)
+            line.pop("transfer_journal_id")
+        return reconciliation_overview, open_balance_vals

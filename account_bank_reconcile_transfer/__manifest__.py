@@ -4,20 +4,20 @@
     "author": "Vauxoo",
     "website": "https://www.vauxoo.com",
     "license": "LGPL-3",
-    "category": "Installer",
-    "version": "13.0.1.0.0",
+    "category": "Accounting/Accounting",
+    "version": "15.0.1.0.0",
     "depends": [
-        "account",
+        "account_accountant",
     ],
-    "data": [
-        "views/assets.xml",
-    ],
+    "data": [],
     "demo": [],
-    "qweb": [
-        "static/src/xml/bank_reconciliation.xml",
-    ],
-    "external_dependencies": {},
+    "assets": {
+        "web.assets_backend": [
+            "account_bank_reconcile_transfer/static/src/js/bank_reconciliation.js",
+        ],
+        "web.assets_qweb": [
+            "account_bank_reconcile_transfer/static/src/xml/bank_reconciliation.xml",
+        ],
+    },
     "installable": True,
-    "auto_install": False,
-    "application": False,
 }

@@ -1,9 +1,9 @@
 odoo.define("account_bank_reconcile_transfer.bank_reconciliation", function (require) {
     "use strict";
 
-    var LineRenderer = require("account.ReconciliationRenderer").LineRenderer;
-    var StatementModel = require("account.ReconciliationModel").StatementModel;
-    var relationalFields = require("web.relational_fields");
+    const LineRenderer = require("account.ReconciliationRenderer").LineRenderer;
+    const StatementModel = require("account.ReconciliationModel").StatementModel;
+    const relationalFields = require("web.relational_fields");
 
     StatementModel.include({
         init: function () {
@@ -13,15 +13,15 @@ odoo.define("account_bank_reconcile_transfer.bank_reconciliation", function (req
 
         updateProposition: function (handle, values) {
             if ("transfer_journal_id" in values && values.transfer_journal_id) {
-                var self = this;
-                var superCall = self._super;
+                const self = this;
+                const superCall = self._super;
                 return new Promise(function (resolve) {
                     self._rpc({
                         model: "res.company",
                         method: "read",
                         args: [self.getLine(handle).st_line.company_id, ["transfer_account_id"]],
                     }).then(function (result) {
-                        var account = result[0]["transfer_account_id"];
+                        const account = result[0]["transfer_account_id"];
                         values.account_id = {
                             id: account[0],
                             display_name: account[1],
@@ -36,7 +36,7 @@ odoo.define("account_bank_reconcile_transfer.bank_reconciliation", function (req
         },
 
         _formatToProcessReconciliation: function (line, prop) {
-            var result = this._super(line, prop);
+            const result = this._super(line, prop);
 
             if (prop.transfer_journal_id) result.transfer_journal_id = prop.transfer_journal_id.id;
 
@@ -46,9 +46,9 @@ odoo.define("account_bank_reconcile_transfer.bank_reconciliation", function (req
 
     LineRenderer.include({
         _renderCreate: function (state) {
-            var self = this;
+            const self = this;
             return self._super(state).then(function () {
-                var record = self.model.get(self.handleCreateRecord);
+                const record = self.model.get(self.handleCreateRecord);
 
                 record.fields.transfer_journal_id = {
                     relation: "account.journal",
