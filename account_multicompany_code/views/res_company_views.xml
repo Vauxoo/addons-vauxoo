@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.account.multicompany</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="code" required="1" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_company_tree" model="ir.ui.view">
+        <field name="name">res.company.tree.inherit.account.multicompany</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="code" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_company_kanban" model="ir.ui.view">
+        <field name="name">res.company.kanban.inherit.account.multicompany</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_res_company_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//kanban/field[@name='name']" position="after">
+                <field name="code" />
+            </xpath>
+            <xpath expr="//i[@class='fa fa-building']" position="after">
+                <strong t-if="record.code.value"><field name="code" /> - </strong>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
