@@ -1,5 +1,4 @@
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models
 
 
 class Company(models.Model):
@@ -7,8 +6,6 @@ class Company(models.Model):
 
     code = fields.Char(help="Internal code name of the company")
 
-    @api.constrains("code")
-    def unique_code(self):
-        for record in self:
-            if record.code and record.search([("code", "=", record.code), ("id", "!=", record.id)]):
-                raise ValidationError(_("Code must be unique"))
+    _sql_constraints = [
+        ("unique_code", "UNIQUE(code)", "Code must be unique"),
+    ]
