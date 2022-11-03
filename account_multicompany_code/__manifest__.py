@@ -10,7 +10,7 @@
     ],
     "demo": [],
     "data": [
-        "views/company_view.xml",
+        "views/res_company_views.xml",
     ],
     "installable": True,
     "auto_install": False,
