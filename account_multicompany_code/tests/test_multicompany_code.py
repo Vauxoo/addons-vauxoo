@@ -2,10 +2,12 @@ from odoo.tests import TransactionCase
 
 
 class TestMulticompanyCode(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.company = self.env.ref("base.main_company")
-        self.company.code = "TEST-CODE"
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.company = cls.env.ref("base.main_company")
+        cls.company.code = "TEST-CODE"
 
     def test_01_check_code_included_account_name(self):
         """Check that the code is shown in the account display names"""
