@@ -31,7 +31,7 @@
             <xpath expr="//kanban/field[@name='name']" position="after">
                 <field name="code" />
             </xpath>
-            <xpath expr="//i[@class='fa fa-building']" position="after">
+            <xpath expr="//i[hasclass('fa', 'fa-building')" position="after">
                 <strong t-if="record.code.value"><field name="code" /> - </strong>
             </xpath>
         </field>
