@@ -5,6 +5,7 @@
         <field name="name">crm.team.form.inherit.default.warehouse</field>
         <field name="model">crm.team</field>
         <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="priority">14</field>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='members']" position="after">
                 <page string="Warehouse settings for the sales team">
