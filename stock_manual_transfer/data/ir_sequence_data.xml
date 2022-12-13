@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="sequence_transfer" model="ir.sequence">
+        <field name="name">Manual Transfers</field>
+        <field name="code">stock.manual_transfer</field>
+        <field name="prefix">MT/%(year)s/</field>
+        <field name="padding">5</field>
+    </record>
+
+</odoo>
