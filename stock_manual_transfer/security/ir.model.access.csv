@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_can_stock_manual_transfer,stock_can_stock_manual_transfer,model_stock_manual_transfer,group_stock_manual_transfer,1,1,1,1
+access_stock_can_stock_manual_transfer_line,stock_can_stock_manual_transfer_line,model_stock_manual_transfer_line,group_stock_manual_transfer,1,1,1,1
