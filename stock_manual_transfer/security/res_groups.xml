@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="group_stock_manual_transfer" model="res.groups">
+        <field name="name">Can make manual transfers</field>
+    </record>
+
+</odoo>

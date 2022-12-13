@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Warehouse -->
+    <record id="demo_warehouse_01" model="stock.warehouse">
+        <field name="name">Demo Warehouse 1</field>
+        <field name="code">DW1</field>
+        <field name="reception_steps">one_step</field>
+        <field name="delivery_steps">ship_only</field>
+    </record>
+
+    <!-- Stock Location Routes -->
+    <record id="demo_wh_route_reception" model="stock.location.route">
+        <field name="name">Reception</field>
+        <field name="product_selectable" eval="True" />
+        <field name="warehouse_selectable" eval="True" />
+        <field name="manual_transfer_selectable" eval="True" />
+    </record>
+
+    <!-- Pull Rules -->
+    <record id="demo_wh_rule" model="stock.rule">
+        <field name="name">Vendors → Stock</field>
+        <field name="action">pull</field>
+        <field name="picking_type_id" ref="stock.picking_type_in" />
+        <field name="warehouse_id" ref="demo_warehouse_01" />
+        <field name="location_src_id" ref="stock.stock_location_suppliers" />
+        <field name="location_id" model="stock.warehouse" eval="obj(ref('demo_warehouse_01')).lot_stock_id.id" />
+        <field name="procure_method">make_to_stock</field>
+        <field name="route_id" ref="demo_wh_route_reception" />
+    </record>
+
+</odoo>
