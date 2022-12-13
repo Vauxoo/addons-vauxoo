@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_manual_transfer_form_view" model="ir.ui.view">
+        <field name="name">stock.manual_transfer.form</field>
+        <field name="model">stock.manual_transfer</field>
+        <field name="arch" type="xml">
+            <form string="Manual Transfer">
+                <header>
+                    <field name="picking_ids" invisible="1" />
+                    <button
+                        name="action_validate"
+                        type="object"
+                        string="Make transfers"
+                        states="draft"
+                        class="oe_highlight"
+                        groups="stock_manual_transfer.group_stock_manual_transfer"
+                    />
+                    <button
+                        name="action_view_pickings"
+                        type="object"
+                        string="View Transfers"
+                        attrs="{'invisible': [('picking_ids', '=', [])]}"
+                        class="oe_highlight"
+                        groups="stock_manual_transfer.group_stock_manual_transfer"
+                    />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <group>
+                        <h1>
+                            <field name="name" force_save="1" />
+                        </h1>
+                    </group>
+                    <group col="4">
+                        <field name="warehouse_id" options="{'no_create': True}" />
+                        <field name="date_planned" />
+                        <field name="route_id" options="{'no_create': True}" />
+                    </group>
+                    <notebook>
+                        <page string="Transfer Lines" name="transfer_lines">
+                            <field name="transfer_line_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="product_id" />
+                                    <field name="product_uom_qty" />
+                                    <field name="product_uom_id" groups="uom.group_uom" optional="show" />
+                                    <field name="product_uom_category_id" invisible="1" />
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="product_id" />
+                                            <field name="product_uom_qty" />
+                                            <field name="product_uom_id" groups="uom.group_uom" />
+                                            <field name="product_uom_category_id" invisible="1" />
+                                            <field name="sequence" />
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_manual_transfer_tree_view" model="ir.ui.view">
+        <field name="name">stock.manual_transfer.tree</field>
+        <field name="model">stock.manual_transfer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="warehouse_id" />
+                <field name="date_planned" />
+                <field name="route_id" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_manual_transfer_action" model="ir.actions.act_window">
+        <field name="name">Manual Transfer</field>
+        <field name="res_model">stock.manual_transfer</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new manual transfer.
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+        action="stock_manual_transfer_action"
+        id="menu_stock_manual_transfer_act"
+        parent="stock.menu_stock_warehouse_mgmt"
+        sequence="40"
+        groups="stock_manual_transfer.group_stock_manual_transfer"
+    />
+
+</odoo>

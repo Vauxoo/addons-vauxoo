@@ -1,0 +1,420 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_manual_transfer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-20 22:03+0000\n"
+"PO-Revision-Date: 2022-12-20 22:03+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_needaction
+msgid "Action Needed"
+msgstr "Acción necesaria"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de excepción de actividad"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_state
+msgid "Activity State"
+msgstr "Estado de actividad"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actividad"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_location_route__manual_transfer_selectable
+msgid "Applicable on manual transfer"
+msgstr "Aplicable en transferencia manual"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_attachment_count
+msgid "Attachment Count"
+msgstr "Recuento de archivos adjuntos"
+
+#. module: stock_manual_transfer
+#: model:res.groups,name:stock_manual_transfer.group_stock_manual_transfer
+msgid "Can make manual transfers"
+msgstr "Puede realizar transferencias manuales"
+
+#. module: stock_manual_transfer
+#: model_terms:ir.actions.act_window,help:stock_manual_transfer.stock_manual_transfer_action
+msgid "Click to add a new manual transfer."
+msgstr "Click para agregar una nueva transferencia manual."
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer_line__product_uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+"La conversión entre Unidades de Medida solo puede ocurrir si pertenecen a la"
+" misma categoría. La conversión se hará en base a los ratios."
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__create_uid
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__create_date
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__display_name
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields.selection,name:stock_manual_transfer.selection__stock_manual_transfer__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Socios)"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de fuente impresionante, p. fa-tareas"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__has_message
+msgid "Has Message"
+msgstr "Tiene mensaje"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__id
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una excepción de actividad."
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_needaction
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, los nuevos mensajes requieren su atención."
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_has_error
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
+
+#. module: stock_manual_transfer
+#: model:ir.model,name:stock_manual_transfer.model_stock_location_route
+msgid "Inventory Routes"
+msgstr "Rutas de inventario"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer____last_update
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__write_uid
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__write_uid
+msgid "Last Updated by"
+msgstr "Última modificación por"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__write_date
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Principal archivo adjunto"
+
+#. module: stock_manual_transfer
+#: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_manual_transfer_form_view
+msgid "Make transfers"
+msgstr "Realizar transferencias"
+
+#. module: stock_manual_transfer
+#: model:ir.actions.act_window,name:stock_manual_transfer.stock_manual_transfer_action
+#: model:ir.model,name:stock_manual_transfer.model_stock_manual_transfer
+#: model:ir.ui.menu,name:stock_manual_transfer.menu_stock_manual_transfer_act
+#: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_manual_transfer_form_view
+msgid "Manual Transfer"
+msgstr "Transferencia manual"
+
+#. module: stock_manual_transfer
+#: model:ir.model,name:stock_manual_transfer.model_stock_manual_transfer_line
+msgid "Manual Transfer Line"
+msgstr "Línea de transferencia manual"
+
+#. module: stock_manual_transfer
+#: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_location_route_form_view
+msgid "Manual transfers"
+msgstr "Transferencias manuales"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de entrega de mensaje"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha limite de mi actividad"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: stock_manual_transfer
+#: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
+#: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
+#: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
+#, python-format
+msgid "New"
+msgstr "Nueva"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha limite de la siguiente actividad"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de la siguiente actividad"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes sin leer"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__date_planned
+msgid "Planned Date"
+msgstr "Fecha planeada"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__route_id
+msgid "Preferred Route"
+msgstr "Ruta preferida"
+
+#. module: stock_manual_transfer
+#: model:ir.model,name:stock_manual_transfer.model_procurement_group
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__procurement_group_id
+msgid "Procurement Group"
+msgstr "Grupo de aprovisionamiento"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__product_uom_category_id
+msgid "Product's unit of measure category"
+msgstr "Categoría de unidad de medida del producto"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__product_uom_qty
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: stock_manual_transfer
+#: model:stock.location.route,name:stock_manual_transfer.demo_wh_route_reception
+msgid "Reception"
+msgstr "Recepción"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega de SMS"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Atrasado: la fecha de vencimiento ya pasó\n"
+"Hoy: la fecha de la actividad es hoy\n"
+"Planeado: Actividades futuras."
+
+#. module: stock_manual_transfer
+#: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
+#, python-format
+msgid ""
+"The selected route doesn't have configured rules on the selected warehouse."
+msgstr ""
+"La ruta seleccionada no tiene reglas configuradas en  el almacén "
+"seleccionado."
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__transfer_line_ids
+#: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_manual_transfer_form_view
+msgid "Transfer Lines"
+msgstr "Líneas de transferencia"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__transfer_id
+msgid "Transfer Reference"
+msgstr "Referencia de transferencia"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_procurement_group__picking_ids
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__picking_ids
+msgid "Transfers"
+msgstr "Transferencias"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción registrada."
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__product_uom_id
+msgid "Unit of Measure"
+msgstr "Unidad de medida"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes no leídos"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de mensajes no leídos"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields.selection,name:stock_manual_transfer.selection__stock_manual_transfer__state__valid
+msgid "Validated"
+msgstr "Validada"
+
+#. module: stock_manual_transfer
+#: model:stock.rule,name:stock_manual_transfer.demo_wh_rule
+msgid "Vendors → Stock"
+msgstr ""
+
+#. module: stock_manual_transfer
+#: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_manual_transfer_form_view
+msgid "View Transfers"
+msgstr "Ver transferencias"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__warehouse_id
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: stock_manual_transfer
+#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: stock_manual_transfer
+#: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
+#, python-format
+msgid ""
+"You can not delete a validated transfer.\n"
+"- Record: %s"
+msgstr ""
+"No puedes eliminar una transferencia validada.\n"
+"- Registro: %s"
