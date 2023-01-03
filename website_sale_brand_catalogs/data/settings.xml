@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="res_config_settings" model="res.config.settings">
+        <field name="group_use_lead" eval="True" />
+    </record>
+
+    <function model="res.config.settings" name="execute" eval="[[ref('res_config_settings')]]" />
+
+    <delete id="res_config_settings" model="res.config.settings" />
+
+</odoo>

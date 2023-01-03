@@ -1,0 +1,240 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_sale_brand_catalogs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-07 19:46+0000\n"
+"PO-Revision-Date: 2022-12-07 19:46+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__attachment_id
+msgid "Attachment"
+msgstr "Adjunto"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__brand_id
+msgid "Brand"
+msgstr "Marca"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.actions.act_window,name:website_sale_brand_catalogs.product_brand_attachment_action
+#: model:ir.ui.menu,name:website_sale_brand_catalogs.product_brand_attrachment_menu
+msgid "Brand Catalogs"
+msgstr "Catálogos de marcas"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__can_publish
+msgid "Can Publish"
+msgstr "Se puede publicar"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid ""
+"Capture your email and automatically download our catalog or register on our"
+" website to access all our content."
+msgstr ""
+"Captura tu correo electrónico y descarga automáticamente nuestro catálogo o regístrate en nuestro"
+" sitio web para tener acceso a todo nuestro contenido "
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.product_brand_attribute_form_view
+msgid "Catalog Brand"
+msgstr "Catálogo de marcas"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.product_brand_attribute_form_view
+msgid "Catalog File"
+msgstr "Archivo del catálogo"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.product_brand_attribute_form_view
+msgid "Catalog Name"
+msgstr "Nombre del catálogo"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand__catalog_ids
+#: model:website.menu,name:website_sale_brand_catalogs.menu_catalog
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.brand_details
+msgid "Catalogs"
+msgstr "Catálogos"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.brand_catalog
+msgid "Catalogs by brand"
+msgstr "Catálogos por marca"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand__description_catalog
+msgid "Description for the website"
+msgstr "Descripción para el sitio web"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid "Download"
+msgstr "Descargar"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.brand_details
+msgid "Download Catalog"
+msgstr "Descargar catálogo"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid "Download catalog"
+msgstr "Descargar catálogo"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid "Download Catalog:"
+msgstr "Descargar catálogo:"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid "E-mail*"
+msgstr "Correo electrónico*"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__id
+msgid "ID"
+msgstr ""
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__image_1920
+msgid "Image"
+msgstr "Imagen"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__image_1024
+msgid "Image 1024"
+msgstr "Imagen 1024"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__image_128
+msgid "Image 128"
+msgstr "Imagen 128"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__image_256
+msgid "Image 256"
+msgstr "Imagen 256"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__image_512
+msgid "Image 512"
+msgstr "Imagen 512"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__is_published
+msgid "Is Published"
+msgstr "Está publicado"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid "Name*"
+msgstr "Nombre*"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.brand_catalog
+msgid "No catalogs available"
+msgstr "No hay catálogos disponibles"
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.download_pdf_modal
+msgid "Phone*"
+msgstr "Teléfono*"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,help:website_sale_brand_catalogs.field_product_brand_attachment__website_id
+msgid "Restrict publishing to this website."
+msgstr "Restringir la publicación en este sitio web."
+
+#. module: website_sale_brand_catalogs
+#: model_terms:ir.ui.view,arch_db:website_sale_brand_catalogs.brand_details
+msgid "See Catalog"
+msgstr "Ver catálogo"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,help:website_sale_brand_catalogs.field_product_brand_attachment__website_url
+msgid "The full URL to access the document through the website."
+msgstr "La URL completa para acceder al documento a través del sitio web."
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__website_published
+msgid "Visible on current website"
+msgstr "Visible en el sitio web actual"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__website_id
+msgid "Website"
+msgstr "Sitio web"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model.fields,field_description:website_sale_brand_catalogs.field_product_brand_attachment__website_url
+msgid "Website URL"
+msgstr "URL del sitio web"
+
+#. module: website_sale_brand_catalogs
+#. openerp-web
+#: code:addons/website_sale_brand_catalogs/static/src/js/catalog_section.js:0
+#, python-format
+msgid "You must complete all fields"
+msgstr "Debe rellenar todos los campos"
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model,name:website_sale_brand_catalogs.model_product_brand
+msgid "product.brand"
+msgstr ""
+
+#. module: website_sale_brand_catalogs
+#: model:ir.model,name:website_sale_brand_catalogs.model_product_brand_attachment
+msgid "product.brand.attachment"
+msgstr ""

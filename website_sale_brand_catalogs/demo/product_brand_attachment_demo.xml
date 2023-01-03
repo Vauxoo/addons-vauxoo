@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="catalog_brand_1" model="product.brand.attachment">
+        <field name="name">Catalog Brand 1</field>
+        <field name="brand_id" ref="product_brand_1" />
+    </record>
+</odoo>

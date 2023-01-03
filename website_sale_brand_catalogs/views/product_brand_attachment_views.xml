@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_brand_attribute_form_view" model="ir.ui.view">
+        <field name="name">product.brand.attachment.form</field>
+        <field name="model">product.brand.attachment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div>
+                        <field name="image_1920" widget="image" class="oe_avatar" />
+                        <group>
+                            <field name="name" placeholder="Catalog Name" />
+                            <field name="attachment_id" />
+                            <field name="brand_id" />
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_brand_attachment_tree_view" model="ir.ui.view">
+        <field name="name">product.brand.attachment.tree</field>
+        <field name="model">product.brand.attachment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="website_id" groups="website.group_multi_website" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_product_brand_attachment" model="ir.actions.act_window">
+        <field name="name">Brand Catalogs</field>
+        <field name="res_model">product.brand.attachment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="product_brand_attrachment_menu"
+        parent="website_sale.menu_product_settings"
+        action="action_product_brand_attachment"
+        sequence="5"
+    />
+
+</odoo>

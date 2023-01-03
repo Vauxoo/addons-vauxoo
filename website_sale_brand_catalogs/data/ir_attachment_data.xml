@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="icon_download" model="ir.attachment">
+        <field name="name">icon_download</field>
+        <field name="type">url</field>
+        <field name="url">/website_sale_brand_catalogs/static/img/download.svg</field>
+        <field name="public" eval="True" />
+    </record>
+
+    <record id="icon_view" model="ir.attachment">
+        <field name="name">icon_view</field>
+        <field name="type">url</field>
+        <field name="url">/website_sale_brand_catalogs/static/img/eye.svg</field>
+        <field name="public" eval="True" />
+    </record>
+
+    <record id="close_red" model="ir.attachment">
+        <field name="name">close_red</field>
+        <field name="type">url</field>
+        <field name="url">/website_sale_brand_catalogs/static/img/close-red.svg</field>
+        <field name="public" eval="True" />
+    </record>
+
+</odoo>
