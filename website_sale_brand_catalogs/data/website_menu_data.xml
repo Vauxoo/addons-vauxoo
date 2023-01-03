@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="menu_catalog" model="website.menu">
+        <field name="name">Catalogs</field>
+        <field name="url">/catalog</field>
+        <field name="parent_id" ref="website.main_menu" />
+        <field name="sequence" eval="20" />
+    </record>
+</odoo>

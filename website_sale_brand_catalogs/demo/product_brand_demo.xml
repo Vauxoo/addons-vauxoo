@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_brand_1" model="product.brand">
+        <field name="name">My Brand</field>
+        <field name="description">Lorem ipsum dolor sit amet</field>
+    </record>
+    <record id="product_brand_2" model="product.brand">
+        <field name="name">Your Brand</field>
+        <field name="description">Lorem ipsum dolor sit amet</field>
+    </record>
+    <record id="product_brand_3" model="product.brand">
+        <field name="name">New Brand</field>
+        <field name="description">Lorem ipsum dolor sit amet</field>
+    </record>
+</odoo>

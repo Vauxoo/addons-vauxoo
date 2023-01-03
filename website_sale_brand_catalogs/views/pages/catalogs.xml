@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Brands catalog -->
+    <template id="brand_catalog" name="Catalogs">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <t t-set="additional_title" />
+                <div class="oe_structure oe_empty" id="oe_structure_website_catalogs_1" />
+                <div class="oe_structure oe_empty" id="oe_structure_website_catalogs_2">
+                    <div id="brand_catalog" class="container mt24 mb24 catalog_brand_page bg-white">
+                        <div class="col-sm-12">
+                            <h2 class="text-center mt32 mb24 text-uppercase font-weight-bold">Catalogs by brand</h2>
+                        </div>
+                        <div class="row">
+                            <t t-foreach="catalog_brands" t-as="brand">
+                                <div class="col-6 col-md-3 text-center brand_card">
+                                    <a t-attf-href="catalog/brand/#{slug(brand)}">
+                                        <div class="brand_image">
+                                            <img
+                                                class="img-responsive img-fluid"
+                                                t-attf-src="/web/image/product.brand/{{brand.id}}/logo"
+                                                t-att-alt="brand.name"
+                                            />
+                                        </div>
+                                        <div class="brand_name mt8">
+                                            <span t-out='brand.name' />
+                                        </div>
+                                    </a>
+                                    <div class="brand_description mt4 d-none d-md-block">
+                                        <t t-if="brand.description">
+                                            <t
+                                                t-set="description"
+                                                t-value="brand.description if len(brand.description) &lt; 150 else brand.description[:151]+'...'"
+                                            />
+                                            <p class="my-0" t-out="description" itemprop="name" />
+                                        </t>
+                                    </div>
+                                    <div class="description mt4 d-sm-none">
+                                        <t t-if="brand.description">
+                                            <t
+                                                t-set="description"
+                                                t-value="brand.description if len(brand.description) &lt; 60 else brand.description[:61]+'...'"
+                                            />
+                                            <p class="my-0" t-out="description" itemprop="name" />
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div t-if="not catalog_brands" class="col-sm-12">
+                            <h2 class="text-center mt48 mb32">No catalogs available</h2>
+                        </div>
+                        <div class="products_pager form-inline justify-content-center py-3">
+                            <t t-call="website.pager" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="brand_details" name="Catalog detail">
+        <t t-call="website.layout">
+            <t t-set="additional_title" t-value="brand.name" />
+            <div class="oe_structure oe_empty" id="oe_structure_website_sale_brand_detail_1" />
+            <div class="oe_structure oe_empty" id="oe_structure_website_sale_brand_detail_2">
+                <div itemscope="itemscope" itemtype="http://schema.org/Catalog_brand" class="catalog_page">
+                    <t t-call="website_sale_brand_catalogs.brand_header" />
+                    <div class="container">
+                        <div class="col-12 my-0">
+                            <ol class="breadcrumb mb0">
+                                <li t-if="brand" class="breadcrumb-item">
+                                    <a href="/catalog">Catalogs</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <span t-field="brand.name" />
+                                </li>
+                            </ol>
+                        </div>
+                        <div
+                            itemprop="description_catalog"
+                            t-field="brand.description_catalog"
+                            class="oe_structure mt16"
+                            id="category_full_description"
+                        />
+                        <!-- Catalogs -->
+                        <div class="catalog_section bg-white p-4">
+                            <div>
+                                <h2 class="text-center mt32 mb24 text-uppercase font-weight-bold">Catalogs</h2>
+                            </div>
+                            <div class="catalog_list">
+                                <div class="row">
+                                    <t t-foreach="catalogs" t-as="catalog">
+                                        <div class="col-6 col-md-3 mb-1 catalog_item">
+                                            <div class="catalog_card">
+                                                <a
+                                                    target="_blank"
+                                                    t-if="website.user_id != user_id"
+                                                    t-attf-href="/web/content/#{catalog.attachment_id.id}"
+                                                >
+                                                    <div class="img-catalog">
+                                                        <img
+                                                            class="card-img-top img-responsive"
+                                                            t-attf-src="/website/image/product.brand.attachment/#{catalog.id}/image_1920"
+                                                            t-att-alt="catalog.name"
+                                                        />
+                                                    </div>
+                                                </a>
+                                                <a
+                                                    t-else=""
+                                                    t-att-data-attachment-id="catalog.attachment_id.id"
+                                                    href="#"
+                                                    data-toggle="modal"
+                                                    data-target="#download_pdf_modal"
+                                                    class="see_pdf"
+                                                >
+                                                    <div class="img-catalog">
+                                                        <img
+                                                            class="card-img-top img-responsive"
+                                                            t-attf-src="/website/image/product.brand.attachment/#{catalog.id}/image_1920"
+                                                            t-att-alt="catalog.name"
+                                                        />
+                                                    </div>
+                                                </a>
+                                                <div class="text-center catalog_name">
+                                                    <p t-out="catalog.name" />
+                                                </div>
+                                                <div class="row mt4 mb4">
+                                                    <div class="col-6">
+                                                        <t t-set="pdf_mode" t-value="download" />
+                                                        <t t-if="website.user_id != user_id">
+                                                            <a
+                                                                target="_blank"
+                                                                t-att-href="'/web/content/{0}?download=true'.format(catalog.attachment_id.id)"
+                                                            >
+                                                                <img
+                                                                    class="pull-left catalog_icon"
+                                                                    src="/web/image/website_sale_brand_catalogs.icon_download"
+                                                                    alt="Download Catalog"
+                                                                />
+                                                            </a>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <a
+                                                                t-if="catalog.attachment_id.sudo().type == 'url'"
+                                                                t-att-data-attachment-id="catalog.attachment_id.id"
+                                                                href="#"
+                                                                data-toggle="modal"
+                                                                data-target="#download_pdf_modal"
+                                                                class="see_pdf"
+                                                            >
+                                                                <img
+                                                                    class="pull-left catalog_icon"
+                                                                    src="/web/image/website_sale_brand_catalogs.icon_download"
+                                                                    alt="Download Catalog"
+                                                                />
+                                                            </a>
+                                                            <a
+                                                                t-else=""
+                                                                t-att-data-attachment-id="catalog.attachment_id.id"
+                                                                href="#"
+                                                                data-toggle="modal"
+                                                                data-target="#download_pdf_modal"
+                                                                class="download_pdf"
+                                                            >
+                                                                <img
+                                                                    class="pull-left catalog_icon"
+                                                                    src="/web/image/website_sale_brand_catalogs.icon_download"
+                                                                    alt="Download Catalog"
+                                                                />
+                                                            </a>
+                                                        </t>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <t t-set="pdf_mode" t-value="see" />
+                                                        <a
+                                                            t-if="website.user_id != user_id"
+                                                            target="_blank"
+                                                            t-attf-href="/web/content/#{catalog.attachment_id.id}"
+                                                        >
+                                                            <img
+                                                                class="pull-right catalog_icon"
+                                                                src="/web/image/website_sale_brand_catalogs.icon_view"
+                                                                alt="See Catalog"
+                                                            />
+                                                        </a>
+                                                        <a
+                                                            t-else=""
+                                                            t-att-data-attachment-id="catalog.attachment_id.id"
+                                                            href="#"
+                                                            data-toggle="modal"
+                                                            data-target="#download_pdf_modal"
+                                                            class="see_pdf"
+                                                        >
+                                                            <img
+                                                                class="pull-right catalog_icon"
+                                                                src="/web/image/website_sale_brand_catalogs.icon_view"
+                                                                alt="See Catalog"
+                                                            />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                            <t t-call="website_sale_brand_catalogs.download_pdf_modal" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure oe_empty" id="oe_structure_website_sale_brand_detail_3" />
+        </t>
+    </template>
+
+    <template id="download_pdf_modal" name="Download PDF Modal">
+        <div id="download_pdf_modal" class="modal fade mt96" role="dialog">
+            <div class="modal-dialog text-center">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <button type="button" class="close mr16" data-dismiss="modal">
+                            <img class="" src="/web/image/website_sale_brand_catalogs.close_red" alt="Close" />
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h2 class="text-uppercase font-weight-bold text-center">Download catalog</h2>
+                        <p
+                        >Capture your email and automatically download our catalog or register on our website to access all our content.</p>
+                        <div class="col-sm-8 offset-md-2">
+                            <section class="s_website_form " data-vcss="001" data-snippet="s_website_form">
+                                <div class="container">
+                                    <form
+                                        id="download_form"
+                                        action="/website/form/"
+                                        method="post"
+                                        enctype="multipart/form-data"
+                                        class="o_mark_required"
+                                        data-mark="*"
+                                        data-model_name="crm.lead"
+                                        data-success-mode="redirect"
+                                        data-success-page=""
+                                        data-pre-fill="true"
+                                    >
+                                        <div>
+                                            <div data-type="char" data-name="Field">
+                                                <div class="form-group form-field o_website_form_required_custom">
+                                                    <input
+                                                        id="contact1"
+                                                        type="text"
+                                                        class="form-control s_website_form_input"
+                                                        name="contact_name"
+                                                        placeholder="Name*"
+                                                        required=""
+                                                        data-fill-with="name"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div data-type="email" data-name="Field">
+                                                <div class="form-group form-field o_website_form_required_custom">
+                                                    <input
+                                                        id="contact2"
+                                                        type="email"
+                                                        class="form-control s_website_form_input"
+                                                        name="email_from"
+                                                        placeholder="E-mail*"
+                                                        required=""
+                                                        data-fill-with="email"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div data-type="char" data-name="Field">
+                                                <div class="form-group form-field o_website_form_required_custom">
+                                                    <input
+                                                        id="contact3"
+                                                        type="tel"
+                                                        class="form-control s_website_form_input"
+                                                        name="phone"
+                                                        placeholder="Phone*"
+                                                        required=""
+                                                        data-fill-with="phone"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="form-group col-12 s_website_form_submit"
+                                                data-name="Submit Button"
+                                            >
+                                                <div class="s_website_form_label" />
+                                                <a
+                                                    data-attachment-id=""
+                                                    data-pdf-mode=""
+                                                    role="button"
+                                                    class="btn btn-primary btn-lg btn-block text-white download_attachment"
+                                                >Download</a>
+                                                <span id="s_website_form_result" />
+                                            </div>
+                                            <div t-if="catalog" class="form-group form-field hidden">
+                                                <t t-set="section_name">Download Catalog:</t>
+                                                <t t-set="catalog_download" t-value="section_name" />
+                                                <input
+                                                    class="form-control o_website_form_input"
+                                                    name="name"
+                                                    placeholder=""
+                                                    t-att-value="'%s %s (%s)' % (
+                                                        catalog_download,
+                                                        catalog.attachment_id.name,
+                                                        catalog.name,
+                                                    )"
+                                                    type="hidden"
+                                                />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+</odoo>

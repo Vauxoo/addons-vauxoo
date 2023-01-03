@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Header Brand -->
+    <template id="brand_header">
+        <div
+            t-if="brand or active_page == 'catalog'"
+            t-attf-class="#{'brand_header' if active_page == 'catalog' else 'brand_header'}"
+        >
+            <div id="brand_img" class="col-12 text-center brand-container">
+                    <div class="brand_image">
+                        <img
+                        class="img-responsive center-block"
+                        t-attf-src="/website/image/product.brand/{{brand.id}}/logo"
+                        t-att-alt="brand.name"
+                    />
+                    </div>
+            </div>
+        </div>
+    </template>
+
+</odoo>

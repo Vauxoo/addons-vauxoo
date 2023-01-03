@@ -11,3 +11,4 @@ export CUSTOMER="addons_vauxoo"
 export COVERAGE_MIN=70
 export COVERAGE_PRECISION=2
 export PRECOMMIT_HOOKS_TYPE="all"
+export CHROME_VERSION="107.0.5304.110-1"

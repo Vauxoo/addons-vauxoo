@@ -1,0 +1,26 @@
+/* BRAND LIST */
+.brand_card {
+    .brand_image {
+        height: $brand-image-height;
+        border-radius: $brand-image-border-radius;
+        background-image: linear-gradient(to bottom, #feffff, #d3d2d2);
+        img {
+            padding: $brand-image-padding;
+            max-height: $brand-image-max-height;
+        }
+    }
+    .brand_name {
+        font-size: $brand-name-font-size;
+        font-weight: $brand-name-font-weight;
+    }
+    .brand_description {
+        font-size: $brand-description-font-size;
+        height: $brand-description-height;
+        margin-bottom: $brand-description-margin-bottom;
+    }
+    @include media-breakpoint-down(xs) {
+        .brand_description {
+            height: $brand-height;
+        }
+    }
+}
