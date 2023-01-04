@@ -64,6 +64,7 @@ jobs:
           source ${REPO_REQUIREMENTS}/virtualenv/python${TRAVIS_PYTHON_VERSION}/bin/activate
           source ${REPO_REQUIREMENTS}/virtualenv/nodejs/bin/activate
           source /usr/local/rvm/scripts/rvm
+          cp test-oca_dependencies.txt oca_dependencies.txt
           travis_install_nightly
           travis_run_tests
           travis_after_tests_success || true
