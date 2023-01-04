@@ -27,6 +27,7 @@ install:
   - source ${TRAVIS_BUILD_DIR}/variables.sh
   - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - cp test-oca_dependencies.txt oca_dependencies.txt   
   - travis_install_nightly
 
 script:
