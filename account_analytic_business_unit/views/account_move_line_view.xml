@@ -23,6 +23,9 @@
                         </div>
                     </button>
                 </div>
+                <group>
+                    <field name="business_unit_id" />
+                </group>
             </xpath>
         </field>
     </record>
@@ -32,6 +35,7 @@
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
             <xpath expr="//page[@id='aml_tab']//button[@name='action_automatic_entry']" position="after">
+                <field name="business_unit_id" invisible="1" groups="analytic.group_analytic_accounting" />
                 <field name="analytic_line_count" invisible="1" groups="analytic.group_analytic_accounting" />
                 <button
                     name="action_open_analytic_lines"
