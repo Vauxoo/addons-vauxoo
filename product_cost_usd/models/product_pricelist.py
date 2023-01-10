@@ -29,19 +29,19 @@ class Pricelist(models.Model):
         results = super()._compute_price_rule(products_qty_partner, date=date, uom_id=uom_id)
         usd_currency = self.env.ref("base.USD")
         date = fields.Date.context_today(self)
-        for product_id in results:
+        for product_qty_partner in products_qty_partner:
+            product = product_qty_partner[0]
             # get current price and pricelist item for product_id
-            price, item_id = results[product_id]
+            price, item_id = results[product.id]
             suitable_rule = self.item_ids.filtered(lambda x: x.id == item_id)
             # look that pricelist item is based on cost in usd
             if not suitable_rule or suitable_rule.base != "standard_price_usd":
                 continue
-            product = self.env["product.product"].browse(product_id)
             # go back conversion made in super, moving the price into
             # product currency for items based on cost in USD
             price = self.currency_id._convert(price, product.currency_id, self.env.company, date, round=False)
             # now convert from USD into pricelist currency
             if self.currency_id != usd_currency:
                 price = usd_currency._convert(price, self.currency_id, self.env.company, date, round=False)
-            results[product_id] = (price, suitable_rule and suitable_rule.id or False)
+            results[product.id] = (price, suitable_rule and suitable_rule.id or False)
         return results
