@@ -5,7 +5,7 @@ Search Action Domain
 ====================
 
 This module lets the user to use server actions as a filters in the "Favorites"
-section. In other words, the user might use complex queries to search the records.  
+section. In other words, the user might use complex queries to search the records.
 
 To use this kind of filter, go to:
 
