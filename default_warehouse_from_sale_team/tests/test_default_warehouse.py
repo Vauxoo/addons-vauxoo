@@ -58,7 +58,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         self.assertEqual(
             purchase_id.picking_type_id,
             pick_type_id,
-            "Default picking type is not the" "set on the sales team related to de user.",
+            "Default picking type is not the set on the sales team related to de user.",
         )
 
     def test_02_default_picking_type_purchase(self):
@@ -74,7 +74,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         self.assertEqual(
             purchase_id.picking_type_id,
             pick_type_id,
-            "Default picking type is not the" "set on the sales team related to de user.",
+            "Default picking type is not the set on the sales team related to de user.",
         )
 
     def test_03_proper_behavior(self):
