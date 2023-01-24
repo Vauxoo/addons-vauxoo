@@ -1,5 +1,3 @@
-from __future__ import division
-
 from odoo import fields
 from odoo.exceptions import ValidationError
 from odoo.tests import Form, TransactionCase, tagged
