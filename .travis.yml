@@ -1,0 +1,39 @@
+language: python
+
+sudo: false
+cache:
+  apt: true
+  directories:
+    - $HOME/.cache/pip
+
+addons:
+  postgresql: "11"
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - openssl
+
+python:
+  - "3.7"
+
+env:
+  global:
+  - TESTS="0" LINT_CHECK="0"
+
+  matrix:
+  - TESTS="1"
+
+install:
+  - source ${TRAVIS_BUILD_DIR}/variables.sh
+  - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - cp test-oca_dependencies.txt oca_dependencies.txt   
+  - travis_install_nightly
+
+script:
+  - source ${TRAVIS_BUILD_DIR}/variables.sh
+  - travis_run_tests
+
+after_success:
+  - source ${TRAVIS_BUILD_DIR}/variables.sh
+  - travis_after_tests_success
