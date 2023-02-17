@@ -9,7 +9,7 @@ class PurchaseRequisitionLine(models.Model):
     )
 
     def _prepare_purchase_order_line(self, name, product_qty=0.0, price_unit=0.0, taxes_ids=False):
-        """Inherit method to add the relation between the purchase order line that is being created from the
+        """Inherited method to add the relation between the purchase order line that is being created from the
         requisition and the purchase requisition line.
         """
         res = super()._prepare_purchase_order_line(name, product_qty, price_unit, taxes_ids)
