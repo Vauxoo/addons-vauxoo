@@ -8,7 +8,6 @@ class TestMulticompanyCode(TransactionCase):
 
         cls.company = cls.env.ref("base.main_company")
         cls.company.code = "TEST-CODE"
-        cls.account_type_expenses = cls.env.ref("account.data_account_type_expenses")
 
     def test_01_check_code_included_account_name(self):
         """Check that the code is shown in the account display names"""
@@ -16,7 +15,7 @@ class TestMulticompanyCode(TransactionCase):
             {
                 "name": "Account Name",
                 "code": "999.01.05",
-                "user_type_id": self.account_type_expenses.id,
+                "account_type": "expense",
                 "company_id": self.company.id,
             }
         )
