@@ -8,20 +8,11 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='default_code']" position="before">
                 <field name="warehouses_stock" widget="warehouse" groups="stock.group_stock_multi_warehouses" />
-                <field
-                    name="warehouses_stock_location"
-                    widget="warehouse"
-                    options='{"by_location": True}'
-                    colspan="1"
-                    groups="stock.group_stock_multi_warehouses"
-                />
-                <field
-                    name="warehouses_stock_recompute"
-                    nolabel="1"
-                    colspan="1"
-                    widget="toggle_button"
-                    groups="stock.group_stock_multi_warehouses"
-                />
+                <label for="warehouses_stock_location" groups="stock.group_stock_multi_warehouses" />
+                <div name="location_widget" class="d-flex" groups="stock.group_stock_multi_warehouses">
+                    <field name="warehouses_stock_location" widget="warehouse" options='{"by_location": True}' />
+                    <field name="warehouses_stock_recompute" widget="boolean_toggle" />
+                </div>
             </xpath>
         </field>
     </record>
