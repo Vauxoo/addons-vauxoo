@@ -1,12 +1,12 @@
 name: tests
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
-      - "15.0*"
+      - "15.0-dummy-luisg"
   push:
     branches:
-      - "15.0"
+      - "15.0-dummy-luisg"
 
 jobs:
   pre-commit-vauxoo:
@@ -14,6 +14,8 @@ jobs:
     name: pre-commit-vauxoo
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Cache pre-commit and pip packages
         id: cache-pre-commit-pip
         uses: actions/cache@v3
@@ -31,6 +33,8 @@ jobs:
     name: No dependency files
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Ensure dependency files don't exist
         run: |
           for reqfile in requirements.txt oca_dependencies.txt ; do
@@ -48,6 +52,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
       - name: Cache pip packages
         id: cache-pip-build
@@ -73,7 +78,7 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           ORCHEST_REGISTRY: ${{ secrets.ORCHEST_REGISTRY }}
           ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
-          GIT_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          CI_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           source variables.sh
           vxci check_keys
