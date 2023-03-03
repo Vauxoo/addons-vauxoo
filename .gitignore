@@ -14,9 +14,7 @@ bin/
 build/
 develop-eggs/
 dist/
-downloads/
 eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -24,12 +22,6 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
 
 # Installer logs
 pip-log.txt
@@ -50,10 +42,6 @@ coverage.xml
 
 # Translations
 *.mo
-*.pot
-
-# Django stuff:
-*.log
 
 # Pycharm
 .idea
@@ -72,14 +60,9 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# PyBuilder
-target/
-
-# Vi swap file
+# Backup files
+*~
 *.swp
-
-# Pycharm project files
-.idea
 
 # docker JSON packages
 package-lock.json
@@ -89,15 +72,15 @@ package.json
 node_modules/
 
 # pre-commit-vauxoo
+.bandit*
+.config/
 .editorconfig
-.eslintrc.json
-.flake8
-.flake8-optional
+.eslintrc*
+.flake8*
 .isort.cfg
-.pre-commit-config.yaml
-.pre-commit-config-autofix.yaml
-.pre-commit-config-optional.yaml
+.pre-commit*.yaml
 .prettierrc.yml
-.pylintrc
-.pylintrc-optional
+.pylintrc*
+bandit*.yaml
+doc8.ini
 pyproject.toml
