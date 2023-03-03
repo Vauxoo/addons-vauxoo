@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="stock_warehouse_default_team" model="stock.warehouse">
+        <field name="name">Team Default Warehouse</field>
+        <field name="code">TDW</field>
+    </record>
+
+</odoo>
