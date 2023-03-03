@@ -63,7 +63,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
                 "picking_type_id": picking_type,
                 "location_id": loc_orig.id,
                 "location_dest_id": loc_dest.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -82,7 +82,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
         return picking
 
     def compare_qty_available_not_res(self, product, value):
-        product.refresh()
+        product.invalidate_recordset()
         self.assertEqual(product.qty_available_not_res, value)
 
     def test01_stock_levels(self):
