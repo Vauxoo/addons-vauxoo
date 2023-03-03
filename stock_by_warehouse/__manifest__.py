@@ -1,6 +1,6 @@
 {
     "name": "Stock by Warehouse",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "summary": """
     Know the stock in all your warehouses with a simple click
     from the product form.
@@ -19,11 +19,9 @@
     "demo": [],
     "assets": {
         "web.assets_backend": [
-            "stock_by_warehouse/static/src/js/widget.js",
-            "stock_by_warehouse/static/src/scss/main.scss",
-        ],
-        "web.assets_qweb": [
-            "stock_by_warehouse/static/src/xml/template.xml",
+            "stock_by_warehouse/static/src/components/warehouse/warehouse_field.scss",
+            "stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml",
+            "stock_by_warehouse/static/src/components/warehouse/warehouse_field.js",
         ],
     },
     "installable": True,
