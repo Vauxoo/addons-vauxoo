@@ -1,6 +1,7 @@
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form, TransactionCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestSalesTeamDefaultWarehouse(TransactionCase):
     def setUp(self):
         super().setUp()
