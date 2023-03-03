@@ -35,7 +35,7 @@
             "website_sale_brand_catalogs/static/tests/tours/test_catalog.js",
         ],
     },
-    "installable": True,
+    "installable": False,
     "application": True,
     "auto_install": False,
 }
