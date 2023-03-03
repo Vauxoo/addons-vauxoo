@@ -6,7 +6,7 @@ on:
       - "15.0*"
   push:
     branches:
-      - "15.0"
+      - "15.0*"
 
 jobs:
   pre-commit-vauxoo:
@@ -59,6 +59,11 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
+          echo ${{ github.sha }}
+          echo ${{ github.head_ref }}
+          git log --oneline
+          echo ${{ github.event.pull_request.head.sha }}
+          echo ${{ github.event.pull_request.head.sha || github.sha }}
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.PRIVATE_DEPLOY_KEY }}"
       - name: Install dependencies
