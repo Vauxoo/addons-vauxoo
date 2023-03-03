@@ -8,11 +8,6 @@ on:
     branches:
       - "15.0"
 
-env:
-  TRAVIS_BUILD_DIR: ${{ github.workspace }}
-  LINT_CHECK: "0"
-  TESTS: "0"
-
 jobs:
   pre-commit-vauxoo:
     runs-on: ubuntu-latest
@@ -45,29 +40,54 @@ jobs:
                   exit 1
                 fi
            done
-  odoo:
+  build_deployv:
     runs-on: ubuntu-latest
-    container: vauxoo/odoo-80-image-shippable-auto
-    name: Odoo
-    env:
-      TESTS: "1"
+    name: Build Deployv
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
-      - name: Install dependencies and run tests
-        shell: bash
+      - name: Cache pip packages
+        id: cache-pip-build
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pre-commit
+            ~/.cache/pip
+          key: cache-pip-build
+      - name: Set ssh keys
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.PRIVATE_DEPLOY_KEY }}"
+      - name: Install dependencies
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          sudo apt update
+          sudo apt install dos2unix
+          mkdir -p ~/.ssh/
+          ssh-keyscan -H git.vauxoo.com >> ~/.ssh/known_hosts
+          pip install -U deployv
+      - name: Build image
+        env:
+          PRIVATE_DEPLOY_KEY: ${{ secrets.PRIVATE_DEPLOY_KEY }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          ORCHEST_REGISTRY: ${{ secrets.ORCHEST_REGISTRY }}
+          ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          pip install -U --force-reinstall vxbase vxci
+          source variables.sh
+          vxci check_keys
+          vxci build_image --push_image
+      - name: Test odoo image
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
           source variables.sh
-          git clone --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
-          export PATH=${HOME}/maintainer-quality-tools/travis:${HOME}/gitlab_tools:${PATH}
-          source ${REPO_REQUIREMENTS}/virtualenv/python${TRAVIS_PYTHON_VERSION}/bin/activate
-          source ${REPO_REQUIREMENTS}/virtualenv/nodejs/bin/activate
-          source /usr/local/rvm/scripts/rvm
-          cp test-oca_dependencies.txt oca_dependencies.txt
-          travis_install_nightly
-          travis_run_tests
-          travis_after_tests_success || true
-          coverage html --rcfile=${GITHUB_WORKSPACE}/.coveragerc -d $CI_COMMIT_REF_SLUG || true
-          coverage xml --rcfile=${GITHUB_WORKSPACE}/.coveragerc -o $CI_COMMIT_REF_SLUG/coverage.xml || true
-          coverage report -m --show-missing --rcfile=${GITHUB_WORKSPACE}/.coveragerc || [[ $? != 2 ]]
+          slugified_branch=$(python -c "from vxci.common import slugify; print(slugify('${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}'))")
+          source ${slugified_branch}/image_name.env
+          vxci test_repo --allow_deprecated
