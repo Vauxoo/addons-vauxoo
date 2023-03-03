@@ -14,7 +14,7 @@
         "stock_by_warehouse",
     ],
     "data": [
-        "views/sale_view.xml",
+        "views/sale_order_views.xml",
     ],
     "demo": [],
     "test": [],
