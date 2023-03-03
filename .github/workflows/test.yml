@@ -1,12 +1,12 @@
 name: tests
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - "15.0*"
   push:
     branches:
-      - "15.0"
+      - "15.0*"
 
 jobs:
   pre-commit-vauxoo:
