@@ -1,6 +1,6 @@
 {
     "name": "PR Line related PO Line",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Vauxoo",
     "category": "Inventory/Purchase",
     "website": "http://www.vauxoo.com/",
