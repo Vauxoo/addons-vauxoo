@@ -2,7 +2,7 @@ from odoo.tests import tagged
 from odoo.tests.common import Form, TransactionCase
 
 
-@tagged("sale_order")
+@tagged("sale_order", "post_install", "-at_install")
 class TestSaleOrder(TransactionCase):
     """Test cases for sale.order model"""
 
