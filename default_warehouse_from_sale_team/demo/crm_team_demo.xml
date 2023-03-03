@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="section_sales_default_team" model="crm.team">
+        <field name="name">Default Team</field>
+        <field name="default_warehouse_id" ref="stock_warehouse_default_team" />
+        <field name="journal_stock_id" ref="journal_default_team" />
+    </record>
+
+</odoo>
