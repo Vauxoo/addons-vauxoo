@@ -68,7 +68,8 @@ jobs:
           ssh-keyscan -H git.vauxoo.com >> ~/.ssh/known_hosts
       - name: Install dependencies
         run: |
-          pip install -U deployv vxci
+          pip install -U deployv vxbase
+          pip install -U git+ssh://git@git.vauxoo.com/devops-dev/vxci.git@master-github_commit_sha-luisg
           sudo apt update
           sudo apt install dos2unix
       - name: Build image
