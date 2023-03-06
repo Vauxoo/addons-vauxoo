@@ -80,12 +80,14 @@ jobs:
           ORCHEST_REGISTRY: ${{ secrets.ORCHEST_REGISTRY }}
           ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
           CI_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: |
+          CI_BRANCH: ${{ github.event.pull_request.head.repo.owner.login }}
+        run: |  
           source variables.sh
           vxci check_keys
           vxci build_image --push_image
       - name: Test odoo image
         run: |
+          echo $CI_BRANCH
           source variables.sh
           slugified_branch=$(python -c "from vxci.common import slugify; print(slugify('${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}'))")
           source ${slugified_branch}/image_name.env
