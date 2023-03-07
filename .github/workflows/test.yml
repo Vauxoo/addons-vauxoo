@@ -8,6 +8,12 @@ on:
     branches:
       - "15.0-dummy-luisg"
 
+env:
+  CI_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  CI_PROJECT_NAME: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+  CI_PROJECT_NAMESPACE: ${{ github.event.pull_request.head.repo.owner.login || github.repository_owner }}
+  CI_PROJECT_ID: ${{ github.event.pull_request.head.repo.owner.id || github.repository_id }}
+
 jobs:
   pre-commit-vauxoo:
     runs-on: ubuntu-latest
@@ -15,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ env.CI_COMMIT_SHA }}
       - name: Cache pre-commit and pip packages
         id: cache-pre-commit-pip
         uses: actions/cache@v3
@@ -34,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ env.CI_COMMIT_SHA }}
       - name: Ensure dependency files don't exist
         run: |
           for reqfile in requirements.txt oca_dependencies.txt ; do
@@ -49,14 +55,10 @@ jobs:
     name: Build Docker and test Odoo
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      CI_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-      CI_PROJECT_NAME: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
-      CI_PROJECT_NAMESPACE: ${{ github.event.pull_request.head.repo.owner.login || github.repository_owner }}
-      CI_PROJECT_ID: ${{ github.event.pull_request.head.repo.owner.id || github.repository_id }}
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ env.CI_COMMIT_SHA }}
           persist-credentials: false
       - name: Cache pip packages
         id: cache-pip-build
