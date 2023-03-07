@@ -83,7 +83,7 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           ORCHEST_REGISTRY: ${{ secrets.ORCHEST_REGISTRY }}
           ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
-        run: |  
+        run: |
           source variables.sh
           vxci check_keys
           vxci build_image --push_image
