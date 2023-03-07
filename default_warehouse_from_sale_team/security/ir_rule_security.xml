@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo noupdate="0">
+<odoo>
 
     <!-- stock.picking.type -->
     <record id="rule_default_warehouse_stock_picking_type_team" model="ir.rule">
