@@ -1,3 +1,4 @@
+from odoo import Command
 from odoo.tests import Form, TransactionCase, tagged
 
 
@@ -20,7 +21,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         self.demo_user.write(
             {
                 "sale_team_id": self.sales_team.id,
-                "sale_team_ids": [(4, self.sales_team.id, None)],
+                "sale_team_ids": [Command.link(self.sales_team.id)],
                 "company_id": self.company.id,
             }
         )
