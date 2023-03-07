@@ -10,8 +10,8 @@ on:
 
 env:
   CI_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-  CI_PROJECT_NAME: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
-  CI_PROJECT_NAMESPACE: ${{ github.event.pull_request.head.repo.owner.login || github.repository_owner }}
+  CI_PROJECT_NAMESPACE: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+  CI_PROJECT_NAME: ${{ github.event.pull_request.head.repo.owner.login || github.repository_owner }}
   CI_PROJECT_ID: ${{ github.event.pull_request.head.repo.owner.id || github.repository_id }}
 
 jobs:
