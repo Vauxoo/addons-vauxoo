@@ -69,13 +69,13 @@ To add more models use it simple do this:
     <record id="rule_group_model" model="ir.rule">
         <field name="name">Limited access to model (filtered by sales teams)</field>
         <field name="model_id" search="[('model','=','model')]" model="ir.model"/>
-        <field name="groups" eval"[(6, 0, [ref('xml_id_group')])]/>
+        <field name="groups" eval"[Command.set([ref('xml_id_group')])]/>
         <field name="domain_force">[('warehouse_id', 'in', [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]</field>
     </record>
     <record id="rule_group_model_2" model="ir.rule">
         <field name="name">Access to all model</field>
         <field name="model_id" search="[('model','=','model')]" model="ir.model"/>
-        <field name="groups" eval"[(6, 0, [ref('xml_id_group')])]/>
+        <field name="groups" eval"[Command.set([ref('xml_id_group')])]/>
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
 
