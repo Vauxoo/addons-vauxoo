@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo noupdate="0">
+<odoo>
 
     <record id="default_warehouse_module" model="ir.module.category">
         <field name="name">Default Warehouse</field>
