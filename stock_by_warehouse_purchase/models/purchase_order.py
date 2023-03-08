@@ -5,9 +5,7 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     warehouses_stock = fields.Text(store=False, readonly=True)
-    warehouse_id = fields.Many2one(
-        string="Warehouse",
-        related='order_id.picking_type_id.warehouse_id')
+    warehouse_id = fields.Many2one(string="Warehouse", related="order_id.picking_type_id.warehouse_id")
     warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
 
     @api.multi
@@ -17,7 +15,7 @@ class PurchaseOrderLine(models.Model):
                 warehouse_id=line.warehouse_id
             )._compute_get_quantity_warehouses_json()
 
-    @api.onchange('warehouses_stock_recompute', 'product_id')
+    @api.onchange("warehouses_stock_recompute", "product_id")
     def _warehouses_stock_recompute_onchange(self):
         if not self.warehouses_stock_recompute:
             self.warehouses_stock_recompute = True
