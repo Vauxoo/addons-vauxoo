@@ -1,12 +1,17 @@
 name: tests
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
-      - "16.0*"
+      - "16.0"
   push:
     branches:
       - "16.0"
+
+env:
+  CI_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  CI_PROJECT_NAMESPACE: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+  CI_PROJECT_NAME: ${{ github.event.pull_request.head.repo.name || github.event.repository.name }}
 
 jobs:
   pre-commit-vauxoo:
@@ -14,6 +19,8 @@ jobs:
     name: pre-commit-vauxoo
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.CI_COMMIT_SHA }}
       - name: Cache pre-commit and pip packages
         id: cache-pre-commit-pip
         uses: actions/cache@v3
@@ -31,6 +38,8 @@ jobs:
     name: No dependency files
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.CI_COMMIT_SHA }}
       - name: Ensure dependency files don't exist
         run: |
           for reqfile in requirements.txt oca_dependencies.txt ; do
@@ -40,7 +49,7 @@ jobs:
                   exit 1
                 fi
            done
-  build_deployv:
+  build_docker:
     runs-on: ubuntu-latest
     name: Build Docker and test Odoo
     env:
@@ -48,6 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          ref: ${{ env.CI_COMMIT_SHA }}
           persist-credentials: false
       - name: Cache pip packages
         id: cache-pip-build
@@ -73,7 +83,6 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           ORCHEST_REGISTRY: ${{ secrets.ORCHEST_REGISTRY }}
           ORCHEST_TOKEN: ${{ secrets.ORCHEST_TOKEN }}
-          GIT_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           source variables.sh
           vxci check_keys
