@@ -4,16 +4,46 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-07 00:40+0000\n"
-"PO-Revision-Date: 2021-08-07 00:40+0000\n"
-"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"POT-Creation-Date: 2023-03-09 01:08+0000\n"
+"PO-Revision-Date: 2023-03-09 01:08+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
+msgid ""
+"\n"
+"            View only the Journal whose warehouse match the configured for the user as default warehouse\n"
+"        "
+msgstr ""
+"Ver sólo el Diario cuyo almacén coincide con los almacenes configurados por "
+"el usuario como almacén por defecto"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_spt
+msgid ""
+"\n"
+"            View only the operation types which warehouses match with the user sales teams default warehouses\n"
+"        "
+msgstr ""
+"Ver solamente los tipos de operación que corresponden con el almacén por "
+"defecto de los equipos de venta del usuario"
+
+#. module: default_warehouse_from_sale_team
+#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_sp
+msgid ""
+"\n"
+"            View only the transfers which warehouses match with the user sales teams default warehouses\n"
+"        "
+msgstr ""
+"Ver solamente las transferencias que corresponden con el almacén por defecto "
+"de los equipos de venta del usuario"
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_journal
@@ -74,40 +104,6 @@ msgid "Default Warehouse"
 msgstr "Almacén por defecto"
 
 #. module: default_warehouse_from_sale_team
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_move__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixin__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixin__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_ir_sequence__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_order__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_requisition__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_res_users__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_sale_order__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_move__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking__display_name
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking_type__display_name
-msgid "Display Name"
-msgstr "Nombre a mostrar"
-
-#. module: default_warehouse_from_sale_team
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_move__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixin__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixin__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_ir_sequence__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_order__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_requisition__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_res_users__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_sale_order__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_move__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking__id
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking_type__id
-msgid "ID"
-msgstr ""
-
-#. module: default_warehouse_from_sale_team
 #: model:ir.model.fields,help:default_warehouse_from_sale_team.field_crm_team__default_warehouse_id
 msgid ""
 "In this field can be defined a default warehouse for the related users to "
@@ -147,23 +143,6 @@ msgid "Journal's sales teams"
 msgstr "Diarios de equipos de ventas"
 
 #. module: default_warehouse_from_sale_team
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_move____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_picking_type_mixin____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_default_warehouse_mixin____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_ir_sequence____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_order____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_purchase_requisition____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_res_users____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_sale_order____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_move____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking____last_update
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking_type____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
-
-#. module: default_warehouse_from_sale_team
 #: model:res.groups,name:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
 msgid "Limited access to Journals (filtered by sales team)"
 msgstr "Acceso limitado a diarios(Filtrados por equipo de ventas)"
@@ -182,12 +161,17 @@ msgstr "Acceso limitado a las transferencias (filtrados por equipo de ventas)"
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_stock_picking_type
 msgid "Picking Type"
-msgstr "Tipo de operación"
+msgstr "Tipo de albarán"
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_procurement_group
+msgid "Procurement Group"
+msgstr "Grupo de abastecimiento"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_purchase_order
 msgid "Purchase Order"
-msgstr "Orden de compra"
+msgstr "Pedido de compra"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_purchase_requisition
@@ -200,6 +184,11 @@ msgid "Sales Order"
 msgstr "Pedido de venta"
 
 #. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_crm_team
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal__section_id
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_ir_sequence__section_id
@@ -208,10 +197,18 @@ msgid "Sales Team"
 msgstr "Equipo de ventas"
 
 #. module: default_warehouse_from_sale_team
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_warehouse__sale_team_ids
+msgid "Sales teams"
+msgstr "Equipos de ventas"
+
+#. module: default_warehouse_from_sale_team
 #: model:ir.model.fields,help:default_warehouse_from_sale_team.field_res_users__sale_team_ids
 msgid ""
-"Sales teams allowed for the user, to give access to warehouses and their related documents."
-msgstr "Equipos de venta permitidos para el usuario, para dar acceso a almacenes y sus documentos relacionados."
+"Sales teams allowed for the user, to give access to warehouses and their "
+"related documents."
+msgstr ""
+"Equipos de venta permitidos para el usuario, para dar acceso a almacenes y "
+"sus documentos relacionados."
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_ir_sequence
@@ -230,49 +227,26 @@ msgid "Stock Move"
 msgstr "Movimiento de existencias"
 
 #. module: default_warehouse_from_sale_team
+#. odoo-python
 #: code:addons/default_warehouse_from_sale_team/models/res_users.py:0
 #, python-format
 msgid "The chosen team (%s) is not in the allowed sales teams for this user"
-msgstr "El equipo de venta seleccionado (%s) no está entre los equipos permitidos para este usuario"
+msgstr ""
+"El equipo de venta seleccionado (%s) no está entre los equipos permitidos "
+"para este usuario"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_stock_picking
 msgid "Transfer"
-msgstr "Traslado"
+msgstr "Albarán"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_res_users
-msgid "Users"
-msgstr "Usuarios"
+msgid "User"
+msgstr "Usuario"
 
 #. module: default_warehouse_from_sale_team
-#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_journal
-msgid ""
-"View only the Journal whose warehouse match the configured for the user as "
-"default warehouse"
-msgstr ""
-"Ver sólo el Diario cuyo almacén coincide con los almacenes configurados por "
-"el usuario como almacén por defecto"
-
-#. module: default_warehouse_from_sale_team
-#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_spt
-msgid ""
-"View only the operation types which warehouses match with the user sales "
-"teams default warehouses"
-msgstr ""
-"Ver solamente los tipos de operación que corresponden con el almacén por "
-"defecto de los equipos de venta del usuario"
-
-#. module: default_warehouse_from_sale_team
-#: model:res.groups,comment:default_warehouse_from_sale_team.group_limited_default_warehouse_sp
-msgid ""
-"View only the transfers which warehouses match with the user sales teams "
-"default warehouses"
-msgstr ""
-"Ver solamente las tranferencias que corresponden con el almacén por defecto "
-"de los equipos de venta del usuario"
-
-#. module: default_warehouse_from_sale_team
+#: model:ir.model,name:default_warehouse_from_sale_team.model_stock_warehouse
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking__warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
