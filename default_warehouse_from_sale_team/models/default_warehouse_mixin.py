@@ -38,12 +38,17 @@ class DefaultWarehouseMixin(models.AbstractModel):
         defaults.update({fld.name: default_warehouse.id for fld in warehouse_fields})
         return defaults
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Pass sales team by context so it's taken into account when computing sequence name"""
-        salesteam = self._get_salesteam_from_vals(vals)
-        self_team = self.with_context(sequence_salesteam_id=salesteam.id)
-        return super(DefaultWarehouseMixin, self_team).create(vals)
+        if not vals_list:
+            return super().create(vals_list)
+        default_obj = self
+        salesteams = self._get_salesteam_from_vals_list(vals_list)
+        for salesteam, salesteam_vals_list in salesteams.items():
+            self = self.with_context(sequence_salesteam_id=salesteam.id)
+            default_obj |= super().create(salesteam_vals_list)
+        return default_obj
 
     def _get_salesteam_from_vals(self, vals):
         """Determine sales team from creation values"""
@@ -56,6 +61,14 @@ class DefaultWarehouseMixin(models.AbstractModel):
         )
         salesteam = warehouse.sale_team_ids[:1]
         return salesteam
+
+    def _get_salesteam_from_vals_list(self, vals_list):
+        """Determine sales team from the list of creation values"""
+        salesteams = {}
+        for vals in vals_list:
+            salesteam = self._get_salesteam_from_vals(vals)
+            salesteams.setdefault(salesteam, []).append(vals)
+        return salesteams
 
     def onchange(self, values, field_name, field_onchange):
         """Add an extra context to prevent current user's salesteam from being overwritten by onchanges
