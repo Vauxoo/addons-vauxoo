@@ -4,12 +4,12 @@ from odoo import api, models
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    @api.model
-    def _search_default_journal(self, journal_types):
+    def _search_default_journal(self):
         """If a team is provided and it has a sales journal set, take it as 1st alternative"""
+        journal = super()._search_default_journal()
         team = self.env.context.get("salesteam") or self.team_id or self.env.user.sale_team_id
-        journal_on_team = team._get_default_journal(journal_types)
-        return journal_on_team or super()._search_default_journal(journal_types)
+        journal_on_team = team._get_default_journal([journal.type or "general"])
+        return journal_on_team or journal
 
     @api.onchange("team_id")
     def _onchange_team_id(self):
