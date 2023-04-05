@@ -1,57 +1,60 @@
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form, TransactionCase
+from odoo.tools.safe_eval import safe_eval
 
 
 class TestStockLogisticsWarehouse(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.picking_obj = self.env["stock.picking"]
-        self.product_obj = self.env["product.product"].with_context(tracking_disable=True)
-        self.template_obj = self.env["product.template"]
-        self.supplier_location = self.env.ref("stock.stock_location_suppliers")
-        self.stock_location = self.env.ref("stock.stock_location_stock")
-        self.customer_location = self.env.ref("stock.stock_location_customers")
-        self.uom_unit = self.env.ref("uom.product_uom_unit")
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.picking_obj = cls.env["stock.picking"]
+        cls.product_obj = cls.env["product.product"].with_context(tracking_disable=True)
+        cls.template_obj = cls.env["product.template"]
+        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
 
         # Create attribute
-        self.attribute = self.env["product.attribute"].create({"name": "Type", "sequence": 1})
-        self.attribute_a = self.env["product.attribute.value"].create(
+        cls.attribute = cls.env["product.attribute"].create({"name": "Type", "sequence": 1})
+        cls.attribute_a = cls.env["product.attribute.value"].create(
             {
                 "name": "A",
-                "attribute_id": self.attribute.id,
+                "attribute_id": cls.attribute.id,
                 "sequence": 1,
             }
         )
-        self.attribute_b = self.env["product.attribute.value"].create(
+        cls.attribute_b = cls.env["product.attribute.value"].create(
             {
                 "name": "B",
-                "attribute_id": self.attribute.id,
+                "attribute_id": cls.attribute.id,
                 "sequence": 2,
             }
         )
 
         # Create product template
-        self.template_ab = self.template_obj.create(
+        cls.template_ab = cls.template_obj.create(
             {
                 "name": "templAB",
                 "standard_price": 1,
                 "type": "product",
-                "uom_id": self.uom_unit.id,
+                "uom_id": cls.uom_unit.id,
                 "attribute_line_ids": [
                     (
                         0,
                         0,
                         {
-                            "attribute_id": self.attribute.id,
-                            "value_ids": [(6, 0, (self.attribute_a + self.attribute_b).ids)],
+                            "attribute_id": cls.attribute.id,
+                            "value_ids": [(6, 0, (cls.attribute_a + cls.attribute_b).ids)],
                         },
                     )
                 ],
             }
         )
-        self.product_values = {
+        cls.product_values = {
             "name": "product A",
             "default_code": "A",
         }
+        cls.env.user.groups_id |= cls.env.ref("stock.group_stock_multi_warehouses")
 
     def update_product(self, position, values):
         self.template_ab.product_variant_ids[position].write(values)
@@ -121,6 +124,16 @@ class TestStockLogisticsWarehouse(TransactionCase):
         self.compare_qty_available_not_res(product_a, 0)
         self.compare_qty_available_not_res(self.template_ab, 0)
 
+        self.assertFalse(product_a.warehouses_stock)
+        with Form(product_a) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 0)
+
+        self.assertFalse(self.template_ab.warehouses_stock)
+        with Form(self.template_ab) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 0)
+
         picking_in_a.action_confirm()
         self.compare_qty_available_not_res(product_a, 0)
         self.compare_qty_available_not_res(self.template_ab, 0)
@@ -133,6 +146,16 @@ class TestStockLogisticsWarehouse(TransactionCase):
         picking_in_a.button_validate()
         self.compare_qty_available_not_res(product_a, 2)
         self.compare_qty_available_not_res(self.template_ab, 2)
+
+        self.assertFalse(product_a.warehouses_stock)
+        with Form(product_a) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 2)
+
+        self.assertFalse(self.template_ab.warehouses_stock)
+        with Form(self.template_ab) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 2)
 
         picking_in_b.action_confirm()
         picking_in_b.action_assign()
@@ -155,10 +178,30 @@ class TestStockLogisticsWarehouse(TransactionCase):
         self.compare_qty_available_not_res(product_b, 3)
         self.compare_qty_available_not_res(self.template_ab, 5)
 
+        self.assertFalse(product_b.warehouses_stock)
+        with Form(product_b) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 3)
+
+        self.assertFalse(self.template_ab.warehouses_stock)
+        with Form(self.template_ab) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 5)
+
         picking_out_a.action_confirm()
         picking_out_a.action_assign()
         self.compare_qty_available_not_res(product_b, 1)
         self.compare_qty_available_not_res(self.template_ab, 3)
+
+        self.assertFalse(product_b.warehouses_stock)
+        with Form(product_b) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 1)
+
+        self.assertFalse(self.template_ab.warehouses_stock)
+        with Form(self.template_ab) as product:
+            product.warehouses_stock_recompute = True
+            self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 3)
 
         picking_out_a.move_line_ids.write({"qty_done": 2})
         picking_out_a.button_validate()
