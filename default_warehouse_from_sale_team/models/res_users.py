@@ -31,3 +31,8 @@ class ResUsers(models.Model):
     def _get_default_warehouse_id(self):
         """Take the warehouse set in sales team as default one, otherwise fallback on user's one"""
         return self.env.user.sale_team_id.default_warehouse_id or super()._get_default_warehouse_id()
+
+    @api.model
+    def _get_invalidation_fields(self):
+        invalidation_fields = super()._get_invalidation_fields()
+        return invalidation_fields | {"sale_team_ids"}
