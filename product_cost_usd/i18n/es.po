@@ -41,6 +41,12 @@ msgid "Cost in USD"
 msgstr "Costo en USD"
 
 #. module: product_cost_usd
+#: model:ir.model.fields,field_description:product_cost_usd.field_product_product__currency_usd_id
+#: model:ir.model.fields,field_description:product_cost_usd.field_product_template__currency_usd_id
+msgid "Currency USD"
+msgstr "Moneda USD"
+
+#. module: product_cost_usd
 #: model:ir.model.fields,help:product_cost_usd.field_product_product__standard_price_usd
 #: model:ir.model.fields,help:product_cost_usd.field_product_template__standard_price_usd
 msgid "Price cost of the product in USD currency"
@@ -70,6 +76,13 @@ msgstr "Plantilla de producto"
 #: model:ir.model,name:product_cost_usd.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
+
+#. module: product_cost_usd
+#: model:ir.model.fields,help:product_cost_usd.field_product_product__currency_usd_id
+#: model:ir.model.fields,help:product_cost_usd.field_product_template__currency_usd_id
+msgid "Technical field to show the price fields as USD in the products"
+msgstr ""
+"Campo técnico para mostrar los campos de precio como USD en los productos"
 
 #. module: product_cost_usd
 #: code:addons/product_cost_usd/models/product_template.py:0
