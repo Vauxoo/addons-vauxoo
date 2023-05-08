@@ -6,7 +6,12 @@
         <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//div[@name='pricing']" position="after">
-                <field name="standard_price_usd" widget="monetary" />
+                <field name="currency_usd_id" invisible="1" />
+                <field
+                    name="standard_price_usd"
+                    widget="monetary"
+                    options="{'currency_field': 'currency_usd_id', 'field_digits': True}"
+                />
             </xpath>
         </field>
     </record>

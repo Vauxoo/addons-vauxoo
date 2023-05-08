@@ -6,9 +6,22 @@ from odoo.tools import float_compare
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    standard_price_usd = fields.Float(
-        "Cost in USD", digits="Product Price", help="Price cost of the product in USD currency"
+    currency_usd_id = fields.Many2one(
+        "res.currency",
+        string="Currency USD",
+        compute="_compute_currency_usd_id",
+        help="Technical field to show the price fields as USD in the products",
     )
+    standard_price_usd = fields.Float(
+        "Cost in USD",
+        digits="Product Price",
+        help="Price cost of the product in USD currency",
+    )
+
+    def _compute_currency_usd_id(self):
+        currency_usd = self.env.ref("base.USD")
+        for product in self:
+            product.currency_usd_id = currency_usd
 
     @api.constrains("standard_price_usd", "seller_ids")
     def check_cost_and_price(self):
