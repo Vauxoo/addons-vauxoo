@@ -1,10 +1,9 @@
-from odoo import api, models
+from odoo import models
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    @api.multi
     def _get_price_unit(self):
         """Take into account custom rate date, if provided"""
         line = self.purchase_line_id
@@ -13,6 +12,7 @@ class StockMove(models.Model):
             or not line
             or self.product_id != line.product_id
             or line.currency_id == line.company_id.currency_id
+            or self.origin_returned_move_id
         ):
             return super()._get_price_unit()
         price_unit = line.price_unit
