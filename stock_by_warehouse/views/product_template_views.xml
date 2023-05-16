@@ -12,6 +12,7 @@
                     colspan="1"
                     widget="warehouse"
                     groups="stock.group_stock_multi_warehouses"
+                    attrs="{'invisible': [('detailed_type', '!=', 'product')]}"
                 />
                 <field
                     name="warehouses_stock_recompute"
@@ -19,6 +20,7 @@
                     colspan="1"
                     widget="toggle_button"
                     groups="stock.group_stock_multi_warehouses"
+                    attrs="{'invisible': [('detailed_type', '!=', 'product')]}"
                 />
             </xpath>
         </field>
