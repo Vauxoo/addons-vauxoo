@@ -7,7 +7,12 @@
         <field name="inherit_id" ref="mrp.mrp_bom_line_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//form/sheet/group" position="before">
-                <div class="text-center alert alert-info" role="alert">
+                <field name="detailed_type" invisible="1" />
+                <div
+                    class="text-center alert alert-info"
+                    role="alert"
+                    attrs="{'invisible': [('detailed_type', '!=', 'product')]}"
+                >
                     <p>The stock <span attrs="{'invisible':[('warehouse_id','=',False)]}">in: <field
                                 name="warehouse_id"
                             /></span> that is immediately available is:
