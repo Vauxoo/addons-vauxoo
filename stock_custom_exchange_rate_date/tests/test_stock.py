@@ -1,29 +1,87 @@
 from datetime import timedelta
 
 from odoo import fields
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form, TransactionCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestStock(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.vendor = self.env.ref("base.res_partner_1")
-        self.usd = self.env.ref("base.USD")
-        self.eur = self.env.ref("base.EUR")
-        self.today = fields.Date.context_today(self.env.user)
-        self.yesterday = self.today - timedelta(days=1)
-        self.set_currency_rates(self.today, usd_rate=1, eur_rate=1.25)
-        self.set_currency_rates(self.yesterday, usd_rate=1, eur_rate=2)
-        self.env.user.company_id.currency_id = self.usd
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.vendor = cls.env.ref("base.res_partner_1")
+        cls.usd = cls.env.ref("base.USD")
+        cls.eur = cls.env.ref("base.EUR")
+        cls.today = fields.Date.context_today(cls.env.user)
+        cls.yesterday = cls.today - timedelta(days=1)
+        account = cls.env["account.account"].create(
+            {
+                "name": "Receivable",
+                "code": "RCV00",
+                "account_type": "asset_receivable",
+                "reconcile": True,
+            }
+        )
+        account_expense = cls.env["account.account"].create(
+            {
+                "name": "Expense",
+                "code": "EXP00",
+                "account_type": "expense",
+                "reconcile": True,
+            }
+        )
+        account_income = cls.env["account.account"].create(
+            {
+                "name": "Income",
+                "code": "INC00",
+                "account_type": "income",
+                "reconcile": True,
+            }
+        )
+        account_output = cls.env["account.account"].create(
+            {
+                "name": "Output",
+                "code": "OUT00",
+                "account_type": "expense",
+                "reconcile": True,
+            }
+        )
+        account_valuation = cls.env["account.account"].create(
+            {
+                "name": "Valuation",
+                "code": "STV00",
+                "account_type": "expense",
+                "reconcile": True,
+            }
+        )
+        stock_journal = cls.env["account.journal"].create(
+            {
+                "name": "Stock journal",
+                "type": "sale",
+                "code": "STK00",
+            }
+        )
 
         # Creating a new product to ensure valuation is clean
-        self.product = self.env["product.product"].create(
+        cls.stock_account_product_categ = cls.env["product.category"].create(
+            {
+                "name": "Test category",
+                "property_valuation": "real_time",
+                "property_cost_method": "fifo",
+                "property_account_income_categ_id": account_income.id,
+                "property_account_expense_categ_id": account_expense.id,
+                "property_stock_account_input_categ_id": account.id,
+                "property_stock_account_output_categ_id": account_output.id,
+                "property_stock_valuation_account_id": account_valuation.id,
+                "property_stock_journal": stock_journal.id,
+            }
+        )
+        cls.product = cls.env["product.product"].create(
             {
                 "name": "Product fifo",
                 "type": "product",
                 "default_code": "PR-FIFO",
-                "valuation": "real_time",
-                "cost_method": "fifo",
+                "categ_id": cls.stock_account_product_categ.id,
             }
         )
 
@@ -45,14 +103,6 @@ class TestStock(TransactionCase):
                 line.product_id = product
                 line.product_qty = quantity
                 line.price_unit = price
-
-    def process_immediate_transfer(self, picking):
-        immediate_transfer = self.env["stock.immediate.transfer"].create(
-            {
-                "pick_ids": [(6, 0, picking.ids)],
-            }
-        )
-        return immediate_transfer.process()
 
     def set_currency_rates(self, rate_date, usd_rate, eur_rate):
         # Remove existing rates, if any
@@ -78,21 +128,24 @@ class TestStock(TransactionCase):
     def test_01_date_rate_set(self):
         """Set a custom rate date on a transfer, valuation should be computed using that date"""
         # Purchase product
+        self.set_currency_rates(rate_date=self.today, usd_rate=1, eur_rate=1.25)
+        self.set_currency_rates(rate_date=self.yesterday, usd_rate=1, eur_rate=2)
         po = self.create_purchase_order()
         po.button_confirm()
         self.assertEqual(po.state, "purchase")
-        self.assertEqual(po.picking_count, 1)
 
         # Set custom rate date on the receipt transfer and confirm
         picking_po = po.picking_ids
         picking_po.exchange_rate_date = self.yesterday
-        self.process_immediate_transfer(picking_po)
+        picking_po.move_line_ids.write({"qty_done": 1.0})
+        picking_po.button_validate()
         self.assertEqual(picking_po.state, "done")
 
         # Check valuation according to stock moves
         # Yesterday's rate was 1 USD = 2 EUR, so 100 EUR should be valued as 50 USD
+        val_layer = self.env["stock.valuation.layer"].search([("stock_move_id", "in", picking_po.move_ids.ids)])
         self.assertRecordValues(
-            picking_po.move_lines,
+            val_layer,
             [
                 {
                     "remaining_qty": 1.0,
@@ -102,58 +155,31 @@ class TestStock(TransactionCase):
             ],
         )
 
-        # Check valuation according to journal entries
-        self.assertEqual(self.product.stock_value, 50.0)
-        self.assertRecordValues(
-            self.product.stock_fifo_real_time_aml_ids,
-            [
-                {
-                    "debit": 50.0,
-                    "credit": 0.0,
-                    "amount_currency": 100.0,
-                    "currency_id": self.eur.id,
-                    "account_id": self.product.categ_id.property_stock_valuation_account_id.id,
-                }
-            ],
-        )
-
     def test_02_date_rate_not_set(self):
         """Don't set a custom date rate, valuation should be computed using today"""
         # Purchase product
+        self.set_currency_rates(rate_date=self.today, usd_rate=1, eur_rate=1.25)
+        self.set_currency_rates(rate_date=self.yesterday, usd_rate=1, eur_rate=2)
         po = self.create_purchase_order()
         po.button_confirm()
         self.assertEqual(po.state, "purchase")
-        self.assertEqual(po.picking_count, 1)
 
         # Confirm receipt transfer
         picking_po = po.picking_ids
-        self.process_immediate_transfer(picking_po)
+        picking_po.move_line_ids.write({"qty_done": 1.0})
+        picking_po.button_validate()
         self.assertEqual(picking_po.state, "done")
 
         # Check valuation according to stock moves
-        # Today's rate is 1 USD = 1.25 EUR, so 100 EUR should be valued as 80 USD
+        # Today"s rate is 1 USD = 1.25 EUR, so 100 EUR should be valued as 80 USD
+        val_layer = self.env["stock.valuation.layer"].search([("stock_move_id", "in", picking_po.move_ids.ids)])
         self.assertRecordValues(
-            picking_po.move_lines,
+            val_layer,
             [
                 {
                     "remaining_qty": 1.0,
                     "remaining_value": 80.0,
                     "value": 80.0,
-                }
-            ],
-        )
-
-        # Check valuation according to journal entries
-        self.assertEqual(self.product.stock_value, 80.0)
-        self.assertRecordValues(
-            self.product.stock_fifo_real_time_aml_ids,
-            [
-                {
-                    "debit": 80.0,
-                    "credit": 0.0,
-                    "amount_currency": 100.0,
-                    "currency_id": self.eur.id,
-                    "account_id": self.product.categ_id.property_stock_valuation_account_id.id,
                 }
             ],
         )
