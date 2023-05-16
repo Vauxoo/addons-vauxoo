@@ -1,6 +1,6 @@
 {
     "name": "Customized Rate Date in Stock",
-    "version": "12.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Vauxoo",
     "category": "stock",
     "website": "http://www.vauxoo.com/",
