@@ -7,7 +7,13 @@
         <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form//field[@name='state']" position="after">
-                <div class="text-center alert alert-info" role="alert" groups="stock.group_stock_multi_warehouses">
+                <field name="product_type" invisible="1" />
+                <div
+                    class="text-center alert alert-info"
+                    role="alert"
+                    groups="stock.group_stock_multi_warehouses"
+                    attrs="{'invisible': [('product_type', '!=', 'product')]}"
+                >
                     <p>The stock in: <field name="warehouse_id" /> that is immediately available is:
                         <field name="warehouses_stock" widget="warehouse" options="{'placement': 'bottom'}" />
                         &amp;nbsp;&amp;nbsp;
