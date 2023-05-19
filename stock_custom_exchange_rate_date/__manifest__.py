@@ -11,8 +11,7 @@
     "data": [
         "views/stock_picking_views.xml",
     ],
-    "demo": [
-    ],
+    "demo": [],
     "installable": True,
     "auto_install": False,
 }
