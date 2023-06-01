@@ -43,12 +43,12 @@ class DefaultWarehouseMixin(models.AbstractModel):
         """Pass sales team by context so it's taken into account when computing sequence name"""
         if not vals_list:
             return super().create(vals_list)
-        default_obj = self
+        result = self.browse()
         salesteams = self._get_salesteam_from_vals_list(vals_list)
         for salesteam, salesteam_vals_list in salesteams.items():
             self = self.with_context(sequence_salesteam_id=salesteam.id)
-            default_obj |= super().create(salesteam_vals_list)
-        return default_obj
+            result |= super().create(salesteam_vals_list)
+        return result
 
     def _get_salesteam_from_vals(self, vals):
         """Determine sales team from creation values"""
