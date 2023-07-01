@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_by_warehouse_sale
+# * stock_by_warehouse_sale
 #
 msgid ""
 msgstr ""
@@ -34,4 +34,3 @@ msgstr "Almacenes de existencia"
 #: model_terms:ir.ui.view,arch_db:stock_by_warehouse_sale.sale_order_form_view
 msgid "that can be delivered immediately is:"
 msgstr "que puede ser enviada inmediatamente es:"
-
