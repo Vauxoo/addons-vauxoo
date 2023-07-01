@@ -40,4 +40,3 @@ msgstr "Movimiento de existencias"
 #: model:ir.model,name:stock_custom_exchange_rate_date.model_stock_picking
 msgid "Transfer"
 msgstr "Transferencia"
-
