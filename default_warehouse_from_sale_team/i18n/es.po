@@ -42,8 +42,8 @@ msgid ""
 "            View only the transfers which warehouses match with the user sales teams default warehouses\n"
 "        "
 msgstr ""
-"Ver solamente las transferencias que corresponden con el almacén por defecto "
-"de los equipos de venta del usuario"
+"Ver solamente las transferencias que corresponden con el almacén por defecto"
+" de los equipos de venta del usuario"
 
 #. module: default_warehouse_from_sale_team
 #: model:res.groups,name:default_warehouse_from_sale_team.group_manager_default_journal
