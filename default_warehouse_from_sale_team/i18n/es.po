@@ -210,8 +210,11 @@ msgstr "Equipo de ventas"
 #. module: default_warehouse_from_sale_team
 #: model:ir.model.fields,help:default_warehouse_from_sale_team.field_res_users__sale_team_ids
 msgid ""
-"Sales teams allowed for the user, to give access to warehouses and their related documents."
-msgstr "Equipos de venta permitidos para el usuario, para dar acceso a almacenes y sus documentos relacionados."
+"Sales teams allowed for the user, to give access to warehouses and their "
+"related documents."
+msgstr ""
+"Equipos de venta permitidos para el usuario, para dar acceso a almacenes y "
+"sus documentos relacionados."
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_ir_sequence
@@ -233,7 +236,9 @@ msgstr "Movimiento de existencias"
 #: code:addons/default_warehouse_from_sale_team/models/res_users.py:0
 #, python-format
 msgid "The chosen team (%s) is not in the allowed sales teams for this user"
-msgstr "El equipo de venta seleccionado (%s) no está entre los equipos permitidos para este usuario"
+msgstr ""
+"El equipo de venta seleccionado (%s) no está entre los equipos permitidos "
+"para este usuario"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_stock_picking
