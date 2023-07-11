@@ -6,5 +6,4 @@ class AccountMove(models.Model):
 
     date = fields.Date(tracking=True)
     journal_id = fields.Many2one(tracking=True)
-    narration = fields.Text(tracking=True)
     reversed_entry_id = fields.Many2one(tracking=True)
