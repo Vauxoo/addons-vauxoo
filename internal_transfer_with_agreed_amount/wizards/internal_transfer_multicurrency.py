@@ -7,7 +7,9 @@ class InternalTransferMulticurrency(models.TransientModel):
 
     agreed_amount = fields.Monetary(help="Agreed amount in the currency of the destination bank.")
     currency_id = fields.Many2one(
-        "res.currency", string="Currency", required=True, default=lambda self: self._get_currency()
+        "res.currency",
+        required=True,
+        default=lambda self: self._get_currency(),
     )
 
     def _get_currency(self):
