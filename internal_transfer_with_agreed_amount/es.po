@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* internal_transfer_with_agreed_amount
+# * internal_transfer_with_agreed_amount
 #
 msgid ""
 msgstr ""
@@ -102,11 +102,17 @@ msgstr "Especifique el monto acordado"
 
 #. module: internal_transfer_with_agreed_amount
 #: model:res.groups,comment:internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount
-msgid "The user with this permission can make multi-currency transfers with an agreed amount."
-msgstr "El usuario con este permiso puede realizar transferencias multi moneda con un monto acordado."
+msgid ""
+"The user with this permission can make multi-currency transfers with an "
+"agreed amount."
+msgstr ""
+"El usuario con este permiso puede realizar transferencias multi moneda con "
+"un monto acordado."
 
 #. module: internal_transfer_with_agreed_amount
 #: model:ir.model,name:internal_transfer_with_agreed_amount.model_internal_transfer_multicurrency
-msgid "Wizard to modify the agreed amount with the bank on an internal transfer."
-msgstr "Wizard para modificar el monto acordado con el banco en una transferencia interna."
-
+msgid ""
+"Wizard to modify the agreed amount with the bank on an internal transfer."
+msgstr ""
+"Wizard para modificar el monto acordado con el banco en una transferencia "
+"interna."
