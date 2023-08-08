@@ -1,12 +1,13 @@
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form, SavepointCase
 
 
-class TestInternalTransferWithAgreedAmount(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.currency_usd = self.env.ref("base.USD")
-        self.currency_eur = self.env.ref("base.EUR")
-        self.bank_journal_usd = self.env["account.journal"].create(
+class TestInternalTransferWithAgreedAmount(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.currency_usd = cls.env.ref("base.USD")
+        cls.currency_eur = cls.env.ref("base.EUR")
+        cls.bank_journal_usd = cls.env["account.journal"].create(
             {
                 "name": "Bank US",
                 "type": "bank",
@@ -14,16 +15,16 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
                 "update_posted": True,
             }
         )
-        self.bank_journal_eur = self.env["account.journal"].create(
+        cls.bank_journal_eur = cls.env["account.journal"].create(
             {
                 "name": "Bank EUR",
                 "type": "bank",
                 "code": "BNK67",
-                "currency_id": self.currency_eur.id,
+                "currency_id": cls.currency_eur.id,
                 "update_posted": True,
             }
         )
-        self.payment_method_manual = self.env.ref("account.account_payment_method_manual_in")
+        cls.payment_method_manual = cls.env.ref("account.account_payment_method_manual_in")
 
     def create_internal_transfer(self, currency, journal, destination_journal, amount):
         transfer = Form(self.env["account.payment"])
