@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//button[@name='post']" position="after">
                 <button
-                    name="%(action_internal_transfer_multicurrency)d"
+                    name="internal_transfer_with_agreed_amount.action_internal_transfer_multicurrency"
                     type="action"
                     class="oe_highlight"
                     string="Confirm with an agreed amount"
@@ -15,7 +15,7 @@
                     attrs="{'invisible':['|', ('payment_type','!=','transfer'), ('state', '!=', 'draft')]}"
                 />
                 <button
-                    name="%(action_internal_transfer_multicurrency)d"
+                    name="internal_transfer_with_agreed_amount.action_internal_transfer_multicurrency"
                     type="action"
                     class="oe_highlight"
                     string="Edit agreed amount"
