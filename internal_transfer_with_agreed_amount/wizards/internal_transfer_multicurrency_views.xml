@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="view_internal_transfer_multicurrency">
+    <record id="view_internal_transfer_multicurrency" model="ir.ui.view">
         <field name="name">internal.transfer.multicurrency</field>
         <field name="model">internal.transfer.multicurrency</field>
         <field name="arch" type="xml">
@@ -11,7 +11,7 @@
                     <field name="currency_id" invisible="1" />
                 </group>
                 <footer>
-                    <button string='Apply' name="apply" type="object" class="btn-primary" />
+                    <button name="apply" string='Apply' type="object" class="btn-primary" />
                     <button string="Cancel" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
