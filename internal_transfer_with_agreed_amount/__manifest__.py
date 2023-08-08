@@ -10,11 +10,11 @@
     ],
     "data": [
         # Security
-        "security/security.xml",
+        "security/res_groups_security.xml",
         # Wizards
-        "wizards/internal_transfer_multicurrency_view.xml",
+        "wizards/internal_transfer_multicurrency_views.xml",
         # Views
-        "views/account_payment.xml",
+        "views/account_payment_views.xml",
     ],
     "installable": True,
 }
