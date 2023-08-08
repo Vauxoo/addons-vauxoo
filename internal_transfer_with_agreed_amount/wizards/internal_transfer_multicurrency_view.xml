@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record model="ir.ui.view" id="view_internal_transfer_multicurrency">
         <field name="name">internal.transfer.multicurrency</field>
