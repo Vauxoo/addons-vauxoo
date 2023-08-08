@@ -1,20 +1,20 @@
 {
-    'name': 'Internal transfers with an agreed amount',
-    'version': '12.0.1.0.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'license': 'LGPL-3',
-    'category': 'account',
-    'depends': [
-        'account',
+    "name": "Internal transfers with an agreed amount",
+    "version": "12.0.1.0.0",
+    "author": "Vauxoo",
+    "website": "http://www.vauxoo.com/",
+    "license": "LGPL-3",
+    "category": "account",
+    "depends": [
+        "account",
     ],
-    'data': [
+    "data": [
         # Security
-        'security/security.xml',
+        "security/security.xml",
         # Wizards
-        'wizards/internal_transfer_multicurrency_view.xml',
+        "wizards/internal_transfer_multicurrency_view.xml",
         # Views
-        'views/account_payment.xml',
+        "views/account_payment.xml",
     ],
     "installable": True,
 }
