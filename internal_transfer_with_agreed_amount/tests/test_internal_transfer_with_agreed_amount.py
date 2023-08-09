@@ -1,34 +1,29 @@
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, TransactionCase, tagged
 
 
-class TestInternalTransferWithAgreedAmount(SavepointCase):
+@tagged("internal_transfer_multicurrency", "post_install", "-at_install")
+class TestInternalTransferWithAgreedAmount(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.currency_usd = cls.env.ref("base.USD")
         cls.currency_eur = cls.env.ref("base.EUR")
-        cls.bank_journal_usd = cls.env["account.journal"].create(
-            {
-                "name": "Bank US",
-                "type": "bank",
-                "code": "BNK68",
-                "update_posted": True,
-            }
+        bank = cls.env["account.journal"].search([("type", "=", "bank")], limit=1)
+        cls.bank_journal_usd = bank.copy()
+        cls.bank_journal_usd.write({"name": "Bank US", "code": "BNK68"})
+        cls.bank_journal_eur = bank.copy({"currency_id": cls.currency_eur.id})
+        cls.bank_journal_eur.write({"name": "Bank EUR", "code": "BNK67"})
+        account = cls.bank_journal_usd.default_account_id
+        payment_method = (
+            cls.bank_journal_usd.inbound_payment_method_line_ids
+            | cls.bank_journal_usd.outbound_payment_method_line_ids
         )
-        cls.bank_journal_eur = cls.env["account.journal"].create(
-            {
-                "name": "Bank EUR",
-                "type": "bank",
-                "code": "BNK67",
-                "currency_id": cls.currency_eur.id,
-                "update_posted": True,
-            }
-        )
-        cls.payment_method_manual = cls.env.ref("account.account_payment_method_manual_in")
+        payment_method.payment_account_id = account
 
     def create_internal_transfer(self, currency, journal, destination_journal, amount):
         transfer = Form(self.env["account.payment"])
-        transfer.payment_type = "transfer"
+        transfer.payment_type = "outbound"
+        transfer.is_internal_transfer = True
         transfer.journal_id = journal
         transfer.currency_id = currency
         transfer.destination_journal_id = destination_journal
@@ -39,7 +34,6 @@ class TestInternalTransferWithAgreedAmount(SavepointCase):
         ctx = {"active_model": payment._name, "active_ids": payment.ids}
         wizard = Form(self.env["internal.transfer.multicurrency"].with_context(**ctx))
         wizard.agreed_amount = agreed_amount
-        wizard.currency_id = currency
         wizard = wizard.save()
         wizard.apply()
         return wizard
@@ -49,30 +43,26 @@ class TestInternalTransferWithAgreedAmount(SavepointCase):
         self.create_multicurrency_transfer(transfer, 120, self.currency_eur)
 
         # Check journal item in USD
-        usd_aml = transfer.move_line_ids.filtered(
-            lambda m: m.account_id == transfer.journal_id.default_debit_account_id
-        )
+        usd_aml = transfer.line_ids.filtered("reconciled")
         self.assertRecordValues(
             usd_aml,
             [
                 {
-                    "balance": -100.0,  # payment amount
-                    "amount_currency": 0.0,
-                    "currency_id": False,
+                    "balance": 100.0,  # payment amount
+                    "amount_currency": 120.0,
+                    "currency_id": self.currency_eur.id,
                 }
             ],
         )
 
         # Check journal item in EUR
-        eur_aml = transfer.move_line_ids.filtered(
-            lambda m: m.account_id == transfer.destination_journal_id.default_credit_account_id
-        )
+        eur_aml = usd_aml.full_reconcile_id.reconciled_line_ids.filtered(lambda l: l != usd_aml)
         self.assertRecordValues(
             eur_aml,
             [
                 {
-                    "balance": 100.0,  # payment amount
-                    "amount_currency": 120.0,  # Agreed amount
+                    "balance": -100.0,  # payment amount
+                    "amount_currency": -120.0,  # Agreed amount
                     "currency_id": self.currency_eur.id,
                 }
             ],
@@ -83,24 +73,20 @@ class TestInternalTransferWithAgreedAmount(SavepointCase):
         self.create_multicurrency_transfer(transfer, 80, self.currency_usd)
 
         # Check journal item in USD
-        usd_aml = transfer.move_line_ids.filtered(
-            lambda m: m.account_id == transfer.destination_journal_id.default_credit_account_id
-        )
+        usd_aml = transfer.line_ids.filtered("reconciled")
         self.assertRecordValues(
             usd_aml,
             [
                 {
                     "balance": 80.0,  # Agreed amount
-                    "amount_currency": 0.0,
-                    "currency_id": False,
+                    "amount_currency": 100.0,
+                    "currency_id": self.currency_eur.id,
                 }
             ],
         )
 
         # Check journal item in EUR
-        eur_aml = transfer.move_line_ids.filtered(
-            lambda m: m.account_id == transfer.journal_id.default_credit_account_id
-        )
+        eur_aml = usd_aml.full_reconcile_id.reconciled_line_ids.filtered(lambda l: l != usd_aml)
         self.assertRecordValues(
             eur_aml,
             [

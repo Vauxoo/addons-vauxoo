@@ -1,6 +1,6 @@
 {
     "name": "Internal transfers with an agreed amount",
-    "version": "12.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "license": "LGPL-3",
@@ -10,6 +10,7 @@
     ],
     "data": [
         # Security
+        "security/ir.model.access.csv",
         "security/res_groups_security.xml",
         # Wizards
         "wizards/internal_transfer_multicurrency_views.xml",
