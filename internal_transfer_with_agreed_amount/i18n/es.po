@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * internal_transfer_with_agreed_amount
+# 	* internal_transfer_with_agreed_amount
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0+e\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-11 15:21+0000\n"
-"PO-Revision-Date: 2023-08-11 15:21+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-09-18 16:40+0000\n"
+"PO-Revision-Date: 2023-09-18 16:40+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,6 +24,17 @@ msgstr "Monto Acordado"
 #: model:ir.model.fields,help:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__agreed_amount
 msgid "Agreed amount in the currency of the destination bank."
 msgstr "Cantidad acordada en la moneda del banco de destino."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+#, python-format
+msgid ""
+"Agreed amount is available when there are two considered currencies. Currently, the following currencies are being considered:\n"
+"- %s"
+msgstr ""
+"El monto acordado está disponible cuando hay dos monedas consideradas. Actualmente, las siguientes monedas se consideran:\n"
+"- %s"
 
 #. module: internal_transfer_with_agreed_amount
 #: model:res.groups,name:internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount
