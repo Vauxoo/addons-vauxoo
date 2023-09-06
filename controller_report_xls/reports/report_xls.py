@@ -167,21 +167,20 @@ class ActionReport(models.Model):
         context = self.env.context
         if response is None or not context.get("xls_report"):
             return response
-        html = self.render_qweb_html(docids, data=data)[0]
+        html = self._render_qweb_html(docids, data=data)[0]
         html = html.decode("utf-8")
         xls_stream = get_xls(html)
         attachment = self.env["ir.attachment"].create(
             {
-                "name": "ProductPricelist.xls",
-                "datas_fname": "ProductPricelis",
+                "name": "%s.xls" % response["name"],
                 "datas": base64.encodebytes(xls_stream),
                 "type": "binary",
                 "mimetype": "application/vnd.ms-excel",
-                "description": "Product Pricelis",
+                "description": response["name"],
             }
         )
         return {
-            "name": "Product Pricelist",
+            "name": attachment.name,
             "type": "ir.actions.act_url",
             "url": "web/content/?id=" + str(attachment.id) + "&download=true&filename=" + attachment.name,
             "target": "new",
