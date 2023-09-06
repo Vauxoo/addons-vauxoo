@@ -1,6 +1,6 @@
 {
     "name": "XLS Report Controller",
-    "version": "11.0.1.0.0",
+    "version": "15.0.1.0.0",
     "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.vauxoo.com/",
@@ -8,12 +8,9 @@
     "depends": [
         "base",
     ],
-    "external_dependencies": {
-        'python': ['cssutils']
-    },
+    "external_dependencies": {"python": ["cssutils"]},
     "demo": [],
-    "data": [
-    ],
+    "data": [],
     "test": [],
     "js": [],
     "css": [],
