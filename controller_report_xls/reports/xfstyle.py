@@ -1,4 +1,4 @@
-from xlwt import XFStyle, Borders, Pattern, Font, Alignment
+from xlwt import Alignment, Borders, Font, Pattern, XFStyle
 
 WEB_COLORS = {
     "Aliceblue": "#F0F8FF",
@@ -147,7 +147,7 @@ WEB_COLORS = {
     "White": "#FFFFFF",
     "Whitesmoke": "#F5F5F5",
     "Yellow": "#FFFF00",
-    "Yellowgreen": "#9ACD32"
+    "Yellowgreen": "#9ACD32",
 }
 
 # Culled from a table at http://www.mvps.org/dmcritchie/excel/colors.htm
@@ -215,7 +215,7 @@ XLWT_COLORS = [
     (153, 51, 0),
     (153, 51, 102),
     (51, 51, 153),
-    (51, 51, 51)
+    (51, 51, 51),
 ]
 
 
@@ -226,29 +226,30 @@ def color_distance(rgb1, rgb2):
     rgbr = rgb1[0] - rgb2[0]
     rgbg = rgb1[1] - rgb2[1]
     rgbb = rgb1[2] - rgb2[2]
-    distance = (((512 + rmean) * rgbr * rgbr) / 256)
+    distance = ((512 + rmean) * rgbr * rgbr) / 256
     distance += 4 * rgbg * rgbg
-    distance += (((767 - rmean) * rgbb * rgbb) / 256)
+    distance += ((767 - rmean) * rgbb * rgbb) / 256
     return distance
 
 
 def htmlcolortorgb(colorstring):
-    """ convert #RRGGBB to an (R, G, B) tuple """
+    """convert #RRGGBB to an (R, G, B) tuple"""
     colorstring = colorstring.strip()
-    if colorstring[0] == '#':
+    if colorstring[0] == "#":
         colorstring = colorstring[1:]
     else:
         if colorstring.title() in WEB_COLORS:
             colorstring = WEB_COLORS[colorstring.title()][1:]
     # Update color code from #FFF to #FFFFFF
     if len(colorstring) == 3:
-        colorstring = ''.join([colorstring[0], colorstring[0], colorstring[1],
-                               colorstring[1], colorstring[2], colorstring[2]])
+        colorstring = "".join(
+            [colorstring[0], colorstring[0], colorstring[1], colorstring[1], colorstring[2], colorstring[2]]
+        )
 
     (rgbr, rgbg, rgbb) = (0, 0, 0)
     if len(colorstring) == 6:
         rgbr, rgbg, rgbb = colorstring[:2], colorstring[2:4], colorstring[4:]
-        rgbr, rgbg, rgbb = [int(n, 16) for n in (rgbr, rgbg, rgbb)]
+        rgbr, rgbg, rgbb = (int(n, 16) for n in (rgbr, rgbg, rgbb))
     return (rgbr, rgbg, rgbb)
 
 
@@ -268,27 +269,27 @@ def match_color_index(color):
 def get_font_height(height):
     size = 10
     factor = 1
-    if height[-2:] == 'EM':
+    if height[-2:] == "EM":
         factor = float(height[:-2])
-    elif height[-2:] == 'PT':
+    elif height[-2:] == "PT":
         size = int(height[:-2])
-    elif height[-2:] == 'PX':
-        factor = float(height[:-2])/16
-    elif height[-1:] == '%':
-        factor = float(height[:-1])/100
-    elif height == 'XX-SMALL':
+    elif height[-2:] == "PX":
+        factor = float(height[:-2]) / 16
+    elif height[-1:] == "%":
+        factor = float(height[:-1]) / 100
+    elif height == "XX-SMALL":
         factor = 0.6
-    elif height == 'X-SMALL':
+    elif height == "X-SMALL":
         factor = 0.75
-    elif height == 'SMALL':
+    elif height == "SMALL":
         factor = 0.89
-    elif height == 'MEDIUM':
+    elif height == "MEDIUM":
         factor = 1
-    elif height == 'LARGE':
+    elif height == "LARGE":
         factor = 1.2
-    elif height == 'X-LARGE':
+    elif height == "X-LARGE":
         factor = 1.5
-    elif height == 'XX-LARGE':
+    elif height == "XX-LARGE":
         factor = 2
     new_size = float(size * factor * 20)
     return new_size
@@ -298,14 +299,12 @@ def get_horizontal_align(halign, align):
     if halign:
         halign = halign.strip().upper()
     style = {
-        'LEFT': align.HORZ_LEFT,
-        'RIGHT': align.HORZ_RIGHT,
-        'CENTER': align.HORZ_CENTER,
-        'JUSTIFY': align.HORZ_JUSTIFIED
+        "LEFT": align.HORZ_LEFT,
+        "RIGHT": align.HORZ_RIGHT,
+        "CENTER": align.HORZ_CENTER,
+        "JUSTIFY": align.HORZ_JUSTIFIED,
     }
-    new_halign = align.HORZ_GENERAL
-    if halign in style.keys():
-        new_halign = style[halign]
+    new_halign = style.get(halign, align.HORZ_GENERAL)
     return new_halign
 
 
@@ -313,14 +312,12 @@ def get_vertical_align(valign, align):
     if valign:
         valign = valign.strip().upper()
     style = {
-        'TOP': align.VERT_TOP,
-        'MIDDLE': align.VERT_CENTER,
-        'BOTTOM': align.VERT_BOTTOM,
-        'JUSTIFY': align.VERT_JUSTIFIED
+        "TOP": align.VERT_TOP,
+        "MIDDLE": align.VERT_CENTER,
+        "BOTTOM": align.VERT_BOTTOM,
+        "JUSTIFY": align.VERT_JUSTIFIED,
     }
-    new_valign = align.VERT_TOP
-    if valign in style.keys():
-        new_valign = style[valign]
+    new_valign = style.get(valign, align.VERT_TOP)
     return new_valign
 
 
@@ -331,23 +328,18 @@ def css2excel(css):
     align = Alignment()
 
     process_css = {
-        'font-family': [fnt, "name", lambda x: x.split(",")[0]],
-        'font-size': [fnt, "height", lambda x: get_font_height(x.upper())],
-        'color': [fnt, "colour_index", lambda x: match_color_index(x.upper())],
-        'font-weight': [fnt, "bold", lambda x: x == 'bold'],
-        'font-style': [fnt, "italic", lambda x: x == 'italic'],
-        'text-align': [align, "horz",
-                       lambda x: get_horizontal_align(x, align)],
-        'vertical-align': [align, "vert",
-                           lambda x: get_vertical_align(x, align)],
-        'background-color': [pattern, "pattern_fore_colour",
-                             lambda x: match_color_index(x.upper())],
+        "font-family": [fnt, "name", lambda x: x.split(",")[0]],
+        "font-size": [fnt, "height", lambda x: get_font_height(x.upper())],
+        "color": [fnt, "colour_index", lambda x: match_color_index(x.upper())],
+        "font-weight": [fnt, "bold", lambda x: x == "bold"],
+        "font-style": [fnt, "italic", lambda x: x == "italic"],
+        "text-align": [align, "horz", lambda x: get_horizontal_align(x, align)],
+        "vertical-align": [align, "vert", lambda x: get_vertical_align(x, align)],
+        "background-color": [pattern, "pattern_fore_colour", lambda x: match_color_index(x.upper())],
     }
     for i in css.keys():
-        if i in process_css.keys():
-            setattr(process_css[i][0],
-                    process_css[i][1],
-                    process_css[i][2](css[i].strip()))
+        if i in process_css:
+            setattr(process_css[i][0], process_css[i][1], process_css[i][2](css[i].strip()))
 
     style = XFStyle()
     style.font = fnt
@@ -359,5 +351,5 @@ def css2excel(css):
     style.pattern = pattern
     style.pattern.pattern = 1
     style.alignment = align
-    style.num_format_str = '#,##0.00'
+    style.num_format_str = "#,##0.00"
     return style
