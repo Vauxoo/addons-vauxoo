@@ -98,7 +98,6 @@ class StockManualTransfer(models.Model):
                         record.name,
                     )
                 )
-        return super().unlink()
 
     @api.model
     def create(self, vals):
