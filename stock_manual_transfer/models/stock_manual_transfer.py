@@ -88,7 +88,8 @@ class StockManualTransfer(models.Model):
         for record in self:
             record.picking_ids = record.procurement_group_id.picking_ids
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_state_valid(self):
         for record in self:
             if record.state == "valid":
                 raise ValidationError(
