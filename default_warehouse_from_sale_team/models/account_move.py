@@ -20,5 +20,5 @@ class AccountMove(models.Model):
             "default_move_type": self.move_type,
             "default_currency_id": self.currency_id.id,
         }
-        default_journal = self.with_context(**default_journal_ctx)._get_default_journal()
+        default_journal = self.with_context(**default_journal_ctx)._search_default_journal()
         self.journal_id = default_journal
