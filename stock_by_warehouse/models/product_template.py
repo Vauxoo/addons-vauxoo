@@ -54,6 +54,7 @@ class ProductTemplate(models.Model):
                 .with_company(warehouse.company_id)
                 .with_context(warehouse=warehouse.id, location=False)
             )
+            tmpl.invalidate_recordset()
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info["warehouse"] = tmpl.qty_available_not_res
             info["content"].append(
