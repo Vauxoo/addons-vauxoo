@@ -33,7 +33,8 @@ def get_odoo_style(html, style, node):
                 styleclass = get_css_style(style_element.text, class_style)
                 style.update(dict(item.split(":") for item in text_adapt(styleclass).split(";") if item != ""))
     if node.attrib.get("style", False):
-        style.update(dict(item.split(":") for item in node.attrib.get("style").split(";") if item != ""))
+        style_nodes = [style_node.strip() for style_node in node.attrib.get("style").split(";") if style_node.strip()]
+        style.update(dict(item.split(":", 1) for item in style_nodes))
     return style
 
 
