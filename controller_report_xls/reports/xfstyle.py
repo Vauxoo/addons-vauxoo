@@ -291,8 +291,8 @@ def get_font_height(height):
         factor = 1.5
     elif height == "XX-LARGE":
         factor = 2
-    new_size = float(size * factor * 20)
-    return new_size
+    # NOTE: Rounding without decimals because the expected `height` needs to be an `integer` value
+    return round(size * factor * 20)
 
 
 def get_horizontal_align(halign, align):
