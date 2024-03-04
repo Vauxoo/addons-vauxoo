@@ -142,7 +142,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
         self.compare_qty_available_not_res(product_a, 0)
         self.compare_qty_available_not_res(self.template_ab, 0)
 
-        picking_in_a.move_line_ids.write({"qty_done": 2})
+        picking_in_a.move_line_ids.write({"quantity": 2, "picked": True})
         picking_in_a.button_validate()
         self.compare_qty_available_not_res(product_a, 2)
         self.compare_qty_available_not_res(self.template_ab, 2)
@@ -159,7 +159,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
 
         picking_in_b.action_confirm()
         picking_in_b.action_assign()
-        picking_in_b.move_line_ids.write({"qty_done": 3})
+        picking_in_b.move_line_ids.write({"quantity": 3, "picked": True})
         picking_in_b.button_validate()
         self.compare_qty_available_not_res(product_a, 2)
         self.compare_qty_available_not_res(product_b, 3)
@@ -203,7 +203,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
             product.warehouses_stock_recompute = True
             self.assertEqual(safe_eval(product.warehouses_stock)["warehouse"], 3)
 
-        picking_out_a.move_line_ids.write({"qty_done": 2})
+        picking_out_a.move_line_ids.write({"quantity": 2, "picked": True})
         picking_out_a.button_validate()
         self.compare_qty_available_not_res(product_b, 1)
         self.compare_qty_available_not_res(self.template_ab, 3)
