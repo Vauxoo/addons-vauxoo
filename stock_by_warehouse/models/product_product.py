@@ -51,13 +51,14 @@ class ProductProduct(models.Model):
         quants = (
             self.env["stock.quant"]
             .with_context(lang=False)
-            .read_group(domain_quant, fields=["product_id", "quantity", "reserved_quantity"], groupby="product_id")
+            ._read_group(
+                domain_quant,
+                groupby=["product_id"],
+                aggregates=["quantity:sum", "reserved_quantity:sum"],
+            )
         )
 
-        res = {}
-        for quant in quants:
-            quantity = quant.get("quantity") - quant.get("reserved_quantity")
-            res[quant.get("product_id")[0]] = max(quantity, 0.0)
+        res = {product.id: max(quantity - reserved_quantity, 0.0) for product, quantity, reserved_quantity in quants}
 
         for prod in self:
             prod.qty_available_not_res = res.get(prod.id, 0.0)
