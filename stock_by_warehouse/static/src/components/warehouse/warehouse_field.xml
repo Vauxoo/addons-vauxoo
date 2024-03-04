@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
 
-    <t t-name="stock_by_warehouse.ShowWarehouseInfo" owl="1">
+    <t t-name="stock_by_warehouse.ShowWarehouseInfo">
         <div>
             <p t-if="this.props.byLocation" class="availability_product my-0 mr-2">
                 The product is available in: <t t-out="show" /> locations.
@@ -24,7 +24,7 @@
         </div>
     </t>
 
-    <t t-name="stock_by_warehouse.ProductWarehousePopOver" owl="1">
+    <t t-name="stock_by_warehouse.ProductWarehousePopOver">
         <h3 t-if="this.props.title" class="o_popover_header" t-out="this.props.title" />
         <div class="popover-body stock-by-warehouse-widget">
             <div class="panel clearfix container">
@@ -85,7 +85,7 @@
         </div>
     </t>
 
-    <t t-name="stock_by_warehouse.StockAvailabilityPopOver" owl="1">
+    <t t-name="stock_by_warehouse.StockAvailabilityPopOver">
         <h3 t-if="this.props.title" class="o_popover_header" t-out="this.props.title" />
         <div class="popover-body stock-by-warehouse-widget">
             <div t-if="this.props.title">
