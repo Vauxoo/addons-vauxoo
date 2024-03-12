@@ -78,6 +78,7 @@ node_modules/
 .eslintrc*
 .flake8*
 .isort.cfg
+.oca_hooks*
 .pre-commit*.yaml
 .prettierrc.yml
 .pylintrc*
