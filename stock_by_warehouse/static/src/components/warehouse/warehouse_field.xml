@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="stock_by_warehouse.ShowWarehouseInfo">
+        <div>
+            <p t-if="this.props.byLocation" class="availability_product my-0 mr-2">
+                The product is available in: <t t-out="show" /> locations.
+                <a
+                    role="button"
+                    tabindex="0"
+                    class="js_available_info fa fa-bars"
+                    t-on-click.stop="(ev) => this.onClick(ev)"
+                />
+            </p>
+            <a
+                t-else=""
+                role="button"
+                tabindex="0"
+                class="js_product_warehouse"
+                t-on-click.stop="(ev) => this.onClick(ev)"
+            >
+                <b t-out="show" /> ... see all warehouses .. <i class="fa fa-list-ul" />
+            </a>
+        </div>
+    </t>
+
+    <t t-name="stock_by_warehouse.ProductWarehousePopOver">
+        <h3 t-if="this.props.title" class="o_popover_header" t-out="this.props.title" />
+        <div class="popover-body stock-by-warehouse-widget">
+            <div class="panel clearfix container">
+                <div class="list-group">
+                    <t t-foreach="this.props.lines" t-as="line" t-key="line_index">
+                        <div
+                            t-if="
+                                line.available_not_res &gt; 0
+                                or line.available &gt; 0
+                                or line.outgoing &gt; 0
+                                or line.saleable &gt; 0
+                                or line.incoming &gt; 0
+                                or line.virtual &gt; 0
+                            "
+                            class="list-group-item row"
+                        >
+                            <div name="warehouse_widget" class="d-flex justify-content-between">
+                                <b class="text-left" t-att-title="'Warehouse Name: ' + line.warehouse">
+                                    <t t-out="line.warehouse_short"> | </t>
+                                </b>
+                                <div class="text-right">
+                                    <span
+                                        title="This is real(on hand) quantity  minus reserved quantity"
+                                        class="text-muted"
+                                        t-out="line.available_not_res_formatted"
+                                    />
+                                    <br />
+                                    <span
+                                        title="Available now but not necessarily what I can sale"
+                                        t-out="line.available_formatted"
+                                    />
+                                    <br />
+                                    - <span title="Outgoing" class="text-danger" t-out="line.outgoing_formatted" />
+                                    <br />
+                                    = <span
+                                        title="I can sale this quantity now and deliver it immediately"
+                                        class="text-muted"
+                                        t-out="line.saleable_formatted"
+                                    />
+                                    <br />
+                                    + <span
+                                        title="Is coming in"
+                                        class="text-success"
+                                        t-out="line.incoming_formatted"
+                                    />
+                                    <br />
+                                    = <span
+                                        title="This will be available next"
+                                        class="text-muted"
+                                        t-out="line.virtual_formatted"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="stock_by_warehouse.StockAvailabilityPopOver">
+        <h3 t-if="this.props.title" class="o_popover_header" t-out="this.props.title" />
+        <div class="popover-body stock-by-warehouse-widget">
+            <div t-if="this.props.title">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th title="Stock Location">Location</th>
+                            <th title="Quantity Available">Stock Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="this.props.lines" t-as="line" t-key="line_index">
+                            <tr class="table-info">
+                                <td>Warehouse: <t t-out="line.warehouse_name" /></td>
+                                <td>Locations: <t t-out="line.locations_quantity_formatted" /></td>
+                            </tr>
+                            <tr t-foreach="line.info_content" t-as="location" t-key="location_index">
+                                <td t-out="location.location" />
+                                <td t-out="location.quantity" />
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+
+</templates>

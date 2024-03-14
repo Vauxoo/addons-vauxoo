@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.product.form.stock.warehouse</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="before">
+                <field
+                    name="warehouses_stock"
+                    widget="warehouse"
+                    groups="stock.group_stock_multi_warehouses"
+                    invisible="detailed_type != 'product'"
+                />
+                <label
+                    for="warehouses_stock_location"
+                    groups="stock.group_stock_multi_warehouses"
+                    invisible="detailed_type != 'product'"
+                />
+                <div
+                    name="location_widget"
+                    class="d-flex"
+                    groups="stock.group_stock_multi_warehouses"
+                    invisible="detailed_type != 'product'"
+                >
+                    <field name="warehouses_stock_location" widget="warehouse" options='{"by_location": True}' />
+                    <field name="warehouses_stock_recompute" widget="boolean_toggle" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
