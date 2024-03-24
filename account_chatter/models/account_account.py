@@ -9,3 +9,4 @@ class AccountAccount(models.Model):
     tag_ids = fields.Many2many(tracking=True)
     group_id = fields.Many2one(tracking=True)
     allowed_journal_ids = fields.Many2many(tracking=True)
+    non_trade = fields.Boolean(tracking=True)
