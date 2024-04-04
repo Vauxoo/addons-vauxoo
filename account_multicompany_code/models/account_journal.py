@@ -1,12 +1,12 @@
-from odoo import models
+from odoo import api, models
 
 
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    def name_get(self):
-        result = dict(super().name_get())
-        for record in self:
-            if record.company_id.code:
-                result[record.id] += " (%s)" % record.company_id.code
-        return list(result.items())
+    @api.depends("company_id.code")
+    def _compute_display_name(self):
+        res = super()._compute_display_name()
+        for journal in self.filtered("company_id.code"):
+            journal.display_name += " (%s)" % journal.company_id.code
+        return res
