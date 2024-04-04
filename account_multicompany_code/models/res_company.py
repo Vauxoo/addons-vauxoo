@@ -1,7 +1,7 @@
 from odoo import fields, models
 
 
-class Company(models.Model):
+class ResCompany(models.Model):
     _inherit = "res.company"
 
     code = fields.Char(help="Internal code name of the company")
