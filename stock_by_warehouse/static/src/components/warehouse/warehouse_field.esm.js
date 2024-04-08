@@ -1,13 +1,13 @@
 /** @odoo-module **/
 
 import {registry} from "@web/core/registry";
-import {usePopover} from "@web/core/popover/popover_hook";
+import {useService} from "@web/core/utils/hooks";
 import {localization} from "@web/core/l10n/localization";
 import {formatFloat} from "@web/views/fields/formatters";
-import {TextField} from "@web/views/fields/text/text_field";
+import {textField, TextField} from "@web/views/fields/text/text_field";
 import {archParseBoolean} from "@web/views/utils";
-
-const {Component, onWillUpdateProps} = owl;
+import {Component} from "@odoo/owl";
+import {useSpecialData} from "@web/views/fields/relational_utils";
 
 // Pop-up to show the information detailed by the warehouses
 export class ProductWarehousePopOver extends Component {}
@@ -21,25 +21,28 @@ StockAvailabilityPopOver.template = "stock_by_warehouse.StockAvailabilityPopOver
 export class StockByWarehouseField extends TextField {
     setup() {
         this.initializeVariables();
-        this.popover = usePopover();
+        this.popover = useService("popover");
         this.formatData(this.props);
-        onWillUpdateProps((nextProps) => this.formatData(nextProps));
+        useSpecialData((orm, props) => {
+            this.formatData(props);
+            this.render();
+        });
     }
 
     initializeVariables() {
-        this.info = JSON.parse(this.props.value);
+        this.info = JSON.parse(this.props.record.data[this.props.name]);
         this.record_id = this.env.model.root.data.id;
         this.show = formatFloat(0, {digit: 2});
         this.lines = [];
     }
 
     formatData(props) {
-        const info = JSON.parse(props.value);
+        const info = JSON.parse(props.record.data[props.name]);
         if (this.record_id != this.env.model.root.data.id) {
             this.initializeVariables();
             return;
         }
-        if (!info) {
+        if (!Object.keys(info).length) {
             return;
         }
         this.info = info;
@@ -48,13 +51,13 @@ export class StockByWarehouseField extends TextField {
         });
         this.lines = this.info.content || [];
         for (const value of this.lines) {
-            value.available_not_res_formatted = formatFloat(value.available_not_res, {digits: 2});
-            value.available_formatted = formatFloat(value.available, {digits: 2});
-            value.incoming_formatted = formatFloat(value.incoming, {digits: 2});
-            value.outgoing_formatted = formatFloat(value.outgoing, {digits: 2});
-            value.virtual_formatted = formatFloat(value.virtual, {digits: 2});
-            value.saleable_formatted = formatFloat(value.saleable, {digits: 2});
-            value.locations_quantity_formatted = formatFloat(value.locations_available, {digits: 2});
+            value.available_not_res_formatted = formatFloat(value.available_not_res || 0, {digits: 2});
+            value.available_formatted = formatFloat(value.available || 0, {digits: 2});
+            value.incoming_formatted = formatFloat(value.incoming || 0, {digits: 2});
+            value.outgoing_formatted = formatFloat(value.outgoing || 0, {digits: 2});
+            value.virtual_formatted = formatFloat(value.virtual || 0, {digits: 2});
+            value.saleable_formatted = formatFloat(value.saleable || 0, {digits: 2});
+            value.locations_quantity_formatted = formatFloat(value.locations_available || 0, {digits: 2});
         }
     }
 
@@ -90,11 +93,14 @@ StockByWarehouseField.props = {
     byLocation: {type: Boolean, optional: true},
 };
 
-const textExtractProps = StockByWarehouseField.extractProps;
-StockByWarehouseField.extractProps = ({attrs, field}) => {
-    return Object.assign(textExtractProps({attrs, field}), {
-        byLocation: archParseBoolean(attrs.options.by_location),
-    });
+const textExtractProps = textField.extractProps;
+export const stockByWarehouseField = {
+    component: StockByWarehouseField,
+    extractProps: (fieldInfo) => {
+        return Object.assign(textExtractProps(fieldInfo), {
+            byLocation: archParseBoolean(fieldInfo.options.by_location),
+        });
+    },
 };
 
-registry.category("fields").add("warehouse", StockByWarehouseField);
+registry.category("fields").add("warehouse", stockByWarehouseField);

@@ -16,23 +16,21 @@ class ProductProduct(models.Model):
         compute="_compute_qty_available_not_reserved",
     )
 
-    warehouses_stock = fields.Text(
-        store=False,
-        readonly=True,
-    )
+    warehouses_stock = fields.Json(compute="_compute_warehouses_stock")
 
-    warehouses_stock_location = fields.Text(store=False, readonly=True)
+    warehouses_stock_location = fields.Json(compute="_compute_warehouses_stock")
 
     warehouses_stock_recompute = fields.Boolean(store=False)
 
-    @api.onchange("warehouses_stock_recompute")
-    def _warehouses_stock_recompute_onchange(self):
-        if not self.warehouses_stock_recompute:
-            self.warehouses_stock_recompute = True
-            return
-        self.warehouses_stock = self._compute_get_quantity_warehouses_json()
-        self.warehouses_stock_location = self._compute_get_stock_location()
-        self.warehouses_stock_recompute = True
+    @api.depends("warehouses_stock_recompute")
+    def _compute_warehouses_stock(self):
+        for record in self:
+            record.warehouses_stock = (
+                record._compute_get_quantity_warehouses_json() if record.warehouses_stock_recompute else False
+            )
+            record.warehouses_stock_location = (
+                record._compute_get_stock_location() if record.warehouses_stock_recompute else False
+            )
 
     def _product_available_not_res_hook(self, quants):
         """Hook used to introduce possible variations"""

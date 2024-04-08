@@ -21,7 +21,7 @@
         "web.assets_backend": [
             "stock_by_warehouse/static/src/components/warehouse/warehouse_field.scss",
             "stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml",
-            "stock_by_warehouse/static/src/components/warehouse/warehouse_field.js",
+            "stock_by_warehouse/static/src/components/warehouse/warehouse_field.esm.js",
         ],
     },
     "installable": True,
