@@ -14,19 +14,15 @@ class ProductTemplate(models.Model):
         compute="_compute_product_available_not_res",
     )
 
-    warehouses_stock = fields.Text(
-        store=False,
-        readonly=True,
-    )
-    warehouses_stock_recompute = fields.Boolean(store=False, readonly=False)
+    warehouses_stock = fields.Json(compute="_compute_warehouse_stock")
+    warehouses_stock_recompute = fields.Boolean(store=False)
 
-    @api.onchange("warehouses_stock_recompute")
-    def _warehouses_stock_recompute_onchange(self):
-        if not self.warehouses_stock_recompute:
-            self.warehouses_stock_recompute = True
-            return
-        self.warehouses_stock = self._compute_get_quantity_warehouses_json()
-        self.warehouses_stock_recompute = True
+    @api.depends("warehouses_stock_recompute")
+    def _compute_warehouse_stock(self):
+        for record in self:
+            record.warehouses_stock = (
+                record._compute_get_quantity_warehouses_json() if record.warehouses_stock_recompute else False
+            )
 
     @api.depends("product_variant_ids.qty_available_not_res")
     @api.depends_context("warehouse", "company")
