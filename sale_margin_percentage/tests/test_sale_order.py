@@ -37,37 +37,37 @@ class TestSaleOrder(TransactionCase):
         """Margin and Margin Percentage when cost is 0"""
         sale = self.create_so(quantity=4, price=12)
         self.assertEqual(sale.order_line.margin, 48)
-        self.assertEqual(sale.order_line.margin_percentage, 100)
+        self.assertEqual(sale.order_line.margin_percent, 1.0)
 
     def test_02_margin_sale_price_0(self):
         """Margin and Margin Percentage when sale price is 0"""
         sale = self.create_so(product=self.product_cost_15, quantity=4, price=0)
         self.assertEqual(sale.order_line.margin, -60)
-        self.assertEqual(sale.order_line.margin_percentage, -100)
+        self.assertEqual(sale.order_line.margin_percent, -1.0)
 
     def test_03_margin_sale_qty_0(self):
         """Margin and Margin Percentage when product qty is 0"""
         sale = self.create_so(product=self.product_cost_10, quantity=0, price=15)
         self.assertEqual(sale.order_line.margin, 0.0)
-        self.assertEqual(sale.order_line.margin_percentage, 0.0)
+        self.assertEqual(sale.order_line.margin_percent, 0.0)
 
     def test_04_margin_positive(self):
         """Margin and Margin Percentage when purchase price < sale cost"""
         sale = self.create_so(product=self.product_cost_10, quantity=4, price=12)
         self.assertEqual(sale.order_line.margin, 8.0)
-        self.assertAlmostEqual(sale.order_line.margin_percentage, 16.66, places=1)
+        self.assertAlmostEqual(sale.order_line.margin_percent, 0.1666, places=3)
 
     def test_05_margin_negative(self):
         """Margin and Margin Percentage when purchase price > sale cost"""
         sale = self.create_so(product=self.product_cost_15, quantity=4, price=12)
         self.assertEqual(sale.order_line.margin, -12)
-        self.assertAlmostEqual(sale.order_line.margin_percentage, -25, places=1)
+        self.assertAlmostEqual(sale.order_line.margin_percent, -0.25, places=3)
 
     def test_06_margin_balanced(self):
         """Margin and Margin Percentage when purchase price = sale cost"""
         sale = self.create_so(product=self.product_cost_15, quantity=4, price=15)
         self.assertEqual(sale.order_line.margin, 0.0)
-        self.assertEqual(sale.order_line.margin_percentage, 0.0)
+        self.assertEqual(sale.order_line.margin_percent, 0.0)
 
     def test_07_margin_total(self):
         """Margin Percentage of the sale order."""
@@ -81,7 +81,8 @@ class TestSaleOrder(TransactionCase):
         self.create_so_line(sale, product=self.product_cost_10, quantity=5, price=12)
         self.assertEqual(sale.order_line.mapped("margin"), [48.0, -60.0, -12.0, 8.0, 0.0, 0.0, 32.0, 10.0])
         self.assertEqual(
-            sale.order_line.mapped("margin_percentage"), [100.0, -100.0, -25.0, 16.67, 0.0, 0.0, 61.54, 16.67]
+            list(map(lambda x: round(x, 4), sale.order_line.mapped("margin_percent"))),
+            [1.0, -1.0, -0.25, 0.1667, 0.0, 0.0, 0.6154, 0.1667],
         )
         self.assertEqual(sale.margin, 26)
-        self.assertAlmostEqual(sale.margin_percentage, 8.55, places=1)
+        self.assertAlmostEqual(sale.margin_percent, 0.0855, places=3)
