@@ -49,17 +49,6 @@ msgid "Limit margin set in sales configuration"
 msgstr "Límite de margen establecido en la configuración de ventas"
 
 #. module: sale_margin_percentage
-#: model_terms:ir.ui.view,arch_db:sale_margin_percentage.view_order_form
-msgid "Margin %"
-msgstr "Margen %"
-
-#. module: sale_margin_percentage
-#: model:ir.model.fields,field_description:sale_margin_percentage.field_sale_order__margin_percentage
-#: model:ir.model.fields,field_description:sale_margin_percentage.field_sale_order_line__margin_percentage
-msgid "Margin Percentage"
-msgstr "Porcentaje de margen"
-
-#. module: sale_margin_percentage
 #: model:ir.model.fields,field_description:sale_margin_percentage.field_res_company__margin_threshold
 #: model:ir.model.fields,field_description:sale_margin_percentage.field_res_config_settings__margin_threshold
 #: model:ir.model.fields,field_description:sale_margin_percentage.field_sale_order_line__margin_threshold
@@ -72,12 +61,6 @@ msgstr "Límite de margen"
 #: model:ir.model.fields,help:sale_margin_percentage.field_res_config_settings__margin_threshold
 msgid "Margin Threshold for product in order lines"
 msgstr "Límite de margen para productos en líneas de pedido"
-
-#. module: sale_margin_percentage
-#: model:ir.model.fields,help:sale_margin_percentage.field_sale_order__margin_percentage
-#: model:ir.model.fields,help:sale_margin_percentage.field_sale_order_line__margin_percentage
-msgid "Margin percentage compute based on price unit"
-msgstr "Porcentaje de margen calculado según la unidad de precio"
 
 #. module: sale_margin_percentage
 #: model_terms:ir.ui.view,arch_db:sale_margin_percentage.res_config_settings_view_form
