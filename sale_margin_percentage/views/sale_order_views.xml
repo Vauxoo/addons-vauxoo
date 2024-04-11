@@ -9,22 +9,17 @@
             <xpath expr="//field[@name='margin']" position="attributes">
                 <attribute name="groups">base.group_system</attribute>
             </xpath>
-            <xpath expr="//field[@name='margin']" position="after">
-                <field name="margin_percentage" class="oe_inline" />
-            </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="after">
                 <field name="margin_threshold" invisible="1" />
-                <field name="margin_percentage" />
             </xpath>
             <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="after">
                 <field name="margin_threshold" invisible="1" />
-                <field name="margin_percentage" string="Margin %" />
             </xpath>
             <xpath expr="//field[@name='order_line']/tree" position="attributes">
-                <attribute name="decoration-danger">margin_percentage &lt;= 0.0</attribute>
+                <attribute name="decoration-danger">margin_percent &lt;= 0.0</attribute>
                 <attribute
                     name="decoration-warning"
-                >margin_percentage &lt;= margin_threshold and margin_percentage &gt; 0.0</attribute>
+                >margin_percent &lt;= margin_threshold and margin_percent &gt; 0.0</attribute>
             </xpath>
         </field>
     </record>

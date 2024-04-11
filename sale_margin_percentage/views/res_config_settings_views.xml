@@ -20,7 +20,7 @@
                             Minimun margin percentage allowed
                         </div>
                         <div class="text-muted">
-                            <field name="margin_threshold" />
+                            <field name="margin_threshold" widget="percentage" />
                         </div>
                     </div>
                 </div>
