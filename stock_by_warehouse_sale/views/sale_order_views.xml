@@ -7,11 +7,15 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form//field[@name='sequence']" position="after">
-                <div class="text-center alert alertdialog" attrs="{'invisible': [('product_type', '!=', 'product')]}">
+                <div class="text-center alert alertdialog" invisible="product_type != 'product'">
                     <p>The saleable stock in: <field name="warehouse_id" /> that can be delivered immediately is:
                         <field name="warehouses_stock" widget="warehouse" options="{'placement': 'bottom'}" />
-                        &amp;nbsp;&amp;nbsp;
-                        <field name="warehouses_stock_recompute" widget="boolean_toggle" />
+                        <span>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>
+                        <field
+                            name="warehouses_stock_recompute"
+                            widget="boolean_toggle"
+                            options="{'autosave': False}"
+                        />
                     </p>
                 </div>
             </xpath>
