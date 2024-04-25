@@ -22,10 +22,6 @@
         <field name="price_unit" eval="75.0" />
     </record>
 
-    <function
-        model="sale.order"
-        name="action_confirm"
-        eval="[[ref('sale_order_usd')]]"
-    />
+    <function model="sale.order" name="action_confirm" eval="[[ref('sale_order_usd')]]" />
 
 </odoo>
