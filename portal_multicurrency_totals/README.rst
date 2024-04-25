@@ -16,13 +16,13 @@ To use this module, just go to the portal  and open a document list; you will se
 When accessing quotations or sale orders, a total will be displayed per
 currency:
 
-    .. image:: portal_multicurrency_totals/static/description/totals_in_so.png
+    .. image:: /portal_multicurrency_totals/static/description/totals_in_so.png
       :width: 400pt
       :alt: Totals in sale orders
 
 When accessing invoices, paid and unpaid amounts will also be available:
 
-    .. image:: portal_multicurrency_totals/static/description/totals_in_invoices.png
+    .. image:: /portal_multicurrency_totals/static/description/totals_in_invoices.png
       :width: 400pt
       :alt: Totals in invoices
 
