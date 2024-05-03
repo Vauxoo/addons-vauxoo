@@ -1,7 +1,7 @@
 from odoo import fields, models
 
 
-class StockLocationRoute(models.Model):
-    _inherit = "stock.location.route"
+class StockRoute(models.Model):
+    _inherit = "stock.route"
 
     manual_transfer_selectable = fields.Boolean("Applicable on manual transfer")
