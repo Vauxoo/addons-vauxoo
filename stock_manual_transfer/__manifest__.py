@@ -9,7 +9,7 @@
     "website": "https://www.vauxoo.com",
     "license": "LGPL-3",
     "category": "Inventory/Inventory",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "depends": [
         "stock",
     ],
@@ -17,7 +17,7 @@
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         "data/ir_sequence_data.xml",
-        "views/stock_location_route_views.xml",
+        "views/stock_route_views.xml",
         "views/stock_manual_transfer_views.xml",
     ],
     "demo": [
