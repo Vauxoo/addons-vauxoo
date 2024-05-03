@@ -8,6 +8,7 @@ class TestStock(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.groups_id += cls.env.ref("uom.group_uom")
         cls.company = cls.env.ref("base.main_company")
         cls.product = cls.env.ref("product.product_product_6")
         cls.warehouse = cls.env.ref("stock_manual_transfer.demo_warehouse_01")
@@ -54,7 +55,7 @@ class TestStock(TransactionCase):
         self.assertEqual(transfer.procurement_group_id.name, expected_name)
         pickings = transfer.picking_ids
         self.assertRecordValues(
-            records=pickings.move_line_ids,
+            records=pickings.move_ids,
             expected_values=[
                 {
                     "product_id": self.product.id,
