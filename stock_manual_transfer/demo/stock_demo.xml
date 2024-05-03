@@ -10,7 +10,7 @@
     </record>
 
     <!-- Stock Location Routes -->
-    <record id="demo_wh_route_reception" model="stock.location.route">
+    <record id="demo_wh_route_reception" model="stock.route">
         <field name="name">Reception</field>
         <field name="product_selectable" eval="True" />
         <field name="warehouse_selectable" eval="True" />
@@ -24,7 +24,7 @@
         <field name="picking_type_id" ref="stock.picking_type_in" />
         <field name="warehouse_id" ref="demo_warehouse_01" />
         <field name="location_src_id" ref="stock.stock_location_suppliers" />
-        <field name="location_id" model="stock.warehouse" eval="obj(ref('demo_warehouse_01')).lot_stock_id.id" />
+        <field name="location_dest_id" model="stock.warehouse" eval="obj(ref('demo_warehouse_01')).lot_stock_id.id" />
         <field name="procure_method">make_to_stock</field>
         <field name="route_id" ref="demo_wh_route_reception" />
     </record>

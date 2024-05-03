@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-20 22:03+0000\n"
-"PO-Revision-Date: 2022-12-20 22:03+0000\n"
+"POT-Creation-Date: 2024-05-06 19:12+0000\n"
+"PO-Revision-Date: 2024-05-06 19:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgid "Activity Type Icon"
 msgstr "Icono de tipo de actividad"
 
 #. module: stock_manual_transfer
-#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_location_route__manual_transfer_selectable
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_route__manual_transfer_selectable
 msgid "Applicable on manual transfer"
 msgstr "Aplicable en transferencia manual"
 
@@ -130,7 +130,6 @@ msgstr "Icono para indicar una excepción de actividad."
 
 #. module: stock_manual_transfer
 #: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_needaction
-#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_unread
 msgid "If checked, new messages require your attention."
 msgstr "Si está marcado, los nuevos mensajes requieren su atención."
 
@@ -141,7 +140,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
 
 #. module: stock_manual_transfer
-#: model:ir.model,name:stock_manual_transfer.model_stock_location_route
+#: model:ir.model,name:stock_manual_transfer.model_stock_route
 msgid "Inventory Routes"
 msgstr "Rutas de inventario"
 
@@ -217,6 +216,7 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: stock_manual_transfer
+#. odoo-python
 #: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
 #: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
 #: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
@@ -251,18 +251,13 @@ msgstr "Número de errores"
 
 #. module: stock_manual_transfer
 #: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr "Número de mensajes que requieren una acción"
 
 #. module: stock_manual_transfer
 #: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "Número de mensajes con error de entrega"
-
-#. module: stock_manual_transfer
-#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer__message_unread_counter
-msgid "Number of unread messages"
-msgstr "Número de mensajes sin leer"
 
 #. module: stock_manual_transfer
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__date_planned
@@ -296,7 +291,7 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: stock_manual_transfer
-#: model:stock.location.route,name:stock_manual_transfer.demo_wh_route_reception
+#: model:stock.route,name:stock_manual_transfer.demo_wh_route_reception
 msgid "Reception"
 msgstr "Recepción"
 
@@ -334,6 +329,7 @@ msgstr ""
 "Planeado: Actividades futuras."
 
 #. module: stock_manual_transfer
+#. odoo-python
 #: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
 #, python-format
 msgid ""
@@ -370,16 +366,6 @@ msgid "Unit of Measure"
 msgstr "Unidad de medida"
 
 #. module: stock_manual_transfer
-#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_unread
-msgid "Unread Messages"
-msgstr "Mensajes no leídos"
-
-#. module: stock_manual_transfer
-#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr "Contador de mensajes no leídos"
-
-#. module: stock_manual_transfer
 #: model:ir.model.fields.selection,name:stock_manual_transfer.selection__stock_manual_transfer__state__valid
 msgid "Validated"
 msgstr "Validada"
@@ -410,6 +396,7 @@ msgid "Website communication history"
 msgstr ""
 
 #. module: stock_manual_transfer
+#. odoo-python
 #: code:addons/stock_manual_transfer/models/stock_manual_transfer.py:0
 #, python-format
 msgid ""
