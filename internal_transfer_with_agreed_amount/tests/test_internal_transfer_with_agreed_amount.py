@@ -24,9 +24,9 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
     def create_internal_transfer(self, currency, journal, destination_journal, amount):
         transfer = Form(self.env["account.payment"])
         transfer.payment_type = "outbound"
-        transfer.is_internal_transfer = True
         transfer.journal_id = journal
         transfer.currency_id = currency
+        transfer.is_internal_transfer = True
         transfer.destination_journal_id = destination_journal
         transfer.amount = amount
         return transfer.save()
