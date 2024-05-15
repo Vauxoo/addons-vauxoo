@@ -66,6 +66,8 @@ class StockManualTransfer(models.Model):
     )
 
     def action_validate(self):
+        if self.state != "draft":
+            return
         route = self.route_id
         if self.warehouse_id not in route.rule_ids.warehouse_id:
             raise ValidationError(_("The selected route doesn't have configured rules on the selected warehouse."))
