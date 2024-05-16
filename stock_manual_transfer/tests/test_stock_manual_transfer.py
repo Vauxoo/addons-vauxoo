@@ -8,7 +8,6 @@ class TestStock(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.groups_id += cls.env.ref("uom.group_uom")
         cls.company = cls.env.ref("base.main_company")
         cls.product = cls.env.ref("product.product_product_6")
         cls.warehouse = cls.env.ref("stock_manual_transfer.demo_warehouse_01")
