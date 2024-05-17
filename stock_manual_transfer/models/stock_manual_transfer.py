@@ -39,7 +39,7 @@ class StockManualTransfer(models.Model):
         states={"draft": [("readonly", False)]},
     )
     transfer_line_ids = fields.One2many(
-        "stock.manual_transfer_line",
+        "stock.manual_transfer.line",
         "transfer_id",
         string="Transfer Lines",
         copy=True,
