@@ -28,7 +28,7 @@ class StockManualTransfer(models.Model):
         states={"draft": [("readonly", False)]},
     )
     route_id = fields.Many2one(
-        "stock.route",
+        "stock.location.route",
         string="Preferred Route",
         domain="""[
             ('manual_transfer_selectable', '=', True),
