@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class StockManualTransferLine(models.Model):
-    _name = "stock.manual_transfer_line"
+    _name = "stock.manual_transfer.line"
     _description = "Manual Transfer Line"
     _order = "transfer_id, sequence, id"
 
