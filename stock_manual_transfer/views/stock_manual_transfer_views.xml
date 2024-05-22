@@ -12,7 +12,7 @@
                         name="action_validate"
                         type="object"
                         string="Make transfers"
-                        states="draft"
+                        invisible="state != 'draft'"
                         class="oe_highlight"
                         groups="stock_manual_transfer.group_stock_manual_transfer"
                     />
@@ -20,7 +20,7 @@
                         name="action_view_pickings"
                         type="object"
                         string="View Transfers"
-                        attrs="{'invisible': [('picking_ids', '=', [])]}"
+                        invisible="not picking_ids"
                         class="oe_highlight"
                         groups="stock_manual_transfer.group_stock_manual_transfer"
                     />
@@ -33,20 +33,20 @@
                         </h1>
                     </group>
                     <group col="4">
-                        <field name="warehouse_id" options="{'no_create': True}" />
-                        <field name="date_planned" />
-                        <field name="route_id" options="{'no_create': True}" />
+                        <field name="warehouse_id" options="{'no_create': True}" readonly="state != 'draft'" />
+                        <field name="date_planned" readonly="state != 'draft'" />
+                        <field name="route_id" options="{'no_create': True}" readonly="state != 'draft'" />
                     </group>
                     <notebook>
                         <page string="Transfer Lines" name="transfer_lines">
-                            <field name="transfer_line_ids" nolabel="1">
+                            <field name="transfer_line_ids" nolabel="1" readonly="state != 'draft'">
                                 <tree editable="bottom">
                                     <field name="sequence" widget="handle" />
                                     <field name="product_id" />
                                     <field name="product_uom_qty" />
-                                    <field name="product_uom_id" invisible="1" />
+                                    <field name="product_uom_id" column_invisible="1" />
                                     <field name="product_uom_id" groups="uom.group_uom" optional="show" />
-                                    <field name="product_uom_category_id" invisible="1" />
+                                    <field name="product_uom_category_id" column_invisible="True" />
                                 </tree>
                                 <form>
                                     <group>
@@ -54,7 +54,7 @@
                                             <field name="product_id" />
                                             <field name="product_uom_qty" />
                                             <field name="product_uom_id" groups="uom.group_uom" />
-                                            <field name="product_uom_category_id" invisible="1" />
+                                            <field name="product_uom_category_id" column_invisible="True" />
                                             <field name="sequence" />
                                         </group>
                                     </group>
@@ -77,9 +77,9 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
-                <field name="warehouse_id" />
-                <field name="date_planned" />
-                <field name="route_id" />
+                <field name="warehouse_id" readonly="state != 'draft'" />
+                <field name="date_planned" readonly="state != 'draft'" />
+                <field name="route_id" readonly="state != 'draft'" />
                 <field name="state" />
             </tree>
         </field>

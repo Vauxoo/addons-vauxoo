@@ -9,7 +9,7 @@
     "website": "https://www.vauxoo.com",
     "license": "LGPL-3",
     "category": "Inventory/Inventory",
-    "version": "16.0.1.0.1",
+    "version": "17.0.1.0.0",
     "depends": [
         "stock",
     ],
