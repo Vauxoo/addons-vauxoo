@@ -17,15 +17,11 @@ class StockManualTransfer(models.Model):
     warehouse_id = fields.Many2one(
         "stock.warehouse",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_planned = fields.Datetime(
         "Planned Date",
         default=fields.Datetime.now,
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     route_id = fields.Many2one(
         "stock.route",
@@ -35,16 +31,12 @@ class StockManualTransfer(models.Model):
             ('supplied_wh_id', '=', warehouse_id),
         ]""",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     transfer_line_ids = fields.One2many(
         "stock.manual_transfer.line",
         "transfer_id",
         string="Transfer Lines",
         copy=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     state = fields.Selection(
         string="Status",
