@@ -2,22 +2,12 @@
 <odoo>
 
     <!-- Grant portal access to the customer -->
-    <record id="grant_portal_access" model="portal.wizard.user">
-        <field
-            name="user_id"
-            model="res.partner"
-            eval="[
-                Command.create(
-                    {
-                        'partner_id': ref('base.res_partner_3'),
-                        'email': obj(ref('base.res_partner_3')).email,
-                        'is_portal': True,
-                    }
-                ),
-            ]"
-        />
+    <record id="grant_portal_access" model="portal.wizard">
+        <field name="partner_ids" eval="[Command.set([ref('base.res_partner_3')])]" />
     </record>
-    <function model="portal.wizard.user" name="action_grant_access" eval="[ref('grant_portal_access')]" />
+    <function model="portal.wizard.user" name="action_grant_access">
+        <value model="portal.wizard" eval="obj(ref('grant_portal_access')).user_ids.ids" />
+    </function>
 
     <!-- Set a password for the portal user so it may log-in -->
     <record id="set_password_portal_user" model="change.password.wizard">
@@ -27,7 +17,7 @@
             eval="[
                 Command.create(
                     {
-                        'user_id': obj(ref('base.res_partner_3')).user_ids.id,
+                        'user_id': obj(ref('base.res_partner_3')).user_ids[0].id,
                         'user_login': obj(ref('base.res_partner_3')).email,
                         'new_passwd': obj(ref('base.res_partner_3')).email,
                     }
