@@ -17,6 +17,7 @@ class StockManualTransfer(models.Model):
     warehouse_id = fields.Many2one(
         "stock.warehouse",
         required=True,
+        default=lambda self: self.env.user._get_default_warehouse_id(),
     )
     date_planned = fields.Datetime(
         "Planned Date",
