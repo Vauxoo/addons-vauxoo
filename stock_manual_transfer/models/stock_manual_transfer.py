@@ -19,6 +19,7 @@ class StockManualTransfer(models.Model):
         required=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
+        default=lambda self: self.env.user._get_default_warehouse_id(),
     )
     date_planned = fields.Datetime(
         "Planned Date",
