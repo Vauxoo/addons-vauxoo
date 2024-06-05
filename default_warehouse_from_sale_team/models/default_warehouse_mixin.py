@@ -47,7 +47,9 @@ class DefaultWarehouseMixin(models.AbstractModel):
 
     def _get_salesteam_from_vals(self, vals):
         """Determine sales team from creation values"""
-        if "name" in vals:
+        name_field = self._fields["name"]
+        default_name = name_field.default(self) if callable(name_field.default) else name_field.default
+        if vals.get("name", default_name) != default_name:
             # Already has a name, so salesteam won't be used anyway
             return self.env["crm.team"]
         warehouse = (
