@@ -3,6 +3,7 @@
 
     <record id="group_stock_manual_transfer" model="res.groups">
         <field name="name">Can make manual transfers</field>
+        <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]" />
     </record>
 
 </odoo>
