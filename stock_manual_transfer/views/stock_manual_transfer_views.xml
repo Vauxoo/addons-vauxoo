@@ -29,7 +29,7 @@
                 <sheet>
                     <group>
                         <h1>
-                            <field name="name" force_save="1" />
+                            <field name="name" readonly="1" />
                         </h1>
                     </group>
                     <group col="4">
