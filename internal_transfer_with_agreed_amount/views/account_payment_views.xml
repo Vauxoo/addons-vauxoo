@@ -12,13 +12,7 @@
                     class="oe_highlight"
                     string="Confirm with an agreed amount"
                     groups="internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount"
-                    attrs="{
-                        'invisible': [
-                            '|',
-                            ('is_internal_transfer', '=', False),
-                            ('state', '!=', 'draft')
-                        ]
-                    }"
+                    invisible="not is_internal_transfer or state != 'draft'"
                 />
                 <button
                     name="internal_transfer_with_agreed_amount.action_internal_transfer_multicurrency"
@@ -26,13 +20,7 @@
                     class="oe_highlight"
                     string="Edit agreed amount"
                     groups="internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount"
-                    attrs="{
-                        'invisible':[
-                            '|',
-                            ('is_internal_transfer', '=', False),
-                            ('state', 'in', ('draft', 'cancelled'))
-                        ]
-                    }"
+                    invisible="not is_internal_transfer or state in ('draft', 'cancelled')"
                 />
             </xpath>
         </field>
