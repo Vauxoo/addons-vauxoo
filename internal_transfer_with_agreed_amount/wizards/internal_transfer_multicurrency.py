@@ -92,7 +92,9 @@ class InternalTransferMulticurrency(models.TransientModel):
         aml_negative = amls.filtered(lambda a: a.amount_currency < 0.00)
         if len(aml_positive) > 2 or len(aml_negative) > 2:
             return
+        payment_vals = {"amount": payment.amount, "currency_id": payment.currency_id.id}
         aml_positive.move_id.button_draft()
+        payment.write(payment_vals)
         self._preprocess_payments_hooks(payment)
         vals = self._prepare_values_from_lines(aml_positive, exchange_currency)
         aml_positive.with_context(**context).write(vals)
