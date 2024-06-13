@@ -10,6 +10,7 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
         main_company.transfer_account_id.write({"reconcile": True})
         cls.currency = main_company.currency_id
         cls.currency_eur = cls.env.ref("base.EUR")
+        cls.currency_eur.active = True
         bank = cls.env["account.journal"].search([("type", "=", "bank")], limit=1)
         cls.bank_journal = bank.copy()
         cls.bank_journal.write({"name": "Bank " + cls.currency.name, "code": "BNK68"})
