@@ -70,7 +70,7 @@ class InternalTransferMulticurrency(models.TransientModel):
         if not self.agreed_amount:
             return
         to_reconcile = amls.filtered(
-            lambda l: l.account_id == l.company_id.transfer_account_id
+            lambda line: line.account_id == line.company_id.transfer_account_id
         ).full_reconcile_id.reconciled_line_ids
         context = {"check_move_validity": False, "skip_account_move_synchronization": True}
         if exchange_currency == payment.company_currency_id:
