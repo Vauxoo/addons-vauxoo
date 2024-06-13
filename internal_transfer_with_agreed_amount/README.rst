@@ -7,7 +7,7 @@ For this process the user must belong to the
 
 "Allow to confirm an internal transfer with an agreed amount" group.
 
-.. image:: internal_transfer_with_agreed_amount/static/src/img/group.png
+.. image:: /internal_transfer_with_agreed_amount/static/src/img/group.png
    :align: center
    :width: 400pt
    :alt: Allow to confirm an internal transfer with an agreed amount group
@@ -15,7 +15,7 @@ For this process the user must belong to the
 
 This group allows to the user see the "Confirm with an agreed amount" button in the transfer
 
-.. image:: internal_transfer_with_agreed_amount/static/src/img/1.png
+.. image:: /internal_transfer_with_agreed_amount/static/src/img/1.png
    :align: center
    :width: 400pt
    :alt: Confirm with an agreed amount button
@@ -24,7 +24,7 @@ This group allows to the user see the "Confirm with an agreed amount" button in 
 Then the agreed amount for the transfer must be established, the currency
 will be the one set in the destination journal.
 
-.. image:: internal_transfer_with_agreed_amount/static/src/img/2.png
+.. image:: /internal_transfer_with_agreed_amount/static/src/img/2.png
    :align: center
    :width: 400pt
    :alt: Set agreed amount
@@ -32,7 +32,7 @@ will be the one set in the destination journal.
 
 This agreed amount will be used in the journal entries of the transfer.
 
-.. image:: internal_transfer_with_agreed_amount/static/src/img/3.png
+.. image:: /internal_transfer_with_agreed_amount/static/src/img/3.png
    :align: center
    :width: 400pt
    :alt: Journal entries
