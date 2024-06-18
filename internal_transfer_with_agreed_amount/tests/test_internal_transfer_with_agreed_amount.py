@@ -57,7 +57,7 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
         )
 
         # Check journal item in EUR
-        eur_aml = aml.full_reconcile_id.reconciled_line_ids.filtered(lambda l: l != aml)
+        eur_aml = aml.full_reconcile_id.reconciled_line_ids.filtered(lambda line: line != aml)
         self.assertRecordValues(
             eur_aml,
             [
@@ -87,7 +87,7 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
         )
 
         # Check journal item in EUR
-        eur_aml = aml.full_reconcile_id.reconciled_line_ids.filtered(lambda l: l != aml)
+        eur_aml = aml.full_reconcile_id.reconciled_line_ids.filtered(lambda line: line != aml)
         self.assertRecordValues(
             eur_aml,
             [
