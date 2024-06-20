@@ -51,7 +51,7 @@ msgid "Attachment Count"
 msgstr "Recuento de archivos adjuntos"
 
 #. module: stock_manual_transfer
-#: model:res.groups,name:stock_manual_transfer.group_stock_manual_transfer
+#: model:res.groups,name:stock_manual_transfer.group_user
 msgid "Can make manual transfers"
 msgstr "Puede realizar transferencias manuales"
 
