@@ -15,7 +15,6 @@ class TestStock(TransactionCase):
         cls.warehouse_route_reception = cls.env.ref("stock_manual_transfer.demo_wh_route_reception")
         cls.today = fields.Date.context_today(cls.company)
         cls.location_suppliers = cls.env.ref("stock.stock_location_suppliers")
-        cls.manual_transfer_group = cls.env.ref("stock_manual_transfer.group_stock_manual_transfer")
 
     def create_manual_transfer(self):
         transfer = Form(self.env["stock.manual_transfer"])
