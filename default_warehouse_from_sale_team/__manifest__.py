@@ -27,6 +27,7 @@
         "demo/stock_warehouse_demo.xml",
         "demo/crm_team_demo.xml",
     ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
     "application": False,
     "auto_install": False,
