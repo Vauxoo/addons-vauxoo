@@ -21,5 +21,6 @@ def update_margin_threshold(env):
 
 def recompute_margin_percent(env):
     order_lines = env["sale.order.line"].search([])
-    order_lines._compute_margin()
+    env.add_to_compute(field=order_lines._fields["margin_percent"], records=order_lines)
+    order_lines.flush()
     _logger.info("The margin percentage of %s records have been recomputed.", len(order_lines))
