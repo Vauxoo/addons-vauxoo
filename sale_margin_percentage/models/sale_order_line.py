@@ -13,11 +13,11 @@ class SaleOrderLine(models.Model):
     def _compute_margin(self):
         res = super()._compute_margin()
         for line in self:
-            currency = line.order_id.pricelist_id.currency_id
             if not line.product_uom_qty:
                 line.margin_percent = 0.0
                 continue
 
+            currency = line.currency_id
             if currency.is_zero(line.price_unit) or currency.is_zero(line.price_subtotal):
                 line.margin_percent = -1.0
                 continue
