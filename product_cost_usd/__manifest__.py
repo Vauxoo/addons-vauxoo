@@ -10,6 +10,7 @@ This module adds the field Cost in USD to the Product form.
     "license": "LGPL-3",
     "depends": [
         "sale_margin",
+        "sale_stock_margin",
     ],
     "demo": [
         "demo/product_pricelist_demo.xml",
