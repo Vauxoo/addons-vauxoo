@@ -7,7 +7,6 @@ class SaleOrderLine(models.Model):
     margin_threshold = fields.Float(
         default=lambda self: self.env.user.company_id.margin_threshold, help="Limit margin set in sales configuration"
     )
-    purchase_price = fields.Float(readonly=True, help="Price purchase of product")
 
     @api.depends("price_subtotal", "product_uom_qty", "purchase_price")
     def _compute_margin(self):
