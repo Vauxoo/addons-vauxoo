@@ -15,7 +15,7 @@
                         <div class="row">
                             <t t-foreach="catalog_brands" t-as="brand">
                                 <div class="col-6 col-md-3 text-center brand_card">
-                                    <a t-attf-href="catalog/brand/#{slug(brand)}">
+                                    <a t-attf-href="/catalog/brand/#{slug(brand)}">
                                         <div class="brand_image">
                                             <img
                                                 class="img-responsive img-fluid"
