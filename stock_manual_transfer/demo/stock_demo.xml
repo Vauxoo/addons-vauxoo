@@ -15,6 +15,7 @@
         <field name="product_selectable" eval="True" />
         <field name="warehouse_selectable" eval="True" />
         <field name="manual_transfer_selectable" eval="True" />
+        <field name="supplied_wh_id" ref="demo_warehouse_01" />
     </record>
 
     <!-- Pull Rules -->
