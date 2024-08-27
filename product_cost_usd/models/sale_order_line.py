@@ -11,6 +11,7 @@ class SaleOrderLine(models.Model):
         """
         res = super()._compute_purchase_price()
         for line in self:
+            line = line.with_company(line.company_id)
             pricelist = line.order_id.pricelist_id
             date = line.order_id.date_order
             if not line.product_id:
