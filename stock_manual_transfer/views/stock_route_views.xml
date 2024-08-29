@@ -5,7 +5,7 @@
         <field name="model">stock.route</field>
         <field name="inherit_id" ref="stock.stock_location_route_form_view" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='warehouse_selectable']" position="after">
+            <xpath expr="//div[field[@name='warehouse_selectable']]" position="after">
                 <field name="manual_transfer_selectable" string="Manual transfers" />
             </xpath>
         </field>
