@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.default.warehouse</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="show_reserved" position="after">
+                <field name="is_editable" invisible="True" />
+            </field>
+            <button name="action_confirm" position="attributes">
+                <attribute name="invisible" add="not is_editable" separator=" or " />
+            </button>
+            <xpath expr="//button[@name='button_validate' and contains(@invisible, 'draft')]" position="attributes">
+                <attribute name="invisible" add="not is_editable" separator=" or " />
+            </xpath>
+            <xpath expr="//button[@name='button_validate' and contains(@invisible, 'waiting')]" position="attributes">
+                <attribute name="invisible" add="not is_editable" separator=" or " />
+            </xpath>
+            <button name="do_print_picking" position="attributes">
+                <attribute name="invisible" add="not is_editable" separator=" or " />
+            </button>
+            <button name="%(stock.act_stock_return_picking)d" position="attributes">
+                <attribute name="invisible" add="not is_editable" separator=" or " />
+            </button>
+        </field>
+    </record>
+
+</odoo>
