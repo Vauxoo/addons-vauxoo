@@ -19,6 +19,7 @@
         "views/ir_sequence_views.xml",
         "views/res_users_views.xml",
         "views/stock_picking_type_views.xml",
+        "views/stock_picking_views.xml",
         "security/res_groups_security.xml",
         "security/ir_rule_security.xml",
     ],
