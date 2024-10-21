@@ -26,22 +26,38 @@ msgstr "... ver todos los almacenes .."
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
 #, python-format
-msgid "Available now but not necessarily what I can sale"
-msgstr "Cantidad disponible pero no necesariamente puede ser vendida"
+msgid "Available"
+msgstr "Disponible"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
 #, python-format
-msgid "I can sale this quantity now and deliver it immediately"
-msgstr "Puedo vender esta cantidad ahora y entregarla inmediatamente"
+msgid "Available now, but not necessarily for sale"
+msgstr "Disponible ahora, pero no necesariamente para vender"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
 #, python-format
-msgid "Is coming in"
-msgstr "Esta llegando"
+msgid "Incoming"
+msgstr "Entrante"
+
+#. module: stock_by_warehouse
+#. odoo-javascript
+#: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
+#, python-format
+msgid "Incoming stock may not cover or will barely meet demand."
+msgstr ""
+"Es posible que el inventario entrante no cubra o apenas satisfaga la "
+"demanda."
+
+#. module: stock_by_warehouse
+#. odoo-javascript
+#: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
+#, python-format
+msgid "It is coming in. It will be available soon."
+msgstr "Está en camino. Estará disponible pronto."
 
 #. module: stock_by_warehouse
 #. odoo-javascript
@@ -56,6 +72,20 @@ msgstr "Ubicación"
 #, python-format
 msgid "Locations:"
 msgstr "Ubicaciones:"
+
+#. module: stock_by_warehouse
+#. odoo-javascript
+#: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
+#, python-format
+msgid "No quantities are coming in."
+msgstr "No hay unidades por llegar."
+
+#. module: stock_by_warehouse
+#. odoo-javascript
+#: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
+#, python-format
+msgid "On Hand"
+msgstr "A mano"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
@@ -131,15 +161,34 @@ msgstr "El producto está disponible en:"
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
 #, python-format
-msgid "This is real(on hand) quantity  minus reserved quantity"
-msgstr "Esta es la cantidad real (en mano) menos la cantidad reservada"
+msgid ""
+"There is a deficit. The reserved quantity is greater than the available "
+"stock."
+msgstr ""
+"Hay un déficit. La cantidad reservada es mayor que el inventario disponible."
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
 #, python-format
-msgid "This will be available next"
-msgstr "Esto estará disponible pronto"
+msgid "This quantity is available for immediate sale and delivery."
+msgstr "Esta cantidad está disponible para venta y entrega inmediata."
+
+#. module: stock_by_warehouse
+#. odoo-javascript
+#: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
+#, python-format
+msgid "This represents on hand quantity minus the picked (outgoing) quantity."
+msgstr ""
+"Esto representa la cantidad disponible menos la cantidad seleccionada "
+"(saliente)."
+
+#. module: stock_by_warehouse
+#. odoo-javascript
+#: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
+#, python-format
+msgid "Warehouse"
+msgstr "Almacén"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
