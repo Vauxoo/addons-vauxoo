@@ -1,5 +1,6 @@
 /** @odoo-module **/
 
+import {isMobileOS} from "@web/core/browser/feature_detection";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {localization} from "@web/core/l10n/localization";
@@ -75,7 +76,7 @@ export class StockByWarehouseField extends TextField {
                 onClose: this.closePopover,
             },
             {
-                position: localization.direction === "rtl" ? "bottom" : "right",
+                position: localization.direction === "rtl" || isMobileOS() ? "bottom" : "right",
             }
         );
     }
