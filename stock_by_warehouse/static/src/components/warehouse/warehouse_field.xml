@@ -27,61 +27,84 @@
     <t t-name="stock_by_warehouse.ProductWarehousePopOver">
         <h3 t-if="this.props.title" class="popover-header d-flex justify-content-center" t-out="this.props.title" />
         <div class="popover-body stock-by-warehouse-widget">
-            <div class="panel clearfix container">
-                <div class="list-group">
+            <table class="table" style="border-collapse: collapse;">
+                <thead style="position: sticky; top: 0; background-color: #017E84; z-index: 1;">
+                    <tr style="text-align: center; background-color: #017E84; color: white;">
+                        <th id="th_warehouse">Warehouse</th>
+                        <th id="th_onhand">On Hand</th>
+                        <th id="th_outgoing">Outgoing</th>
+                        <th id="th_available">Available</th>
+                        <th id="th_incoming">Incoming</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <t t-foreach="this.props.lines" t-as="line" t-key="line_index">
-                        <div
+                        <t
                             t-if="
-                                line.available_not_res &gt; 0
-                                or line.available &gt; 0
-                                or line.outgoing &gt; 0
-                                or line.saleable &gt; 0
-                                or line.incoming &gt; 0
-                                or line.virtual &gt; 0
+                                line.available gt 0
+                                or line.outgoing gt 0
+                                or line.saleable gt 0
+                                or line.incoming gt 0
+                                or line.virtual gt 0
                             "
-                            class="list-group-item row"
                         >
-                            <div name="warehouse_widget" class="d-flex justify-content-between">
-                                <b class="text-left" t-att-title="'Warehouse Name: ' + line.warehouse">
-                                    <t t-out="line.warehouse_short"> | </t>
-                                </b>
-                                <div class="text-right">
-                                    <span
-                                        title="This is real(on hand) quantity  minus reserved quantity"
-                                        class="text-muted"
-                                        t-out="line.available_not_res_formatted"
+                            <tr>
+                                <td style="text-align: center;">
+                                    <b
+                                        class="text-left"
+                                        t-att-title="'Warehouse Name: ' + line.warehouse"
+                                        t-out="line.warehouse_short"
                                     />
-                                    <br />
+                                </td>
+                                <td style="text-align: center;">
                                     <span
-                                        title="Available now but not necessarily what I can sale"
+                                        class="text-muted"
+                                        title="Available now, but not necessarily for sale"
                                         t-out="line.available_formatted"
                                     />
-                                    <br />
-                                    - <span title="Outgoing" class="text-danger" t-out="line.outgoing_formatted" />
-                                    <br />
-                                    = <span
-                                        title="I can sale this quantity now and deliver it immediately"
-                                        class="text-muted"
+                                </td>
+                                <td style="text-align: center;">
+                                    <span class="text-muted" title="Outgoing" t-out="line.outgoing_formatted" />
+                                </td>
+                                <td style="text-align: center;">
+                                    <t t-if="line.virtual gt 0" t-set="saleable_qty_title_message">
+                                        <t>This quantity is available for immediate sale and delivery.</t>
+                                        <t t-out="'\n'" />
+                                        <t>This represents on hand quantity minus the picked (outgoing) quantity.</t>
+                                    </t>
+                                    <t t-else="" t-set="saleable_qty_title_message">
+                                        There is a deficit. The reserved quantity is greater than the available stock.
+                                    </t>
+                                    <span
+                                        t-att-title="saleable_qty_title_message"
+                                        t-att-class="line.saleable gt 0 ? 'text-success' : 'text-danger'"
                                         t-out="line.saleable_formatted"
                                     />
-                                    <br />
-                                    + <span
-                                        title="Is coming in"
-                                        class="text-success"
+                                </td>
+                                <td style="text-align: center;">
+                                    <t
+                                        t-if="line.virtual lt 1 and line.incoming gt 0"
+                                        t-set="incoming_qty_title_message"
+                                    >
+                                        Incoming stock may not cover or will barely meet demand.
+                                    </t>
+                                    <t t-elif="line.incoming lt 1" t-set="incoming_qty_title_message">
+                                        No quantities are coming in.
+                                    </t>
+                                    <t t-else="" t-set="incoming_qty_title_message">
+                                        It is coming in. It will be available soon.
+                                    </t>
+                                    <span
+                                        t-att-title="incoming_qty_title_message"
+                                        t-att-class="line.virtual gt 0 ? '' : 'text-danger'"
                                         t-out="line.incoming_formatted"
                                     />
-                                    <br />
-                                    = <span
-                                        title="This will be available next"
-                                        class="text-muted"
-                                        t-out="line.virtual_formatted"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                            </tr>
+                        </t>
                     </t>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </t>
 
