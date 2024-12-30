@@ -7,7 +7,13 @@ class AccountMove(models.Model):
     def _search_default_journal(self):
         """If a team is provided and it has a sales journal set, take it as 1st alternative"""
         journal = super()._search_default_journal()
-        team = self.env.context.get("salesteam") or self.team_id or self.env.user.sale_team_id
+        team = (
+            self.env.context.get("salesteam")
+            # If the team_id value (ID) is in the cache, it must be converted to a record from the
+            # cached value to avoid triggering the field's compute method when it has not yet been computed.
+            or self._fields["team_id"].convert_to_record(self._cache.get("team_id"), self)
+            or self.env.user.sale_team_id
+        )
         journal_on_team = team._get_default_journal([journal.type or "general"])
         return journal_on_team or journal
 
