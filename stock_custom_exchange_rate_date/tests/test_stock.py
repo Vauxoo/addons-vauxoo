@@ -12,6 +12,7 @@ class TestStock(TransactionCase):
         cls.vendor = cls.env.ref("base.res_partner_1")
         cls.usd = cls.env.ref("base.USD")
         cls.eur = cls.env.ref("base.EUR")
+        cls.eur.active = True
         cls.today = fields.Date.context_today(cls.env.user)
         cls.yesterday = cls.today - timedelta(days=1)
         account = cls.env["account.account"].create(
@@ -137,7 +138,7 @@ class TestStock(TransactionCase):
         # Set custom rate date on the receipt transfer and confirm
         picking_po = po.picking_ids
         picking_po.exchange_rate_date = self.yesterday
-        picking_po.move_line_ids.write({"qty_done": 1.0})
+        picking_po.move_line_ids.write({"quantity": 1.0})
         picking_po.button_validate()
         self.assertEqual(picking_po.state, "done")
 
@@ -166,7 +167,7 @@ class TestStock(TransactionCase):
 
         # Confirm receipt transfer
         picking_po = po.picking_ids
-        picking_po.move_line_ids.write({"qty_done": 1.0})
+        picking_po.move_line_ids.write({"quantity": 1.0})
         picking_po.button_validate()
         self.assertEqual(picking_po.state, "done")
 
