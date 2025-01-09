@@ -9,9 +9,10 @@ class AccountMove(models.Model):
         journal = super()._search_default_journal()
         team = (
             self.env.context.get("salesteam")
-            # If the team_id value (ID) is in the cache, it must be converted to a record from the
-            # cached value to avoid triggering the field's compute method when it has not yet been computed.
-            or self._fields["team_id"].convert_to_record(self._cache.get("team_id"), self)
+            # If the team_id value (ID) is in the cache on a existing account.move record, it must be
+            # converted to a record from the cached value to avoid triggering the field's compute
+            # method when it has not yet been computed.
+            or (self and self._fields["team_id"].convert_to_record(self._cache.get("team_id"), self))
             or self.env.user.sale_team_id
         )
         journal_on_team = team._get_default_journal([journal.type or "general"])
