@@ -97,7 +97,7 @@ welcomed feedback
 `here <https://github.com/Vauxoo/addons-vauxoo/issues/new?body=module:%20
 default_warehouse_from_sale_team
 %0Aversion:%20
-15.0
+18.0
 %0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_
 
 Credits

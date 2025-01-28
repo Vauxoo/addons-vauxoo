@@ -11,7 +11,7 @@ class StockPicking(models.Model):
     @api.depends_context("uid")
     def _compute_is_editable(self):
         # Using intersection operator to keep original env
-        editable_records = self & self._filter_access_rules_python("write")
+        editable_records = self & self._filtered_access("write")
         editable_records.is_editable = True
         (self - editable_records).is_editable = False
 
