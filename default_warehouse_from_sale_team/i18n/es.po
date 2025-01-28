@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 01:08+0000\n"
-"PO-Revision-Date: 2023-03-09 01:08+0000\n"
+"POT-Creation-Date: 2025-02-10 23:25+0000\n"
+"PO-Revision-Date: 2025-02-10 23:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -104,6 +104,11 @@ msgid "Default Warehouse"
 msgstr "Almacén por defecto"
 
 #. module: default_warehouse_from_sale_team
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_account_journal__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: default_warehouse_from_sale_team
 #: model:ir.model.fields,help:default_warehouse_from_sale_team.field_crm_team__default_warehouse_id
 msgid ""
 "In this field can be defined a default warehouse for the related users to "
@@ -111,6 +116,11 @@ msgid ""
 msgstr ""
 "En este campo se puede definir el almacén por defecto para los usuarios "
 "relacionados al equipo de ventas."
+
+#. module: default_warehouse_from_sale_team
+#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_stock_picking__is_editable
+msgid "Is Editable"
+msgstr "Es editable"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model.fields,help:default_warehouse_from_sale_team.field_crm_team__journal_stock_id
@@ -125,6 +135,11 @@ msgstr ""
 #: model:ir.model,name:default_warehouse_from_sale_team.model_account_journal
 msgid "Journal"
 msgstr "Diario"
+
+#. module: default_warehouse_from_sale_team
+#: model:account.journal,name:default_warehouse_from_sale_team.journal_default_team
+msgid "Journal Default Warehouse"
+msgstr "Diario Almacén por defecto"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_account_move
@@ -229,7 +244,6 @@ msgstr "Movimiento de existencias"
 #. module: default_warehouse_from_sale_team
 #. odoo-python
 #: code:addons/default_warehouse_from_sale_team/models/res_users.py:0
-#, python-format
 msgid "The chosen team (%s) is not in the allowed sales teams for this user"
 msgstr ""
 "El equipo de venta seleccionado (%s) no está entre los equipos permitidos "

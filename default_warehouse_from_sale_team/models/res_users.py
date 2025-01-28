@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -22,7 +22,7 @@ class ResUsers(models.Model):
         user_wrong_team = self.filtered(lambda u: u.sale_team_id - u.sale_team_ids)
         if user_wrong_team:
             raise ValidationError(
-                _(
+                self.env._(
                     "The chosen team (%s) is not in the allowed sales teams for this user",
                     user_wrong_team[0].sale_team_id.name,
                 )
