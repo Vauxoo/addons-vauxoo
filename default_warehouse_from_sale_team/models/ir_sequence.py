@@ -12,7 +12,7 @@ class IrSequence(models.Model):
         if "sequence_salesteam_id" not in self.env.context:
             return super().next_by_code(sequence_code, sequence_date)
         salesteam_id = self.env.context["sequence_salesteam_id"]
-        self.check_access_rights("read")
+        self.check_access("read")
         company_id = self.env.company.id
         sequence = self.search(
             [

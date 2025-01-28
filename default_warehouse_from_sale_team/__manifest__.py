@@ -8,12 +8,11 @@
     "website": "http://www.vauxoo.com",
     "license": "LGPL-3",
     "category": "Inventory/Inventory",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "depends": [
         "sale_stock",
         "purchase_requisition",
     ],
-    "test": [],
     "data": [
         "views/crm_team_views.xml",
         "views/ir_sequence_views.xml",
