@@ -11,7 +11,6 @@
     "data": [
         "views/stock_picking_views.xml",
     ],
-    "demo": [],
-    "installable": True,
-    "auto_install": False,
+    "price": 100,
+    "currency": "USD",
 }
