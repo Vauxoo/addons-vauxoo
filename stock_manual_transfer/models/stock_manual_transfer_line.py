@@ -10,7 +10,7 @@ class StockManualTransferLine(models.Model):
     sequence = fields.Integer(default=10)
     product_id = fields.Many2one(
         "product.product",
-        domain=[("type", "=", "product")],
+        domain=[("is_storable", "=", True)],
         required=True,
     )
     product_uom_qty = fields.Float("Quantity", default=1.0)

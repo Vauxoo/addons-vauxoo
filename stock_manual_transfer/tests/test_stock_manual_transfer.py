@@ -59,7 +59,7 @@ class TestStock(TransactionCase):
                     "product_id": self.product.id,
                     "quantity": 1.0,
                     "location_id": self.location_suppliers.id,
-                    "location_dest_id": self.warehouse.lot_stock_id.id,
+                    "location_final_id": self.warehouse.lot_stock_id.id,
                     "origin": expected_name,
                     "state": "assigned",
                 },
