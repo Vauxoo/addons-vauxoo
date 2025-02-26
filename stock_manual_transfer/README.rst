@@ -6,7 +6,7 @@ Stock Manual Transfer:
 
 This module allows you to trigger transfers using a specific route, as it were triggered by a reordering rule.
 
-- In order to be able to make the transfer, the user must belong to the stock manual transfer group:
+- In order to be able to make the transfer, the user must belong to the Can make manual transfers group:
 
 .. image:: ./static/description/manual_transfer_group.png
     :alt: Manual transfer group

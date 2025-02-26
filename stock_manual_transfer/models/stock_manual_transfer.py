@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -12,7 +12,7 @@ class StockManualTransfer(models.Model):
         copy=False,
         readonly=True,
         index=True,
-        default=lambda self: _("New"),
+        default=lambda self: self.env._("New"),
     )
     warehouse_id = fields.Many2one(
         "stock.warehouse",
@@ -63,7 +63,9 @@ class StockManualTransfer(models.Model):
             return
         route = self.route_id
         if self.warehouse_id not in route.rule_ids.warehouse_id:
-            raise ValidationError(_("The selected route doesn't have configured rules on the selected warehouse."))
+            raise ValidationError(
+                self.env._("The selected route doesn't have configured rules on the selected warehouse.")
+            )
 
         procurement_group = self.env["procurement.group"].create({"name": self.name})
         values = {
@@ -91,7 +93,7 @@ class StockManualTransfer(models.Model):
         for record in self:
             if record.state == "valid":
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "You can not delete a validated transfer.\n- Record: %s",
                         record.name,
                     )
@@ -100,7 +102,7 @@ class StockManualTransfer(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get("name", _("New")) == _("New"):
+            if vals.get("name", self.env._("New")) == self.env._("New"):
                 vals["name"] = self.env["ir.sequence"].next_by_code(self._name)
         return super().create(vals_list)
 
