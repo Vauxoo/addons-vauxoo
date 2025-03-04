@@ -86,7 +86,7 @@
     </record>
 
     <record id="stock_manual_transfer_action" model="ir.actions.act_window">
-        <field name="name">Manual Transfer</field>
+        <field name="name">Manual Transfers</field>
         <field name="res_model">stock.manual_transfer</field>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
