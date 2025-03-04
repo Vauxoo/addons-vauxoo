@@ -167,7 +167,6 @@ msgid "Make transfers"
 msgstr "Realizar transferencias"
 
 #. module: stock_manual_transfer
-#: model:ir.actions.act_window,name:stock_manual_transfer.stock_manual_transfer_action
 #: model:ir.model,name:stock_manual_transfer.model_stock_manual_transfer
 #: model:ir.ui.menu,name:stock_manual_transfer.menu_stock_manual_transfer_act
 #: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_manual_transfer_form_view
@@ -180,8 +179,9 @@ msgid "Manual Transfer Line"
 msgstr "Línea de transferencia manual"
 
 #. module: stock_manual_transfer
+#: model:ir.actions.act_window,name:stock_manual_transfer.stock_manual_transfer_action
 #: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_location_route_form_view
-msgid "Manual transfers"
+msgid "Manual Transfers"
 msgstr "Transferencias manuales"
 
 #. module: stock_manual_transfer
