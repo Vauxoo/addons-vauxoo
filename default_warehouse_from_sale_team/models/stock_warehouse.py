@@ -22,7 +22,7 @@ class StockWarehouse(models.Model):
         return (
             warehouses
             and not self.env.su
-            and warehouses.check_access("read", raise_exception=False)
+            and warehouses.has_access("read")
             and failed_rules
             and not failed_rules - allowed_rules
         )
