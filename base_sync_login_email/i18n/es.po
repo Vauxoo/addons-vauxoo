@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_sync_login_email
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-09 04:26+0000\n"
+"PO-Revision-Date: 2025-04-09 04:26+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_sync_login_email
+#: model:ir.model,name:base_sync_login_email.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: base_sync_login_email
+#. odoo-python
+#: code:addons/base_sync_login_email/models/res_partner.py:0
+#, python-format
+msgid ""
+"It's not possible to change this contact's email because it's associated to an internal user and the new email doesn't match the user login.\n"
+"- Contact's email: '%s'\n"
+"- User login: '%s'"
+msgstr ""
+"No es posible modifica el correo electrónico de este contacto porque está asociado con un usuario interno y el nuevo correo electrónico no coincide con el inicio de sesión (login) del usuario.\n"
+"- Correo electrónico del contacto: '%s'\n"
+"- Inicio de sesión del usuario: '%s'"
+
+#. module: base_sync_login_email
+#: model:ir.model,name:base_sync_login_email.model_res_users
+msgid "User"
+msgstr "Usuario"
