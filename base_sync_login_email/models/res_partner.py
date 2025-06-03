@@ -6,7 +6,7 @@ from odoo.tools import single_email_re
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    @api.constrains("email", "partner_share", "active")
+    @api.constrains("email", "active")
     def _check_email_internal_user(self):
         """If the partner belongs to an internal user, validate the email matches the user login"""
         for partner in self:
