@@ -13,7 +13,7 @@
     </record>
 
     <record id="view_company_tree" model="ir.ui.view">
-        <field name="name">res.company.tree.inherit.account.multicompany</field>
+        <field name="name">res.company.list.inherit.account.multicompany</field>
         <field name="model">res.company</field>
         <field name="inherit_id" ref="base.view_company_tree" />
         <field name="arch" type="xml">
