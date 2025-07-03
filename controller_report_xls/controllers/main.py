@@ -19,6 +19,7 @@ def get_css_style(csstext, style):
     cssutils.log.setLevel(logging.CRITICAL)
     cssnode = parseString(csstext)
     stylesheet = cssnode.cssRules
+    cssstyle = None
     for rule in stylesheet:
         if rule.selectorText.replace(".", "") == style:
             cssstyle = str(rule.style.cssText)
@@ -30,9 +31,9 @@ def get_odoo_style(html, style, node):
         for class_style in node.attrib.get("class", False).split():
             for style_element in html.xpath('//style[@type="text/css"]'):
                 styleclass = get_css_style(style_element.text, class_style)
-                style.update(dict(item.split(":") for item in text_adapt(styleclass).split(";") if item != ""))
+                style.update(dict(item.split(":") for item in text_adapt(styleclass).split(";") if item))
     if node.attrib.get("style", False):
-        style.update(dict(item.split(":") for item in node.attrib.get("style").split(";") if item != ""))
+        style.update(dict(item.split(":") for item in node.attrib.get("style").split(";") if item))
     return style
 
 

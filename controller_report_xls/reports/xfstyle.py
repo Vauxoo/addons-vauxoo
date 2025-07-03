@@ -260,6 +260,7 @@ def match_color_index(color):
     color = htmlcolortorgb(color)
     if isinstance(color, int):
         return color
+    result = None
     if color:
         distances = [color_distance(color, x) for x in XLWT_COLORS]
         result = distances.index(min(distances))
