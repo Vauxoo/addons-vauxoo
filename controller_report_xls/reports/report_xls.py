@@ -168,7 +168,7 @@ class ActionReport(models.Model):
         context = self.env.context
         if response is None or not context.get("xls_report"):
             return response
-        html = self._render_qweb_html(docids, data=data)[0]
+        html = self._render_qweb_html(self.report_name, docids, data=data)[0]
         html = html.decode("utf-8")
         xls_stream = get_xls(html)
         attachment = self.env["ir.attachment"].create(
