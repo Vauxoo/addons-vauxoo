@@ -1,2 +1,2 @@
 # Required by controller_report_xls
-cssutils==2.7.1
+cssutils==2.11.1
