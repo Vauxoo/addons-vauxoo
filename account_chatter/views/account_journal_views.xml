@@ -6,7 +6,7 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('oe_chatter')]" position="attributes">
+            <xpath expr="//chatter" position="attributes">
                  <attribute name="groups">account_chatter.group_show_account_chatter_notifications</attribute>
             </xpath>
         </field>
