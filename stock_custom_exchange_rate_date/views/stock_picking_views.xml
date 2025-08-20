@@ -7,7 +7,6 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <xpath expr="//label[@for='scheduled_date']" position="before">
-                <field name="purchase_id" invisible="True" />
                 <field
                     name="exchange_rate_date"
                     invisible="not purchase_id or picking_type_code != 'incoming'"

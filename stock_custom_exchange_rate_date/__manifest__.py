@@ -1,10 +1,10 @@
 {
     "name": "Customized Rate Date in Stock",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Vauxoo",
     "category": "stock",
     "website": "http://www.vauxoo.com/",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     "depends": [
         "purchase_stock",
     ],
@@ -14,4 +14,6 @@
     "demo": [],
     "installable": True,
     "auto_install": False,
+    "price": 230,
+    "currency": "EUR",
 }
