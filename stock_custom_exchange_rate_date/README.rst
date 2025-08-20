@@ -13,6 +13,7 @@ Contributors
 ------------
 
 * Luis González <lgonzalez@vauxoo.com>
+* Yennifer Santiago <yennifer@vauxoo.com>
 
 
 Maintainer
@@ -24,9 +25,9 @@ Maintainer
 
 This module is maintained by Vauxoo.
 
-a latinamerican company that provides training, coaching,
+A latinamerican company that provides training, coaching,
 development and implementation of enterprise management
 systems and bases its entire operation strategy in the use
 of Open Source Software and its main product is Odoo.
 
-To contribute to this module, please visit http://www.vauxoo.com.
+To contribute to this module, please visit https://www.vauxoo.com.

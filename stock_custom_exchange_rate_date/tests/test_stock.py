@@ -80,7 +80,7 @@ class TestStock(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product fifo",
-                "type": "product",
+                "is_storable": True,
                 "default_code": "PR-FIFO",
                 "categ_id": cls.stock_account_product_categ.id,
             }

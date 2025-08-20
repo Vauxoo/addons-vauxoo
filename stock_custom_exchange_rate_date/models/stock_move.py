@@ -18,4 +18,6 @@ class StockMove(models.Model):
         price_unit = line.currency_id._convert(
             price_unit, line.company_id.currency_id, line.company_id, self.picking_id.exchange_rate_date, round=False
         )
-        return price_unit
+        if self.product_id.lot_valuated:
+            return dict.fromkeys(self.lot_ids, price_unit)
+        return {self.env["stock.lot"]: price_unit}
