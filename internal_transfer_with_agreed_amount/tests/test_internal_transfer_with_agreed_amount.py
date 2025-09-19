@@ -6,20 +6,45 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        main_company = cls.env.ref("base.main_company")
-        main_company.transfer_account_id.write({"reconcile": True})
-        cls.currency = main_company.currency_id
-        cls.currency_eur = cls.env.ref("base.EUR")
-        bank = cls.env["account.journal"].search([("type", "=", "bank")], limit=1)
-        cls.bank_journal = bank.copy()
-        cls.bank_journal.write({"name": "Bank " + cls.currency.name, "code": "BNK68"})
-        cls.bank_journal_eur = bank.copy({"currency_id": cls.currency_eur.id})
-        cls.bank_journal_eur.write({"name": "Bank EUR", "code": "BNK67"})
-        account = cls.bank_journal.default_account_id
-        payment_method = (
-            cls.bank_journal.inbound_payment_method_line_ids | cls.bank_journal.outbound_payment_method_line_ids
+        cls.currency = cls.env.ref("base.USD")
+        cls.currency_foreign = cls.env.ref("base.EUR")
+        cls.currency.active = True
+        cls.currency_foreign.active = True
+        cls.main_company = cls.env["res.company"].create({"name": "USD Company", "currency_id": cls.currency.id})
+        cls.env.user.company_ids |= cls.main_company
+        cls.env.user.company_id = cls.main_company
+        transfer_account = cls.env["account.account"].create(
+            {
+                "name": "Liquidity Transfer",
+                "code": "123456",
+                "reconcile": True,
+                "company_id": cls.main_company.id,
+            }
         )
-        payment_method.payment_account_id = account
+        journal_payment_account = transfer_account.copy()
+        cls.main_company.write(
+            {
+                "transfer_account_id": transfer_account.id,
+                "account_journal_payment_credit_account_id": journal_payment_account.id,
+                "account_journal_payment_debit_account_id": journal_payment_account.id,
+            }
+        )
+        cls.bank_journal = cls.env["account.journal"].create(
+            {
+                "name": "Bank " + cls.currency.name,
+                "type": "bank",
+                "currency_id": cls.currency.id,
+                "company_id": cls.main_company.id,
+            }
+        )
+        cls.bank_journal_foreign = cls.env["account.journal"].create(
+            {
+                "name": "Bank " + cls.currency_foreign.name,
+                "type": "bank",
+                "currency_id": cls.currency_foreign.id,
+                "company_id": cls.main_company.id,
+            }
+        )
 
     def create_internal_transfer(self, currency, journal, destination_journal, amount):
         transfer = Form(self.env["account.payment"])
@@ -39,11 +64,11 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
         wizard.apply()
         return wizard
 
-    def test_01_transfer_local_eur(self):
-        transfer = self.create_internal_transfer(self.currency, self.bank_journal, self.bank_journal_eur, 100)
+    def test_01_transfer_local_foreign(self):
+        transfer = self.create_internal_transfer(self.currency, self.bank_journal, self.bank_journal_foreign, 100)
         self.create_multicurrency_transfer(transfer, 120)
 
-        # Check journal item in USD
+        # Check journal item in local currency
         aml = transfer.line_ids.filtered("reconciled")
         self.assertRecordValues(
             aml,
@@ -51,12 +76,12 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
                 {
                     "balance": 100.0,  # payment amount
                     "amount_currency": 120.0,
-                    "currency_id": self.currency_eur.id,
+                    "currency_id": self.currency_foreign.id,
                 }
             ],
         )
 
-        # Check journal item in EUR
+        # Check journal item in foreign currency
         eur_aml = aml.full_reconcile_id.reconciled_line_ids.filtered(lambda line: line != aml)
         self.assertRecordValues(
             eur_aml,
@@ -64,16 +89,18 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
                 {
                     "balance": -100.0,  # payment amount
                     "amount_currency": -120.0,  # Agreed amount
-                    "currency_id": self.currency_eur.id,
+                    "currency_id": self.currency_foreign.id,
                 }
             ],
         )
 
-    def test_02_transfer_eur_local(self):
-        transfer = self.create_internal_transfer(self.currency_eur, self.bank_journal_eur, self.bank_journal, 100)
+    def test_02_transfer_foreign_local(self):
+        transfer = self.create_internal_transfer(
+            self.currency_foreign, self.bank_journal_foreign, self.bank_journal, 100
+        )
         self.create_multicurrency_transfer(transfer, 80)
 
-        # Check journal item in USD
+        # Check journal item in local currency
         aml = transfer.line_ids.filtered("reconciled")
         self.assertRecordValues(
             aml,
@@ -81,12 +108,12 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
                 {
                     "balance": 80.0,  # Agreed amount
                     "amount_currency": 100.0,
-                    "currency_id": self.currency_eur.id,
+                    "currency_id": self.currency_foreign.id,
                 }
             ],
         )
 
-        # Check journal item in EUR
+        # Check journal item in foreign currency
         eur_aml = aml.full_reconcile_id.reconciled_line_ids.filtered(lambda line: line != aml)
         self.assertRecordValues(
             eur_aml,
@@ -94,7 +121,7 @@ class TestInternalTransferWithAgreedAmount(TransactionCase):
                 {
                     "balance": -80.0,  # Agreed amount
                     "amount_currency": -100.0,  # Payment amount
-                    "currency_id": self.currency_eur.id,
+                    "currency_id": self.currency_foreign.id,
                 }
             ],
         )
