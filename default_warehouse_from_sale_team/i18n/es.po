@@ -255,3 +255,18 @@ msgstr "Almacén"
 #: model_terms:ir.ui.view,arch_db:default_warehouse_from_sale_team.crm_team_view_form
 msgid "Warehouse settings for the sales team"
 msgstr "Configuración de almacén para el equipo de ventas"
+
+#. module: default_warehouse_from_sale_team
+#. odoo-python
+#: code:addons/default_warehouse_from_sale_team/models/ir_rule.py:0
+#, python-format
+msgid ""
+"You do not have access to the selected journal(s) for this operation.\n"
+"Journal(s): %s \n"
+"\n"
+"Please select a journal that corresponds to your branch."
+msgstr ""
+"No tiene acceso a los diarios seleccionados para esta operación.\n"
+"Diarios: %s\n"
+"\n"
+"Por favor seleccione un diario que corresponda a su sucursal."

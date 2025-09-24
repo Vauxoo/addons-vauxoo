@@ -1,4 +1,7 @@
-from odoo import Command
+import re
+
+from odoo import Command, fields
+from odoo.exceptions import AccessError
 from odoo.tests import Form, TransactionCase, tagged
 
 
@@ -123,3 +126,57 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         pick.action_assign()
         pick.move_ids.write({"quantity": 1, "picked": True})
         pick.button_validate()
+
+    def test_05_validate_saleteam_journal_access(self):
+        """Enforces record rule: move must use a public journal or one from the user's sales team;
+        otherwise AccessError with custom message.
+        """
+        today = fields.Date.context_today(self.env.user)
+        public_journal = self.env["account.journal"].create(
+            {
+                "name": "Public Sales",
+                "type": "sale",
+                "code": "PUB",
+            }
+        )
+        invoice = self.env["account.move"].create(
+            {
+                "move_type": "out_invoice",
+                "partner_id": self.env.ref("base.res_partner_2").id,
+                "company_id": self.company.id,
+                "date": today,
+                "invoice_date": today,
+                "invoice_date_due": today,
+                "is_payment_only": True,
+                "journal_id": public_journal.id,
+            }
+        )
+        # Case 1: Journal assigned to demo user's team → should succeed
+        my_team_journal = self.env["account.journal"].create(
+            {
+                "name": "My team Journal",
+                "type": "sale",
+                "code": "My-J",
+                "section_id": self.sales_team.id,
+            }
+        )
+        invoice.with_user(self.demo_user).write({"journal_id": my_team_journal.id})
+        self.assertEqual(invoice.journal_id, my_team_journal)
+
+        # Case 2: Public Journal assigned to another team → should raise UserError
+        other_team = self.env["crm.team"].create({"name": "Other Team"})
+        other_team_journal = self.env["account.journal"].create(
+            {
+                "name": "Other team Journal",
+                "type": "sale",
+                "code": "OTH-J",
+                "section_id": other_team.id,
+            }
+        )
+        error_msg = (
+            "You do not have access to the selected journal(s) for this operation.\n"
+            f"Journal(s): {other_team_journal.display_name} \n\n"
+            "Please select a journal that corresponds to your branch."
+        )
+        with self.assertRaisesRegex(AccessError, re.escape(error_msg)):
+            invoice.with_user(self.demo_user).write({"journal_id": other_team_journal.id})
