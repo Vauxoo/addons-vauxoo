@@ -1,259 +1,253 @@
-<html>
- <head>
-  <style>
-   .backgrounds{background-color:#fff;color:#a41d35}
-  </style>
- </head>
- <body>
-  <section class="oe_container" id="description">
-   <object data="https://img.shields.io/badge/licence-AGPL--3-blue.svg" type="image/svg+xml">
-    License: AGPL-3
-   </object>
-   <div class="section oe_span12" id="sales-team-warehouse">
-    <h2 class="oe_slogan">
-     Sales Team Warehouse
-    </h2>
-    <div class="section oe_span12" id="usage">
-     <h2>
-      Usage
-     </h2>
-     <p class="oe_mt32">
-      Add a field
-      <cite>
-       default_warehouse
-      </cite>
-      in sales team.
-     </p>
-     <p class="oe_mt32">
-      Create sort kind of api where any object with field called warehouse_id will
-take the default value from the sales team field
-this taking into account the team defined in
-      <cite>
-       Default Sale Teams
-      </cite>
-      field defined
-in the res.user model.
-     </p>
-     <p class="oe_mt32">
-      To improve, consistency and usability we add the next features:
-     </p>
-     <ul>
-      <li>
-       <p class="oe_mt32">
-        If you try to add a default sale team where the user do not belongs wil throw
-you an error message: Can not set default team is do not belongs to sale team
-       </p>
-      </li>
-      <li>
-       <p class="oe_mt32">
-        Add an automated action/server action to update the user default sales team
-every time that a sales teams by:
-       </p>
-       <blockquote>
-        <ul class="simple">
-         <li>
-          add user's default sale team if empty.
-         </li>
-         <li>
-          remove default sale team from user if not longer in sale team.
-         </li>
-         <li>
-          dummy write to update m2m in users to make new feature for filtering
-records.
-         </li>
-        </ul>
-       </blockquote>
-      </li>
-     </ul>
-     <p class="oe_mt32">
-      Currently this default warehouse feature applies for sale.order,
-stock.picking.type and stock.picking.
-     </p>
-     <p class="oe_mt32">
-      Also add a new feature for Permissions and Security: Taking advantage of the
-default_warehouse field in the sales team model now we can filter the
-records (picking type and picking model) to only show those records that match
-with the user sale teams default_warehouse. To accomplish this I:
-     </p>
-     <ul class="simple">
-      <li>
-       add new groups to manage the records access by user:
-       <ul>
-        <li>
-         Default Warehouse / Limited access to transfers (filtered by sale teams)
-        </li>
-        <li>
-         Default Warehouse / Limited access to stock pickings (filtered by sale teams)
-        </li>
-        <li>
-         Default Warehouse / Access to all operation types
-        </li>
-        <li>
-         Default Warehouse / Access to all transfers
-        </li>
-       </ul>
-      </li>
-      <li>
-       add new m2m field in the res.user model used in the new ir.rules.
-this onw is showed as a readonly field (only informative) to know
-the teams were the sale user belongs.
-      </li>
-      <li>
-       add new ir.rule records, one for each default warehouse group. This
-one will let us to only show the records for the current user sale
-teams default_warehouse or to do not take into account the sale teams
-and show all the records to the user.
-      </li>
-     </ul>
-     <p class="oe_mt32">
-      To add more models use it simple do this:
-     </p>
-     <ol class="arabic">
-      <li>
-       <p class="oe_mt32">
-        inherit the class that you want to set the field warehouse_id:
-       </p>
-       <pre class="literal-block">
-class SomeClass(models.Model):
-    _name = 'some.class'
-    _inherit = ['some.class', 'default.warehouse']
-    warehouse_id = fields.Many2one('stock.warehouse', help='Warehouse were'
-    'this object will belong to')
-</pre>
-      </li>
-     </ol>
-     <p class="oe_mt32">
-      2. Create two ir.rule to filter stock.picking and stock.picking.type taking
-into account the current user warehouses. When a user is part of warehouse
-teams will be able to access only the records related to that warehouses:
-     </p>
-     <pre class="literal-block">
-&lt;record id="rule_group_model" model="ir.rule"&gt;
-    &lt;field name="name"&gt;Limited access to model (filtered by sales teams)&lt;/field&gt;
-    &lt;field name="model_id" search="[('model','=','model')]" model="ir.model"/&gt;
-    &lt;field name="groups" eval"[Command.set([ref('xml_id_group')])]/&gt;
-    &lt;field name="domain_force"&gt;[('warehouse_id', 'in', [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]&lt;/field&gt;
-&lt;/record&gt;
-&lt;record id="rule_group_model_2" model="ir.rule"&gt;
-    &lt;field name="name"&gt;Access to all model&lt;/field&gt;
-    &lt;field name="model_id" search="[('model','=','model')]" model="ir.model"/&gt;
-    &lt;field name="groups" eval"[Command.set([ref('xml_id_group')])]/&gt;
-    &lt;field name="domain_force"&gt;[(1, '=', 1)]&lt;/field&gt;
-&lt;/record&gt;
-</pre>
-     <ol class="arabic simple" start="3">
-      <li>
-       Don't forget depends of this module adding it to the list into
-       <cite>
-        __openerp__.py
-       </cite>
-      </li>
-     </ol>
-     <p class="oe_mt32">
-      The default value from this field will be the warehouse setted in the section
-If the user is not related to a sales team or not warehouse setted on the
-section the default warehouse will be set using the default behavior of the
-system which is assign the main warehouse.
-     </p>
-    </div>
-    <div class="section oe_span12" id="bug-tracker">
-     <h2>
-      Bug Tracker
-     </h2>
-     <p class="oe_mt32">
-      Bugs are tracked on
-      <a class="reference external" href="https://github.com/Vauxoo/addons-vauxoo/issues">
-       GitHub Issues
-      </a>
-      .
-In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and
-welcomed feedback
-      <a class="reference external" href="https://github.com/Vauxoo/addons-vauxoo/issues/new?body=module:%20default_warehouse_from_sale_team%0Aversion:%208.0.2.0.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">
-       here
-      </a>
-     </p>
-    </div>
-    <div class="section oe_span12" id="credits">
-     <h2>
-      Credits
-     </h2>
-     <p class="oe_mt32">
-      <strong>
-       Contributors
-      </strong>
-     </p>
-     <ul class="simple">
-      <li>
-       Nhomar Hernandez &lt;
-       <a class="reference external" href="mailto:nhomar@vauxoo.com">
-        nhomar@vauxoo.com
-       </a>
-       &gt; (Planner/Developer)
-      </li>
-      <li>
-       Katherine Zaoral &lt;
-       <a class="reference external" href="mailto:kathy@vauxoo.com">
-        kathy@vauxoo.com
-       </a>
-       &gt; (Planner/Developer)
-      </li>
-     </ul>
-    </div>
-   </div>
-  </section>
-  <section class="oe_container">
-   <div class="oe_row oe_spaced">
-    <div class="oe_span6">
-     <h2 class="oe_slogan">
-      Do you need help?
-     </h2>
-     <h3 class="oe_slogan">
-      Let's offer you the best services!
-     </h3>
-     <p class="oe_mt32 text-center">
-      Contact us by our official channels.
-     </p>
-     <div class="oe_spaced">
-      <ul class="text-center list-inline">
-       <li>
-        <a href="https://facebook.com/vauxoo" target="_blank">
-         <i class="fa fa-facebook-square fa-xs backgrounds">
-         </i>
-        </a>
-       </li>
-       <li>
-        <a href="https://twitter.com/vauxoo" target="_blank">
-         <i class="fa fa-twitter-square fa-xs backgrounds">
-         </i>
-        </a>
-       </li>
-       <li>
-        <a href="https://www.linkedin.com/company/vauxoo" target="_blank">
-         <i class="fa fa-linkedin-square fa-xs backgrounds">
-         </i>
-        </a>
-       </li>
-       <li>
-        <a data-placement="left" data-toggle="tooltip" href="https://www.vauxoo.com/page/website.contactus" target="_blank" title="Contact us">
-         <i class="fa fa-envelope-square fa-xs backgrounds">
-         </i>
-        </a>
-       </li>
-      </ul>
-     </div>
-    </div>
-    <div class="oe_span6">
-     <div class="oe_demo oe_picture oe_screenshot">
-      <a href="https://www.vauxoo.com" r="" target="_blank">
-       <img height="auto" src="https://s3.amazonaws.com/s3.vauxoo.com/description_logo.png" width="200"/>
-      </a>
-      <div class="oe_demo_footer oe_centeralign">
-       Meet Us
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Default Warehouse Automation by Sales Team — Odoo App</title>
+</head>
+<body>
+  <div style="font-family: 'Inter', sans-serif; margin: 0 auto; color: #282930;">
+    <div class="text-white py-4 px-0 d-none d-lg-block position-relative"
+    style="background-color: #282930; border-radius: 24px; margin-bottom: 24px;">
+    <div class="row align-items-center">
+      <div class="col-6 d-flex align-items-center">
+        <div class="me-4 ps-4 d-flex align-items-center">
+          <img src="./icon.png" alt="Default Warehouse icon" style="height: 90px; width: auto;">
+        </div>
+        <div style="font-size:18px;">
+          <p style="font-weight:700; margin:0;">DISCOVER EVERYTHING YOU CAN DO WITH OUR APP!</p>
+        </div>
       </div>
-     </div>
+      <div class="col-6 d-flex flex-column justify-content-center" style="font-size:18px;">
+        <p class="text-center" style="margin:0;"><strong>User:</strong> demo</p>
+        <p class="text-center"><strong>Password:</strong> demo</p>
+      </div>
     </div>
-   </div>
-  </section>
- </body>
+  </div>
+  
+  <div class="d-none d-md-block"
+  style="text-align: left; border-radius: 30px 30px 0 0; box-shadow: 12px 12px 22px 0px #0000001F; background-color: #27282F;">
+  <header class="container-fluid">
+    <div class="d-flex justify-content-center py-4">
+      <img src="https://www.vauxoo.com/web/content/765943/Flat-logo.svg" alt="Vauxoo Logo" width="100%" style="max-width: 410px;">
+    </div>
+    <div class="row m-3">
+      <div class="col-12 px-0 py-4">
+        <div class="row bg-white justify-content-between h-100 overflow-hidden m-0"
+        style="text-align: left; padding: 20px; border-radius: 18px;">
+        <div class="col-sm-12 col-lg-6">
+          <div class="d-flex d-lg-none justify-content-center" style="margin-bottom: 12px;">
+            <img src="./icon.png" alt="App icon" width="95px">
+          </div>
+          <div>
+            <p class="font-weight-bold" style="color: black; font-weight: 700; font-size: 30px;">App</p>
+            <h1 class="text-uppercase"
+            style="font-family: 'Sora', sans-serif; font-weight: 900; overflow-wrap: break-word; color: #B71244; font-size: 36px;">
+            Default Warehouse Automation by Sales Team
+          </h1>
+          <div style="font-size: 18px;">
+            <p>This module automates the assignment of warehouses in Odoo based on each user's Sales Team.</p>
+            <p style="font-style: italic;"><strong>*Useful for: </strong>Sales Managers and Inventory Teams.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-6 d-none d-lg-flex flex-column align-items-center justify-content-center">
+        <img style="height: 150px; width: 150px; display: block; margin: 0 auto;" src="./icon.png"
+        alt="App icon">
+        <p style="font-size: 28px; text-align: center; font-weight: 500; padding: 15px; font-style: italic; color: black;">
+          Keep your warehouse operations aligned automatically with every sales action.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+</div>
+
+<main class="mb-4 p-0">
+  <div class="bg-white position-relative">
+    <div style="padding: 24px 35px 32px 35px;">
+      <p class="text-uppercase text-center m-0" style="color: #B71244; font-weight: 700;">
+        <span class="d-none d-md-block" style="font-size: 30px;">Main Features</span>
+        <span class="d-md-none" style="font-size: 24px;">Main Features</span>
+      </p>
+    </div>
+    <div class="row justify-content-center w-100 mb-3 g-4"
+    style="font-weight: 400; margin: 0 auto; max-width: 900px;">
+    <div class="col-lg-4 d-flex flex-column align-items-center" style="color: #34393E;">
+      <div style="margin-bottom: 12px"><img src="./check_1.png" alt="Check icon" width="52px"></div>
+      <div class="row">
+        <p class="text-center" style="max-width: 260px"><span class="d-none d-md-block" style="font-size: 18px;">Automatically assign <code>warehouse_id</code> from the user's default Sales Team.</span></p>
+      </div>
+    </div>
+    <div class="col-lg-4 d-flex flex-column align-items-center" style="color: #34393E;">
+      <div style="margin-bottom: 12px"><img src="./check_2.png" alt="Check icon" width="52px"></div>
+      <div class="row">
+        <p class="text-center" style="max-width: 260px"><span class="d-none d-md-block" style="font-size: 18px;">Validate team membership; prevent setting a team the user doesn't belong to.</span></p>
+      </div>
+    </div>
+    <div class="col-lg-4 d-flex flex-column align-items-center" style="color: #34393E;">
+      <div style="margin-bottom: 12px"><img src="./check_3.png" alt="Check icon" width="52px"></div>
+      <div class="row">
+        <p class="text-center" style="max-width: 260px"><span class="d-none d-md-block" style="font-size: 18px;">Align permissions and visibility to the team's warehouse across flows.</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<section class="position-relative overflow-hidden"
+style="box-shadow: 12px 12px 22px 0px #0000001F; margin-bottom: 35px; border-radius: 30px; text-align: left;">
+<div class="row d-flex align-items-center justify-content-between w-100 m-0 py-md-4 px-md-5"
+style="padding: 12.5px; box-sizing: border-box;">
+<img src="./bg2.svg" class="position-absolute" style="object-fit: cover;">
+<div class="col-sm-12 col-md-5 position-relative">
+  <p class="text-uppercase text-center text-lg-start"
+  style="margin-top: 35px; color: #B71244; font-weight: 700; font-size: 30px;">Installation</p>
+  <div class="m-0" style="font-size: 16px; font-weight: 400; text-align: left;">
+    <p style='font-size:16px;'>Install via Apps and activate the module.</p>
+  </div>
+</div>
+<div class="col-sm-12 col-md-6 d-flex justify-content-center p-0 position-relative">
+  <img src="./app-installation.png" alt="Installation preview" width="100%" style="max-width: 600px; max-height: 340px">
+</div>
+</div>
+</section>
+
+<section class="overflow-hidden"
+style="box-shadow: 12px 12px 22px 0px #0000001F; margin-bottom: 35px; border-radius: 30px;">
+<div class="position-relative">
+  <div class="row d-flex align-items-center justify-content-between w-100 m-0 py-md-4 px-md-5"
+  style="padding: 12px;">
+  <img src="./bg2.svg" class="position-absolute" style="object-fit: cover;">
+  <div class="col-12 position-relative">
+    <p class="text-uppercase text-center text-lg-start"
+    style="margin-bottom: 33px; font-size: 30px; color: #B71244; font-weight: 700;">Usage</p>
+    <div style="font-weight: 400; font-size: 16px;"><h3 style='color:#B71244;font-weight:700;font-size:22px;margin-top:12px;'>Default Warehouse from Sales Team</h3>
+      
+      <h3 style='color:#B71244;font-weight:700;font-size:22px;margin-top:12px;'>Usage</h3>
+      <p style='font-size:16px; font-weight:400;'>Add a field `Default Warehouse` in sales team.</p>
+
+    <div class="col-12 d-flex justify-content-center p-0 position-relative">
+      <img src="./default_warehouse.png" alt="Add  field default warehouse" width="100%" style="max-width: 1024px;">
+    </div>
+      <br>
+      <p style='font-size:16px; font-weight:400;'>Create sort kind of API where any object with field called warehouse_id will
+        take the default value from the sales team field this taking into account the team defined in `Default Sale Teams` field defined in the res.user model.</p>
+        
+      <br>
+      <p style='font-size:16px; font-weight:400;'>To improve, consistency and usability we add the following features:</p>
+      <br>
+      <ul style='font-size:16px;'>
+        <li>If you try to add a default sales team where the user doesn&#x27;t belongs wil throw you an error message: </li>
+      </ul>
+      <pre style='background:#e291a8;border-radius:12px;padding:16px;overflow:auto;font-family:monospace;font-size:13.5px;color:white;'><p style='font-size:16px; font-weight:400;'> Can not set default team is do not belongs to sale team</p></pre>
+      <div class="col-12 d-flex justify-content-center p-0 position-relative">
+        <img src="./res_user.png" alt="Add  field default warehouse" width="100%" style="max-width: 1024px;">
+      </div>
+      <div class="col-12 d-flex justify-content-center p-0 position-relative">
+        <img src="./default_team.png" alt="Add  field default warehouse" width="100%" style="max-width: 1024px;">
+      </div>
+      <ul style='font-size:16px;'>
+        <li>Add an automated action/server action to update the user default sales team every time that a sales teams by:</li>
+      </ul>
+      <br>
+      <pre style='background:#F4F6F8;border-radius:12px;padding:16px;overflow:auto;font-family:monospace;font-size:13.5px;'><code>- Adding user&#x27;s default sale team if empty.
+- Removing default sale team from user if not longer in sale team.
+- Dummy write to update m2m in users to make new feature for filtering records.
+      </code></pre>
+      <h2>Example of automatically added warehouse to sale order given the user</h2>
+      <div class="col-12 d-flex justify-content-center p-0 position-relative">
+        <img src="./sales_order.png" alt="Add  field default warehouse" width="100%" style="max-width: 1024px;">
+      </div>
+      <p style='font-size:16px; font-weight:400;'>Currently this default warehouse feature applies for:</p>
+      <ul style='font-size:16px;'>
+        <li>Sale orders</li>
+        <li>Transfers (``stock.picking``)</li>
+        <li>Operation type (``stock.picking.type``)</li>
+      </ul>
+      <br>
+      <p style='font-size:16px; font-weight:400;'>Also add a new feature for Permissions and Security: Taking advantage of the
+      default_warehouse field in the sales team model now we can filter the
+      records (picking type and picking model) to only show those records that match
+      with the user sale teams default_warehouse. To accomplish this I: </p>
+      <br>
+      <br>
+      <ul>
+        <li>Add new groups to manage the records access by user:</li>
+        <br>
+        <ul style='font-size:16px;'>
+          <li>Default Warehouse / Limited access to transfers (filtered by sales team)</li>
+          <li>Default Warehouse / Limited access to operation types (filtered by sales team)</li>
+          <li>Default Warehouse / Access to all operation types</li>
+          <li>Default Warehouse / Access to all transfers</li>
+        </ul>
+      </ul>
+      <br>
+      <ul>
+        <li style='font-size:16px; font-weight:400;'>Add a new M2M field in the res.user model used in the new ir.rules, this one is showed as a readonly field (only informative) to know the teams were the sale user belongs.</li>
+        <li>Add new ir.rule records, one for each default warehouse group. This one will let us to only show the records for the current user sal teams default_warehouse or to do not take into account the sale team and show all the records to the user.</li>
+      </ul>
+      <ul style='font-size:16px;'>
+      </ul>
+      <br>
+      <p style='font-size:16px; font-weight:400;'>To add more models use it simple do this:</p>
+      <br>
+      <p style='font-size:16px; font-weight:400;'>1. Inherit the class that you want to set the field warehouse_id</p>
+      <pre style='background:#F4F6F8;border-radius:12px;padding:16px;overflow:auto;font-family:monospace;font-size:13.5px;'><code>class SomeClass(models.Model):
+        _name = &#x27;some.class&#x27;
+        _inherit = [&#x27;some.class&#x27;, &#x27;default.warehouse&#x27;]
+        warehouse_id = fields.Many2one(&#x27;stock.warehouse&#x27;, help=&#x27;Warehouse were&#x27;
+        &#x27;this object will belong to&#x27;)
+      </code></pre>
+      <ol style='font-size:16px;'>
+        <li>Create two ir.rule to filter stock.picking and stock.picking.type taking</li>
+      </ol>
+      <p style='font-size:16px; font-weight:400;'>   into account the current user warehouses. When a user is part of warehouse</p>
+      <p style='font-size:16px; font-weight:400;'>   teams will be able to access only the records related to that warehouses</p>
+      <pre style='background:#F4F6F8;border-radius:12px;padding:16px;overflow:auto;font-family:monospace;font-size:13.5px;'><code>&lt;record id=&quot;rule_group_model&quot; model=&quot;ir.rule&quot;&gt;
+        &lt;field name=&quot;name&quot;&gt;Limited access to model (filtered by sales teams)&lt;/field&gt;
+        &lt;field name=&quot;model_id&quot; search=&quot;[(&#x27;model&#x27;,&#x27;=&#x27;,&#x27;model&#x27;)]&quot; model=&quot;ir.model&quot;/&gt;
+        &lt;field name=&quot;groups&quot; eval&quot;[Command.set([ref(&#x27;xml_id_group&#x27;)])]/&gt;
+        &lt;field name=&quot;domain_force&quot;&gt;[(&#x27;warehouse_id&#x27;, &#x27;in&#x27;, [team.default_warehouse.id for team in user.sale_team_ids if team.default_warehouse])]&lt;/field&gt;
+        &lt;/record&gt;
+        &lt;record id=&quot;rule_group_model_2&quot; model=&quot;ir.rule&quot;&gt;
+        &lt;field name=&quot;name&quot;&gt;Access to all model&lt;/field&gt;
+        &lt;field name=&quot;model_id&quot; search=&quot;[(&#x27;model&#x27;,&#x27;=&#x27;,&#x27;model&#x27;)]&quot; model=&quot;ir.model&quot;/&gt;
+        &lt;field name=&quot;groups&quot; eval&quot;[Command.set([ref(&#x27;xml_id_group&#x27;)])]/&gt;
+        &lt;field name=&quot;domain_force&quot;&gt;[(1, &#x27;=&#x27;, 1)]&lt;/field&gt;
+        &lt;/record&gt;
+      </code></pre>
+      <p style='font-size:16px; font-weight:400;'>3. Don&#x27;t forget depends of this module adding it to the list into `__manifest__.py`</p>
+      <pre style='background:#F4F6F8;border-radius:12px;padding:16px;overflow:auto;font-family:monospace;font-size:13.5px;'><code>The default value from this field will be the warehouse setted in the section.
+If the user is not related to a sales team or not warehouse setted on the section the default warehouse will be set using the default behavior of the system which is assign the main warehouse.</code></pre></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="container d-flex justify-content-center align-items-center pt-3 pb-5"
+style="gap: 42px; max-width: 766px;">
+<div class="row w-100 justify-content-center">
+  <div class="col-sm-8 col-md-6 d-flex justify-content-center">
+    <img class="w-100" src="./icon-support.png" alt="Support" style="max-width: 359px">
+  </div>
+  <div class="col-sm-12 col-md-6 d-flex align-items-center">
+    <div class="w-100 pt-3">
+      <p class="text-uppercase text-center text-lg-start m-0 mb-2"
+      style="color: #B71244; font-family: 'Sora', sans-serif; font-weight: 800; font-size: 48px;">
+      Support</p>
+      <p class="text-center text-lg-start m-0 mb-2" style="color: black; font-weight: 400; font-size: 16px;">
+        We are committed to the quality of our products and services, offering expert support for setup, customization, or troubleshooting.</p>
+        <a class="text-uppercase d-block text-center m-0 py-3 btn btn-dark"
+        style="text-decoration: none; font-family: 'Sora', sans-serif; width: 100%; border: 2px solid #282A32; font-weight: 600; font-size: 16px; background:#282930; color:#fff;"
+        href="mailto:support@vauxoo.com">How can we help?</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
 </html>
