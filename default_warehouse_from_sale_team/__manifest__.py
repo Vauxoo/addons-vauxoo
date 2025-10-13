@@ -27,6 +27,11 @@
         "demo/stock_warehouse_demo.xml",
         "demo/crm_team_demo.xml",
     ],
+    "images": [
+        "static/description/main_screen.png",
+    ],
+    "price": 260,
+    "currency": "EUR",
     "post_init_hook": "post_init_hook",
     "installable": True,
     "application": False,
