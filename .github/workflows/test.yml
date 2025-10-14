@@ -52,8 +52,12 @@ jobs:
           key: cache-pylint-odoo-pip
       - name: Install pylint-odoo
         run: pip install --upgrade pylint-odoo
-      - name: Run pylint-odoo
-        run: pylint --load-plugins=pylint_odoo -d all -e invalid-email,manifest-required-key,missing-odoo-file --output-format=colorized --reports=no --score=no .
+      - name: Run pylint-odoo apps
+        run:
+          pylint --load-plugins=pylint_odoo -d all -e invalid-email,manifest-required-key,missing-odoo-file --output-format=colorized --reports=no --score=no .
+      - name: Run pylint-odoo price required
+        run:
+          pylint --load-plugins=pylint_odoo -d all -e manifest-required-key --manifest-required-keys="price" --manifest-required-keys-app="" --output-format=colorized --reports=no --score=no .
   no-dependency-files:
     runs-on: ubuntu-latest
     name: No dependency files
