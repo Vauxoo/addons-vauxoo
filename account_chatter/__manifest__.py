@@ -7,11 +7,10 @@
     """,
     "category": "Accounting",
     "website": "http://www.vauxoo.com",
-    "license": "LGPL-3",
+    "license": "OPL-1",
     "depends": [
         "account",
     ],
-    "demo": [],
     "data": [
         "security/account_chatter_security.xml",
         "views/account_account_views.xml",
@@ -21,8 +20,7 @@
     "images": [
         "static/description/main_screen.png",
     ],
-    "installable": True,
-    "auto_install": False,
+    "support": "support@vauxoo.com",
     "price": 130,
     "currency": "EUR",
 }
