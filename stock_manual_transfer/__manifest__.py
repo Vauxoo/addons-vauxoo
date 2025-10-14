@@ -23,6 +23,11 @@
     "demo": [
         "demo/stock_demo.xml",
     ],
+    "images": [
+        "static/description/main_screen.png",
+    ],
     "installable": True,
     "auto_install": False,
+    "price": 260,
+    "currency": "EUR",
 }
