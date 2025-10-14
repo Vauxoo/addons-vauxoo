@@ -1,5 +1,5 @@
 # Copyright 2022 Vauxoo
-# License LGPL-3 or later (http://www.gnu.org/licenses/lgpl).
+# License OPL-1 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "Stock Manual Transfer",
     "author": "Vauxoo",
@@ -7,8 +7,8 @@
     Trigger transfers using a specific route, as it were triggered by a reordering rule
     """,
     "website": "https://www.vauxoo.com",
-    "license": "LGPL-3",
-    "category": "Inventory/Inventory",
+    "license": "OPL-1",
+    "category": "Warehouse",
     "version": "18.0.1.0.0",
     "depends": [
         "stock",
@@ -26,8 +26,7 @@
     "images": [
         "static/description/main_screen.png",
     ],
-    "installable": True,
-    "auto_install": False,
     "price": 260,
+    "support": "support@vauxoo.com",
     "currency": "EUR",
 }
