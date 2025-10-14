@@ -11,12 +11,10 @@
     "data": [
         "views/stock_picking_views.xml",
     ],
-    "demo": [],
     "images": [
         "static/description/main_screen.png",
     ],
-    "installable": True,
-    "auto_install": False,
+    "support": "support@vauxoo.com",
     "price": 230,
     "currency": "EUR",
 }
