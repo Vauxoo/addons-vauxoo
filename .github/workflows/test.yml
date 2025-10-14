@@ -33,6 +33,27 @@ jobs:
         run: pip install --upgrade pre-commit-vauxoo
       - name: Run pre-commit-vauxoo
         run: pre-commit-vauxoo
+  pylint-app-checks:
+    # This lint doesn't apply to other projects as they include purchased apps from third-party providers
+    # which may trigger lints that are not relevant for us to fix
+    # We could include this feature in pre-commit-vauxoo but is too complex, for now it is enabled in this way
+    runs-on: ubuntu-latest
+    name: pylint-app-checks
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.CI_COMMIT_SHA }}
+      - name: Cache pip packages
+        id: cache-pylint-odoo-pip
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+          key: cache-pylint-odoo-pip
+      - name: Install pylint-odoo
+        run: pip install --upgrade pylint-odoo
+      - name: Run pylint-odoo
+        run: pylint --load-plugins=pylint_odoo -d all -e invalid-email,manifest-required-key,missing-odoo-file --output-format=colorized --reports=no --score=no .
   no-dependency-files:
     runs-on: ubuntu-latest
     name: No dependency files
