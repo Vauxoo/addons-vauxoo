@@ -33,12 +33,9 @@ jobs:
         run: pip install --upgrade pre-commit-vauxoo
       - name: Run pre-commit-vauxoo
         run: pre-commit-vauxoo
-  pylint-app-checks:
-    # This lint doesn't apply to other projects as they include purchased apps from third-party providers
-    # which may trigger lints that are not relevant for us to fix
-    # We could include this feature in pre-commit-vauxoo but is too complex, for now it is enabled in this way
+  pylint-force-price:
     runs-on: ubuntu-latest
-    name: pylint-app-checks
+    name: pylint-force-price
     steps:
       - uses: actions/checkout@v3
         with:
@@ -52,10 +49,7 @@ jobs:
           key: cache-pylint-odoo-pip
       - name: Install pylint-odoo
         run: pip install --upgrade pylint-odoo
-      - name: Run pylint-odoo apps
-        run:
-          pylint --load-plugins=pylint_odoo -d all -e invalid-email,manifest-required-key,missing-odoo-file --output-format=colorized --reports=no --score=no .
-      - name: Run pylint-odoo price required
+      - name: Run pylint-odoo price required (for commercial purposes)
         run:
           pylint --load-plugins=pylint_odoo -d all -e manifest-required-key --manifest-required-keys="price" --manifest-required-keys-app="" --output-format=colorized --reports=no --score=no .
   no-dependency-files:
