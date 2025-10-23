@@ -1,3 +1,4 @@
+from odoo import Command
 from odoo.tests import TransactionCase
 
 
@@ -16,7 +17,7 @@ class TestMulticompanyCode(TransactionCase):
                 "name": "Account Name",
                 "code": "999.01.05",
                 "account_type": "expense",
-                "company_id": self.company.id,
+                "company_ids": [Command.link(self.company.id)],
             }
         )
         expected_account_name = "999.01.05 Account Name (TEST-CODE)"

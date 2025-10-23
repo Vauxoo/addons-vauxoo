@@ -13,7 +13,7 @@
     </record>
 
     <record id="view_company_tree" model="ir.ui.view">
-        <field name="name">res.company.tree.inherit.account.multicompany</field>
+        <field name="name">res.company.list.inherit.account.multicompany</field>
         <field name="model">res.company</field>
         <field name="inherit_id" ref="base.view_company_tree" />
         <field name="arch" type="xml">
@@ -28,9 +28,6 @@
         <field name="model">res.company</field>
         <field name="inherit_id" ref="base.view_res_company_kanban" />
         <field name="arch" type="xml">
-            <xpath expr="//kanban/field[@name='name']" position="after">
-                <field name="code" />
-            </xpath>
             <xpath expr="//i[hasclass('fa', 'fa-building')]" position="after">
                 <strong t-if="record.code.value"><field name="code" /> - </strong>
             </xpath>
