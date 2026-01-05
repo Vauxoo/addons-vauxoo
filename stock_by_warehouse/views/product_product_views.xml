@@ -11,18 +11,18 @@
                     name="warehouses_stock"
                     widget="warehouse"
                     groups="stock.group_stock_multi_warehouses"
-                    invisible="detailed_type != 'product'"
+                    invisible="not is_storable"
                 />
                 <label
                     for="warehouses_stock_location"
                     groups="stock.group_stock_multi_warehouses"
-                    invisible="detailed_type != 'product'"
+                    invisible="not is_storable"
                 />
                 <div
                     name="location_widget"
                     class="d-flex"
                     groups="stock.group_stock_multi_warehouses"
-                    invisible="detailed_type != 'product'"
+                    invisible="not is_storable"
                 >
                     <field name="warehouses_stock_location" widget="warehouse" options='{"by_location": True}' />
                     <field name="warehouses_stock_recompute" widget="boolean_toggle" />

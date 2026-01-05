@@ -1,7 +1,7 @@
 import json
 from collections import defaultdict
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.tools import float_is_zero
 
 UNIT = "Product Unit of Measure"
@@ -64,20 +64,24 @@ class ProductProduct(models.Model):
     def _compute_get_quantity_warehouses_json(self):
         # get original from onchange
         self_origin = self._origin if hasattr(self, "_origin") else self
-        info = {"title": _("Stock by Warehouse"), "content": [], "warehouse": self_origin.qty_available_not_res}
+        info = {
+            "title": self.env._("Stock by Warehouse"),
+            "content": [],
+            "warehouse": self_origin.qty_available_not_res,
+        }
         if not self_origin.exists():
             return json.dumps(info)
         self_origin.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
-        warehouse_id = self._context.get("warehouse_id")
+        warehouse_id = self.env.context.get("warehouse_id")
 
-        for warehouse in self.env["stock.warehouse"].sudo().search([]):
+        for warehouse in self.env["stock.warehouse"].sudo().search([("company_id", "in", self.env.companies.ids)]):
             product = (
                 self_origin.sudo()
                 .with_company(warehouse.company_id)
-                .with_context(warehouse=warehouse.id, location=False)
+                .with_context(warehouse_id=warehouse.id, location=False)
             )
             if warehouse_id and warehouse_id.id == warehouse.id:
                 info["warehouse"] = product.qty_available_not_res
@@ -147,7 +151,7 @@ class ProductProduct(models.Model):
 
         # Get original from onchange
         self_origin = getattr(self, "_origin", self)
-        info = {"title": _("Stock by Warehouse and Locations"), "content": []}
+        info = {"title": self.env._("Stock by Warehouse and Locations"), "content": []}
         if not self_origin.exists():
             return json.dumps(info)
 
@@ -156,7 +160,7 @@ class ProductProduct(models.Model):
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
-        warehouse_context = self._context.get("warehouse")
+        warehouse_context = self.env.context.get("warehouse")
 
         warehouses = warehouse_context and warehouse_context or self.env["stock.warehouse"].sudo().search([])
         available_locations_warehouse = 0

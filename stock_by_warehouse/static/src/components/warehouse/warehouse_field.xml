@@ -4,7 +4,7 @@
     <t t-name="stock_by_warehouse.ShowWarehouseInfo">
         <div>
             <p t-if="this.props.byLocation" class="availability_product my-0 mr-2">
-                The product is available in: <t t-out="show" /> locations.
+                The product is available in: <t t-out="state.show" /> locations.
                 <a
                     role="button"
                     tabindex="0"
@@ -19,7 +19,7 @@
                 class="js_product_warehouse"
                 t-on-click.stop="(ev) => this.onClick(ev)"
             >
-                <b t-out="show" /> ... see all warehouses .. <i class="fa fa-list-ul" />
+                <b t-out="state.show" /> ... see all warehouses .. <i class="fa fa-list-ul" />
             </a>
         </div>
     </t>

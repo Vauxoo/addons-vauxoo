@@ -1,14 +1,10 @@
-/** @odoo-module **/
-
-import {isMobileOS} from "@web/core/browser/feature_detection";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {localization} from "@web/core/l10n/localization";
 import {formatFloat} from "@web/views/fields/formatters";
-import {textField, TextField} from "@web/views/fields/text/text_field";
-import {archParseBoolean} from "@web/views/utils";
-import {Component} from "@odoo/owl";
-import {useSpecialData} from "@web/views/fields/relational_utils";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
+import {Component, useState, useEffect, onWillStart} from "@odoo/owl";
+import {isMobileOS} from "@web/core/browser/feature_detection";
 
 // Pop-up to show the information detailed by the warehouses
 export class ProductWarehousePopOver extends Component {}
@@ -19,89 +15,91 @@ export class StockAvailabilityPopOver extends Component {}
 StockAvailabilityPopOver.template = "stock_by_warehouse.StockAvailabilityPopOver";
 
 // Main Widget
-export class StockByWarehouseField extends TextField {
+export class StockByWarehouseField extends Component {
     setup() {
-        this.initializeVariables();
+        this.digits = 2;
+        this.state = useState({
+            info: {},
+            show: formatFloat(0, {digits: this.digits}),
+            lines: [],
+        });
         this.popover = useService("popover");
-        this.formatData(this.props);
-        useSpecialData((orm, props) => {
-            this.formatData(props);
-            this.render();
+
+        onWillStart(async () => {
+            await this.formatData(this.props.record.data[this.props.name]);
         });
+        useEffect(
+            (val) => {
+                this.formatData(val);
+            },
+            () => [this.props.record.data[this.props.name]]
+        );
     }
 
-    initializeVariables() {
-        this.info = JSON.parse(this.props.record.data[this.props.name]);
-        this.record_id = this.env.model.root.data.id;
-        this.show = formatFloat(0, {digit: 2});
-        this.lines = [];
-    }
-
-    formatData(props) {
-        const info = JSON.parse(props.record.data[props.name]);
-        if (this.record_id != this.env.model.root.data.id) {
-            this.initializeVariables();
-            return;
+    async formatData(rawData) {
+        let info = {};
+        if (typeof rawData === "string") {
+            try {
+                info = JSON.parse(rawData);
+            } catch (e) {
+                info = {};
+                console.error("Error parsing warehouse info:", e);
+            }
+        } else {
+            info = rawData || {};
         }
+
         if (!Object.keys(info).length) {
+            Object.assign(this.state, {
+                info: {},
+                show: formatFloat(0, {digits: this.digits}),
+                lines: [],
+            });
             return;
         }
-        this.info = info;
-        this.show = formatFloat(this.props.byLocation ? this.info.available_locations : this.info.warehouse, {
-            digit: 2,
+
+        this.state.info = info;
+        this.state.show = formatFloat(this.props.byLocation ? info.available_locations || 0 : info.warehouse || 0, {
+            digits: this.digits,
         });
-        this.lines = this.info.content || [];
-        for (const value of this.lines) {
-            value.available_not_res_formatted = formatFloat(value.available_not_res || 0, {digits: 2});
-            value.available_formatted = formatFloat(value.available || 0, {digits: 2});
-            value.incoming_formatted = formatFloat(value.incoming || 0, {digits: 2});
-            value.outgoing_formatted = formatFloat(value.outgoing || 0, {digits: 2});
-            value.virtual_formatted = formatFloat(value.virtual || 0, {digits: 2});
-            value.saleable_formatted = formatFloat(value.saleable || 0, {digits: 2});
-            value.locations_quantity_formatted = formatFloat(value.locations_available || 0, {digits: 2});
+        const lines = info.content || [];
+        for (const value of lines) {
+            value.available_not_res_formatted = formatFloat(value.available_not_res || 0, {digits: this.digits});
+            value.available_formatted = formatFloat(value.available || 0, {digits: this.digits});
+            value.incoming_formatted = formatFloat(value.incoming || 0, {digits: this.digits});
+            value.outgoing_formatted = formatFloat(value.outgoing || 0, {digits: this.digits});
+            value.virtual_formatted = formatFloat(value.virtual || 0, {digits: this.digits});
+            value.saleable_formatted = formatFloat(value.saleable || 0, {digits: this.digits});
+            value.locations_quantity_formatted = formatFloat(value.locations_available || 0, {digits: this.digits});
         }
+        this.state.lines = lines;
     }
 
     onClick(ev) {
-        if (this.popoverCloseFn) {
-            this.closePopover();
-        }
         const template = this.props.byLocation ? StockAvailabilityPopOver : ProductWarehousePopOver;
-        this.popoverCloseFn = this.popover.add(
+        this.popover.add(
             ev.currentTarget,
             template,
             {
-                title: this.info.title,
-                lines: this.lines,
-                onClose: this.closePopover,
+                title: this.state.info.title,
+                lines: this.state.lines,
             },
             {
                 position: localization.direction === "rtl" || isMobileOS() ? "bottom" : "right",
             }
         );
     }
-
-    closePopover() {
-        this.popoverCloseFn();
-        this.popoverCloseFn = null;
-    }
 }
-StockByWarehouseField.template = "stock_by_warehouse.ShowWarehouseInfo";
 
-// Add the new option by_location to the props of the widget
+StockByWarehouseField.template = "stock_by_warehouse.ShowWarehouseInfo";
 StockByWarehouseField.props = {
-    ...StockByWarehouseField.props,
+    ...standardFieldProps,
     byLocation: {type: Boolean, optional: true},
 };
 
-const textExtractProps = textField.extractProps;
-export const stockByWarehouseField = {
+registry.category("fields").add("warehouse", {
     component: StockByWarehouseField,
-    extractProps: (fieldInfo) => {
-        return Object.assign(textExtractProps(fieldInfo), {
-            byLocation: archParseBoolean(fieldInfo.options.by_location),
-        });
-    },
-};
-
-registry.category("fields").add("warehouse", stockByWarehouseField);
+    extractProps: ({options}) => ({
+        byLocation: !!options.by_location,
+    }),
+});
