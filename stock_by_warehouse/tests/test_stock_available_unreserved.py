@@ -37,7 +37,8 @@ class TestStockLogisticsWarehouse(TransactionCase):
             {
                 "name": "templAB",
                 "standard_price": 1,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
                 "attribute_line_ids": [
                     Command.create(
@@ -53,7 +54,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
             "name": "product A",
             "default_code": "A",
         }
-        cls.env.user.groups_id |= cls.env.ref("stock.group_stock_multi_warehouses")
+        cls.env.user.group_ids |= cls.env.ref("stock.group_stock_multi_warehouses")
 
     def update_product(self, position, values):
         self.template_ab.product_variant_ids[position].write(values)
@@ -70,7 +71,7 @@ class TestStockLogisticsWarehouse(TransactionCase):
                         0,
                         0,
                         {
-                            "name": "Test move",
+                            "description_picking": "Test move",
                             "product_id": product.id,
                             "product_uom": product.uom_id.id,
                             "product_uom_qty": qty,

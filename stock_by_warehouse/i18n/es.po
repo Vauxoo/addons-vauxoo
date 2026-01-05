@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-16 01:31+0000\n"
-"PO-Revision-Date: 2024-05-16 01:31+0000\n"
+"POT-Creation-Date: 2026-01-16 22:56+0000\n"
+"PO-Revision-Date: 2026-01-16 22:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,35 +18,42 @@ msgstr ""
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "... see all warehouses .."
 msgstr "... ver todos los almacenes .."
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Available"
 msgstr "Disponible"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Available now, but not necessarily for sale"
 msgstr "Disponible ahora, pero no necesariamente para vender"
 
 #. module: stock_by_warehouse
+#: model:ir.model.fields,field_description:stock_by_warehouse.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_by_warehouse.field_product_template__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: stock_by_warehouse
+#: model:ir.model.fields,field_description:stock_by_warehouse.field_product_product__id
+#: model:ir.model.fields,field_description:stock_by_warehouse.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Incoming"
 msgstr "Entrante"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Incoming stock may not cover or will barely meet demand."
 msgstr ""
 "Es posible que el inventario entrante no cubra o apenas satisfaga la "
@@ -55,42 +62,36 @@ msgstr ""
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "It is coming in. It will be available soon."
 msgstr "Está en camino. Estará disponible pronto."
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Location"
 msgstr "Ubicación"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Locations:"
 msgstr "Ubicaciones:"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "No quantities are coming in."
 msgstr "No hay unidades por llegar."
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "On Hand"
 msgstr "A mano"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Outgoing"
 msgstr "Saliente"
 
@@ -112,7 +113,6 @@ msgstr "Cantidad disponible no reservada"
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Quantity Available"
 msgstr "Cantidad disponible"
 
@@ -124,14 +124,12 @@ msgstr "Cantidad a mano sin reserva"
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Stock Location"
 msgstr "Ubicación en el Inventario"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Stock Quantity"
 msgstr "Cantidad en Inventario"
 
@@ -139,28 +137,24 @@ msgstr "Cantidad en Inventario"
 #. odoo-python
 #: code:addons/stock_by_warehouse/models/product_product.py:0
 #: code:addons/stock_by_warehouse/models/product_template.py:0
-#, python-format
 msgid "Stock by Warehouse"
 msgstr "Existencia por almacén"
 
 #. module: stock_by_warehouse
 #. odoo-python
 #: code:addons/stock_by_warehouse/models/product_product.py:0
-#, python-format
 msgid "Stock by Warehouse and Locations"
 msgstr "Existencia por Almacén y Ubicaciones"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "The product is available in:"
 msgstr "El producto está disponible en:"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid ""
 "There is a deficit. The reserved quantity is greater than the available "
 "stock."
@@ -170,14 +164,12 @@ msgstr ""
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "This quantity is available for immediate sale and delivery."
 msgstr "Esta cantidad está disponible para venta y entrega inmediata."
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "This represents on hand quantity minus the picked (outgoing) quantity."
 msgstr ""
 "Esto representa la cantidad disponible menos la cantidad seleccionada "
@@ -186,14 +178,12 @@ msgstr ""
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Warehouse"
 msgstr "Almacén"
 
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "Warehouse:"
 msgstr "Almacén:"
 
@@ -217,6 +207,5 @@ msgstr "Recalculación de Stock de Almacenes"
 #. module: stock_by_warehouse
 #. odoo-javascript
 #: code:addons/stock_by_warehouse/static/src/components/warehouse/warehouse_field.xml:0
-#, python-format
 msgid "locations."
 msgstr "ubicaciones."

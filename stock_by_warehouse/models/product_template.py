@@ -1,6 +1,6 @@
 import json
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 UNIT = "Product Unit of Measure"
 
@@ -21,34 +21,37 @@ class ProductTemplate(models.Model):
     def _compute_warehouse_stock(self):
         for record in self:
             record.warehouses_stock = (
-                record._compute_get_quantity_warehouses_json() if record.warehouses_stock_recompute else False
+                record._compute_get_quantity_warehouses_json() if record.warehouses_stock_recompute else {}
             )
 
     @api.depends("product_variant_ids.qty_available_not_res")
     @api.depends_context("warehouse", "company")
     def _compute_product_available_not_res(self):
         for tmpl in self:
-            if isinstance(tmpl.id, models.NewId):
-                continue
-            tmpl.qty_available_not_res = sum(tmpl.mapped("product_variant_ids.qty_available_not_res"))
+            tmpl.qty_available_not_res = sum(tmpl.filtered("id").mapped("product_variant_ids.qty_available_not_res"))
 
     def _compute_get_quantity_warehouses_json(self):
         # get original from onchange
         self_origin = self._origin if hasattr(self, "_origin") else self
-        info = {"title": _("Stock by Warehouse"), "content": [], "warehouse": self_origin.qty_available_not_res}
+        info = {
+            "title": self.env._("Stock by Warehouse"),
+            "content": [],
+            "warehouse": self_origin.qty_available_not_res,
+        }
         if not self_origin.exists():
             return json.dumps(info)
         self_origin.ensure_one()
 
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
-        warehouse_id = self._context.get("warehouse_id")
+        warehouse_id = self.env.context.get("warehouse_id")
 
-        for warehouse in self.env["stock.warehouse"].sudo().search([]):
+        # Limit search to companies the user has access to
+        for warehouse in self.env["stock.warehouse"].sudo().search([("company_id", "in", self.env.companies.ids)]):
             tmpl = (
                 self_origin.sudo()
                 .with_company(warehouse.company_id)
-                .with_context(warehouse=warehouse.id, location=False)
+                .with_context(warehouse_id=warehouse.id, location=False)
             )
             tmpl.invalidate_recordset()
             if warehouse_id and warehouse_id.id == warehouse.id:

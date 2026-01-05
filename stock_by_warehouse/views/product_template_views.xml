@@ -10,13 +10,13 @@
                 <label
                     for="warehouses_stock"
                     groups="stock.group_stock_multi_warehouses"
-                    invisible="detailed_type != 'product'"
+                    invisible="not is_storable"
                 />
                 <div
                     name="warehouse_widget"
                     class="d-flex"
                     groups="stock.group_stock_multi_warehouses"
-                    invisible="detailed_type != 'product'"
+                    invisible="not is_storable"
                 >
                     <field name="warehouses_stock" widget="warehouse" />
                     <field name="warehouses_stock_recompute" widget="boolean_toggle" />
