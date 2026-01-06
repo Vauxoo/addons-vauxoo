@@ -6,28 +6,24 @@
         <field name="model">mrp.bom.line</field>
         <field name="inherit_id" ref="mrp.mrp_bom_line_view_form" />
         <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="edit">1</attribute>
+            </xpath>
             <xpath expr="//form/sheet/group" position="before">
-                <field name="detailed_type" invisible="1" />
-                <div
-                    class="text-center alert alert-info"
-                    role="alert"
-                    attrs="{'invisible': [('detailed_type', '!=', 'product')]}"
-                >
-                    <p>The stock <span attrs="{'invisible':[('warehouse_id','=',False)]}">in: <field
+                <div class="text-center alert alert-info" role="alert" invisible="not is_storable">
+                    <p>The stock <span invisible="not warehouse_id">in: <field
                                 name="warehouse_id"
-                            /></span> that is immediately available is:
-                        <field
+                            /></span> that is immediately available is: <field
                             name="warehouses_stock"
                             widget="warehouse"
                             groups="stock.group_stock_multi_warehouses"
                             options="{'placement': 'bottom'}"
                         />
-                        &amp;nbsp;&amp;nbsp;
+                        <span class="me-2" />
                         <field
                             name="warehouses_stock_recompute"
-                            nolabel="1"
-                            colspan="1"
-                            widget="toggle_button"
+                            widget="boolean_toggle"
+                            force_save="1"
                             groups="stock.group_stock_multi_warehouses"
                         />
                     </p>
