@@ -8,7 +8,7 @@
     "website": "http://www.vauxoo.com",
     "license": "OPL-1",
     "category": "Warehouse",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "depends": [
         "sale_stock",
         "purchase_requisition",
@@ -19,6 +19,8 @@
         "views/res_users_views.xml",
         "views/stock_picking_type_views.xml",
         "views/stock_picking_views.xml",
+        "security/ir_module_category_security.xml",
+        "security/res_groups_privilege_security.xml",
         "security/res_groups_security.xml",
         "security/ir_rule_security.xml",
     ],
