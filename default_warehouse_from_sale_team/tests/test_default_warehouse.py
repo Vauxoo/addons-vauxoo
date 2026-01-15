@@ -4,38 +4,80 @@ from odoo.tests import Form, TransactionCase, tagged
 
 @tagged("post_install", "-at_install")
 class TestSalesTeamDefaultWarehouse(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.company = self.env.ref("base.main_company")
-        self.partner = self.env.ref("base.res_partner_12")
-        self.purchase_obj = self.env["purchase.order"]
-        self.purchase_requisition_obj = self.env["purchase.requisition"]
-        self.res_user_obj = self.env["res.users"]
-        self.pick_type_obj = self.env["stock.picking.type"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.company = cls.env.ref("base.main_company")
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+        cls.purchase_obj = cls.env["purchase.order"]
+        cls.purchase_requisition_obj = cls.env["purchase.requisition"]
+        cls.pick_type_obj = cls.env["stock.picking.type"]
 
-        # user with team
-        self.demo_user = self.env.ref("base.user_demo")
-        self.test_wh = self.env.ref("default_warehouse_from_sale_team.stock_warehouse_default_team")
-        self.sales_team = self.env.ref("sales_team.crm_team_1")
-        self.sales_team.write({"default_warehouse_id": self.test_wh.id})
-        self.demo_user.write(
-            {
-                "sale_team_id": self.sales_team.id,
-                "sale_team_ids": [Command.link(self.sales_team.id)],
-                "company_id": self.company.id,
-            }
-        )
+        # Create test warehouse
+        cls.test_wh = cls.env["stock.warehouse"].create({
+            "name": "Team Default Warehouse",
+            "code": "TDW",
+            "company_id": cls.company.id,
+        })
 
-        # Products
-        self.product = self.env.ref("product.product_product_11")
-        self.product_uom = self.env.ref("uom.product_uom_unit")
+        # Create sales team with default warehouse
+        cls.sales_team = cls.env["crm.team"].create({
+            "name": "Test Sales Team",
+            "default_warehouse_id": cls.test_wh.id,
+        })
 
-    def create_sale_order(self, partner=None, **line_kwargs):
+        # Create demo user with required groups
+        cls.demo_user = cls.env["res.users"].create({
+            "name": "Demo User",
+            "login": "demo_user_test",
+            "email": "demo@test.com",
+            "company_id": cls.company.id,
+            "company_ids": [Command.link(cls.company.id)],
+            "sale_team_id": cls.sales_team.id,
+            "sale_team_ids": [Command.link(cls.sales_team.id)],
+            "group_ids": [
+                Command.link(cls.env.ref("sales_team.group_sale_salesman").id),
+                Command.link(cls.env.ref("purchase.group_purchase_user").id),
+            ],
+        })
+
+        # Create team membership - this triggers sale_team_id compute
+        cls.env["crm.team.member"].create({
+            "user_id": cls.demo_user.id,
+            "crm_team_id": cls.sales_team.id,
+        })
+
+        # Create test product
+        cls.product_uom = cls.env.ref("uom.product_uom_unit")
+        cls.product = cls.env["product.product"].create({
+            "name": "Test Product",
+            "type": "consu",
+            "uom_id": cls.product_uom.id,
+        })
+
+        # User without team should get main warehouse
+        cls.user_without_team = cls.env["res.users"].create({
+            "name": "User No Team",
+            "login": "user_no_team_test",
+            "email": "noteam@test.com",
+            "company_id": cls.company.id,
+            "company_ids": [Command.link(cls.company.id)],
+            "sale_team_id": False,
+            "group_ids": [
+                Command.link(cls.env.ref("sales_team.group_sale_salesman").id),
+            ],
+        })
+
+    def create_sale_order(self, partner=None, user=None, **line_kwargs):
         if partner is None:
             partner = self.partner
-        sale_order = Form(self.env["sale.order"])
-        sale_order.partner_id = partner
-        sale_order = sale_order.save()
+        if user is None:
+            user = self.env.user
+        # Create order with explicit user_id to ensure correct warehouse computation
+        sale_order = self.env["sale.order"].with_user(user).create({
+            "partner_id": partner.id,
+            "user_id": user.id,  # Explicit to trigger warehouse compute correctly
+        })
         self.create_so_line(sale_order, **line_kwargs)
         return sale_order
 
@@ -90,17 +132,22 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
         on the user sales team.
         """
         main_wh = self.env.ref("stock.warehouse0")
-        # user without team
-        user_without_team = self.demo_user.copy({"sale_team_id": False})
-        self.uid = user_without_team
-        sale_order1 = self.create_sale_order()
-        self.uid = self.demo_user
-        sale_order2 = self.create_sale_order()
-        self.assertEqual(sale_order1.warehouse_id, main_wh, "Default warehouse is not the main warehouse.")
+
+        # Verify setup is correct
+        self.assertEqual(self.demo_user.sale_team_id, self.sales_team)
+        self.assertEqual(self.sales_team.default_warehouse_id, self.test_wh)
+        sale_order1 = self.create_sale_order(user=self.user_without_team)
+        sale_order2 = self.create_sale_order(user=self.demo_user)
+
         self.assertEqual(
-            sale_order2.warehouse_id,
-            self.test_wh,
-            "Default warehouse is not the warehouse set on the sales team related to de user.",
+            sale_order1.warehouse_id, main_wh,
+            "User without team should get main warehouse."
+        )
+        self.assertEqual(
+            sale_order2.warehouse_id, self.test_wh,
+            f"User with team should get team warehouse. "
+            f"User sale_team_id: {self.demo_user.sale_team_id.name}, "
+            f"Team warehouse: {self.sales_team.default_warehouse_id.name}"
         )
 
     def test_04_warehouse_team_sale_policy(self):
@@ -115,7 +162,7 @@ class TestSalesTeamDefaultWarehouse(TransactionCase):
                 "property_stock_account_output_categ_id": account_id.id,
             }
         )
-        sale = self.create_sale_order()
+        sale = self.create_sale_order(user=self.demo_user)
 
         # Confirm sale order
         sale.sudo().action_confirm()
