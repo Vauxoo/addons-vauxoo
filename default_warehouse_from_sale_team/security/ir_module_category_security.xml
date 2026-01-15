@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Category for Default Warehouse groups -->
+    <record id="module_category_default_warehouse" model="ir.module.category">
+        <field name="name">Default Warehouse</field>
+        <field name="sequence" eval="50" />
+    </record>
+</odoo>

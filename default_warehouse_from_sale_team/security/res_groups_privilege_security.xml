@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Privileges (one per pair of limited/manager groups) -->
+    <record id="privilege_default_warehouse_spt" model="res.groups.privilege">
+        <field name="name">Operation Types</field>
+        <field name="category_id" ref="module_category_default_warehouse" />
+    </record>
+
+    <record id="privilege_default_warehouse_sp" model="res.groups.privilege">
+        <field name="name">Transfers</field>
+        <field name="category_id" ref="module_category_default_warehouse" />
+    </record>
+
+    <record id="privilege_default_warehouse_journal" model="res.groups.privilege">
+        <field name="name">Journals</field>
+        <field name="category_id" ref="module_category_default_warehouse" />
+    </record>
+</odoo>
