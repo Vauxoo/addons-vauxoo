@@ -1,6 +1,6 @@
 [![Vauxoo Logo](https://www.vauxoo.com/logo.png)](https://www.vauxoo.com)
 
-[![Runbot Status](https://runbot.vauxoo.com/runbot/badge/230/18.0.svg)](https://runbot.vauxoo.com/runbot/repo/git-github-com-vauxoo-addons-vauxoo-git-230)
+[![Runbot Status](https://runbot.vauxoo.com/runbot/badge/230/19.0.svg)](https://runbot.vauxoo.com/runbot/repo/git-github-com-vauxoo-addons-vauxoo-git-230)
 [![GitHub Actions Build Status](https://github.com/Vauxoo/addons-vauxoo/actions/workflows/test.yml/badge.svg)](https://github.com/Vauxoo/addons-vauxoo/actions)
 
 Vauxoo modules for Odoo
@@ -31,6 +31,6 @@ Read the requirements.txt file for more information.
 Do you want to contribute?
 --------------------------
 
-[Read the way](https://github.com/Vauxoo/addons-vauxoo/blob/9.0/CONTRIBUTING.md).
+[Read the way](https://github.com/Vauxoo/addons-vauxoo/blob/19.0/CONTRIBUTING.md).
 
 #Better go with [Vauxoo](http://vauxoo.com)

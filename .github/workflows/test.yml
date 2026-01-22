@@ -3,10 +3,10 @@ name: tests
 on:
   pull_request_target:
     branches:
-      - "19.0"
+      - "*.0"
   push:
     branches:
-      - "19.0"
+      - "*.0"
 
 env:
   CI_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -18,12 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     name: pre-commit-vauxoo
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           ref: ${{ env.CI_COMMIT_SHA }}
       - name: Cache pre-commit and pip packages
         id: cache-pre-commit-pip
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             ~/.cache/pre-commit
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     name: No dependency files
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           ref: ${{ env.CI_COMMIT_SHA }}
       - name: Ensure dependency files don't exist
@@ -49,33 +49,41 @@ jobs:
                   exit 1
                 fi
            done
-  build_docker:
+  build_and_test:
     runs-on: ubuntu-latest
     name: Build Docker and test Odoo
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           ref: ${{ env.CI_COMMIT_SHA }}
           persist-credentials: false
-      - name: Cache pip packages
-        id: cache-pip-build
-        uses: actions/cache@v3
+      - name: Cache dependencies
+        id: cache-build-depends
+        uses: actions/cache@v5
         with:
-          path: ~/.cache/pip
-          key: cache-pip-build
+          path: |
+            ~/.cache/pip
+            ~/.local/bin/orchestsh
+            ~/.local/bin/staticv
+          key: cache-build-depends
       - name: Set ssh keys
         run: |
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.PRIVATE_DEPLOY_KEY }}"
           mkdir -p ~/.ssh/
           ssh-keyscan -H git.vauxoo.com >> ~/.ssh/known_hosts
-      - name: Install dependencies
+      - name: Install Python dependencies
+        run: pip install -U deployv vxci
+      - name: Install apt dependencies
+        run: sudo apt update && sudo apt install -y dos2unix
+      - name: Install OrchestSH
+        env:
+          ORCHESTSH_PREFIX: /home/runner/.local/bin
         run: |
-          pip install -U deployv vxci
-          sudo apt update
-          sudo apt install dos2unix
+          command -v orchestsh || wget -qO- https://raw.githubusercontent.com/Orchestsh/orchestsh/master/installer.sh | sed "s:/usr/bin:$ORCHESTSH_PREFIX:g" | sh
+          command -v staticv || wget -qO- https://raw.githubusercontent.com/OrchestSh/staticv/master/installer.sh | sed "s:/usr/bin:$ORCHESTSH_PREFIX:g" | sh
       - name: Build image
         env:
           PRIVATE_DEPLOY_KEY: ${{ secrets.PRIVATE_DEPLOY_KEY }}
