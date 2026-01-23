@@ -82,8 +82,8 @@ jobs:
         env:
           ORCHESTSH_PREFIX: /home/runner/.local/bin
         run: |
-          command -v orchestsh || wget -qO- https://raw.githubusercontent.com/Orchestsh/orchestsh/master/installer.sh | sed "s:/usr/bin:$ORCHESTSH_PREFIX:g" | sh
-          command -v staticv || wget -qO- https://raw.githubusercontent.com/OrchestSh/staticv/master/installer.sh | sed "s:/usr/bin:$ORCHESTSH_PREFIX:g" | sh
+          command -v orchestsh || wget -qO- https://raw.githubusercontent.com/Orchestsh/orchestsh/master/installer.sh | sh
+          command -v staticv || wget -qO- https://raw.githubusercontent.com/OrchestSh/staticv/master/installer.sh | sh
       - name: Build image
         env:
           PRIVATE_DEPLOY_KEY: ${{ secrets.PRIVATE_DEPLOY_KEY }}
