@@ -4,31 +4,32 @@ from odoo.tests import Form, TransactionCase, tagged
 
 @tagged("post_install", "-at_install")
 class TestSalesTeamDefaultWarehouse(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.company = self.env.ref("base.main_company")
-        self.partner = self.env.ref("base.res_partner_12")
-        self.purchase_obj = self.env["purchase.order"]
-        self.purchase_requisition_obj = self.env["purchase.requisition"]
-        self.res_user_obj = self.env["res.users"]
-        self.pick_type_obj = self.env["stock.picking.type"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.company = cls.env.ref("base.main_company")
+        cls.partner = cls.env.ref("base.res_partner_12")
+        cls.purchase_obj = cls.env["purchase.order"]
+        cls.purchase_requisition_obj = cls.env["purchase.requisition"]
+        cls.res_user_obj = cls.env["res.users"]
+        cls.pick_type_obj = cls.env["stock.picking.type"]
 
         # user with team
-        self.demo_user = self.env.ref("base.user_demo")
-        self.test_wh = self.env.ref("default_warehouse_from_sale_team.stock_warehouse_default_team")
-        self.sales_team = self.env.ref("sales_team.crm_team_1")
-        self.sales_team.write({"default_warehouse_id": self.test_wh.id})
-        self.demo_user.write(
+        cls.demo_user = cls.env.ref("base.user_demo")
+        cls.test_wh = cls.env.ref("default_warehouse_from_sale_team.stock_warehouse_default_team")
+        cls.sales_team = cls.env.ref("sales_team.crm_team_1")
+        cls.sales_team.write({"default_warehouse_id": cls.test_wh.id})
+        cls.demo_user.write(
             {
-                "sale_team_id": self.sales_team.id,
-                "sale_team_ids": [Command.link(self.sales_team.id)],
-                "company_id": self.company.id,
+                "sale_team_id": cls.sales_team.id,
+                "sale_team_ids": [Command.link(cls.sales_team.id)],
+                "company_id": cls.company.id,
             }
         )
 
         # Products
-        self.product = self.env.ref("product.product_product_11")
-        self.product_uom = self.env.ref("uom.product_uom_unit")
+        cls.product = cls.env.ref("product.product_product_11")
+        cls.product_uom = cls.env.ref("uom.product_uom_unit")
 
     def create_sale_order(self, partner=None, **line_kwargs):
         if partner is None:
