@@ -42,7 +42,7 @@ class TestStock(TransactionCase):
                     "state": "draft",
                     "warehouse_id": self.warehouse.id,
                     "picking_ids": [],
-                    "procurement_group_id": False,
+                    "reference_id": False,
                 }
             ],
         )
@@ -50,7 +50,7 @@ class TestStock(TransactionCase):
         # Validate and check pickings were created
         transfer.action_validate()
         self.assertEqual(transfer.state, "valid")
-        self.assertEqual(transfer.procurement_group_id.name, expected_name)
+        self.assertEqual(transfer.reference_id.name, expected_name)
         pickings = transfer.picking_ids
         self.assertRecordValues(
             records=pickings.move_ids,

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-27 00:52+0000\n"
-"PO-Revision-Date: 2025-03-27 00:52+0000\n"
+"POT-Creation-Date: 2026-02-03 16:30+0000\n"
+"PO-Revision-Date: 2026-02-03 16:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,15 +61,6 @@ msgid "Click to add a new manual transfer."
 msgstr "Click para agregar una nueva transferencia manual."
 
 #. module: stock_manual_transfer
-#: model:ir.model.fields,help:stock_manual_transfer.field_stock_manual_transfer_line__product_uom_category_id
-msgid ""
-"Conversion between Units of Measure can only occur if they belong to the "
-"same category. The conversion will be made based on the ratios."
-msgstr ""
-"La conversión entre Unidades de Medida solo puede ocurrir si pertenecen a la"
-" misma categoría. La conversión se hará en base a los ratios."
-
-#. module: stock_manual_transfer
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__create_uid
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__create_uid
 msgid "Created by"
@@ -84,6 +75,7 @@ msgstr "Creado en"
 #. module: stock_manual_transfer
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__display_name
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__display_name
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_route__display_name
 msgid "Display Name"
 msgstr "Nombre para mostrar"
 
@@ -115,6 +107,7 @@ msgstr "Tiene mensaje"
 #. module: stock_manual_transfer
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__id
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__id
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_route__id
 msgid "ID"
 msgstr ""
 
@@ -257,20 +250,9 @@ msgid "Preferred Route"
 msgstr "Ruta preferida"
 
 #. module: stock_manual_transfer
-#: model:ir.model,name:stock_manual_transfer.model_procurement_group
-#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__procurement_group_id
-msgid "Procurement Group"
-msgstr "Grupo de abastecimiento"
-
-#. module: stock_manual_transfer
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__product_id
 msgid "Product"
 msgstr "Producto"
-
-#. module: stock_manual_transfer
-#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__product_uom_category_id
-msgid "Product's unit of measure category"
-msgstr "Categoría de unidad de medida del producto"
 
 #. module: stock_manual_transfer
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer_line__product_uom_qty
@@ -278,9 +260,9 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: stock_manual_transfer
-#: model:stock.route,name:stock_manual_transfer.demo_wh_route_reception
-msgid "Reception"
-msgstr "Recepción"
+#: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__reference_id
+msgid "Reference"
+msgstr "Referencia"
 
 #. module: stock_manual_transfer
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__activity_user_id
@@ -336,7 +318,6 @@ msgid "Transfer Reference"
 msgstr "Referencia de transferencia"
 
 #. module: stock_manual_transfer
-#: model:ir.model.fields,field_description:stock_manual_transfer.field_procurement_group__picking_ids
 #: model:ir.model.fields,field_description:stock_manual_transfer.field_stock_manual_transfer__picking_ids
 msgid "Transfers"
 msgstr "Transferencias"
@@ -355,11 +336,6 @@ msgstr "Unidad de medida"
 #: model:ir.model.fields.selection,name:stock_manual_transfer.selection__stock_manual_transfer__state__valid
 msgid "Validated"
 msgstr "Validada"
-
-#. module: stock_manual_transfer
-#: model:stock.rule,name:stock_manual_transfer.demo_wh_rule
-msgid "Vendors → Stock"
-msgstr "Proveedores → Inventario"
 
 #. module: stock_manual_transfer
 #: model_terms:ir.ui.view,arch_db:stock_manual_transfer.stock_manual_transfer_form_view

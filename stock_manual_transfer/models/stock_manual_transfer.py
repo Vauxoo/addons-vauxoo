@@ -51,8 +51,8 @@ class StockManualTransfer(models.Model):
         copy=False,
         tracking=True,
     )
-    procurement_group_id = fields.Many2one("procurement.group", copy=False)
-    picking_ids = fields.One2many(
+    reference_id = fields.Many2one("stock.reference", string="Reference", copy=False)
+    picking_ids = fields.Many2many(
         "stock.picking",
         string="Transfers",
         compute="_compute_picking_ids",
@@ -67,26 +67,26 @@ class StockManualTransfer(models.Model):
                 self.env._("The selected route doesn't have configured rules on the selected warehouse.")
             )
 
-        procurement_group = self.env["procurement.group"].create({"name": self.name})
+        reference = self.env["stock.reference"].create({"name": self.name})
         values = {
             "date_planned": self.date_planned,
             "route_ids": self.route_id,
             "warehouse_id": self.warehouse_id,
-            "group_id": procurement_group,
+            "reference_ids": reference,
         }
         procurements = [line._create_procurement(values) for line in self.transfer_line_ids]
-        self.env["procurement.group"].run(procurements)
+        self.env["stock.rule"].run(procurements)
         return self.write(
             {
                 "state": "valid",
-                "procurement_group_id": procurement_group.id,
+                "reference_id": reference.id,
             }
         )
 
-    @api.depends("procurement_group_id")
+    @api.depends("reference_id")
     def _compute_picking_ids(self):
         for record in self:
-            record.picking_ids = record.procurement_group_id.picking_ids
+            record.picking_ids = record.reference_id.picking_ids
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_state_valid(self):
