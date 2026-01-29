@@ -9,7 +9,7 @@
     "website": "https://www.vauxoo.com",
     "license": "OPL-1",
     "category": "Warehouse",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "depends": [
         "stock",
     ],

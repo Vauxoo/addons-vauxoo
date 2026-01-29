@@ -17,17 +17,22 @@ class StockManualTransferLine(models.Model):
     product_uom_id = fields.Many2one(
         "uom.uom",
         string="Unit of Measure",
-        domain="[('category_id', '=', product_uom_category_id)]",
+        domain="[('id', 'in', allowed_uom_ids)]",
         required=True,
         compute="_compute_product_uom_id",
         store=True,
         readonly=False,
     )
-    product_uom_category_id = fields.Many2one(
-        "uom.category",
-        string="Product's unit of measure category",
-        related="product_id.uom_id.category_id",
+    allowed_uom_ids = fields.Many2many(
+        "uom.uom",
+        compute="_compute_allowed_uom_ids",
+        export_string_translation=False,
     )
+
+    @api.depends("product_id.uom_id", "product_id.uom_ids")
+    def _compute_allowed_uom_ids(self):
+        for line in self:
+            line.allowed_uom_ids = line.product_id.uom_id | line.product_id.uom_ids
 
     @api.depends("product_id")
     def _compute_product_uom_id(self):
@@ -37,7 +42,7 @@ class StockManualTransferLine(models.Model):
     def _create_procurement(self, values):
         self.ensure_one()
         transfer = self.transfer_id
-        return self.env["procurement.group"].Procurement(
+        return self.env["stock.rule"].Procurement(
             product_id=self.product_id,
             product_qty=self.product_uom_qty,
             product_uom=self.product_uom_id,
