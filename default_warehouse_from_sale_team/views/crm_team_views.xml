@@ -12,9 +12,6 @@
                         <group name="conf_warehouse">
                             <field name="default_warehouse_id" widget="selection" />
                         </group>
-                        <group name="conf_journal">
-                            <field name="journal_stock_id" />
-                        </group>
                     </group>
                     <separator string="Journal's sales teams" />
                     <field name="journal_team_ids" domain="[('section_id', '=', False)]" widget='many2many' />
