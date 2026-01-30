@@ -14,11 +14,6 @@ class CrmTeam(models.Model):
         string="Journal's sales teams",
         help="Specify what journals a member of this sales team can see.",
     )
-    journal_stock_id = fields.Many2one(
-        "account.journal",
-        "Journal stock valuation",
-        help="It indicates the journal to be used when a move line is created with the warehouse of this sales team",
-    )
 
     def _get_default_team_id(self, user_id=None, domain=None):
         """When specified by context, ensure the sales team is taken from the current user"""

@@ -152,15 +152,6 @@ msgid "Is Editable"
 msgstr "Es editable"
 
 #. module: default_warehouse_from_sale_team
-#: model:ir.model.fields,help:default_warehouse_from_sale_team.field_crm_team__journal_stock_id
-msgid ""
-"It indicates the journal to be used when a move line is created with the "
-"warehouse of this sales team"
-msgstr ""
-"Indica el diario que se utilizará cuando se cree la línea de movimiento con "
-"el almacén de este equipo de ventas"
-
-#. module: default_warehouse_from_sale_team
 #: model:ir.model,name:default_warehouse_from_sale_team.model_account_journal
 msgid "Journal"
 msgstr "Diario"
@@ -169,11 +160,6 @@ msgstr "Diario"
 #: model:ir.model,name:default_warehouse_from_sale_team.model_account_move
 msgid "Journal Entry"
 msgstr "Asiento contable"
-
-#. module: default_warehouse_from_sale_team
-#: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team__journal_stock_id
-msgid "Journal stock valuation"
-msgstr "Diario para valoración de existencias"
 
 #. module: default_warehouse_from_sale_team
 #: model:ir.model.fields,field_description:default_warehouse_from_sale_team.field_crm_team__journal_team_ids
