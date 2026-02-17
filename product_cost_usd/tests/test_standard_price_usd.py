@@ -1,4 +1,4 @@
-from odoo import fields
+from odoo import Command
 from odoo.exceptions import ValidationError
 from odoo.tests import Form, TransactionCase, tagged
 from odoo.tools import float_compare
@@ -6,30 +6,74 @@ from odoo.tools import float_compare
 
 @tagged("post_install", "-at_install", "sale")
 class TestStandardPriceUsd(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.mxn = self.env.ref("base.MXN")
-        self.usd = self.env.ref("base.USD")
-        self.partner = self.env.ref("base.res_partner_4")
-        self.product_uom = self.env.ref("uom.product_uom_unit")
-        self.product = self.env.ref("product.product_product_24")
-        self.pricelist_15_usd = self.env.ref("product_cost_usd.pricelist_15_usd")
-        self.pricelist_15_mxn = self.pricelist_15_usd.copy({"name": "Pricelist 15% MXN", "currency_id": self.mxn.id})
-        self.pricelist = self.env["product.pricelist"].create({"name": "Pricelist Demo"})
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.mxn = cls.env.ref("base.MXN")
+        cls.usd = cls.env.ref("base.USD")
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+        cls.env.user.write({"group_ids": [Command.link(cls.env.ref("product.group_product_pricelist").id)]})
+        # Get or create the unit UOM
+        cls.product_uom = cls.env.ref("uom.product_uom_unit")
+        if not cls.product_uom:
+            cls.product_uom = cls.env["uom.uom"].create(
+                {
+                    "name": "Unit",
+                }
+            )
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Test Product",
+                "uom_id": cls.product_uom.id,
+                "type": "consu",
+                "standard_price": 876.0,
+                "list_price": 885.0,
+            }
+        )
+
+        # Create supplier for product
+        cls.env["product.supplierinfo"].create(
+            {
+                "product_tmpl_id": cls.product.product_tmpl_id.id,
+                "partner_id": cls.partner.id,
+                "price": 876.0,
+                "currency_id": cls.usd.id,
+            }
+        )
+
+        # Create pricelist with USD base cost strategy
+        cls.pricelist_15_usd = cls.env["product.pricelist"].create(
+            {
+                "name": "Pricelist 15% USD",
+                "currency_id": cls.usd.id,
+                "item_ids": [
+                    Command.create(
+                        {
+                            "applied_on": "1_product",
+                            "product_id": cls.product.id,
+                            "base": "standard_price_usd",
+                            "compute_price": "formula",
+                            "price_discount": -15,
+                        }
+                    )
+                ],
+            }
+        )
+        cls.pricelist_15_mxn = cls.pricelist_15_usd.copy({"name": "Pricelist 15% MXN", "currency_id": cls.mxn.id})
+        cls.pricelist = cls.env["product.pricelist"].create({"name": "Pricelist Demo"})
 
     def create_sale_order(self, product=None, partner=None, pricelist=None, **line_kwargs):
         if partner is None:
             partner = self.partner
+
         order = Form(self.env["sale.order"])
-        order.date_order = fields.Datetime.now()
         order.partner_id = partner
-        order.pricelist_id = pricelist
+        if pricelist:
+            order.pricelist_id = pricelist
         with order.order_line.new() as line:
             line.product_id = product
-            line.product_uom = self.product_uom
             line.product_uom_qty = 1
-        order = order.save()
-        return order
+        return order.save()
 
     def set_standard_price_usd(self, price):
         self.assertTrue(self.product.seller_ids)
@@ -41,10 +85,11 @@ class TestStandardPriceUsd(TransactionCase):
         self.set_standard_price_usd(880)
         product = self.product.with_context(pricelist=self.pricelist_15_usd.id)
         expected_price = self.usd.round(product.standard_price_usd * 1.15)
+        product_price = product.get_contextual_price()
         self.assertEqual(
-            float_compare(product.price, expected_price, precision_digits=2),
+            float_compare(product_price, expected_price, precision_digits=2),
             0,
-            "Product price should be %s" % product.price,
+            "Product price should be %s" % product_price,
         )
 
     def test_02_mxn_pricelist(self):
@@ -53,10 +98,11 @@ class TestStandardPriceUsd(TransactionCase):
         product = self.product.with_context(pricelist=self.pricelist_15_mxn.id)
         mxn_rate = self.mxn.rate / self.usd.rate
         expected_price = self.mxn.round((product.standard_price_usd * 1.15) * mxn_rate)
+        product_price = product.get_contextual_price()
         self.assertEqual(
-            float_compare(product.price, expected_price, precision_digits=2),
+            float_compare(product_price, expected_price, precision_digits=2),
             0,
-            "Product price should be %s" % product.price,
+            "Product price should be %s" % product_price,
         )
 
     def test_03_constraint_check_cost_no_seller(self):
