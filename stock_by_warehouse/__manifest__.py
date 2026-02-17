@@ -16,7 +16,6 @@
         "views/product_product_views.xml",
         "views/product_template_views.xml",
     ],
-    "demo": [],
     "assets": {
         "web.assets_backend": [
             "stock_by_warehouse/static/src/components/warehouse/warehouse_field.scss",
@@ -24,6 +23,4 @@
             "stock_by_warehouse/static/src/components/warehouse/warehouse_field.esm.js",
         ],
     },
-    "installable": True,
-    "auto_install": False,
 }
