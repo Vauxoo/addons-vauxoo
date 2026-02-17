@@ -1,3 +1,4 @@
+from odoo.fields import Command
 from odoo.tests import Form, TransactionCase
 from odoo.tools.safe_eval import safe_eval
 
@@ -39,13 +40,11 @@ class TestStockLogisticsWarehouse(TransactionCase):
                 "type": "product",
                 "uom_id": cls.uom_unit.id,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute.id,
-                            "value_ids": [(6, 0, (cls.attribute_a + cls.attribute_b).ids)],
-                        },
+                            "value_ids": [Command.set((cls.attribute_a + cls.attribute_b).ids)],
+                        }
                     )
                 ],
             }
