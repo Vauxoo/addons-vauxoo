@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="mrp_bom_view_form" model="ir.ui.view">
         <field name="name">mrp.bom.stock.warehouse</field>
