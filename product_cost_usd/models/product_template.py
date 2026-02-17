@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
@@ -13,7 +13,7 @@ class ProductTemplate(models.Model):
         help="Technical field to show the price fields as USD in the products",
     )
     standard_price_usd = fields.Float(
-        "Cost in USD",
+        string="Cost in USD",
         digits="Product Price",
         help="Price cost of the product in USD currency",
     )
@@ -40,11 +40,11 @@ class ProductTemplate(models.Model):
             standard_price_usd = product.standard_price_usd
             if not usd_seller and float_compare(standard_price_usd, 0, precision_digits=prec) > 0:
                 raise ValidationError(
-                    _("You must have at least one supplier with price in USD before assigning a Cost in USD")
+                    self.env._("You must have at least one supplier with price in USD before assigning a Cost in USD")
                 )
-            if float_compare(list_price, standard_price_usd, precision_digits=prec) > 0:
+            if usd_seller and float_compare(list_price, standard_price_usd, precision_digits=prec) > 0:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "You cannot create or modify a product if the cost in USD"
                         " is less than the supplier list price.\n\n"
                         "- Supplier list price = %s\n"
