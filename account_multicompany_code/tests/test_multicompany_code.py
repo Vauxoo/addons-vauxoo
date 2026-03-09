@@ -1,3 +1,4 @@
+from odoo import Command
 from odoo.tests import TransactionCase
 
 
@@ -8,6 +9,7 @@ class TestMulticompanyCode(TransactionCase):
 
         cls.company = cls.env.ref("base.main_company")
         cls.company.code = "TEST-CODE"
+        cls.env.user.group_ids += cls.env.ref("account.group_account_readonly")
 
     def test_01_check_code_included_account_name(self):
         """Check that the code is shown in the account display names"""
@@ -16,7 +18,7 @@ class TestMulticompanyCode(TransactionCase):
                 "name": "Account Name",
                 "code": "999.01.05",
                 "account_type": "expense",
-                "company_id": self.company.id,
+                "company_ids": [Command.link(self.company.id)],
             }
         )
         expected_account_name = "999.01.05 Account Name (TEST-CODE)"

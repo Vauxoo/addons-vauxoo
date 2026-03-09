@@ -6,6 +6,7 @@ class ResCompany(models.Model):
 
     code = fields.Char(help="Internal code name of the company")
 
-    _sql_constraints = [
-        ("unique_code", "UNIQUE(code)", "Code must be unique"),
-    ]
+    _unique_code = models.Constraint(
+        "UNIQUE(code)",
+        "Code must be unique",
+    )
