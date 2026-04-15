@@ -5,8 +5,24 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     margin_threshold = fields.Float(
-        default=lambda self: self.env.user.company_id.margin_threshold, help="Limit margin set in sales configuration"
+        compute="_compute_margin_threshold",
+        store=True,
+        readonly=False,
+        help="Limit margin set in sales configuration",
     )
+    margin_alert = fields.Selection(
+        selection=[
+            ("none", "None"),
+            ("warning", "Warning"),
+            ("danger", "Danger"),
+        ],
+        compute="_compute_margin_alert",
+    )
+
+    @api.depends("company_id")
+    def _compute_margin_threshold(self):
+        for line in self:
+            line.margin_threshold = (line.company_id or self.env.company).margin_threshold
 
     @api.depends("price_subtotal", "product_uom_qty", "purchase_price")
     def _compute_margin(self):
@@ -27,3 +43,16 @@ class SaleOrderLine(models.Model):
                 continue
 
         return res
+
+    @api.depends("margin_percent", "margin_threshold")
+    def _compute_margin_alert(self):
+        """Compute the margin alert level based on the margin percentage and threshold
+        and avoid the warning because of the groups that can't see the margin percentage
+        """
+        for line in self:
+            if line.margin_percent <= 0.0:
+                line.margin_alert = "danger"
+            elif 0.0 < line.margin_percent <= line.margin_threshold:
+                line.margin_alert = "warning"
+            else:
+                line.margin_alert = "none"
