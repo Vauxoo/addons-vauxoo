@@ -1,19 +1,20 @@
-from odoo.tests import tagged
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form, TransactionCase, tagged
 
 
 @tagged("sale_order", "post_install", "-at_install")
 class TestSaleOrder(TransactionCase):
     """Test cases for sale.order model"""
 
-    def setUp(self):
-        super().setUp()
-        self.partner = self.env.ref("base.res_partner_12")
-        self.product_cost_0 = self.env.ref("product.product_product_4")
-        self.product_cost_5 = self.env.ref("product.product_product_5")
-        self.product_cost_10 = self.env.ref("product.product_product_6")
-        self.product_cost_12 = self.env.ref("product.product_product_7")
-        self.product_cost_15 = self.env.ref("product.product_product_8")
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+        product = cls.env["product.product"]
+        cls.product_cost_0 = product.create({"name": "Product Cost 0", "standard_price": 0.0})
+        cls.product_cost_5 = product.create({"name": "Product Cost 5", "standard_price": 5.0})
+        cls.product_cost_10 = product.create({"name": "Product Cost 10", "standard_price": 10.0})
+        cls.product_cost_12 = product.create({"name": "Product Cost 12", "standard_price": 12.0})
+        cls.product_cost_15 = product.create({"name": "Product Cost 15", "standard_price": 15.0})
 
     def create_so(self, partner=None, **line_kwargs):
         if partner is None:

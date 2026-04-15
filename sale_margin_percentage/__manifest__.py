@@ -1,6 +1,6 @@
 {
     "name": "Sale Order Gross Margin Percentage",
-    "version": "15.0.1.0.1",
+    "version": "19.0.1.0.0",
     "author": "Vauxoo",
     "category": "Sales/Sales",
     "website": "https://www.vauxoo.com/",
