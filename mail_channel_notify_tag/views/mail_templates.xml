@@ -5,11 +5,7 @@
         <div style="width: 100%; margin: 0 auto;">
             <div style="font-size: 0.8em;margin: 5px 0;">
                 on
-                <a
-                    t-attf-href="/web#id={{source.id}}&amp;model={{source._name}}&amp;view_type=form"
-                    target="_blank"
-                    t-out="source.display_name"
-                />
+                <a t-attf-href="/odoo/{{source._name}}/{{source.id}}" target="_blank" t-out="source.display_name" />
             </div>
             <br />
             <div t-out="message.body" />
