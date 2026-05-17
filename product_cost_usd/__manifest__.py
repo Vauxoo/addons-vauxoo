@@ -20,5 +20,4 @@ This module adds the field Cost in USD to the Product form.
         "views/product_template_views.xml",
     ],
     "installable": True,
-    "auto_install": False,
 }
