@@ -76,6 +76,7 @@ class ProductProduct(models.Model):
         # Just in case it's asked from other place different than product
         # itself, we enable this context management
         warehouse_id = self.env.context.get("warehouse_id")
+        context_warehouse = self.env["stock.warehouse"].browse(warehouse_id).exists()
 
         for warehouse in self.env["stock.warehouse"].sudo().search([("company_id", "in", self.env.companies.ids)]):
             product = (
@@ -83,7 +84,7 @@ class ProductProduct(models.Model):
                 .with_company(warehouse.company_id)
                 .with_context(warehouse_id=warehouse.id, location=False)
             )
-            if warehouse_id and warehouse_id.id == warehouse.id:
+            if context_warehouse and context_warehouse == warehouse:
                 info["warehouse"] = product.qty_available_not_res
             info["content"].append(
                 {
