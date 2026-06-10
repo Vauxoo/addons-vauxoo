@@ -18,5 +18,5 @@ class SaleOrderLine(models.Model):
     @api.depends("warehouses_stock_recompute", "product_id")
     def _compute_warehouse_stock(self):
         for record in self:
-            record.warehouse_id = self.order_id.warehouse_id
+            record.warehouse_id = record.order_id.warehouse_id
             record._compute_get_warehouses_stock()
