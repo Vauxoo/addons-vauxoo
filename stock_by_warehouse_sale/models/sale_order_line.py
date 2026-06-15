@@ -10,7 +10,7 @@ class SaleOrderLine(models.Model):
     def _compute_get_warehouses_stock(self):
         for line in self:
             line.warehouses_stock = (
-                line.product_id.with_context(warehouse_id=line.warehouse_id)._compute_get_quantity_warehouses_json()
+                line.product_id.with_context(warehouse_id=line.warehouse_id.id)._compute_get_quantity_warehouses_json()
                 if line.warehouses_stock_recompute
                 else False
             )
