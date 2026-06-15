@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form//field[@name='sequence']" position="after">
-                <div class="text-center alert alertdialog" invisible="product_type != 'product'">
+                <div class="text-center alert alertdialog" invisible="not is_storable">
                     <p>The saleable stock in: <field name="warehouse_id" /> that can be delivered immediately is:
                         <field name="warehouses_stock" widget="warehouse" options="{'placement': 'bottom'}" />
                         <span>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>
@@ -19,7 +19,7 @@
                     </p>
                 </div>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
                 <attribute name="editable" />
             </xpath>
         </field>
