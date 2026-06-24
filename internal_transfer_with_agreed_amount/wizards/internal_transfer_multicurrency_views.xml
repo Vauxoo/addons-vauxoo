@@ -5,14 +5,68 @@
         <field name="model">internal.transfer.multicurrency</field>
         <field name="arch" type="xml">
             <form>
-                <group class="o_row">
-                    <p>Fill with the total amount that you will receive for this operation</p>
-                    <field name="agreed_amount" />
-                    <field name="currency_id" invisible="1" />
+                <group>
+                    <field name="company_id" readonly="True" />
+                    <field
+                        name="company_currency_id"
+                        string="Company Currency"
+                        readonly="True"
+                        options="{'no_create': True, 'no_open': True}"
+                    />
+                    <field name="date" />
+                    <field name="memo" />
+                </group>
+                <group>
+                    <group string="Sending Transaction">
+                        <field name="out_journal_id" string="Journal" />
+                        <field name="out_currency_locked" invisible="True" />
+                        <label for="out_amount_currency" string="Amount" />
+                        <div class="o_row" name="out_amount_currency_div">
+                            <field name="out_amount_currency" nolabel="1" />
+                            <field
+                                name="out_currency_id"
+                                readonly="out_currency_locked"
+                                nolabel="1"
+                                options="{'no_create': True, 'no_open': True}"
+                            />
+                        </div>
+                        <field name="out_amount" string="Local Amount" />
+                        <field name="out_payment_method_line_id" string="Payment Method" />
+                    </group>
+                    <group string="Receiving Transaction">
+                        <field name="in_journal_id" string="Journal" />
+                        <field name="in_currency_locked" invisible="True" />
+                        <label for="in_amount_currency" string="Amount" />
+                        <div class="o_row" name="in_amount_currency_div">
+                            <field name="in_amount_currency" nolabel="1" />
+                            <field
+                                name="in_currency_id"
+                                readonly="in_currency_locked"
+                                nolabel="1"
+                                options="{'no_create': True, 'no_open': True}"
+                            />
+                        </div>
+                        <field name="in_amount" string="Local Amount" readonly="True" />
+                        <field name="in_payment_method_line_id" string="Payment Method" />
+                    </group>
                 </group>
                 <footer>
-                    <button name="apply" string='Apply' type="object" class="btn-primary" />
-                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                    <button
+                        name="action_create_internal_transfer"
+                        string="Create Internal Transfer"
+                        type="object"
+                        class="btn-primary"
+                        invisible="not out_journal_id
+                                   or not out_currency_id
+                                   or not out_amount_currency
+                                   or not out_amount
+                                   or not out_payment_method_line_id
+                                   or not in_journal_id
+                                   or not in_currency_id
+                                   or not in_amount_currency
+                                   or not in_payment_method_line_id"
+                    />
+                    <button string="Close" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>

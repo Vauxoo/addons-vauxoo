@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="account_journal_dashboard_kanban_view_inherited" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban.internal.transfer</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//a[@name='open_payments_action']/.." position="after">
+                <div t-if="journal_type == 'bank'">
+                    <a
+                        role="menuitem"
+                        type="object"
+                        name="open_internal_transfers_payments_action"
+                    >Internal Transfers</a>
+                </div>
+            </xpath>
+            <xpath expr="//t[@t-name='menu']//div[@name='kanban_manage_new']" position="inside">
+                <div
+                    t-if="journal_type == 'bank'"
+                    groups="internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount"
+                >
+                    <a type="object" name="open_action_internal_transfer">Internal Transfer</a>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

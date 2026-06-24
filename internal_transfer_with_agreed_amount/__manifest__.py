@@ -1,6 +1,6 @@
 {
     "name": "Internal transfers with an agreed amount",
-    "version": "17.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
     "license": "LGPL-3",
@@ -14,8 +14,9 @@
         "security/res_groups_security.xml",
         # Wizards
         "wizards/internal_transfer_multicurrency_views.xml",
+        "wizards/internal_transfer_draft_confirm_views.xml",
         # Views
+        "views/account_journal_dashboard_views.xml",
         "views/account_payment_views.xml",
     ],
-    "installable": True,
 }
