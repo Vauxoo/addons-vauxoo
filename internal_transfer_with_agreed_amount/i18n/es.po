@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-18 15:42+0000\n"
-"PO-Revision-Date: 2024-06-18 15:42+0000\n"
+"POT-Creation-Date: 2026-06-26 06:21+0000\n"
+"PO-Revision-Date: 2026-06-26 06:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,25 +16,10 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: internal_transfer_with_agreed_amount
-#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__agreed_amount
-msgid "Agreed Amount"
-msgstr "Monto Acordado"
-
-#. module: internal_transfer_with_agreed_amount
-#: model:ir.model.fields,help:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__agreed_amount
-msgid "Agreed amount in the currency of the destination bank."
-msgstr "Cantidad acordada en la moneda del banco de destino."
-
-#. module: internal_transfer_with_agreed_amount
 #. odoo-python
 #: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
-#, python-format
-msgid ""
-"Agreed amount is available when there are two considered currencies. Currently, the following currencies are being considered:\n"
-"- %s"
-msgstr ""
-"El monto acordado está disponible cuando hay dos monedas consideradas. Actualmente, las siguientes monedas se consideran:\n"
-"- %s"
+msgid "A second payment has been created: %s"
+msgstr "Se ha creado un segundo pago: %s"
 
 #. module: internal_transfer_with_agreed_amount
 #: model:res.groups,name:internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount
@@ -43,68 +28,325 @@ msgstr "Permitir confirmar una transferencia interna con un monto acordado"
 
 #. module: internal_transfer_with_agreed_amount
 #: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
-msgid "Apply"
-msgstr "Aplicar"
+msgid "Amount"
+msgstr "Monto"
 
 #. module: internal_transfer_with_agreed_amount
-#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_draft_confirm
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: internal_transfer_with_agreed_amount
-#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_account_payment_form
-msgid "Confirm with an agreed amount"
-msgstr "Confirmar con un monto acordado"
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Close"
+msgstr "Cerrar"
 
 #. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "Company \"%s\" does not have an internal transfer account configured."
+msgstr ""
+"La compañía \"%s\" no tiene una cuenta de transferencia interna configurada."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/models/account_journal.py:0
+msgid ""
+"Company \"%s\" does not have an internal transfer account configured. Please"
+" set it in Accounting > Configuration > Settings."
+msgstr ""
+"La compañía \"%s\" no tiene una cuenta de transferencia interna configurada."
+" Por favor configúrela en Contabilidad > Configuración > Ajustes."
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Company Currency"
+msgstr "Moneda de la compañía"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model,name:internal_transfer_with_agreed_amount.model_internal_transfer_draft_confirm
+msgid "Confirm Reset to Draft of Internal Transfer Payments"
+msgstr ""
+"Confirmar restablecimiento a borrador de pagos de transferencia interna"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Create Internal Transfer"
+msgstr "Crear transferencia interna"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__create_uid
 #: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__create_date
 #: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__create_date
 msgid "Created on"
 msgstr "Creado en"
 
 #. module: internal_transfer_with_agreed_amount
-#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__currency_id
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__company_currency_id
 msgid "Currency"
 msgstr "Moneda"
 
 #. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_account_journal__display_name
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_account_payment__display_name
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__display_name
 #: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre para mostrar"
 
 #. module: internal_transfer_with_agreed_amount
-#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_account_payment_form
-msgid "Edit agreed amount"
-msgstr "Editar monto acordado"
-
-#. module: internal_transfer_with_agreed_amount
-#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
-msgid "Fill with the total amount that you will receive for this operation"
-msgstr "Complete con el monto total que recibirá por esta operación"
-
-#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_account_journal__id
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_account_payment__id
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__id
 #: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__id
 msgid "ID"
 msgstr ""
 
 #. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__in_amount
+msgid "In Amount"
+msgstr "Monto recibido"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__in_amount_currency
+msgid "In Amount Currency"
+msgstr "Monto recibido en moneda extranjera"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__in_currency_id
+msgid "In Currency"
+msgstr "Moneda de recepción"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__in_currency_locked
+msgid "In Currency Locked"
+msgstr "Moneda de recepción bloqueada"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__in_journal_id
+msgid "In Journal"
+msgstr "Diario de recepción"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__in_payment_method_line_id
+msgid "In Payment Method Line"
+msgstr "Línea de método de pago de recepción"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/models/account_journal.py:0
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.account_journal_dashboard_kanban_view_inherited
+msgid "Internal Transfer"
+msgstr "Transferencia interna"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:res.groups.privilege,name:internal_transfer_with_agreed_amount.res_groups_privilege_internal_transfer_with_agreed_amount
+msgid "Internal Transfer with Agreed Amount"
+msgstr "Transferencia interna con monto acordado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.account_journal_dashboard_kanban_view_inherited
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_account_payment_search_internal_transfer
+msgid "Internal Transfers"
+msgstr "Transferencias internas"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_account_payment__is_internal_transfer
+msgid "Is Internal Transfer"
+msgstr "Es transferencia interna"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model,name:internal_transfer_with_agreed_amount.model_account_journal
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Journal"
+msgstr "Diario"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "Journal \"%s\" does not belong to company \"%s\"."
+msgstr "El diario \"%s\" no pertenece a la compañía \"%s\"."
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__write_uid
 #: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__write_date
 #: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
 
 #. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Local Amount"
+msgstr "Monto local"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__memo
+msgid "Memo"
+msgstr "Concepto"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__message
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__out_amount
+msgid "Out Amount"
+msgstr "Monto enviado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__out_amount_currency
+msgid "Out Amount Currency"
+msgstr "Monto enviado en moneda extranjera"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__out_currency_id
+msgid "Out Currency"
+msgstr "Moneda de envío"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__out_currency_locked
+msgid "Out Currency Locked"
+msgstr "Moneda de envío bloqueada"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__out_journal_id
+msgid "Out Journal"
+msgstr "Diario de envío"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_multicurrency__out_payment_method_line_id
+msgid "Out Payment Method Line"
+msgstr "Línea de método de pago de envío"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__paired_payment_id
+msgid "Paired Payment"
+msgstr "Pago vinculado"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model.fields,field_description:internal_transfer_with_agreed_amount.field_internal_transfer_draft_confirm__payment_id
+msgid "Payment"
+msgstr "Pago"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Payment Method"
+msgstr "Método de pago"
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model,name:internal_transfer_with_agreed_amount.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "Please select an inbound payment method."
+msgstr "Por favor seleccione un método de pago de recepción."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "Please select an outbound payment method."
+msgstr "Por favor seleccione un método de pago de envío."
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Receiving Transaction"
+msgstr "Transacción de recepción"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_draft_confirm
+msgid "Reset Both to Draft"
+msgstr "Restablecer ambos a borrador"
+
+#. module: internal_transfer_with_agreed_amount
+#: model_terms:ir.ui.view,arch_db:internal_transfer_with_agreed_amount.view_internal_transfer_multicurrency
+msgid "Sending Transaction"
+msgstr "Transacción de envío"
+
+#. module: internal_transfer_with_agreed_amount
 #: model:ir.actions.act_window,name:internal_transfer_with_agreed_amount.action_internal_transfer_multicurrency
 msgid "Specify the agreed amount"
 msgstr "Especifique el monto acordado"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid ""
+"The destination journal uses the company currency (%s). The received amount "
+"and the local amount must be equal."
+msgstr ""
+"El diario de destino utiliza la moneda de la compañía (%s). El monto "
+"recibido y el monto local deben ser iguales."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_draft_confirm.py:0
+msgid ""
+"The following payments are already matched to a bank statement line and "
+"cannot be reset to draft: %s"
+msgstr ""
+"Los siguientes pagos ya están conciliados con una línea de estado de cuenta "
+"bancario y no pueden restablecerse a borrador: %s"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "The inbound payment method must have an account configured."
+msgstr "El método de pago de recepción debe tener una cuenta configurada."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "The outbound payment method must have an account configured."
+msgstr "El método de pago de envío debe tener una cuenta configurada."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid ""
+"The payment accounts for the outbound and inbound methods must be different."
+msgstr ""
+"Las cuentas de pago de los métodos de envío y recepción deben ser "
+"diferentes."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "The source and destination journals must be different."
+msgstr "Los diarios de origen y destino deben ser diferentes."
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid ""
+"The source journal uses the company currency (%s). The sent amount and the "
+"local amount must be equal."
+msgstr ""
+"El diario de origen utiliza la moneda de la compañía (%s). El monto enviado "
+"y el monto local deben ser iguales."
 
 #. module: internal_transfer_with_agreed_amount
 #: model:res.groups,comment:internal_transfer_with_agreed_amount.allow_confirm_internal_transfer_with_agreed_amount
@@ -116,9 +358,36 @@ msgstr ""
 "un monto acordado."
 
 #. module: internal_transfer_with_agreed_amount
-#: model:ir.model,name:internal_transfer_with_agreed_amount.model_internal_transfer_multicurrency
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid "This payment has been created from %s"
+msgstr "Este pago fue creado desde %s"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_draft_confirm.py:0
 msgid ""
-"Wizard to modify the agreed amount with the bank on an internal transfer."
+"This payment is part of an internal transfer. Resetting it to draft will "
+"also reset the related payment %s and remove the reconciliation between both"
+" payments. Do you want to continue?"
+msgstr ""
+"Este pago es parte de una transferencia interna. Restablecerlo a borrador "
+"también restablecerá el pago relacionado %s y eliminará la conciliación "
+"entre ambos pagos. ¿Desea continuar?"
+
+#. module: internal_transfer_with_agreed_amount
+#. odoo-python
+#: code:addons/internal_transfer_with_agreed_amount/wizards/internal_transfer_multicurrency.py:0
+msgid ""
+"When both journals use the same currency (%s), the sent and received amounts"
+" must be equal."
+msgstr ""
+"Cuando ambos diarios utilizan la misma moneda (%s), los montos enviado y "
+"recibido deben ser iguales."
+
+#. module: internal_transfer_with_agreed_amount
+#: model:ir.model,name:internal_transfer_with_agreed_amount.model_internal_transfer_multicurrency
+msgid "Wizard to create an internal transfer with an agreed amount."
 msgstr ""
 "Wizard para modificar el monto acordado con el banco en una transferencia "
 "interna."

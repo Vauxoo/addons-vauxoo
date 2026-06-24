@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_internal_transfer_draft_confirm" model="ir.ui.view">
+        <field name="name">internal.transfer.draft.confirm</field>
+        <field name="model">internal.transfer.draft.confirm</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="payment_id" invisible="True" />
+                <field name="paired_payment_id" invisible="True" />
+                <group>
+                    <field name="message" widget="html" nolabel="1" readonly="True" />
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Reset Both to Draft" type="object" class="btn-primary" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

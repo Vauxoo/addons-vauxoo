@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <record model="res.groups.privilege" id="res_groups_privilege_internal_transfer_with_agreed_amount">
+        <field name="name">Internal Transfer with Agreed Amount</field>
+        <field name="category_id" ref="base.module_category_accounting" />
+    </record>
+
     <record id="allow_confirm_internal_transfer_with_agreed_amount" model="res.groups">
         <field name="name">Allow to confirm an internal transfer with an agreed amount</field>
-        <field name="category_id" ref="base.module_category_usability" />
+        <field name="privilege_id" ref="res_groups_privilege_internal_transfer_with_agreed_amount" />
         <field
             name="comment"
         >The user with this permission can make multi-currency transfers with an agreed amount.</field>

@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_internal_transfer_multicurrency,access_internal_transfer_multicurrency,model_internal_transfer_multicurrency,base.group_user,1,1,1,1
+access_internal_transfer_draft_confirm,access_internal_transfer_draft_confirm,model_internal_transfer_draft_confirm,base.group_user,1,1,1,1
