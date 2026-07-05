@@ -15,6 +15,7 @@ class ProductTemplate(models.Model):
     standard_price_usd = fields.Float(
         string="Cost in USD",
         digits="Product Price",
+        company_dependent=True,
         help="Price cost of the product in USD currency",
     )
 
