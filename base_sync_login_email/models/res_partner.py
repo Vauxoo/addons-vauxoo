@@ -1,4 +1,4 @@
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import ValidationError
 from odoo.tools import single_email_re
 
@@ -17,7 +17,7 @@ class ResPartner(models.Model):
             }
             if internal_emails - {new_email}:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "It's not possible to change this contact's email because it's associated to an internal user "
                         "and the new email doesn't match the user login.\n"
                         "- Contact's email: '%s'\n"

@@ -39,7 +39,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 `feedback
 <https://github.com/vauxoo/addons-vauxoo/issues/new?body=
 module:%20base_sync_login_email%0A
-version:%2016.0%0A%0A
+version:%2019.0%0A%0A
 **Steps%20to%20reproduce**%0A
 -%20...%0A%0A
 **Current%20behavior**%0A%0A
