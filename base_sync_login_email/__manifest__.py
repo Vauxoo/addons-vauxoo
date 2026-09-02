@@ -8,7 +8,7 @@
     "website": "https://www.vauxoo.com",
     "license": "LGPL-3",
     "category": "Tools",
-    "version": "16.0.1.0.0",
+    "version": "19.0.1.0.0",
     "depends": [
         "base",
     ],

@@ -4,11 +4,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-09 04:26+0000\n"
-"PO-Revision-Date: 2025-04-09 04:26+0000\n"
-"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"POT-Creation-Date: 2026-09-11 17:34+0000\n"
+"PO-Revision-Date: 2026-09-11 17:34+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,15 +21,26 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: base_sync_login_email
+#: model:ir.model.fields,field_description:base_sync_login_email.field_res_partner__display_name
+#: model:ir.model.fields,field_description:base_sync_login_email.field_res_users__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: base_sync_login_email
+#: model:ir.model.fields,field_description:base_sync_login_email.field_res_partner__id
+#: model:ir.model.fields,field_description:base_sync_login_email.field_res_users__id
+msgid "ID"
+msgstr ""
+
+#. module: base_sync_login_email
 #. odoo-python
 #: code:addons/base_sync_login_email/models/res_partner.py:0
-#, python-format
 msgid ""
 "It's not possible to change this contact's email because it's associated to an internal user and the new email doesn't match the user login.\n"
 "- Contact's email: '%s'\n"
 "- User login: '%s'"
 msgstr ""
-"No es posible modifica el correo electrónico de este contacto porque está asociado con un usuario interno y el nuevo correo electrónico no coincide con el inicio de sesión (login) del usuario.\n"
+"No es posible modificar el correo electrónico de este contacto porque está asociado con un usuario interno y el nuevo correo electrónico no coincide con el inicio de sesión (login) del usuario.\n"
 "- Correo electrónico del contacto: '%s'\n"
 "- Inicio de sesión del usuario: '%s'"
 
