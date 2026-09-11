@@ -1,6 +1,13 @@
 name: tests
 
 on:
+  # Jobs that check out and execute the contributor's code belong here: a fork
+  # gets a read-only token and no secrets, so running its code is safe.
+  pull_request:
+    branches:
+      - "*.0"
+  # Reserved for jobs that need repository secrets. This context runs with the
+  # base repository's token, so any job kept here must NOT execute fork code.
   pull_request_target:
     branches:
       - "*.0"
@@ -17,6 +24,9 @@ jobs:
   pre-commit-vauxoo:
     runs-on: ubuntu-latest
     name: pre-commit-vauxoo
+    # Needs no secret, so it runs in the untrusted context. The guard keeps it
+    # from running twice when both PR events fire for the same pull request.
+    if: github.event_name != 'pull_request_target'
     steps:
       - uses: actions/checkout@v6
         with:
@@ -36,6 +46,7 @@ jobs:
   no-dependency-files:
     runs-on: ubuntu-latest
     name: No dependency files
+    if: github.event_name != 'pull_request_target'
     steps:
       - uses: actions/checkout@v6
         with:
@@ -52,6 +63,12 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     name: Build Docker and test Odoo
+    # Kept on pull_request_target because it needs PRIVATE_DEPLOY_KEY to reach
+    # private repositories and the registry credentials to push the image.
+    # That combination -- secrets plus fork code -- is what actions/checkout
+    # refuses for forks; see the note in the pull request that introduced this
+    # guard. Skipped on pull_request so it does not run twice on internal PRs.
+    if: github.event_name != 'pull_request'
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     steps:
